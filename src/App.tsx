@@ -23,6 +23,8 @@ import SearchAapPage from './pages/porteur/SearchAapPage';
 import AapDetailPage from './pages/porteur/AapDetailPage';
 import ApplicationFormPage from './pages/porteur/ApplicationFormPage';
 import MyApplicationsPage from './pages/porteur/MyApplicationsPage';
+import SavedSearchesPage from './pages/porteur/SavedSearchesPage';
+import RecommendationsPage from './pages/porteur/RecommendationsPage';
 
 // Financeur pages
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
@@ -30,6 +32,12 @@ import CreateAapPage from './pages/financeur/CreateAapPage';
 import MyAapPage from './pages/financeur/MyAapPage';
 import ViewApplicationsPage from './pages/financeur/ViewApplicationsPage';
 import EvaluateApplicationPage from './pages/financeur/EvaluateApplicationPage';
+import StatisticsPage from './pages/financeur/StatisticsPage';
+
+// Common pages
+import NotificationsPage from './pages/common/NotificationsPage';
+import MessagesPage from './pages/common/MessagesPage';
+import CalendarPage from './pages/common/CalendarPage';
 
 // Placeholder component for pages not yet created
 function PlaceholderPage({ title }: { title: string }) {
@@ -232,6 +240,33 @@ function App() {
             }
           />
 
+          {/* Porteur specific routes */}
+          <Route
+            path="/recherches-sauvegardees"
+            element={
+              <ProtectedRoute>
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['porteur']}>
+                    <SavedSearchesPage />
+                  </RoleGuard>
+                </SubscriptionGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/recommandations"
+            element={
+              <ProtectedRoute>
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['porteur']}>
+                    <RecommendationsPage />
+                  </RoleGuard>
+                </SubscriptionGuard>
+              </ProtectedRoute>
+            }
+          />
+
           {/* Common Authenticated Routes */}
           <Route
             path="/profil"
@@ -247,7 +282,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <SubscriptionGuard>
-                  <PlaceholderPage title="Calendrier" />
+                  <CalendarPage />
                 </SubscriptionGuard>
               </ProtectedRoute>
             }
@@ -258,7 +293,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <SubscriptionGuard>
-                  <PlaceholderPage title="Messages" />
+                  <MessagesPage />
                 </SubscriptionGuard>
               </ProtectedRoute>
             }
@@ -268,7 +303,7 @@ function App() {
             path="/notifications"
             element={
               <ProtectedRoute>
-                <PlaceholderPage title="Notifications" />
+                <NotificationsPage />
               </ProtectedRoute>
             }
           />
@@ -279,7 +314,7 @@ function App() {
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['financeur']}>
-                    <PlaceholderPage title="Statistiques" />
+                    <StatisticsPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
