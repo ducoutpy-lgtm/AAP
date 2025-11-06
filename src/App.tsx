@@ -39,6 +39,12 @@ import NotificationsPage from './pages/common/NotificationsPage';
 import MessagesPage from './pages/common/MessagesPage';
 import CalendarPage from './pages/common/CalendarPage';
 
+// Admin pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ManageUsersPage from './pages/admin/ManageUsersPage';
+import ManageAAPsPage from './pages/admin/ManageAAPsPage';
+import GlobalStatisticsPage from './pages/admin/GlobalStatisticsPage';
+
 // Placeholder component for pages not yet created
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -327,7 +333,62 @@ function App() {
             element={
               <ProtectedRoute>
                 <RoleGuard allowedRoles={['admin']}>
-                  <PlaceholderPage title="Admin Dashboard" />
+                  <AdminDashboard />
+                </RoleGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/utilisateurs"
+            element={
+              <ProtectedRoute>
+                <RoleGuard allowedRoles={['admin']}>
+                  <ManageUsersPage />
+                </RoleGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/aaps"
+            element={
+              <ProtectedRoute>
+                <RoleGuard allowedRoles={['admin']}>
+                  <ManageAAPsPage />
+                </RoleGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/statistiques"
+            element={
+              <ProtectedRoute>
+                <RoleGuard allowedRoles={['admin']}>
+                  <GlobalStatisticsPage />
+                </RoleGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/paiements"
+            element={
+              <ProtectedRoute>
+                <RoleGuard allowedRoles={['admin']}>
+                  <PlaceholderPage title="Gestion des Paiements" />
+                </RoleGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/parametres"
+            element={
+              <ProtectedRoute>
+                <RoleGuard allowedRoles={['admin']}>
+                  <PlaceholderPage title="Paramètres Plateforme" />
                 </RoleGuard>
               </ProtectedRoute>
             }
