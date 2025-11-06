@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasActiveSubscription() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.subscriptionStatus == 'active' || userData.subscriptionStatus == 'trial';
+    }
+
+    function isPorteur() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.userType == 'porteur';
+    }
+
+    function isFinanceur() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.userType == 'financeur';
+    }
+
+    function isAdmin() {
+      let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userData.userType == 'admin';
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated();
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // Porteur profiles
+    match /porteurProfiles/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+    }
+
+    // Financeur profiles
+    match /financeurProfiles/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+    }
+
+    // AAP (Appels à Projets)
+    match /aap/{aapId} {
+      // Lecture: tous les utilisateurs authentifiés avec abonnement
+      allow read: if isAuthenticated() && hasActiveSubscription();
+
+      // Création: financeurs avec abonnement
+      allow create: if isFinanceur() && hasActiveSubscription();
+
+      // Mise à jour et suppression: propriétaire uniquement
+      allow update, delete: if isAuthenticated() &&
+                               resource.data.financeurId == request.auth.uid;
+    }
+
+    // Applications (Candidatures)
+    match /applications/{applicationId} {
+      // Lecture: porteur propriétaire ou financeur de l'AAP
+      allow read: if isAuthenticated() && (
+        resource.data.porteurId == request.auth.uid ||
+        resource.data.financeurId == request.auth.uid ||
+        isAdmin()
+      );
+
+      // Création: porteurs avec abonnement
+      allow create: if isPorteur() && hasActiveSubscription();
+
+      // Mise à jour: porteur propriétaire (draft) ou financeur (évaluation)
+      allow update: if isAuthenticated() && (
+        (resource.data.porteurId == request.auth.uid && resource.data.status == 'draft') ||
+        resource.data.financeurId == request.auth.uid
+      );
+
+      // Suppression: porteur propriétaire si draft
+      allow delete: if isOwner(resource.data.porteurId) &&
+                       resource.data.status == 'draft';
+    }
+
+    // Saved Searches
+    match /savedSearches/{searchId} {
+      allow read, write: if isOwner(resource.data.userId);
+    }
+
+    // Favorite AAP
+    match /favoriteAap/{favoriteId} {
+      allow read, write: if isOwner(resource.data.userId);
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read: if isOwner(resource.data.userId);
+      allow write: if isOwner(resource.data.userId) || isAdmin();
+    }
+
+    // Messages
+    match /messages/{messageId} {
+      allow read: if isAuthenticated() && (
+        resource.data.senderId == request.auth.uid ||
+        resource.data.receiverId == request.auth.uid
+      );
+      allow create: if isAuthenticated() && hasActiveSubscription();
+      allow update: if isOwner(resource.data.receiverId); // Pour marquer comme lu
+    }
+
+    // Payments
+    match /payments/{paymentId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow write: if false; // Écritures via Cloud Functions uniquement
+    }
+
+    // Analytics
+    match /analytics/{analyticsId} {
+      allow read: if isAdmin();
+      allow write: if false; // Écritures via Cloud Functions uniquement
+    }
+  }
+}
