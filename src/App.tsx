@@ -9,11 +9,21 @@ import LandingPage from './pages/public/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 
+// Profile pages
+import CompleteProfile from './pages/profile/CompleteProfile';
+
+// Subscription pages
+import SelectPlanPage from './pages/subscription/SelectPlanPage';
+import SubscriptionSuccess from './pages/subscription/SubscriptionSuccess';
+import SubscriptionCancelled from './pages/subscription/SubscriptionCancelled';
+
 // Porteur pages
 import PorteurDashboard from './pages/porteur/PorteurDashboard';
 
 // Financeur pages
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
+import CreateAapPage from './pages/financeur/CreateAapPage';
+import MyAapPage from './pages/financeur/MyAapPage';
 
 // Placeholder component for pages not yet created
 function PlaceholderPage({ title }: { title: string }) {
@@ -36,6 +46,42 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+
+          {/* Profile Completion */}
+          <Route
+            path="/complete-profile"
+            element={
+              <ProtectedRoute>
+                <CompleteProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Subscription Routes */}
+          <Route
+            path="/abonnement/choisir"
+            element={
+              <ProtectedRoute>
+                <SelectPlanPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/abonnement/succes"
+            element={
+              <ProtectedRoute>
+                <SubscriptionSuccess />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/abonnement/annule"
+            element={
+              <ProtectedRoute>
+                <SubscriptionCancelled />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Porteur Routes */}
           <Route
@@ -121,7 +167,7 @@ function App() {
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['financeur']}>
-                    <PlaceholderPage title="Mes AAP" />
+                    <MyAapPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
@@ -134,7 +180,33 @@ function App() {
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['financeur']}>
-                    <PlaceholderPage title="Nouveau AAP" />
+                    <CreateAapPage />
+                  </RoleGuard>
+                </SubscriptionGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/aap/:aapId/edit"
+            element={
+              <ProtectedRoute>
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['financeur']}>
+                    <PlaceholderPage title="Modifier l'AAP" />
+                  </RoleGuard>
+                </SubscriptionGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/mes-aap/:aapId/candidatures"
+            element={
+              <ProtectedRoute>
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['financeur']}>
+                    <PlaceholderPage title="Gestion des candidatures" />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
@@ -146,16 +218,7 @@ function App() {
             path="/profil"
             element={
               <ProtectedRoute>
-                <PlaceholderPage title="Profil" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/complete-profile"
-            element={
-              <ProtectedRoute>
-                <PlaceholderPage title="Compléter le profil" />
+                <PlaceholderPage title="Mon Profil" />
               </ProtectedRoute>
             }
           />
@@ -191,12 +254,15 @@ function App() {
             }
           />
 
-          {/* Subscription */}
           <Route
-            path="/abonnement/choisir"
+            path="/statistiques"
             element={
               <ProtectedRoute>
-                <PlaceholderPage title="Choisir un abonnement" />
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['financeur']}>
+                    <PlaceholderPage title="Statistiques" />
+                  </RoleGuard>
+                </SubscriptionGuard>
               </ProtectedRoute>
             }
           />
