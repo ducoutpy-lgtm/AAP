@@ -19,11 +19,17 @@ import SubscriptionCancelled from './pages/subscription/SubscriptionCancelled';
 
 // Porteur pages
 import PorteurDashboard from './pages/porteur/PorteurDashboard';
+import SearchAapPage from './pages/porteur/SearchAapPage';
+import AapDetailPage from './pages/porteur/AapDetailPage';
+import ApplicationFormPage from './pages/porteur/ApplicationFormPage';
+import MyApplicationsPage from './pages/porteur/MyApplicationsPage';
 
 // Financeur pages
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
 import CreateAapPage from './pages/financeur/CreateAapPage';
 import MyAapPage from './pages/financeur/MyAapPage';
+import ViewApplicationsPage from './pages/financeur/ViewApplicationsPage';
+import EvaluateApplicationPage from './pages/financeur/EvaluateApplicationPage';
 
 // Placeholder component for pages not yet created
 function PlaceholderPage({ title }: { title: string }) {
@@ -103,7 +109,7 @@ function App() {
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['porteur']}>
-                    <PlaceholderPage title="Recherche d'AAP" />
+                    <SearchAapPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
@@ -115,19 +121,19 @@ function App() {
             element={
               <ProtectedRoute>
                 <SubscriptionGuard>
-                  <PlaceholderPage title="Détail AAP" />
+                  <AapDetailPage />
                 </SubscriptionGuard>
               </ProtectedRoute>
             }
           />
 
           <Route
-            path="/aap/:aapId/apply"
+            path="/aap/:aapId/candidater"
             element={
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['porteur']}>
-                    <PlaceholderPage title="Candidature" />
+                    <ApplicationFormPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
@@ -140,7 +146,7 @@ function App() {
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['porteur']}>
-                    <PlaceholderPage title="Mes Candidatures" />
+                    <MyApplicationsPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
@@ -201,12 +207,25 @@ function App() {
           />
 
           <Route
-            path="/mes-aap/:aapId/candidatures"
+            path="/aap/:aapId/candidatures"
             element={
               <ProtectedRoute>
                 <SubscriptionGuard>
                   <RoleGuard allowedRoles={['financeur']}>
-                    <PlaceholderPage title="Gestion des candidatures" />
+                    <ViewApplicationsPage />
+                  </RoleGuard>
+                </SubscriptionGuard>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/aap/:aapId/candidature/:applicationId/evaluer"
+            element={
+              <ProtectedRoute>
+                <SubscriptionGuard>
+                  <RoleGuard allowedRoles={['financeur']}>
+                    <EvaluateApplicationPage />
                   </RoleGuard>
                 </SubscriptionGuard>
               </ProtectedRoute>
