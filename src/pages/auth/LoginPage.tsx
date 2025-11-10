@@ -4,6 +4,8 @@ import { Target, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -11,11 +13,42 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = (location.state as any)?.from?.pathname || '/';
+  const from = (location.state as any)?.from?.pathname;
+
+  const getRedirectPath = async () => {
+    if (from && from !== '/') {
+      return from;
+    }
+
+    // Récupérer le profil utilisateur pour déterminer la redirection
+    if (currentUser) {
+      try {
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const userType = userData.userType;
+
+          // Rediriger vers le dashboard approprié
+          if (userType === 'admin') {
+            return '/admin';
+          } else if (userType === 'porteur') {
+            return '/dashboard/porteur';
+          } else if (userType === 'financeur') {
+            return '/dashboard/financeur';
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user profile:', err);
+      }
+    }
+
+    // Par défaut, rediriger vers la page de complétion du profil
+    return '/complete-profile';
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -24,7 +57,12 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      navigate(from, { replace: true });
+
+      // Attendre un peu pour que le profil soit chargé
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const redirectPath = await getRedirectPath();
+      navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message || 'Échec de la connexion');
     } finally {
@@ -38,7 +76,12 @@ export default function LoginPage() {
 
     try {
       await loginWithGoogle();
-      navigate(from, { replace: true });
+
+      // Attendre un peu pour que le profil soit chargé
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const redirectPath = await getRedirectPath();
+      navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message || 'Échec de la connexion avec Google');
     } finally {
