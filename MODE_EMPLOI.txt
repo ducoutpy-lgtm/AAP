@@ -1,0 +1,352 @@
+================================================================================
+  MODE D'EMPLOI - POC Scraping AAP Santé (ARCADIA SASU)
+  Toutes les commandes à taper dans CMD ou PowerShell sous Windows
+================================================================================
+
+Ce document est un pense-bête pratique. Chaque section présente les commandes
+dans l'ordre où les exécuter.
+
+Toutes les commandes sont à exécuter depuis le dossier :
+   C:\Users\pierr\Documents\ClaudeCode\poc-scraping
+
+================================================================================
+ ARCHITECTURE DU PROJET (où se trouve quoi)
+================================================================================
+
+Arborescence commentée :
+
+ClaudeCode/                              <- racine du projet AAP Santé
+├─ CLAUDE.md                             <- contexte auto pour Claude Code
+├─ CDC_AAP_Sante_v1.md                   <- cahier des charges complet
+├─ COMPARATIF_SCRAPING_AAP_Sante.md      <- arbitrage technique scraping
+└─ poc-scraping/                         <- le POC scraping (dossier courant)
+   │
+   ├─ README.md                          <- entrée pour un dev externe
+   ├─ MODE_EMPLOI.txt                    <- ce fichier
+   ├─ requirements.txt                   <- dépendances Python
+   ├─ .env.example / .env                <- config (clé API Anthropic)
+   │
+   ├─ schema.py                          <- STRUCTURE DE DONNÉES
+   │                                        Pydantic "AapNormalized" : le format
+   │                                        unique que tout scraper doit produire
+   │                                        (titre, dates, montants, eligibilité...)
+   │
+   ├─ utils.py                           <- HELPERS PARTAGÉS
+   │                                        Fonctions communes utilisées par
+   │                                        orchestrator, scrapers et debug :
+   │                                        stdout UTF-8, datetime UTC, écriture
+   │                                        JSON/JSONL, création context Playwright
+   │                                        standard, fermeture bandeau cookies.
+   │
+   ├─ extractor.py                       <- APPEL À L'IA CLAUDE
+   │                                        Envoie le texte d'une page à Claude
+   │                                        qui retourne un JSON structuré.
+   │                                        Contient aussi : retry sur 429/529,
+   │                                        prompt caching, logging du coût.
+   │
+   ├─ orchestrator.py                    <- BOUCLE PRINCIPALE
+   │                                        Pilote Playwright (navigateur),
+   │                                        appelle le scraper de la source,
+   │                                        appelle l'extracteur, sauve le JSON.
+   │
+   ├─ run.py                             <- POINT D'ENTRÉE CLI
+   │                                        C'est ce qu'on lance avec :
+   │                                        python run.py --source xxx
+   │
+   ├─ validate.py                        <- OUTIL 2 : rapport HTML qualité
+   ├─ analyze_costs.py                   <- OUTIL 3 : suivi coût Claude
+   ├─ debug_page.py                      <- OUTIL 4 : diagnostic Playwright
+   │
+   ├─ sources/                           <- UN FICHIER = UNE SOURCE
+   │  └─ fondation_de_france.py          <- le scraper Fondation de France
+   │                                        (celui qu'on a construit au POC).
+   │                                        À DUPLIQUER pour ARS IDF, CNSA, etc.
+   │
+   ├─ results/                           <- SORTIES SCRAPING (créé au run)
+   │  ├─ fondation_de_france.json        <- liste des AAP extraits
+   │  └─ fondation_de_france.errors.json <- échecs éventuels (diagnostic)
+   │
+   ├─ downloads/<source>/                <- PDF / DOCX téléchargés (créé au run)
+   ├─ logs/extraction_costs.jsonl        <- journal du coût (1 ligne par AAP)
+   └─ validation_reports/<source>.html   <- rapports qualité à ouvrir dans Chrome
+
+
+RÉPONSES AUX QUESTIONS FRÉQUENTES :
+
+Où se trouve le code du scraper de la Fondation de France ?
+   -> poc-scraping/sources/fondation_de_france.py
+
+Où modifier la structure du JSON de sortie (ajouter un champ) ?
+   -> poc-scraping/schema.py
+      (et aussi poc-scraping/extractor.py pour dire à Claude de le remplir)
+
+Où modifier le nombre max d'AAP par run ?
+   -> variable d'environnement MAX_AAPS (voir section OUTIL 1 ci-dessous)
+      OU en dur dans poc-scraping/orchestrator.py
+
+Où modifier le retry en cas d'erreur Claude 429/529 ?
+   -> poc-scraping/extractor.py (boucle de retry avec backoff exponentiel)
+
+Où est géré le cache inter-runs (skip Claude si URL déjà extraite) ?
+   -> poc-scraping/orchestrator.py, fonction _load_previous()
+      (indexe results/<source>.json par url_source au démarrage du run)
+
+Où modifier les helpers partagés (UA Chrome, sélecteurs cookies, UTF-8) ?
+   -> poc-scraping/utils.py
+
+Comment ajouter une nouvelle source (ex: ARS Île-de-France) ?
+   -> créer poc-scraping/sources/ars_idf.py en copiant le fichier
+      fondation_de_france.py et en adaptant les 2 fonctions
+      (list_aaps et fetch_detail). Puis :
+          python run.py --source ars_idf
+
+
+RÔLE DES 4 OUTILS (vue d'ensemble) :
+
+   1. run.py          : fait le scraping d'une source.
+   2. validate.py     : produit un rapport HTML de contrôle qualité.
+   3. analyze_costs.py : affiche le coût API Claude consommé.
+   4. debug_page.py   : ouvre Chromium en mode visible pour diagnostiquer
+                        un problème (page qui ne charge pas, liens invisibles).
+
+
+--------------------------------------------------------------------------------
+ 1. OUVRIR UN TERMINAL AU BON ENDROIT
+--------------------------------------------------------------------------------
+
+Option A - depuis l'Explorateur Windows :
+   - Ouvrir le dossier C:\Users\pierr\Documents\ClaudeCode\poc-scraping
+   - Cliquer dans la barre d'adresse, taper : cmd
+   - Appuyer sur Entrée. Un terminal s'ouvre déjà dans le bon dossier.
+
+Option B - depuis un cmd quelconque :
+   cd C:\Users\pierr\Documents\ClaudeCode\poc-scraping
+
+
+--------------------------------------------------------------------------------
+ 2. INSTALLATION (à faire UNE SEULE FOIS sur la machine)
+--------------------------------------------------------------------------------
+
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   python -m playwright install chromium
+   copy .env.example .env
+
+Ensuite, ouvrir .env avec le bloc-notes et renseigner la clé API Anthropic :
+   ANTHROPIC_API_KEY=sk-ant-api03-votre-vraie-cle-ici
+
+La clé se récupère sur https://console.anthropic.com/ > API Keys.
+
+
+--------------------------------------------------------------------------------
+ 3. ACTIVER L'ENVIRONNEMENT (à faire à CHAQUE nouveau terminal)
+--------------------------------------------------------------------------------
+
+   .venv\Scripts\activate
+
+Vous devez voir (.venv) apparaître au début de la ligne de prompt. Si ce n'est
+pas le cas, les commandes suivantes échoueront avec "module not found".
+
+
+================================================================================
+ UTILISATION QUOTIDIENNE - LES 4 OUTILS
+================================================================================
+
+POURQUOI 4 OUTILS SÉPARÉS ET PAS UN SEUL SCRIPT « TOUT-EN-UN » ?
+
+Chaque outil a un seul rôle, c'est volontaire. Lancer automatiquement
+validate.py à la fin de run.py serait tentant pour le confort mais créerait
+5 problèmes :
+
+  1. Cadences différentes. run.py tournera en cron automatique en prod
+     (quotidien). validate.py est un acte HUMAIN de relecture, fait
+     ponctuellement. Générer un HTML que personne ne lit 90 % du temps
+     pollue validation_reports/ et gaspille du temps.
+  2. Failure isolation. Si validate.py plante (bug template, champ schéma
+     manquant), ça ne doit pas casser le pipeline de scraping.
+  3. Itération rapide. Quand on développe une nouvelle source (ARS, CNSA...),
+     on relance run.py 20 fois en 1 h. Générer un rapport HTML à chaque run
+     = +10 s perdues à chaque fois.
+  4. Contrats de sortie distincts. run.py produit du JSON (consommé par la
+     plateforme / la base). validate.py produit du HTML (consommé par un
+     humain dans Chrome). Deux formats, deux consommateurs, deux outils.
+  5. Prod != POC. À terme (sprint 3 MVP), la validation humaine passera par
+     un back-office admin en Next.js. validate.py est un outil temporaire ;
+     le coupler au scraper créerait une dette à défaire.
+
+SI VOUS VOULEZ QUAND MÊME LE CONFORT « UNE SEULE COMMANDE » :
+   Créer un fichier run_and_validate.bat dans poc-scraping\ avec :
+
+      @echo off
+      python run.py --source %1 && python validate.py --source %1
+
+   Usage :
+      run_and_validate.bat fondation_de_france
+
+   Le && garantit que la validation ne se déclenche que si le scraping
+   a réussi (fail-fast propre). Ça n'ajoute aucune dette dans le code Python.
+
+
+--------------------------------------------------------------------------------
+ OUTIL 1 : SCRAPER une source (télécharge les AAP + extraction IA)
+--------------------------------------------------------------------------------
+
+Lancement standard (jusqu'à 100 AAP par source) :
+   python run.py --source fondation_de_france
+
+Limiter le nombre d'AAP (utile pour tests rapides) :
+   set MAX_AAPS=10 && python run.py --source fondation_de_france
+
+Tout scraper sans limite (attention au coût) :
+   set MAX_AAPS=9999 && python run.py --source fondation_de_france
+
+CACHE INTER-RUNS (économie majeure)
+   Au 2e lancement (et aux suivants), les AAP dont l'URL est inchangée sont
+   servis depuis results\<source>.json SANS réinterroger Claude. On ne paie
+   l'API que pour les nouveaux AAP ou les AAP dont l'URL a changé. En régime
+   de croisière (delta ~5%/jour), ~95% des AAP sont servis depuis le cache.
+
+   Pour FORCER une ré-extraction complète (ex : vous avez modifié le prompt
+   dans extractor.py et voulez re-générer tous les champs) :
+      set FORCE_REFRESH=1 && python run.py --source fondation_de_france
+
+Sorties créées :
+   results\fondation_de_france.json         <- les AAP extraits
+   results\fondation_de_france.errors.json  <- échecs éventuels
+   downloads\fondation_de_france\           <- PDF / DOCX téléchargés
+   logs\extraction_costs.jsonl              <- journal coût (1 ligne par AAP)
+
+
+--------------------------------------------------------------------------------
+ OUTIL 2 : VALIDER la qualité du scraping (rapport HTML visuel)
+--------------------------------------------------------------------------------
+
+À lancer APRES chaque scraping, pour contrôler ce qui a été extrait :
+   python validate.py --source fondation_de_france
+
+Cela crée : validation_reports\fondation_de_france.html
+
+Ouvrir ce fichier dans Chrome ou Firefox. Vous y verrez :
+   - Chaque AAP à gauche (champs extraits)
+   - La page source à droite (iframe)
+   - Un score /10 par AAP + pastilles par champ (vert = OK, rouge = KO)
+   - Un sommaire cliquable en haut
+
+PROTOCOLE DE RELECTURE (10-15 min pour 50 AAP) :
+   1. Regarder les AAP avec score < 5/10 en priorité.
+   2. Comparer côte-à-côte : si l'info manque parce qu'elle n'est PAS sur la
+      page source, c'est normal. Si elle EST sur la page et n'a pas été
+      extraite, c'est un vrai problème à noter.
+   3. Les champs "categories_etablissement" vides sur la Fondation de France
+      sont normaux (pas de MCO/EHPAD ciblés). Ils seront remplis sur les
+      sources ARS / CNSA / CPAM.
+
+
+--------------------------------------------------------------------------------
+ OUTIL 3 : ANALYSER les coûts API Claude
+--------------------------------------------------------------------------------
+
+Afficher le coût total de tous les runs :
+   python analyze_costs.py
+
+Aujourd'hui uniquement :
+   python analyze_costs.py --today
+
+Pour une source précise :
+   python analyze_costs.py --source fondation_de_france
+
+Sortie type :
+   Source                    AAP      InTok   OutTok     USD     EUR
+   fondation_de_france        60     180000   120000   2.34    2.15
+   TOTAL                      60     180000   120000   2.34    2.15
+   Cout moyen / AAP          : 0.0358 EUR
+   Projection 5 src x 50 AAP / jour  : 8.95 EUR/jour = 268 EUR/mois
+   Projection avec delta scraping 5% : 13.42 EUR/mois
+
+
+--------------------------------------------------------------------------------
+ OUTIL 4 : DEBUG - quand un scraper ne trouve rien
+--------------------------------------------------------------------------------
+
+Si python run.py retourne "0 URLs candidates trouvees", ou si une page
+semble bloquée :
+
+   python debug_page.py https://www.url-du-site/listing
+
+Cela ouvre Chromium EN MODE VISIBLE (vous voyez le navigateur), tente
+d'accepter les cookies, scrolle, puis dumpe dans le dossier debug\ :
+   - debug\page.html       <- HTML complet de la page
+   - debug\links.txt       <- tous les liens détectés
+   - debug\screenshot.png  <- capture d'écran
+   - debug\console.txt     <- messages console JS
+
+C'est l'outil de diagnostic de premier niveau à utiliser quand un nouveau
+scraper ne fonctionne pas.
+
+
+================================================================================
+ ROUTINE COMPLÈTE RECOMMANDÉE (à enchaîner)
+================================================================================
+
+   .venv\Scripts\activate
+   python run.py --source fondation_de_france
+   python validate.py --source fondation_de_france
+   python analyze_costs.py --source fondation_de_france
+
+Puis ouvrir dans Chrome :
+   validation_reports\fondation_de_france.html
+
+
+================================================================================
+ AJOUTER UNE NOUVELLE SOURCE (ex: ARS Île-de-France)
+================================================================================
+
+1. Créer le fichier sources\ars_idf.py en s'inspirant de fondation_de_france.py
+   (2 fonctions à écrire : list_aaps et fetch_detail).
+
+2. Le lancer :
+      python run.py --source ars_idf
+      python validate.py --source ars_idf
+
+3. Si scraping échoue, utiliser l'outil 4 (debug_page.py) sur la page listing.
+
+
+================================================================================
+ PROBLÈMES COURANTS
+================================================================================
+
+Symptôme : "ANTHROPIC_API_KEY manquante"
+   -> Vérifier que le fichier .env existe et contient la clé.
+   -> Vérifier qu'il n'y a pas une variable système ANTHROPIC_API_KEY vide
+      qui masque le .env (commande : set ANTHROPIC_API_KEY= pour la vider).
+
+Symptôme : "Overloaded" / "529" / "rate_limit"
+   -> Retry automatique déjà en place (4 tentatives avec backoff). Si échec
+      persistant, relancer la commande 10 minutes plus tard.
+
+Symptôme : "0 URLs candidates trouvees"
+   -> Le site a probablement changé sa structure HTML, ou le filtre URL est
+      trop strict. Lancer debug_page.py pour voir ce que Playwright voit.
+
+Symptôme : AAP bien listés mais tous en erreur "texte_trop_court"
+   -> La page a du contenu chargé en JavaScript après le domcontentloaded.
+      Augmenter le timeout dans fetch_detail : await page.wait_for_timeout(3000).
+
+
+================================================================================
+ ORDRE CHRONOLOGIQUE D'UNE SESSION TYPE
+================================================================================
+
+Première fois :
+   (suivre section 2 - INSTALLATION)
+
+Chaque session ensuite :
+   cd C:\Users\pierr\Documents\ClaudeCode\poc-scraping
+   .venv\Scripts\activate
+   python run.py --source fondation_de_france
+   python validate.py --source fondation_de_france
+   (ouvrir le HTML dans Chrome et relire)
+   python analyze_costs.py
+
+================================================================================
