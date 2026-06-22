@@ -17,6 +17,12 @@ logs/
 validation_reports/
 debug/
 
+# Graphify (graphes générés automatiquement)
+graphify-out/
+
+# Fichiers de test temporaires
+test_download.pdf
+
 # Playwright
 playwright/.auth/
 
