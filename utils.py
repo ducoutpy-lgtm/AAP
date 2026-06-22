@@ -63,6 +63,15 @@ DEFAULT_USER_AGENT = (
     "Chrome/131.0.0.0 Safari/537.36"
 )
 
+# Headers HTTP a utiliser pour tous les telechargements httpx.
+# Regle : toujours simuler un navigateur reel (User-Agent Chrome).
+# Les sites gouvernementaux français bloquent les bots identifies (User-Agent "Bot/0.1").
+DEFAULT_HTTP_HEADERS = {
+    "User-Agent": DEFAULT_USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "fr-FR,fr;q=0.9",
+}
+
 DEFAULT_COOKIE_SELECTORS = [
     "button:has-text('Accepter')",
     "button:has-text('Tout accepter')",

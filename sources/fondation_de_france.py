@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 
 import httpx
 
-from utils import accept_cookies
+from utils import accept_cookies, DEFAULT_HTTP_HEADERS
 
 LIST_URL = "https://www.fondationdefrance.org/fr/appels-a-projets"
 FINANCEUR_HINT = "Fondation de France"
@@ -25,10 +25,7 @@ PAGE_SIZE = 15          # FDF affiche 15 AAP par page (pagination offset)
 MAX_PAGES = 30          # garde-fou absolu (30 pages = 450 AAP max)
 MAX_ATTACHMENTS = 6     # nb max de pieces jointes PDF/DOCX par AAP
 
-_HTTP_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; AAPSanteBot/0.1)",
-    "Accept": "application/pdf, */*",
-}
+_HTTP_HEADERS = DEFAULT_HTTP_HEADERS
 
 
 async def _collect_links_on_current_page(page) -> list[str]:
