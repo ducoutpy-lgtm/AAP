@@ -137,6 +137,7 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : sante.gouv, ameli, autres ARS | A FAIRE | prochaine extension |
 | Jonction scraping -> Firestore | EN COURS | script écrit, à tester contre le projet Firebase réel |
 | Démo bout en bout testable | A FAIRE | objectif de la reprise |
+| Méthode OpenSpec installée | OK | 2026-10-09 — 8 workflows, config projet |
 
 ---
 
@@ -149,6 +150,30 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 - Modifier un cahier des charges dans `docs/` sans en informer explicitement.
 - Committer une clé (Anthropic, Firebase, Stripe). Tout est dans des `.env` ignorés par Git.
 - Supprimer la branche ou le tag d'archive.
+
+---
+
+## Méthode de développement : OpenSpec (spec-driven) — depuis 2026-10-09
+
+Toute nouvelle fonctionnalité passe par un **changement OpenSpec** avant d'écrire du code.
+Pourquoi : les sessions précédentes produisaient du code déclaré « fonctionnel » sans critère
+vérifiable par Monsieur DUCOUT. Les scénarios WHEN / THEN de la spec sont ce critère.
+
+Cycle (commandes slash dans Claude Code) :
+
+| Commande | Effet |
+|---|---|
+| `/opsx:explore` | Comprendre le problème et le code existant, sans rien écrire |
+| `/opsx:propose "<idée>"` | Crée `openspec/changes/<nom>/` : `proposal.md`, `specs/`, `design.md`, `tasks.md` |
+| `/opsx:apply` | Implémente les tâches, une par une |
+| `/opsx:verify` | Rejoue chaque scénario WHEN / THEN : OK ou ÉCHEC |
+| `/opsx:archive` | Range le changement dans `changes/archive/` et fusionne dans `openspec/specs/` |
+
+- `openspec/specs/` = la vérité fonctionnelle du produit (remplace progressivement les CDC de `docs/`,
+  qui restent la référence historique).
+- Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
+- Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
+- Premier changement prévu : `visualiseur-local` (interface locale pour voir et filtrer les AAP scrapés).
 
 ---
 

@@ -1,0 +1,47 @@
+schema: spec-driven
+
+context: |
+  Projet : AAP Sante - plateforme d'agregation et de matching IA d'appels a projets
+  du secteur sante / medico-social francais. Porteur : Monsieur DUCOUT (ARCADIA SASU).
+  Le contexte technique complet (stack retenue, architecture du depot, principes du
+  scraping, interdits) est dans CLAUDE.md a la racine : le lire avant tout artefact.
+  Developpeur solo, niveau Python basique : toujours expliquer le POURQUOI avant le COMMENT.
+
+  Language: fr
+  All artifacts must be written in fr.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+  Pas d'emojis dans les artefacts.
+  Marquer "[A VALIDER - Monsieur DUCOUT]" plutot qu'inventer une information inconnue.
+
+rules:
+  proposal:
+    - Moins de 500 mots.
+    - Toujours indiquer ce qui est hors perimetre.
+    - Justifier chaque choix technique en une phrase.
+    - Indiquer le cout estime (API Anthropic, temps) quand il y en a un.
+  specs:
+    - Chaque exigence a au moins un scenario WHEN / THEN verifiable manuellement
+      par Monsieur DUCOUT, sans competence technique.
+  design:
+    - Respecter la decision de stack du CLAUDE.md (Python + Playwright + Claude API
+      pour le scraping ; app React/Firebase en pause ; FastAPI/PostgreSQL en pause).
+    - Ne jamais modifier le schema AapNormalized (scraping/schema.py) ni le type AAP
+      de l'application sans une exigence explicite dans la spec.
+    - Preferer des diagrammes Mermaid pour les flux.
+  tasks:
+    - Taches de 2 heures maximum, chacune avec un critere de "fait" observable.
+    - La derniere tache est toujours une verification manuelle par Monsieur DUCOUT.
+
+operations:
+  apply:
+    guidance:
+      - Travailler tache par tache, cocher tasks.md au fur et a mesure.
+      - Ne jamais committer de cle (Anthropic, Firebase, Stripe).
+      - Si un choix non prevu par la spec apparait, s'arreter et demander.
+  verify:
+    guidance:
+      - Rejouer chaque scenario WHEN / THEN et dire explicitement OK ou ECHEC.
+  archive:
+    guidance:
+      - Mettre a jour le tableau "Etat d'avancement" du CLAUDE.md.
+      - Resumer en 3 lignes ce qui a change pour le compte rendu de session.
