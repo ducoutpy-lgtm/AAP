@@ -1,0 +1,46 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper function
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function hasActiveSubscription() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.subscriptionStatus in ['active', 'trial'];
+    }
+
+    // AAP documents
+    match /uploads/aap-documents/{aapId}/{filename} {
+      allow read: if isAuthenticated() && hasActiveSubscription();
+      allow write: if isAuthenticated() && hasActiveSubscription();
+      allow delete: if isAuthenticated();
+    }
+
+    // Application documents
+    match /uploads/application-documents/{applicationId}/{filename} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && hasActiveSubscription();
+      allow delete: if isAuthenticated();
+    }
+
+    // Financeur logos
+    match /uploads/logos/financeurs/{financeurId}/{filename} {
+      allow read: if true; // Public
+      allow write: if isOwner(financeurId);
+      allow delete: if isOwner(financeurId);
+    }
+
+    // Profile avatars
+    match /uploads/profiles/avatars/{userId}/{filename} {
+      allow read: if true; // Public
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+  }
+}
