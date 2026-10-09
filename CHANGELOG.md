@@ -6,6 +6,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Pièces jointes des AAP scrapés (changement OpenSpec `pieces-jointes-aap`, 2026-10-09) : section
+  « Pièces jointes » sur la fiche et compteur « N pièces jointes » sur les cartes de la recherche ;
+  champ optionnel `scrapeMetadata` déclaré sur le type `AAP`. Les fichiers déjà téléchargés par le
+  scraping (93 sur 109) sont servis depuis le PC en développement (`app/public/documents` ->
+  `scraping/downloads`, lien de jonction ignoré par Git), car les ARS refusent l'accès direct
+  (« Forbidden ») ; les autres gardent leur lien d'origine. Envoi vers Firebase Storage codé mais
+  désactivé (`--vers-storage`, nécessite le forfait Blaze : compte de facturation fermé).
 - Démo de bout en bout (changement OpenSpec `demo-aap-scrapes-visibles`, 2026-10-09) : 89 AAP scrapés
   importés dans Firestore et visibles dans l'application ; procédure de rejeu dans le README (section 4).
 - `app/src/utils/deadline.ts` : helper partagé « jours restants » ; mention « Clôturé » dans la liste et la

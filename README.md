@@ -77,7 +77,13 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
 3. `cd app && npm run dev`, puis http://localhost:3000 : inscription comme « Porteur de projet »
    (14 jours d'essai, suffisant pour lire les AAP), ou connexion avec le compte de démo existant.
 4. Page « Rechercher des AAP » : les AAP scrapés apparaissent, les AAP clos portent la mention « Clôturé »,
-   la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle ».
+   la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle » et liste ses
+   pièces jointes. En développement, les fichiers sont servis depuis le PC : créer une fois le lien de
+   jonction `app\public\documents` vers `scraping\downloads` (PowerShell :
+   `New-Item -ItemType Junction -Path app\public\documents -Target scraping\downloads`). Sans ce lien,
+   ou sur la version en ligne, les liens renvoient chez le financeur (les ARS répondent « Forbidden »).
+   Option `--vers-storage` de l'import : copie des fichiers dans Firebase Storage, réservée au jour où
+   le projet aura un compte de facturation (forfait Blaze).
 
 Spécifications correspondantes : `openspec/specs/import-aap-scrapes/` et `openspec/specs/consultation-aap-scrapes/`
 (après archivage du changement `demo-aap-scrapes-visibles`).

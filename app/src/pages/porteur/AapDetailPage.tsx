@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
 import { Button } from '../../components/ui/Button';
@@ -21,12 +22,37 @@ import {
   CheckCircle,
 } from 'lucide-react';
 
+// Ordre de préférence pour ouvrir une pièce jointe (spec consultation-aap-scrapes) :
+// copie Storage, sinon copie locale (seulement quand l'application tourne sur le PC, dossier
+// app/public/documents -> scraping/downloads), sinon fichier d'origine chez le financeur.
+const lienPieceJointe = (
+  fichier: { url: string; fichierLocal?: string },
+  urlStorage: string | undefined
+): string => {
+  if (urlStorage) return urlStorage;
+  if (import.meta.env.DEV && fichier.fichierLocal) return `/documents/${fichier.fichierLocal}`;
+  return fichier.url;
+};
+
 export default function AapDetailPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
   const { userProfile } = useAuth();
   const [aap, setAap] = useState<AAP | null>(null);
   const [loading, setLoading] = useState(true);
+  // Adresses de téléchargement des pièces jointes hébergées dans Storage, par index dans fichiersJoints.
+  // Les sites des ARS refusent l'accès direct à leurs fichiers : on sert notre copie quand elle existe.
+  const [pieceUrls, setPieceUrls] = useState<Record<number, string>>({});
+
+  useEffect(() => {
+    const fichiers = aap?.scrapeMetadata?.fichiersJoints ?? [];
+    fichiers.forEach((fichier, index) => {
+      if (!fichier.storagePath) return;
+      getDownloadURL(ref(storage, fichier.storagePath))
+        .then(url => setPieceUrls(prev => ({ ...prev, [index]: url })))
+        .catch(err => console.error('Pièce jointe indisponible dans Storage:', fichier.storagePath, err));
+    });
+  }, [aap]);
 
   useEffect(() => {
     if (aapId) {
@@ -270,6 +296,31 @@ export default function AapDetailPage() {
                 <li key={index} className="flex items-center gap-2 text-gray-700">
                   <CheckCircle className="h-4 w-4 text-green-500" />
                   {doc}
+                </li>
+              ))}
+            </ul>
+          </Card>
+        )}
+
+        {/* Pièces jointes collectées par le scraping (liens vers le site du financeur) */}
+        {aap.scrapeMetadata?.fichiersJoints && aap.scrapeMetadata.fichiersJoints.length > 0 && (
+          <Card className="p-6 mb-6">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <FileText className="h-5 w-5 text-primary-600" />
+              Pièces jointes
+            </h3>
+            <ul className="space-y-2">
+              {aap.scrapeMetadata.fichiersJoints.map((fichier, index) => (
+                <li key={index}>
+                  <a
+                    href={lienPieceJointe(fichier, pieceUrls[index])}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary-600 hover:underline"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    {fichier.filename}
+                  </a>
                 </li>
               ))}
             </ul>

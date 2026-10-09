@@ -139,6 +139,7 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : sante.gouv, ameli, autres ARS | A FAIRE | prochaine extension |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
 | Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 |
+| Pièces jointes des AAP scrapés | OK (local) | 2026-10-09 : servies depuis le PC en dev (`app/public/documents`) ; Storage codé, inactif (forfait Blaze refusé pour l'instant) |
 | Méthode OpenSpec installée | OK | 2026-10-09 — 8 workflows, config projet |
 
 ---
@@ -175,7 +176,10 @@ Cycle (commandes slash dans Claude Code) :
   qui restent la référence historique).
 - Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
-- Premier changement prévu : `visualiseur-local` (interface locale pour voir et filtrer les AAP scrapés).
+- Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap` (2026-10-09). Specs en vigueur :
+  `import-aap-scrapes`, `consultation-aap-scrapes`.
+- Décision de Monsieur DUCOUT (2026-10-09) : tout tester en local avant de déployer ; pas de forfait Blaze
+  (facturation) pour l'instant.
 
 ---
 

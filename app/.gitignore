@@ -37,3 +37,6 @@ ui-debug.log
 # Functions
 functions/node_modules/
 functions/lib/
+
+# Lien de jonction vers scraping/downloads (pieces jointes servies en local, jamais commitees)
+public/documents

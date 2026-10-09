@@ -102,6 +102,14 @@ export interface AAP {
   views?: number;
   applicationsCount?: number;
   source?: 'manual' | 'scraped';
+  // Bloc écrit par scripts/import_to_firestore.py pour les AAP scrapés (absent pour les AAP saisis à la main)
+  scrapeMetadata?: {
+    source: string;
+    signature: string;
+    // fichierLocal : chemin relatif à scraping/downloads, servi sous /documents/ en développement
+    // storagePath : copie dans Firebase Storage (présent seulement après un import --vers-storage)
+    fichiersJoints?: { url: string; filename: string; fichierLocal?: string; storagePath?: string }[];
+  };
 }
 
 export type ApplicationStatus =

@@ -106,6 +106,52 @@ def parse_budget_total(enveloppe: str | None) -> int | None:
         return None
 
 
+def piece_jointe(fichier: dict, doc_id: str) -> dict:
+    """Entree fichiersJoints : url d'origine, nom, et chemin Storage si le fichier est sur le disque.
+
+    Pourquoi heberger : les sites des ARS repondent 403 a tout acces direct a leurs fichiers
+    (constate le 2026-10-09) ; le scraping les a deja telecharges dans scraping/downloads/.
+    Le chemin uploads/aap-documents/<id>/<nom> est celui que storage.rules reserve aux comptes
+    connectes avec abonnement ou essai. localPath est retire avant l'ecriture en base.
+    """
+    entree = {"url": fichier.get("url"), "filename": fichier.get("filename")}
+    local = fichier.get("local_path")
+    chemin = (ROOT / "scraping" / local) if local else None
+    if chemin and chemin.exists() and entree["filename"]:
+        # fichierLocal : chemin relatif a scraping/downloads, servi par l'application en mode
+        # developpement via le lien app/public/documents -> scraping/downloads (demo locale, sans frais)
+        entree["fichierLocal"] = chemin.relative_to(ROOT / "scraping" / "downloads").as_posix()
+        entree["localPath"] = str(chemin)
+        entree["_storagePath"] = f"uploads/aap-documents/{doc_id}/{entree['filename']}"
+    return entree
+
+
+def envoyer_fichiers(bucket, doc: dict) -> tuple[int, int]:
+    """Envoie dans Storage les fichiers d'un AAP absents du bucket. Retourne (envoyes, deja presents)."""
+    import mimetypes
+
+    envoyes = presents = 0
+    for entree in doc["scrapeMetadata"]["fichiersJoints"]:
+        local = entree.pop("localPath", None)
+        chemin_storage = entree.pop("_storagePath", None)
+        if not local:
+            continue
+        blob = bucket.blob(chemin_storage)
+        if blob.exists():
+            presents += 1
+        else:
+            blob.upload_from_filename(local, content_type=mimetypes.guess_type(local)[0] or "application/octet-stream")
+            envoyes += 1
+        entree["storagePath"] = chemin_storage  # ecrit seulement une fois la copie presente dans Storage
+    return envoyes, presents
+
+
+def retirer_champs_internes(doc: dict) -> None:
+    for entree in doc["scrapeMetadata"]["fichiersJoints"]:
+        entree.pop("localPath", None)
+        entree.pop("_storagePath", None)
+
+
 def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
     """Mappe un AapNormalized vers le type AAP de l'application. Retourne None si inexploitable."""
     titre = (item.get("titre") or "").strip()
@@ -148,7 +194,7 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
             "signature": signature(titre, financeur, item.get("date_cloture")),
             "enveloppeGlobale": item.get("enveloppe_globale"),
             "fichiersJoints": [
-                {"url": f.get("url"), "filename": f.get("filename")}
+                piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
                 for f in item.get("fichiers_joints") or []
             ],
             "importedAt": now,
@@ -189,6 +235,13 @@ def main() -> int:
         help="importer les AAP sans date de cloture (AAP permanents) avec une echeance fictive a +365 jours, tag 'sans-date-cloture'",
     )
     parser.add_argument("--key", default=str(DEFAULT_KEY), help="chemin de la cle de compte de service Firebase")
+    parser.add_argument("--bucket", help="bucket Storage (defaut : <project_id>.firebasestorage.app)")
+    parser.add_argument(
+        "--vers-storage",
+        action="store_true",
+        help="envoyer aussi les pieces jointes dans Firebase Storage (necessite le forfait Blaze ; par defaut, "
+        "les fichiers sont seulement references en local pour la demo sur le PC)",
+    )
     args = parser.parse_args()
 
     if not RESULTS_DIR.exists():
@@ -226,6 +279,10 @@ def main() -> int:
     mapped = list(uniques.items())
 
     print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes) | ignores : {skipped}")
+    fichiers = [e for _, d in mapped for e in d["scrapeMetadata"]["fichiersJoints"]]
+    sur_disque = [e for e in fichiers if "localPath" in e]
+    print(f"Pieces jointes : {len(fichiers)} | disponibles en local (scraping/downloads) : {len(sur_disque)}"
+          + (" | envoi vers Storage demande" if args.vers_storage else ""))
 
     if args.dry_run:
         for sig, doc in mapped[:10]:
@@ -240,16 +297,40 @@ def main() -> int:
         return 1
 
     import firebase_admin
-    from firebase_admin import credentials, firestore
+    from firebase_admin import credentials, firestore, storage
 
     firebase_admin.initialize_app(credentials.Certificate(str(key_path)))
     db = firestore.client()
     col = db.collection("aap")
+    bucket = None
+    if args.vers_storage and sur_disque:
+        with key_path.open(encoding="utf-8") as fh:
+            project_id = json.load(fh)["project_id"]
+        bucket = storage.bucket(args.bucket or f"{project_id}.firebasestorage.app")
+        from google.api_core.exceptions import Forbidden
 
-    created = updated = 0
+        try:
+            if not bucket.exists():
+                print(f"Bucket Storage introuvable : {bucket.name} (activer Storage dans la console ou passer --bucket)", file=sys.stderr)
+                return 1
+            bucket.blob("uploads/aap-documents/.verification").exists()
+        except Forbidden as err:
+            # Cas reel du 2026-10-09 : compte de facturation du projet ferme. Firebase Storage exige
+            # un projet rattache a un compte de facturation (forfait Blaze), meme dans la part gratuite.
+            print("Acces a Storage refuse par Google : " + str(err).split(":")[-1].strip(), file=sys.stderr)
+            print("Rien n'a ete ecrit. Rattacher un compte de facturation au projet, ou relancer sans --vers-storage.", file=sys.stderr)
+            return 1
+
+    created = updated = envoyes = presents = 0
     batch = db.batch()
     pending = 0
     for sig, doc in mapped:
+        if bucket is not None:
+            e, p = envoyer_fichiers(bucket, doc)
+            envoyes += e
+            presents += p
+        else:
+            retirer_champs_internes(doc)
         ref = col.document(f"scraped-{sig}")
         exists = ref.get().exists
         if exists:
@@ -266,7 +347,8 @@ def main() -> int:
     if pending:
         batch.commit()
 
-    print(f"Termine : {created} crees, {updated} mis a jour, collection 'aap'.")
+    print(f"Termine : {created} crees, {updated} mis a jour, collection 'aap'. "
+          f"Pieces jointes : {envoyes} envoyees dans Storage, {presents} deja presentes.")
     return 0
 
 

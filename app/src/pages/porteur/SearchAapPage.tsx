@@ -7,7 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { Search, Calendar, Building, MapPin, Euro, Heart } from 'lucide-react';
+import { Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
 
 export default function SearchAapPage() {
@@ -350,6 +350,17 @@ export default function SearchAapPage() {
                           </span>
                         </div>
                       </div>
+                      {/* Pièces jointes collectées par le scraping, seulement s'il y en a */}
+                      {aap.scrapeMetadata?.fichiersJoints && aap.scrapeMetadata.fichiersJoints.length > 0 && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 pt-3">
+                          <FileText className="h-4 w-4" />
+                          <span>
+                            {aap.scrapeMetadata.fichiersJoints.length} pièce
+                            {aap.scrapeMetadata.fichiersJoints.length > 1 ? 's' : ''} jointe
+                            {aap.scrapeMetadata.fichiersJoints.length > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      )}
                     </Card>
                   );
                 })}
