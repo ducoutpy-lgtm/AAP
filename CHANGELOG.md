@@ -5,6 +5,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Ajouté
+- Installation de Graphify (outil de cartographie de code en graphe interactif) — génère `graph.html`, `GRAPH_REPORT.md`, `graph.json`
+- Mode_emploi mis à jour : statistiques réelles (23 AAP, 0,031 €/AAP, 2 sources opérationnelles), arborescence complète avec ARS IDF, glossaire enrichi (terme "403 Forbidden")
+
+### Ajouté (sessions précédentes)
 - Extraction structurée des AAP via Claude API (tool use) avec schéma `AapNormalized`
 - Cache inter-runs : les AAP déjà extraits sont servis sans réinterroger Claude (économie ~95 % des appels en régime)
 - Téléchargement et cache disque des pièces jointes PDF/DOCX
