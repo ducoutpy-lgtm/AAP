@@ -6,6 +6,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Registre des sources, seconde extension (changement OpenSpec `registre-des-sources-2`, 2026-10-09) : 847
+  sources, 657 pages vérifiées ; caisses et services de l'État locaux, IHU, GIRCI, Europe régionale, fédérations,
+  plateformes de dépôt, sur la liste de Monsieur DUCOUT.
 - Registre des sources (changement OpenSpec `registre-des-sources`, 2026-10-09) : 334 émetteurs d'AAP
   inventoriés dans `scraping/sources/registre.json` (régions, départements et grandes villes via l'annuaire
   officiel de l'administration), 304 pages vérifiées, outil `scraping/registre.py`,

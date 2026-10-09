@@ -73,3 +73,20 @@ rattachés à leur source.
 - **THEN** il voit les 17 ARS, la CNSA, la CNAM, la CNAV, le ministère de la Santé et la Fondation de France
 - **AND** le décompte indique au moins 40 sources en statut « page vérifiée » ou mieux
 - **AND** `fondation_de_france`, `ars_idf`, `ars_idf_local`, `cnsa`, `ars_corse` apparaissent en « opérationnelle »
+
+### Requirement: Couverture des émetteurs locaux de l'État et des caisses
+
+Le registre SHALL couvrir, un organisme par site web, les caisses locales (CAF, CPAM, Carsat,
+MSA) et les services déconcentrés de l'État (préfectures, DREETS, DDETS, DRAAF) de tous les
+départements, ainsi que les plateformes de dépôt qui hébergent des appels sans page financeur.
+
+#### Scenario: Couverture locale
+
+- **WHEN** Monsieur DUCOUT ouvre `scraping/REGISTRE_SOURCES.md`
+- **THEN** il trouve la CAF, la CPAM et la préfecture de l'Essonne, la DREETS Île-de-France et la DRAAF de sa région
+- **AND** le décompte total dépasse 600 sources
+
+#### Scenario: Plateformes de dépôt
+
+- **WHEN** il consulte la catégorie « Autres émetteurs »
+- **THEN** Démarches simplifiées, Démarche numérique, Dauphin et Le Compte Asso y figurent
