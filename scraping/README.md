@@ -133,6 +133,23 @@ python debug_page.py https://www.fondationdefrance.org/fr/appels-a-projets
 
 ---
 
+## Registre des sources
+
+Avant de scraper, savoir qui publie. `sources/registre.json` est l'inventaire des émetteurs d'appels
+à projets santé et médico-social (ARS, ministères, caisses, agences, fondations, Europe,
+collectivités, agrégateurs), avec pour chacun la page des AAP et un statut d'avancement :
+`identifiee` -> `page-verifiee` -> `connecteur-teste` -> `operationnelle`.
+
+```bash
+python registre.py --verifier-format   # structure du fichier
+python registre.py --verifier-pages    # chaque page répond-elle ? (met à jour code HTTP et date)
+python registre.py --tableau           # écrit REGISTRE_SOURCES.md, la vue lisible
+```
+
+Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et ne s'édite pas à la main.
+Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
+Spécification : `openspec/specs/registre-sources/`.
+
 ## Ajouter une source
 
 Créer `sources/<nom>.py` sur le modèle de `fondation_de_france.py`. Deux fonctions async à implémenter :

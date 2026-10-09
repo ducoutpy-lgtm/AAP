@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (registre des sources, 2026-10-09)
+- `registre.py` et `sources/registre.json` : inventaire de 334 émetteurs d'AAP (18 ARS + portail
+  national, ministères, caisses, agences de l'État, fondations, sociétés savantes, hôpitaux, centrales
+  d'achat, Europe, toutes les régions et tous les départements, grandes villes, agrégateurs), contrôle
+  HTTP des pages, tableau `REGISTRE_SOURCES.md`. Tests `tests/test_registre.py`.
+
 ### Corrigé (jonction scripts/import_to_firestore.py, 2026-10-09)
 - Premier import réel dans Firestore (projet aapi-11bc3) : 105 AAP lus, 89 documents distincts.
 - Les doublons entre sources (ars_idf et ars_idf_local, même signature) sont fusionnés avant

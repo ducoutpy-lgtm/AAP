@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Registre des sources (changement OpenSpec `registre-des-sources`, 2026-10-09) : 334 émetteurs d'AAP
+  inventoriés dans `scraping/sources/registre.json` (régions, départements et grandes villes via l'annuaire
+  officiel de l'administration), 304 pages vérifiées, outil `scraping/registre.py`,
+  vue `scraping/REGISTRE_SOURCES.md`. Aucune dépense.
 - Pièces jointes des AAP scrapés (changement OpenSpec `pieces-jointes-aap`, 2026-10-09) : section
   « Pièces jointes » sur la fiche et compteur « N pièces jointes » sur les cartes de la recherche ;
   champ optionnel `scrapeMetadata` déclaré sur le type `AAP`. Les fichiers déjà téléchargés par le

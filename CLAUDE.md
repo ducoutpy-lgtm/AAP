@@ -111,6 +111,8 @@ Conventions :
   ouvrir le rapport HTML, et ne déclarer la source opérationnelle qu'après contrôle visuel.
 
 Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_idf_local` (18), `cnsa` (3), `ars_corse` (2).
+**Registre des sources** : `scraping/sources/registre.json` (334 émetteurs, statut par source), outil
+`scraping/registre.py`, vue `scraping/REGISTRE_SOURCES.md`. Toute nouvelle source part du registre.
 
 ---
 
@@ -136,7 +138,9 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : tests | A FAIRE | aucun test |
 | Appli web : pages placeholder | A FAIRE | édition AAP, profil, pages légales, mot de passe oublié |
 | Scraping : 5 sources | OK | voir ci-dessus |
-| Scraping : sante.gouv, ameli, autres ARS | A FAIRE | prochaine extension |
+| Scraping : registre des sources | OK | 2026-10-09 : 334 sources, 304 pages vérifiées |
+| Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
+| Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
 | Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 |
 | Pièces jointes des AAP scrapés | OK (local) | 2026-10-09 : servies depuis le PC en dev (`app/public/documents`) ; Storage codé, inactif (forfait Blaze refusé pour l'instant) |
