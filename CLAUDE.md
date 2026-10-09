@@ -120,6 +120,8 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
   de l'application (`app/src/types/index.ts`), écrit dans la collection Firestore `aap` avec `source: "scraped"`.
 - Identifiant du document = signature de dédoublonnage (ré-import idempotent).
 - Nécessite une clé de compte de service Firebase (`scripts/serviceAccountKey.json`, **jamais commitée**).
+- Environnement Python : `.venv` à la racine du dépôt (`scripts/requirements.txt`, `grpcio` fixé en 1.74.0 à cause
+  de Smart App Control). `firebase-tools` installé en global pour déployer règles et index.
 
 ---
 
@@ -135,8 +137,8 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : pages placeholder | A FAIRE | édition AAP, profil, pages légales, mot de passe oublié |
 | Scraping : 5 sources | OK | voir ci-dessus |
 | Scraping : sante.gouv, ameli, autres ARS | A FAIRE | prochaine extension |
-| Jonction scraping -> Firestore | EN COURS | script écrit, à tester contre le projet Firebase réel |
-| Démo bout en bout testable | A FAIRE | objectif de la reprise |
+| Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
+| Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 |
 | Méthode OpenSpec installée | OK | 2026-10-09 — 8 workflows, config projet |
 
 ---

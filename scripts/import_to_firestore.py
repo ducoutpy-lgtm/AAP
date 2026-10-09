@@ -218,7 +218,14 @@ def main() -> int:
             continue
         mapped.append((doc["scrapeMetadata"]["signature"], doc))
 
-    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} | ignores : {skipped}")
+    # Deux sources peuvent livrer le meme AAP (ars_idf et ars_idf_local) : meme signature, donc
+    # meme document Firestore. On fusionne ici pour que les compteurs affiches correspondent au
+    # nombre reel de documents ecrits (le dernier lu l'emporte).
+    uniques = {sig: doc for sig, doc in mapped}
+    doublons = len(mapped) - len(uniques)
+    mapped = list(uniques.items())
+
+    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes) | ignores : {skipped}")
 
     if args.dry_run:
         for sig, doc in mapped[:10]:

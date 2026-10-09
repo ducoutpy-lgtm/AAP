@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP } from '../../types';
 import { Button } from '../../components/ui/Button';
@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Search, Calendar, Building, MapPin, Euro, Heart } from 'lucide-react';
+import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
 
 export default function SearchAapPage() {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ export default function SearchAapPage() {
         aap =>
           aap.title.toLowerCase().includes(term) ||
           aap.description.toLowerCase().includes(term) ||
-          aap.financeurName || "Non spécifié".toLowerCase().includes(term)
+          (aap.financeurName || 'Non spécifié').toLowerCase().includes(term)
       );
     }
 
@@ -136,12 +137,6 @@ export default function SearchAapPage() {
       budgetMin: '',
       budgetMax: '',
     });
-  };
-
-  const getDaysUntilDeadline = (deadline: Date | Timestamp): number => {
-    const deadlineDate = deadline instanceof Date ? deadline : deadline.toDate();
-    const diff = deadlineDate.getTime() - Date.now();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
 
   if (loading) {
@@ -279,7 +274,8 @@ export default function SearchAapPage() {
               <div className="space-y-4">
                 {filteredAaps.map(aap => {
                   const daysLeft = getDaysUntilDeadline(aap.deadline);
-                  const isUrgent = daysLeft <= 7;
+                  const closed = isClosed(daysLeft);
+                  const isUrgent = !closed && daysLeft <= 7;
 
                   return (
                     <Card
@@ -332,7 +328,7 @@ export default function SearchAapPage() {
                         <div className="flex items-center gap-2 text-sm">
                           <Calendar className={`h-4 w-4 ${isUrgent ? 'text-warning-500' : 'text-gray-400'}`} />
                           <span className={isUrgent ? 'text-warning-600 font-medium' : 'text-gray-600'}>
-                            {daysLeft} jour{daysLeft > 1 ? 's' : ''}
+                            {deadlineLabel(daysLeft)}
                           </span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600">

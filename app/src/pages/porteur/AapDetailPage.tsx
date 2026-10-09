@@ -7,6 +7,7 @@ import { AAP } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import {
   Calendar,
   Building,
@@ -48,12 +49,6 @@ export default function AapDetailPage() {
     }
   };
 
-  const getDaysUntilDeadline = (deadline: Date | Timestamp): number => {
-    const deadlineDate = deadline instanceof Date ? deadline : deadline.toDate();
-    const diff = deadlineDate.getTime() - Date.now();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
-  };
-
   const formatDate = (date: Date | Timestamp): string => {
     const dateObj = date instanceof Date ? date : date.toDate();
     return dateObj.toLocaleDateString('fr-FR', {
@@ -91,7 +86,8 @@ export default function AapDetailPage() {
   }
 
   const daysLeft = getDaysUntilDeadline(aap.deadline);
-  const isUrgent = daysLeft <= 7;
+  const closed = isClosed(daysLeft);
+  const isUrgent = !closed && daysLeft <= 7;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -128,9 +124,9 @@ export default function AapDetailPage() {
             <div className="text-center">
               <div className={`flex items-center justify-center gap-2 mb-2 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
                 <Calendar className="h-5 w-5" />
-                <span className="text-2xl font-bold">{daysLeft}</span>
+                <span className="text-2xl font-bold">{closed ? 'Clôturé' : daysLeft}</span>
               </div>
-              <p className="text-sm text-gray-600">Jours restants</p>
+              <p className="text-sm text-gray-600">{closed ? 'Candidatures fermées' : 'Jours restants'}</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 text-gray-900 mb-2">
@@ -341,6 +337,13 @@ export default function AapDetailPage() {
                 {formatDate(aap.deadline)}
               </span>
             </div>
+            {closed && (
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                <p className="text-gray-700 text-sm font-medium">
+                  Clôturé : la date limite de candidature est passée.
+                </p>
+              </div>
+            )}
             {isUrgent && (
               <div className="bg-warning-50 border border-warning-200 rounded-lg p-3">
                 <p className="text-warning-800 text-sm font-medium">

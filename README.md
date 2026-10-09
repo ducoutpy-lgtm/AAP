@@ -50,14 +50,37 @@ Guide détaillé non technique : `scraping/MODE_EMPLOI.txt`.
 ### 3. Import des AAP scrapés dans l'application
 
 ```bash
-pip install -r scripts/requirements.txt
-# Clé de compte de service : console Firebase > Paramètres > Comptes de service > Générer une nouvelle clé privée
-# Enregistrer le fichier sous scripts/serviceAccountKey.json (ignoré par Git)
-python scripts/import_to_firestore.py --dry-run     # affiche ce qui serait importé, n'écrit rien
-python scripts/import_to_firestore.py               # écrit dans la collection Firestore "aap"
+python -m venv .venv                       # environnement Python à la racine (ignoré par Git)
+.venv\Scripts\python -m pip install -r scripts/requirements.txt
+# Clé de compte de service : console Firebase > Paramètres du projet > Comptes de service > Générer une nouvelle clé privée
+# Enregistrer le fichier sous scripts/serviceAccountKey.json (ignoré par Git, jamais commité)
+.venv\Scripts\python scripts/import_to_firestore.py --dry-run     # affiche ce qui serait importé, n'écrit rien
+.venv\Scripts\python scripts/import_to_firestore.py               # écrit dans la collection Firestore "aap"
 ```
 
----
+Options utiles : `--include-expired` (AAP dont la clôture est passée) et `--include-without-deadline`
+(AAP sans date, échéance fictive à un an, étiquette `sans-date-cloture`). Sans ces options, seuls les
+AAP encore ouverts sont importés. L'import est rejouable : un second passage met à jour sans dupliquer.
+
+Pourquoi `grpcio` est fixé en 1.74.0 dans `scripts/requirements.txt` : les versions plus récentes sont
+bloquées par Smart App Control de Windows (constaté le 2026-10-09).
+
+### 4. Rejouer la démo de bout en bout (vérifiée le 2026-10-09)
+
+Ordre des opérations, après les étapes 1 à 3 ci-dessus :
+
+1. Index et règles Firestore (une fois, nécessite votre compte Google) : depuis `app/`,
+   `npm install -g firebase-tools`, `firebase login`, puis
+   `firebase deploy --only firestore:rules,firestore:indexes --project aapi-11bc3`.
+2. Import avec les deux options : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired --include-without-deadline`
+   (105 AAP lus, 89 documents distincts : les doublons entre sources sont fusionnés).
+3. `cd app && npm run dev`, puis http://localhost:3000 : inscription comme « Porteur de projet »
+   (14 jours d'essai, suffisant pour lire les AAP), ou connexion avec le compte de démo existant.
+4. Page « Rechercher des AAP » : les AAP scrapés apparaissent, les AAP clos portent la mention « Clôturé »,
+   la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle ».
+
+Spécifications correspondantes : `openspec/specs/import-aap-scrapes/` et `openspec/specs/consultation-aap-scrapes/`
+(après archivage du changement `demo-aap-scrapes-visibles`).
 
 ## Historique
 

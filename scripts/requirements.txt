@@ -1,1 +1,5 @@
 firebase-admin>=6.5
+# firebase-admin 7 ne tire plus Firestore automatiquement (constate le 2026-10-09)
+google-cloud-firestore>=2.19
+# grpcio 1.75+ : DLL bloquee par Smart App Control de Windows (2026-10-09) ; 1.74.0 passe
+grpcio==1.74.0
