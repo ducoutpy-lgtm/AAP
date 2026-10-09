@@ -1,0 +1,195 @@
+================================================================================
+   MODE D'EMPLOI — GRAPHIFY
+   Outil de cartographie visuelle du code AAP Santé
+   Projet ARCADIA SASU — Monsieur Pierre-Yves DUCOUT
+================================================================================
+
+Ce document explique EN LANGAGE CLAIR ce qu'est Graphify, à quoi ça sert,
+et comment l'utiliser sur le projet POC AAP Santé.
+
+
+================================================================================
+   C'EST QUOI GRAPHIFY ?
+================================================================================
+
+Graphify est un outil qui "lit" votre code et vos documents, puis produit
+une carte visuelle interactive — un graphe — qui montre comment toutes les
+pièces du projet sont connectées entre elles.
+
+Imaginez une carte mentale géante où :
+- Chaque bulle = une fonction, un fichier, ou un concept du projet
+- Chaque flèche = un lien (cette fonction appelle celle-là, ce fichier
+  documente ce module, etc.)
+
+C'est utile pour :
+- Comprendre d'un coup d'oeil l'architecture du projet
+- Montrer le projet à un partenaire ou investisseur de façon visuelle
+- Repérer quelles fonctions sont les plus "centrales" (si elles cassent,
+  tout casse)
+- Préparer la candidature IMT Starter 2026
+
+
+================================================================================
+   CE QUE GRAPHIFY PRODUIT
+================================================================================
+
+Après chaque exécution, Graphify crée un dossier "graphify-out/" contenant :
+
+  graph.html        <- LE FICHIER PRINCIPAL : ouvrez-le dans votre navigateur.
+                       Cliquez sur les bulles, filtrez par communauté, zoomez.
+                       C'est interactif.
+
+  GRAPH_REPORT.md   <- Un rapport textuel qui résume :
+                       - Les "hubs" (fonctions les plus importantes)
+                       - Les connexions surprenantes détectées
+                       - Les 8 "communautés" (groupes de fonctions liées)
+                       - Des questions que vous devriez vous poser sur
+                         l'architecture
+
+  graph.json        <- Les données brutes du graphe (pour usage technique).
+                       Vous n'avez pas besoin d'ouvrir ce fichier.
+
+
+================================================================================
+   RÉSULTAT SUR LE POC AAP SANTÉ (22 juin 2026)
+================================================================================
+
+Graphify a analysé 19 fichiers (13 fichiers Python + 6 documents) et trouvé :
+
+  - 108 nœuds (fonctions, modules, concepts)
+  - 177 connexions entre eux
+  - 8 communautés (groupes logiques)
+
+Les 8 communautés détectées :
+  1. AAP Extraction Orchestration  <- le cœur du système (orchestrator.py,
+                                      extractor.py, run.py)
+  2. Scraping Pipeline Overview    <- vue d'ensemble du pipeline
+  3. Claude API Data Models        <- les modèles de données (AapNormalized)
+  4. ARS Corse Scraper             <- scraper source ARS Corse
+  5. ARS IDF Local Scraper         <- scraper source ARS Île-de-France
+  6. HTML Validation Reporter      <- outil de rapport qualité (validate.py)
+  7. API Cost Analyzer             <- suivi des coûts (analyze_costs.py)
+  8. (communauté 7)                <- éléments isolés
+
+Les fonctions les plus "centrales" (si elles cassent, tout casse) :
+  1. accept_cookies()    <- présente dans tous les scrapers (16 connexions)
+  2. process_source()    <- orchestre chaque source (10 connexions)
+  3. extract_aap()       <- extraction via Claude (7 connexions)
+  4. AapNormalized       <- le schéma de données commun (7 connexions)
+
+
+================================================================================
+   COMMENT UTILISER GRAPHIFY
+================================================================================
+
+PRÉREQUIS : avoir la clé API Anthropic dans le fichier .env
+(la même clé que pour le scraper)
+
+
+--- COMMANDE PRINCIPALE : générer le graphe complet ---
+
+Ouvrez un terminal PowerShell dans le dossier poc-scraping, puis tapez :
+
+  graphify . --backend claude
+
+Durée : environ 1-2 minutes
+Coût : environ 0,15 $ (une seule fois — voir section MISE À JOUR ci-dessous)
+
+Ensuite ouvrez le résultat dans votre navigateur :
+
+  start graphify-out\graph.html
+
+
+--- COMMANDE APRÈS UNE MODIFICATION DU CODE ---
+
+Si vous avez modifié ou ajouté du code Python (pas les .md), tapez :
+
+  graphify update .
+
+Durée : quelques secondes
+Coût : GRATUIT (pas d'appel à l'IA, juste une analyse du code)
+
+Cette commande met à jour le graphe sans tout recalculer depuis zéro.
+À faire après chaque session de développement.
+
+
+--- COMMANDE POUR VOIR LE GRAPHE SANS LE RECONSTRUIRE ---
+
+Si le graphe existe déjà et que vous voulez juste l'ouvrir :
+
+  start graphify-out\graph.html
+
+
+--- COMMANDE POUR GÉNÉRER UN DIAGRAMME D'ARCHITECTURE (Mermaid) ---
+
+Pour obtenir un schéma d'architecture lisible (utile pour la candidature
+IMT Starter ou une présentation) :
+
+  graphify export callflow-html
+
+Cela crée un fichier HTML avec des diagrammes Mermaid montrant les flux
+d'appels entre modules.
+
+
+================================================================================
+   COMMENT LIRE LE GRAPHE INTERACTIF
+================================================================================
+
+Quand vous ouvrez graph.html dans votre navigateur :
+
+  - Chaque bulle colorée = un nœud (fonction, fichier, concept)
+  - La taille de la bulle = son importance (plus elle est grande,
+    plus elle est connectée)
+  - Les couleurs = les 8 communautés (groupes logiques)
+  - Les flèches = les connexions
+
+Actions possibles dans le graphe :
+  - Cliquer sur une bulle  -> affiche ses connexions
+  - Faire glisser          -> réorganise le graphe
+  - Molette souris         -> zoom avant/arrière
+  - Filtre par communauté  -> n'affiche qu'un groupe
+
+
+================================================================================
+   COÛT ET FRÉQUENCE D'UTILISATION
+================================================================================
+
+  Première génération complète : ~0,15 $ (analyse IA des .md et PDF)
+  Mise à jour code uniquement  : GRATUIT (graphify update .)
+  Régénération complète        : ~0,15 $ (à faire seulement si les .md changent)
+
+Recommandation : utiliser "graphify update ." après chaque session de code,
+et "graphify . --backend claude" seulement quand les documents changent
+significativement (nouveau README, nouveau MODE_EMPLOI, etc.).
+
+
+================================================================================
+   EMPLACEMENT DES FICHIERS
+================================================================================
+
+  Outil installé dans  : C:\Users\pierr\Documents\graphify\
+  Graphe généré dans   : poc-scraping\graphify-out\
+  Fichier principal    : poc-scraping\graphify-out\graph.html
+  Rapport textuel      : poc-scraping\graphify-out\GRAPH_REPORT.md
+
+Note : le dossier graphify-out\ est exclu de Git (dans .gitignore) car il
+est généré automatiquement. Il n'est pas sauvegardé dans l'historique Git —
+c'est normal et voulu.
+
+
+================================================================================
+   EN CAS DE PROBLÈME
+================================================================================
+
+Erreur "credit balance too low"
+  -> Vérifier que la clé API dans .env est bien la clé de la CONSOLE
+     Anthropic (console.anthropic.com), pas de Claude.ai
+
+Erreur "graphify n'est pas reconnu"
+  -> Ouvrir un nouveau terminal PowerShell (la commande ne sera reconnue
+     qu'après une nouvelle ouverture si l'installation vient d'être faite)
+
+Le graphe est vide ou incomplet
+  -> Relancer "graphify . --backend claude" (première génération complète)
+
+================================================================================

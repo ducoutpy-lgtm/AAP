@@ -1,0 +1,39 @@
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Variables d'environnement (clé API Anthropic — NE JAMAIS COMMITTER)
+.env
+.env.local
+
+# Sorties du scraper (données, pas du code)
+results/
+downloads/
+logs/
+validation_reports/
+debug/
+
+# Graphify (graphes générés automatiquement)
+graphify-out/
+
+# Fichiers de test temporaires
+test_download.pdf
+
+# Playwright
+playwright/.auth/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs d'exécution
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
