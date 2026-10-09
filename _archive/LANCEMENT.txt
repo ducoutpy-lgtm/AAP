@@ -1,0 +1,158 @@
+========================================================================
+  GUIDE COMPLET — Extraction d'Appels à Projets (AAP)
+  Mise à jour : 21/04/2026
+========================================================================
+
+Vous disposez de DEUX outils complémentaires :
+
+  1. httrack_aap_extractor.py  → Analyse une archive HTTrack téléchargée en LOCAL
+  2. aap_web_scraper.py        → Scrape des sites web en DIRECT (internet)
+
+========================================================================
+  PRÉREQUIS COMMUNS
+========================================================================
+
+- Python 3.10 ou supérieur
+- LM Studio installé avec le modèle "qwen2.5-7b-instruct" chargé
+- Serveur local LM Studio activé sur le port 1234
+  (onglet "Local Server" dans LM Studio -> bouton Start)
+
+  RÉGLAGE IMPORTANT DANS LM STUDIO :
+  Avant de charger le modèle, régler le "Context Length" à 10 000
+  (onglet My Models -> qwen2.5-7b-instruct -> Context Length = 10000)
+  Ce réglage permet d'obtenir les fichiers et les échéances dans les résultats.
+
+  POURQUOI Qwen 2.5 7B ?
+  - Comprend très bien le français
+  - Suit précisément les instructions JSON
+  - Fonctionne avec ~5 Go de VRAM (carte graphique standard)
+
+  NE PAS UTILISER : google/gemma-4-26b-a4b (trop lourd, crashes)
+
+========================================================================
+  INSTALLATION (une seule fois)
+========================================================================
+
+Ouvrir un terminal dans le dossier des scripts, puis :
+
+  pip install -r requirements.txt
+
+========================================================================
+  OUTIL 1 — ARCHIVE HTTRACK : httrack_aap_extractor.py
+========================================================================
+
+Cet outil analyse les fichiers HTML téléchargés localement par HTTrack.
+Il ne fait aucune connexion internet (tout est en local).
+
+Résultats générés dans :
+  C:\Users\pierr\Documents\Arcadia\HTTrack\_extraction\
+
+  - appels_a_projets.db   -> Base SQLite (3 tables : aap, fichiers, echeances)
+  - appels_a_projets.xlsx -> Tableau Excel (3 onglets : Synthese, Fichiers, Echeances)
+  - pages_analysees.log   -> Journal détaillé de chaque page traitée
+
+--- COMMANDES ---
+
+Lancement standard (sélection du modèle au démarrage) :
+  python httrack_aap_extractor.py --dossier "C:\Users\pierr\Documents\Arcadia\HTTrack"
+
+Avec modèle spécifié (recommandé) :
+  python httrack_aap_extractor.py --dossier "C:\Users\pierr\Documents\Arcadia\HTTrack" --model "qwen2.5-7b-instruct"
+
+Sur un sous-dossier précis :
+  python httrack_aap_extractor.py --dossier "C:\Users\pierr\Documents\Arcadia\HTTrack\nom-du-site" --model "qwen2.5-7b-instruct"
+
+Réinitialiser et tout re-analyser depuis zéro :
+  python httrack_aap_extractor.py --dossier "C:\Users\pierr\Documents\Arcadia\HTTrack" --model "qwen2.5-7b-instruct" --reset
+
+--- CE QUE LE SCRIPT CAPTURE ---
+
+Pour chaque AAP trouvé :
+  - Nom, type de dispositif, accroche
+  - Objectifs, description complète, critères d'éligibilité
+  - Porteur, territoire, type de public, thématiques
+  - Montant, dates (ouverture / clôture / publication)
+  - URL de dépôt, email et téléphone de contact
+  - Fichiers joints (PDF, DOCX...) avec chemin absolu local
+  - Calendrier complet (échéances avec dates et heures)
+
+--- REPRISE APRÈS INTERRUPTION ---
+
+Relancer la même commande. Les pages déjà traitées sont ignorées automatiquement.
+
+--- STATUT DANS LE LOG ---
+
+  OK       -> page analysée, AAP trouvés et enregistrés
+  IGNOREE  -> page sans mots-clés AAP ou déjà traitée
+  ERREUR   -> problème de lecture ou réponse LM Studio invalide
+
+========================================================================
+  OUTIL 2 — SCRAPER WEB EN DIRECT : aap_web_scraper.py
+========================================================================
+
+Cet outil scrape des sites internet en direct.
+Vous devez lister les sites dans le fichier sources.json.
+
+Résultats générés dans :
+  C:\Users\pierr\Documents\Arcadia\AAP_moteur\
+
+  - aap_moteur.db    -> Base SQLite
+  - aap_moteur.xlsx  -> Tableau Excel (3 onglets)
+  - aap_moteur.json  -> Export JSON pour votre méta-moteur de recherche
+  - scraping.log     -> Journal détaillé
+
+--- COMMANDES ---
+
+Scraper une seule page (test rapide) :
+  python aap_web_scraper.py --model "qwen2.5-7b-instruct" --url "https://www.exemple.fr/aap"
+
+Scraper toutes les sources configurées dans sources.json :
+  python aap_web_scraper.py --model "qwen2.5-7b-instruct"
+
+Réinitialiser et tout re-scraper :
+  python aap_web_scraper.py --model "qwen2.5-7b-instruct" --reset
+
+--- AJOUTER UN SITE DANS sources.json ---
+
+Editez le fichier sources.json et ajoutez un bloc :
+  {
+    "nom": "Nom de l'organisme",
+    "url_liste": "https://www.site.fr/page-liste-aap",
+    "urls_directes": ["https://www.site.fr/aap-specifique"],
+    "filtre_url_keywords": ["appel", "projet", "candidature"],
+    "domaine": "site.fr"
+  }
+
+========================================================================
+  OUTILS POUR EXPLOITER LES RÉSULTATS
+========================================================================
+
+- DB Browser for SQLite (gratuit) : https://sqlitebrowser.org
+  Pour ouvrir les fichiers .db et faire des recherches SQL
+
+- Excel ou LibreOffice Calc
+  Pour exploiter les fichiers .xlsx
+
+- Le fichier aap_moteur.json est utilisable directement par une API web
+
+========================================================================
+  EN CAS DE PROBLÈME
+========================================================================
+
+"LM Studio indisponible" ou "Connection refused"
+  -> Vérifiez que LM Studio est ouvert
+  -> Onglet "Local Server" -> le bouton doit afficher "Stop" (serveur actif)
+
+LM Studio crashe ou se ferme pendant le traitement
+  -> Réduire le Context Length dans LM Studio (essayer 6000 au lieu de 10000)
+  -> Ou fermer les autres applications pour libérer de la RAM
+
+"JSON tronqué" dans les logs
+  -> Le modèle génère trop de texte pour la fenêtre configurée
+  -> Augmenter le Context Length dans LM Studio
+
+Fichiers et échéances vides
+  -> Vérifier que le Context Length est bien à 10 000 dans LM Studio
+  -> Certaines pages web chargent leurs fichiers en JavaScript (impossible à détecter en local)
+
+========================================================================

@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/pierr/.claude/hooks/session_start.py",
+            "shell": "bash",
+            "timeout": 10,
+            "statusMessage": "Chargement contexte AAP Sante..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/pierr/.claude/hooks/detect_session_end.py",
+            "shell": "bash",
+            "timeout": 5,
+            "statusMessage": "Detection fin de session..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch"
+    ]
+  }
+}

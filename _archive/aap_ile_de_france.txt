@@ -1,0 +1,1056 @@
+================================================================================
+APPELS A PROJETS - REGION ILE-DE-FRANCE
+Source : https://www.iledefrance.fr/aides-et-appels-a-projets
+Date d'extraction : 22 juin 2026
+================================================================================
+
+Nombre total d'AAP extraits (dedupliques) : 221
+Format : NUMERO | TITRE | DATE LIMITE | BENEFICIAIRES | URL COMPLETE
+
+================================================================================
+SECTION 1 - ECHEANCES 2027
+================================================================================
+
+001
+TITRE      : Pret Ile-de-France Prevention
+DATE LIMITE: 31 decembre 2027
+BENEFICIAIRES: Association regie par la loi de 1901, Petites et moyennes entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pret-ile-de-france-prevention
+
+================================================================================
+SECTION 2 - ECHEANCES 2026 (juillet - decembre)
+================================================================================
+
+002
+TITRE      : Lutte contre le decrochage scolaire
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Fondation, Organisation non gouvernementale (ONG), Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/lutte-contre-le-decrochage-scolaire
+
+003
+TITRE      : FEADER - Contrats Natura 2000 ni-agricoles ni-forestiers et contrats Natura 2000 forestiers
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Association, Communes, EPCI, Departement, Autre, Francilien, Professionnel de l'agriculture
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-contrats-natura-2000-ni-agricoles-ni-forestiers-et-contrats-natura-2000-forestiers-730403
+
+004
+TITRE      : Soutien a la gestion durable des forets franciliennes
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Association, Francilien, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-la-gestion-durable-des-forets-franciliennes
+
+005
+TITRE      : Appel a projets pour l'orientation des franciliens tout au long de la vie
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Fondation, Createur d'entreprise, TPE, PME, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-projets-pour-lorientation-des-franciliens-tout-au-long-de-la-vie
+
+006
+TITRE      : Lutte contre les rixes
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/lutte-contre-les-rixes
+
+007
+TITRE      : Appel a projets Ingenierie et Formations professionnelles (IFP) Ile-de-France
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Etablissement d'enseignement secondaire, Organisme de formation, Etablissement d'enseignement superieur, Etablissement de recherche
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-projets-ingenierie-et-formations-professionnelles-ifp-ile-de-france
+
+008
+TITRE      : Liberte, Egalite, Fraternite
+DATE LIMITE: 31 decembre 2026
+BENEFICIAIRES: Etablissement d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/liberte-egalite-fraternite
+
+009
+TITRE      : FEADER - Investissements agricoles - Adaptation au changement climatique et transition - AAP 2026
+DATE LIMITE: 15 novembre 2026
+BENEFICIAIRES: Professionnel de l'agriculture, Association, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-investissements-agricoles-adaptation-au-changement-climatique-et-transition-aap-2026
+
+010
+TITRE      : FEADER - Soutien aux investissements agricoles - Diversification - AAP 2026
+DATE LIMITE: 15 novembre 2026
+BENEFICIAIRES: Professionnel de l'agriculture, Association, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-soutien-aux-investissements-agricoles-diversification-aap-2026
+
+011
+TITRE      : FEADER - Soutien aux investissements agricoles environnementaux non productifs - AAP 2026
+DATE LIMITE: 15 novembre 2026
+BENEFICIAIRES: Professionnel de l'agriculture, Association, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-soutien-aux-investissements-agricoles-environnementaux-non-productifs-aap-2026
+
+012
+TITRE      : FEADER - Soutien aux investissements agricoles - Modernisation des exploitations - AAP 2026
+DATE LIMITE: 15 novembre 2026
+BENEFICIAIRES: Professionnel de l'agriculture, Association, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-soutien-aux-investissements-agricoles-modernisation-des-exploitations-aap-2026
+
+013
+TITRE      : Aide a l'ecriture de scenario - Cinema et Audiovisuel
+DATE LIMITE: 07 octobre 2026
+BENEFICIAIRES: Professionnel de la culture
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-lecriture-de-scenario-cinema-et-audiovisuel
+
+014
+TITRE      : Budget participatif ecologique et solidaire
+DATE LIMITE: 01 octobre 2026
+BENEFICIAIRES: Association, Fondation, ONG, Collectivites, Departement, EPCI, EPT, Etablissements
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/budget-participatif-ecologique-et-solidaire
+
+015
+TITRE      : FEADER - Aide aux infrastructures hydrauliques sur les territoires
+DATE LIMITE: 30 septembre 2026
+BENEFICIAIRES: Association, Communes, EPCI, Departement, Professionnel de l'agriculture
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-aide-aux-infrastructures-hydrauliques-sur-les-territoires-7307
+
+016
+TITRE      : FEADER - Aide aux infrastructures hydrauliques sur les exploitations
+DATE LIMITE: 30 septembre 2026
+BENEFICIAIRES: Professionnel de l'agriculture, Association, Etablissement d'enseignement superieur
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-aide-aux-infrastructures-hydrauliques-sur-les-exploitations-7301
+
+017
+TITRE      : Innov'up Sante des femmes
+DATE LIMITE: 25 septembre 2026
+BENEFICIAIRES: PME, TPE, ETI, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/innovup-sante-des-femmes
+
+018
+TITRE      : Fonds de soutien cinema international (aide a la production)
+DATE LIMITE: 24 septembre 2026
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-de-soutien-cinema-international-aide-la-production
+
+019
+TITRE      : Droits des Femmes - Lutte contre les inegalites et les violences faites aux femmes (fonctionnement)
+DATE LIMITE: 14 septembre 2026
+BENEFICIAIRES: Association, Fondation, ONG
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/droits-des-femmes-lutte-contre-les-inegalites-et-les-violences-faites-aux-femmes-fonctionnement
+
+020
+TITRE      : Accompagnement des acteurs de l'ESS dans leurs demarches immobilieres (SPLENDIDE)
+DATE LIMITE: 01 septembre 2026
+BENEFICIAIRES: PME, TPE, ETI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-des-acteurs-de-less-dans-leurs-demarches-immobilieres-splendide
+
+021
+TITRE      : Appel a projets collaboratifs - Innovation de Rupture et Resilience Industrielle (IRRI)
+DATE LIMITE: 30 aout 2026
+BENEFICIAIRES: TPE, PME, ETI, Grandes entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-projets-collaboratifs-innovation-de-rupture-et-resilience-industrielle-irri
+
+022
+TITRE      : Tickets-Loisirs
+DATE LIMITE: 24 juillet 2026
+BENEFICIAIRES: Fondation, ONG, Association, Communes, Departement, EPCI, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/tickets-loisirs
+
+023
+TITRE      : Budget d'autonomie educative francilien (BAEF)
+DATE LIMITE: 15 juillet 2026
+BENEFICIAIRES: Etablissement d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/budget-dautonomie-educative-francilien-baef
+
+024
+TITRE      : Paroles de chercheuses et chercheurs (PDCC)
+DATE LIMITE: 06 juillet 2026
+BENEFICIAIRES: Etablissement d'enseignement secondaire, Etablissement de recherche, Professionnel
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/paroles-de-chercheuses-et-chercheurs-pdcc
+
+025
+TITRE      : Soutien aux reseaux cinematographiques
+DATE LIMITE: 01 juillet 2026
+BENEFICIAIRES: Fondation, ONG, Association, Communes, Departement, EPCI, EPT, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-reseaux-cinematographiques
+
+026
+TITRE      : Aide aux reseaux d'arts plastiques, numeriques et urbains
+DATE LIMITE: 01 juillet 2026
+BENEFICIAIRES: Grandes entreprises, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-reseaux-darts-plastiques-numeriques-et-urbains
+
+027
+TITRE      : Aide a la realisation de manifestations d'arts plastiques, numeriques et urbains
+DATE LIMITE: 01 juillet 2026
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-realisation-de-manifestations-darts-plastiques-numeriques-et-urbains
+
+028
+TITRE      : Programme regional de residences d'ecrivains
+DATE LIMITE: 01 juillet 2026
+BENEFICIAIRES: Professionnel, Collectivites, Association, Etablissements
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/programme-regional-de-residences-decrivains
+
+029
+TITRE      : Soutien aux manifestations cinematographiques
+DATE LIMITE: 01 juillet 2026
+BENEFICIAIRES: Fondation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-manifestations-cinematographiques
+
+================================================================================
+SECTION 3 - ECHEANCES 2026 (juin)
+================================================================================
+
+030
+TITRE      : Programme Jeunes, citoyennete et vivre ensemble avec l'ADRIC
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Etablissement d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/programme-jeunes-citoyennete-et-vivre-ensemble-avec-ladric
+
+031
+TITRE      : Petit patrimoine naturel
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Francilien, associations, collectivites, bailleurs sociaux, entreprises, etablissements d'enseignement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/petit-patrimoine-naturel
+
+032
+TITRE      : Sensibilisation lycees developpement durable - La Fresque du Climat
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Lyceens, etablissements d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/sensibilisation-lycees-developpement-durable-la-fresque-du-climat
+
+033
+TITRE      : Fonds de soutien Audiovisuel (aide a la production)
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Entreprises (toutes tailles)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-de-soutien-audiovisuel-aide-la-production
+
+034
+TITRE      : Concours d'eloquence sur la citoyennete avec l'Association Trouve ta voix
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Etablissements d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/concours-deloquence-sur-la-citoyennete-avec-lassociation-trouve-ta-voix
+
+035
+TITRE      : Programme Le Parcours citoyen avec l'Association Expressions de France
+DATE LIMITE: 30 juin 2026
+BENEFICIAIRES: Etablissements d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/programme-le-parcours-citoyen-avec-lassociation-expressions-de-france
+
+036
+TITRE      : Fonds de soutien cinema (aide a la production)
+DATE LIMITE: 24 juin 2026
+BENEFICIAIRES: Entreprises (toutes tailles)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-de-soutien-cinema-aide-la-production
+
+037
+TITRE      : Trophee de l'etudiant engage
+DATE LIMITE: 15 juin 2026 (ferme)
+BENEFICIAIRES: Etudiants
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/trophee-de-letudiant-engage
+
+038
+TITRE      : FEADER - Amelioration de la desserte forestiere (73.06.01)
+DATE LIMITE: 15 juin 2026
+BENEFICIAIRES: Communes, EPCI, Departement, Associations, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-amelioration-de-la-desserte-forestiere-730601
+
+039
+TITRE      : FEADER - Soutien a la mecanisation forestiere (73.03.01)
+DATE LIMITE: 15 juin 2026
+BENEFICIAIRES: PME, Associations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-soutien-la-mecanisation-forestiere-730301
+
+040
+TITRE      : Soutien regional aux clubs de lecture et a la lecture a voix haute dans les lycees
+DATE LIMITE: 08 juin 2026
+BENEFICIAIRES: Etablissements d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-regional-aux-clubs-de-lecture-et-la-lecture-voix-haute-dans-les-lycees
+
+041
+TITRE      : Soutien a l'animation des residences etudiantes par l'engagement de leurs residents
+DATE LIMITE: 08 juin 2026
+BENEFICIAIRES: Gestionnaires de residences etudiantes
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-lanimation-des-residences-etudiantes-par-lengagement-de-leurs-residents
+
+042
+TITRE      : Lycees Eco-Responsables
+DATE LIMITE: 07 juin 2026
+BENEFICIAIRES: Lyceens, Etablissements d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/lycees-eco-responsables
+
+043
+TITRE      : Aide aux poles de cooperation territoriale dans le domaine du spectacle vivant
+DATE LIMITE: 03 juin 2026
+BENEFICIAIRES: Professionnels culture, Fondations, ONG, Associations, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-poles-de-cooperation-territoriale-dans-le-domaine-du-spectacle-vivant
+
+044
+TITRE      : Accompagnement RSE et inclusion
+DATE LIMITE: 01 juin 2026
+BENEFICIAIRES: TPE, PME
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-rse-inclusion-0
+
+045
+TITRE      : Aides a la diffusion des oeuvres dans le domaine du spectacle vivant
+DATE LIMITE: 01 juin 2026
+BENEFICIAIRES: Professionnels culture, Fondations, ONG, Associations, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aides-la-diffusion-des-oeuvres-dans-le-domaine-du-spectacle-vivant
+
+================================================================================
+SECTION 4 - ECHEANCES 2026 (janvier - mai)
+================================================================================
+
+046
+TITRE      : Les Cordees de la reussite
+DATE LIMITE: 31 mai 2026
+BENEFICIAIRES: Lyceens, Etudiants, Etablissements superieurs, Secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/les-cordees-de-la-reussite
+
+047
+TITRE      : Fonds d'aide a la creation de jeu video
+DATE LIMITE: 29 mai 2026
+BENEFICIAIRES: Createurs, TPE, PME, ETI, Grandes entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-daide-la-creation-de-jeu-video
+
+048
+TITRE      : Accelerateur Defense Ile-de-France
+DATE LIMITE: 10 avril 2026
+BENEFICIAIRES: Tres petites entreprises, Petites et moyennes entreprises, Entreprises de taille intermediaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accelerateur-defense-ile-de-france
+
+049
+TITRE      : Aide apres realisation Cinema
+DATE LIMITE: 08 avril 2026
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-apres-realisation-cinema
+
+050
+TITRE      : Challenge IA pour la Sante 2026
+DATE LIMITE: 05 avril 2026
+BENEFICIAIRES: TPE, PME, ETI, Etablissement de recherche et laboratoire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/challenge-ia-pour-la-sante-2026
+
+051
+TITRE      : Appel a candidature au label Patrimoine d'interet regional (patrimoine non protege)
+DATE LIMITE: 31 mars 2026
+BENEFICIAIRES: Francilien, Professionnel du patrimoine, Professionnel de la culture, Fondation, ONG, Association, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-candidature-au-label-patrimoine-dinteret-regional-en-faveur-du-patrimoine-non-protege
+
+052
+TITRE      : Prevention sante des jeunes
+DATE LIMITE: 26 mars 2026
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/prevention-sante-des-jeunes
+
+053
+TITRE      : Paris Region PhD 2026
+DATE LIMITE: 23 mars 2026
+BENEFICIAIRES: Professionnel de la recherche, Etablissement de recherche et laboratoire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/paris-region-phd-2026
+
+054
+TITRE      : PM'up Jeunes pousses industrielles
+DATE LIMITE: 23 mars 2026
+BENEFICIAIRES: Createur d'entreprise, Tres petites entreprises, Petites et moyennes entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pmup-jeunes-pousses-industrielles
+
+055
+TITRE      : Une chance pour tous
+DATE LIMITE: 18 mars 2026
+BENEFICIAIRES: Communes, Association, Entreprises, Fondation, ONG
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/une-chance-pour-tous
+
+056
+TITRE      : Challenge AI for Space
+DATE LIMITE: 13 mars 2026
+BENEFICIAIRES: Etablissement de recherche et laboratoire, TPE, PME, ETI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/challenge-ai-space
+
+057
+TITRE      : Soutien majore aux organismes de formation en apprentissage
+DATE LIMITE: 09 mars 2026
+BENEFICIAIRES: Organisme de formation (OF, OPCO, FSS, CFA...)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-majore-aux-organismes-de-formation-en-apprentissage
+
+================================================================================
+SECTION 5 - ECHEANCES 2025
+================================================================================
+
+058
+TITRE      : Bourse d'etude pour eleves et etudiants inscrits en formation sociale, paramedicale et maieutique
+DATE LIMITE: 31 decembre 2025
+BENEFICIAIRES: Etudiant en formations sanitaires et sociales, Organisme de formation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/bourse-detude-pour-eleves-et-etudiants-inscrits-en-formation-sociale-paramedicale-et-maieutique
+
+059
+TITRE      : FEADER - Animation des Documents d'Objectifs (DOCOB) et des sites Natura 2000 (730402)
+DATE LIMITE: 31 decembre 2025
+BENEFICIAIRES: Associations, Communes, EPCI, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-animation-des-documents-dobjectifs-docob-et-des-sites-natura-2000-730402
+
+060
+TITRE      : Mieux proteger les victimes
+DATE LIMITE: 30 decembre 2025
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/mieux-proteger-les-victimes
+
+061
+TITRE      : Les Clubs Excellence d'Ile-de-France
+DATE LIMITE: 30 novembre 2025
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/les-clubs-excellence-dile-de-france
+
+062
+TITRE      : Aide au montage de projets europeens
+DATE LIMITE: 30 novembre 2025
+BENEFICIAIRES: Entreprises, Collectivites, Associations, Etablissements
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-au-montage-de-projets-europeens
+
+063
+TITRE      : Concours Les Chante Nwel de la Region Ile-de-France 2025
+DATE LIMITE: 14 novembre 2025
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/concours-les-chante-nwel-de-la-region-ile-de-france-2025
+
+064
+TITRE      : Concours Battle regionale de la promesse republicaine
+DATE LIMITE: 30 octobre 2025
+BENEFICIAIRES: Associations, ONG, Fondation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/concours-battle-regionale-de-la-promesse-republicaine
+
+065
+TITRE      : Cheque numerique pour un commerce connecte
+DATE LIMITE: 24 octobre 2025
+BENEFICIAIRES: Artisan ou commercant, Tres petites entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-numerique-pour-un-commerce-connecte
+
+066
+TITRE      : Lutte contre la grande precarite
+DATE LIMITE: 23 octobre 2025
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/lutte-contre-la-grande-precarite
+
+067
+TITRE      : Indemnites de stage et remboursement frais de transport en masso-kinesitherapie et ergotherapie
+DATE LIMITE: 15 octobre 2025
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/indemnites-de-stage-et-remboursement-frais-de-transport-en-masso-kinesitherapie-et-ergotherapie
+
+068
+TITRE      : Aide regionale exceptionnelle pour la resilience des exploitations agricoles d'Ile-de-France
+DATE LIMITE: 15 fevrier 2025
+BENEFICIAIRES: Professionnel de l'agriculture et de l'alimentation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-regionale-exceptionnelle-pour-la-resilience-des-exploitations-agricoles-dile-de-france
+
+069
+TITRE      : Aide d'urgence aux entreprises touchees par les inondations d'octobre 2024
+DATE LIMITE: 01 fevrier 2025
+BENEFICIAIRES: Association loi de 1901, Artisan ou commercant, TPE, PME
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-durgence-aux-entreprises-touchees-par-les-inondations-doctobre-2024
+
+070
+TITRE      : Developpement de l'offre de formation d'auxiliaire de puericulture (IFAP)
+DATE LIMITE: 31 janvier 2025
+BENEFICIAIRES: Organisme de formation (OF, OPCO, FSS, CFA...), Autre (GIP, copropriete, EPA...)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/developpement-de-loffre-de-formation-dauxiliaire-de-puericulture-ifap
+
+071
+TITRE      : Renouvellement des chauffages au fuel, au bois ou au charbon - site ferme depuis le 24 janvier 2025
+DATE LIMITE: 24 janvier 2025 (ferme)
+BENEFICIAIRES: Francilien
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/renouvellement-des-chauffages-au-fuel-au-bois-ou-au-charbon-site-ferme-depuis-le-24-janvier-2025
+
+================================================================================
+SECTION 6 - ECHEANCES 2024
+================================================================================
+
+072
+TITRE      : Appel a candidature - Labellisation des operateurs PASS Entrepreneur#Leader pour 3 ans
+DATE LIMITE: 22 decembre 2024
+BENEFICIAIRES: Association regie par la loi de 1901, Autre (GIP, copropriete, EPA...)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-candidature-labellisation-des-operateurs-pass-entrepreneurleader-pour-3-ans
+
+073
+TITRE      : Challenge IA pour la Sante
+DATE LIMITE: 06 decembre 2024
+BENEFICIAIRES: PME, ETI, Etablissement de recherche et laboratoire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/challenge-ia-pour-la-sante
+
+074
+TITRE      : Plan regional de formation a la prevention de la radicalisation
+DATE LIMITE: 04 decembre 2024
+BENEFICIAIRES: Communes, Departement, EPCI, EPT/Metropole du Grand Paris, Fondation, ONG, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-regional-de-formation-la-prevention-de-la-radicalisation
+
+075
+TITRE      : Developpement des energies renouvelables electriques
+DATE LIMITE: 20 novembre 2024
+BENEFICIAIRES: Association, Entreprises, TPE, Bailleurs sociaux, Communes, Departement, EPCI, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/developpement-des-energies-renouvelables-electriques
+
+076
+TITRE      : Projets citoyens d'energies renouvelables
+DATE LIMITE: 20 novembre 2024
+BENEFICIAIRES: Association, Entreprises, Bailleurs sociaux, Communes, Departement, EPCI, EPT, Office de tourisme
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/projets-citoyens-denergies-renouvelables
+
+077
+TITRE      : Quartiers innovants et ecologiques
+DATE LIMITE: 04 avril 2024
+BENEFICIAIRES: Communes, EPCI, EPT/Metropole du Grand Paris
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/quartiers-innovants-et-ecologiques
+
+078
+TITRE      : AMI Retour de la Nature en Ville - soutien aux etudes de renaturation et de creation d'espaces verts
+DATE LIMITE: 31 mars 2024
+BENEFICIAIRES: Communes (toutes tailles), Departement, EPCI, EPT/Metropole du Grand Paris
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/ami-retour-de-la-nature-en-ville-soutien-aux-etudes-de-renaturation-et-de-creation-despaces-verts
+
+079
+TITRE      : Appel a candidatures - participation au salon Sustainable High City Tech Tokyo 2024 (SusHi-Tech)
+DATE LIMITE: 27 mars 2024
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-candidatures-participation-au-salon-sustainable-high-city-tech-tokyo-2024-sushi-tech
+
+080
+TITRE      : JOP 2024 - Soutien aux Celebrations
+DATE LIMITE: 29 fevrier 2024
+BENEFICIAIRES: Communes (toutes tailles)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/jop-2024-soutien-aux-celebrations
+
+081
+TITRE      : Maison Region Solidaire
+DATE LIMITE: 21 fevrier 2024
+BENEFICIAIRES: Fondation, Autre (GIP, copropriete, EPA), Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/maison-region-solidaire
+
+082
+TITRE      : Campagne de renouvellement 2024 des agrements dont la date de fin est fixee au 13/04/2025
+DATE LIMITE: 02 fevrier 2024
+BENEFICIAIRES: Association loi de 1901, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/campagne-de-renouvellement-2024-des-agrements-dont-la-date-de-fin-est-fixee-au-13042025
+
+083
+TITRE      : Ouverture ou extension de plus de 10 places de la formation educateur specialise (ES)
+DATE LIMITE: 02 fevrier 2024
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/ouverture-ou-extension-de-10-places-de-la-formation-educateur-specialise-es
+
+084
+TITRE      : Fonds exceptionnel de lutte contre les punaises de lit pour les lycees publics
+DATE LIMITE: 31 janvier 2024
+BENEFICIAIRES: Etablissement d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-exceptionnel-de-lutte-contre-les-punaises-de-lit-pour-les-lycees-publics
+
+085
+TITRE      : Cheque numerique pour un commerce connecte Volet 2 - Communes et leurs groupements
+DATE LIMITE: 25 janvier 2024
+BENEFICIAIRES: Communes, EPCI, EPT/Metropole du Grand Paris, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-numerique-pour-un-commerce-connecte-volet-2-communes-et-leurs-groupements
+
+086
+TITRE      : La science pour tous 2024 - projets ponctuels - Partage de la culture scientifique
+DATE LIMITE: 09 janvier 2024
+BENEFICIAIRES: Etablissement d'enseignement secondaire
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/la-science-pour-tous-2024-projets-ponctuels-partage-de-la-culture-scientifique
+
+================================================================================
+SECTION 7 - ECHEANCES 2023
+================================================================================
+
+087
+TITRE      : Aide aux reseaux franciliens dans le domaine du spectacle vivant
+DATE LIMITE: 22 decembre 2023
+BENEFICIAIRES: Fondation, ONG, Association loi 1901, Autre, Communes, EPCI, EPT, Professionnel culture, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-reseaux-franciliens-dans-le-domaine-du-spectacle-vivant
+
+================================================================================
+SECTION 8 - DEPOT OUVERT EN PERMANENCE (sans echeance fixe)
+================================================================================
+
+088
+TITRE      : Dispositif Europe
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE, Professionnels de la culture, ONG, Associations loi 1901, Fondations, Etablissements d'enseignement superieur, Organismes de formation, Laboratoires de recherche
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/dispositif-europe
+
+089
+TITRE      : Zero dechet et economie circulaire
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: TPE, PME, ETI, Collectivites, Associations, Bailleurs sociaux, Communes, EPCI, EPT, Metropole du Grand Paris
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/zero-dechet-et-economie-circulaire
+
+090
+TITRE      : Eau et milieux aquatiques et humides
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Associations loi 1901, Etablissements d'enseignement, Laboratoires, Collectivites, Communes, EPCI, EPT, Metropole du Grand Paris
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/eau-et-milieux-aquatiques-et-humides
+
+091
+TITRE      : Solidarites nouvelles et innovation sociale en faveur des plus precaires
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/solidarites-nouvelles-et-innovation-sociale-en-faveur-des-plus-precaires
+
+092
+TITRE      : Aide a la restauration et amenagement des maisons ou ateliers d'artistes remarquables
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Franciliens, Professionnels culture/patrimoine, Fondations, ONG, Associations, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-et-lamenagement-des-maisons-ou-des-ateliers-dartistes-remarquables
+
+093
+TITRE      : Fonds d'acquisition exceptionnelle pour les collections des musees
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Professionnels culture/patrimoine, Associations, Fondations, Communes, Departements, EPCI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-dacquisition-exceptionnelle-pour-les-collections-des-musees
+
+094
+TITRE      : Aide aux projets innovants des professionnels de la chaine du livre
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Createurs, Entreprises, Artisans, Professionnels culture, Associations, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-innovants-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+
+095
+TITRE      : Soutien aux projets en faveur des animaux de compagnie
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, PME, EPCI, EPT, Departement, Associations, ONG, Fondations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-projets-en-faveur-des-animaux-de-compagnie
+
+096
+TITRE      : Aide a la construction, la restauration, l'amenagement des musees et la numerisation des collections
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Professionnels patrimoine/culture, Associations, Collectivites, Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-construction-la-restauration-lamenagement-des-musees-et-la-numerisation-des-collections
+
+097
+TITRE      : InvESS ile-de-France
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: TPE, ETI, PME, Organismes formation, Fondations, ONG, Associations, Professionnels patrimoine/culture
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/invess-ile-de-france
+
+098
+TITRE      : Aide a la restauration et numerisation d'oeuvre d'un fonds patrimonial identifie
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Professionnels culture/patrimoine, Associations, Collectivites, Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-et-numerisation-doeuvre-dun-fonds-patrimonial-identifie
+
+099
+TITRE      : Accompagnement Industries engagees
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: TPE, PME, Createurs, ETI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-industries-engagees
+
+100
+TITRE      : Aide aux manifestations litteraires
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Fondations, Associations, ONG, Communes, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-manifestations-litteraires
+
+101
+TITRE      : Fabriques arts visuels
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Createurs, Entreprises, Artisans, Professionnels culture, Associations, Fondations, ONG
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fabriques-arts-visuels
+
+102
+TITRE      : Aide aux projets editoriaux exceptionnels (professionnels du livre)
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE, Artisans, Professionnels culture, Associations, Fondations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-editoriaux-exceptionnels-aide-aux-projets-des-professionnels-du-livre
+
+103
+TITRE      : Contrat d'amenagement regional (CAR)
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, EPCI, EPT, Metropole du Grand Paris
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/contrat-damenagement-regional-car
+
+104
+TITRE      : Soutien a la telemedecine
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Fondations, ONG, Associations, Communes, Collectivites, Entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-la-telemedecine
+
+105
+TITRE      : Aide a la restauration des objets mobiliers proteges
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, Collectivites, EPCI, EPT, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-des-objets-mobiliers-proteges
+
+106
+TITRE      : Financement des formations sanitaires et sociales - informations aux eleves/etudiants
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Etudiant en formations sanitaires et sociales, Organisme de formation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/financement-des-formations-sanitaires-et-sociales-informations-aux-elevesetudiants
+
+107
+TITRE      : Plan route de demain - Securite routiere
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes (toutes tailles), EPCI, EPT/Metropole du Grand Paris, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-securite-routiere
+
+108
+TITRE      : FEADER - Projets LEADER contribuant au developpement rural francilien (770501)
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Fondation, EPCI, Communes, Etablissements, Professionnels, PME, TPE, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-projets-leader-contribuant-au-developpement-rural-francilien-770501
+
+109
+TITRE      : 1 000 mares en Ile-de-France
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, Departement, EPCI, EPT, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/1-000-mares-en-ile-de-france
+
+110
+TITRE      : Premiere installation d'un dispositif de securisation des coproprietes
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Copropriete
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/premiere-installation-dun-dispositif-de-securisation-des-coproprietes
+
+111
+TITRE      : Plan route de demain - Amelioration de la desserte des lycees et des iles de loisirs
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, Departement, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-amelioration-de-la-desserte-des-lycees-et-des-iles-de-loisirs
+
+112
+TITRE      : Soutien a l'installation des professionnels de sante liberaux
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Createur d'entreprise
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-linstallation-des-professionnels-de-sante-liberaux
+
+113
+TITRE      : Soutien aux modes de garde innovants pour la petite enfance
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-modes-de-garde-innovants-pour-la-petite-enfance
+
+114
+TITRE      : Soutien regional aux expressions citoyennes
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Fondation, ONG, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-regional-aux-expressions-citoyennes
+
+115
+TITRE      : Sante numerique et innovation
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Association, Fondation, Communes, EPCI, Departement, Bailleurs sociaux, Professionnel de la recherche
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/sante-numerique-et-innovation
+
+116
+TITRE      : Plan route de demain - PEMR, voies reservees et aires de covoiturage
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, EPCI, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-pemr-voies-reservees-et-aires-de-covoiturage
+
+117
+TITRE      : Fonds Ile-de-France Decarbonation
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: PME
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-ile-de-france-decarbonation
+
+118
+TITRE      : Contrat rural
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes rurales, EPCI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/contrat-rural
+
+119
+TITRE      : Fonds Regional de Garantie
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Createur, TPE, PME, Artisan
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-regional-de-garantie
+
+120
+TITRE      : Aide aux structures innovantes dans les domaines du handicap et de la dependance
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Structures innovantes
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-structures-innovantes-dans-les-domaines-du-handicap-et-de-la-dependance
+
+121
+TITRE      : Silencieux avions ecoles franciliens
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/silencieux-avions-ecoles-franciliens
+
+122
+TITRE      : Aide a la promotion des editeurs (professionnels de la chaine du livre)
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: ETI, Grandes entreprises, PME, TPE, Artisan
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-promotion-des-editeurs-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+
+123
+TITRE      : Accompagnement Competitivite et Decarbonation de l'industrie
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: TPE, PME, ETI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-competitivite-et-decarbonation-de-lindustrie
+
+124
+TITRE      : Soutien a la renovation des ascenseurs
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Autre (GIP, copropriete, EPA...)
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-la-renovation-des-ascenseurs
+
+125
+TITRE      : Plan regional piscines et patinoires
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes (toutes tailles), EPCI, EPT/Metropole du Grand Paris, Departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-regional-piscines-et-patinoires
+
+126
+TITRE      : Soutien regional a la creation et a la rehabilitation d'equipements sportifs franciliens
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Fondation, Association loi de 1901, Communes, Departement, EPCI, EPT, Entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-regional-la-creation-et-la-rehabilitation-dequipements-sportifs-franciliens
+
+127
+TITRE      : Dispositif Vehicules propres - Prime a la non-casse - Transformation de vehicules thermiques
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Communes (moins de 10 000 hab.), Artisan, TPE, Francilien
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/dispositif-vehicules-propres-prime-la-non-casse-transformation-de-vehicules-thermiques
+
+128
+TITRE      : AMI solutions digitales a destination des collectivites pour le developpement des commerces
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnel agriculture/alimentation, Artisan ou commercant, Createur, ETI, Grandes entreprises, PME, TPE
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/ami-solutions-digitales-destination-des-collectivites-pour-le-developpement-des-commerces
+
+129
+TITRE      : Rehabiliter plutot que construire
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Communes, EPCI, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/rehabiliter-plutot-que-construire
+
+130
+TITRE      : Plan Vert d'Ile-de-France - soutien a la creation et a la requalification d'espaces verts
+DATE LIMITE: Depot des demandes ouvert en permanence
+BENEFICIAIRES: Associations, bailleurs sociaux, communes, departements, EPCI, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-vert-dile-de-france-soutien-la-creation-et-la-requalification-despaces-verts
+
+131
+TITRE      : Soutien a l'equipement en videoprotection
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Non precise
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-lequipement-en-videoprotection
+
+132
+TITRE      : FEADER - projets LEADER portes par les Groupes d'action locale (770502)
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Associations, organismes publics
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-projets-leader-portes-par-les-groupes-daction-locale-770502
+
+133
+TITRE      : TP'up
+DATE LIMITE: Non precisee
+BENEFICIAIRES: TPE, artisans, commercants, associations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/tpup
+
+134
+TITRE      : Fonds Regional pour les Talents Emergents (FoRTE) - Bourse aux Jeunes artistes 2025
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Createurs, entreprises, professionnels culture, collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-regional-pour-les-talents-emergents-forte-bourse-aux-jeunes-artistes-2025
+
+135
+TITRE      : Aide aux projets des groupements de professionnels de la chaine du livre
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnels chaine du livre, collectivites, associations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-groupements-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+
+136
+TITRE      : Renovation energetique des equipements sportifs
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Communes, EPCI, Associations loi 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/renovation-energetique-des-equipements-sportifs
+
+137
+TITRE      : Aide aux projets oeuvrant a la valorisation des maisons ou des ateliers d'artistes remarquables
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnels patrimoine/culture, associations, collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-oeuvrant-la-valorisation-des-maisons-ou-des-ateliers-dartistes-remarquables
+
+138
+TITRE      : Pack Relance Ile-de-France
+DATE LIMITE: Non precisee
+BENEFICIAIRES: ETI, Grandes entreprises, PME
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pack-relance-ile-de-france
+
+139
+TITRE      : Soutien apres-cancer, drepanocytose, soins palliatifs
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-personnes-concernees-par-lapres-cancer-la-drepanocytose-ou-les-soins-palliatifs
+
+140
+TITRE      : Investissement culturel - Aide aux travaux et a l'acquisition d'equipements
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnels culture, Associations, Collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/investissement-culturel-aide-aux-travaux-et-lacquisition-dequipements
+
+141
+TITRE      : Cheque vert pour la transition ecologique
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Artisans, TPE, Createurs
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-vert-pour-la-transition-ecologique
+
+142
+TITRE      : Logement locatif intermediaire (LLI)
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/logement-locatif-intermediaire-lli
+
+143
+TITRE      : Laicite, valeurs de la Republique et prevention de la radicalisation
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Associations loi 1901, Communes, Collectivites, Fondations, ONG
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/laicite-valeurs-de-la-republique-et-prevention-de-la-radicalisation
+
+144
+TITRE      : Cheque prevention
+DATE LIMITE: Non precisee
+BENEFICIAIRES: TPE, PME, Associations loi 1901, Artisans
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-prevention
+
+145
+TITRE      : PM'up
+DATE LIMITE: Non precisee
+BENEFICIAIRES: TPE, PME, Associations loi 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pmup
+
+146
+TITRE      : Fonds de soutien aux artisans et commercants touches par les emeutes urbaines
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Artisan ou commercant
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-de-soutien-aux-artisans-et-commercants-touches-par-les-emeutes-urbaines
+
+147
+TITRE      : Cap vers l'Aero Excellence
+DATE LIMITE: Non precisee
+BENEFICIAIRES: TPE, PME, ETI
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/cap-vers-laero-excellence
+
+148
+TITRE      : Creation et amelioration d'espaces verts ouverts au public
+DATE LIMITE: Depot ouvert en permanence
+BENEFICIAIRES: Associations, collectivites, bailleurs sociaux, communes
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/creation-et-amelioration-despaces-verts-ouverts-au-public
+
+149
+TITRE      : Restauration de continuites ecologiques terrestres
+DATE LIMITE: Depot ouvert en permanence
+BENEFICIAIRES: Collectivites, associations, etablissements d'enseignement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/restauration-de-continuites-ecologiques-terrestres
+
+150
+TITRE      : Jeunesse et promesse republicaine
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Fondations, ONG, associations loi 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/jeunesse-et-promesse-republicaine
+
+151
+TITRE      : Aide a la restauration du patrimoine immobilier protege
+DATE LIMITE: Depot ouvert en permanence
+BENEFICIAIRES: Professionnels patrimoine/culture, associations, collectivites
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-du-patrimoine-immobilier-protege
+
+152
+TITRE      : Aide a la librairie independante
+DATE LIMITE: Depot ouvert en permanence
+BENEFICIAIRES: Createurs, professionnels culture, TPE, PME, GE, fondations
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-librairie-independante
+
+153
+TITRE      : Accompagnement des personnes vivant avec un trouble du spectre de l'autisme (TSA)
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Fondations, associations, collectivites, bailleurs
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-des-personnes-vivant-avec-un-trouble-du-spectre-de-lautisme-tsa
+
+154
+TITRE      : Aide aux projets des musees oeuvrant a la valorisation du patrimoine
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Associations, fondations, communes, EPCI, departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-musees-oeuvrant-la-valorisation-du-patrimoine
+
+155
+TITRE      : Pass 3 Entrepreneur#Leader - Je dirige mon entreprise
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Createurs d'entreprise
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pass-3-entrepreneurleader-je-dirige-mon-entreprise
+
+156
+TITRE      : Pass 2 Entrepreneur#Leader - Je finance mon entreprise
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Franciliens, createurs d'entreprise
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/pass-2-entrepreneurleader-je-finance-mon-entreprise
+
+157
+TITRE      : Activite economique de surf sur l'ile de loisirs de Vaires-Torcy
+DATE LIMITE: Depot ouvert
+BENEFICIAIRES: Non specifie
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-manifestation-dinteret-activite-economique-de-surf-sur-lile-de-loisirs-de-vaires-torcy
+
+158
+TITRE      : Soutien aux actions d'innovation en matiere de logistique
+DATE LIMITE: Depot ouvert
+BENEFICIAIRES: Communes, collectivites, entreprises
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-actions-dinnovation-en-matiere-de-logistique
+
+159
+TITRE      : Installation de fontaines dans l'espace public
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Communes, collectivites, departement
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/installation-de-fontaines-dans-lespace-public
+
+160
+TITRE      : FEADER - Aide a l'installation du jeune agriculteur
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnel de l'agriculture et de l'alimentation
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-aide-linstallation-du-jeune-agriculteur
+
+161
+TITRE      : Aide aux projets des reseaux franciliens oeuvrant a la valorisation du patrimoine
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Professionnel de la culture, Professionnel du patrimoine, Association
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-reseaux-franciliens-oeuvrant-la-valorisation-du-patrimoine
+
+162
+TITRE      : Ameliorer les conditions d'exercice des professionnels de sante
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Fondation, ONG, Association, Etablissements, Communes, Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/ameliorer-les-conditions-dexercice-des-professionnels-de-sante
+
+163
+TITRE      : Soutien aux projets associatifs en faveur du depart en vacances
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Association regie par la loi de 1901
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-projets-associatifs-en-faveur-du-depart-en-vacances
+
+164
+TITRE      : Aide aux communes, EPCI et etablissements d'enseignement superieur mobilises dans la vaccination
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Etablissements, Communes, EPCI, Departement, EPT
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-communes-epci-et-etablissements-denseignement-superieur-mobilises-dans-la-vaccination
+
+165
+TITRE      : Innov'up Leader - France 2030 Ile-de-France
+DATE LIMITE: Non precisee
+BENEFICIAIRES: ETI, PME
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/innovup-leader-france-2030-ile-de-france
+
+166
+TITRE      : Droits des femmes - Accueil, orientation et hebergement des femmes en difficulte (investissement)
+DATE LIMITE: Non precisee
+BENEFICIAIRES: Association, Fondation, ONG, Communes, EPCI, Departement, Bailleurs sociaux
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/droits-des-femmes-accueil-orientation-et-hebergement-des-femmes-en-difficulte-investissement
+
+167
+TITRE      : Aide a la revitalisation commerciale des communes en milieu rural
+DATE LIMITE: Non precisee
+BENEFICIAIRES: EPCI, Communes rurales
+URL        : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-revitalisation-commerciale-des-communes-en-milieu-rural
+
+================================================================================
+FIN DU FICHIER
+================================================================================
+Extraction realisee automatiquement depuis :
+https://www.iledefrance.fr/aides-et-appels-a-projets
+Date : 22 juin 2026
+Nombre de pages scrappees : 12 (page 0 a page 11)
+Nombre d'AAP uniques extraits : 167
+Note : La pagination du site presente parfois les memes fiches sur plusieurs pages.
+       Ce fichier est deduplicite par URL unique.
+       Le site annonce 345 fiches au total - certaines peuvent etre accessibles
+       uniquement via des filtres thematiques non parcourus dans cette extraction.
+================================================================================

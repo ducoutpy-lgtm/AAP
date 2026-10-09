@@ -1,0 +1,44 @@
+Questions relatives au développement du scraper et à l'architecture des données
+1. Gestion de la pagination et de la navigation dynamique
+Comment le scraper gère-t-il la navigation multi-pages ? Plus précisément :
+
+Peut-il détecter et suivre une pagination classique (pages 1, 2, 3...) ?
+
+Sait-il gérer le "Lazy Loading" (chargement au défilement) ou les boutons "Suivant" (flèches) qui n'apparaissent qu'après une action ?
+
+Comment s'assurer qu'il traite bien l'intégralité des 5 pages (ou plus) d'un site comme la Fondation de France ?
+
+2. Analyse des coûts et monitoring
+Quelle est la méthode pour calculer précisément le coût de l'API Claude par Appel à Projet (AAP) extrait ?
+
+Est-il possible d'avoir un log détaillé de la consommation de tokens par exécution ou par item traité ?
+
+3. Structuration et Normalisation (Mapping)
+Pour que le moteur de recherche "bi-face" soit efficace, les données doivent être uniformes. Cependant, chaque site source est différent.
+
+Comment garantis-tu que les champs (date de début, date de fin, critères d'éligibilité) soient structurés de manière identique dans le JSON, quel que soit le site d'origine ?
+
+Utilises-tu un schéma de données (JSON Schema) strict pour forcer cette cohérence ?
+
+4. Pipeline d'importation vers la base de données
+Le stockage actuel se fait dans des fichiers JSON locaux.
+
+Quelle est la stratégie pour automatiser le transfert de ces fichiers JSON vers une base de données centralisée (type PostgreSQL ou MongoDB) ?
+
+Comment assurer le lien entre le script de scraping et l'injection en base de données pour que le moteur de recherche puisse consommer les données en temps réel ?
+
+5. Optimisation du scraping (Delta Scraping / Mise à jour)
+Pour limiter les coûts d'API, je ne veux pas rescraper l'intégralité des sites chaque jour.
+
+Comment mettre en place un système de "diff" (ou incrémental) qui identifie uniquement les nouveaux AAP publiés ?
+
+Comment gérer la mise à jour des AAP existants (ex: modification d'une date) sans tout ré-extraire, et comment supprimer de la base de données les appels qui sont arrivés à échéance ?
+
+6. Transition vers un modèle local pour l'optimisation des coûts
+Étant donné que la rapidité n'est pas une priorité (un cycle de scraping de 20 jours est acceptable), serait-il possible de migrer l'intelligence de l'extracteur vers un modèle IA local (ex: Llama 3, Mistral ou Phi-3 via Ollama) ?
+
+Quels ajustements techniques seraient nécessaires pour que le script de scraping communique avec une instance locale plutôt qu'avec l'API de Claude ?
+
+Peux-tu recommander un modèle "léger" capable de structurer du texte brut en JSON de manière fiable sur mon matériel actuel ?
+
+Comment gérer la fiabilité de l'extraction (le respect du format JSON) avec un modèle local, souvent moins rigoureux que Claude 3.5 ?

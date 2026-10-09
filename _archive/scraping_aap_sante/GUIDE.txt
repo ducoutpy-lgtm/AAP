@@ -1,0 +1,244 @@
+====================================================================
+  GUIDE — Scraper d'Appels à Projets Santé & Médico-Social
+  Version : Phase 1 (collecte + base de données)
+====================================================================
+
+
+--------------------------------------------------------------------
+  VUE D'ENSEMBLE
+--------------------------------------------------------------------
+
+Ce que fait l'outil :
+  - Visite automatiquement les sites listés dans urls.txt
+  - Extrait : titre, description, dates, critères, thématique
+  - Télécharge les PDFs trouvés sur les pages (dossier pdfs/)
+  - Stocke tout dans une base de données (aap_sante.db)
+  - Exporte en Excel (aap_sante.xlsx)
+  - Ajoute uniquement les nouveaux appels à chaque lancement
+  - Horodate chaque ajout
+
+Technologies :
+  - crawl4ai   : visite les sites (gère le JavaScript)
+  - LM Studio  : IA locale gratuite pour extraire les informations
+  - SQLite      : base de données (fichier unique sur votre PC)
+  - openpyxl   : export Excel
+
+Fichiers du projet :
+  - urls.txt         → liste des sites à scraper (MODIFIABLE)
+  - scraper.py       → programme principal
+  - requirements.txt → bibliothèques Python nécessaires
+  - aap_sante.db     → base de données (créée au 1er lancement)
+  - aap_sante.xlsx   → export Excel (créé au 1er lancement)
+  - pdfs/            → dossier des PDFs téléchargés
+
+
+--------------------------------------------------------------------
+  ÉTAPE 1 — INSTALLER LM STUDIO
+--------------------------------------------------------------------
+
+  1. Aller sur : https://lmstudio.ai
+  2. Télécharger et installer LM Studio
+  3. Ouvrir LM Studio
+  4. Aller dans l'onglet "Discover" (icône loupe à gauche)
+  5. Chercher un modèle adapté à votre RAM :
+       - 8 Go de RAM  → taper "mistral 7b instruct" → choisir une version Q4
+       - 16 Go de RAM → taper "llama 3 8b instruct" → choisir une version Q5
+       - 32 Go de RAM → taper "llama 3 70b instruct" → choisir une version Q4
+  6. Cliquer Download sur le modèle choisi (téléchargement ~4 Go)
+  7. Aller dans l'onglet "Local Server" (icône <-> à gauche)
+  8. Sélectionner votre modèle dans le menu déroulant en haut
+  9. Cliquer "Start Server"
+  10. Vérifier que vous voyez : "Server running on http://localhost:1234"
+
+  ⚠️  IMPORTANT : LM Studio doit rester ouvert pendant le scraping.
+
+
+--------------------------------------------------------------------
+  ÉTAPE 2 — INSTALLER LES BIBLIOTHÈQUES PYTHON
+--------------------------------------------------------------------
+
+  Ouvrir un terminal (cmd) et taper ces commandes une par une :
+
+  1. Installer les bibliothèques :
+     python -m pip install -r requirements.txt
+
+  2. Installer les navigateurs pour crawl4ai (une seule fois, ~150 Mo) :
+     python -m crawl4ai-setup
+
+  ✓ C'est tout pour l'installation.
+
+
+--------------------------------------------------------------------
+  ÉTAPE 3 — AJOUTER VOS PROPRES SITES (optionnel)
+--------------------------------------------------------------------
+
+  Ouvrir le fichier urls.txt avec un éditeur de texte (Notepad, etc.)
+
+  Pour AJOUTER un site :
+    → Ajoutez une ligne avec l'URL complète, par exemple :
+      https://www.nouveau-site.fr/appels-a-projets
+
+  Pour DÉSACTIVER temporairement un site :
+    → Ajoutez # devant la ligne :
+      # https://www.site-a-ignorer.fr/appels
+
+  Pour SUPPRIMER un site :
+    → Effacez la ligne
+
+  Les lignes commençant par # sont des commentaires ignorés.
+  Les lignes vides sont ignorées.
+
+  ✓ Sauvegardez le fichier, puis relancez le scraper.
+
+
+--------------------------------------------------------------------
+  ÉTAPE 4 — LANCER LE SCRAPER
+--------------------------------------------------------------------
+
+  Prérequis :
+    ✓ LM Studio ouvert avec le serveur démarré (port 1234)
+
+  Dans le terminal, aller dans le dossier du projet :
+    cd C:\Users\pierr\Documents\ClaudeCode\scraping_aap_sante
+
+  Lancer le scraper :
+    python scraper.py
+
+  Ce que vous verrez s'afficher :
+    [01/43] https://anr.fr/fr/appels-a-projets/
+      → Extraction en cours...
+      ✓ 3 AAP trouvés — 3 nouveaux ajoutés
+
+    [02/43] https://www.ars.sante.fr/appels-projets
+      📄 PDF : dossier_candidature_2025.pdf
+      → Extraction en cours...
+      ✓ 5 AAP trouvés — 2 nouveaux ajoutés
+    ...
+
+  Durée estimée : 15 à 45 minutes selon votre connexion et votre PC.
+
+  À la fin, vous verrez un résumé :
+    ✅ Scraping terminé
+    → X appels trouvés au total
+    → Y nouveaux ajoutés à la base
+    → Z site(s) inaccessible(s)
+
+
+--------------------------------------------------------------------
+  ÉTAPE 5 — CONSULTER LES RÉSULTATS
+--------------------------------------------------------------------
+
+  FICHIER EXCEL : ouvrir aap_sante.xlsx
+  Colonnes :
+    Titre                  → nom de l'appel à projet
+    Description            → objectif / résumé
+    Date début             → date d'ouverture
+    Date fin               → date limite de dépôt
+    Critères d'éligibilité → qui peut candidater
+    Thématique             → domaine de santé
+    URL source             → lien vers la page originale
+    Date d'ajout           → quand la ligne a été collectée
+
+  DOSSIER PDFS : ouvrir le dossier pdfs/
+    Contient tous les PDFs téléchargés depuis les sites.
+
+  BASE DE DONNÉES : aap_sante.db
+    Fichier SQLite consultable avec "DB Browser for SQLite"
+    (logiciel gratuit : https://sqlitebrowser.org)
+
+
+--------------------------------------------------------------------
+  ÉTAPE 6 — AUTOMATISER (lancer tous les jours)
+--------------------------------------------------------------------
+
+  Pour que le script tourne automatiquement chaque matin :
+
+  1. Ouvrir le Planificateur de tâches Windows
+     (Touche Windows → taper "Planificateur de tâches" → Entrée)
+
+  2. Cliquer "Créer une tâche de base..." (colonne de droite)
+
+  3. Nom : Scraping AAP Sante
+     Description : Mise à jour quotidienne de la base d'appels à projets
+
+  4. Déclencheur → "Quotidien"
+     Heure de début : 07:00:00
+
+  5. Action → "Démarrer un programme"
+     Programme/script : python
+     Ajouter des arguments :
+       C:\Users\pierr\Documents\ClaudeCode\scraping_aap_sante\scraper.py
+     Démarrer dans :
+       C:\Users\pierr\Documents\ClaudeCode\scraping_aap_sante
+
+  6. Terminer → OK
+
+  ⚠️  RAPPEL : LM Studio doit être ouvert avant l'heure prévue.
+  Conseil : configurez LM Studio pour démarrer avec Windows
+  (Paramètres LM Studio → "Launch at startup").
+
+
+--------------------------------------------------------------------
+  DÉPANNAGE
+--------------------------------------------------------------------
+
+  ❌ "LM Studio inaccessible"
+     → Ouvrir LM Studio
+     → Aller dans "Local Server"
+     → Vérifier que le serveur est démarré sur le port 1234
+     → Relancer le scraper
+
+  ❌ "python n'est pas reconnu"
+     → Utiliser : python -m pip install ...  (avec "python -m")
+     → Ou réinstaller Python depuis python.org
+       (cocher "Add Python to PATH")
+
+  ⚠️  "Page inaccessible" sur certains sites
+     → Normal : certains sites bloquent les scrapers automatiques
+     → Le script continue avec les autres sites
+     → Ces sites sont comptés dans "site(s) inaccessible(s)"
+
+  ⚠️  "Aucun appel à projet détecté" sur un site connu
+     → Le site charge peut-être ses données en JavaScript avancé
+     → Ou LM Studio n'a pas trouvé de données structurées
+     → Essayez de rouvrir la page manuellement pour vérifier
+
+  ⚠️  Excel déjà ouvert dans Excel → erreur à la sauvegarde
+     → Fermer aap_sante.xlsx avant de lancer le scraper
+
+  ⚠️  Réponse LM Studio non parseable
+     → Essayez un modèle plus performant dans LM Studio
+     → Llama 3 8B fonctionne mieux que Mistral 7B pour l'extraction
+
+
+--------------------------------------------------------------------
+  RÉSUMÉ DES COMMANDES
+--------------------------------------------------------------------
+
+  Installation (une seule fois) :
+    python -m pip install -r requirements.txt
+    python -m crawl4ai-setup
+
+  Lancement :
+    cd C:\Users\pierr\Documents\ClaudeCode\scraping_aap_sante
+    python scraper.py
+
+  Prérequis avant chaque lancement :
+    → LM Studio ouvert + serveur démarré sur http://localhost:1234
+
+
+--------------------------------------------------------------------
+  PROCHAINES ÉTAPES (Phase 2)
+--------------------------------------------------------------------
+
+  Une fois la base de données remplie avec des données réelles :
+
+  1. Concevoir l'interface de recherche sur Figma
+  2. Développer le moteur de recherche avec Claude Code
+  3. Ajouter les comptes clients et les profils d'entreprises
+  4. Connecter l'IA pour le matching et le pré-remplissage des dossiers
+
+
+====================================================================
+  Problème non résolu ? Ouvrez Claude Code et décrivez l'erreur.
+====================================================================

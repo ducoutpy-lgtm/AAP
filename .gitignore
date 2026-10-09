@@ -1,0 +1,53 @@
+# === Secrets (ne JAMAIS committer) ===
+.env
+.env.local
+.env.production
+**/.env
+**/.env.local
+**/serviceAccountKey*.json
+**/firebase-adminsdk*.json
+
+# === Node / application web ===
+node_modules/
+dist/
+dist-ssr/
+*.local
+app/functions/lib/
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# === Python / scraping ===
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+scraping/results/
+scraping/downloads/
+scraping/logs/
+scraping/validation_reports/
+scraping/debug/
+scraping/test_download.pdf
+scraping/run.log
+playwright/.auth/
+
+# === Outils de cartographie (générés) ===
+graphify-out/
+
+# === Comptes rendus de session Claude Code (locaux) ===
+.claude/sessions/
+.claude/settings.local.json
+
+# === IDE / OS ===
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+
+# === Fichiers de transfert temporaires ===
+_transfert_reprise.tgz

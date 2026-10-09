@@ -1,0 +1,2330 @@
+================================================================================
+APPELS A PROJETS - REGION ILE-DE-FRANCE - FICHE DETAIL COMPLETE
+Source : https://www.iledefrance.fr/aides-et-appels-a-projets
+Date d'extraction : 22 juin 2026
+================================================================================
+
+Nombre total d'AAP extraits (dedupliques) : 167
+Ce fichier contient les fiches detaillees pour les AAP 081 a 167.
+Les AAP 001 a 080 font l'objet du fichier aap_ile_de_france.txt (listing).
+
+================================================================================
+NOTE : AAP 001 A 080
+================================================================================
+Les fiches de listing (titre, date limite, beneficiaires, URL) pour les AAP 001
+a 080 sont disponibles dans le fichier aap_ile_de_france.txt.
+Les details complets de chaque page sont a extraire individuellement depuis les
+URLs listees dans ce fichier.
+
+================================================================================
+DETAILS COMPLETS AAP 081 - 167
+================================================================================
+
+--------------------------------------------------------------------------------
+AAP 081 - Maison Region Solidaire
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/maison-region-solidaire
+DATE LIMITE : 21 fevrier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme de creation de "Maisons Region solidaire" pour resocialiser et
+reintegrer des personnes en situation de grande precarite vivant dans le metro,
+mis en oeuvre conjointement par la Region Ile-de-France et la DRIHL.
+
+OBJECTIFS :
+- Creer des projets d'accompagnement et d'hebergement de personnes orientees
+  par le recueil social de la RATP
+- Assurer une prise en charge rapide et perenne
+- S'inscrire dans le plan quinquennal logement d'abord 2023-2027
+
+BENEFICIAIRES ELIGIBLES :
+- Associations avec presence effective en Ile-de-France
+- Etablissements publics avec siege social ou antenne locale
+- Si siege hors IDF : justifier d'au moins 1 salarie employeur regional
+
+MONTANT / NATURE DE L'AIDE :
+Financement pour hebergement et accompagnement pluridisciplinaire
+Structure de 20 a 40 personnes a proximite d'une station metro/RER (max 15 min)
+
+CONDITIONS :
+- Reseau diversifie de partenaires (RATP, bailleurs, associations, structures sanitaires)
+- Lieu d'implantation perenne et proche des transports
+- Accueil des animaux constitue un avantage
+
+MODALITES DE DEPOT :
+Dossier : fiches partenariats, suivi/evaluation, moyens locaux, budget 1 an,
+elements de l'annexe 1 du cahier des charges.
+
+CONTACT :
+- sah.udhl75.drihl-if@developpement-durable.gouv.fr
+- solidarites@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 082 - Campagne de renouvellement 2024 des agrements (date fin 13/04/2025)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/campagne-de-renouvellement-2024-des-agrements-dont-la-date-de-fin-est-fixee-au-13042025
+DATE LIMITE : 02 fevrier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region delivre les agrements des formations reglementees en travail social
+(ASS, EJE, ES, ETS, CESF) bases sur le SRFSS, apres avis de la DRIEETS.
+Agrements valables 5 ans, renouvelables.
+
+OBJECTIFS :
+- Renouveler les agrements de formation professionnelle de niveau 6 en travail social
+- Permettre aux organismes de maintenir leurs activites de formation apres expiration
+
+BENEFICIAIRES ELIGIBLES :
+- Associations reglees par la loi de 1901
+- Departements
+- Organismes dont l'agrement expire au 13/04/2025
+
+MONTANT / NATURE DE L'AIDE :
+Delivrance d'un agrement valable 5 ans jusqu'au 13 avril 2030
+
+MODALITES DE DEPOT :
+Plateforme : mesdemarches.iledefrance.fr
+Periode : 4 decembre 2023 - 2 fevrier 2024 (ferme)
+
+CONTACT : aapfss@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 083 - Ouverture ou extension de +10 places formation Educateur Specialise
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/ouverture-ou-extension-de-10-places-de-la-formation-educateur-specialise-es
+DATE LIMITE : 02 fevrier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Creation de capacite d'accueil ou augmentation de plus de 10 places en
+formation d'Educateur specialise. La Region delivre les agrements selon le SRFSS.
+
+BENEFICIAIRES ELIGIBLES :
+Toute personne morale ou physique juridiquement responsable, secteur public
+ou prive, souhaitant dispenser la formation en travail social.
+
+MONTANT / NATURE DE L'AIDE :
+Agrement valable 5 ans jusqu'au 13 avril 2030
+
+MODALITES DE DEPOT :
+Plateforme : mesdemarches.iledefrance.fr
+Periode : 4 decembre 2023 au 2 fevrier 2024 a 23h
+
+CONTACT : aapfss@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 084 - Fonds exceptionnel lutte punaises de lit lycees publics
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-exceptionnel-de-lutte-contre-les-punaises-de-lit-pour-les-lycees-publics
+DATE LIMITE : 31 janvier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region Ile-de-France offre un soutien financier aux lycees publics confrontes
+aux infestations de punaises de lit en remboursant les depenses engagees.
+
+OBJECTIFS :
+Aider les lycees publics a eradiquer les infestations en financant les frais
+d'intervention.
+
+BENEFICIAIRES ELIGIBLES :
+Lycees publics ayant eu des depenses de lutte contre les punaises de lit.
+
+MONTANT / NATURE DE L'AIDE :
+Remboursement sous conditions des factures et justificatifs presentes.
+
+CONDITIONS :
+- Depenses correspondant aux criteres du reglement d'attribution
+- Presentation de factures et justificatifs (certificat ou attestation d'intervention)
+
+MODALITES DE DEPOT :
+Formulaire type signe + justificatifs (factures et certificat/attestation)
+
+CONTACT : DGFL@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 085 - Cheque numerique commerce connecte Volet 2 - Communes et groupements
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-numerique-pour-un-commerce-connecte-volet-2-communes-et-leurs-groupements
+DATE LIMITE : 25 janvier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Aide regionale pour le deploiement de solutions numeriques favorisant l'activite
+commerciale territoriale des communes et leurs groupements.
+
+OBJECTIFS :
+- Favoriser la visibilite et l'attractivite des commerces via solutions digitales
+- Soutenir la vente en ligne (click-and-collect, marketplace, fidelisation)
+- Proposer des formations collectives en ligne
+
+BENEFICIAIRES ELIGIBLES :
+Communes (toutes tailles), EPCI, EPT, Metropole du Grand Paris, Departements.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention jusqu'a 10 000 EUR en fonction des depenses eligibles realisees.
+
+CONDITIONS :
+Depenses fonctionnement TTC ou investissement HT, periode maximale 1 an.
+Benefice unique : une fois par an, limite a 3 annees consecutives.
+Depenses realisees apres le 12/03/2020.
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 086 - La science pour tous 2024 - projets ponctuels
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/la-science-pour-tous-2024-projets-ponctuels-partage-de-la-culture-scientifique
+DATE LIMITE : 09 janvier 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional visant a partager les apports scientifiques avec tous les
+Franciliens, valoriser les filieres scientifiques et encourager le dialogue
+sciences/societe.
+
+OBJECTIFS :
+- Partager la demarche scientifique avec le grand public, scolaires, jeunes
+- Rendre la science visible dans l'espace public (expositions, festivals, debats)
+- Promouvoir les sciences participatives et la participation citoyenne
+- Soutenir les structures et thematiques emergentes
+
+BENEFICIAIRES ELIGIBLES :
+Organismes publics ou prives a but non lucratif en IDF, collectivites locales.
+Publics prioritaires : jeunes (notamment jeunes filles) et Franciliens eloignes
+de la science.
+
+MONTANT / NATURE DE L'AIDE :
+- Fonctionnement : jusqu'a 30 000 EUR (60% max des depenses eligibles)
+- Investissement : jusqu'a 20 000 EUR (60% max des depenses eligibles)
+
+CONDITIONS :
+Actions ponctuelles entre 1er avril et 31 decembre 2024.
+
+CONTACT : csti@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 087 - Aide aux reseaux franciliens spectacle vivant
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-reseaux-franciliens-dans-le-domaine-du-spectacle-vivant
+DATE LIMITE : 22 decembre 2023 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien aux reseaux de dimension regionale de structures professionnelles du
+spectacle vivant pour leur developpement et structuration.
+
+OBJECTIFS :
+- Accompagner a la structuration
+- Mettre en reseau des acteurs
+- Mettre en oeuvre des actions innovantes de mutualisation
+- Developper une fonction ressource pour les acteurs
+
+BENEFICIAIRES ELIGIBLES :
+Reseaux franciliens du spectacle vivant :
+- Au moins 1 an d'existence avec siege social en IDF
+- Federant des professionnels d'un ou plusieurs secteurs artistiques
+- Presence significative regionale
+- Soutien financier d'au moins un partenaire public
+
+MONTANT / NATURE DE L'AIDE :
+Plafond a 50% du budget de fonctionnement de la structure.
+
+CONTACT :
+- isabelle.roux@iledefrance.fr
+- muriel.metura@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 088 - Dispositif Europe
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/dispositif-europe
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les actions valorisant l'action europeenne en Ile-de-France,
+via des initiatives pedagogiques, informationnelles et communicationnelles.
+
+OBJECTIFS :
+Projets lies aux competences regionales, construction europeenne, attractivite
+et rayonnement territorial, ou proposant des actions pedagogiques innovantes
+valorisant les formations aux metiers europeens.
+
+BENEFICIAIRES ELIGIBLES :
+Fondations, etablissements d'enseignement superieur, medias locaux (tous statuts).
+
+MONTANT / NATURE DE L'AIDE :
+Maximum 50% des depenses eligibles, plafonne a 50 000 EUR.
+Minimum : 10 000 EUR. Une seule subvention par beneficiaire par an.
+
+CONTACT : europe@iledefrance.fr (Sophie PRADE)
+
+--------------------------------------------------------------------------------
+AAP 089 - Zero dechet et economie circulaire
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/zero-dechet-et-economie-circulaire
+DATE LIMITE : 08/06/2026 ou 06/07/2026 (prise de contact avant 07/05 ou 29/05)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien aux operations visant les objectifs du Plan regional de prevention et
+de gestion des dechets et de la Strategie regionale economie circulaire.
+
+OBJECTIFS :
+- Atteindre le "zero dechet" et combattre les gaspillages
+- Soutenir le reemploi, la reutilisation et la reparation
+- Integrer l'economie circulaire dans l'amenagement
+- Ameliorer le tri et le recyclage
+
+BENEFICIAIRES ELIGIBLES :
+Toutes les personnes morales sauf l'Etat : TPE/PME/ETI, collectivites,
+bailleurs sociaux, associations loi 1901, GIP, EPA, offices de tourisme.
+
+MONTANT / NATURE DE L'AIDE :
+- Etudes : jusqu'a 50% (max 100 000 EUR)
+- Autres investissements : jusqu'a 35% (max 250 000 EUR, 300 000 EUR pour collecte/tri artisanal)
+- Minimum demande : 10 000 EUR
+
+CONTACT : zerodechet@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 090 - Eau et milieux aquatiques et humides
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/eau-et-milieux-aquatiques-et-humides
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region s'appuie sur les solutions fondees sur la nature pour preserver,
+restaurer et valoriser les milieux aquatiques et humides en IDF.
+
+OBJECTIFS :
+- Elaboration et suivi des Contrats Trame Verte et Bleue
+- Protection et restauration des milieux aquatiques, humides et berges
+- Maitrise des ruissellements et desimpermeabilisation
+- Alternatives aux produits phytosanitaires
+- Recuperation des eaux pluviales sur batiments publics
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites, groupements, associations, etablissements publics, bailleurs
+sociaux, syndicats professionnels, universites, organismes de recherche.
+
+MONTANT / NATURE DE L'AIDE :
+- Etudes Trame Verte et Bleue : jusqu'a 40% HT, plafond 80 000 EUR
+- Accompagnement territorial : jusqu'a 50% fonctionnement, max 40 000 EUR/an
+- Protection/restauration milieux : jusqu'a 50%, max 400 000 EUR
+- Desimpermeabilisation : jusqu'a 50%, max 400 000 EUR
+- Alternatives phytosanitaires : jusqu'a 50%, max 100 000 EUR
+- Recuperation eaux pluie : jusqu'a 50%, max 100 000 EUR
+
+CONTACT : eau-tramevertetbleue@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 091 - Solidarites nouvelles et innovation sociale
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/solidarites-nouvelles-et-innovation-sociale-en-faveur-des-plus-precaires
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La region soutient des actions apportant des reponses novatrices aux besoins
+des populations vulnerables.
+
+DOMAINES D'INTERVENTION :
+Aide alimentaire, hebergement, accompagnement social, acces aux droits, sante,
+lutte contre la fracture numerique, prevention de l'isolement, soutien a la
+parentalite, enjeux intergenerationnels et developpement durable.
+
+BENEFICIAIRES ELIGIBLES :
+Personnes morales de droit public, personnes morales de droit prive a but non
+lucratif.
+
+MONTANT / NATURE DE L'AIDE :
+- Subvention max 50% de la depense subventionnable, plafond 400 000 EUR
+- Investissements (terrain, travaux, equipements, solutions numeriques, vehicules)
+
+CONTACT : solidarites@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 092 - Aide restauration et amenagement maisons/ateliers artistes remarquables
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-et-lamenagement-des-maisons-ou-des-ateliers-dartistes-remarquables
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Financement de projets visant a preserver et ouvrir au public les demeures
+de personnages artistiques importants.
+
+OBJECTIFS :
+- Restaurer des batiments (structure et enveloppe)
+- Realiser des interventions d'urgence
+- Effectuer des amenagements interieurs et exterieurs
+
+BENEFICIAIRES ELIGIBLES :
+Proprietaires publics et prives de maisons ou ateliers d'artistes, amenageurs
+mandates, etablissements labellises "Maisons des illustres" (DRAC).
+
+MONTANT / NATURE DE L'AIDE :
+- 40% maximum des depenses eligibles
+- Plafond : 500 000 EUR
+Couvre travaux et honoraires de maitrise d'oeuvre.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 093 - Fonds d'acquisition exceptionnelle collections des musees
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-dacquisition-exceptionnelle-pour-les-collections-des-musees
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient l'enrichissement des collections museales via des acquisitions
+d'oeuvres, d'objets ou de collections exceptionnelles.
+
+OBJECTIFS :
+- Enrichir les collections des musees regionaux
+- Renforcer l'attractivite touristique et culturelle d'IDF
+- Financer des acquisitions coherentes avec le projet scientifique et culturel
+
+BENEFICIAIRES ELIGIBLES :
+Musees departementaux, intercommunaux, communaux ou associatifs labellises
+"Musee de France" (exclusion des musees nationaux).
+
+MONTANT / NATURE DE L'AIDE :
+- Taux d'intervention : 50% maximum des depenses eligibles
+- Plafond : 80 000 EUR
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 094 - Aide aux projets innovants - chaine du livre
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-innovants-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+DATE LIMITE : 15 novembre / 15 janvier / 15 avril / 1er juin (sessions multiples)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les projets innovants favorisant le livre et la lecture.
+
+OBJECTIFS :
+- Developper des actions en direction de nouveaux publics
+- Considerer l'evolution des pratiques culturelles (papier-numerique)
+- Promouvoir le livre dans des approches interdisciplinaires
+
+CRITERES REQUIS :
+Originalite, conception innovante, diversite territoriale, rayonnement
+departemental ou regional.
+
+BENEFICIAIRES ELIGIBLES :
+Associations, collectifs d'auteurs, editeurs independants, libraires,
+collectivites territoriales.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention max 50% des depenses eligibles, plafonnee a 50 000 EUR.
+
+CONTACT : laurence.vintejoux@iledefrance.fr (01 53 85 67 53)
+
+--------------------------------------------------------------------------------
+AAP 095 - Soutien aux projets en faveur des animaux de compagnie
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-projets-en-faveur-des-animaux-de-compagnie
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme soutenant des initiatives ameliorant le bien-etre animal et
+renforçant le lien entre animaux de compagnie et populations vulnerables.
+
+OBJECTIFS :
+- Ameliorer le bien-etre animal, lutter contre la maltraitance/l'abandon
+- Favoriser l'utilisation partagee des espaces publics
+- Soutenir les publics fragiles (isoles, handicapes, sans abri, hospitalises)
+
+BENEFICIAIRES ELIGIBLES :
+Personnes morales (publiques ou privees) justifiant plus d'un an d'existence :
+collectivites, PME, associations 1901, ONG, fondations, GIP, coproprietes.
+
+MONTANT / NATURE DE L'AIDE :
+- Plafond : 100 000 EUR max
+- Taux : 50% max des depenses subventionnables
+
+CONTACT : solidarites@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 096 - Aide construction/restauration/amenagement musees et numerisation
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-construction-la-restauration-lamenagement-des-musees-et-la-numerisation-des-collections
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient l'attractivite et le rayonnement des musees franciliens en
+financant des projets d'investissement relatifs a leurs infrastructures.
+
+BENEFICIAIRES ELIGIBLES :
+Musees departementaux, intercommunaux, communaux ou associatifs labellises
+"Musee de France" (exclusion des musees nationaux).
+
+MONTANT / NATURE DE L'AIDE :
+Construction/Restauration :
+- 40% maximum des depenses eligibles, plafond 1 000 000 EUR
+
+Numerisation :
+- 30% maximum des depenses eligibles, plafond 30 000 EUR
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 097 - InvESS Ile-de-France
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/invess-ile-de-france
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme de fonds d'investissement renforçant les capitaux propres des
+structures de l'ESS et entreprises a impact.
+
+OBJECTIFS :
+Soutenir les structures ESS/impact dans quatre domaines prioritaires :
+- Climat, ressources et ecosystemes naturels
+- Inclusion et insertion
+- Prevention sante et bien vieillir
+- Education, citoyennete et economie collaborative
+
+BENEFICIAIRES ELIGIBLES :
+Structures IDF, non-cotees, tous statuts juridiques (associations, cooperatives, SIAE, SAS).
+- Amorcage : creees < 5 ans, revenus <= 1M EUR
+- Developpement : revenus >= 1M EUR, rentabilite en 18 mois max
+
+MONTANT / NATURE DE L'AIDE :
+- Amorcage : 150 000 EUR a 500 000 EUR
+- Developpement : 300 000 EUR a 2 500 000 EUR
+Actions, titres participatifs, titres associatifs, obligations + accompagnement.
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 098 - Aide restauration et numerisation fonds patrimonial identifie
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-et-numerisation-doeuvre-dun-fonds-patrimonial-identifie
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient la preservation et la conservation d'oeuvres issues d'un
+fonds identifie constituant le patrimoine materiel et immateriel regional.
+
+OBJECTIFS :
+- Preserver et conserver les archives photographiques, audiovisuelles et papier
+- Valoriser ces fonds aupres du public
+- Favoriser les programmations culturelles
+- Developper actions de sensibilisation des publics
+
+BENEFICIAIRES ELIGIBLES :
+Associations, Fondations, Entreprises, Professionnels culture/patrimoine,
+Collectivites, Bailleurs sociaux.
+
+MONTANT / NATURE DE L'AIDE :
+- 40% maximum des depenses eligibles
+- Plafond : 1 000 000 EUR
+- Financement minimal requis : 20% par porteur de projet
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (01 53 85 66 27)
+- Kamel.kacihi@iledefrance.fr (01 53 85 64 72)
+
+--------------------------------------------------------------------------------
+AAP 099 - Accompagnement Industries engagees
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-industries-engagees
+DATE LIMITE : 14 novembre 2024 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme inEdit valorisant et renforçant le role de l'ESS dans la
+reindustrialisation francilienne.
+
+OBJECTIFS :
+- Valoriser les structures ESS et developper leurs activites manufacturieres
+- Faciliter les rencontres entre structures ESS et entreprises industrielles
+- Renforcer les competences via cas pratiques et outils collectifs
+- Contribuer a un manifeste "Industries engagees"
+
+BENEFICIAIRES ELIGIBLES :
+Structures ESS franciliennes (tous secteurs) ayant ou souhaitant mettre en
+place des processus industriels.
+
+MONTANT / NATURE DE L'AIDE :
+Parcours collectif en 7 etapes gratuit (100% finance par la Region).
+Maximum 30 dirigeants selectionnes.
+
+CALENDRIER : Decembre 2024 a juillet 2025
+
+--------------------------------------------------------------------------------
+AAP 100 - Aide aux manifestations litteraires
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-manifestations-litteraires
+DATE LIMITE : Sessions multiples (01/12/2025, 10/02/2026, 01/05/2026, 10/07/2026)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les manifestations litteraires inscrites dans une dynamique
+territoriale, favorisant la decouverte de la creation litteraire.
+
+OBJECTIFS :
+- Encourager decouverte de la creation litteraire
+- Associer les acteurs de la chaine du livre
+- Soutenir salons, festivals et programmes de rencontres litteraires
+
+BENEFICIAIRES ELIGIBLES :
+Fondations, Associations loi 1901, ONG, Communes, Departements, EPCI/EPT.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention max 40% des depenses eligibles, plafonnee a 100 000 EUR.
+Taux bonifie a 50% pour projets en zones geographiques carencees.
+
+CONTACT : gwenaelle.hamelin@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 101 - Fabriques arts visuels
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fabriques-arts-visuels
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien regional aux projets contribuant au renouvellement des formes
+artistiques, portes par des structures de creation et d'experimentation.
+
+OBJECTIFS :
+- Favoriser un maillage d'espaces de travail independants
+- Accueillir artistes en residence (attention a la jeune creation)
+- Contribuer au renouvellement des formes artistiques
+
+BENEFICIAIRES ELIGIBLES :
+Associations, ateliers d'artistes autogerees, cooperatives artistiques,
+structures culturelles.
+
+MONTANT / NATURE DE L'AIDE :
+Conventions quadriennales avec avenants annuels.
+Plafond : 40% des depenses subventionnables, max 150 000 EUR.
+
+CONDITION IMPORTANTE : Contacter le charge de mission avant tout depot.
+
+CONTACT :
+- edouard.brena@iledefrance.fr
+- delphine.barberolle@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 102 - Aide aux projets editoriaux exceptionnels (professionnels du livre)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-editoriaux-exceptionnels-aide-aux-projets-des-professionnels-du-livre
+DATE LIMITE : 15 novembre / 15 janvier / 15 avril / 1er juin
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La region soutient des initiatives d'edition remarquables dont la viabilite
+economique depend d'un appui financier specifique.
+
+OBJECTIFS :
+Accompagner les projets editoriaux exceptionnels dont l'equilibre financier
+ne peut etre atteint par les seules ressources ordinaires de l'editeur.
+
+BENEFICIAIRES ELIGIBLES :
+Editeurs independants franciliens dans les champs de la creation litteraire
+et les sciences humaines.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention max 50% des depenses HT, plafonnee a 50 000 EUR.
+
+CONDITIONS :
+Livres imprimes dans l'UE, projet non debute a la presentation en commission.
+
+CONTACT : laurence.vintejoux@iledefrance.fr (01 53 85 67 53)
+
+--------------------------------------------------------------------------------
+AAP 103 - Contrat d'amenagement regional (CAR)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/contrat-damenagement-regional-car
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les collectivites dans leurs projets d'investissement
+concernant l'amenagement, le developpement et l'equipement durable du territoire.
+
+OBJECTIFS :
+Financer des projets d'investissement sur trois ans, soutenir l'equipement
+territorial durable.
+
+TYPES DE PROJETS :
+Petite enfance/famille (creches, groupes scolaires), espaces culturels/loisirs
+(salles polyvalentes, bibliotheques, equipements sportifs), equipements
+municipaux (accessibilite, centres de sante, voirie, stationnement).
+
+BENEFICIAIRES ELIGIBLES :
+Communes > 2 000 habitants, EPCI a fiscalite propre, EPT.
+
+MONTANT / NATURE DE L'AIDE :
+Communes : jusqu'a 50% des depenses eligibles (max 1 M EUR).
+EPCI/EPT : jusqu'a 30% des depenses eligibles (max 2 M EUR).
+
+CONTACT : amenagement@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 104 - Soutien a la telemedecine
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-la-telemedecine
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region facilite le deploiement des technologies medicales pour repondre
+aux problemes de desertification medicale dans les territoires.
+
+OBJECTIFS :
+Soutenir l'acquisition de materiels legers de teleconsultation inscrits dans
+un parcours de soins et ayant recu l'aval des autorites de sante.
+
+BENEFICIAIRES ELIGIBLES :
+Fondations, ONG, Associations loi 1901, Communes, EPCI, EPT, Metropole du Grand Paris,
+Departements, organismes publics, Entreprises.
+
+MONTANT / NATURE DE L'AIDE :
+50% de la depense subventionnable, plafonnee a 20 000 EUR pour equipements mobiles
+et non-mobiles.
+
+DEPENSES ELIGIBLES :
+Materiel de teleconsultation (chariot, ordinateur, equipement connecte,
+imprimante, terminal Vitale) et solutions informatiques associees.
+
+CONTACT : sante@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 105 - Aide restauration objets mobiliers proteges
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-des-objets-mobiliers-proteges
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region preserve le mobilier inscrit ou classe au titre des Monuments
+historiques, contribuant a l'attrait des sites patrimoniaux.
+
+BENEFICIAIRES ELIGIBLES :
+Proprietaires publics d'objets mobiliers proteges n'appartenant pas a l'Etat :
+Communes, Departements, EPCI, EPT, GIP, copropriete, EPA.
+
+MONTANT / NATURE DE L'AIDE :
+Mobilier classe : 20% maximum, plafond 15 000 EUR.
+Mobilier inscrit : 30% maximum, plafond 20 000 EUR.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 106 - Financement des formations sanitaires et sociales
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/financement-des-formations-sanitaires-et-sociales-informations-aux-elevesetudiants
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region prend en charge la formation sanitaire ou sociale de certains
+eleves/etudiants via une subvention de fonctionnement versee aux organismes
+de formation.
+
+FORMATIONS SANITAIRES CONCERNEES :
+Aide-soignant, Ambulancier, Auxiliaire de puericulture, Cadre de sante,
+Infirmier, Infirmier anesthesiste, Ergotherapeute, Masseur-kinesitherapeute,
+Psychomotricien, Sage-femme, et autres.
+
+FORMATIONS SOCIALES CONCERNEES :
+Accompagnant educatif et social, Assistant de service social, Educateur specialise,
+Educateur de jeunes enfants, Moniteur-educateur.
+
+BENEFICIAIRES ELIGIBLES :
+- Moins de 26 ans en continuite d'etudes
+- Demandeurs d'emploi
+- Beneficiaires RSA ou PEC
+- Apprenants sans diplome sur parcours complet
+
+MODALITES :
+Les organismes de formation gerent les demandes et informent les candidats.
+
+CONTACT : Conseil regional IDF - Tel. : +33 (0)1 53 85 53 85
+
+--------------------------------------------------------------------------------
+AAP 107 - Plan route de demain - Securite routiere
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-securite-routiere
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional de lutte contre l'insecurite routiere en IDF couvrant
+infrastructure, protection des usagers vulnerables et securisation des
+passages a niveaux.
+
+OBJECTIFS :
+- Identifier et traiter anomalies infrastructurelles
+- Intervenir sur zones d'accumulation d'accidents
+- Securiser transitions en entrees d'agglomeration
+- Proteger usagers vulnerables
+
+BENEFICIAIRES ELIGIBLES :
+Etat, Departements, EPCI, Syndicats mixtes, Communes.
+
+MONTANT / NATURE DE L'AIDE :
+- Etudes et infrastructure : 50% de la depense
+- Actions usagers vulnerables : 30% de la depense
+
+CONTACT : directiondestransports@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 108 - FEADER projets LEADER dev rural francilien (770501)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-projets-leader-contribuant-au-developpement-rural-francilien-770501
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme de soutien aux zones rurales et periurbaines d'IDF via 5 Groupes
+d'action locale (GAL) pour la periode 2023-2027.
+
+OBJECTIFS :
+Developpement des zones rurales et periurbaines, projets multi-sectoriels
+alignes avec les strategies locales des GAL.
+
+THEMATIQUES :
+Environnement, amenagement durable, economie circulaire, transition energetique,
+foret, alimentation, agriculture, tourisme, attractivite, identite locale.
+
+BENEFICIAIRES ELIGIBLES :
+Secteur prive : TPE/PME, entrepreneurs, proprietaires forestiers, agriculteurs,
+fondations, associations.
+Secteur public : collectivites, etablissements publics, chambres consulaires.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention jusqu'a 100% max des couts eligibles.
+Cofinancement LEADER : 80% maximum.
+
+CONTACT : leader@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 109 - 1 000 mares en Ile-de-France
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/1-000-mares-en-ile-de-france
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Le programme regional soutient la creation et la restauration de zones humides
+pour preserver la biodiversite et la trame verte et bleue francilienne.
+
+OBJECTIFS :
+- Preserver la biodiversite
+- Restaurer les zones humides
+- Reconstituer les corridors ecologiques
+
+TYPES DE PROJETS :
+Etudes pre-operationnelles, creation de mares et reseaux de mares, restauration
+et rehabilitation de mares existantes.
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales et leurs groupements, Associations loi 1901.
+
+MONTANT / NATURE DE L'AIDE :
+- Creation de mares : jusqu'a 80%, subvention max 5 000 EUR
+- Restauration de mares : jusqu'a 80%, subvention max 2 500 EUR
+
+CONTACT : biodiversite@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 110 - Premiere installation securisation des coproprietes
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/premiere-installation-dun-dispositif-de-securisation-des-coproprietes
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient l'installation d'equipements collectifs visant a renforcer
+la protection et la securite des habitants des coproprietes en zones prioritaires.
+
+OBJECTIFS :
+Accompagner les syndicats de coproprietaires dans la securisation des parties
+communes dans les quartiers politique de la Ville.
+
+BENEFICIAIRES ELIGIBLES :
+Syndicats de coproprietaires en geographie prioritaire QPV ou en difficulte
+avec label regional.
+
+MONTANT / NATURE DE L'AIDE :
+50% du cout total engage, limite de 5 000 EUR maximum.
+
+CONTACT :
+- loic.gandais@iledefrance.fr
+- veronique.darras@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 111 - Plan route demain - Desserte lycees et iles de loisirs
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-amelioration-de-la-desserte-des-lycees-et-des-iles-de-loisirs
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Le programme vise a ameliorer l'accessibilite par les transports en commun
+des etablissements regionaux majeurs et sites de detente.
+
+OBJECTIFS :
+- Favoriser la desserte par transports en commun des lycees et iles de loisirs
+- Ameliorer les amenagements de voirie pour les transports collectifs
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites locales, Etat, Etablissements publics, Communes, Departements, EPT.
+
+MONTANT / NATURE DE L'AIDE :
+Participation max egale a 70% de la depense HT.
+Amenagements limites a 300m autour des acces principaux.
+
+CONTACT : Conseil regional IDF - Tel. : +33 (0)1 53 85 53 85
+
+--------------------------------------------------------------------------------
+AAP 112 - Soutien installation professionnels de sante liberaux
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-linstallation-des-professionnels-de-sante-liberaux
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region aide les professionnels de sante liberaux s'installant pour la
+premiere fois dans les territoires les plus sous-dotes de la region.
+
+OBJECTIFS :
+- Favoriser l'installation de professionnels de sante en zones deficitaires
+- Renforcer l'offre de soins dans les territoires prioritaires
+
+BENEFICIAIRES ELIGIBLES :
+Generalistes et specialistes de premier recours (gynecos, pediatres, ophtalmologistes),
+Masseurs-kinesitherapeutes, Infirmiers, Sages-femmes.
+Conditions : premiere installation en liberal, zones ZIP/ZIP-R des depts
+77, 78, 91, 95 ou 93.
+
+MONTANT / NATURE DE L'AIDE :
+- Aide en investissement : 50% max des depenses eligibles
+- Plafond : 10 000 EUR par professionnel, 20 000 EUR par cabinet
+
+DEPENSES ELIGIBLES : travaux d'installation, equipement medical, informatique, mobilier.
+
+CONTACT : sante@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 113 - Soutien aux modes de garde innovants pour la petite enfance
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-modes-de-garde-innovants-pour-la-petite-enfance
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme soutenant l'accueil et le developpement d'enfants de 0 a 4 ans
+non scolarises et favorisant la professionnalisation des personnels.
+
+OBJECTIFS :
+- Accueillir et favoriser le developpement des jeunes enfants (0-4 ans)
+- Soutenir les enfants porteurs de handicap jusqu'a 6 ans
+- Ameliorer la professionnalisation des equipes de petite enfance
+- Renforcer les liens parents-enfants et les competences parentales
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901, collectivites, etablissements publics, fondations,
+mutuelles, organismes sanitaires et sociaux.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention en investissement : 50% max, limite 300 000 EUR.
+
+CONTACT : solidarites@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 114 - Soutien regional aux expressions citoyennes
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-regional-aux-expressions-citoyennes
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme promouvant des initiatives citoyennes pour renforcer le lien social
+et favoriser la transmission de savoir et le patrimoine vivant francilien.
+
+OBJECTIFS :
+- Promotion et organisation d'evenements d'expressions citoyennes
+- Transmission de savoirs et savoir-faire
+- Collecte et diffusion de memoires franciliennes
+- Developpement de supports pedagogiques et citoyens
+
+BENEFICIAIRES ELIGIBLES :
+Personnes morales de droit prive a but non lucratif : associations et fondations
+reconnues d'utilite publique avec plus d'un an d'existence.
+
+MONTANT / NATURE DE L'AIDE :
+80% max de la depense subventionnable, plafond 100 000 EUR par an.
+Depenses de fonctionnement exclusivement.
+
+CONTACT : sports@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 115 - Sante numerique et innovation
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/sante-numerique-et-innovation
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien regional pour les projets innovants utilisant les nouvelles technologies
+dans le domaine de la sante, pour ameliorer les soins et le travail des professionnels.
+
+OBJECTIFS / THEMATIQUES :
+Innovation en sante, Intelligence artificielle, Telemedecine / teleconsultation /
+teleexpertise, Coordination des professionnels de sante, Amelioration de la
+prise en charge des patients.
+
+BENEFICIAIRES ELIGIBLES :
+Prioritaires : associations loi 1901 et fondations (> 1 an d'existence).
+Collectivites, EPCI, etablissements publics, GIP (pour projets innovants).
+Etablissements d'enseignement superieur et recherche (pour projets de recherche).
+
+MONTANT / NATURE DE L'AIDE :
+Subvention en fonctionnement : 50% des depenses subventionnables,
+plafonne a 50 000 EUR par annee par structure.
+
+CONTACT : sante@iledefrance.fr - Tel. : 01.53.85.53.85
+
+--------------------------------------------------------------------------------
+AAP 116 - Plan route demain - PEMR, voies reservees, aires de covoiturage
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-route-de-demain-pemr-voies-reservees-et-aires-de-covoiturage
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Initiative regionale visant a transformer les usages de la route pour les
+rendre plus modernes, performants et respectueux de l'environnement.
+
+OBJECTIFS :
+- Reduire la congestion routiere
+- Moderniser et optimiser l'utilisation du reseau routier
+- Promouvoir des solutions ecologiquement responsables
+
+TYPES DE PROJETS :
+Poles d'echanges multimodaux routiers (PEMR), aires de covoiturage (min 5 places),
+voies reservees.
+
+BENEFICIAIRES ELIGIBLES :
+Etat, Departements, EPCI, Communes, Syndicats mixtes, Ville de Paris.
+
+MONTANT / NATURE DE L'AIDE :
+Taux : 50% de la depense du maitre d'ouvrage.
+Plafonds : PEMR sans plafond, Voies reservees sans plafond,
+Aires de covoiturage 1 000 EUR par place max.
+
+CONTACT : directiondestransports@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 117 - Fonds Ile-de-France Decarbonation
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-ile-de-france-decarbonation
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional soutenant l'emergence de futurs champions franciliens de la
+transition ecologique via des investissements en fonds propres.
+
+OBJECTIFS :
+Accompagner les entreprises innovantes en levee de fonds pour les secteurs :
+energies renouvelables, hydrogene, efficacite energetique, mobilite durable,
+economie circulaire, capture carbone.
+
+BENEFICIAIRES ELIGIBLES :
+PME avec siege social ou essentiel de l'activite en IDF.
+CA entre 2 et 10 millions d'euros.
+Solutions innovantes en transition energetique.
+
+MONTANT / NATURE DE L'AIDE :
+Tickets compris entre 3 et 10 millions d'euros.
+Participations minoritaires au capital.
+
+PLATEFORME : decarbonation.iledefrance.fr
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 118 - Contrat rural
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/contrat-rural
+DATE LIMITE : 19/01/2026, 06/04/2026, 06/07/2026, 31/08/2026
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les projets de construction, renovation ou amenagement des
+collectivites dans les territoires ruraux de grande couronne
+(departements 77, 78, 91, 95).
+
+OBJECTIFS :
+Financer des equipements et amenagements collectifs, notamment dans les domaines
+petite enfance, culture, loisirs et services municipaux.
+
+BENEFICIAIRES ELIGIBLES :
+- Communes de moins de 2 000 habitants
+- Syndicats de communes de moins de 3 000 habitants
+
+MONTANT / NATURE DE L'AIDE :
+- Communes : jusqu'a 500 000 EUR de depenses eligibles
+- Syndicats : jusqu'a 770 000 EUR de depenses eligibles
+- Composition : 40% subvention regionale + 30% subvention departementale
+
+CONTACT : contrats-ruraux@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 119 - Fonds Regional de Garantie
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-regional-de-garantie
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Dispositif regional facilitant l'acces au credit bancaire par la garantie de
+prets moyen et long terme, en partenariat Region IDF / Bpifrance.
+
+OBJECTIFS :
+- Reduire la caution personnelle demandee par les banques
+- Faciliter le financement via co-garantie jusqu'a 80%
+
+BENEFICIAIRES ELIGIBLES :
+Createurs d'entreprise, TPE, PME, Artisans, Commercants.
+PME : moins de 250 salaries, CA < 50 M EUR ou bilan < 43 M EUR.
+
+PROJETS FINANÇABLES :
+Creation d'entreprise, developpement, croissance externe, transmission,
+renforcement de tresorerie, investissements materiels.
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 120 - Aide aux structures innovantes handicap et dependance
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-structures-innovantes-dans-les-domaines-du-handicap-et-de-la-dependance
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region s'engage a aider les structures innovantes dans les domaines du
+handicap et de la dependance.
+
+OBJECTIFS :
+- Soutenir la creation, extension, restructuration d'etablissements medico-sociaux
+- Financer des projets innovants en habitat alternatif
+- Acquerir des vehicules adaptes au transport PMR
+- Developper des projets de recherche dans le secteur
+
+BENEFICIAIRES ELIGIBLES :
+Institutions sociales et medico-sociales, organismes gestionnaires, GCS,
+Collectivites, Associations loi 1901, Fondations, Bailleurs sociaux.
+
+MONTANT / NATURE DE L'AIDE :
+- Travaux et equipement : 50% max, plafond 300 000 EUR par etablissement/service
+- Vehicules : 50% max, plafond 10 000 EUR par vehicule
+
+CONTACT : delegationhandicap@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 121 - Silencieux avions ecoles franciliens
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/silencieux-avions-ecoles-franciliens
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme de financement pour installer des dispositifs reduisant le bruit des
+avions ecoles en IDF, en partenariat Region, Aeroports de Paris et FFA.
+
+OBJECTIFS :
+- Reduire les nuisances sonores des aeronefs d'ecole
+- Ameliorer la classification acoustique CALIPSO des avions
+- Diminuer la pollution sonore percue par les riverains
+
+BENEFICIAIRES ELIGIBLES :
+Structures associatives aeroclubs affilies a la FFA, reconnus ATO ou DTO,
+en situation regulieree aupres d'Aeroports de Paris.
+
+MONTANT / NATURE DE L'AIDE :
+Financement jusqu'a 100% des depenses eligibles, plafond 30 000 EUR :
+- ADP : maximum 30% (9 000 EUR)
+- Region : maximum 70% (21 000 EUR)
+Gain acoustique minimum de 2 classes CALIPSO requis.
+
+CONTACT : Conseil regional IDF - Tel. : +33 (0)1 53 85 53 85
+
+--------------------------------------------------------------------------------
+AAP 122 - Aide a la promotion des editeurs
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-promotion-des-editeurs-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+DATE LIMITE : 15 novembre / 15 janvier / 15 avril / 1er juin
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Accompagnement regional pour promouvoir les editeurs independants, notamment
+via leur participation a des salons et foires.
+
+OBJECTIFS :
+Soutenir la promotion des editeurs independants et leur developpement commercial.
+
+BENEFICIAIRES ELIGIBLES :
+Editeurs independants, regroupements d'editeurs, entreprises (TPE, PME, ETI, GE).
+Conditions : valeur culturelle de la ligne editoriale, edition comme activite
+principale, plus d'une annee d'activite.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention max 50% de la depense HT, plafonnee a 50 000 EUR.
+
+CONTACT : laurence.vintejoux@iledefrance.fr (01 53 85 67 53)
+
+--------------------------------------------------------------------------------
+AAP 123 - Accompagnement Competitivite et Decarbonation de l'industrie
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-competitivite-et-decarbonation-de-lindustrie
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional soutenant les PME et ETI industrielles dans leur
+modernisation et transition ecologique, porte par le CETIM en partenariat
+avec la CCI Paris IDF.
+
+OBJECTIFS :
+- Apporter des solutions operationnelles a court terme
+- Elaborer une feuille de route strategique sur les transitions numerique,
+  energetique et environnementale
+- Securiser investissements et innovations
+
+BENEFICIAIRES ELIGIBLES :
+TPE (min 5 salaries), PME et ETI industrielles avec au moins 1 site de
+production en IDF.
+
+MONTANT / NATURE DE L'AIDE :
+Etape 1 (etat des lieux) : 100% prise en charge PME, 50% ETI
+Etape 2 (mise en oeuvre) : 60% prise en charge PME, 30% ETI
+
+CONTACT : industrie-decarbonee@cetim.fr
+
+--------------------------------------------------------------------------------
+AAP 124 - Soutien a la renovation des ascenseurs
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-la-renovation-des-ascenseurs
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les syndicats de coproprietes dans la renovation ou le
+remplacement d'ascenseurs anciens (plus de 40 ans) ou avec pannes frequentes.
+
+OBJECTIFS :
+- Financer etudes pre-operationnelles et AMO
+- Soutenir travaux de renovation ou remplacement
+- Exiger performance energetique (classe A, B ou C)
+
+BENEFICIAIRES ELIGIBLES :
+Syndicats de coproprietaires avec au minimum 30% de coproprietaires-occupants,
+en procedure publique de prevention/redressement OU label "Copropriete en difficulte".
+
+MONTANT / NATURE DE L'AIDE :
+Maximum 50% de la depense TTC.
+Etudes : plafond 1 000 EUR.
+Travaux par ascenseur : plafond 30 000 EUR.
+
+CONTACT :
+- loic.gandais@iledefrance.fr
+- veronique.darras@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 125 - Plan regional piscines et patinoires
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-regional-piscines-et-patinoires
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional pour reduire les deficits en equipements aquatiques et de
+patinage en IDF, favorisant l'acces aux personnes handicapees.
+
+OBJECTIFS :
+- Combler les carences en patinoires et piscines
+- Repondre aux besoins des clubs residents
+- Faciliter l'acces pour les personnes en situation de handicap
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales, Syndicats mixtes, EPCI, Communes, Departements,
+Federation française des sports de glace et hockey sur glace (pour patinoires).
+
+MONTANT / NATURE DE L'AIDE :
+Centres aquatiques :
+- Rehabilitations : 15% plafonne a 3 M EUR HT
+- Rehabilitations-extensions/constructions : 10% plafonne a 8 M EUR HT
+
+Patinoires :
+- Rehabilitations : 15% max plafonne a 3 M EUR HT
+- Constructions : 10% max plafonne a 8 M EUR HT
+
+CONTACT :
+- soutien-equipements-sportifs@iledefrance.fr
+- Mathieu Leopold : 01 53 85 61 33
+
+--------------------------------------------------------------------------------
+AAP 126 - Soutien creation et rehabilitation equipements sportifs franciliens
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-regional-la-creation-et-la-rehabilitation-dequipements-sportifs-franciliens
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme d'aide visant a reduire les carences en equipements sportifs et
+favoriser la pratique sportive des Franciliens, avec priorite accordee aux
+femmes, personnes handicapees et lyceens.
+
+TYPES DE PROJETS :
+Equipements exterieurs et couverts, salles specialisees (dojos, boxe, centres
+equestres), espaces en acces libre, projets d'eclairage et vestiaires,
+equipements esportifs.
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites et EPCI, federations et clubs sportifs agrees, societes sportives,
+etablissements medico-sociaux, personnes morales privees.
+
+MONTANT / NATURE DE L'AIDE :
+Variable selon nature d'equipement, usages, publics accueillis et carence
+territoriale (consulter reglement).
+
+CONTACT :
+- soutien-equipements-sportifs@iledefrance.fr
+- Mathieu Leopold : 01 53 85 61 33
+- Victor Carriere : 01 53 85 60 52
+
+--------------------------------------------------------------------------------
+AAP 127 - Dispositif Vehicules propres - Prime non-casse - Retro-fit
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/dispositif-vehicules-propres-prime-la-non-casse-transformation-de-vehicules-thermiques
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region aide les particuliers, communes et petites entreprises a transformer
+leurs vehicules thermiques en vehicules electriques (retro-fit).
+
+OBJECTIF :
+Ameliorer la qualite de l'air en favorisant la conversion electrique des
+vehicules et eviter leur mise a la casse.
+
+BENEFICIAIRES ELIGIBLES :
+- Particuliers residant en IDF
+- Entreprises en IDF (jusqu'a 50 salaries)
+- Communes franciliennes < 10 000 habitants
+
+CONDITIONS :
+Etre proprietaire du vehicule, s'engager a ne pas le revendre/louer pendant 2 ans.
+Limite : 1 vehicule par beneficiaire.
+
+MONTANT / NATURE DE L'AIDE :
+Jusqu'a 1 000 EUR pour 2-roues et 3-roues.
+Jusqu'a 6 000 EUR pour vehicules 4-roues.
+Plafond cumulatif : 50% du cout total de transformation.
+Retro-fit par professionnel agree selon arrete du 13 mars 2020.
+
+CONTACT : Tel. : +33 (0)1 53 85 53 85
+
+--------------------------------------------------------------------------------
+AAP 128 - AMI solutions digitales collectivites pour les commerces
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/ami-solutions-digitales-destination-des-collectivites-pour-le-developpement-des-commerces
+DATE LIMITE : 31 mai 2020 (ferme - archivee)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region IDF a lance un appel pour identifier des solutions numeriques aidant
+les collectivites a developper le commerce local.
+
+OBJECTIFS :
+- Solutions operationnelles pour collectivites (referencement commerces,
+  click and collect, marketplace, fidelisation)
+- Formations numeriques destinees aux commerces
+
+BENEFICIAIRES :
+Collectivites (communes, communautes de communes), entreprises proposant
+des solutions operationnelles.
+
+MONTANT / NATURE DE L'AIDE :
+Communication regionale et visibilite sur plateforme numerique (pas de
+subvention directe).
+
+NOTE : Cette fiche est archivee (date limite passee en 2020).
+
+CONTACT : vanessa.cabrol@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 129 - Rehabiliter plutot que construire
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/rehabiliter-plutot-que-construire
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les collectivites engagees dans la restauration de batiments
+existants plutot que dans la creation de nouveaux.
+
+OBJECTIFS :
+- Favoriser la revitalisation du bati existant
+- Reduire l'etalement urbain
+- Soutenir les equipements publics via la rehabilitation
+
+BENEFICIAIRES ELIGIBLES :
+Communes, EPCI a fiscalite propre, EPT, Syndicats de communes.
+(Batiments classes monuments historiques exclus)
+
+MONTANT / NATURE DE L'AIDE :
+- Pre-etudes : jusqu'a 70% (max 50 000 EUR pour petites communes)
+- Revitalisation : jusqu'a 50% (max 250 000 EUR)
+- Honoraires MOE : 15% maximum du cout HT
+
+CONTACT : amenagement@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 130 - Plan Vert d'Ile-de-France - espaces verts
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/plan-vert-dile-de-france-soutien-la-creation-et-la-requalification-despaces-verts
+DATE LIMITE : Depot ouvert (nouveau reglement juillet 2026)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Initiative regionale visant a reduire la carence en espaces verts en IDF en
+developpant des surfaces accessibles gratuitement aux habitants.
+
+OBJECTIFS :
+- Creer ou requalifier des espaces verts ouverts au public sans frais
+- Favoriser la desimpermeabilisation et la biodiversite
+- S'adapter au changement climatique
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales et groupements (teleservice ferme jusqu'au 1er juillet 2026),
+societes publiques locales, associations (jardins familiaux, pedagogiques, partages),
+bailleurs sociaux, hopitaux.
+
+CONTACT : planvert@iledefrance-nature.fr
+
+--------------------------------------------------------------------------------
+AAP 131 - Soutien a l'equipement en videoprotection
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-lequipement-en-videoprotection
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La region finance l'installation de cameras de surveillance sur l'espace
+public pour prevenir la delinquance routiere.
+
+BENEFICIAIRES ELIGIBLES :
+Communes, EPCI, EPT.
+
+MONTANT / NATURE DE L'AIDE :
+Extension : 30% (autres territoires) ou 40% (zones de securite prioritaire).
+Creation : 35% (autres territoires) ou 50% (ZSP).
+Plafond : 15 000 EUR par camera.
+
+EQUIPEMENTS INELIGIBLES : etudes, entretien, formations, garanties etendues,
+batiments de supervision.
+
+CONTACT :
+- Bruno Tellier : 01 53 85 57 32 (depts 77, 92, 93, 94)
+- Michel Mora : 01 53 85 79 28 (depts 75, 78, 91, 95)
+- SSP@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 132 - FEADER projets LEADER portes par les GAL (770502)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-projets-leader-portes-par-les-groupes-daction-locale-770502
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les initiatives deployees par 5 Groupes d'action locale
+(GAL) selectionnes pour animer leurs territoires selon le programme LEADER.
+
+OBJECTIFS :
+Projets repondant aux strategies locales couvrant : animation LEADER,
+environnement, economie circulaire, transition energetique, foret, alimentation,
+tourisme, identite locale.
+
+BENEFICIAIRES ELIGIBLES :
+Les 4 structures porteuses de GAL : ADADSA (Seine-Aval), Terre et Cite
+(Plateau de Saclay), PNR du Gatinais français, Seine-et-Marne Attractivite
+(SUD77 et Terres de Brie).
+
+MONTANT / NATURE DE L'AIDE :
+Taux d'aide publique : 100% maximum.
+Taux de cofinancement LEADER : 80% maximum.
+
+CONTACT : leader@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 133 - TP'up
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/tpup
+DATE LIMITE : Pas de date limite (dispositif continu)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme d'aide regionale pour accompagner les tres petites entreprises dans
+leur transformation ecologique et energetique.
+
+OBJECTIFS :
+- Accompagner TPE dans la transformation ecologique
+- Soutenir des projets de croissance createurs d'emplois
+- Developper la circularite economique et l'eco-conception
+- Relocaliser/implanter des activites en IDF
+
+BENEFICIAIRES ELIGIBLES :
+TPE, Artisans, Commercants, Associations avec activite economique.
+Criteres : 1 a moins de 10 salaries, CA ou bilan <= 2M EUR, min 1 etablissement IDF,
+1 an d'existence minimum.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention directe, plafond standard 55 000 EUR.
+Plafond exceptionnel 82 500 EUR (zones reconquete, fort impact ecologique).
+
+SECTEURS NON ELIGIBLES : negoce, conseil, professions liberales, finance,
+restauration, formation, transport routier, agriculture.
+
+WEBINAIRES : 3 juillet, 4 septembre, 16 octobre, 27 novembre 2026,
+8 janvier 2027 (a 9h30).
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 134 - FoRTE - Bourse aux Jeunes artistes 2025
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-regional-pour-les-talents-emergents-forte-bourse-aux-jeunes-artistes-2025
+DATE LIMITE : 8 octobre - 19 decembre 2025 (session unique)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional soutenant la jeune creation en IDF permettant aux jeunes
+artistes de 18 a 30 ans d'etre aides financierement pour leur premiere oeuvre
+professionnelle.
+
+DOMAINES :
+Arts plastiques/visuels, cinema-video, musique, arts de la scene (theatre, danse,
+cirque), projets hybrides.
+
+BENEFICIAIRES ELIGIBLES :
+Jeunes artistes et createurs de 18 a 30 ans :
+- Diplomes d'ecole d'art ou justifiant formation qualifiante
+- Residant en IDF durant le projet
+- Collaborant obligatoirement avec une structure d'accompagnement
+
+MONTANT / NATURE DE L'AIDE :
+La bourse peut representer jusqu'a 2 500 EUR par mois sur 10 mois maximum.
+Versement en deux parts.
+
+CONTACT : forte@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 135 - Aide aux projets des groupements professionnels chaine du livre
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-groupements-aide-aux-projets-des-professionnels-de-la-chaine-du-livre
+DATE LIMITE : 15 novembre / 15 janvier / 15 avril / 1er juin
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne l'elaboration d'outils et d'actions communes par des
+groupements de professionnels du livre et de la lecture.
+
+OBJECTIFS :
+- Structurer un secteur professionnel via des actions mutualisees
+- Promouvoir le livre et la lecture via des projets rassemblant differents
+  acteurs (auteurs, libraires, bibliothecaires)
+- Developper des actions sur les territoires franciliens
+
+BENEFICIAIRES ELIGIBLES :
+Associations, collectifs d'auteurs, editeurs independants, libraires,
+collectivites territoriales (via bibliotheques).
+
+MONTANT / NATURE DE L'AIDE :
+Subvention max 50% de la depense eligible, plafonne a 50 000 EUR.
+
+CONTACT : laurence.vintejoux@iledefrance.fr (01 53 85 67 53)
+
+--------------------------------------------------------------------------------
+AAP 136 - Renovation energetique des equipements sportifs
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/renovation-energetique-des-equipements-sportifs
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les operations de renovation energetique et climatique des
+equipements sportifs couverts dans le cadre de sa strategie energie-climat.
+
+OBJECTIFS :
+Ameliorer la performance energetique des installations sportives regionales
+en realisant un gain energetique minimal de 30%.
+
+TYPES DE PROJETS :
+Etudes (diagnostic energetique avec au moins 2 scenarios) et Travaux de
+renovation (gymnases, piscines, patinoires, dojos).
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales et regroupements, mouvements sportifs
+(clubs, ligues, comites, federations).
+
+MONTANT / NATURE DE L'AIDE :
+- Etudes : jusqu'a 70% du cout TTC/HT (plafonne a 50 000 EUR)
+- Travaux : jusqu'a 50% du cout TTC/HT (plafonne a 450 000 EUR)
+
+CONTACT : aap-equipement-sportif@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 137 - Aide valorisation maisons/ateliers artistes remarquables
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-oeuvrant-la-valorisation-des-maisons-ou-des-ateliers-dartistes-remarquables
+DATE LIMITE : 30 novembre 2026 (session 2027)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien financier aux actions visant a valoriser et mieux faire connaitre les
+maisons d'artistes presentant une forte dimension patrimoniale.
+
+TYPES DE PROJETS :
+Valorisation (expositions, documentaires, sites web, publications), mediation
+(cartes numeriques, livrets, parcours), pedagogie (mallettes, MOOCs), evenements.
+
+BENEFICIAIRES ELIGIBLES :
+Proprietaires publics/prives de maisons d'artistes, personnes morales chargees
+de ce patrimoine, etablissements labellises "Maisons des illustres" par la DRAC.
+
+MONTANT / NATURE DE L'AIDE :
+Taux max : 40% des depenses eligibles. Plafond : 30 000 EUR.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 138 - Pack Relance Ile-de-France
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/pack-relance-ile-de-france
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme d'accompagnement pour PME et ETI industrielles et evenementielles
+franciliennes ayant subi des impacts economiques lies a la crise sanitaire Covid-19.
+
+OBJECTIFS :
+- Fournir un diagnostic complet de la situation
+- Mesurer l'impact de la crise
+- Definir un plan d'action pour la relance et la croissance
+
+BENEFICIAIRES ELIGIBLES :
+PME ou ETI (< 5 000 salaries, CA < 1,5 Md EUR) des secteurs industriels ou
+services a l'industrie (aeronautique, automobile, agroalimentaire, sante prioritaires),
+activites evenementielles.
+
+MONTANT / NATURE DE L'AIDE :
+Diagnostic gratuit de 3 jours (feuille de route) entierement finance par la Region.
+
+CONTACT : packrelance@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 139 - Soutien apres-cancer, drepanocytose, soins palliatifs
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-personnes-concernees-par-lapres-cancer-la-drepanocytose-ou-les-soins-palliatifs
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Dans le cadre de sa politique Region solidaire, la Region IDF finance des
+initiatives soutenant les personnes touchees par ces trois domaines sanitaires.
+
+OBJECTIFS :
+- Apres-cancer : ameliorer la qualite de vie et faciliter le retour professionnel
+- Soins palliatifs : diffuser l'information sur les dispositifs de fin de vie
+- Drepanocytose : sensibiliser, depister et ameliorer la prise en charge
+
+BENEFICIAIRES ELIGIBLES :
+Prioritairement : associations loi 1901 et fondations RUP (> 1 an d'existence).
+Pour projets innovants : collectivites, etablissements publics, GIP.
+Pour recherche : etablissements d'enseignement superieur et de recherche.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention a 50% des depenses eligibles, maximum 50 000 EUR par an par operateur.
+
+CONTACT : sante@iledefrance.fr - Tel. : 01 53 85 53 85
+
+--------------------------------------------------------------------------------
+AAP 140 - Investissement culturel - Aide aux travaux et a l'acquisition d'equipements
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/investissement-culturel-aide-aux-travaux-et-lacquisition-dequipements
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les travaux des batiments culturels et les acquisitions
+d'equipements dans le secteur culturel.
+
+DOMAINES :
+Enseignement artistique (conservatoires), spectacle vivant (lieux repetition,
+formation, diffusion), arts plastiques (centres d'art, ateliers collectifs),
+cinema (cinemas classes art et essai).
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales, amanageurs mandates, personnes morales droit
+prive/public (min 1 an d'existence), associations, fondations, ONG, communes.
+
+MONTANT / NATURE DE L'AIDE :
+- 30% des depenses eligibles (plafond 6,5 M EUR)
+- 40% pour acquisitions d'equipements sans travaux (plafond 1 M EUR)
+
+CONTACT :
+- Spectacle vivant/enseignement : christine.vacher@iledefrance.fr
+- Arts plastiques/numeriques : edouard.brena@iledefrance.fr
+- Cinema : marianne.feingold@iledefrance.fr
+- Livre/lecture : gwenaelle.hamelin@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 141 - Cheque vert pour la transition ecologique
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-vert-pour-la-transition-ecologique
+DATE LIMITE : 30 novembre 2022 (DEFINITIVAMENTE CLOTURE)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Aide financiere aux artisans et commercants franciliens pour leur transition
+ecologique. REMPLACEE par le Cheque efficacite energetique depuis 01/12/2022.
+
+OBJECTIFS :
+- Developper la consigne pour reemploi
+- Optimiser le tri et la gestion des dechets
+- Diminuer les consommations d'energie et d'eau
+
+BENEFICIAIRES ELIGIBLES :
+Commercants de proximite ou artisans, effectif < 20 salaries.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention jusqu'a 1 500 EUR selon bareme progressif.
+
+NOTE : Dispositif ferme. Voir le nouveau "Cheque efficacite energetique".
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 142 - Logement locatif intermediaire (LLI)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/logement-locatif-intermediaire-lli
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient la creation nette de logements locatifs intermediaires
+pour les "travailleurs cles" indispensables au fonctionnement de la societe.
+
+OBJECTIFS :
+Soutenir des programmes destines aux travailleurs cles des secteurs sante,
+securite, education, transports et autres domaines essentiels.
+
+BENEFICIAIRES ELIGIBLES :
+Organismes HLM, filiales HLM, SEM de construction, organismes sous controle
+d'Action Logement Immobilier, personnes morales dont le capital est detenu
+par entites soumises a l'impot sur les societes.
+
+MONTANT / NATURE DE L'AIDE :
+5% max de la depense HT liee aux travaux et honoraires, plafond 5 000 EUR
+par logement. Primes supplementaires possibles pour projets energetiques
+performants, eco-construction ou vegetalisation.
+
+CONTACT :
+- angelo.zagalolo@iledefrance.fr
+- jerome.de-vivies@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 143 - Laicite, valeurs de la Republique et prevention de la radicalisation
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/laicite-valeurs-de-la-republique-et-prevention-de-la-radicalisation
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient des projets visant a defendre les principes republicains
+et a lutter contre la radicalisation.
+
+OBJECTIFS (4 axes) :
+1. Affirmer le principe de laicite
+2. Prevenir la radicalisation
+3. Renforcer une culture commune de vigilance
+4. Prevenir et combattre les derives dans le domaine sportif
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901, Communes, Departements, EPCI/EPT, Fondations, ONG.
+
+MONTANT / NATURE DE L'AIDE :
+Taux max : 80% de la depense subventionnable.
+Plafond : 100 000 EUR max par an.
+Destine au financement d'un projet specifique.
+
+CONTACT : preventionradicalisation@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 144 - Cheque prevention
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-prevention
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Aide regionale pour favoriser l'acces des entreprises franciliennes aux
+procedures amiables de prevention (mandat ad hoc ou conciliation).
+
+OBJECTIFS :
+- Favoriser l'acces aux procedures amiables de prevention
+- Preserver l'activite economique et les emplois
+- Soutenir les TPE et PME en difficulte financiere
+
+BENEFICIAIRES ELIGIBLES :
+Artisans, commercants, societes commerciales, associations avec activite economique.
+Immatricules >= 2 ans, effectif 1 a < 250 salaries, CA <= 50 M EUR, siege IDF.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention de 10 000 EUR avec depenses eligibles minimales de 3 000 EUR HT.
+Couvre frais de greffe, honoraires expert-comptable/commissaire, honoraires
+mandataire ad hoc/conciliateur, frais IBR.
+
+CONTACT :
+- cheque-prevention-idf@asp-public.fr (dossiers en cours)
+- cheque-prevention@iledefrance.fr (questions prealables)
+
+--------------------------------------------------------------------------------
+AAP 145 - PM'up
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/pmup
+DATE LIMITE : Pas de date limite (candidatures continues)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les PME dans leur transformation ecologique et energetique
+et soutient leurs projets de developpement createurs d'emplois.
+
+OBJECTIFS :
+- Favoriser la decarbonation et la circularite des moyens de production
+- Produire localement des produits/services strategiques
+- Sauvegarder activites et savoir-faire menaces
+- Creer des emplois directs et indirects
+
+BENEFICIAIRES ELIGIBLES :
+PME (toute forme juridique), 5 a 250 salaries, CA <= 50 M EUR ou bilan <= 43 M EUR,
+au moins 1 etablissement IDF.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention plafonnee a 250 000 EUR (375 000 EUR exceptionnel).
+Taux maximum : 50% des depenses eligibles.
+
+SECTEURS NON ELIGIBLES : negoce, conseil, professions liberales, finance,
+hotellerie-restauration, formation, transport routier, logistique, services
+numeriques, communication/multimedia, agriculture primaire.
+
+WEBINAIRES : disponibles regulierement (voir site).
+
+CONTACT : aides.economiques@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 146 - Fonds soutien artisans et commercants emeutes urbaines
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/fonds-de-soutien-aux-artisans-et-commercants-touches-par-les-emeutes-urbaines
+DATE LIMITE : 30 septembre 2023 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region aide les commerçants et artisans ayant subi des degradations
+materielles lors des emeutes urbaines de juin-juillet 2023.
+
+OBJECTIFS :
+Assurer un accompagnement financier aux petits commerces et entreprises
+artisanales sinistreces. "Zero reste a charge apres le passage des assurances."
+
+BENEFICIAIRES ELIGIBLES :
+Entreprises franciliennes (commerces, artisans, professions liberales, independants).
+Effectif : 0 a 50 salaries. Degradations subies entre 27 juin et 8 juillet 2023.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention de 500 EUR a 10 000 EUR selon paliers progressifs.
+
+CONTACT : urgencecommerce@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 147 - Cap vers l'Aero Excellence
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/cap-vers-laero-excellence
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les PME et ETI industrielles du secteur aeronautique et
+spatial dans la realisation de leur feuille de route de transformation selon
+le referentiel Aero Excellence™ du GIFAS.
+
+OBJECTIFS :
+- Accompagner les entreprises aeronautiques selon le referentiel Aero Excellence
+- Soutenir la transformation industrielle et l'excellence operationnelle
+- Integrer les enjeux de transition ecologique
+
+BENEFICIAIRES ELIGIBLES :
+TPE (min 10 salaries), PME et ETI industrielles, au moins 1 site de production IDF,
+plus de 3 ans d'anciennete.
+Respect de la regle de minimis (max 300 000 EUR d'aides publiques sur 3 ans).
+
+MONTANT / NATURE DE L'AIDE :
+Etape 1 (diagnostic 4,5 jours) :
+- PME : 100% prise en charge
+- ETI : 50% prise en charge
+Etape 2 (accompagnement 12 jours) :
+- PME : 60% prise en charge
+- ETI : 30% prise en charge
+
+CONTACT : asd@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 148 - Creation et amelioration espaces verts ouverts au public
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/creation-et-amelioration-despaces-verts-ouverts-au-public
+DATE LIMITE : Depot ouvert toute l'annee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Dans le cadre du Plan vert, IDF Nature finance la creation d'espaces verts et
+naturels ainsi que l'amelioration des espaces verts existants accessibles
+au public.
+
+OBJECTIFS :
+- Creer et ouvrir des espaces verts et naturels au public
+- Rendre les espaces existants plus favorables a la biodiversite
+- Augmenter la resilience face aux changements climatiques
+- Desimpermeabiliser et vegetaliser les zones artificialisees
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901, collectivites (communes, departements, EPCI, EPT),
+bailleurs sociaux, GIP, EPA, coproprietes.
+
+MONTANT / NATURE DE L'AIDE :
+Creation :
+- Communes tres carencees : 60% - max 1 M EUR
+- Communes carencees : 50% - max 500 000 EUR
+- Communes non carencees : 40% - max 500 000 EUR
+
+Requalification : 60%, 50% ou 40% selon carence - max 250 000 EUR.
+
+CONTACT : planvert@iledefrance-nature.fr
+
+--------------------------------------------------------------------------------
+AAP 149 - Restauration de continuites ecologiques terrestres
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/restauration-de-continuites-ecologiques-terrestres
+DATE LIMITE : Depot ouvert toute l'annee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne l'emergence et la realisation de projets de restauration
+des continuites ecologiques terrestres.
+
+OBJECTIFS :
+- Identifier les sites a enjeux pour la trame verte
+- Mobiliser les acteurs du territoire
+- Accompagner la mise en oeuvre de projets de restauration
+
+ACTIONS SOUTENUES :
+AMO, etudes prealables (diagnostics, faisabilite, conception), honoraires MOE,
+travaux (passages a faune, corridors vegetalises, plantations, renaturation).
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites, associations, etablissements publics, bailleurs sociaux,
+universites et organismes de recherche.
+
+MONTANT / NATURE DE L'AIDE :
+Jusqu'a 70% des depenses eligibles (subvention max 500 000 EUR par projet).
+
+CONTACT : biodiversite@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 150 - Jeunesse et promesse republicaine
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/jeunesse-et-promesse-republicaine
+DATE LIMITE : Sessions multiples (2 novembre 2025, 2 mars 2026, 10 juin 2026)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Soutien regional aux actions visant a repondre aux enjeux de la promesse
+republicaine, principalement aupres de la jeunesse francilienne, via ORIANE.
+
+OBJECTIFS (2 axes) :
+1. Favoriser la reussite et cohesion sociale (egalite des chances, insertion)
+2. Promouvoir la citoyennete (exercice citoyen, lutte contre les discriminations)
+
+Accent sur quartiers populaires, territoires ruraux et projets pour les jeunes.
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901, Fondations, ONG.
+Conditions : SIRET, > 1 an d'existence, bilan comptable disponible.
+
+MONTANT / NATURE DE L'AIDE :
+Entre 5 000 EUR et 50 000 EUR annuels.
+Plafond : 80% du budget previsionnel du projet.
+
+CONTACT : jeunesse-citoyennete@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 151 - Aide restauration patrimoine immobilier protege
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-restauration-du-patrimoine-immobilier-protege
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region contribue a la restauration des edifices inscrits ou classes au
+titre des monuments historiques.
+
+TYPES DE PROJETS :
+Restauration du batiment (clos et couvert), mesures d'urgence, amenagements
+interieurs et exterieurs.
+
+BENEFICIAIRES ELIGIBLES :
+Proprietaires publics ou prives de biens immobiliers proteges (hors Etat),
+amenageurs mandates par collectivites, communes, EPCI, departements,
+fondations, associations loi 1901, GIP.
+
+MONTANT / NATURE DE L'AIDE :
+- Immeubles inscrits : 30% max des depenses eligibles
+- Immeubles classes : 20% max des depenses eligibles
+- Plafond : 1 M EUR par operation (ou par tranche)
+
+CONDITIONS PREALABLES :
+Dialogue avec DRAC et architecte des batiments de France requis.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 152 - Aide a la librairie independante
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-librairie-independante
+DATE LIMITE : 15 novembre / 15 janvier / 15 avril / 1er juin
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient les librairies independantes qui constituent ou renforcent
+leur fonds, ou qui sont en phase de creation, reprise, demenagement ou renovation.
+
+OBJECTIFS :
+- Constitution ou renforcement du fonds litteraire
+- Creation, reprise, demenagement ou renovation de locaux
+  (travaux, mobilier, enseigne, signalétique, securite)
+
+BENEFICIAIRES ELIGIBLES :
+Librairies independantes franciliennes (personnes morales de droit prive).
+Criteres : majorite du capital par personnes impliquees operationnellement,
+activite principale : vente de livres neufs, qualification du libraire.
+
+MONTANT / NATURE DE L'AIDE :
+Max 50% de la depense eligible, plafonne a 50 000 EUR.
+
+CONTACT : laurence.vintejoux@iledefrance.fr (01 53 85 67 53)
+
+--------------------------------------------------------------------------------
+AAP 153 - Accompagnement personnes avec trouble du spectre de l'autisme (TSA)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/accompagnement-des-personnes-vivant-avec-un-trouble-du-spectre-de-lautisme-tsa
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region IDF (autisme = grande cause regionale 2022) soutient des projets
+visant a ameliorer le reperage, le diagnostic et le traitement du TSA.
+
+OBJECTIFS (3 axes) :
+1. Mieux reperer, diagnostiquer et soigner
+2. Mieux vivre au quotidien
+3. Sensibiliser et faire connaitre
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901 (> 1 an), collectivites, etablissements publics, GIP,
+fondations, entreprises privees, GCS.
+
+MONTANT / NATURE DE L'AIDE :
+- Fonctionnement : 50% max, plafond 40 000 EUR
+- Investissement : 50% max, plafond 200 000 EUR
+
+CONTACT : delegationhandicap@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 154 - Aide aux projets des musees - valorisation du patrimoine
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-musees-oeuvrant-la-valorisation-du-patrimoine
+DATE LIMITE : 30 novembre 2026 (session pour projets 2027)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient des projets ponctuels d'envergure favorisant la decouverte
+des collections patrimoniales franciliennes.
+
+TYPES DE PROJETS :
+Actions de valorisation (expos physiques ou virtuelles, journees d'etude,
+site internet, publications, documentaires), outils de mediation, dispositifs
+pedagogiques, evenements d'envergure regionale.
+
+BENEFICIAIRES ELIGIBLES :
+Musees departementaux, intercommunaux, communaux ou associatifs labellises
+"Musee de France" (exclusion des musees nationaux).
+
+MONTANT / NATURE DE L'AIDE :
+Taux d'intervention : 40% max des depenses eligibles.
+Aide regionale plafonnee a 30 000 EUR.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 155 - Pass 3 Entrepreneur#Leader - Je dirige mon entreprise
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/pass-3-entrepreneurleader-je-dirige-mon-entreprise
+DATE LIMITE : Depot ouvert (depuis 2 avril 2025)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme regional de financement d'accompagnements individuels pour les
+entrepreneurs et repreneurs d'entreprise en IDF.
+
+OBJECTIFS :
+Elaborer le pilotage efficace de l'entreprise, mettre en oeuvre l'action
+commerciale, developper le reseau, maitriser le recrutement.
+
+BENEFICIAIRES ELIGIBLES :
+Personnes physiques majeures residant en IDF, createurs/repreneurs d'entreprise
+< 3 ans, dirigeants (representants legaux). Tous secteurs sauf activites
+liberales reglementees, medical/medico-social, immobilier, finance, assurance,
+agriculture primaire, peche, sylviculture.
+
+Criteres prioritaires : femmes, < 30 ans, demandeurs d'emploi, personnes
+handicapees, repreneurs, residents QPV ou zones rurales.
+
+MONTANT / NATURE DE L'AIDE :
+- Tout public : 310 EUR (accompagnement 3h min)
+- Public prioritaire : 410 EUR (accompagnement 5h min)
+
+CONTACT :
+- aides.economiques@iledefrance.fr
+- pass-entrepreneur-leader-idf@asp-public.fr
+
+--------------------------------------------------------------------------------
+AAP 156 - Pass 2 Entrepreneur#Leader - Je finance mon entreprise
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/pass-2-entrepreneurleader-je-finance-mon-entreprise
+DATE LIMITE : Depot ouvert (depuis 2 avril 2025)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Aide regionale pour financer l'accompagnement des createurs/repreneurs via
+microcredit ou pret d'honneur.
+
+OBJECTIFS :
+- Informer sur les solutions de financement adaptees
+- Structurer financierement le projet via analyse du business plan
+- Obtenir un microcredit ou un pret d'honneur avec garantie bancaire
+
+BENEFICIAIRES ELIGIBLES :
+Toute personne majeure residant en IDF en projet de creation/reprise d'entreprise.
+
+MONTANT / NATURE DE L'AIDE :
+Microcredit : 440 EUR (general) / 540 EUR (prioritaire).
+Pret d'honneur/Garantie : 570 EUR / 670 EUR.
+
+CONTACT :
+- aides.economiques@iledefrance.fr
+- pass-entrepreneur-leader-idf@asp-public.fr
+
+--------------------------------------------------------------------------------
+AAP 157 - AMI surf ile de loisirs de Vaires-Torcy
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/appel-manifestation-dinteret-activite-economique-de-surf-sur-lile-de-loisirs-de-vaires-torcy
+DATE LIMITE : 18 octobre 2019 (ferme)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region cherchait des candidats pour developper une activite de surf via
+l'implantation d'une structure demontable immergee sur le plan d'eau de
+Vaires-Torcy generant une vague de 1,5m minimum.
+
+OBJECTIFS :
+- Creer une infrastructure de surf dynamique
+- Permettre l'entrainement d'athletes de haut niveau
+- Respecter l'esthetique et la compatibilite avec autres activites nautiques
+
+BENEFICIAIRES :
+Entreprises/porteurs de projet capables de proposer une activite economique
+de surf.
+
+NOTE : Cette fiche est archivee (date limite passee en 2019).
+
+CONTACT :
+- Valerie BERGER AUMONT (Sports)
+- Christel ANDRES (Direction generale)
+- Tel. : 01 53 85 55 92
+
+--------------------------------------------------------------------------------
+AAP 158 - Soutien aux actions d'innovation en matiere de logistique
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-actions-dinnovation-en-matiere-de-logistique
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient l'emergence de solutions innovantes pour repondre aux
+enjeux d'une "smart logistique", vecteur de developpement economique et social.
+
+OBJECTIFS :
+- Reorganisation des chaines logistiques avec mutualisation
+- Immobilier logistique connecte et mutualise
+- Vehicules propres, autonomes et/ou connectes
+- Amelioration de la connaissance des flux de marchandises en IDF
+
+BENEFICIAIRES ELIGIBLES :
+Collectivites territoriales et groupements, etablissements publics, entreprises
+(toutes tailles), associations.
+
+MONTANT / NATURE DE L'AIDE :
+Jusqu'a 50% des depenses eligibles, plafonnees a 500 000 EUR.
+
+CONTACT : directiondestransports@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 159 - Installation de fontaines dans l'espace public
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/installation-de-fontaines-dans-lespace-public
+DATE LIMITE : Depot ouvert en permanence
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region encourage l'installation de bornes-fontaines publiques dans les
+communes franciliennes.
+
+OBJECTIFS :
+Promouvoir l'acces a l'eau potable publique via des equipements hydratation
+dans les espaces publics regionaux.
+
+BENEFICIAIRES ELIGIBLES :
+Communes (toutes tailles), Departements, EPCI, EPT/Metropole du Grand Paris.
+
+MONTANT / NATURE DE L'AIDE :
+Jusqu'a 50% des depenses eligibles, maximum 8 000 EUR par borne-fontaine.
+
+PROJETS ELIGIBLES :
+Bornes-fontaines, fontaines murales, fontaines a brumisation, fontaines connectees.
+
+PROJETS NON ACCEPTES :
+Fontaines a ecoulement continu, sans acces remplissage gourdes, a eau petillante,
+refrigerees, mobiles ou purement ornementales.
+
+CONTACT : biodiversite@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 160 - FEADER - Aide a l'installation du jeune agriculteur
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/feader-aide-linstallation-du-jeune-agriculteur
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Aide a la tresorerie aux agriculteurs de 18 a moins de 40 ans ayant un projet
+de premiere installation.
+
+OBJECTIFS :
+Soutenir les jeunes agriculteurs en premiere installation via une dotation en
+capital destinee a renforcer leur tresorerie.
+
+BENEFICIAIRES ELIGIBLES :
+Personnes agees de 18 a moins de 40 ans, premiere installation en tant que
+chef d'exploitation agricole en IDF.
+
+MONTANT / NATURE DE L'AIDE :
+Base : 22 000 EUR.
+Bonifications : Agriculture biologique (+22 000 EUR), projet valeur ajoutee
+(+20 000 EUR), investissements importants (montant variable).
+Pour installations secondaires : montants divises par 2.
+
+CONTACT :
+- feader.installation@iledefrance.fr
+- installation-transmission@idf.chambagri.fr
+
+--------------------------------------------------------------------------------
+AAP 161 - Aide aux reseaux franciliens valorisation du patrimoine
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-projets-des-reseaux-franciliens-oeuvrant-la-valorisation-du-patrimoine
+DATE LIMITE : 30 novembre 2026 (session pour projets 2027)
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les reseaux structurants qui mettent en valeur le
+patrimoine et favorisent les synergies entre acteurs professionnels et
+associatifs du secteur.
+
+OBJECTIFS :
+- Actions de valorisation (expositions, journees d'etude, sites Internet,
+  publications, documentaires)
+- Outils de mediation (cartes, itineraires numeriques, livrets)
+- Dispositifs pedagogiques (mallettes, MOOCs)
+- Evenements a forte dimension patrimoniale
+
+BENEFICIAIRES ELIGIBLES :
+Reseaux structurants federant professionnels et acteurs du patrimoine,
+associations et fondations avec presence representative a l'echelle IDF.
+Personnes morales de droit prive, minimum 1 an d'existence.
+
+MONTANT / NATURE DE L'AIDE :
+40% maximum des depenses eligibles, plafonnee a 30 000 EUR.
+
+CONTACT :
+- heloise.maille-virole@iledefrance.fr (depts 75, 77, 92, 93)
+- Kamel.kacihi@iledefrance.fr (depts 78, 91, 94, 95)
+
+--------------------------------------------------------------------------------
+AAP 162 - Ameliorer les conditions d'exercice des professionnels de sante
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/ameliorer-les-conditions-dexercice-des-professionnels-de-sante
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient des initiatives ameliorant le bien-etre et les conditions
+de travail des professionnels de sante.
+
+OBJECTIFS :
+- Valorisation de nouvelles formes d'exercice et meilleure coordination
+- Lutte contre les risques psychosociaux
+- Preservation de la qualite de vie professionnelle
+- Incitation a l'exercice durable en IDF
+- Formation et sensibilisation sur thematiques prioritaires
+- Reduction des contraintes administratives
+
+BENEFICIAIRES ELIGIBLES :
+Prioritaires : associations loi 1901 et fondations RUP (> 1 an).
+Projets innovants : collectivites, EPCI, etablissements publics, GIP.
+Projets recherche : etablissements d'enseignement superieur et de recherche.
+
+MONTANT / NATURE DE L'AIDE :
+Subvention regionale : 50% des depenses eligibles.
+Maximum : 50 000 EUR par an par operateur.
+
+CONTACT : sante@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 163 - Soutien aux projets associatifs en faveur du depart en vacances
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/soutien-aux-projets-associatifs-en-faveur-du-depart-en-vacances
+DATE LIMITE : 16 janvier 2026 - 29 janvier 2026
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Programme s'inscrivant dans le cadre de "Region solidaire" visant a soutenir
+des initiatives associatives de vacances pour populations vulnerables.
+
+OBJECTIFS :
+- Financer des sejours de vacances pour jeunes et familles precaires
+- Organiser evenements festifs ou sejours pour seniors isoles
+
+BENEFICIAIRES ELIGIBLES :
+Associations loi 1901 (> 1 an d'existence).
+Projets incluant personnes residant dans au moins 3 departements IDF differents.
+
+MONTANT / NATURE DE L'AIDE :
+Subventions en fonctionnement : jusqu'a 50% des depenses eligibles,
+dans la limite de 40 000 EUR par dossier.
+
+CONTACT : solidarites@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 164 - Aide aux communes, EPCI et etablissements mobilises dans la vaccination
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-aux-communes-epci-et-etablissements-denseignement-superieur-mobilises-dans-la-vaccination
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region accompagne les collectivites et etablissements d'enseignement
+superieur qui mettent en place des centres de vaccination anti-Covid ou
+investissent dans des equipements sanitaires.
+
+OBJECTIFS :
+- Mettre en place des centres de vaccination anti-Covid-19
+- Acquerir des equipements sanitaires (purificateurs d'air, petit materiel)
+- Soutenir la logistique et les solutions de mobilite pour la vaccination
+
+BENEFICIAIRES ELIGIBLES :
+Communes (tous niveaux), EPCI, etablissements d'enseignement superieur.
+
+MONTANT / NATURE DE L'AIDE :
+Aide forfaitaire de 10 000 EUR maximum par structure.
+Couverture : 100% des depenses subventionnables en investissement et fonctionnement.
+
+CONDITIONS :
+Depenses non anterieures au 27 decembre 2020.
+
+CONTACT :
+- pierre.faivre@iledefrance.fr
+- Tel. : 01 53 85 66 96
+
+--------------------------------------------------------------------------------
+AAP 165 - Innov'up Leader - France 2030 Ile-de-France
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/innovup-leader-france-2030-ile-de-france
+DATE LIMITE : Dernier appel : 7 avril - 4 juillet 2025
+--------------------------------------------------------------------------------
+DESCRIPTION :
+Le programme soutient des projets innovants portes par des PME et ETI
+franciliennes, en partenariat Region IDF, Etat et Bpifrance.
+
+OBJECTIFS :
+Financer des initiatives alignees sur la strategie "Impact 2028" dans les
+secteurs cles : aeronautique, agriculture, automobile, industrie du futur,
+energies d'avenir, numerique, sante, tourisme, villes durables.
+
+BENEFICIAIRES ELIGIBLES :
+PME et ETI, creees au moment du depot, siege social ou R&D en IDF,
+situation financiere saine.
+ETI : strictement 5 thematiques : industrie du futur, quantique, cybersecurite,
+hydrogene ou bioproduction/sante.
+
+MONTANT / NATURE DE L'AIDE :
+Entre 75 000 EUR et 500 000 EUR :
+- 2/3 en subventions
+- 1/3 en avances recuperables
+Versement : 50% a la notification, 50% a la cloture.
+
+CONTACT :
+- aides.economiques@iledefrance.fr
+- Depot : leaderpia.iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 166 - Droits des femmes - Accueil, orientation et hebergement (investissement)
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/droits-des-femmes-accueil-orientation-et-hebergement-des-femmes-en-difficulte-investissement
+DATE LIMITE : Non precisee
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient des centres d'accueil et d'hebergement destines aux femmes
+vulnerables en situation de precarite et de pauvrete.
+
+OBJECTIFS :
+- Creer, rehabiliter, etendre ou equiper des lieux d'accueil et d'hebergement
+- Favoriser la reinsertion socio-professionnelle des femmes
+- Faciliter l'acces aux droits
+- Prevenir et permettre la sortie des situations de violences
+
+TYPES DE PROJETS :
+Dispositifs d'hebergement ou de logement dedies, lieux d'ecoute et d'orientation,
+services mobiles, espaces et services specifiques.
+
+BENEFICIAIRES ELIGIBLES :
+Personnes morales de droit public ou prive a but non lucratif/lucratif a
+vocation sociale (> 1 an d'existence).
+
+MONTANT / NATURE DE L'AIDE :
+Maximum 500 000 EUR par an, ne peut pas exceder 50% du montant total.
+Depenses eligibles : travaux, equipements, vehicules propres, acquisitions
+numeriques.
+
+CONTACT : egaliteFH@iledefrance.fr
+
+--------------------------------------------------------------------------------
+AAP 167 - Aide a la revitalisation commerciale des communes en milieu rural
+URL : https://www.iledefrance.fr/aides-et-appels-a-projets/aide-la-revitalisation-commerciale-des-communes-en-milieu-rural
+DATE LIMITE : 19/01/2026, 06/04/2026, 06/07/2026, 31/08/2026
+--------------------------------------------------------------------------------
+DESCRIPTION :
+La Region soutient le maintien, creation, developpement et reprise de commerces
+de proximite dans les territoires ruraux pour revitaliser les centres-bourgs.
+
+OBJECTIFS :
+- Ameliorer l'environnement des commerces de proximite
+- Contribuer a la revitalisation des centres-bourgs
+- Renforcer l'attractivite des communes rurales
+
+TYPES DE PROJETS :
+Amenagements ameliorant l'environnement commercial (halles de marche),
+acquisition fonciere/immobiliere pour installation de commerces, etudes et
+prestations d'ingenierie.
+
+BENEFICIAIRES ELIGIBLES :
+Communes < 10 000 habitants (hors Metropole Grand Paris, priorite < 5 000 hab.)
+EPCI avec siege hors unite urbaine parisienne.
+
+MONTANT / NATURE DE L'AIDE :
+Jusqu'a 50% du montant HT des depenses eligibles (max 150 000 EUR).
+Minimum 50 000 EUR HT de depenses subventionnables.
+
+CONTACT : commerces-ruraux@iledefrance.fr
+
+================================================================================
+FIN DU FICHIER - DETAILS AAP 081 A 167
+================================================================================
+Extraction realisee depuis :
+https://www.iledefrance.fr/aides-et-appels-a-projets
+Date : 22 juin 2026
+Nombre d'AAP avec details complets : 87 (AAP 081 a 167)
+Fichier de listing pour AAP 001 a 080 : aap_ile_de_france.txt
+================================================================================

@@ -1,0 +1,22 @@
+[
+  {
+    "nom": "ARS Grand Est",
+    "url_liste": "https://www.grand-est.ars.sante.fr/appels-projets-et-appels-candidatures",
+    "urls_directes": [
+      "https://www.grand-est.ars.sante.fr/creation-de-postes-partages-territoriaux"
+    ],
+    "selecteur_liens_aap": "a[href]",
+    "filtre_url_keywords": ["appel", "candidature", "projet", "aap", "ami", "financement"],
+    "domaine": "grand-est.ars.sante.fr"
+  },
+  {
+    "nom": "Fondation de France",
+    "url_liste": "https://www.fondationdefrance.org/fr/nos-appels-a-projets",
+    "urls_directes": [
+      "https://www.fondationdefrance.org/fr/appels-a-projets/environnement-sante"
+    ],
+    "selecteur_liens_aap": "a[href]",
+    "filtre_url_keywords": ["appels-a-projets", "appel-a-projets"],
+    "domaine": "fondationdefrance.org"
+  }
+]
