@@ -47,10 +47,9 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 
 ## Où en est le projet (mis à jour le 2026-10-12 au soir)
 
-- Changement `qualification-des-sources` : tâches 1.1 à 3.2 faites. Reste **3.3, la validation par Monsieur
-  DUCOUT** : lire `scraping/QUALIFICATION.md`, contrôler un verdict "rubrique confirmée" et un "pas d'AAP" sur
-  les pages d'origine, puis dire "Validé : archiver, commit et push". Ensuite : `openspec archive
-  qualification-des-sources --yes`, commit, push.
+- Changement `qualification-des-sources` : validé par Monsieur DUCOUT le 2026-10-12 au soir, archivé et poussé.
+  **Tâche suivante : reprendre `extraction-echantillon-aap`** (voir plus bas), en commençant par vérifier le fichier
+  de l'extraction Ollama, puis relire rapidement les 133 "hors santé" du registre.
 - Résultat : 270 rubriques qualifiées, 127 confirmées, 133 hors santé, 5 sans AAP, 4 à vérifier, 1 PDF seulement ;
   577 sources sans page gardée (à vérifier plus tard). Sondage manuel de 31 verdicts : 83 % d'accord. Attention :
   le modèle déclare "hors santé" des listes mixtes où un seul appel concerne la santé (Gard, Interreg Sudoe) ;
@@ -63,14 +62,14 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   `scraping/results/echantillon_ollama.json` à la fin seulement : si ce fichier a moins de 40 fiches, la
   relancer (`echantillon.py --extraire --moteur ollama`, 12 minutes seule sur la carte graphique). Restent :
   contrôle des fiches Ollama, `--rapport`, import des fiches justes, documentation, validation.
-- Tout est commité en local (pas de push tant que Monsieur DUCOUT ne l'a pas demandé). Le dossier
+- Tout est commité et poussé sur GitHub (dernier push le 2026-10-12 au soir). Le dossier
   `scraping/decouverte/` et `scraping/results/` restent sur le PC (ignorés par Git).
 - Règle d'exploitation d'Ollama : un seul travail à la fois sur le modèle ; ne pas lancer un autre modèle
   (Qwen 27B) ni un calcul lourd sur le processeur pendant un passage.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md, dis-moi la tâche suivante et attends ma validation du rapport de qualification."
+"Lis REPRISE.md, dis-moi la tâche suivante et propose-moi comment reprendre l'extraction sur échantillon."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 

@@ -184,7 +184,7 @@ Cycle (commandes slash dans Claude Code) :
 - Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
-  (2026-10-09), `decouverte-rubriques-aap` (2026-10-12). `qualification-des-sources` (2026-10-12). En attente : `extraction-echantillon-aap` (reprise sur les rubriques confirmées). Specs en vigueur : `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`,
+  (2026-10-09), `decouverte-rubriques-aap` (2026-10-12). `qualification-des-sources` (2026-10-12, archivé). En attente : `extraction-echantillon-aap` (reprise sur les rubriques confirmées). Specs en vigueur : `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`,
   `decouverte-rubriques-aap`.
 - Reprise d'une session : lire d'abord `REPRISE.md` (racine), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
   `scraping/QUALIFICATION.md` s'il existe. Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.

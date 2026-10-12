@@ -15,7 +15,7 @@
 
 - [x] 3.1 `--rapport` écrit `QUALIFICATION.md`. Fait quand : décompte par famille, sources confirmées, sources à vérifier.
 - [x] 3.2 README scraping, CHANGELOGs, CLAUDE.md. Fait quand : fichiers relus.
-- [ ] 3.3 Vérification par Monsieur DUCOUT : lecture de `QUALIFICATION.md`, contrôle de deux verdicts (un confirmé, un pas-d-aap) sur les pages d'origine. Fait quand : validation.
+- [x] 3.3 Vérification par Monsieur DUCOUT : lecture de `QUALIFICATION.md`, contrôle de deux verdicts (un confirmé, un pas-d-aap) sur les pages d'origine. Fait quand : validation.
 
 ## Workflow follow-up
 
