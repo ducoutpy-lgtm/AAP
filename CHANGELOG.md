@@ -6,6 +6,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Robot de découverte des rubriques appels à projets (changement OpenSpec `decouverte-rubriques-aap`,
+  2026-10-09) : 847 sources explorées sans IA, 268 rubriques trouvées, 3744 liens d'AAP gardés en local
+  pour l'extraction à venir. Rapport `scraping/DECOUVERTE.md`.
 - Registre des sources, seconde extension (changement OpenSpec `registre-des-sources-2`, 2026-10-09) : 847
   sources, 657 pages vérifiées ; caisses et services de l'État locaux, IHU, GIRCI, Europe régionale, fédérations,
   plateformes de dépôt, sur la liste de Monsieur DUCOUT.

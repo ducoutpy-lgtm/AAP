@@ -150,6 +150,27 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+## Découverte des rubriques appels à projets
+
+Avant d'écrire un connecteur, savoir où chaque source publie. `decouverte.py` ouvre la page de chaque
+source du registre avec le navigateur piloté, note les liens qui évoquent un appel à projets, visite
+au plus trois pages candidates et retient la plus riche en liens d'AAP. Sans IA, sans appel d'API.
+
+```bash
+python decouverte.py --limite 10            # essai
+python decouverte.py --ids ars-bretagne     # une source
+python decouverte.py --parallele 4          # tout le registre (reprise automatique)
+python decouverte.py --rapport              # écrit DECOUVERTE.md
+```
+
+Résultats dans `decouverte/resultats.json` et, par source, `decouverte/<id>/rubrique.html` et
+`liens.json` (dossier ignoré par Git). Premier passage du 2026-10-09 : 847 sources traitées,
+268 rubriques trouvées, 3744 liens d'AAP collectés (détail : `DECOUVERTE.md`).
+Spécification : `openspec/specs/decouverte-rubriques-aap/`.
+Limites connues : les sites des préfectures (92) renvoient une réponse vide au navigateur piloté et
+ameli (CPAM) répond 403 ; ces sources demandent un traitement à part (flux RSS, recherche web ou saisie
+manuelle).
+
 ## Ajouter une source
 
 Créer `sources/<nom>.py` sur le modèle de `fondation_de_france.py`. Deux fonctions async à implémenter :

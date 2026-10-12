@@ -51,3 +51,6 @@ Thumbs.db
 
 # === Fichiers de transfert temporaires ===
 _transfert_reprise.tgz
+
+# Pages collectees par le robot de decouverte (volumineux, regenerable)
+scraping/decouverte/

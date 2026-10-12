@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (découverte des rubriques, 2026-10-09)
+- `decouverte.py` : robot générique (Playwright) qui trouve la rubrique appels à projets de chaque source du
+  registre et garde la page et ses liens en local. Premier passage : 847 sources, 268 rubriques,
+  3744 liens d'AAP, 110 sites bloqués. Rapport `DECOUVERTE.md`. Tests `tests/test_decouverte.py`.
+- Playwright et Chromium installés dans `.venv` à la racine du dépôt.
+
 ### Ajouté (registre des sources, seconde extension, 2026-10-09)
 - Registre porté à 847 sources (657 pages vérifiées) : CAF et CPAM de chaque département, Carsat, MSA,
   préfectures, DREETS, DDETS, DRAAF, MDPH (annuaire DILA), CNAF et groupes de protection sociale, 12 IHU,

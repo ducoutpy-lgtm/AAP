@@ -139,6 +139,8 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : pages placeholder | A FAIRE | édition AAP, profil, pages légales, mot de passe oublié |
 | Scraping : 5 sources | OK | voir ci-dessus |
 | Scraping : registre des sources | OK | 2026-10-09 : 847 sources, 657 pages vérifiées (deux extensions) |
+| Scraping : découverte des rubriques AAP | OK | 2026-10-09 : 847 sources explorées, 268 rubriques, 3744 liens d'AAP en local (`scraping/decouverte.py`, `DECOUVERTE.md`) |
+| Scraping : extraction des AAP découverts | A FAIRE | test comparatif sur échantillon (Claude Code, Ollama local, API) puis industrialisation |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
