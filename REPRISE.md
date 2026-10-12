@@ -48,8 +48,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 ## Où en est le projet (mis à jour le 2026-10-12 au soir)
 
 - Changement `qualification-des-sources` : validé par Monsieur DUCOUT le 2026-10-12 au soir, archivé et poussé.
-  **Tâche suivante : reprendre `extraction-echantillon-aap`** (voir plus bas), en commençant par vérifier le fichier
-  de l'extraction Ollama, puis relire rapidement les 133 "hors santé" du registre.
+  **Tâche suivante : reprendre `extraction-echantillon-aap`** (voir plus bas), en commençant par le contrôle des fiches
+  Ollama, puis relire rapidement les 133 "hors santé" du registre.
 - Résultat : 270 rubriques qualifiées, 127 confirmées, 133 hors santé, 5 sans AAP, 4 à vérifier, 1 PDF seulement ;
   577 sources sans page gardée (à vérifier plus tard). Sondage manuel de 31 verdicts : 83 % d'accord. Attention :
   le modèle déclare "hors santé" des listes mixtes où un seul appel concerne la santé (Gard, Interreg Sudoe) ;
@@ -58,10 +58,11 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   (anglais, 16 Go de mémoire graphique). Mistral 7b via Ollama reste le moteur de tri. Laya est installé dans
   `.venv` mais inutilisé.
 - Changement `extraction-echantillon-aap` (en attente) : 45 textes collectés, 24 fiches Claude Code validées,
-  grille de contrôle remplie pour Claude Code, estimation API faite. L'extraction Ollama des 45 fiches écrit
-  `scraping/results/echantillon_ollama.json` à la fin seulement : si ce fichier a moins de 40 fiches, la
-  relancer (`echantillon.py --extraire --moteur ollama`, 12 minutes seule sur la carte graphique). Restent :
-  contrôle des fiches Ollama, `--rapport`, import des fiches justes, documentation, validation.
+  grille de contrôle remplie pour Claude Code, estimation API faite. Extraction Ollama terminée le 2026-10-12 à
+  23 h 05 : 41 fiches sur 45, 4 échecs (`scraping/results/echantillon_ollama.json` et `.errors.json`), une heure
+  de calcul (1 à 5 minutes par page longue : prévoir d'écrire le fichier fiche par fiche à l'avenir). Restent :
+  contrôle manuel des 41 fiches Ollama (grille `results/controle_echantillon.json`), `--rapport`, import des
+  fiches justes dans Firestore, documentation, validation.
 - Tout est commité et poussé sur GitHub (dernier push le 2026-10-12 au soir). Le dossier
   `scraping/decouverte/` et `scraping/results/` restent sur le PC (ignorés par Git).
 - Règle d'exploitation d'Ollama : un seul travail à la fois sur le modèle ; ne pas lancer un autre modèle
