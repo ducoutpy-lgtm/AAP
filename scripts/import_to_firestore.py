@@ -213,6 +213,11 @@ def load_results(source_filter: str | None) -> list[tuple[str, dict]]:
         if path.name.endswith(".errors.json"):
             continue
         source_name = path.stem
+        # Les fichiers de l'echantillon (echantillon_*.json, controle_*.json) ne sont pas des sorties
+        # de connecteur : les fiches Ollama non controlees ne doivent pas partir dans la base par un
+        # import global. On ne les lit que sur demande explicite (--source echantillon_claude_code).
+        if source_filter is None and (source_name.startswith("echantillon_") or source_name.startswith("controle_")):
+            continue
         if source_filter and source_name != source_filter:
             continue
         with path.open(encoding="utf-8") as fh:

@@ -212,6 +212,31 @@ sur la forme PDF/web), contre 83 % pour mistral, et des probabilités trop sûre
 pour une agence de l'eau). Non retenu sans entraînement spécifique ; résultats dans
 `decouverte/qualification_laya.json`. Kev (anglais seulement, 16 Go de mémoire graphique) écarté sans essai.
 
+## Extraction sur échantillon (comparaison des moteurs)
+
+Avant de dépenser des crédits API sur les 3 748 liens découverts, `echantillon.py` compare trois moteurs sur un
+échantillon : le modèle local Ollama, la session Claude Code elle-même (fiches écrites à la main à partir du texte des
+pages), et une estimation du coût de l'API Anthropic sans aucun appel. Aucun appel à l'API n'est fait par ce script.
+
+```bash
+python echantillon.py --collecter                 # texte de 5 fiches au plus pour 10 rubriques (navigateur)
+python echantillon.py --extraire --moteur ollama  # fiches par le modèle local -> results/echantillon_ollama.json
+python echantillon.py --verifier results/echantillon_claude_code.json
+python echantillon.py --estimer                   # coût API estimé (échantillon et ensemble des liens)
+python echantillon.py --rapport                   # ECHANTILLON.md à partir des résultats et de la grille de contrôle
+```
+
+La grille `results/controle_echantillon.json` note, pour chaque fiche et chaque moteur, si le titre, le financeur, la
+date de clôture et le montant correspondent à la page d'origine. Résultat du 2026-10-12 (`ECHANTILLON.md`) : 45 textes
+collectés, 21 pages hors sujet (listes, présentations, pages sans rapport) ; Ollama produit 41 fiches dont 9 justes sur
+les quatre champs (il fabrique une fiche même pour une page hors sujet, écrit des dates hors format comme
+« 20 Septembre 2026 » et des enveloppes « oui ») ; la session 24 fiches justes sur 24 ; API estimée à 1,19 euro pour
+l'échantillon et 99 euros pour les 3 748 liens (avant qualification des sources). Le modèle local ne suffit donc pas
+pour l'extraction ; il reste l'outil de tri gratuit. Les fichiers `echantillon_*.json` et `controle_*.json` sont
+ignorés par l'import global de `scripts/import_to_firestore.py` (import possible seulement par `--source`).
+Le 2026-10-12, les 6 fiches validées encore ouvertes et du champ santé (`results/echantillon_valides.json`) ont été
+importées dans Firestore par `python scripts/import_to_firestore.py --source echantillon_valides` (95 AAP scrapés en base).
+
 ## Ajouter une source
 
 Créer `sources/<nom>.py` sur le modèle de `fondation_de_france.py`. Deux fonctions async à implémenter :

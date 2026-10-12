@@ -117,29 +117,12 @@ function App() {
             }
           />
 
-          <Route
-            path="/aap/search"
-            element={
-              <ProtectedRoute>
-                <SubscriptionGuard>
-                  <RoleGuard allowedRoles={['porteur']}>
-                    <SearchAapPage />
-                  </RoleGuard>
-                </SubscriptionGuard>
-              </ProtectedRoute>
-            }
-          />
+          {/* Consultation publique : les AAP publiés sont lisibles sans compte
+              (changement OpenSpec consultation-aap-sans-compte). Les actions qui engagent
+              (candidater, favori) restent réservées aux comptes connectés. */}
+          <Route path="/aap/search" element={<SearchAapPage />} />
 
-          <Route
-            path="/aap/:aapId"
-            element={
-              <ProtectedRoute>
-                <SubscriptionGuard>
-                  <AapDetailPage />
-                </SubscriptionGuard>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/aap/:aapId" element={<AapDetailPage />} />
 
           <Route
             path="/aap/:aapId/candidater"

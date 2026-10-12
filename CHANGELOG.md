@@ -6,11 +6,20 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Consultation des AAP sans compte (changement OpenSpec `consultation-aap-sans-compte`, 2026-10-13) : règle Firestore
+  « lecture publique des AAP publiés » déployée sur `aapi-11bc3`, routes « Rechercher des AAP » et fiche sorties de la
+  zone protégée, lien « Voir les appels à projets » sur l'accueil ; « Candidater » et favori renvoient vers la
+  connexion sans compte. Les appels à projets sont des informations publiques ; le compte ne sert qu'aux actions.
 - Relecture manuelle de la qualification (changement OpenSpec `relecture-qualification`, 2026-10-12) : fichier versionné
   `scraping/sources/relecture_qualification.json` appliqué par `qualification.py` par-dessus les verdicts du modèle (verdict
   du modèle conservé, section « Relecture manuelle » dans `QUALIFICATION.md`). 60 pages relues sans IA ; bilan : 155 rubriques
   confirmées (127 avant), 88 hors santé, 6 sans AAP, 20 à vérifier.
-- Extraction Ollama de l'échantillon terminée (`extraction-echantillon-aap`, 2026-10-12) : 41 fiches sur 45 en une heure environ (dont trois délais dépassés de dix minutes).
+- Extraction sur échantillon (`extraction-echantillon-aap`, 2026-10-12) : extraction Ollama terminée (41 fiches sur 45 en une
+  heure environ, dont trois délais dépassés de dix minutes), contrôle des fiches et rapport `scraping/ECHANTILLON.md`
+  (Ollama 9 fiches justes sur 41, session 24 sur 24, API estimée 99 euros pour 3 748 liens) ; 6 fiches validées importées
+  dans Firestore (95 AAP scrapés en base).
+- `scripts/import_to_firestore.py` : l'import global ignore les fichiers `echantillon_*.json` et `controle_*.json`
+  (import de l'échantillon seulement par `--source`), pour ne jamais verser en base des fiches non contrôlées.
 - Qualification des sources (changement OpenSpec `qualification-des-sources`, 2026-10-12) : 270 rubriques relues par
   le modèle local, 127 confirmées comme publiant des appels à projets santé ; verdict dans le registre et `scraping/QUALIFICATION.md`.
 - Échantillon d'extraction (`extraction-echantillon-aap`, en attente) : 24 fiches produites par la session, coût API estimé.

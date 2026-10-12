@@ -13,6 +13,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   18 adresses de rubrique corrigées dans le champ `notes` du registre.
 - `echantillon.py --extraire --moteur ollama` terminé : 41 fiches sur 45 (`results/echantillon_ollama.json`), 4 échecs,
   1 767 s de calcul utile et une heure au total avec les délais dépassés.
+- Contrôle des fiches Ollama (`results/controle_echantillon.json`, colonne `ollama`) et rapport `ECHANTILLON.md` :
+  Ollama 9 fiches justes sur 41 (19 fiches fabriquées pour des pages hors sujet, dates hors format, enveloppes « oui »),
+  session 24 sur 24. Les 6 fiches validées encore ouvertes du champ santé (`results/echantillon_valides.json`) importées
+  dans Firestore. README : section « Extraction sur échantillon ».
 
 ### Ajouté (qualification des sources, 2026-10-12)
 - `qualification.py` : verdict par rubrique via le modèle local Ollama, champ `qualification` dans le registre,

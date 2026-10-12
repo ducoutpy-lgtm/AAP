@@ -27,8 +27,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 | 1. Registre des émetteurs (qui publie des AAP) | `scraping/registre.py`, `sources/registre.json` | 847 sources ; 657 adresses répondent. "Page vérifiée" veut dire que l'adresse répond, pas qu'elle contient des AAP. |
 | 2. Découverte des rubriques (où ils publient) | `scraping/decouverte.py`, `DECOUVERTE.md` | 270 rubriques candidates et 3 748 liens candidats, repérés par mots-clés, NON vérifiés. Pages gardées dans `scraping/decouverte/` (hors Git). |
 | 3. Qualification des sources (publient-ils vraiment des AAP ?) | `scraping/qualification.py`, `QUALIFICATION.md`, `sources/relecture_qualification.json` | FAIT le 2026-10-12 : 270 rubriques relues par le modèle, puis relecture manuelle (changement `relecture-qualification`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier. Verdict relu dans le registre (champ `qualification`, verdict du modèle conservé) et `QUALIFICATION.md`. |
-| 4. Extraction des fiches (page -> fiche AAP) | `scraping/echantillon.py`, `ECHANTILLON.md` | EN COURS (changement `extraction-echantillon-aap`). 45 textes collectés, 24 fiches Claude Code validées, 41 fiches Ollama produites (non contrôlées), 21 pages hors sujet, coût API estimé 99 euros pour 3 748 liens. Reste : contrôle des fiches Ollama, rapport, import. |
-| 5. Import dans l'application | `scripts/import_to_firestore.py` | OK : 89 AAP des 5 connecteurs historiques visibles dans "Rechercher des AAP", pièces jointes servies depuis le PC. |
+| 4. Extraction des fiches (page -> fiche AAP) | `scraping/echantillon.py`, `ECHANTILLON.md` | ÉCHANTILLON FAIT (changement `extraction-echantillon-aap`, validation 3.4 en attente). 45 textes, 24 fiches Claude Code justes sur 24, Ollama 9 justes sur 41, 21 pages hors sujet, API estimée 99 euros pour 3 748 liens (avant qualification). 6 fiches ouvertes du champ santé importées dans Firestore. |
+| 5. Import dans l'application | `scripts/import_to_firestore.py` | OK : 95 AAP en base (89 des 5 connecteurs historiques + 6 de l'échantillon), visibles dans "Rechercher des AAP" SANS compte depuis le 2026-10-13 (changement `consultation-aap-sans-compte`), pièces jointes servies depuis le PC. |
 | 6. Veille des changements (re-scraper ce qui bouge) | à créer | Idée validée par Monsieur DUCOUT : passage initial lent, puis comparaison quotidienne des pages gardées. |
 
 ## Leçons apprises (ne pas refaire)
@@ -58,8 +58,22 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   20 à vérifier ; 577 sources sans page gardée. Leçon : le modèle ne juge que la page gardée ; quand c'est une page
   d'accueil, d'archives ou un bandeau cookies (liste de cookies plus longue que les 8 000 caractères lus), le verdict
   ne vaut rien. Mécanisme : `scraping/sources/relecture_qualification.json`, appliqué par `qualification.py`.
-- **Tâche suivante : reprendre `extraction-echantillon-aap`** à la tâche 3.1 (contrôle des 41 fiches
-  Ollama dans `results/controle_echantillon.json`, colonne `ollama`, puis `echantillon.py --rapport`).
+- Changement `extraction-echantillon-aap` : tâches 3.1 à 3.3 faites le 2026-10-12 (nuit). Ollama : 9 fiches justes
+  sur 41 (il fabrique une fiche pour toute page, même hors sujet ; dates hors format ; enveloppes « oui ») ; session :
+  24 sur 24. 6 fiches ouvertes du champ santé importées dans Firestore (`results/echantillon_valides.json`, 95 AAP en base).
+  Validé et archivé le 2026-10-13. **Décision de Monsieur DUCOUT sur le moteur : « lentement et sûrement sur
+  Ollama »**, c'est-à-dire un second tour à zéro euro avant tout appel payant.
+- **Tâche suivante : changement « second tour d'extraction Ollama avec seuil »** (à proposer avec `/opsx:propose`) :
+  question préalable « est-ce un appel à projets ? » avant d'extraire, contrôle strict des formats (dates AAAA-MM-JJ,
+  montants entiers) avec nouvelle demande au modèle en cas d'écart, essai de Qwen 27B à côté de mistral 7b (un seul
+  modèle à la fois sur la carte graphique), mesure contre les 24 fiches de référence de `results/echantillon_claude_code.json`,
+  seuil fixé par Monsieur DUCOUT avant le tour (proposition : 20 fiches justes sur 24). L'API Anthropic n'est retenue
+  que si le seuil n'est pas atteint ; son coût sur les 155 rubriques confirmées reste à estimer dans ce cas.
+- Changement `consultation-aap-sans-compte` (2026-10-13, validé et archivé) : la
+  consultation des AAP ne demande plus de compte (règle Firestore déployée, routes ouvertes, lien sur l'accueil) ;
+  vérifié sans compte : 95 AAP listés, recherche « Dentobus », fiche, « Candidater » renvoie à la connexion.
+  Défauts connus laissés de côté : redirection après connexion, bouton Google (fournisseur non activé). Leçon : après
+  une modification de page, si le navigateur sert une version périmée, redémarrer le serveur de développement.
 - Essai de modèles de décision : Laya multilingue testé (48 % d'accord, trop sûr de lui), non retenu ; Kev écarté
   (anglais, 16 Go de mémoire graphique). Mistral 7b via Ollama reste le moteur de tri. Laya est installé dans
   `.venv` mais inutilisé.
@@ -78,7 +92,7 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md, dis-moi la tâche suivante et reprends extraction-echantillon-aap à la tâche 3.1 (contrôle des fiches Ollama)."
+"Lis REPRISE.md, dis-moi la tâche suivante et propose le changement du second tour d'extraction Ollama avec seuil."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 

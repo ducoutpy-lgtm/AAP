@@ -74,8 +74,10 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
    `firebase deploy --only firestore:rules,firestore:indexes --project aapi-11bc3`.
 2. Import avec les deux options : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired --include-without-deadline`
    (105 AAP lus, 89 documents distincts : les doublons entre sources sont fusionnés).
-3. `cd app && npm run dev`, puis http://localhost:3000 : inscription comme « Porteur de projet »
-   (14 jours d'essai, suffisant pour lire les AAP), ou connexion avec le compte de démo existant.
+3. `cd app && npm run dev`, puis http://localhost:3000 : depuis le 2026-10-13 (changement
+   `consultation-aap-sans-compte`), la consultation des AAP ne demande aucun compte : lien « Voir les appels
+   à projets » sur l'accueil, ou directement http://localhost:3000/aap/search. Un compte porteur (inscription,
+   14 jours d'essai, ou compte de démo) n'est nécessaire que pour candidater.
 4. Page « Rechercher des AAP » : les AAP scrapés apparaissent, les AAP clos portent la mention « Clôturé »,
    la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle » et liste ses
    pièces jointes. En développement, les fichiers sont servis depuis le PC : créer une fois le lien de

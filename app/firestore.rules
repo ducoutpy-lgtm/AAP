@@ -53,8 +53,11 @@ service cloud.firestore {
 
     // AAP (Appels à Projets)
     match /aap/{aapId} {
-      // Lecture: tous les utilisateurs authentifiés avec abonnement
-      allow read: if isAuthenticated() && hasActiveSubscription();
+      // Lecture: un AAP publié est public (lisible sans compte) ; les autres statuts
+      // (brouillons) restent réservés aux utilisateurs authentifiés avec abonnement.
+      // Les requêtes de liste doivent filtrer sur status == 'published' pour passer sans compte.
+      allow read: if resource.data.status == 'published' ||
+                     (isAuthenticated() && hasActiveSubscription());
 
       // Création: financeurs avec abonnement
       allow create: if isFinanceur() && hasActiveSubscription();

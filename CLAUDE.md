@@ -141,11 +141,11 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : registre des sources | OK | 2026-10-09 : 847 sources, 657 pages vérifiées (deux extensions) |
 | Scraping : découverte des rubriques AAP | OK | 2026-10-12 : 847 sources explorées, 270 rubriques candidates, 3 748 liens candidats (repérés par mots-clés, NON vérifiés : l'échantillon a montré 21 pages hors sujet sur 45) ; préfectures et ameli bloquent le robot (voir README scraping) |
 | Scraping : qualification des sources | OK | 2026-10-12 : 270 rubriques relues par Ollama (sondage 83 % d'accord), puis relecture manuelle (changement `relecture-qualification`, `scraping/sources/relecture_qualification.json`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier (`scraping/qualification.py`, `QUALIFICATION.md`, champ `qualification` du registre avec verdict du modèle conservé) |
-| Scraping : extraction des AAP découverts | EN COURS | changement `extraction-echantillon-aap` : 45 textes collectés, 24 fiches Claude Code validées, 41 fiches Ollama produites (contrôle à faire), coût API estimé 99 euros pour 3 748 liens |
+| Scraping : extraction des AAP découverts | ÉCHANTILLON FAIT | changement `extraction-echantillon-aap` (validation 3.4 en attente) : 45 textes, 24 fiches Claude Code justes, Ollama 9 justes sur 41 (`scraping/ECHANTILLON.md`), API estimée 99 euros pour 3 748 liens ; 6 fiches importées. Passage global : moteur et budget à décider par Monsieur DUCOUT |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
-| Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
-| Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 |
+| Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) ; 2026-10-12 : + 6 fiches de l'échantillon (95 en base) ; l'import global ignore `echantillon_*.json` |
+| Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 ; 2026-10-13 : consultation sans compte (changement `consultation-aap-sans-compte`, règle Firestore déployée), 95 AAP visibles sur http://localhost:3000/aap/search |
 | Pièces jointes des AAP scrapés | OK (local) | 2026-10-09 : servies depuis le PC en dev (`app/public/documents`) ; Storage codé, inactif (forfait Blaze refusé pour l'instant) |
 | Méthode OpenSpec installée | OK | 2026-10-09 — 8 workflows, config projet |
 
@@ -156,7 +156,10 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 - Changer le schéma `AapNormalized` (impact toutes les sources) ou le type `AAP` de l'appli.
 - Démarrer la stack FastAPI/PostgreSQL/Next.js (mise en pause).
 - Installer une lib lourde (ex : Crawl4AI — rejetée, voir `docs/comparatif_scraping_2026-04.md`).
-- Proposer un modèle IA local pour le MVP (décision : Claude API jusqu'à > 500 €/mois).
+- Proposer un modèle IA local pour le MVP (décision d'avril : Claude API jusqu'à > 500 €/mois). Nuance du 2026-10-13,
+  décidée par Monsieur DUCOUT : avant tout appel payant, un second tour d'extraction Ollama à zéro euro est mesuré contre
+  les 24 fiches de référence de l'échantillon, avec un seuil fixé à l'avance ; l'API n'est retenue que si le seuil n'est
+  pas atteint.
 - Modifier un cahier des charges dans `docs/` sans en informer explicitement.
 - Committer une clé (Anthropic, Firebase, Stripe). Tout est dans des `.env` ignorés par Git.
 - Supprimer la branche ou le tag d'archive.
@@ -184,8 +187,8 @@ Cycle (commandes slash dans Claude Code) :
 - Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
-  (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12). En cours :
-  `extraction-echantillon-aap` (reprise à la tâche 3.1). Specs en vigueur :
+  (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
+  Prochain changement : second tour d'extraction Ollama avec seuil (décision du 2026-10-13). Specs en vigueur :
   `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`, `decouverte-rubriques-aap`, `qualification-sources`.
 - Reprise d'une session : lire d'abord `REPRISE.md` (racine), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
   `scraping/QUALIFICATION.md` (section « Relecture manuelle » : corrections humaines des verdicts du modèle). Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.

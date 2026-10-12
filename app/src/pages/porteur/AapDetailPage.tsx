@@ -37,8 +37,11 @@ const lienPieceJointe = (
 export default function AapDetailPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
-  const { userProfile } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [aap, setAap] = useState<AAP | null>(null);
+  // Consultation publique (spec consultation-aap-scrapes) : la fiche se lit sans compte ; les actions
+  // qui engagent (candidater, favori) renvoient le visiteur vers la connexion, puis le ramènent ici.
+  const versConnexion = () => navigate('/login', { state: { from: { pathname: `/aap/${aapId}` } } });
   const [loading, setLoading] = useState(true);
   // Adresses de téléchargement des pièces jointes hébergées dans Storage, par index dans fichiersJoints.
   // Les sites des ARS refusent l'accès direct à leurs fichiers : on sert notre copie quand elle existe.
@@ -139,7 +142,7 @@ export default function AapDetailPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" onClick={currentUser ? undefined : versConnexion}>
                 <Heart className="h-5 w-5" />
               </Button>
             </div>
@@ -181,16 +184,21 @@ export default function AapDetailPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          {userProfile?.userType === 'porteur' && (
+          {/* CTA : porteur connecté -> formulaire ; visiteur sans compte -> connexion puis retour ici */}
+          {(userProfile?.userType === 'porteur' || !currentUser) && (
             <div className="mt-6">
               <Button
                 size="lg"
                 className="w-full"
-                onClick={() => navigate(`/aap/${aapId}/candidater`)}
+                onClick={() => (currentUser ? navigate(`/aap/${aapId}/candidater`) : versConnexion())}
               >
                 Candidater à cet AAP
               </Button>
+              {!currentUser && (
+                <p className="mt-2 text-center text-sm text-gray-500">
+                  La consultation est libre ; candidater demande un compte porteur.
+                </p>
+              )}
             </div>
           )}
         </Card>

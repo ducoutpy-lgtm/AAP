@@ -14,6 +14,10 @@ export default function LandingPage() {
               <span className="text-2xl font-bold text-gray-900">AAP Platform</span>
             </div>
             <div className="flex items-center gap-4">
+              {/* Consultation publique des AAP, sans compte (spec consultation-aap-scrapes) */}
+              <Link to="/aap/search" className="text-gray-700 hover:text-primary-600">
+                Voir les appels à projets
+              </Link>
               <Link to="/login" className="text-gray-700 hover:text-primary-600">
                 Connexion
               </Link>
