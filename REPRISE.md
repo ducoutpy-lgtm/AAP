@@ -65,7 +65,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   Ollama »**, c'est-à-dire un second tour à zéro euro avant tout appel payant.
 - **Tâche suivante : changement « second tour d'extraction Ollama avec seuil »** (à proposer avec `/opsx:propose`) :
   question préalable « est-ce un appel à projets ? » avant d'extraire, contrôle strict des formats (dates AAAA-MM-JJ,
-  montants entiers) avec nouvelle demande au modèle en cas d'écart, essai de Qwen 27B à côté de mistral 7b (un seul
+  montants entiers) avec nouvelle demande au modèle en cas d'écart, essai d'un modèle local plus gros à côté de
+  mistral 7b (installés le 2026-10-13 : `qwen3.6:latest` 23 Go, `orcarouter/Qwen3.8-27B-Uncensored` 17 Go ; un seul
   modèle à la fois sur la carte graphique), mesure contre les 24 fiches de référence de `results/echantillon_claude_code.json`,
   seuil fixé par Monsieur DUCOUT avant le tour (proposition : 20 fiches justes sur 24). L'API Anthropic n'est retenue
   que si le seuil n'est pas atteint ; son coût sur les 155 rubriques confirmées reste à estimer dans ce cas.
