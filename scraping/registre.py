@@ -140,11 +140,12 @@ def tableau(sources: list[dict], aujourdhui: str) -> str:
         if not groupe:
             continue
         lignes += [f"## {LIBELLES_CATEGORIES[categorie]} ({len(groupe)})", "",
-                   "| Source | Périmètre | Statut | Connecteur | Page des AAP | Dernier contrôle | Notes |",
-                   "|---|---|---|---|---|---|---|"]
+                   "| Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |",
+                   "|---|---|---|---|---|---|---|---|"]
         for s in sorted(groupe, key=lambda x: x["nom"]):
             controle = f"{s['derniere_verification']} ({s['code_http']})" if s.get("derniere_verification") else ""
-            lignes.append(f"| {s['nom']} | {s['perimetre']} | {LIBELLES_STATUTS[s['statut']]} | "
+            qualification = (s.get("qualification") or {}).get("verdict", "")
+            lignes.append(f"| {s['nom']} | {s['perimetre']} | {LIBELLES_STATUTS[s['statut']]} | {qualification} | "
                           f"{s.get('connecteur') or ''} | [page]({s['url_aap']}) | {controle} | {s.get('notes', '')} |")
         lignes.append("")
     return "\n".join(lignes)

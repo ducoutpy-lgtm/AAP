@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Qualification des sources (changement OpenSpec `qualification-des-sources`, 2026-10-12) : 270 rubriques relues par
+  le modèle local, 127 confirmées comme publiant des appels à projets santé ; verdict dans le registre et `scraping/QUALIFICATION.md`.
+- Échantillon d'extraction (`extraction-echantillon-aap`, en attente) : 24 fiches produites par la session, coût API estimé.
+- `REPRISE.md` à la racine : résumé du projet et consigne de reprise pour chaque nouvelle session.
 - Robot de découverte des rubriques appels à projets (changement OpenSpec `decouverte-rubriques-aap`,
   2026-10-09) : 847 sources explorées sans IA, 268 rubriques trouvées, 3744 liens d'AAP gardés en local
   pour l'extraction à venir. Rapport `scraping/DECOUVERTE.md`.

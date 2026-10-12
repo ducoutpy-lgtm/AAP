@@ -173,6 +173,30 @@ dizaine de pages en quelques secondes. Les parcourir depuis la box personnelle, 
 (`--parallele 1`), avec une pause entre deux sites. Ameli (CPAM) accepte la box personnelle mais ses
 pages dépassent souvent le délai de 180 s ; les 19 pages lues ne contiennent pas d'appel à projets.
 
+## Qualification des sources
+
+La découverte repère des rubriques par mots-clés : ce sont des candidates, pas des certitudes. `qualification.py`
+relit la page gardée de chaque rubrique avec le modèle local Ollama (`mistral:7b-instruct`, gratuit) et répond à
+trois questions fermées : la page liste-t-elle des appels à projets, sous quelle forme (web, PDF), dans le champ
+santé ou médico-social ? Le verdict est calculé par le script : `rubrique-confirmee`, `pdf-seulement`,
+`hors-sante`, `pas-d-aap`, `a-verifier`.
+
+```bash
+python qualification.py --qualifier            # toutes les rubriques, reprise automatique
+python qualification.py --registre --rapport   # champ "qualification" dans le registre, QUALIFICATION.md
+```
+
+Passage du 2026-10-12 : 270 rubriques qualifiées, 127 confirmées, 1 en PDF seulement, 133 hors santé,
+5 sans AAP, 4 à vérifier ; sondage manuel de 31 verdicts : 83 % d'accord
+(`decouverte/sondage_qualification.json`). Détail : `QUALIFICATION.md`. Le modèle se trompe surtout sur les pages
+bloquées (bandeau cookies, message d'accès refusé) et sur les listes mixtes où un seul appel concerne la santé.
+
+Essai d'un modèle de décision (2026-10-12) : Laya multilingue (322 millions de paramètres, paquet `laya`, sur
+processeur) rejoué sur les 31 sources du sondage : 48 % d'accord avec la relecture (74 % en ignorant sa question
+sur la forme PDF/web), contre 83 % pour mistral, et des probabilités trop sûres d'elles (0,85 à 0,99 de "santé"
+pour une agence de l'eau). Non retenu sans entraînement spécifique ; résultats dans
+`decouverte/qualification_laya.json`. Kev (anglais seulement, 16 Go de mémoire graphique) écarté sans essai.
+
 ## Ajouter une source
 
 Créer `sources/<nom>.py` sur le modèle de `fondation_de_france.py`. Deux fonctions async à implémenter :

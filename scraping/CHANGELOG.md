@@ -4,6 +4,14 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (qualification des sources, 2026-10-12)
+- `qualification.py` : verdict par rubrique via le modèle local Ollama, champ `qualification` dans le registre,
+  colonne Qualification dans `REGISTRE_SOURCES.md`, rapport `QUALIFICATION.md`. 270 rubriques qualifiées :
+  127 confirmées, 1 PDF seulement, 133 hors santé, 5 sans AAP, 4 à vérifier ; sondage de 31 verdicts, 83 % d'accord.
+- `echantillon.py` (changement `extraction-echantillon-aap`, en attente) : collecte du texte de 45 fiches sur 9 rubriques,
+  extraction par Ollama et par la session, estimation du coût API (99 euros pour 3 748 liens), rapport `ECHANTILLON.md`.
+- Dépendance : `pydantic` installé dans `.venv` (schéma `AapNormalized`).
+
 ### Ajouté (découverte des rubriques, 2026-10-09)
 - `decouverte.py` : robot générique (Playwright) qui trouve la rubrique appels à projets de chaque source du
   registre et garde la page et ses liens en local. Premier passage : 847 sources, 268 rubriques,

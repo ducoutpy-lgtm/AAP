@@ -1,15 +1,18 @@
 # Tasks
 
+EN ATTENTE (2026-10-12) : Monsieur DUCOUT demande de qualifier d'abord les sources (changement
+`qualification-des-sources`) ; l'extraction reprendra sur les rubriques confirmées. Fait : 1.1, 1.2, 2.2, 2.3.
+
 ## 1. Échantillon
 
-- [ ] 1.1 `scraping/echantillon.py --collecter` : choix de 10 rubriques (familles variées), ouverture de 5 fiches au plus par rubrique, texte lisible enregistré dans `decouverte/<id>/fiches/`. Fait quand : au moins 30 fichiers texte avec leur adresse en première ligne.
-- [ ] 1.2 Tests `scraping/tests/test_echantillon.py` sur les fonctions pures (choix des rubriques, nettoyage du texte, validation d'une fiche, estimation). Fait quand : pytest vert.
+- [x] 1.1 `scraping/echantillon.py --collecter` : choix de 10 rubriques (familles variées), ouverture de 5 fiches au plus par rubrique, texte lisible enregistré dans `decouverte/<id>/fiches/`. Fait quand : au moins 30 fichiers texte avec leur adresse en première ligne.
+- [x] 1.2 Tests `scraping/tests/test_echantillon.py` sur les fonctions pures (choix des rubriques, nettoyage du texte, validation d'une fiche, estimation). Fait quand : pytest vert.
 
 ## 2. Trois moteurs
 
 - [ ] 2.1 `--extraire --moteur ollama` avec `mistral:7b-instruct`, sortie `results/echantillon_ollama.json`, compte des réussites et du temps. Fait quand : le fichier existe et le terminal affiche réussites / échecs / durée.
-- [ ] 2.2 Fiches écrites par la session dans `results/echantillon_claude_code.json`, vérifiées par `--verifier`. Fait quand : "N fiches valides, 0 invalide".
-- [ ] 2.3 `--estimer` : coût API estimé pour l'échantillon et pour les 3 744 liens. Fait quand : les deux montants s'affichent avec la mention "estimation".
+- [x] 2.2 Fiches écrites par la session dans `results/echantillon_claude_code.json`, vérifiées par `--verifier`. Fait quand : "N fiches valides, 0 invalide".
+- [x] 2.3 `--estimer` : coût API estimé pour l'échantillon et pour les 3 744 liens. Fait quand : les deux montants s'affichent avec la mention "estimation".
 
 ## 3. Contrôle et rapport
 
