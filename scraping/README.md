@@ -167,9 +167,11 @@ Résultats dans `decouverte/resultats.json` et, par source, `decouverte/<id>/rub
 `liens.json` (dossier ignoré par Git). Premier passage du 2026-10-09 : 847 sources traitées,
 268 rubriques trouvées, 3744 liens d'AAP collectés (détail : `DECOUVERTE.md`).
 Spécification : `openspec/specs/decouverte-rubriques-aap/`.
-Limites connues : les sites des préfectures (92) renvoient une réponse vide au navigateur piloté et
-ameli (CPAM) répond 403 ; ces sources demandent un traitement à part (flux RSS, recherche web ou saisie
-manuelle).
+Limites connues (constat du 2026-10-12) : les sites des préfectures partagent une protection qui refuse
+les adresses de centres de données (réseau public, VPN) et qui coupe l'adresse domestique après une
+dizaine de pages en quelques secondes. Les parcourir depuis la box personnelle, un site à la fois
+(`--parallele 1`), avec une pause entre deux sites. Ameli (CPAM) accepte la box personnelle mais ses
+pages dépassent souvent le délai de 180 s ; les 19 pages lues ne contiennent pas d'appel à projets.
 
 ## Ajouter une source
 

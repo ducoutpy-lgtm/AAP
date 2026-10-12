@@ -2,16 +2,16 @@
 
 Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 
-**847 sources traitées sur 847 : 268 rubrique trouvée, 347 aucune rubrique, 110 bloqué, 122 erreur ; 3744 liens d'AAP collectés.**
+**847 sources traitées sur 847 : 270 rubrique trouvée, 376 aucune rubrique, 12 bloqué, 189 erreur ; 3748 liens d'AAP collectés.**
 
 ## Par famille
 
 | Famille | Traitées | Rubrique trouvée | Aucune rubrique | Bloquées | Erreurs | Liens d'AAP |
 |---|---|---|---|---|---|---|
-| caisse-nationale | 266 | 23 | 139 | 96 | 8 | 140 |
-| collectivite | 230 | 110 | 105 | 11 | 4 | 1680 |
-| ministere | 150 | 45 | 12 | 0 | 93 | 446 |
-| fondation | 42 | 23 | 13 | 1 | 5 | 257 |
+| caisse-nationale | 266 | 23 | 160 | 0 | 83 | 140 |
+| collectivite | 230 | 111 | 106 | 10 | 3 | 1682 |
+| ministere | 150 | 46 | 18 | 0 | 86 | 448 |
+| fondation | 42 | 23 | 14 | 0 | 5 | 257 |
 | autre | 40 | 10 | 26 | 0 | 4 | 217 |
 | agence-nationale | 34 | 17 | 16 | 1 | 0 | 463 |
 | etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
@@ -278,6 +278,7 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Conseil départemental Yonne | collectivite | [page](https://www.yonne.fr/aides-et-services/publics-demandeur-de-subvention/) | 2 |
 | Conseil départemental Hautes-Alpes | collectivite | [page](https://www.hautes-alpes.fr/le-departement/appels-a-candidatures/) | 2 |
 | Conseil départemental Aube | collectivite | [page](https://www.aube.fr/le-departement/budget-et-documents-reglementaires/appels-a-projets/) | 2 |
+| Conseil départemental Mayotte | collectivite | [page](https://www.mayotte.fr/) | 2 |
 | Mairie de Villeurbanne | collectivite | [page](https://www.villeurbanne.fr/) | 2 |
 | Mairie de Nancy | collectivite | [page](https://www.nancy.fr/culture/appels-a-candidature) | 2 |
 | Mairie de Cayenne | collectivite | [page](https://ville-cayenne.fr/evenements/appel-a-candidature-implantation-dequipements-de-telecommunication-electroniques-pylones-du-fort-ceperou/) | 2 |
@@ -285,6 +286,7 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Caisse d'assurance retraite et de la santé au travail (Carsat) - Alsac | caisse-nationale | [page](https://www.carsat-alsacemoselle.fr/home.html) | 2 |
 | Caisse nationale d’assurance vieillesse (Cnav) Assurance retraite Île- | caisse-nationale | [page](https://www.lassuranceretraite-idf.fr/home/partenaire/soutenir-financierement-les-projets/appels-a-projets.html) | 2 |
 | Mutualité sociale agricole (MSA) Alpes-Vaucluse - accueil d'Avignon | caisse-nationale | [page](https://alpes-vaucluse.msa.fr/lfp/l-appel-%C3%A0-projets-jeunes-apj-) | 2 |
+| Haut-commissariat de la République - Nouvelle-Calédonie | ministere | [page](https://www.nouvelle-caledonie.gouv.fr/Actions-de-l-Etat/Appels-a-projets) | 2 |
 | Direction départementale de l'emploi, du travail et des solidarités (D | ministere | [page](https://auvergne-rhone-alpes.dreets.gouv.fr/appels-projets) | 2 |
 | Direction générale de la cohésion des populations (DGCOPOP) - Guyane | ministere | [page](https://guyane.deets.gouv.fr/Appel-a-projet-FSE-Favoriser-l-acces-au-logement-et-la-prevention-des-violences) | 2 |
 | IHU Méditerranée Infection | etablissement | [page](https://ihu-medinfection.com/appel-a-projet-aap-mi2-2026/) | 2 |
@@ -298,128 +300,103 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Source | Statut | Motif |
 |---|---|---|
 | AG2R La Mondiale – action sociale | erreur | HTTP 404 |
-| Assurance Maladie (CNAM, ameli) | bloqué | HTTP 403 |
 | CAF de Côtes-d'Armor | erreur | HTTP 404 |
 | CAF de l'Haute-Vienne | erreur | HTTP 404 |
 | CAF de l'Hauts-de-Seine | erreur | HTTP 404 |
 | CAF de la Finistère | erreur | HTTP 404 |
 | CAF de la Meurthe-et-Moselle | erreur | HTTP 404 |
 | CAF du Seine-Saint-Denis | erreur | HTTP 404 |
-| CPAM de Côte-d'Or | bloqué | HTTP 403 |
-| CPAM de Côtes-d'Armor | bloqué | HTTP 403 |
-| CPAM de La Réunion | bloqué | HTTP 403 |
-| CPAM de Landes | bloqué | HTTP 403 |
-| CPAM de Territoire de Belfort | bloqué | HTTP 403 |
-| CPAM de Vosges | bloqué | HTTP 403 |
-| CPAM de l'Ain | bloqué | HTTP 403 |
-| CPAM de l'Aisne | bloqué | HTTP 403 |
-| CPAM de l'Allier | bloqué | HTTP 403 |
-| CPAM de l'Alpes-Maritimes | bloqué | HTTP 403 |
-| CPAM de l'Alpes-de-Haute-Provence | bloqué | HTTP 403 |
-| CPAM de l'Ardennes | bloqué | HTTP 403 |
-| CPAM de l'Ardèche | bloqué | HTTP 403 |
-| CPAM de l'Ariège | bloqué | HTTP 403 |
-| CPAM de l'Aube | bloqué | HTTP 403 |
-| CPAM de l'Aude | bloqué | HTTP 403 |
-| CPAM de l'Aveyron | bloqué | HTTP 403 |
-| CPAM de l'Essonne | bloqué | HTTP 403 |
-| CPAM de l'Eure | bloqué | HTTP 403 |
-| CPAM de l'Eure-et-Loir | bloqué | HTTP 403 |
-| CPAM de l'Haute-Garonne | bloqué | HTTP 403 |
-| CPAM de l'Haute-Loire | bloqué | HTTP 403 |
-| CPAM de l'Haute-Marne | bloqué | HTTP 403 |
-| CPAM de l'Haute-Savoie | bloqué | HTTP 403 |
-| CPAM de l'Haute-Saône | bloqué | HTTP 403 |
-| CPAM de l'Haute-Vienne | bloqué | HTTP 403 |
-| CPAM de l'Hautes-Alpes | bloqué | HTTP 403 |
-| CPAM de l'Hautes-Pyrénées | bloqué | HTTP 403 |
-| CPAM de l'Hauts-de-Seine | bloqué | HTTP 403 |
-| CPAM de l'Hérault | bloqué | HTTP 403 |
-| CPAM de l'Ille-et-Vilaine | bloqué | HTTP 403 |
-| CPAM de l'Indre | bloqué | HTTP 403 |
-| CPAM de l'Indre-et-Loire | bloqué | HTTP 403 |
-| CPAM de l'Isère | bloqué | HTTP 403 |
-| CPAM de l'Oise | bloqué | HTTP 403 |
-| CPAM de l'Orne | bloqué | HTTP 403 |
-| CPAM de l'Yonne | bloqué | HTTP 403 |
-| CPAM de l'Yvelines | bloqué | HTTP 403 |
-| CPAM de la Bouches-du-Rhône | bloqué | HTTP 403 |
-| CPAM de la Charente | bloqué | HTTP 403 |
-| CPAM de la Charente-Maritime | bloqué | HTTP 403 |
-| CPAM de la Corrèze | bloqué | HTTP 403 |
-| CPAM de la Creuse | bloqué | HTTP 403 |
-| CPAM de la Dordogne | bloqué | HTTP 403 |
-| CPAM de la Drôme | bloqué | HTTP 403 |
-| CPAM de la Finistère | bloqué | HTTP 403 |
-| CPAM de la Gironde | bloqué | HTTP 403 |
-| CPAM de la Guadeloupe | bloqué | HTTP 403 |
-| CPAM de la Loire | bloqué | HTTP 403 |
-| CPAM de la Loire-Atlantique | bloqué | HTTP 403 |
-| CPAM de la Lozère | bloqué | HTTP 403 |
-| CPAM de la Manche | bloqué | HTTP 403 |
-| CPAM de la Marne | bloqué | HTTP 403 |
-| CPAM de la Mayenne | bloqué | HTTP 403 |
-| CPAM de la Mayotte | bloqué | HTTP 403 |
-| CPAM de la Meurthe-et-Moselle | bloqué | HTTP 403 |
-| CPAM de la Meuse | bloqué | HTTP 403 |
-| CPAM de la Moselle | bloqué | HTTP 403 |
-| CPAM de la Nièvre | bloqué | HTTP 403 |
-| CPAM de la Puy-de-Dôme | bloqué | HTTP 403 |
-| CPAM de la Rhône | bloqué | HTTP 403 |
-| CPAM de la Sarthe | bloqué | HTTP 403 |
-| CPAM de la Savoie | bloqué | HTTP 403 |
-| CPAM de la Saône-et-Loire | bloqué | HTTP 403 |
-| CPAM de la Seine-Maritime | bloqué | HTTP 403 |
-| CPAM de la Seine-et-Marne | bloqué | HTTP 403 |
-| CPAM de la Somme | bloqué | HTTP 403 |
-| CPAM de la Val-d'Oise | bloqué | HTTP 403 |
-| CPAM de la Vaucluse | bloqué | HTTP 403 |
-| CPAM de la Vendée | bloqué | HTTP 403 |
-| CPAM de la Vienne | bloqué | HTTP 403 |
-| CPAM du Calvados | bloqué | HTTP 403 |
-| CPAM du Cantal | bloqué | HTTP 403 |
-| CPAM du Cher | bloqué | HTTP 403 |
-| CPAM du Deux-Sèvres | bloqué | HTTP 403 |
-| CPAM du Doubs | bloqué | HTTP 403 |
-| CPAM du Gard | bloqué | HTTP 403 |
-| CPAM du Gers | bloqué | HTTP 403 |
-| CPAM du Jura | bloqué | HTTP 403 |
-| CPAM du Loir-et-Cher | bloqué | HTTP 403 |
-| CPAM du Loiret | bloqué | HTTP 403 |
-| CPAM du Lot | bloqué | HTTP 403 |
-| CPAM du Lot-et-Garonne | bloqué | HTTP 403 |
-| CPAM du Maine-et-Loire | bloqué | HTTP 403 |
-| CPAM du Morbihan | bloqué | HTTP 403 |
-| CPAM du Nord | bloqué | HTTP 403 |
-| CPAM du Pas-de-Calais | bloqué | HTTP 403 |
-| CPAM du Pyrénées-Atlantiques | bloqué | HTTP 403 |
-| CPAM du Pyrénées-Orientales | bloqué | HTTP 403 |
-| CPAM du Seine-Saint-Denis | bloqué | HTTP 403 |
-| CPAM du Tarn | bloqué | HTTP 403 |
-| CPAM du Tarn-et-Garonne | bloqué | HTTP 403 |
-| CPAM du Val-de-Marne | bloqué | HTTP 403 |
-| CPAM du Var | bloqué | HTTP 403 |
-| Caisse générale de sécurité sociale (CGSS) de Guyane - Accueil de Sain | bloqué | HTTP 403 |
+| CPAM de Côte-d'Or | erreur | délai maximal de 180 s dépassé |
+| CPAM de La Réunion | erreur | délai maximal de 180 s dépassé |
+| CPAM de Landes | erreur | délai maximal de 180 s dépassé |
+| CPAM de Territoire de Belfort | erreur | délai maximal de 180 s dépassé |
+| CPAM de Vosges | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Ain | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Aisne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Allier | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Alpes-Maritimes | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Alpes-de-Haute-Provence | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Ardennes | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Ardèche | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Aube | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Aude | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Aveyron | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Essonne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Eure | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Eure-et-Loir | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Haute-Garonne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Haute-Loire | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Haute-Marne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Haute-Savoie | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Haute-Saône | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Hautes-Alpes | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Hautes-Pyrénées | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Ille-et-Vilaine | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Indre | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Indre-et-Loire | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Isère | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Orne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Yonne | erreur | délai maximal de 180 s dépassé |
+| CPAM de l'Yvelines | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Bouches-du-Rhône | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Charente | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Charente-Maritime | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Corrèze | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Creuse | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Dordogne | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Drôme | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Gironde | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Guadeloupe | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Loire | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Loire-Atlantique | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Lozère | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Manche | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Mayenne | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Mayotte | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Meuse | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Puy-de-Dôme | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Rhône | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Sarthe | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Savoie | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Saône-et-Loire | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Seine-Maritime | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Seine-et-Marne | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Somme | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Val-d'Oise | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Vaucluse | erreur | délai maximal de 180 s dépassé |
+| CPAM de la Vienne | erreur | délai maximal de 180 s dépassé |
+| CPAM du Calvados | erreur | délai maximal de 180 s dépassé |
+| CPAM du Cantal | erreur | délai maximal de 180 s dépassé |
+| CPAM du Deux-Sèvres | erreur | délai maximal de 180 s dépassé |
+| CPAM du Gers | erreur | délai maximal de 180 s dépassé |
+| CPAM du Loir-et-Cher | erreur | délai maximal de 180 s dépassé |
+| CPAM du Loiret | erreur | délai maximal de 180 s dépassé |
+| CPAM du Lot | erreur | délai maximal de 180 s dépassé |
+| CPAM du Maine-et-Loire | erreur | délai maximal de 180 s dépassé |
+| CPAM du Morbihan | erreur | délai maximal de 180 s dépassé |
+| CPAM du Nord | erreur | délai maximal de 180 s dépassé |
+| CPAM du Pas-de-Calais | erreur | délai maximal de 180 s dépassé |
+| CPAM du Pyrénées-Atlantiques | erreur | délai maximal de 180 s dépassé |
+| CPAM du Pyrénées-Orientales | erreur | délai maximal de 180 s dépassé |
+| CPAM du Tarn | erreur | délai maximal de 180 s dépassé |
+| CPAM du Tarn-et-Garonne | erreur | délai maximal de 180 s dépassé |
+| CPAM du Val-de-Marne | erreur | délai maximal de 180 s dépassé |
 | Carenews – appels à projets | erreur | HTTP 404 |
-| Conseil départemental Landes | bloqué | HTTP 403 |
-| Conseil départemental Mayotte | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
 | Conseil départemental Seine-Saint-Denis | bloqué | HTTP 403 |
 | Conseil régional Bretagne | bloqué | HTTP 403 |
 | Conseil régional Normandie | bloqué | HTTP 403 |
-| Conseil territorial de Saint-Martin | erreur | HTTP 522 |
+| Conseil territorial de Saint-Martin | erreur | HTTP 523 |
 | Dauphin (politique de la ville) | erreur | Error: Page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://usager-dauphin.cget.gouv.fr |
-| Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) -  | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at http://daaf.reunion.agriculture.gouv.fr |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at http://draaf.hauts-de-france.agricultur |
+| Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) -  | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
 | Fondation Arsène | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.fondation-arsene.org/ |
 | Fondation Cœur & Recherche | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.fondation-coeur-recherche.org/ |
-| Fondation Korian pour le Bien-Vieillir | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.fondation-korian.com/ |
+| Fondation Korian pour le Bien-Vieillir | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
 | Fondation Roche | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.fondation-roche.org/ |
-| Fondation nehs | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.fondation-nehs.com/deposer- |
-| Fédération Française de Cardiologie | bloqué | HTTP 403 |
+| Fondation nehs | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
 | Fédération Promotion Santé | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.promotion-sante.org/ |
 | GIRCI Auvergne-Rhône-Alpes | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.girci-auvergnerhonealpes.fr/ |
 | GIRCI Nord-Ouest | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.girci-nordouest.fr/ |
-| Haut-commissariat de la République - Nouvelle-Calédonie | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.nouvelle-caledonie.gouv.fr/ |
 | Haut-commissariat de la République - Polynésie française | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.polynesie-francaise.gouv.fr/ |
 | Hospimedia – appels à projets | erreur | HTTP 404 |
 | Hôpital Robert-Debré (AP-HP) – veille des appels à projets | bloqué | HTTP 403 |
@@ -431,7 +408,7 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Institut Pasteur | bloqué | HTTP 403 |
 | L'Europe s'engage en France (FEDER, FSE+, Interreg) | erreur | HTTP 404 |
 | Mairie de Limoges | bloqué | HTTP 403 |
-| Maison départementale des personnes handicapées (MDPH) - Eure | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.mdph27.fr/ |
+| Maison départementale des personnes handicapées (MDPH) - Eure | erreur | TimeoutError: Page.goto: Timeout 30000ms exceeded. |
 | Maison départementale des personnes handicapées (MDPH) - Pas-de-Calais | bloqué | HTTP 403 |
 | Maison départementale des personnes handicapées (MDPH) - Seine-Saint-D | bloqué | HTTP 403 |
 | Maison départementale des personnes handicapées (MDPH) - Yonne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at http://www.mdph89.fr/ |
@@ -461,7 +438,6 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Dordogne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.dordogne.gouv.fr/ |
 | Préfecture - Doubs | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.doubs.gouv.fr/ |
 | Préfecture - Drôme | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.drome.gouv.fr/ |
-| Préfecture - Essonne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.essonne.gouv.fr/ |
 | Préfecture - Eure | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.eure.gouv.fr/ |
 | Préfecture - Eure-et-Loir | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.eure-et-loir.gouv.fr/ |
 | Préfecture - Finistère | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.finistere.gouv.fr/ |
@@ -477,11 +453,9 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Haute-Marne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.haute-marne.gouv.fr/ |
 | Préfecture - Haute-Savoie | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.haute-savoie.gouv.fr/ |
 | Préfecture - Haute-Saône | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.haute-saone.gouv.fr/ |
-| Préfecture - Hautes-Alpes | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.hautes-alpes.gouv.fr/ |
 | Préfecture - Hautes-Pyrénées | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.hautes-pyrenees.gouv.fr/ |
 | Préfecture - Hauts-de-Seine | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.hauts-de-seine.gouv.fr/ |
 | Préfecture - Hérault | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.herault.gouv.fr/ |
-| Préfecture - Indre | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.indre.gouv.fr/ |
 | Préfecture - Indre-et-Loire | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.indre-et-loire.gouv.fr/ |
 | Préfecture - Isère | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.isere.gouv.fr/ |
 | Préfecture - La Réunion | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.reunion.gouv.fr/ |
@@ -498,13 +472,11 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Martinique | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.martinique.gouv.fr/ |
 | Préfecture - Mayenne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.mayenne.gouv.fr/ |
 | Préfecture - Mayotte | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.mayotte.gouv.fr/ |
-| Préfecture - Meurthe-et-Moselle | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.meurthe-et-moselle.gouv.fr/ |
 | Préfecture - Meuse | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.meuse.gouv.fr/ |
 | Préfecture - Moselle | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.moselle.gouv.fr/ |
 | Préfecture - Nord | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.nord.gouv.fr/ |
 | Préfecture - Oise | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.oise.gouv.fr/ |
 | Préfecture - Orne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.orne.gouv.fr/ |
-| Préfecture - Pas-de-Calais | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.pas-de-calais.gouv.fr/ |
 | Préfecture - Puy-de-Dôme | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.puy-de-dome.gouv.fr/ |
 | Préfecture - Pyrénées-Atlantiques | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.pyrenees-atlantiques.gouv.fr/ |
 | Préfecture - Pyrénées-Orientales | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.pyrenees-orientales.gouv.fr/ |
@@ -515,7 +487,6 @@ Généré le 2026-10-12 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Seine-Saint-Denis | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.seine-saint-denis.gouv.fr/ |
 | Préfecture - Seine-et-Marne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.seine-et-marne.gouv.fr/ |
 | Préfecture - Somme | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.somme.gouv.fr/ |
-| Préfecture - Tarn | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.tarn.gouv.fr/ |
 | Préfecture - Tarn-et-Garonne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.tarn-et-garonne.gouv.fr/ |
 | Préfecture - Territoire de Belfort | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.territoire-de-belfort.gouv.fr/ |
 | Préfecture - Val-de-Marne | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.val-de-marne.gouv.fr/ |
