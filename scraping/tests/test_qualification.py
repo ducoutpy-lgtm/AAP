@@ -2,8 +2,35 @@
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import qualification  # noqa: E402
+
+
+def test_appliquer_relecture():
+    q = {"a": {"verdict": "hors-sante", "url": "https://a.fr"}, "b": {"verdict": "rubrique-confirmee"}}
+    relecture = {"_note": "commentaire ignoré",
+                 "a": {"verdict": "rubrique-confirmee", "motif": "recherche sur le cancer", "date": "2026-10-12", "relecteur": "session"},
+                 "inconnu": {"verdict": "a-verifier"}}
+    resultat = qualification.appliquer_relecture(q, relecture)
+    assert resultat["a"]["verdict"] == "rubrique-confirmee"
+    assert resultat["a"]["verdict_modele"] == "hors-sante"
+    assert resultat["a"]["relecture"] == {"motif": "recherche sur le cancer", "date": "2026-10-12", "relecteur": "session"}
+    assert resultat["b"] == {"verdict": "rubrique-confirmee"}
+    assert q["a"]["verdict"] == "hors-sante"  # les verdicts du modèle ne sont pas modifiés en place
+    with pytest.raises(ValueError):
+        qualification.appliquer_relecture(q, {"a": {"verdict": "n-importe-quoi"}})
+
+
+def test_rapport_relecture():
+    sources = [{"id": "a", "nom": "A", "categorie": "ars"}]
+    q = {"a": {"verdict": "rubrique-confirmee", "verdict_modele": "hors-sante", "url": "https://a.fr", "nb_aap": 2,
+               "forme": "html", "date": "2026-10-12", "relecture": {"motif": "liste mixte", "date": "2026-10-12", "relecteur": "session"}}}
+    texte = qualification.rapport(q, sources, {}, "2026-10-12")
+    assert "1 verdicts corrigés à la relecture" in texte
+    assert "| A | hors santé | rubrique confirmée | liste mixte | [page](https://a.fr) |" in texte
+    assert "1 sources qualifiées sur 1 : 1 rubrique confirmée" in texte
 
 
 def test_texte_sans_balises_retire_navigation_et_scripts():

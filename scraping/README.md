@@ -191,6 +191,21 @@ Passage du 2026-10-12 : 270 rubriques qualifiées, 127 confirmées, 1 en PDF seu
 (`decouverte/sondage_qualification.json`). Détail : `QUALIFICATION.md`. Le modèle se trompe surtout sur les pages
 bloquées (bandeau cookies, message d'accès refusé) et sur les listes mixtes où un seul appel concerne la santé.
 
+### Relecture manuelle des verdicts
+
+Le modèle juge une seule page par source, celle gardée par la découverte : si c'est une page d'accueil, une page
+d'archives ou un bandeau cookies, le verdict ne dit rien de l'organisme. Les corrections humaines vont dans
+`sources/relecture_qualification.json` (versionné, contrairement à `decouverte/`) : une entrée par source avec
+`verdict`, `motif`, `date`, `relecteur`. `--registre --rapport` applique ces verdicts par-dessus ceux du modèle,
+garde le verdict du modèle sous `verdict_modele`, et ajoute une section « Relecture manuelle » à `QUALIFICATION.md`.
+Pour corriger une source : ajouter son identifiant dans le fichier, relancer `--registre --rapport`.
+Quand la vraie rubrique est ailleurs, son adresse est notée dans le champ `notes` du registre.
+
+Relecture du 2026-10-12 (changement `relecture-qualification`) : 70 corrections décidées avec Monsieur DUCOUT
+(10 « hors santé » dont le motif prouvait la santé, 60 pages relues sans Ollama ni API), puis 60 décisions après
+relecture. Bilan : 155 confirmées, 1 PDF seulement, 88 hors santé, 6 sans AAP, 20 à vérifier (6 cas limites à
+trancher, 9 sites illisibles par le robot à ouvrir à la main, 2 préfectures bloquées, 2 pages sans AAP).
+
 Essai d'un modèle de décision (2026-10-12) : Laya multilingue (322 millions de paramètres, paquet `laya`, sur
 processeur) rejoué sur les 31 sources du sondage : 48 % d'accord avec la relecture (74 % en ignorant sa question
 sur la forme PDF/web), contre 83 % pour mistral, et des probabilités trop sûres d'elles (0,85 à 0,99 de "santé"

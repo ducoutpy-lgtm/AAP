@@ -140,8 +140,8 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : 5 sources | OK | voir ci-dessus |
 | Scraping : registre des sources | OK | 2026-10-09 : 847 sources, 657 pages vérifiées (deux extensions) |
 | Scraping : découverte des rubriques AAP | OK | 2026-10-12 : 847 sources explorées, 270 rubriques candidates, 3 748 liens candidats (repérés par mots-clés, NON vérifiés : l'échantillon a montré 21 pages hors sujet sur 45) ; préfectures et ameli bloquent le robot (voir README scraping) |
-| Scraping : qualification des sources | OK | 2026-10-12 : 270 rubriques relues par Ollama, 127 confirmées, 133 hors santé, 4 à vérifier ; sondage 83 % d'accord (`scraping/qualification.py`, `QUALIFICATION.md`, champ `qualification` du registre) |
-| Scraping : extraction des AAP découverts | EN ATTENTE | changement `extraction-echantillon-aap` : 45 textes collectés, 24 fiches Claude Code validées, coût API estimé 99 euros pour 3 748 liens ; reprend sur les rubriques confirmées |
+| Scraping : qualification des sources | OK | 2026-10-12 : 270 rubriques relues par Ollama (sondage 83 % d'accord), puis relecture manuelle (changement `relecture-qualification`, `scraping/sources/relecture_qualification.json`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier (`scraping/qualification.py`, `QUALIFICATION.md`, champ `qualification` du registre avec verdict du modèle conservé) |
+| Scraping : extraction des AAP découverts | EN COURS | changement `extraction-echantillon-aap` : 45 textes collectés, 24 fiches Claude Code validées, 41 fiches Ollama produites (contrôle à faire), coût API estimé 99 euros pour 3 748 liens |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) |
@@ -184,10 +184,11 @@ Cycle (commandes slash dans Claude Code) :
 - Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
-  (2026-10-09), `decouverte-rubriques-aap` (2026-10-12). `qualification-des-sources` (2026-10-12, archivé). En attente : `extraction-echantillon-aap` (reprise sur les rubriques confirmées). Specs en vigueur : `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`,
-  `decouverte-rubriques-aap`.
+  (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12). En cours :
+  `extraction-echantillon-aap` (reprise à la tâche 3.1). Specs en vigueur :
+  `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`, `decouverte-rubriques-aap`, `qualification-sources`.
 - Reprise d'une session : lire d'abord `REPRISE.md` (racine), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
-  `scraping/QUALIFICATION.md` s'il existe. Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.
+  `scraping/QUALIFICATION.md` (section « Relecture manuelle » : corrections humaines des verdicts du modèle). Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.
 - Modèle local Ollama (mistral:7b-instruct, installé sur le PC) : utilisé seulement comme outil de tri et de test à
   coût zéro (qualification, échantillon) ; la décision « Claude API pour le MVP » n'est pas remise en cause.
 - Décision de Monsieur DUCOUT (2026-10-09) : tout tester en local avant de déployer ; pas de forfait Blaze

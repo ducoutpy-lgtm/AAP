@@ -4,6 +4,16 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (relecture de la qualification, 2026-10-12)
+- `qualification.py` : fonction `appliquer_relecture`, lecture de `sources/relecture_qualification.json` lors de
+  `--registre` et `--rapport`, champs `verdict_modele` et `relecture` dans le registre, section « Relecture manuelle »
+  dans `QUALIFICATION.md`, motif de relecture dans la liste des sources à vérifier. Deux tests ajoutés.
+- `sources/relecture_qualification.json` : 70 corrections décidées avec Monsieur DUCOUT puis 60 décisions après relecture
+  des pages (sans Ollama ni API). Bilan : 155 confirmées, 1 PDF seulement, 88 hors santé, 6 sans AAP, 20 à vérifier.
+  18 adresses de rubrique corrigées dans le champ `notes` du registre.
+- `echantillon.py --extraire --moteur ollama` terminé : 41 fiches sur 45 (`results/echantillon_ollama.json`), 4 échecs,
+  1 767 s de calcul utile et une heure au total avec les délais dépassés.
+
 ### Ajouté (qualification des sources, 2026-10-12)
 - `qualification.py` : verdict par rubrique via le modèle local Ollama, champ `qualification` dans le registre,
   colonne Qualification dans `REGISTRE_SOURCES.md`, rapport `QUALIFICATION.md`. 270 rubriques qualifiées :

@@ -26,8 +26,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 |---|---|---|
 | 1. Registre des émetteurs (qui publie des AAP) | `scraping/registre.py`, `sources/registre.json` | 847 sources ; 657 adresses répondent. "Page vérifiée" veut dire que l'adresse répond, pas qu'elle contient des AAP. |
 | 2. Découverte des rubriques (où ils publient) | `scraping/decouverte.py`, `DECOUVERTE.md` | 270 rubriques candidates et 3 748 liens candidats, repérés par mots-clés, NON vérifiés. Pages gardées dans `scraping/decouverte/` (hors Git). |
-| 3. Qualification des sources (publient-ils vraiment des AAP ?) | `scraping/qualification.py`, `QUALIFICATION.md` | FAIT le 2026-10-12 : 270 rubriques relues, 127 confirmées, 133 hors santé, 4 à vérifier ; sondage 83 % d'accord. Verdict dans le registre (champ `qualification`) et `QUALIFICATION.md`. |
-| 4. Extraction des fiches (page -> fiche AAP) | `scraping/echantillon.py`, `ECHANTILLON.md` | EN ATTENTE (changement `extraction-echantillon-aap`). 45 textes collectés, 24 fiches écrites par Claude Code et validées, 21 pages hors sujet, coût API estimé 99 euros pour 3 748 liens (trop cher : d'où la qualification d'abord). |
+| 3. Qualification des sources (publient-ils vraiment des AAP ?) | `scraping/qualification.py`, `QUALIFICATION.md`, `sources/relecture_qualification.json` | FAIT le 2026-10-12 : 270 rubriques relues par le modèle, puis relecture manuelle (changement `relecture-qualification`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier. Verdict relu dans le registre (champ `qualification`, verdict du modèle conservé) et `QUALIFICATION.md`. |
+| 4. Extraction des fiches (page -> fiche AAP) | `scraping/echantillon.py`, `ECHANTILLON.md` | EN COURS (changement `extraction-echantillon-aap`). 45 textes collectés, 24 fiches Claude Code validées, 41 fiches Ollama produites (non contrôlées), 21 pages hors sujet, coût API estimé 99 euros pour 3 748 liens. Reste : contrôle des fiches Ollama, rapport, import. |
 | 5. Import dans l'application | `scripts/import_to_firestore.py` | OK : 89 AAP des 5 connecteurs historiques visibles dans "Rechercher des AAP", pièces jointes servies depuis le PC. |
 | 6. Veille des changements (re-scraper ce qui bouge) | à créer | Idée validée par Monsieur DUCOUT : passage initial lent, puis comparaison quotidienne des pages gardées. |
 
@@ -45,24 +45,32 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   parfois (sondage obligatoire). La décision "Claude API pour le produit final" n'est pas remise
   en cause.
 
-## Où en est le projet (mis à jour le 2026-10-12 au soir)
+## Où en est le projet (mis à jour le 2026-10-12, nuit)
 
-- Changement `qualification-des-sources` : validé par Monsieur DUCOUT le 2026-10-12 au soir, archivé et poussé.
-  **Tâche suivante : reprendre `extraction-echantillon-aap`** (voir plus bas), en commençant par le contrôle des fiches
-  Ollama, puis relire rapidement les 133 "hors santé" du registre.
-- Résultat : 270 rubriques qualifiées, 127 confirmées, 133 hors santé, 5 sans AAP, 4 à vérifier, 1 PDF seulement ;
-  577 sources sans page gardée (à vérifier plus tard). Sondage manuel de 31 verdicts : 83 % d'accord. Attention :
-  le modèle déclare "hors santé" des listes mixtes où un seul appel concerne la santé (Gard, Interreg Sudoe) ;
-  les 133 "hors santé" méritent une relecture rapide avant d'être écartés définitivement.
+- Changement `relecture-qualification` (validé par Monsieur DUCOUT et archivé le 2026-10-12) : les 133 "hors santé" ont été relus avec
+  Monsieur DUCOUT. 10 passés en confirmée sur le motif du modèle, 60 pages relues par la session (sans Ollama ni API),
+  décisions validées sauf 6 cas limites laissés "à vérifier" (Val-de-Marne, DREETS Nouvelle-Aquitaine, Mayotte,
+  Région Île-de-France, Corrèze, FRM) et 9 sites illisibles par le robot (Meurthe-et-Moselle, Aube, Doubs,
+  Hautes-Alpes, Drôme, DDETS Isère, DREETS Occitanie, GIRCI Est) à ouvrir à la main. L'ANR est confirmée sur
+  l'adresse donnée par Monsieur DUCOUT (anr.fr/fr/appels).
+  Vérification 3.2 faite par Monsieur DUCOUT sur Fondation Le Souffle et ANR.
+- Bilan de la qualification après relecture : 155 confirmées, 1 PDF seulement, 88 hors santé, 6 sans AAP,
+  20 à vérifier ; 577 sources sans page gardée. Leçon : le modèle ne juge que la page gardée ; quand c'est une page
+  d'accueil, d'archives ou un bandeau cookies (liste de cookies plus longue que les 8 000 caractères lus), le verdict
+  ne vaut rien. Mécanisme : `scraping/sources/relecture_qualification.json`, appliqué par `qualification.py`.
+- **Tâche suivante : reprendre `extraction-echantillon-aap`** à la tâche 3.1 (contrôle des 41 fiches
+  Ollama dans `results/controle_echantillon.json`, colonne `ollama`, puis `echantillon.py --rapport`).
 - Essai de modèles de décision : Laya multilingue testé (48 % d'accord, trop sûr de lui), non retenu ; Kev écarté
   (anglais, 16 Go de mémoire graphique). Mistral 7b via Ollama reste le moteur de tri. Laya est installé dans
   `.venv` mais inutilisé.
-- Changement `extraction-echantillon-aap` (en attente) : 45 textes collectés, 24 fiches Claude Code validées,
+- Changement `extraction-echantillon-aap` (en cours, 2.1 coché) : 45 textes collectés, 24 fiches Claude Code validées,
   grille de contrôle remplie pour Claude Code, estimation API faite. Extraction Ollama terminée le 2026-10-12 à
   23 h 05 : 41 fiches sur 45, 4 échecs (`scraping/results/echantillon_ollama.json` et `.errors.json`), une heure
-  de calcul (1 à 5 minutes par page longue : prévoir d'écrire le fichier fiche par fiche à l'avenir). Restent :
-  contrôle manuel des 41 fiches Ollama (grille `results/controle_echantillon.json`), `--rapport`, import des
-  fiches justes dans Firestore, documentation, validation.
+  de calcul dont 30 minutes de délais dépassés (1 à 5 minutes par page longue : prévoir d'écrire le fichier fiche
+  par fiche à l'avenir). Défauts vus dans les fiches Ollama : fiches produites pour des pages sans rapport (facture
+  d'eau, formulaire de recherche), dates hors format ("20 Septembre 2026", "Pas de date"), listes de catégories
+  aberrantes (SFMU). Restent : contrôle manuel des 41 fiches Ollama (grille `results/controle_echantillon.json`),
+  `--rapport`, import des fiches justes dans Firestore, documentation, validation.
 - Tout est commité et poussé sur GitHub (dernier push le 2026-10-12 au soir). Le dossier
   `scraping/decouverte/` et `scraping/results/` restent sur le PC (ignorés par Git).
 - Règle d'exploitation d'Ollama : un seul travail à la fois sur le modèle ; ne pas lancer un autre modèle
@@ -70,7 +78,7 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md, dis-moi la tâche suivante et propose-moi comment reprendre l'extraction sur échantillon."
+"Lis REPRISE.md, dis-moi la tâche suivante et reprends extraction-echantillon-aap à la tâche 3.1 (contrôle des fiches Ollama)."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 

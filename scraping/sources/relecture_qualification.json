@@ -1,0 +1,423 @@
+{
+ "_note": "Relecture manuelle des verdicts de qualification. Une entrée par source corrigée : verdict relu, motif, date, relecteur. Appliquée par qualification.py --registre --rapport par-dessus decouverte/qualification.json ; le verdict du modèle est conservé sous verdict_modele. Décisions de Monsieur DUCOUT du 2026-10-12 : 10 passages en rubrique confirmée, 60 passages en à vérifier en attendant la relecture des pages.",
+ "fondation-arc": {
+  "verdict": "rubrique-confirmee",
+  "motif": "douze appels de recherche sur le cancer : recherche médicale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "fondation-alzheimer": {
+  "verdict": "rubrique-confirmee",
+  "motif": "prix Joël Ménard pour jeunes médecins chercheurs : recherche médicale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "interreg-sudoe": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel ciblant le vieillissement de la population (autonomie), relevé au sondage",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "conseil-departemental-gard": {
+  "verdict": "rubrique-confirmee",
+  "motif": "activité physique adaptée et isolement des personnes âgées, relevé au sondage",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "hauts-de-seine-appels-a-projets": {
+  "verdict": "rubrique-confirmee",
+  "motif": "fonds de mobilité pour les services d'aide à domicile : médico-social",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "conseil-departemental-hauts-de-seine": {
+  "verdict": "rubrique-confirmee",
+  "motif": "même page que Hauts-de-Seine appels à projets : services d'aide à domicile",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-languedoc-roussillon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel « Innovation et Silver autonomie »",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "caisse-nationale-dassurance-vieillesse-cnav-assurance-retraite-ile-de-france": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel « bien-vieillir » : prévention de la perte d'autonomie",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "societe-francaise-de-geriatrie-et-gerontologie-sfgg": {
+  "verdict": "rubrique-confirmee",
+  "motif": "prix Chaffoteaux : recherche en gériatrie",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "france-life-imaging-reseaux-thematiques-de-recherche": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels de recherche en imagerie médicale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+ },
+ "fondation-le-souffle": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bourses et appels à projets de recherche en santé respiratoire ; le modèle n'avait lu que la liste des cookies",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "ministere-de-l-enseignement-superieur-et-de-la-recherche": {
+  "verdict": "hors-sante",
+  "motif": "coopérations internationales, prix Joliot-Curie, contrats doctoraux handicap (accès des étudiants, pas de santé)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-meurthe-et-moselle": {
+  "verdict": "a-verifier",
+  "motif": "page vide pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-aube": {
+  "verdict": "a-verifier",
+  "motif": "page vide pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-doubs": {
+  "verdict": "a-verifier",
+  "motif": "page vide pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-alpes-maritimes": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels Santé Innovation, Seniors, commission des financeurs 2027, syndrome de Diogène",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-isere": {
+  "verdict": "a-verifier",
+  "motif": "liste non rendue pour le robot (filtre Solidarités : 3 appels) : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "region-ile-de-france-aides-et-appels-a-projets": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : guichet régional de 347 aides par public et thématique, la santé y figure (ex. AlimenTaSanté) mais noyée",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-regional-ile-de-france": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : même page, guichet régional de 347 aides où la santé est noyée",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-yonne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "AMI 2027-2029 prévention de la perte d'autonomie, avis d'appel à projet social et médico-social",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-vosges": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel commission des financeurs 2026, dotation aux services autonomie à domicile",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-moselle": {
+  "verdict": "rubrique-confirmee",
+  "motif": "services autonomie à domicile, proches aidants, « Avec ma santé », isolement des seniors",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-mayenne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel commission des financeurs, accueil de mineurs et jeunes majeurs",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "rhone-appels-a-candidatures-prevention": {
+  "verdict": "rubrique-confirmee",
+  "motif": "AMI CPOM services autonomie à domicile 2027, appel à candidatures conférence des financeurs 2027",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-rhone": {
+  "verdict": "rubrique-confirmee",
+  "motif": "même page : AMI CPOM services autonomie à domicile 2027, conférence des financeurs 2027",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-seine-et-marne": {
+  "verdict": "hors-sante",
+  "motif": "culture, sport, para-sport",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-allier": {
+  "verdict": "rubrique-confirmee",
+  "motif": "AMI habitat inclusif 2026, création de places en lieux de vie et d'accueil",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "drome-commission-des-financeurs": {
+  "verdict": "a-verifier",
+  "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-drome": {
+  "verdict": "a-verifier",
+  "motif": "même page : liste non rendue pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-savoie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel commission des financeurs 2027-2029",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-gironde": {
+  "verdict": "hors-sante",
+  "motif": "ventes immobilières, conseil des jeunes, concours citoyenneté",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-pas-de-calais": {
+  "verdict": "hors-sante",
+  "motif": "soutien à la filière halieutique",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-val-de-marne": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : appel 2026 pour 222 mesures d'accueil de mineurs de l'ASE (établissements sociaux, pas médico-sociaux)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-aude": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels isolement social des seniors, #moisenior 2027, places pour mineurs non accompagnés",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-orne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel à candidatures commission des financeurs Orne, dotation qualité des services autonomie",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-yvelines": {
+  "verdict": "hors-sante",
+  "motif": "FSE insertion des jeunes, AMI occupation du domaine public",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-territoire-de-belfort": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel commission des financeurs de la prévention de la perte d'autonomie 2026",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-saone-et-loire": {
+  "verdict": "pas-d-aap",
+  "motif": "article sur le téléservice de demande d'aide 2027, aucun appel listé",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-hautes-alpes": {
+  "verdict": "a-verifier",
+  "motif": "page vide pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mairie-de-bordeaux": {
+  "verdict": "hors-sante",
+  "motif": "prix des jeunes associations ; page du CCAS presque vide",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-regional-centre-val-de-loire": {
+  "verdict": "hors-sante",
+  "motif": "Humain et Tech, diversification, formation, vie étudiante, recherche générale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "metropole-aix-marseille-provence-contrat-de-ville": {
+  "verdict": "hors-sante",
+  "motif": "contrat de ville, projet alimentaire territorial, locaux et immobilier",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "caisse-generale-de-securite-sociale-cgss-martinique": {
+  "verdict": "rubrique-confirmee",
+  "motif": "ateliers Bienvenue à la retraite : prévention inter-régimes du bien vieillir",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-normandie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel accompagner le passage à la retraite : prévention du bien vieillir",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mutualite-sociale-agricole-msa-grand-est-accueil-de-sarrebourg": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel à projets Bien-être psychologique (Label Vie)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mutualite-sociale-agricole-msa-meurthe-et-moselle-accueil-de-vanduvre-les-nancy": {
+  "verdict": "rubrique-confirmee",
+  "motif": "même page : appel à projets Bien-être psychologique (Label Vie)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mutualite-sociale-agricole-msa-nouvelle-aquitaine-accueil-de-libourne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel 2026 en faveur des aidants, répit parental",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mutualite-sociale-agricole-msa-occitanie-accueil-de-carcassonne": {
+  "verdict": "hors-sante",
+  "motif": "appel Grandir en milieu rural (jeunesse)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "anses-programme-pnr-est": {
+  "verdict": "hors-sante",
+  "motif": "AMI techniques (vaccins faune sauvage, génotypage) ; page du programme PNR-EST non trouvée",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "bpifrance-france-2030": {
+  "verdict": "hors-sante",
+  "motif": "industrie, clusters Eureka, espace de données",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "fondation-maladies-rares": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels à projets conjoints maladies rares (MASFD, GRI, AFMF) ; la page gardée datait de 2019",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "ihu-mediterranee-infection": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel MI2 2026 : innovation en infectiologie",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "girci-est": {
+  "verdict": "a-verifier",
+  "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-nouvelle-aquitaine": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : appel 2026 lutte contre la précarité menstruelle (santé publique, financeur hors santé)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "le-compte-asso-subventions-de-l-etat": {
+  "verdict": "hors-sante",
+  "motif": "FDVA, mentorat, solidarité internationale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "anr": {
+  "verdict": "rubrique-confirmee",
+  "motif": "page des appels en cours indiquée par Monsieur DUCOUT (anr.fr/fr/appels) : PEPR Psychiatrie de précision, appel générique 2027",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-tarn": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel commission des financeurs de la prévention de la perte d'autonomie visible dans les actualités",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-correze": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : rubriques dédiées Autonomie et Action sociale visibles par leur nom, contenu non lisible par le robot",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-mayotte": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : rubrique AAP, AMI, AAC du Département-Région, vide au 2026-10-12",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "avise": {
+  "verdict": "hors-sante",
+  "motif": "agenda d'appels de tiers (innovation sociale, finance durable)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "conseil-departemental-tarn-et-garonne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels prévention santé et remobilisation, création de 35 places d'accueil et d'hébergement, CDCA ; site refuse le robot",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mairie-de-reims": {
+  "verdict": "hors-sante",
+  "motif": "appels culturels et postes à pourvoir",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "mairie-de-villeurbanne": {
+  "verdict": "hors-sante",
+  "motif": "foodtrucks, marchés, cité éducative",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "girci-soho-sud-ouest-outre-mer-hospitalier": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels interrégionaux APITHEM et APIRES (recherche en soins)",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-occitanie": {
+  "verdict": "a-verifier",
+  "motif": "délai dépassé ; un appel à candidatures mandataires judiciaires vu : ouvrir à la main",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "inserm": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appels Horizon 2050 et équipements en cancérologie : recherche médicale",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "iresp": {
+  "verdict": "rubrique-confirmee",
+  "motif": "programmes Autonomie, Addictions, MESSIDORE ; la page gardée listait les appels clos",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "fondation-pour-la-recherche-medicale-frm": {
+  "verdict": "a-verifier",
+  "motif": "cas limite à trancher : programmes de recherche en biologie et santé, mais seule la page des appels clôturés est connue, page des appels en cours à retrouver",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "firah": {
+  "verdict": "rubrique-confirmee",
+  "motif": "quatre appels de recherche appliquée sur le handicap en 2026 ; la page gardée listait les lauréats",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "canceropole-est-appels-a-projets": {
+  "verdict": "rubrique-confirmee",
+  "motif": "appel générique 2027, PLBIO, bourses ; la page gardée listait les résultats",
+  "date": "2026-10-12",
+  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ }
+}

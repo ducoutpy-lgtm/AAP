@@ -602,13 +602,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP de recherche en santé publique (avec CNSA, CNAM, Inserm).",
+    "notes": "AAP de recherche en santé publique (avec CNSA, CNAM, Inserm). ; rubrique relue le 2026-10-12 : https://iresp.net/financements/programmes-et-appels/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'IReSP présente une liste de 23 appels à projets, appel à candidatures, appel à manifestation d'intérêt, bourse ou subvention, dont au moins un concerne la santé, le médico-social, le handicap, l'autonomie, les personnes âgées, la prévention de la perte d'autonomie, la recherche médicale, les établissements de soins ou médico-sociaux."
+      "justification": "La page web de l'IReSP présente une liste de 23 appels à projets, appel à candidatures, appel à manifestation d'intérêt, bourse ou subvention, dont au moins un concerne la santé, le médico-social, le handicap, l'autonomie, les personnes âgées, la prévention de la perte d'autonomie, la recherche médicale, les établissements de soins ou médico-sociaux.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "programmes Autonomie, Addictions, MESSIDORE ; la page gardée listait les appels clos",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -619,13 +625,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Programme de recherche en santé publique et appels thématiques.",
+    "notes": "Programme de recherche en santé publique et appels thématiques. ; rubrique relue le 2026-10-12 : https://anr.fr/fr/appels/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'ANR présente 11 appels à projets spécifiques ouverts à toutes les disciplines, dont certains sont liés à la recherche et l'innovation dans la région méditerranéenne, à l'intelligence artificielle pour les biotechnologies, à la coopération scientifique et technologique entre la France et la Corée du Sud, et à des programmes spécialement dédiés à améliorer le taux de réussite de la France aux appels de l'ERC."
+      "justification": "La page web de l'ANR présente 11 appels à projets spécifiques ouverts à toutes les disciplines, dont certains sont liés à la recherche et l'innovation dans la région méditerranéenne, à l'intelligence artificielle pour les biotechnologies, à la coopération scientifique et technologique entre la France et la Corée du Sud, et à des programmes spécialement dédiés à améliorer le taux de réussite de la France aux appels de l'ERC.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "page des appels en cours indiquée par Monsieur DUCOUT (anr.fr/fr/appels) : PEPR Psychiatrie de précision, appel générique 2027",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -676,7 +688,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de Bpifrance présente 10 appels à projets ouverts, accessibles en cliquant sur les liens fournis."
+      "justification": "La page web de Bpifrance présente 10 appels à projets ouverts, accessibles en cliquant sur les liens fournis.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "industrie, clusters Eureka, espace de données",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -840,13 +858,19 @@
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Recherche appliquée sur le handicap. Adresse à confirmer.",
+    "notes": "Recherche appliquée sur le handicap. Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://www.firah.org/fr/deposer-un-projet.html",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente la liste des appels à projets précédents passés par l'organisme FIRAH, dont certains sont liés à la santé, le médico-social, le handicap, l'autonomie, les personnes âgées, la prévention de la perte d'autonomie, la recherche médicale, les établissements de soins ou médico-sociaux."
+      "justification": "La page présente la liste des appels à projets précédents passés par l'organisme FIRAH, dont certains sont liés à la santé, le médico-social, le handicap, l'autonomie, les personnes âgées, la prévention de la perte d'autonomie, la recherche médicale, les établissements de soins ou médico-sociaux.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "quatre appels de recherche appliquée sur le handicap en 2026 ; la page gardée listait les lauréats",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -878,9 +902,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page présente des appels à projets clôturés de la Fondation pour la Recherche Médicale, qui concernent des domaines de recherche en biologie et santé, y compris des programmes thématiques sur l'inflammation, la reproduction et la fertilité, les maladies neurodégénératives, l'environnement et la santé, et des prix de recherche."
+      "justification": "La page présente des appels à projets clôturés de la Fondation pour la Recherche Médicale, qui concernent des domaines de recherche en biologie et santé, y compris des programmes thématiques sur l'inflammation, la reproduction et la fertilité, les maladies neurodégénératives, l'environnement et la santé, et des prix de recherche.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "cas limite à trancher : programmes de recherche en biologie et santé, mais seule la page des appels clôturés est connue, page des appels en cours à retrouver",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -895,9 +925,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Fondation ARC présente 12 appels à projets ouverts ou fermés dans divers domaines de la recherche sur le cancer, tels que l'immunothérapie, les jeunes chercheurs, les prix et récompenses, la mobilité internationale, etc. Les appels sont décrits sur des pages web."
+      "justification": "La page web de l'organisme Fondation ARC présente 12 appels à projets ouverts ou fermés dans divers domaines de la recherche sur le cancer, tels que l'immunothérapie, les jeunes chercheurs, les prix et récompenses, la mobilité internationale, etc. Les appels sont décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "douze appels de recherche sur le cancer : recherche médicale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -925,13 +961,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Adresse à confirmer.",
+    "notes": "Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://fondation-maladiesrares.org/le-financement-des-projets-scientifiques/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de la Fondation Maladies Rares présente les appels à projets de l'année 2019. Il n'y a pas de nombre spécifié de nombre d'appels distincts, mais il est possible de les trouver en cliquant sur le lien fourni."
+      "justification": "La page web de la Fondation Maladies Rares présente les appels à projets de l'année 2019. Il n'y a pas de nombre spécifié de nombre d'appels distincts, mais il est possible de les trouver en cliquant sur le lien fourni.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appels à projets conjoints maladies rares (MASFD, GRI, AFMF) ; la page gardée datait de 2019",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1065,9 +1107,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web présente un appel à projets ouvert dédié aux projets structurants sur les défis majeurs de l'espace Sud-ouest européen, avec des thématiques ciblées sur les incendies et le vieillissement de la population."
+      "justification": "La page web présente un appel à projets ouvert dédié aux projets structurants sur les défis majeurs de l'espace Sud-ouest européen, avec des thématiques ciblées sur les incendies et le vieillissement de la population.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel ciblant le vieillissement de la population (autonomie), relevé au sondage",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1133,9 +1181,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web présente un appel à manifestation d'intérêt pour le fonds de mobilité et temps de dialogue à destination des services d'aide à domicile du Département des Hauts-de-Seine."
+      "justification": "La page web présente un appel à manifestation d'intérêt pour le fonds de mobilité et temps de dialogue à destination des services d'aide à domicile du Département des Hauts-de-Seine.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "fonds de mobilité pour les services d'aide à domicile : médico-social",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1218,9 +1272,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web présente une liste d'appels à projets en cours proposés par le Département du Rhône dans des thématiques diverses, dont certains sont des appels à candidatures pour des projets liés à la prévention."
+      "justification": "La page web présente une liste d'appels à projets en cours proposés par le Département du Rhône dans des thématiques diverses, dont certains sont des appels à candidatures pour des projets liés à la prévention.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "AMI CPOM services autonomie à domicile 2027, appel à candidatures conférence des financeurs 2027",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1235,9 +1295,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web présente un appel à projets."
+      "justification": "La page web présente un appel à projets.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1286,9 +1352,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Région Île-de-France présente une liste de 347 aides et appels à projets, accessibles via des filtres par public et par thématique."
+      "justification": "La page web de l'organisme Région Île-de-France présente une liste de 347 aides et appels à projets, accessibles via des filtres par public et par thématique.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : guichet régional de 347 aides par public et thématique, la santé y figure (ex. AlimenTaSanté) mais noyée",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1458,7 +1530,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web en question ne présente pas d'appels à projets ou à candidatures spécifiques, mais plutôt un message d'erreur de blocage de l'accès à un site web. Cependant, il est possible que l'organisme en question offre des appels à projets ou à candidatures sur d'autres pages web."
+      "justification": "La page web en question ne présente pas d'appels à projets ou à candidatures spécifiques, mais plutôt un message d'erreur de blocage de l'accès à un site web. Cependant, il est possible que l'organisme en question offre des appels à projets ou à candidatures sur d'autres pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "coopérations internationales, prix Joliot-Curie, contrats doctoraux handicap (accès des étudiants, pas de santé)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1520,13 +1598,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Espace Inserm Pro ; rubrique AAP à préciser.",
+    "notes": "Espace Inserm Pro ; rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://pro.inserm.fr/appels-a-projets",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Inserm présente plusieurs appels à projets, dont un appel à projets sur la transition écologique et sociétale, un appel à projets Inserm Horizon 2050 sur le microbiome intestinal et la santé mentale des jeunes, un appel à projets sur le dépistage du cancer du sein, un appel à projets sur les traumatismes crâniens liés au sport, un appel à projets sur l'amnésie traumatique liée aux violences sexuelles, un appel à projets pour financer des équipements destinés à produire de nouvelles données ou à améliorer les méthodes en cancérologie, et un appel à projets pour le pôle IA de l'Inserm et le Centre de recherche en épidémiologie et santé des populations organisant une journée sur l'IA en santé publique. De plus, il y a un appel à candidatures pour le programme Atip-Avenir, qui permet aux jeunes chercheurs et chercheuses qui présentent un projet de très haut niveau de créer animer leur propre équipe, et un appel à candidatures pour les contrats d’un an, renouvelables une fois, pour les chercheurs et chercheuses en situation de handicap."
+      "justification": "La page web de l'organisme Inserm présente plusieurs appels à projets, dont un appel à projets sur la transition écologique et sociétale, un appel à projets Inserm Horizon 2050 sur le microbiome intestinal et la santé mentale des jeunes, un appel à projets sur le dépistage du cancer du sein, un appel à projets sur les traumatismes crâniens liés au sport, un appel à projets sur l'amnésie traumatique liée aux violences sexuelles, un appel à projets pour financer des équipements destinés à produire de nouvelles données ou à améliorer les méthodes en cancérologie, et un appel à projets pour le pôle IA de l'Inserm et le Centre de recherche en épidémiologie et santé des populations organisant une journée sur l'IA en santé publique. De plus, il y a un appel à candidatures pour le programme Atip-Avenir, qui permet aux jeunes chercheurs et chercheuses qui présentent un projet de très haut niveau de créer animer leur propre équipe, et un appel à candidatures pour les contrats d’un an, renouvelables une fois, pour les chercheurs et chercheuses en situation de handicap.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "appels Horizon 2050 et équipements en cancérologie : recherche médicale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -1543,7 +1627,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'ANSES présente un appel à manifestation d'intérêt (AMI) pour des collaborations scientifiques en vue de l'évaluation de nouvelles technologies ou de nouveaux outils, pour la valorisation d'activité de recherche. Il y a 15 appels à manifestation d'intérêt visibles sur la page."
+      "justification": "La page web de l'ANSES présente un appel à manifestation d'intérêt (AMI) pour des collaborations scientifiques en vue de l'évaluation de nouvelles technologies ou de nouveaux outils, pour la valorisation d'activité de recherche. Il y a 15 appels à manifestation d'intérêt visibles sur la page.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "AMI techniques (vaccins faune sauvage, génotypage) ; page du programme PNR-EST non trouvée",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -2068,9 +2158,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de la Fondation Alzheimer présente un appel à projets, le Prix Joël Ménard, qui est destiné à récompenser de jeunes médecins et/ou scientifiques pour leurs contributions à la recherche sur les maladies neurocognitives dont la maladie d'Alzheimer. Les candidatures sont ouvertes aux deux profils suivants : Titulaires d’un doctorat d’université (PhD) ayant obtenu leur diplôme il y a moins de 10 ans ; Titulaires d’un doctorat de médecine (MD) et d’un doctorat d’université (PhD) ayant obtenu leur diplôme de médecine il y a moins de 15 ans. Les candidats doivent exercer dans un laboratoire de recherche ou un service clinique appartenant à un organisme public ou privé basé en France. La contribution à la recherche doit être dans les domaines de la maladie d'Alzheimer."
+      "justification": "La page web de la Fondation Alzheimer présente un appel à projets, le Prix Joël Ménard, qui est destiné à récompenser de jeunes médecins et/ou scientifiques pour leurs contributions à la recherche sur les maladies neurocognitives dont la maladie d'Alzheimer. Les candidatures sont ouvertes aux deux profils suivants : Titulaires d’un doctorat d’université (PhD) ayant obtenu leur diplôme il y a moins de 10 ans ; Titulaires d’un doctorat de médecine (MD) et d’un doctorat d’université (PhD) ayant obtenu leur diplôme de médecine il y a moins de 15 ans. Les candidats doivent exercer dans un laboratoire de recherche ou un service clinique appartenant à un organisme public ou privé basé en France. La contribution à la recherche doit être dans les domaines de la maladie d'Alzheimer.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "prix Joël Ménard pour jeunes médecins chercheurs : recherche médicale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -2170,9 +2266,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Fondation Le Souffle liste les différents cookies utilisés sur le site, mais il n'y a pas d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions visibles."
+      "justification": "La page web de l'organisme Fondation Le Souffle liste les différents cookies utilisés sur le site, mais il n'y a pas d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions visibles.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "bourses et appels à projets de recherche en santé respiratoire ; le modèle n'avait lu que la liste des cookies",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -2357,9 +2459,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web présente l'appel à candidature pour le Prix Chaffoteaux, un prix décerné par la Société Française de Gériatrie et Gérontologie (SFGG) en partenariat avec la Fondation de France."
+      "justification": "La page web présente l'appel à candidature pour le Prix Chaffoteaux, un prix décerné par la Société Française de Gériatrie et Gérontologie (SFGG) en partenariat avec la Fondation de France.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "prix Chaffoteaux : recherche en gériatrie",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -2886,7 +2994,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'Organisme Métropole Aix-Marseille-Provence présente un appel à projets accessible en html."
+      "justification": "La page web de l'Organisme Métropole Aix-Marseille-Provence présente un appel à projets accessible en html.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "contrat de ville, projet alimentaire territorial, locaux et immobilier",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3037,9 +3151,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "Cette page web du Conseil départemental de Meurthe-et-Moselle présente des informations sur les cookies utilisés sur le site, mais ne liste pas ouvertement d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions."
+      "justification": "Cette page web du Conseil départemental de Meurthe-et-Moselle présente des informations sur les cookies utilisés sur le site, mais ne liste pas ouvertement d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "page vide pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3088,9 +3208,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Gard présente un appel à projets pour l'environnement et les risques naturels, un appel à projets pour le Prix de l'initiative pour une transition écologique et solidaire des associations, un appel à projets pour le Prix de l'initiative pour une transition écologique et solidaire des collectivités, un appel à projets pour l'activité physique adaptée, un appel à projets FSE+ OSH 2027 et un appel à projets pour la lutte contre l'isolement des personnes âgées."
+      "justification": "La page web de l'organisme Conseil départemental Gard présente un appel à projets pour l'environnement et les risques naturels, un appel à projets pour le Prix de l'initiative pour une transition écologique et solidaire des associations, un appel à projets pour le Prix de l'initiative pour une transition écologique et solidaire des collectivités, un appel à projets pour l'activité physique adaptée, un appel à projets FSE+ OSH 2027 et un appel à projets pour la lutte contre l'isolement des personnes âgées.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "activité physique adaptée et isolement des personnes âgées, relevé au sondage",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3139,9 +3265,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "Cette page web du Conseil départemental Doubs présente un appel à projets, à candidatures ou appel à manifestation d'intérêt."
+      "justification": "Cette page web du Conseil départemental Doubs présente un appel à projets, à candidatures ou appel à manifestation d'intérêt.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "page vide pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3275,9 +3407,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Hauts-de-Seine présente deux appels à manifestation d'intérêt et deux appels à projet, ouverts jusqu'au 16 octobre à midi."
+      "justification": "La page web de l'organisme Conseil départemental Hauts-de-Seine présente deux appels à manifestation d'intérêt et deux appels à projet, ouverts jusqu'au 16 octobre à midi.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "même page que Hauts-de-Seine appels à projets : services d'aide à domicile",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3360,9 +3498,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente 10 appels à projets, candidatures, manifestations d'intérêt ou subventions, ouverts ou clos, décrits sur des pages web."
+      "justification": "La page présente 10 appels à projets, candidatures, manifestations d'intérêt ou subventions, ouverts ou clos, décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "services autonomie à domicile, proches aidants, « Avec ma santé », isolement des seniors",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3394,9 +3538,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Allier présente au moins un appel à projets ouvert à la candidature : l'Appel à manifestation d'intérêt - Soutien à l'investissement – Habitat inclusif 2026, le projet d'appel à projets : Création de 12 places d'accueil en lieux de vie et d'accueil (LVA), le projet de création de 80 places d'Action Éducative Renforcée, l'appel à manifestation d'intérêt pour les projets de réalisation ou réhabilitation d'un équipement de production hydroélectrique ainsi que d'aménagements à vocation environnementale, et l'avis de classement : création de 12 places d'accueil familial pour jeunes en difficulté."
+      "justification": "La page web de l'organisme Conseil départemental Allier présente au moins un appel à projets ouvert à la candidature : l'Appel à manifestation d'intérêt - Soutien à l'investissement – Habitat inclusif 2026, le projet d'appel à projets : Création de 12 places d'accueil en lieux de vie et d'accueil (LVA), le projet de création de 80 places d'Action Éducative Renforcée, l'appel à manifestation d'intérêt pour les projets de réalisation ou réhabilitation d'un équipement de production hydroélectrique ainsi que d'aménagements à vocation environnementale, et l'avis de classement : création de 12 places d'accueil familial pour jeunes en difficulté.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "AMI habitat inclusif 2026, création de places en lieux de vie et d'accueil",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3411,9 +3561,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "pas-d-aap",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Saône-et-Loire présente un appel à projets pour l'année 2027, qui est accessible en navigant sur le site internet."
+      "justification": "La page web de l'organisme Conseil départemental Saône-et-Loire présente un appel à projets pour l'année 2027, qui est accessible en navigant sur le site internet.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "article sur le téléservice de demande d'aide 2027, aucun appel listé",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3679,13 +3835,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.yonne.fr/mon-departement/les-appels-et-dispositifs-en-cours/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Yonne présente une liste de 32 aides et services proposés par le département, classés par thématiques et bénéficiaires. Les appels à projets concernent des domaines tels que l'agriculture, l'environnement, la culture, l'éducation, la formation, l'habitat, le handicap, l'inclusion, la jeunesse, la parentalité, le patrimoine, la personne âgée, la petite enfance, la prévention, la santé, le social, la solidarité, le sport, la sécurité, le tourisme et la vie quotidienne."
+      "justification": "La page web de l'organisme Conseil départemental Yonne présente une liste de 32 aides et services proposés par le département, classés par thématiques et bénéficiaires. Les appels à projets concernent des domaines tels que l'agriculture, l'environnement, la culture, l'éducation, la formation, l'habitat, le handicap, l'inclusion, la jeunesse, la parentalité, le patrimoine, la personne âgée, la petite enfance, la prévention, la santé, le social, la solidarité, le sport, la sécurité, le tourisme et la vie quotidienne.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "AMI 2027-2029 prévention de la perte d'autonomie, avis d'appel à projet social et médico-social",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3717,9 +3879,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Vosges présente 11 appels à projets dans différentes catégories telles que culture, numérique, sécurité et solidarités. Les appels sont décrits sur des pages web."
+      "justification": "La page web de l'organisme Conseil départemental Vosges présente 11 appels à projets dans différentes catégories telles que culture, numérique, sécurité et solidarités. Les appels sont décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel commission des financeurs 2026, dotation aux services autonomie à domicile",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3764,13 +3932,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.tarnetgaronne.fr/appels-projets-et-candidatures",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à projets pour l'accompagnement des auto-entrepreneurs et travailleurs indépendants et exploitants agricoles allocataires du RSA, un appel à projets pour le coaching et accompagnement intensif à l'emploi des allocataires du RSA, un appel à projets pour le français et numérique à visée professionnelle pour les allocataires du RSA, un appel à projets pour la prévention santé et remobilisation physique pour l'insertion socio-professionnelle des allocataires du RSA, un appel à projets pour le Médiateur social départemental pour l’accompagnement des gens du voyage, un appel à candidatures pour la composition du CDCA 2026-2029, un appel à candidatures pour la création de 35 places d’accueil/ hébergement/ accompagnement de mineurs non accompagnés pris en charge au titre de l’aide sociale à l'enfance sur le Département de Tarn-et-Garonne."
+      "justification": "La page présente un appel à projets pour l'accompagnement des auto-entrepreneurs et travailleurs indépendants et exploitants agricoles allocataires du RSA, un appel à projets pour le coaching et accompagnement intensif à l'emploi des allocataires du RSA, un appel à projets pour le français et numérique à visée professionnelle pour les allocataires du RSA, un appel à projets pour la prévention santé et remobilisation physique pour l'insertion socio-professionnelle des allocataires du RSA, un appel à projets pour le Médiateur social départemental pour l’accompagnement des gens du voyage, un appel à candidatures pour la composition du CDCA 2026-2029, un appel à candidatures pour la création de 35 places d’accueil/ hébergement/ accompagnement de mineurs non accompagnés pris en charge au titre de l’aide sociale à l'enfance sur le Département de Tarn-et-Garonne.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "appels prévention santé et remobilisation, création de 35 places d'accueil et d'hébergement, CDCA ; site refuse le robot",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3785,9 +3959,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Hautes-Alpes présente un appel à candidatures du département des Hautes-Alpes."
+      "justification": "La page web de l'organisme Conseil départemental Hautes-Alpes présente un appel à candidatures du département des Hautes-Alpes.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "page vide pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3802,9 +3982,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web présente un appel à projets."
+      "justification": "La page web présente un appel à projets.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "même page : liste non rendue pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -3904,9 +4090,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "Cette page web du Conseil départemental Aube présente un panneau de gestion des cookies, mais ne liste pas ou ne présente pas explicitement d'appels à projets, appel à candidatures, appel à manifestation d'intérêt, bourse ou subvention auquel on peut candidater."
+      "justification": "Cette page web du Conseil départemental Aube présente un panneau de gestion des cookies, mais ne liste pas ou ne présente pas explicitement d'appels à projets, appel à candidatures, appel à manifestation d'intérêt, bourse ou subvention auquel on peut candidater.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "page vide pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4040,9 +4232,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Rhône présente une liste d'appels à projets en cours proposés par le Département du Rhône dans des thématiques diverses, dont certains sont accessibles en répondant à des appels à candidatures ou manifestations d'intérêt."
+      "justification": "La page web de l'organisme Conseil départemental Rhône présente une liste d'appels à projets en cours proposés par le Département du Rhône dans des thématiques diverses, dont certains sont accessibles en répondant à des appels à candidatures ou manifestations d'intérêt.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "même page : AMI CPOM services autonomie à domicile 2027, conférence des financeurs 2027",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4057,9 +4255,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": null,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Territoire de Belfort présente trois appels à projets ouverts : l'appel à projets 2026 du dispositif d'aide aux communes, le second appel à projets 2026 du Fonds pour la coopération entre le Territoire de Belfort et le canton du Jura, et l'appel à projets Fonds social européen+ - Améliorer l’accès à l’emploi pour les jeunes en difficulté d'insertion - 2026-2027."
+      "justification": "La page web de l'organisme Conseil départemental Territoire de Belfort présente trois appels à projets ouverts : l'appel à projets 2026 du dispositif d'aide aux communes, le second appel à projets 2026 du Fonds pour la coopération entre le Territoire de Belfort et le canton du Jura, et l'appel à projets Fonds social européen+ - Améliorer l’accès à l’emploi pour les jeunes en difficulté d'insertion - 2026-2027.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel commission des financeurs de la prévention de la perte d'autonomie 2026",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4070,13 +4274,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.savoie.fr/web/sw_112540/appels-a-projets",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Savoie présente six appels à projets dans différents domaines : Solidarité internationale, Environnement, Prévention de la Perte d'Autonomie, Personnes agées, Cohésion sociale et Tourisme et Montagne."
+      "justification": "La page web de l'organisme Conseil départemental Savoie présente six appels à projets dans différents domaines : Solidarité internationale, Environnement, Prévention de la Perte d'Autonomie, Personnes agées, Cohésion sociale et Tourisme et Montagne.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel commission des financeurs 2027-2029",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4104,13 +4314,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.correze.fr/le-departement/les-appels-projets/les-appels-projets-autonomie",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page présente au moins un appel à candidature (Boost Emploi), un appel à manifestation d'intérêt (Agenda des évènements) et un appel à projets (Opération brioches 2026)."
+      "justification": "La page présente au moins un appel à candidature (Boost Emploi), un appel à manifestation d'intérêt (Agenda des évènements) et un appel à projets (Opération brioches 2026).",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : rubriques dédiées Autonomie et Action sociale visibles par leur nom, contenu non lisible par le robot",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4178,7 +4394,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web présente 8 appels à projets ou subventions dans différents domaines : culture, patrimoine, sport, etc. Il n'y a pas de mention de la santé, du médico-social, du handicap, de l'autonomie, des personnes âgées, de la prévention de la perte d'autonomie, de la recherche médicale, des établissements de soins ou médico-sociaux."
+      "justification": "La page web présente 8 appels à projets ou subventions dans différents domaines : culture, patrimoine, sport, etc. Il n'y a pas de mention de la santé, du médico-social, du handicap, de l'autonomie, des personnes âgées, de la prévention de la perte d'autonomie, de la recherche médicale, des établissements de soins ou médico-sociaux.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "culture, sport, para-sport",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4189,13 +4411,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.departement06.fr/appels-projets-et-manifestation",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web du Conseil départemental Alpes-Maritimes présente des services tiers tels que YouTube, Vimeo et Dailymotion qui peuvent déposer des cookies. Cependant, il n'y a pas de mention d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions ouverts ou clos."
+      "justification": "La page web du Conseil départemental Alpes-Maritimes présente des services tiers tels que YouTube, Vimeo et Dailymotion qui peuvent déposer des cookies. Cependant, il n'y a pas de mention d'appels à projets, candidatures, manifestations d'intérêt, bourses ou subventions ouverts ou clos.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appels Santé Innovation, Seniors, commission des financeurs 2027, syndrome de Diogène",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4363,9 +4591,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Mayenne présente neuf appels à projets dans différentes domaines : accueil et accompagnement de mineurs, innovation, prévention de la perte d'autonomie, sécurité routière, jeunesse et citoyenneté, tourisme, enseignement, insertion et logement."
+      "justification": "La page web de l'organisme Conseil départemental Mayenne présente neuf appels à projets dans différentes domaines : accueil et accompagnement de mineurs, innovation, prévention de la perte d'autonomie, sécurité routière, jeunesse et citoyenneté, tourisme, enseignement, insertion et logement.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel commission des financeurs, accueil de mineurs et jeunes majeurs",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4399,7 +4633,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Gironde présente six appels à projets ouverts à la candidature, concernant la jeunesse, la vente de biens immobiliers et la vente d'une maison individuelle."
+      "justification": "La page web de l'organisme Conseil départemental Gironde présente six appels à projets ouverts à la candidature, concernant la jeunesse, la vente de biens immobiliers et la vente d'une maison individuelle.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "ventes immobilières, conseil des jeunes, concours citoyenneté",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4414,9 +4654,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Orne présente trois appels à projets et un appel à manifestation d'intérêt, ouverts pour la création et la restauration des haies bocagères, un appel à candidature pour la Commission des financeurs de la prévention de la perte d'autonomie (CFPPA) de l'Orne et un appel à candidatures dotation qualité 2027."
+      "justification": "La page web de l'organisme Conseil départemental Orne présente trois appels à projets et un appel à manifestation d'intérêt, ouverts pour la création et la restauration des haies bocagères, un appel à candidature pour la Commission des financeurs de la prévention de la perte d'autonomie (CFPPA) de l'Orne et un appel à candidatures dotation qualité 2027.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel à candidatures commission des financeurs Orne, dotation qualité des services autonomie",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4433,7 +4679,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web du Conseil départemental Pas-de-Calais présente six appels à projets et appels à candidatures et à manifestation d'intérêt, décrits sur des pages web."
+      "justification": "La page web du Conseil départemental Pas-de-Calais présente six appels à projets et appels à candidatures et à manifestation d'intérêt, décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "soutien à la filière halieutique",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4478,13 +4730,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "identifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.mayotte.fr/services-en-ligne/opportunites/appels-a-projets",
     "derniere_verification": "2026-10-09",
     "code_http": null,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web présente un appel à candidature pour une subvention, accessible en ligne."
+      "justification": "La page web présente un appel à candidature pour une subvention, accessible en ligne.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : rubrique AAP, AMI, AAC du Département-Région, vide au 2026-10-12",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4529,13 +4787,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.aude.fr/les-appels-projets-candidatures-en-cours",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Aude présente des appels à projets, appels à candidatures, appels à initiatives en cours, ainsi qu'une liste des candidats retenus pour les différents appels à candidatures lancés par le Département de l'Aude."
+      "justification": "La page web de l'organisme Conseil départemental Aude présente des appels à projets, appels à candidatures, appels à initiatives en cours, ainsi qu'une liste des candidats retenus pour les différents appels à candidatures lancés par le Département de l'Aude.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appels isolement social des seniors, #moisenior 2027, places pour mineurs non accompagnés",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4552,7 +4816,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil départemental Yvelines présente des appels à projets et subventions, dont trois sont visibles sur la page."
+      "justification": "La page web de l'organisme Conseil départemental Yvelines présente des appels à projets et subventions, dont trois sont visibles sur la page.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "FSE insertion des jeunes, AMI occupation du domaine public",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4580,13 +4850,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "CFPPA et AAP du Département. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.tarn.fr/actualites",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web du Conseil départemental Tarn présente au moins un appel à projets (Programme Départemental d'Insertion 2027), un appel à candidatures (Atelier parentalité en ligne), un appel à manifestation d'intérêt (Journée d’information du 14 avril à l’Hôtel du département), un appel à subvention (Règlement départemental d'aide sociale Info routes 81 Aide aux petits investissements agricoles) et un appel à tarif (Titres de transport Tarn Solidarité et Solidario)."
+      "justification": "La page web du Conseil départemental Tarn présente au moins un appel à projets (Programme Départemental d'Insertion 2027), un appel à candidatures (Atelier parentalité en ligne), un appel à manifestation d'intérêt (Journée d’information du 14 avril à l’Hôtel du département), un appel à subvention (Règlement départemental d'aide sociale Info routes 81 Aide aux petits investissements agricoles) et un appel à tarif (Titres de transport Tarn Solidarité et Solidario).",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel commission des financeurs de la prévention de la perte d'autonomie visible dans les actualités",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4618,9 +4894,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web du Conseil départemental Val-de-Marne présente cinq appels à projets, appel à candidatures, appel à manifestation d'intérêt, dont un concerne la restauration ambulante dans les parcs départementaux, un concerne la désignation de membres permanents de la commission d'information et de sélection d'appel à projets social et médico-social."
+      "justification": "La page web du Conseil départemental Val-de-Marne présente cinq appels à projets, appel à candidatures, appel à manifestation d'intérêt, dont un concerne la restauration ambulante dans les parcs départementaux, un concerne la désignation de membres permanents de la commission d'information et de sélection d'appel à projets social et médico-social.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : appel 2026 pour 222 mesures d'accueil de mineurs de l'ASE (établissements sociaux, pas médico-sociaux)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4839,9 +5121,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil régional Île-de-France présente une liste de 347 aides et appels à projets par public et par thématique."
+      "justification": "La page web de l'organisme Conseil régional Île-de-France présente une liste de 347 aides et appels à projets par public et par thématique.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : même page, guichet régional de 347 aides où la santé est noyée",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -4988,13 +5276,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP régionaux (santé, formation, innovation). Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "AAP régionaux (santé, formation, innovation). Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://www.centre-valdeloire.fr/appels-projet",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Conseil régional Centre-Val de Loire présente un appel à projet de recherche et innovation pour la campagne 2026, qui concerne des projets ayant des perspectives spécifiques d'impact socio-économique et environnemental pour le territoire régional, répondant aux besoins de la Région pour l'élaboration, la mise en œuvre et l'évaluation de ses propres politiques, ou s'inscrivant dans la démarche « Sciences et Société ». Les projets doivent être présentés conjointement par au moins deux partenaires dont au moins un partenaire non académique."
+      "justification": "La page web de l'organisme Conseil régional Centre-Val de Loire présente un appel à projet de recherche et innovation pour la campagne 2026, qui concerne des projets ayant des perspectives spécifiques d'impact socio-économique et environnemental pour le territoire régional, répondant aux besoins de la Région pour l'élaboration, la mise en œuvre et l'évaluation de ses propres politiques, ou s'inscrivant dans la démarche « Sciences et Société ». Les projets doivent être présentés conjointement par au moins deux partenaires dont au moins un partenaire non académique.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "Humain et Tech, diversification, formation, vie étudiante, recherche générale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5164,7 +5458,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de la Mairie de Bordeaux présente 7 appels à projets, à manifestation ou à candidature, décrits sur des pages web."
+      "justification": "La page web de la Mairie de Bordeaux présente 7 appels à projets, à manifestation ou à candidature, décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "prix des jeunes associations ; page du CCAS presque vide",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5213,9 +5513,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à candidature pour un animateur(trice) pour les temps périscolaires et les classes de découvertes et des semaines d'information sur la santé mentale."
+      "justification": "La page présente un appel à candidature pour un animateur(trice) pour les temps périscolaires et les classes de découvertes et des semaines d'information sur la santé mentale.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "appels culturels et postes à pourvoir",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5349,9 +5655,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page présente deux appels : 'Budget participatif : envoyez vos idées' et 'Santé mentale : deux semaines de partage', le premier concerne la participation citoyenne et le second concerne la santé mentale."
+      "justification": "La page présente deux appels : 'Budget participatif : envoyez vos idées' et 'Santé mentale : deux semaines de partage', le premier concerne la participation citoyenne et le second concerne la santé mentale.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "foodtrucks, marchés, cité éducative",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5791,9 +6103,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Carsat Normandie présente un appel à projets visant à accompagner les retraités dans leur passage à la retraite."
+      "justification": "La page web de l'organisme Carsat Normandie présente un appel à projets visant à accompagner les retraités dans leur passage à la retraite.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel accompagner le passage à la retraite : prévention du bien vieillir",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5808,9 +6126,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de la Caisse générale de sécurité sociale (CGSS) de Martinique présente un appel à projets intitulé 'Bienvenue à la Retraite'. Les critères d'éligibilités et les modules des ateliers sont détaillés sur la page."
+      "justification": "La page web de la Caisse générale de sécurité sociale (CGSS) de Martinique présente un appel à projets intitulé 'Bienvenue à la Retraite'. Les critères d'éligibilités et les modules des ateliers sont détaillés sur la page.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "ateliers Bienvenue à la retraite : prévention inter-régimes du bien vieillir",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -5978,9 +6302,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à projets 'Innovation et Silver autonomie' et un appel à projets 'Bienvenue à la retraite' qui concernent la retraite et l'accompagnement des retraités, ainsi qu'un webinaire 'La perte du conjoint' qui concerne la santé mentale des actifs et retraités."
+      "justification": "La page présente un appel à projets 'Innovation et Silver autonomie' et un appel à projets 'Bienvenue à la retraite' qui concernent la retraite et l'accompagnement des retraités, ainsi qu'un webinaire 'La perte du conjoint' qui concerne la santé mentale des actifs et retraités.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel « Innovation et Silver autonomie »",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -6012,9 +6342,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'Assurance retraite Île-de-France présente un appel à projets en faveur du bien-vieillir à la retraite de ses retraités."
+      "justification": "La page web de l'Assurance retraite Île-de-France présente un appel à projets en faveur du bien-vieillir à la retraite de ses retraités.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel « bien-vieillir » : prévention de la perte d'autonomie",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -6201,7 +6537,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Mutualité sociale agricole (MSA) Occitanie - accueil de Carcassonne présente un appel à projet de la MSA Grand Sud pour les départements de l'Aude et des Pyrénées-Orientales dans le cadre de son plan d'action sanitaire et social sur 2025. Les projets financés devront s'inscrire dans l'une des politiques et des objectifs du PASS 2021-2025, notamment dans les domaines de la famille, des actifs fragiles et de la retraite."
+      "justification": "La page web de l'organisme Mutualité sociale agricole (MSA) Occitanie - accueil de Carcassonne présente un appel à projet de la MSA Grand Sud pour les départements de l'Aude et des Pyrénées-Orientales dans le cadre de son plan d'action sanitaire et social sur 2025. Les projets financés devront s'inscrire dans l'une des politiques et des objectifs du PASS 2021-2025, notamment dans les domaines de la famille, des actifs fragiles et de la retraite.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel Grandir en milieu rural (jeunesse)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -6301,9 +6643,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Mutualité sociale agricole (MSA) Nouvelle-Aquitaine de Libourne présente un liste d'appels à projets pour les associations et les collectivités."
+      "justification": "La page web de l'organisme Mutualité sociale agricole (MSA) Nouvelle-Aquitaine de Libourne présente un liste d'appels à projets pour les associations et les collectivités.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel 2026 en faveur des aidants, répit parental",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -6454,9 +6802,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à candidature pour le coaching Instants Santé Jeunes et un appel à déclaration pour l'allocation de rentrée scolaire."
+      "justification": "La page présente un appel à candidature pour le coaching Instants Santé Jeunes et un appel à déclaration pour l'allocation de rentrée scolaire.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel à projets Bien-être psychologique (Label Vie)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -6692,9 +7046,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à candidature pour le coaching Instants Santé Jeunes et un appel à participation à la réunion des réformes majeures en 2026."
+      "justification": "La page présente un appel à candidature pour le coaching Instants Santé Jeunes et un appel à participation à la réunion des réformes majeures en 2026.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "même page : appel à projets Bien-être psychologique (Label Vie)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -8630,9 +8990,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "Cette page web de la Direction départementale de l'emploi, du travail et des solidarités (DDETS) d'Isère présente une liste des appels à projets, mais ne donne pas de détails sur les appels eux-mêmes."
+      "justification": "Cette page web de la Direction départementale de l'emploi, du travail et des solidarités (DDETS) d'Isère présente une liste des appels à projets, mais ne donne pas de détails sur les appels eux-mêmes.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "liste non rendue pour le robot (filtre Solidarités : 3 appels) : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10109,9 +10475,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme IHU Méditerranée Infection présente un appel à projet AAP MI2 - 2026, qui vise à favoriser la création d'entreprise valorisant les acquis de l'IHU Méditerranée Infection dans le domaine des maladies infectieuses et la microbiologie médicale."
+      "justification": "La page web de l'organisme IHU Méditerranée Infection présente un appel à projet AAP MI2 - 2026, qui vise à favoriser la création d'entreprise valorisant les acquis de l'IHU Méditerranée Infection dans le domaine des maladies infectieuses et la microbiologie médicale.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appel MI2 2026 : innovation en infectiologie",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10241,13 +10613,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Groupement interrégional de recherche clinique : AAP recherche en soins, jeunes chercheurs. Adresse à confirmer.",
+    "notes": "Groupement interrégional de recherche clinique : AAP recherche en soins, jeunes chercheurs. Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://girci-est.fr/les-appels-a-projets-du-girci-est/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme GIRCI Est présente un appel à projets, plus précisément un webinaire juridique du GIRCI Est."
+      "justification": "La page web de l'organisme GIRCI Est présente un appel à projets, plus précisément un webinaire juridique du GIRCI Est.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10275,13 +10653,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Groupement interrégional de recherche clinique : AAP recherche en soins, jeunes chercheurs. Adresse à confirmer.",
+    "notes": "Groupement interrégional de recherche clinique : AAP recherche en soins, jeunes chercheurs. Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://www.girci-soho.fr/appels-projets",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme GIRCI SOHO présente plusieurs appels à projets, dont certains concernent la santé, le médico-social, la recherche clinique et les soins."
+      "justification": "La page web de l'organisme GIRCI SOHO présente plusieurs appels à projets, dont certains concernent la santé, le médico-social, la recherche clinique et les soins.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "appels interrégionaux APITHEM et APIRES (recherche en soins)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10347,9 +10731,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web présente des appels à projets financés par FLI, qui sont ouverts ou fermés."
+      "justification": "La page web présente des appels à projets financés par FLI, qui sont ouverts ou fermés.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "appels de recherche en imagerie médicale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10360,13 +10750,19 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Relais des AAP cancer (INCa, Ligue, ARC) ; 7 cancéropôles en France.",
+    "notes": "Relais des AAP cancer (INCa, Ligue, ARC) ; 7 cancéropôles en France. ; rubrique relue le 2026-10-12 : https://www.canceropole-est.org/appels-a-projet/",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web du Cancéropôle Est présente des appels à projets, des appels à candidatures et des appels à manifestations scientifiques qui concernent la recherche en oncologie, ce qui implique la santé."
+      "justification": "La page web du Cancéropôle Est présente des appels à projets, des appels à candidatures et des appels à manifestations scientifiques qui concernent la recherche en oncologie, ce qui implique la santé.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "appel générique 2027, PLBIO, bourses ; la page gardée listait les résultats",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -10978,7 +11374,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Avise présente trois appels à projets ouverts : Concours Green Finance 2026, Appel à projets de Dota Bene pour consolider des innovations sociales et Appel à projets de la Fondation RAJA-Danièle Marcovici."
+      "justification": "La page web de l'organisme Avise présente trois appels à projets ouverts : Concours Green Finance 2026, Appel à projets de Dota Bene pour consolider des innovations sociales et Appel à projets de la Fondation RAJA-Danièle Marcovici.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "agenda d'appels de tiers (innovation sociale, finance durable)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -11046,7 +11448,13 @@
     "qualification": {
       "verdict": "hors-sante",
       "date": "2026-10-12",
-      "justification": "La page web de l'organisme Le Compte Asso présente six appels à projets ou manifestations d'intérêt ouverts, décrits sur des pages web."
+      "justification": "La page web de l'organisme Le Compte Asso présente six appels à projets ou manifestations d'intérêt ouverts, décrits sur des pages web.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "FDVA, mentorat, solidarité internationale",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -14257,9 +14665,15 @@
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "hors-sante",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page web présente trois appels à projets ouverts : un appel à projets dédié à la lutte contre la précarité menstruelle, un appel à candidature pour la création de 22 places en Intermédiation Locative (IML) sur le territoire de la Corrèze, et un marché public pour l'accompagnement de la réindustrialisation en Nouvelle-Aquitaine."
+      "justification": "La page web présente trois appels à projets ouverts : un appel à projets dédié à la lutte contre la précarité menstruelle, un appel à candidature pour la création de 22 places en Intermédiation Locative (IML) sur le territoire de la Corrèze, et un marché public pour l'accompagnement de la réindustrialisation en Nouvelle-Aquitaine.",
+      "verdict_modele": "hors-sante",
+      "relecture": {
+        "motif": "cas limite à trancher : appel 2026 lutte contre la précarité menstruelle (santé publique, financeur hors santé)",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {
@@ -14270,13 +14684,19 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "DREETS : Insertion, pauvreté, hébergement, FSE+. Site officiel (annuaire de l'administration) : rubrique AAP à préciser.",
+    "notes": "DREETS : Insertion, pauvreté, hébergement, FSE+. Site officiel (annuaire de l'administration) : rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://occitanie.dreets.gouv.fr/Appels-a-projets",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "a-verifier",
       "date": "2026-10-12",
-      "justification": "La page présente un appel à candidatures pour l'agrément de mandataires judiciaires à la protection des majeurs exerçant à titre individuel dans le département du Lot."
+      "justification": "La page présente un appel à candidatures pour l'agrément de mandataires judiciaires à la protection des majeurs exerçant à titre individuel dans le département du Lot.",
+      "verdict_modele": "rubrique-confirmee",
+      "relecture": {
+        "motif": "délai dépassé ; un appel à candidatures mandataires judiciaires vu : ouvrir à la main",
+        "date": "2026-10-12",
+        "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+      }
     }
   },
   {

@@ -8,6 +8,10 @@ Usage :
 Le modèle local Ollama lit le texte de la page gardée par decouverte.py et répond à des questions
 fermées (JSON contraint). Le verdict est calculé par ce script, pas par le modèle. Aucun appel
 à l'API Anthropic.
+
+Relecture manuelle : sources/relecture_qualification.json (identifiant -> verdict relu, motif, date,
+relecteur) est appliqué par-dessus les verdicts du modèle lors de --registre et --rapport. Le verdict
+du modèle reste sous verdict_modele ; le fichier de relecture est versionné, pas le dossier decouverte/.
 """
 from __future__ import annotations
 
@@ -30,6 +34,7 @@ DOSSIER = ICI / "decouverte"
 RESULTATS_DECOUVERTE = DOSSIER / "resultats.json"
 QUALIFICATION = DOSSIER / "qualification.json"
 SONDAGE = DOSSIER / "sondage_qualification.json"
+RELECTURE = ICI / "sources" / "relecture_qualification.json"
 RAPPORT = ICI / "QUALIFICATION.md"
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -90,6 +95,27 @@ def calculer_verdict(reponse: dict, nb_liens_notes: int = 0) -> str:
     return "rubrique-confirmee"
 
 
+def appliquer_relecture(qualification: dict, relecture: dict) -> dict:
+    """Copie des verdicts où le verdict relu remplace celui du modèle, conservé sous verdict_modele.
+
+    Un identifiant inconnu est ignoré avec un avertissement ; un verdict hors liste arrête tout.
+    """
+    resultat = {i: dict(q) for i, q in qualification.items()}
+    for i, r in relecture.items():
+        if i.startswith("_"):  # clé de commentaire, comme dans le sondage
+            continue
+        if i not in resultat:
+            print(f"relecture ignorée : « {i} » n'a pas de verdict du modèle", file=sys.stderr)
+            continue
+        if r.get("verdict") not in VERDICTS:
+            raise ValueError(f"relecture de « {i} » : verdict inconnu « {r.get('verdict')} »")
+        entree = resultat[i]
+        entree["verdict_modele"] = entree["verdict"]
+        entree["verdict"] = r["verdict"]
+        entree["relecture"] = {"motif": r.get("motif", ""), "date": r.get("date", ""), "relecteur": r.get("relecteur", "")}
+    return resultat
+
+
 def appliquer_registre(sources: list[dict], qualification: dict, aujourdhui: str) -> int:
     """Écrit le champ qualification de chaque source ; retourne le nombre de verdicts reportés."""
     reportes = 0
@@ -97,6 +123,9 @@ def appliquer_registre(sources: list[dict], qualification: dict, aujourdhui: str
         q = qualification.get(s["id"])
         if q:
             s["qualification"] = {"verdict": q["verdict"], "date": q["date"], "justification": q.get("justification", "")}
+            if "relecture" in q:
+                s["qualification"]["verdict_modele"] = q["verdict_modele"]
+                s["qualification"]["relecture"] = q["relecture"]
             reportes += 1
         else:
             s["qualification"] = {"verdict": "a-verifier", "date": aujourdhui, "justification": "pas de page gardée par la découverte"}
@@ -124,9 +153,19 @@ def rapport(qualification: dict, sources: list[dict], sondage: dict, aujourdhui:
             lignes += ["| Source | Verdict du modèle | Verdict relu | Page |", "|---|---|---|---|"]
             for i, s in desaccords:
                 q = qualification.get(i, {})
-                lignes.append(f"| {par_id.get(i, {}).get('nom', i)} | {LIBELLES.get(q.get('verdict'), '')} | "
+                lignes.append(f"| {par_id.get(i, {}).get('nom', i)} | {LIBELLES.get(q.get('verdict_modele', q.get('verdict')), '')} | "
                               f"{LIBELLES.get(s.get('verdict_relu'), s.get('verdict_relu', ''))} | [page]({q.get('url', '')}) |")
             lignes.append("")
+    relus = [(i, q) for i, q in qualification.items() if "relecture" in q]
+    if relus:
+        lignes += ["## Relecture manuelle", "",
+                   f"{len(relus)} verdicts corrigés à la relecture (fichier `sources/relecture_qualification.json`) ; "
+                   "le verdict du modèle est conservé. Les décomptes ci-dessus et ci-dessous utilisent le verdict relu.", "",
+                   "| Source | Verdict du modèle | Verdict relu | Motif | Page |", "|---|---|---|---|---|"]
+        for i, q in relus:
+            lignes.append(f"| {par_id.get(i, {}).get('nom', i)} | {LIBELLES.get(q.get('verdict_modele'), '')} | "
+                          f"{LIBELLES.get(q['verdict'], '')} | {q['relecture'].get('motif', '')} | [page]({q.get('url', '')}) |")
+        lignes.append("")
     lignes += ["## Par famille", "", "| Famille | Qualifiées | " + " | ".join(LIBELLES[v] for v in VERDICTS) + " | Sans page |",
                "|---|---|" + "---|" * (len(VERDICTS) + 1)]
     for categorie in registre_module.CATEGORIES:
@@ -144,7 +183,8 @@ def rapport(qualification: dict, sources: list[dict], sondage: dict, aujourdhui:
     lignes += ["", "## Sources à vérifier à la main", "", "| Source | Raison | Page |", "|---|---|---|"]
     for i, q in qualification.items():
         if q["verdict"] == "a-verifier":
-            lignes.append(f"| {par_id.get(i, {}).get('nom', i)} | {q.get('justification') or q.get('erreur', '')} | [page]({q['url']}) |")
+            raison = q.get("relecture", {}).get("motif") or q.get("justification") or q.get("erreur", "")
+            lignes.append(f"| {par_id.get(i, {}).get('nom', i)} | {raison} | [page]({q['url']}) |")
     return "\n".join(lignes) + "\n"
 
 
@@ -202,15 +242,16 @@ def main() -> int:
         resultats = json.loads(RESULTATS_DECOUVERTE.read_text(encoding="utf-8"))
         ids = {i.strip() for i in args.ids.split(",")} if args.ids else None
         qualifier(resultats, args.modele, args.limite, ids, args.forcer)
+    verdicts = appliquer_relecture(charger(QUALIFICATION), charger(RELECTURE))
     if args.registre:
         sources = registre_module.charger()
-        n = appliquer_registre(sources, charger(QUALIFICATION), aujourdhui)
+        n = appliquer_registre(sources, verdicts, aujourdhui)
         registre_module.sauver(sources)
         registre_module.TABLEAU.write_text(registre_module.tableau(sources, aujourdhui), encoding="utf-8")
         print(f"{n} verdicts reportés dans le registre, {len(sources) - n} sources « à vérifier » ; REGISTRE_SOURCES.md régénéré")
     if args.rapport:
         sources = registre_module.charger()
-        RAPPORT.write_text(rapport(charger(QUALIFICATION), sources, charger(SONDAGE), aujourdhui), encoding="utf-8")
+        RAPPORT.write_text(rapport(verdicts, sources, charger(SONDAGE), aujourdhui), encoding="utf-8")
         print(f"Rapport écrit : {RAPPORT.name}")
     if not any([args.qualifier, args.registre, args.rapport]):
         parser.print_help()

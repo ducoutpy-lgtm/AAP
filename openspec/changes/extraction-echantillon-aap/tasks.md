@@ -10,7 +10,7 @@ EN ATTENTE (2026-10-12) : Monsieur DUCOUT demande de qualifier d'abord les sourc
 
 ## 2. Trois moteurs
 
-- [ ] 2.1 `--extraire --moteur ollama` avec `mistral:7b-instruct`, sortie `results/echantillon_ollama.json`, compte des réussites et du temps. Fait quand : le fichier existe et le terminal affiche réussites / échecs / durée.
+- [x] 2.1 `--extraire --moteur ollama` avec `mistral:7b-instruct`, sortie `results/echantillon_ollama.json`, compte des réussites et du temps. Fait quand : le fichier existe et le terminal affiche réussites / échecs / durée. (Fait le 2026-10-12 : 41 fiches, 4 échecs dans `echantillon_ollama.errors.json` (3 délais dépassés, 1 erreur 500 d'Ollama), 1 767 s de calcul utile, une heure au total.)
 - [x] 2.2 Fiches écrites par la session dans `results/echantillon_claude_code.json`, vérifiées par `--verifier`. Fait quand : "N fiches valides, 0 invalide".
 - [x] 2.3 `--estimer` : coût API estimé pour l'échantillon et pour les 3 744 liens. Fait quand : les deux montants s'affichent avec la mention "estimation".
 
