@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Second tour d'extraction par le modèle local (changement OpenSpec `extraction-ollama-second-tour`, 2026-10-13, en
+  attente de la décision de Monsieur DUCOUT) : question fermée avant extraction, contrôle des formats, contrôle
+  automatique contre les fiches de référence, seuil de décision. Résultat : mistral 7b 15 fiches justes sur 23 et
+  13 fabriquées ; qwen3:8b 16 sur 21 et 1 fabriquée ; seuil (20 et 2) non atteint. Détail dans `scraping/ECHANTILLON.md`.
 - Consultation des AAP sans compte (changement OpenSpec `consultation-aap-sans-compte`, 2026-10-13) : règle Firestore
   « lecture publique des AAP publiés » déployée sur `aapi-11bc3`, routes « Rechercher des AAP » et fiche sorties de la
   zone protégée, lien « Voir les appels à projets » sur l'accueil ; « Candidater » et favori renvoient vers la

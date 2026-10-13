@@ -141,7 +141,7 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : registre des sources | OK | 2026-10-09 : 847 sources, 657 pages vérifiées (deux extensions) |
 | Scraping : découverte des rubriques AAP | OK | 2026-10-12 : 847 sources explorées, 270 rubriques candidates, 3 748 liens candidats (repérés par mots-clés, NON vérifiés : l'échantillon a montré 21 pages hors sujet sur 45) ; préfectures et ameli bloquent le robot (voir README scraping) |
 | Scraping : qualification des sources | OK | 2026-10-12 : 270 rubriques relues par Ollama (sondage 83 % d'accord), puis relecture manuelle (changement `relecture-qualification`, `scraping/sources/relecture_qualification.json`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier (`scraping/qualification.py`, `QUALIFICATION.md`, champ `qualification` du registre avec verdict du modèle conservé) |
-| Scraping : extraction des AAP découverts | ÉCHANTILLON FAIT | changement `extraction-echantillon-aap` (validation 3.4 en attente) : 45 textes, 24 fiches Claude Code justes, Ollama 9 justes sur 41 (`scraping/ECHANTILLON.md`), API estimée 99 euros pour 3 748 liens ; 6 fiches importées. Passage global : moteur et budget à décider par Monsieur DUCOUT |
+| Scraping : extraction des AAP découverts | ÉCHANTILLON FAIT, MOTEUR À DÉCIDER | `extraction-echantillon-aap` (archivé) : 24 fiches Claude Code justes, Ollama premier tour 9 justes sur 41 ; `extraction-ollama-second-tour` (2026-10-13, décision 3.2 en attente) : mistral 7b 15 justes sur 23 et 13 fabriquées, qwen3:8b 16 sur 21 et 1 fabriquée, seuil 20/2 non atteint (`scraping/ECHANTILLON.md`). API estimée 99 euros pour 3 748 liens avant qualification ; 6 fiches importées |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) ; 2026-10-12 : + 6 fiches de l'échantillon (95 en base) ; l'import global ignore `echantillon_*.json` |
@@ -188,7 +188,7 @@ Cycle (commandes slash dans Claude Code) :
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
-  Prochain changement : second tour d'extraction Ollama avec seuil (décision du 2026-10-13). Specs en vigueur :
+  En cours : `extraction-ollama-second-tour` (tours faits, décision 3.2 de Monsieur DUCOUT en attente). Specs en vigueur :
   `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`, `decouverte-rubriques-aap`, `qualification-sources`.
 - Reprise d'une session : lire d'abord `REPRISE.md` (racine), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
   `scraping/QUALIFICATION.md` (section « Relecture manuelle » : corrections humaines des verdicts du modèle). Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.

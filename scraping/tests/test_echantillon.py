@@ -52,6 +52,71 @@ def test_rapport_compte_les_fiches_justes():
     controle = {"https://a.fr/1": {"ollama": {"titre": True, "financeur": True, "date_cloture": True, "montant": True}},
                 "https://a.fr/2": {"ollama": {"titre": True, "financeur": False, "date_cloture": True, "montant": True}}}
     texte = echantillon.rapport(sorties, controle, None, [{"url": "https://a.fr/2", "raison": "liste"}])
-    assert "| ollama | 2 | 2 | 1 | 20 s | 0 euro |" in texte
+    assert "| ollama | 2 | 2 | 1 | 1 | 20 s | 0 euro | seuil non atteint |" in texte
     assert "| a | [page](https://a.fr/2) | oui | oui non oui oui |" in texte
     assert "jugées hors sujet" in texte and ": 1." in texte
+    assert "au moins 20 fiches justes" in texte
+
+
+def test_nom_de_fichier_par_modele():
+    assert echantillon.nom_modele("mistral:7b-instruct") == "mistral-7b-instruct"
+    assert echantillon.fichier_sortie("ollama", "qwen3:8b").name == "echantillon_ollama_qwen3-8b.json"
+    assert echantillon.cle_controle("ollama", "qwen3:8b") == "ollama_qwen3-8b"
+    assert echantillon.cle_controle("claude_code", "x") == "claude_code_auto"  # la colonne relue à la main reste intacte
+
+
+def test_ecarts_format_et_neutralisation():
+    brut = {"titre": "AAP", "financeur": "Non spécifié", "date_cloture": "20 Septembre 2026", "date_ouverture": None,
+            "montant_min": None, "montant_max": "10 000", "enveloppe_globale": "oui"}
+    ecarts = echantillon.ecarts_format(brut)
+    assert [e.split(" ")[0] for e in ecarts] == ["date_cloture", "montant_max", "enveloppe_globale", "financeur"]
+    assert "20 Septembre 2026" in ecarts[0]
+    corrige = echantillon.neutraliser(brut, ecarts)
+    assert corrige["date_cloture"] is None and corrige["montant_max"] is None and corrige["enveloppe_globale"] is None
+    assert corrige["financeur"] == ""  # sera remplacé par le nom de la rubrique
+    assert echantillon.ecarts_format({"financeur": "CNSA", "date_cloture": "2026-10-15", "montant_max": 150000,
+                                      "enveloppe_globale": "10,5 millions d'euros"}) == []
+    assert echantillon.ecarts_format({"financeur": "CNSA", "date_cloture": "2026-02-30"})  # date impossible
+
+
+def test_nombre_dans():
+    assert echantillon.nombre_dans("10,5 millions d'euros (7 M pour...)") == 10_500_000
+    assert echantillon.nombre_dans("6,58 millions d'euros de FEDER") == 6_580_000
+    assert echantillon.nombre_dans("22,3 M€") == 22_300_000
+    assert echantillon.nombre_dans("400 000 €") == 400_000
+    assert echantillon.nombre_dans("6000000") == 6_000_000
+    assert echantillon.nombre_dans(None) is None and echantillon.nombre_dans("oui") is None
+
+
+def test_comparer_fiche_contre_la_reference():
+    reference = {"titre": "Appel à projets général 2023 (FIRAH)", "financeur": "FIRAH (Fondation internationale de la recherche appliquée sur le handicap)",
+                 "date_cloture": "2023-03-20", "montant_min": None, "montant_max": None, "enveloppe_globale": None}
+    produite = {"titre": "Appel à projets général - 2023", "financeur": "FIRAH", "date_cloture": "2023-03-20",
+                "montant_min": None, "montant_max": None, "enveloppe_globale": None}
+    assert echantillon.comparer_fiche(produite, reference) == {"titre": True, "financeur": True, "date_cloture": True, "montant": True}
+    assert echantillon.comparer_fiche(reference, reference) == {"titre": True, "financeur": True, "date_cloture": True, "montant": True}
+    autre = {**produite, "financeur": "Agence régionale de santé", "date_cloture": None, "enveloppe_globale": "oui"}
+    assert echantillon.comparer_fiche(autre, reference) == {"titre": True, "financeur": False, "date_cloture": False, "montant": True}
+    assert echantillon.comparer_fiche({**produite, "montant_max": 150000}, reference)["montant"] is False
+    assert echantillon.verdict_seuil(20, 2) == "seuil atteint" and echantillon.verdict_seuil(19, 0) == "seuil non atteint"
+    # Même montant dans un autre champ : juste ; montant manquant : faux
+    assert echantillon.comparer_fiche({**produite, "montant_max": 400000}, {**reference, "enveloppe_globale": "400 000 euros"})["montant"] is True
+    assert echantillon.comparer_fiche({**produite, "montant_max": 150000},
+                                      {**reference, "montant_max": 150000, "enveloppe_globale": "10,5 millions d'euros"})["montant"] is False
+
+
+def test_comparer_fiche_accepte_une_valeur_confirmee_par_la_page():
+    page = ("Appel à projets général 2024\nClôture de la réception des lettres d'intention : lundi 25 mars 2024.\n"
+            "Clôture de la réception des dossiers complets : Lundi 23 septembre 2024 inclus à minuit.")
+    reference = {"titre": "Appel à projets de recherche appliquée 2024 - Général (FIRAH)", "financeur": "FIRAH", "date_cloture": "2024-03-25"}
+    produite = {"titre": "Appel à projets général 2024", "financeur": "FIRAH", "date_cloture": "2024-09-23"}
+    sans_page = echantillon.comparer_fiche(produite, reference)
+    assert sans_page["titre"] is True  # mots communs majoritaires
+    assert sans_page["date_cloture"] is False  # autre échéance que la référence, page inconnue
+    avec_page = echantillon.comparer_fiche(produite, reference, page)
+    assert avec_page["titre"] is True and avec_page["date_cloture"] is True  # échéance confirmée par la page
+    assert echantillon.comparer_fiche({"titre": "Réforme des redevances 2025", "financeur": "FIRAH", "date_cloture": None},
+                                      reference, page)["titre"] is False
+    assert echantillon.comparer_fiche({**produite, "date_cloture": "2024-10-06"}, reference, page)["date_cloture"] is False
+    assert echantillon.date_dans_texte("2026-11-08", "Date limite : 8 novembre 2026") is True
+    assert echantillon.date_dans_texte("2026-11-08", "Date limite : 08/11/2026") is True

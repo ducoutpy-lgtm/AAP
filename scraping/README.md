@@ -237,6 +237,46 @@ ignorés par l'import global de `scripts/import_to_firestore.py` (import possibl
 Le 2026-10-12, les 6 fiches validées encore ouvertes et du champ santé (`results/echantillon_valides.json`) ont été
 importées dans Firestore par `python scripts/import_to_firestore.py --source echantillon_valides` (95 AAP scrapés en base).
 
+### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
+
+Décision de Monsieur DUCOUT : avant tout appel payant, « lentement et sûrement sur Ollama ». Le second tour corrige
+les trois défauts du premier :
+
+- une question fermée « cette page est-elle la fiche d'un appel à projets ? » est posée avant toute extraction ; les
+  pages refusées sont gardées avec la raison dans `results/echantillon_ollama_<modele>_non_aap.json` ;
+- les formats sont contrôlés après extraction (dates AAAA-MM-JJ ou null, montants entiers, enveloppe chiffrée,
+  financeur nommé) ; en cas d'écart, le modèle est resollicité une fois avec l'écart cité ; s'il persiste, le champ est
+  mis à null et la fiche marquée `a_relire` (une date absente vaut mieux qu'une date fausse) ;
+- un fichier par modèle (`results/echantillon_ollama_<modele>.json`), écrit fiche par fiche, avec reprise.
+
+```bash
+python echantillon.py --extraire --moteur ollama --modele mistral:7b-instruct   # ou qwen3:8b
+python echantillon.py --controler --modele mistral:7b-instruct                  # comparaison automatique à la référence
+python echantillon.py --rapport
+```
+
+`--controler` compare chaque fiche aux 24 fiches de référence validées (`echantillon_claude_code.json`) : titre
+normalisé, financeur (mots communs), date de clôture, montant ; une fiche produite pour une page de
+`echantillon_non_aap.json` compte comme « fabriquée à tort ». Lancé sur la référence contre elle-même : 24 justes sur 24.
+Seuil fixé par Monsieur DUCOUT pour retenir un modèle local : au moins 20 fiches justes sur 24 et au plus 2 fabriquées
+sur 21 ; `ECHANTILLON.md` affiche le verdict par modèle. Carte graphique du poste : 8 Go, donc modèles de 7 à 8
+milliards de paramètres (mistral 7b, qwen3:8b), un seul à la fois.
+
+Résultat du second tour (2026-10-13, nuit) :
+
+| Modèle | Pages refusées (sur 21 hors sujet) | Fiches | Justes sur les comparées | Fabriquées à tort | Temps |
+|---|---|---|---|---|---|
+| mistral:7b-instruct | 7 | 36 (2 délais dépassés) | 15 sur 23 | 13 | 40 min |
+| qwen3:8b | 21 (20 hors sujet + 1 appel clos) | 22 (2 délais dépassés) | 16 sur 21 | 1 | 53 min |
+
+Aucun des deux n'atteint le seuil (20 justes, 2 fabriquées au plus). `qwen3:8b` s'en approche : son filtre est presque
+parfait, et parmi ses 5 désaccords, 2 sont des formulations exactes jugées sévèrement (nom complet de l'ANAP au lieu
+du sigle, titre court) et 3 des enveloppes financières manquées (Interreg, habitat inclusif). Ses limites : 70 s par
+texte (le modèle déborde sur le processeur avec un contexte de 16 384 jetons), 2 délais dépassés sur des pages longues.
+Le comparateur a été relu par sondage (5 fiches par modèle) et corrigé deux fois : il accepte une échéance ou un titre
+confirmés par le texte de la page, et compare les montants cités quel que soit le champ. La décision du moteur du
+passage global revient à Monsieur DUCOUT (tâche 3.2 du changement).
+
 ## Ajouter une source
 
 Créer `sources/<nom>.py` sur le modèle de `fondation_de_france.py`. Deux fonctions async à implémenter :

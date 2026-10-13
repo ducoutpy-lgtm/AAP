@@ -4,6 +4,15 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (second tour d'extraction Ollama avec seuil, 2026-10-13)
+- `echantillon.py` : question fermée « fiche d'un appel à projets ? » avant extraction (pages refusées gardées avec la
+  raison), contrôle strict des formats avec seconde demande au modèle puis champ mis à null et marque `a_relire`, fichier
+  par modèle (`results/echantillon_ollama_<modele>.json`) écrit fiche par fiche avec reprise, `--controler` (comparaison
+  automatique aux 24 fiches de référence : titre, financeur, clôture, montants cités ; valeur confirmée par la page
+  acceptée), seuil et verdict par modèle dans `ECHANTILLON.md`. Cinq tests ajoutés.
+- Tours : mistral:7b-instruct 15 justes sur 23, 13 fabriquées ; qwen3:8b (téléchargé, 5,2 Go) 16 justes sur 21,
+  1 fabriquée. Seuil de 20 justes et 2 fabriquées non atteint. Sondage du comparateur : 5/5 et 4/5.
+
 ### Ajouté (relecture de la qualification, 2026-10-12)
 - `qualification.py` : fonction `appliquer_relecture`, lecture de `sources/relecture_qualification.json` lors de
   `--registre` et `--rapport`, champs `verdict_modele` et `relecture` dans le registre, section « Relecture manuelle »

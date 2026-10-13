@@ -63,13 +63,19 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   24 sur 24. 6 fiches ouvertes du champ santé importées dans Firestore (`results/echantillon_valides.json`, 95 AAP en base).
   Validé et archivé le 2026-10-13. **Décision de Monsieur DUCOUT sur le moteur : « lentement et sûrement sur
   Ollama »**, c'est-à-dire un second tour à zéro euro avant tout appel payant.
-- **Tâche suivante : changement « second tour d'extraction Ollama avec seuil »** (à proposer avec `/opsx:propose`) :
-  question préalable « est-ce un appel à projets ? » avant d'extraire, contrôle strict des formats (dates AAAA-MM-JJ,
-  montants entiers) avec nouvelle demande au modèle en cas d'écart, essai d'un modèle local plus gros à côté de
-  mistral 7b (installés le 2026-10-13 : `qwen3.6:latest` 23 Go, `orcarouter/Qwen3.8-27B-Uncensored` 17 Go ; un seul
-  modèle à la fois sur la carte graphique), mesure contre les 24 fiches de référence de `results/echantillon_claude_code.json`,
-  seuil fixé par Monsieur DUCOUT avant le tour (proposition : 20 fiches justes sur 24). L'API Anthropic n'est retenue
-  que si le seuil n'est pas atteint ; son coût sur les 155 rubriques confirmées reste à estimer dans ce cas.
+- Changement `extraction-ollama-second-tour` (2026-10-13, nuit, tâches 1.1 à 3.1 faites, **décision 3.2 de
+  Monsieur DUCOUT en attente**). Seuil fixé par lui : 20 justes sur 24, 2 fabriquées au plus. Résultat
+  (`scraping/ECHANTILLON.md`) : mistral 7b 15 justes sur 23, 13 fabriquées ; qwen3:8b (téléchargé, 5,2 Go) 16 justes
+  sur 21, 1 fabriquée, filtre presque parfait (20 des 21 pages hors sujet refusées) mais 70 s par texte et 2 délais
+  dépassés. Aucun des deux n'atteint le seuil ; qwen3:8b s'en approche (2 de ses 5 désaccords sont des formulations
+  exactes jugées sévèrement, 3 sont des enveloppes financières manquées). Carte graphique : 8 Go (RTX 5060 portable) :
+  les Qwen de 17 et 23 Go installés ne tiennent pas, non testés. Le comparateur automatique a été corrigé deux fois après
+  sondage (échéance ou titre confirmés par la page ; montants cités quel que soit le champ) ; sondage final 5/5 et 4/5.
+- **Tâche suivante : décision de Monsieur DUCOUT (tâche 3.2)**, trois options honnêtes : (a) qwen3:8b pour le passage
+  global malgré le seuil non atteint, avec sondage humain renforcé sur les montants ; (b) un troisième tour pour gagner
+  les points manquants (contexte réduit pour tenir en mémoire graphique et éviter les délais dépassés, relance des
+  2 pages en délai, question dédiée sur l'enveloppe financière) ; (c) API Anthropic, après estimation du coût sur les
+  155 rubriques confirmées. Puis archivage du changement.
 - Changement `consultation-aap-sans-compte` (2026-10-13, validé et archivé) : la
   consultation des AAP ne demande plus de compte (règle Firestore déployée, routes ouvertes, lien sur l'accueil) ;
   vérifié sans compte : 95 AAP listés, recherche « Dentobus », fiche, « Candidater » renvoie à la connexion.
@@ -93,7 +99,7 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md, dis-moi la tâche suivante et propose le changement du second tour d'extraction Ollama avec seuil."
+"Lis REPRISE.md, montre-moi le récapitulatif d'ECHANTILLON.md et les trois options pour le moteur, et attends ma décision."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 
