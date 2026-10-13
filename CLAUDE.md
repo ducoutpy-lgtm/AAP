@@ -190,7 +190,7 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
   En cours : `extraction-ollama-second-tour` (tours faits, décision 3.2 de Monsieur DUCOUT en attente). Specs en vigueur :
   `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`, `decouverte-rubriques-aap`, `qualification-sources`.
-- Reprise d'une session : lire d'abord `REPRISE.md` (racine), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
+- Reprise d'une session : lire d'abord `REPRISE.md` (racine) et `docs/FEUILLE_DE_ROUTE.md` (huit grandes étapes, état), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
   `scraping/QUALIFICATION.md` (section « Relecture manuelle » : corrections humaines des verdicts du modèle). Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.
 - Modèle local Ollama (mistral:7b-instruct, installé sur le PC) : utilisé seulement comme outil de tri et de test à
   coût zéro (qualification, échantillon) ; la décision « Claude API pour le MVP » n'est pas remise en cause.

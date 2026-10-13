@@ -20,6 +20,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 - Expliquer le pourquoi avant le comment, en français, sans jargon, sans emojis dans les fichiers.
 - Une session = un seul dossier : ouvrir la session dans `AAP`, jamais dans `Scrapling`.
 
+Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUTE.md` (à tenir à jour avec ce fichier).
+
 ## Chaîne de traitement et état réel
 
 | Étape | Outil | État |
@@ -71,6 +73,16 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
   exactes jugées sévèrement, 3 sont des enveloppes financières manquées). Carte graphique : 8 Go (RTX 5060 portable) :
   les Qwen de 17 et 23 Go installés ne tiennent pas, non testés. Le comparateur automatique a été corrigé deux fois après
   sondage (échéance ou titre confirmés par la page ; montants cités quel que soit le champ) ; sondage final 5/5 et 4/5.
+- Essai du 2026-10-13 au matin, à la demande de Monsieur DUCOUT : **logiciel de validation manuelle** `scraping/validation.py`
+  (serveur local, bibliothèque standard, NON commité, hors changement OpenSpec pour l'instant). Lancement :
+  `../.venv/Scripts/python validation.py --fichier results/echantillon_ollama_qwen3-8b.json --port 8787` puis
+  http://localhost:8787 dans n'importe quel navigateur (le port 8765 est pris par un autre programme du poste). Une fiche
+  à la fois, extrait de la page, lien vers la page officielle, boutons 1 à 4 (juste / à corriger / pas un AAP / passer),
+  verdicts dans `results/validation_manuelle.json` (rejouable). Au moment de la pause, aucun verdict n'avait encore été donné.
+  Suite envisagée si la méthode lui convient : changement OpenSpec (correction directe des champs dans la page, fichier
+  cumulatif d'exemples validés), puis exemples validés dans la consigne (niveau 1, zéro euro), puis réglage fin d'un
+  modèle léger à poids ouverts quand le jeu dépasse quelques centaines d'exemples (niveau 2, LoRA, 3 milliards de
+  paramètres en local sur 8 Go, ou 8 milliards sur une carte louée avec son accord). Pas de réglage fin des modèles Claude.
 - **Tâche suivante : décision de Monsieur DUCOUT (tâche 3.2)**, trois options honnêtes : (a) qwen3:8b pour le passage
   global malgré le seuil non atteint, avec sondage humain renforcé sur les montants ; (b) un troisième tour pour gagner
   les points manquants (contexte réduit pour tenir en mémoire graphique et éviter les délais dépassés, relance des
@@ -99,7 +111,8 @@ fonctionne en local. GitHub sert de trace (commit et push à chaque changement v
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md, montre-moi le récapitulatif d'ECHANTILLON.md et les trois options pour le moteur, et attends ma décision."
+"Lis REPRISE.md. Donne-moi le bilan de mes verdicts dans results/validation_manuelle.json s'il y en a, puis le récapitulatif
+d'ECHANTILLON.md et les trois options pour le moteur, et attends ma décision."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 
