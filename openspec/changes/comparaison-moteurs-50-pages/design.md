@@ -38,17 +38,23 @@ Non-Goals : choisir le moteur ; améliorer l'un ou l'autre moteur ; mesurer d'au
 
 ## Decisions
 
-### Décision 1 : tirage parmi les textes jamais traités
+### Décision 1 : tirage parmi les pages d'appels des financeurs de la santé (second tirage du 2026-10-14)
 
-Les 50 adresses sont tirées au sort, graine fixe (2026), parmi les textes collectés des 242 sources confirmées que
-le passage local n'a jamais traités (ni fiche, ni refus, ni échec, par fichier et par adresse), hors des 45
-adresses de l'échantillon, réparties par famille du registre au prorata des textes restants (quotas aux plus
-forts restes, tirage dans chaque famille). Pourquoi : demande de Monsieur DUCOUT (pages neuves pour les deux
-moteurs) ; la graine rend la liste identique d'une exécution à l'autre tant que rien n'a été traité ; la
-répartition par famille évite un tirage dominé par la famille la plus nombreuse. Limite assumée : les textes
-restants appartiennent aux dernières familles de l'ordre du passage global (autres, collectivités), ce que le
-rapport indique. Le passage global traitera ces pages à son tour, dans ses propres fichiers, sans effet sur la
-comparaison.
+Premier tirage (matin) : 50 pages jamais traitées par le passage local, toutes de la famille collectivités, seuls
+textes restants ; résultat sans aucun appel de santé et avec 18 pages de navigation, jugé inutilisable par
+Monsieur DUCOUT, à raison : l'objectif est de comparer les moteurs sur les appels que cherchent hôpitaux et
+cliniques (ARS, INCa, CNSA, fondations de santé). La session a appliqué « jamais traitées » à la lettre au lieu de
+s'arrêter. Fichiers archivés sous le suffixe `collectivites` (liste, 18 verdicts, résultats des deux moteurs).
+Second tirage : 50 adresses, graine 2026, parmi les textes collectés des sources des familles ARS, caisses
+nationales, fondations, sociétés savantes, établissements, plus l'INCa et l'Inserm (81 sources), dont le texte
+contient un mot d'appel (« appel à projets », « appel à candidatures », « appel à manifestation », « date limite »,
+« candidature », « dossier de candidature », « cahier des charges »), hors des 45 adresses de l'échantillon, au
+prorata des familles : 458 candidats, 50 tirées (ARS 20, fondations 11, caisses 8, INCa et Inserm 5,
+établissements 4, sociétés savantes 2). Pourquoi un mot dans le texte plutôt que le score du lien : 152 des 184
+pages d'appels des ARS ont un lien sans mot-clé (le titre de l'appel) ; le mot dans le texte écarte menus et
+contrôles anti-robot sans dépendre du lien. La condition « jamais traitées » est abandonnée : ces pages ont été
+vues par le passage global, mais les deux moteurs les retraitent à neuf dans des fichiers distincts, ce qui est le
+protocole de la comparaison.
 
 ### Décision 2 : le modèle local recalcule les 50 textes, pendant le passage global
 

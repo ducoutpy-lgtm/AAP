@@ -100,3 +100,31 @@ def test_rapport_markdown_compte_les_commentaires_hors_champ():
                                          [("Modèle local", "local", "m", {}, 0.0, "0 euro"), ("Modèle API", "api", "h", {}, 0.0, "0 euro")],
                                          "2026-10-14")
     assert "question du 2026-10-14) : 1." in texte
+
+
+def test_candidats_score_minimal_ecarte_la_navigation(tmp_path, monkeypatch):
+    # Second tirage du 2026-10-14 : les liens de navigation (score 0) ne sont plus candidats.
+    monkeypatch.setattr(echantillon, "DOSSIER", tmp_path / "decouverte")
+    dossier = tmp_path / "decouverte" / "a" / "fiches"
+    dossier.mkdir(parents=True)
+    (dossier / "1.txt").write_text("https://x/appel\nlien\n\ntexte", encoding="utf-8")
+    (dossier / "2.txt").write_text("https://x/menu\nlien\n\ntexte", encoding="utf-8")
+    (tmp_path / "decouverte" / "a" / "liens.json").write_text(
+        '{"liens": [{"href": "https://x/appel", "score": 3}, {"href": "https://x/menu", "score": 0}]}', encoding="utf-8")
+    sources = [{"id": "a", "nom": "A", "categorie": "ars"}]
+    scores = comparaison.scores_des_liens(sources)
+    assert scores == {"https://x/appel": 3, "https://x/menu": 0}
+    assert [c["url"] for c in comparaison.candidats_jamais_traites(sources, [], [], [], set(), 3, scores)] == ["https://x/appel"]
+    assert len(comparaison.candidats_jamais_traites(sources, [], [], [], set())) == 2
+
+
+def test_candidats_mots_dans_le_texte_sans_accents(tmp_path, monkeypatch):
+    # Second tirage : la page doit contenir un mot d'appel ; les menus et contrôles anti-robot sont écartés.
+    monkeypatch.setattr(echantillon, "DOSSIER", tmp_path / "decouverte")
+    dossier = tmp_path / "decouverte" / "a" / "fiches"
+    dossier.mkdir(parents=True)
+    (dossier / "1.txt").write_text("https://x/appel\nlien\n\nAppel à candidatures 2027 : dossier avant le 3 mars", encoding="utf-8")
+    (dossier / "2.txt").write_text("https://x/menu\nlien\n\nMentions légales du site", encoding="utf-8")
+    sources = [{"id": "a", "nom": "A", "categorie": "ars"}]
+    urls = [c["url"] for c in comparaison.candidats_jamais_traites(sources, [], [], [], set(), mots=["appel a candidature", "date limite"])]
+    assert urls == ["https://x/appel"]

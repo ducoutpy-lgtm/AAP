@@ -15,7 +15,13 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
   `test_tirer_pages_bornes`, `test_candidats_jamais_traites_exclut_traites_echantillon_et_doublons` ; `--tirer` :
   « 765 textes jamais traités (collectivite 765) », « 50 pages tirées, graine 2026 (collectivite 50) » ; second passage
   « (inchangé) ». Constat : les textes jamais traités sont tous de la famille collectivité, dernière de l'ordre du
-  passage global ; les 50 pages sont donc toutes des pages de collectivités.)
+  passage global ; les 50 pages sont donc toutes des pages de collectivités. Constat de Monsieur DUCOUT le soir :
+  tirage inutilisable, aucun appel de santé. Second tirage le 2026-10-14 au soir, options `--familles`, `--ids`,
+  `--mots`, `--inclure-traites`, `--score-min` (tests 68 verts) : « 458 textes jamais traités (ars 184, fondation 97,
+  caisse-nationale 72, agence-nationale 50, etablissement 36, societe-savante 19) », « 50 pages tirées, graine 2026
+  (ars 20, fondation 11, caisse-nationale 8, agence-nationale 5, etablissement 4, societe-savante 2) », 32 sources ;
+  premier tirage archivé dans `sources/comparaison_pages_collectivites_2026-10-14.json`, ses 18 verdicts dans
+  `sources/verdicts_comparaison_collectivites_2026-10-14.json`, ses résultats sous le suffixe `_collectivites`.)
 - [x] 1.2 `echantillon.extraire` et `extraire_api` : paramètres optionnels (liste de textes, fichier de sortie),
   comportement inchangé sans eux ; tests. Fait quand : pytest scraping vert ; le journal des coûts n'a pas bougé.
   (Fait le 2026-10-14 : `test_extraire_accepte_une_liste_explicite_de_textes` et
@@ -43,6 +49,13 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
   depuis l'échantillon 0,058 euro, plafond 5 euros. Avant jugement : les deux moteurs prennent la même décision fiche /
   refus sur 46 pages sur 50 (local 24 fiches, Haiku 20).)
 
+## 2 bis. Second tirage (financeurs de la santé)
+
+- [ ] 2b.1 Extraction locale `qwen3:8b` des 50 nouvelles pages (lancée le 2026-10-14 au soir, 0 euro). Fait quand :
+  compte des fiches et des refus collé, durée collée.
+- [ ] 2b.2 Accord écrit de Monsieur DUCOUT pour Haiku sur les 50 nouvelles pages (coût estimé 0,03 euro, même modèle
+  et mêmes prix qu'en 2.1), puis extraction. Fait quand : compte des fiches et des refus collé, coût réel collé.
+
 ## 3. Jugement
 
 - [x] 3.1 `comparaison.py --juger` : serveur local (port 8766), page par adresse avec texte collecté, lien officiel,
@@ -58,13 +71,22 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
   candidats portent une marque de ce type (surtout « cloudflare », parfois légitime). Liste conservée telle quelle, la
   page sera jugée « pas un appel » sur le texte collecté ; filtre des contrôles anti-robot à ajouter avant un prochain
   tirage `[A VALIDER - Monsieur DUCOUT]`.)
-- [ ] 3.2 Monsieur DUCOUT juge les 50 pages. Fait quand : 50 clés dans `sources/verdicts_comparaison.json`.
+- [x] 3.2 Monsieur DUCOUT juge les 50 pages. Fait quand : 50 clés dans `sources/verdicts_comparaison.json`. (Fait le
+  2026-10-14 au soir sur le premier tirage, collectivités : 50 verdicts, 23 « appel » et 27 « pas un appel », aucun
+  commentaire « hors champ » ; fichier archivé `sources/verdicts_comparaison_collectivites_2026-10-14.json`. À refaire
+  sur le second tirage, financeurs de la santé, quand les deux moteurs auront fini.)
 
 ## 4. Rapport et documentation
 
 - [ ] 4.1 `comparaison.py --rapport` : `scraping/COMPARAISON.md` (tableau par moteur, liste des pages, graine, date,
   coût réel lu dans le journal, compte des pages commentées « hors champ » : question de Monsieur DUCOUT du 2026-10-14,
-  section 8 du rapport de critique). Fait quand : rapport collé dans le compte rendu.
+  section 8 du rapport de critique). Fait quand : rapport collé dans le compte rendu. (Premier tirage, collectivités,
+  rapport `scraping/COMPARAISON_collectivites_2026-10-14.md` généré le 2026-10-14 au soir à partir des fichiers
+  archivés : « Modèle local | qwen3:8b | 50 / 50 | 45 / 50 (90 %) | 19 / 23 (83 %) | 3 | 2501 s | 0 euro » ;
+  « Modèle API | claude-haiku-5-5 | 50 / 50 | 47 / 50 (94 %) | 19 / 23 (83 %) | 0 | 184 s | 0.030 euros (70 appels) ».
+  Lecture : même qualité de fiche, Haiku refuse mieux les pages qui ne sont pas des appels (0 fabrication contre 3)
+  et va treize fois plus vite ; mesure faite sur des pages de collectivités, hors du cœur du projet. Rapport du
+  second tirage à produire.)
 - [ ] 4.2 Documentation : README scraping (outil et commandes), CHANGELOGs, CLAUDE.md (état d'avancement), REPRISE.md,
   section 8 du rapport de critique (résultat). Fait quand : fichiers relus.
 

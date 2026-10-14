@@ -429,6 +429,56 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   d'extraction, stocké dans `scrape_metadata`, l'import ignorant « hors champ » (Haiku : environ 0,0002 euro par
   page, moins de 1 euro pour les 2 395 pages ; modèle local possible) ; (c) à terme, mots du champ dès la découverte
   des liens. Lot : à fixer par Monsieur DUCOUT, avant toute publication des fiches de collectivités.
+- Question de Monsieur DUCOUT (2026-10-14, soir) : pourquoi les efforts ne se concentrent-ils pas sur les appels de
+  santé et du médico-social ? Réponse vérifiée dans les données : la chaîne choisit des sources, pas des appels. Pour
+  les sources spécialisées (ARS, CNSA, INCa, Inserm, fondations de santé) le résultat est dans le champ ; pour les
+  sources mixtes gardées en « rubrique confirmée » parce qu'elles publient parfois des appels du champ (collectivités,
+  préfectures, DRAAF, agences de l'eau, Bpifrance, ANR, Admical, agrégateurs), tout est pris. Dans le passage global
+  (783 fiches au 2026-10-14 au soir) : 17 fiches de l'agence de l'eau Seine-Normandie, 8 de Rhin-Meuse, 24 de deux
+  DRAAF, 20 de deux préfectures, 10 de l'ANR, 8 de Bpifrance France 2030, 10 d'Admical, 9 d'appelaprojets.org.
+  Dans les 194 fiches publiées, une trentaine sont hors champ d'après le nom du financeur (Bpifrance 8, DRAAF et
+  DAAF 6, agences de l'eau 7, ministère de l'Agriculture, FEADER, FIPD, Dalloz...) : estimation par lecture des
+  financeurs, non jugée fiche par fiche. Ce n'est pas un choix de priorité, c'est une étape absente du plan, que ce
+  rapport n'avait pas vue. Proposition d'instruction 26, MAJEUR, lot 1 `[À VALIDER — Monsieur DUCOUT]` : (1) verdict
+  « hors champ » dans la validation quotidienne, reporté à l'import comme rejet ; (2) question fermée « cet appel
+  relève-t-il de la santé, du médico-social, du social, du handicap ou de l'autonomie ? » dans la chaîne d'extraction
+  (modèle local à 0 euro ou Haiku pour moins de 1 euro), appliquée aussi, une fois, aux 783 fiches locales et aux
+  194 fiches publiées, les fiches hors champ repassant en brouillon jusqu'au verdict ; (3) dans le registre, marquer
+  les sources mixtes et revoir la qualification des sources dont presque aucune page n'est dans le champ.
+- Question de Monsieur DUCOUT (2026-10-14, soir, pendant le jugement) : beaucoup de pages tirées sont sans rapport
+  avec un appel ; en cherchant « <département> appel à projets » on trouve la page qui liste les appels, il faut
+  l'utiliser, ouvrir chaque appel, extraire texte, PDF et montants. Réponse vérifiée : c'est bien la chaîne prévue
+  (page de liste validée par lui pour 257 sources, liens de la page ouverts un à un, extraction), mais le passage
+  global ouvre tous les liens de la page de liste, menus compris, alors que l'échantillon ne prenait que les mieux
+  notés. Chiffres : sur 2 888 liens des 242 sources confirmées, 1 190 ont un score 0 (navigation du site) ; 516 des
+  740 refus du passage global et 18 des 50 pages de la comparaison viennent de ces liens ; 165 fiches viennent
+  pourtant de liens à score 0 (appels dont le texte du lien est vague : « en savoir plus »), ce qui interdit de
+  filtrer par le seul score sans perte. Les PDF ne sont pas lus (exclus de la collecte), les pages de liste ne sont
+  pas feuilletées (pas de pagination), et 577 sources n'ont pas encore de page de liste. Proposition d'instruction
+  27, MAJEUR, lot 1 `[À VALIDER — Monsieur DUCOUT]` : (1) tout de suite, le passage global ne lit plus que les liens
+  de score 3 et plus (224 des 629 textes restants évités) ; (2) lecture de chaque page de liste par le modèle, qui
+  rend les entrées d'appels (titre et lien) au lieu d'un score par mots-clés, 242 pages, 0 euro en local ou environ
+  0,05 euro avec Haiku ; (3) pagination des pages de liste ; (4) lecture du texte des PDF joints (bibliothèque
+  locale, 0 euro) ; (5) recherche de la page de liste des 577 sources sans page par la méthode de Monsieur DUCOUT
+  (requête « <nom> appel à projets »).
+- Constat de Monsieur DUCOUT (2026-10-14, soir) : le tirage de la comparaison ne contenait que des pages de
+  départements et aucun appel de santé. Erreur de la session, qui a appliqué « pages jamais traitées » à la lettre
+  alors que seules les collectivités restaient, au lieu de s'arrêter et de le dire. Rappel du projet, dans ses mots :
+  mettre en relation, entre autres, les cliniques privées et les hôpitaux publics avec les appels publiés par les
+  financeurs de la santé, ARS et INCa en tête ; toute mesure doit porter sur ces appels. Second tirage le soir même :
+  50 pages d'appels des financeurs de la santé (ARS 20, fondations 11, caisses 8, INCa et Inserm 5, établissements
+  4, sociétés savantes 2), pages dont le texte contient un mot d'appel, les deux moteurs repassant à neuf ; premier
+  tirage et ses résultats archivés sous le suffixe « collectivites ». Monsieur DUCOUT a néanmoins jugé les 50 pages
+  du premier tirage (23 appels, 27 non) ; résultat (`scraping/COMPARAISON_collectivites_2026-10-14.md`) : modèle
+  local, repérage 45 sur 50, qualité 19 sur 23, 3 fabrications, 2 501 s, 0 euro ; Haiku, repérage 47 sur 50,
+  qualité 19 sur 23, 0 fabrication, 184 s, 0,03 euro. Même qualité de fiche, Haiku plus sûr sur le tri et treize
+  fois plus rapide, mesure hors du cœur du projet. Dépense totale de la journée sur le compte Anthropic : 0,09 euro.
+  Business plan (dossier IMT Starter v2) lu par la session le soir même : cibles porteurs (EHPAD, hôpitaux publics et
+  privés, HAD, SSIAD, GHT, GCS, associations de santé), financeurs (18 ARS, conseils régionaux, CNSA, fondations,
+  CNAV et CARSAT, Europe, ministères), promesse « ne ratez plus aucun financement pertinent », problème terrain
+  numéro un : la faible pertinence des appels détectés. Les collectivités sont donc bien des financeurs à couvrir,
+  mais seules leurs pages du champ comptent : le filtre du champ (instruction 26) et la précision de la collecte
+  (instruction 27) sont la condition de la promesse du produit.
 - Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
   Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
   publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)

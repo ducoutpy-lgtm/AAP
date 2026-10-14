@@ -1,0 +1,352 @@
+{
+ "https://oise.fr/actions/sante-social-solidarite/emploi-insertion/appels-a-projets": {
+  "page": "appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 16:57"
+ },
+ "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Planification-eologique-Modernisation-des-entreprises-d-exploitation-forestiere-en-Guyane": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 16:59"
+ },
+ "https://www.ladrome.fr/mon-quotidien/numerique/travailler-autrement/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 17:00"
+ },
+ "https://www.ladrome.fr/mon-quotidien/solidarites/stop-maltraitance/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 17:00"
+ },
+ "https://www.paris.fr/pages/appel-a-projets-pour-l-organisation-de-marches-de-producteurs-a-paris-en-2027-35825": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 17:01"
+ },
+ "https://lozere.fr/node/23539": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "https://lozere.fr/lamenagement-du-territoire/developpement-economique/appels-projets.html",
+  "date": "2026-10-14 17:02"
+ },
+ "https://www.cg971.fr/aap-promouvoir-lintegration-sociale-des-personnes-exposees-au-risque-de-pauvrete-ou-dexclusion-sociale/": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 17:02"
+ },
+ "https://www.ledepartement66.fr/appels-a-projet-programmation-culturelle-2024-2025-de-spectacles-vivants-et-dateliers-dart-plastiques-et-visuels/": {
+  "page": "appel",
+  "local": "a-corriger",
+  "api": "juste",
+  "commentaire": "https://www.ledepartement66.fr/dossier/les-appels-a-projets/ ca c'est la bonne page et la fiche du modle elocal est a corriger car il a lu le mauvais trerritoire : c'est pyrenee orientale et non pas bouches du rhone",
+  "date": "2026-10-14 17:03"
+ },
+ "https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026/Appel-a-projet-pour-les-journees-europeennes-du-patrimoine-2026": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 17:04"
+ },
+ "https://www.laregion.fr/Prix-Claude-Nougaro-39650": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 17:05"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A1348": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "ok donc cest une page qui liste des appels a projet donc il faut lire et traiter les appels a projets qui sont sur cette page",
+  "date": "2026-10-14 20:25"
+ },
+ "https://www.laregion.fr/mentions-legales": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "quand on cherche la bonne page on la trouve : https://www.laregion.fr/-tous-les-appels-a-projets- il suffit de taper sur google : region occitanie appel a projet et c'est la première page",
+  "date": "2026-10-14 20:26"
+ },
+ "https://www.laregion.fr/Investir-dans-les-equipements-et-installations-de-production-d-energies-a-partir-de": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "toujour pas la bonne page : https://www.laregion.fr/-tous-les-appels-a-projets-",
+  "date": "2026-10-14 20:27"
+ },
+ "https://www.vosges.fr/donnees-personnelles/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "quand on recherche les bons mots clé on trouve la bonne pages : https://www.vosges.fr/mon-departement/appels-a-projets/",
+  "date": "2026-10-14 20:28"
+ },
+ "https://www.ladrome.fr/mon-quotidien/education/college-pour-tous/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "quand on recherche avec les bon mots clé on trouve la bonne page : https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/",
+  "date": "2026-10-14 20:28"
+ },
+ "https://www.le64.fr/favoriser-linsertion-professionnelle-des-personnes-eloignees-du-marche-du-travail": {
+  "page": "pas-un-appel",
+  "local": "juste",
+  "api": null,
+  "commentaire": "quand on recherche les bons mots clé on trouve la bonne page : https://le64.fr/vous-souhaitez/les-appels-projets-en-cours et effectivement haikua  raison il y a deux appel a projet differents sur la page",
+  "date": "2026-10-14 20:30"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A589": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:34"
+ },
+ "https://www.cg971.fr/appel-a-projets-fse-2025-ateliers-chantiers-dinsertion-guadoi1671/": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:35"
+ },
+ "http://www.ledepartement66.fr/?post_type=profil&p=13163": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:36"
+ },
+ "https://www.maine-et-loire.fr/aides-et-services/professionnels/appels-a-projets/nature-en-ville": {
+  "page": "appel",
+  "local": "a-corriger",
+  "api": "a-corriger",
+  "commentaire": "",
+  "date": "2026-10-14 20:37"
+ },
+ "https://herault.fr/328-partenaires.htm": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:38"
+ },
+ "https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/aides-de-leurope-pour-le-territoire/": {
+  "page": "pas-un-appel",
+  "local": "a-corriger",
+  "api": null,
+  "commentaire": "rien a voir le modele local a du melanger plusieurs fiches",
+  "date": "2026-10-14 20:39"
+ },
+ "https://www.essonne.gouv.fr/info-cookies": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:39"
+ },
+ "https://le64.fr/ouverture-du-teleservice-demande-de-subvention-autonomie-prevention-de-la-perte-dautonomie-0": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:40"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A616": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:41"
+ },
+ "https://aidescd30.gard.fr/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:41"
+ },
+ "https://www.seine-et-marne.fr/fr/appels-projet-subventions/festivals-et-manifestations-culturelles-et-artistiques": {
+  "page": "appel",
+  "local": null,
+  "api": null,
+  "commentaire": "c'est un appel a projet",
+  "date": "2026-10-14 20:42"
+ },
+ "https://www.savoie.fr/web/sw_180135/appel-a-projets-commission-des-financeurs-pour-la-prevention-de-la-perte-d-autonomie-2027-2029": {
+  "page": "pas-un-appel",
+  "local": "a-corriger",
+  "api": null,
+  "commentaire": "plusieurs appels a projet",
+  "date": "2026-10-14 20:43"
+ },
+ "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Appel-a-projet-DILCRAH": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:43"
+ },
+ "https://www.centre-valdeloire.fr/appels-projet/projeunes-donne-vie-tes-projets-de-lycee": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:44"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A229": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:44"
+ },
+ "https://www.collectivitedemartinique.mq/appels_a_projets/appel-a-projets-parcours-de-la-3eme-chance-accompagner-les-jeunes-vers-une-reinsertion-durable/": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:44"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets/concours-deloquence-sur-la-citoyennete-avec-lassociation-trouve-ta-voix": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:45"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets/parentalite-ouverture-socio-culturelle-et-scolarite-pour-les-enfants-en-difficulte": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:45"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A166": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:45"
+ },
+ "https://www.yvelines.fr/mon-departement/appels-a-projets-subventions/appel-a-projets-fse-insertion-des-jeunes-acces-emploi-des-jeunes-yvelinois/": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:46"
+ },
+ "https://www.ladrome.fr/mon-quotidien/sports/le-sport-dans-la-drome/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:46"
+ },
+ "https://www.orleans.fr/actualites?tx_news_pi1%5BoverwriteDemand%5D%5Bcategories%5D=5&cHash=7485d4459d69ab9103f864df8c397e49": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:47"
+ },
+ "https://hautesavoie.fr/rentree-des-classes-les-nouveaux-eleves-de-6e-accueillis-par-les-conseillers-departementaux/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:47"
+ },
+ "https://www.valdoise.fr/annuaire/2548/294-libelle.htm": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:51"
+ },
+ "https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/appel-a-projets-poles-touristiques-des-hautes-pyrenees/": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:51"
+ },
+ "https://herault.fr/aideProjet/181/321-appel-a-projets-paysages-en-mouvement-pour-une-residence-de-territoire-dans-le-geoparc-terres-d-herault-residence-artistique-en-college-2027-arts-visuels.htm": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:51"
+ },
+ "https://www.laregion.fr/Recrutement-de-medecins-generalistes-pour-le-Centre-de-Sante-de-Ma-Region-a-Lacaune": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:51"
+ },
+ "https://www.laregion.fr/Europe-en-Occitanie-39538": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:52"
+ },
+ "https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures/appel-a-projets-pdi-2027-42305": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:52"
+ },
+ "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A658": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:52"
+ },
+ "https://regionreunion.com/aides-services/appels-a-projets/aides-services/appels-a-projets/article/appel-a-manifestation-d-interet-valorisation-agricole-de-la-propriete-regionale-du-grand-stella": {
+  "page": "appel",
+  "local": "juste",
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:52"
+ },
+ "https://www.paris.fr/pages/appel-a-projets-paris-solidarites-internationales-anciennement-solidev-2027-36706": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:53"
+ },
+ "https://www.somme.fr/services/loisirs-et-sports/": {
+  "page": "pas-un-appel",
+  "local": null,
+  "api": null,
+  "commentaire": "",
+  "date": "2026-10-14 20:53"
+ },
+ "https://www.valdemarne.fr/le-conseil-departemental/appel-a-candidatures-restauration-ambulante-dans-les-parcs-departementaux": {
+  "page": "appel",
+  "local": "juste",
+  "api": "juste",
+  "commentaire": "",
+  "date": "2026-10-14 20:53"
+ }
+}

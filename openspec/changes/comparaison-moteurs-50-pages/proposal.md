@@ -10,9 +10,10 @@ choisies à la main ; ici les pages sont tirées au sort dans le corpus réel et
 
 ## What Changes
 
-- Nouvel outil `scraping/comparaison.py`, cinq étapes : `--tirer` (50 adresses, graine fixe, parmi les textes
-  collectés que le modèle local n'a jamais traités, hors échantillon, réparties par famille, écrites dans
-  `sources/comparaison_pages.json`) ; `--extraire-local` (les 50 textes
+- Nouvel outil `scraping/comparaison.py`, cinq étapes : `--tirer` (50 adresses, graine fixe, parmi les pages
+  d'appels des financeurs de la santé, ARS, INCa, CNSA, fondations, sociétés savantes, établissements, dont le
+  texte contient un mot d'appel, réparties par famille, écrites dans `sources/comparaison_pages.json` ; le premier
+  tirage du 2026-10-14, limité aux pages jamais traitées, n'avait donné que des collectivités et a été archivé) ; `--extraire-local` (les 50 textes
   par `qwen3:8b`, même chaîne que le passage global, 0 euro) ; `--extraire-api` (les 50 textes par
   `claude-haiku-5-5`, deux appels par texte, plafond cumulé 5 euros, reprise) ; `--juger` (écran local : texte
   collecté, fiche locale et fiche Haiku côte à côte, verdict par page et par moteur dans

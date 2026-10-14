@@ -1,357 +1,379 @@
 {
  "graine": 2026,
  "nombre": 50,
- "candidats": 765,
+ "candidats": 458,
+ "familles": [
+  "ars",
+  "caisse-nationale",
+  "fondation",
+  "societe-savante",
+  "etablissement"
+ ],
+ "ids": [
+  "institut-national-du-cancer-inca",
+  "inserm"
+ ],
+ "score_min": 0,
+ "inclure_traites": true,
+ "mots": [
+  "appel a projet",
+  "appel a candidature",
+  "appel a manifestation",
+  "date limite",
+  "candidature",
+  "dossier de candidature",
+  "cahier des charges"
+ ],
  "pages": [
   {
-   "url": "https://oise.fr/actions/sante-social-solidarite/emploi-insertion/appels-a-projets",
-   "source": "conseil-departemental-oise",
-   "nom": "Conseil départemental Oise",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-oise/fiches/adb32636c4.txt"
+   "url": "https://pro.inserm.fr/rubriques/appels-a-projets/passerelles-soins-recherche/contrats-dinterface-pour-hospitaliers",
+   "source": "inserm",
+   "nom": "Inserm",
+   "categorie": "agence-nationale",
+   "fichier": "decouverte/inserm/fiches/8445aa2558.txt"
   },
   {
-   "url": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Planification-eologique-Modernisation-des-entreprises-d-exploitation-forestiere-en-Guyane",
-   "source": "collectivite-territoriale-de-guyane",
-   "nom": "Collectivité territoriale de Guyane",
-   "categorie": "collectivite",
-   "fichier": "decouverte/collectivite-territoriale-de-guyane/fiches/e9cefaabe9.txt"
+   "url": "https://pro.inserm.fr/rubriques/appels-a-projets/programmes-de-linserm/impact-sante/programme",
+   "source": "inserm",
+   "nom": "Inserm",
+   "categorie": "agence-nationale",
+   "fichier": "decouverte/inserm/fiches/05cb2c7866.txt"
   },
   {
-   "url": "https://www.ladrome.fr/mon-quotidien/numerique/travailler-autrement/",
-   "source": "drome-commission-des-financeurs",
-   "nom": "Drôme – Commission des financeurs",
-   "categorie": "collectivite",
-   "fichier": "decouverte/drome-commission-des-financeurs/fiches/4718d373fc.txt"
+   "url": "https://pro.inserm.fr/rubriques/appels-a-projets/strategie-decennale-cancer-2021-2030/formation-a-la-recherche-en-cancerologie-frft-doc",
+   "source": "inserm",
+   "nom": "Inserm",
+   "categorie": "agence-nationale",
+   "fichier": "decouverte/inserm/fiches/73b5487d02.txt"
   },
   {
-   "url": "https://www.ladrome.fr/mon-quotidien/solidarites/stop-maltraitance/",
-   "source": "drome-commission-des-financeurs",
-   "nom": "Drôme – Commission des financeurs",
-   "categorie": "collectivite",
-   "fichier": "decouverte/drome-commission-des-financeurs/fiches/5004f1160d.txt"
+   "url": "https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets/pedia-ori26",
+   "source": "institut-national-du-cancer-inca",
+   "nom": "Institut national du cancer (INCa)",
+   "categorie": "agence-nationale",
+   "fichier": "decouverte/institut-national-du-cancer-inca/fiches/8ddbcc14be.txt"
   },
   {
-   "url": "https://www.paris.fr/pages/appel-a-projets-pour-l-organisation-de-marches-de-producteurs-a-paris-en-2027-35825",
-   "source": "ville-de-paris-appels-a-projets",
-   "nom": "Ville de Paris – appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/ville-de-paris-appels-a-projets/fiches/5f6a8630c1.txt"
+   "url": "https://pro.inserm.fr/rubriques/appels-a-projets/passerelles-soins-recherche/chef-de-clinique-assistant-cca-inserm-bettencourt",
+   "source": "inserm",
+   "nom": "Inserm",
+   "categorie": "agence-nationale",
+   "fichier": "decouverte/inserm/fiches/282b1e3bbf.txt"
   },
   {
-   "url": "https://lozere.fr/node/23539",
-   "source": "conseil-departemental-lozere",
-   "nom": "Conseil départemental Lozère",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-lozere/fiches/463cdf4525.txt"
+   "url": "https://www.grand-est.ars.sante.fr/portage-du-dispositif-dappui-la-coordination-dac-dalsace",
+   "source": "ars-grand-est",
+   "nom": "ARS Grand Est",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-grand-est/fiches/2880144176.txt"
   },
   {
-   "url": "https://www.cg971.fr/aap-promouvoir-lintegration-sociale-des-personnes-exposees-au-risque-de-pauvrete-ou-dexclusion-sociale/",
-   "source": "conseil-departemental-guadeloupe",
-   "nom": "Conseil départemental Guadeloupe",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-guadeloupe/fiches/71c5debff4.txt"
+   "url": "https://www.occitanie.ars.sante.fr/mnpea-2026-renforcement-de-loffre-de-psychiatrie-perinatale-et-de-psychiatrie-de-lenfant-et-de",
+   "source": "ars-occitanie",
+   "nom": "ARS Occitanie",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-occitanie/fiches/d0095097c3.txt"
   },
   {
-   "url": "https://www.ledepartement66.fr/appels-a-projet-programmation-culturelle-2024-2025-de-spectacles-vivants-et-dateliers-dart-plastiques-et-visuels/",
-   "source": "conseil-departemental-pyrenees-orientales",
-   "nom": "Conseil départemental Pyrénées-Orientales",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-pyrenees-orientales/fiches/10755861c1.txt"
+   "url": "https://www.paca.ars.sante.fr/creation-de-4-dispositifs-adaptes-de-scolarisation-pour-la-rentree-scolaire-2026-uema-ueeadar",
+   "source": "ars-provence-alpes-cote-d-azur",
+   "nom": "ARS Provence-Alpes-Côte d'Azur",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-provence-alpes-cote-d-azur/fiches/78fae40087.txt"
   },
   {
-   "url": "https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026/Appel-a-projet-pour-les-journees-europeennes-du-patrimoine-2026",
-   "source": "conseil-departemental-mayotte",
-   "nom": "Conseil départemental Mayotte",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-mayotte/fiches/b2b2ea4513.txt"
+   "url": "https://www.nouvelle-aquitaine.ars.sante.fr/appel-candidatures-2025-creation-dune-plateforme-daccompagnement-et-de-repit-pfr-destination-des",
+   "source": "ars-nouvelle-aquitaine",
+   "nom": "ARS Nouvelle-Aquitaine",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-nouvelle-aquitaine/fiches/06f54bfdb1.txt"
   },
   {
-   "url": "https://www.laregion.fr/Prix-Claude-Nougaro-39650",
-   "source": "conseil-regional-occitanie",
-   "nom": "Conseil régional Occitanie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-occitanie/fiches/3329f1ab3a.txt"
+   "url": "https://www.mayotte.ars.sante.fr/aac-creation-dune-plateforme-de-coordination-et-dorientation-pco",
+   "source": "ars-mayotte",
+   "nom": "ARS Mayotte",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-mayotte/fiches/ba0ac2fcec.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A1348",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/c605712df7.txt"
+   "url": "https://www.nouvelle-aquitaine.ars.sante.fr/appel-candidatures-2026-qvcttms-prevention-de-lusure-professionnelle-et-reduction-de-la",
+   "source": "ars-nouvelle-aquitaine",
+   "nom": "ARS Nouvelle-Aquitaine",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-nouvelle-aquitaine/fiches/0f0a3d47b9.txt"
   },
   {
-   "url": "https://www.laregion.fr/mentions-legales",
-   "source": "conseil-regional-occitanie",
-   "nom": "Conseil régional Occitanie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-occitanie/fiches/a4a70659a3.txt"
+   "url": "https://www.nouvelle-aquitaine.ars.sante.fr/appel-candidatures-2024-creation-de-plateformes-daccompagnement-et-de-repit-en-gironde-33",
+   "source": "ars-nouvelle-aquitaine",
+   "nom": "ARS Nouvelle-Aquitaine",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-nouvelle-aquitaine/fiches/df4a1cfde8.txt"
   },
   {
-   "url": "https://www.laregion.fr/Investir-dans-les-equipements-et-installations-de-production-d-energies-a-partir-de",
-   "source": "conseil-regional-occitanie",
-   "nom": "Conseil régional Occitanie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-occitanie/fiches/2b21fbfb0f.txt"
+   "url": "https://www.normandie.ars.sante.fr/conseil-de-surveillance-cs-des-etablissements-de-sante-designation-des-representants-des-usagers-ru",
+   "source": "ars-normandie",
+   "nom": "ARS Normandie",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-normandie/fiches/a130a16424.txt"
   },
   {
-   "url": "https://www.vosges.fr/donnees-personnelles/",
-   "source": "conseil-departemental-vosges",
-   "nom": "Conseil départemental Vosges",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-vosges/fiches/5965a93190.txt"
+   "url": "https://www.nouvelle-aquitaine.ars.sante.fr/appel-projets-2027-culture-et-sante",
+   "source": "ars-nouvelle-aquitaine",
+   "nom": "ARS Nouvelle-Aquitaine",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-nouvelle-aquitaine/fiches/0eb725a8c9.txt"
   },
   {
-   "url": "https://www.ladrome.fr/mon-quotidien/education/college-pour-tous/",
-   "source": "drome-commission-des-financeurs",
-   "nom": "Drôme – Commission des financeurs",
-   "categorie": "collectivite",
-   "fichier": "decouverte/drome-commission-des-financeurs/fiches/8f4b07b5af.txt"
+   "url": "https://www.mayotte.ars.sante.fr/appel-projet-relatif-la-creation-de-2-centres-medico-psycho-pedagogiques-cmpp-sur-le-territoire-de",
+   "source": "ars-mayotte",
+   "nom": "ARS Mayotte",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-mayotte/fiches/a7ca2bd485.txt"
   },
   {
-   "url": "https://www.le64.fr/favoriser-linsertion-professionnelle-des-personnes-eloignees-du-marche-du-travail",
-   "source": "conseil-departemental-pyrenees-atlantiques",
-   "nom": "Conseil départemental Pyrénées-Atlantiques",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-pyrenees-atlantiques/fiches/d7f2daa2b0.txt"
+   "url": "https://www.grand-est.ars.sante.fr/recrutement-de-professionnels-de-sante-et-de-representants-dusagers-au-sein-des-commissions",
+   "source": "ars-grand-est",
+   "nom": "ARS Grand Est",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-grand-est/fiches/dacce5df9b.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A589",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/8d47ba6c1a.txt"
+   "url": "https://www.auvergne-rhone-alpes.ars.sante.fr/creation-de-15-lits-halte-soins-sante-lhss-dedies-la-perinatalite-sur-la-metropole-de-lyon",
+   "source": "ars-auvergne-rhone-alpes",
+   "nom": "ARS Auvergne-Rhône-Alpes",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-auvergne-rhone-alpes/fiches/bfa38e28f2.txt"
   },
   {
-   "url": "https://www.cg971.fr/appel-a-projets-fse-2025-ateliers-chantiers-dinsertion-guadoi1671/",
-   "source": "conseil-departemental-guadeloupe",
-   "nom": "Conseil départemental Guadeloupe",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-guadeloupe/fiches/65dd64424d.txt"
+   "url": "https://www.paca.ars.sante.fr/appel-projet-programme-esms-numerique",
+   "source": "ars-provence-alpes-cote-d-azur",
+   "nom": "ARS Provence-Alpes-Côte d'Azur",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-provence-alpes-cote-d-azur/fiches/ab2b774a0c.txt"
   },
   {
-   "url": "http://www.ledepartement66.fr/?post_type=profil&p=13163",
-   "source": "conseil-departemental-pyrenees-orientales",
-   "nom": "Conseil départemental Pyrénées-Orientales",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-pyrenees-orientales/fiches/61f2cdc90a.txt"
+   "url": "https://www.bourgogne-franche-comte.ars.sante.fr/experimentation-acces-direct-aux-masseurs-kinesitherapeutes-yonne-departement-89",
+   "source": "ars-bourgogne-franche-comte",
+   "nom": "ARS Bourgogne-Franche-Comté",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-bourgogne-franche-comte/fiches/ec29183dab.txt"
   },
   {
-   "url": "https://www.maine-et-loire.fr/aides-et-services/professionnels/appels-a-projets/nature-en-ville",
-   "source": "conseil-departemental-maine-et-loire",
-   "nom": "Conseil départemental Maine-et-Loire",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-maine-et-loire/fiches/581262981c.txt"
+   "url": "https://www.bretagne.ars.sante.fr/appel-projet-experimentation-pilote-de-mon-espace-sante-dans-les-etablissements-et-services-medico",
+   "source": "ars-bretagne",
+   "nom": "ARS Bretagne",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-bretagne/fiches/35af84b332.txt"
   },
   {
-   "url": "https://herault.fr/328-partenaires.htm",
-   "source": "conseil-departemental-herault",
-   "nom": "Conseil départemental Hérault",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-herault/fiches/dc7a59a091.txt"
+   "url": "https://www.guyane.ars.sante.fr/appel-candidatures-pcr-enfance-protegee",
+   "source": "ars-guyane",
+   "nom": "ARS Guyane",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-guyane/fiches/7876c8cc1c.txt"
   },
   {
-   "url": "https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/aides-de-leurope-pour-le-territoire/",
-   "source": "mairie-de-rennes",
-   "nom": "Mairie de Rennes",
-   "categorie": "collectivite",
-   "fichier": "decouverte/mairie-de-rennes/fiches/5742a83718.txt"
+   "url": "https://www.bretagne.ars.sante.fr/appel-candidatures-2026-ars-cd29-01-phv",
+   "source": "ars-bretagne",
+   "nom": "ARS Bretagne",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-bretagne/fiches/81a37c9303.txt"
   },
   {
-   "url": "https://www.essonne.gouv.fr/info-cookies",
-   "source": "conseil-departemental-essonne",
-   "nom": "Conseil départemental Essonne",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-essonne/fiches/a97c08d957.txt"
+   "url": "https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-agreees-dusagers-du-systeme-de-sante",
+   "source": "portail-national-des-ars",
+   "nom": "Portail national des ARS",
+   "categorie": "ars",
+   "fichier": "decouverte/portail-national-des-ars/fiches/b3828bad0c.txt"
   },
   {
-   "url": "https://le64.fr/ouverture-du-teleservice-demande-de-subvention-autonomie-prevention-de-la-perte-dautonomie-0",
-   "source": "conseil-departemental-pyrenees-atlantiques",
-   "nom": "Conseil départemental Pyrénées-Atlantiques",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-pyrenees-atlantiques/fiches/aecd29d08a.txt"
+   "url": "https://www.auvergne-rhone-alpes.ars.sante.fr/creation-de-41-places-detablissement-daccueil-medicalise-eam-pour-adultes-presentant-des-troubles",
+   "source": "ars-auvergne-rhone-alpes",
+   "nom": "ARS Auvergne-Rhône-Alpes",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-auvergne-rhone-alpes/fiches/a20cd5af21.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A616",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/906cd7a83c.txt"
+   "url": "https://www.pays-de-la-loire.ars.sante.fr/creation-dun-pole-ressources-handicap-dans-le-departement-de-la-vendee",
+   "source": "ars-pays-de-la-loire",
+   "nom": "ARS Pays de la Loire",
+   "categorie": "ars",
+   "fichier": "decouverte/ars-pays-de-la-loire/fiches/952bf40915.txt"
   },
   {
-   "url": "https://aidescd30.gard.fr/",
-   "source": "conseil-departemental-gard",
-   "nom": "Conseil départemental Gard",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-gard/fiches/afd72c2449.txt"
+   "url": "https://www.cnsa.fr/appels-projets/experimentation-de-lintelligence-artificielle-ia-en-mdph",
+   "source": "cnsa",
+   "nom": "CNSA (Caisse nationale de solidarité pour l'autonomie)",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/cnsa/fiches/b2dca08019.txt"
   },
   {
-   "url": "https://www.seine-et-marne.fr/fr/appels-projet-subventions/festivals-et-manifestations-culturelles-et-artistiques",
-   "source": "conseil-departemental-seine-et-marne",
-   "nom": "Conseil départemental Seine-et-Marne",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-seine-et-marne/fiches/e0d31c60da.txt"
+   "url": "https://www.carsat-lr.fr/home/partenaires/actualites-partenaire/toutes%20les%20actualites/aap-innov-autonomie.html",
+   "source": "caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-languedoc-roussillon",
+   "nom": "Caisse d'assurance retraite et de la santé au travail (Carsat) - Languedoc-Roussillon",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-languedoc-roussillon/fiches/637d6e3a44.txt"
   },
   {
-   "url": "https://www.savoie.fr/web/sw_180135/appel-a-projets-commission-des-financeurs-pour-la-prevention-de-la-perte-d-autonomie-2027-2029",
-   "source": "conseil-departemental-savoie",
-   "nom": "Conseil départemental Savoie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-savoie/fiches/9440b0b719.txt"
+   "url": "https://picardie.msa.fr/lfp/web/msa-picardie/sante-mentale",
+   "source": "mutualite-sociale-agricole-msa-picardie-accueil-de-laon",
+   "nom": "Mutualité sociale agricole (MSA) Picardie - accueil de Laon",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/mutualite-sociale-agricole-msa-picardie-accueil-de-laon/fiches/a48daae1e7.txt"
   },
   {
-   "url": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Appel-a-projet-DILCRAH",
-   "source": "collectivite-territoriale-de-guyane",
-   "nom": "Collectivité territoriale de Guyane",
-   "categorie": "collectivite",
-   "fichier": "decouverte/collectivite-territoriale-de-guyane/fiches/7bf8a3a44a.txt"
+   "url": "https://www.cgss-guyane.fr/appel-a-projets/appel-a-projet-fnpeis-2026/",
+   "source": "caisse-generale-de-securite-sociale-cgss-guyane",
+   "nom": "Caisse générale de sécurité sociale (CGSS) - Guyane",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/caisse-generale-de-securite-sociale-cgss-guyane/fiches/3e31bb2f93.txt"
   },
   {
-   "url": "https://www.centre-valdeloire.fr/appels-projet/projeunes-donne-vie-tes-projets-de-lycee",
-   "source": "conseil-regional-centre-val-de-loire",
-   "nom": "Conseil régional Centre-Val de Loire",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-centre-val-de-loire/fiches/bf7e6698df.txt"
+   "url": "https://sudchampagne.msa.fr/lfp/ami",
+   "source": "mutualite-sociale-agricole-msa-sud-champagne-accueil-de-troyes",
+   "nom": "Mutualité sociale agricole (MSA) Sud-Champagne - accueil de Troyes",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/mutualite-sociale-agricole-msa-sud-champagne-accueil-de-troyes/fiches/2fcc1976c8.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A229",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/5f51021295.txt"
+   "url": "https://www.carsat-nordest.fr/home/partenaires/etre-partenaire-de-l-action-soci/appels-a-projets-des-partenaires/appel-a-projets-2026-conf%20aube.html",
+   "source": "carsat-nord-est-aap-des-partenaires",
+   "nom": "Carsat Nord-Est – AAP des partenaires",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/carsat-nord-est-aap-des-partenaires/fiches/fb5eddad1d.txt"
   },
   {
-   "url": "https://www.collectivitedemartinique.mq/appels_a_projets/appel-a-projets-parcours-de-la-3eme-chance-accompagner-les-jeunes-vers-une-reinsertion-durable/",
-   "source": "collectivite-territoriale-de-martinique",
-   "nom": "Collectivité territoriale de Martinique",
-   "categorie": "collectivite",
-   "fichier": "decouverte/collectivite-territoriale-de-martinique/fiches/1fc1f105aa.txt"
+   "url": "https://www.carsat-nordest.fr/home/partenaires/etre-partenaire-de-l-action-soci/appels-a-projets-des-partenaires/appel-a-projets-2026-conference.html",
+   "source": "carsat-nord-est-aap-des-partenaires",
+   "nom": "Carsat Nord-Est – AAP des partenaires",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/carsat-nord-est-aap-des-partenaires/fiches/55cac2f677.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets/concours-deloquence-sur-la-citoyennete-avec-lassociation-trouve-ta-voix",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/a10eee4446.txt"
+   "url": "https://www.cgss-guyane.fr/appel-a-projets",
+   "source": "caisse-generale-de-securite-sociale-cgss-guyane",
+   "nom": "Caisse générale de sécurité sociale (CGSS) - Guyane",
+   "categorie": "caisse-nationale",
+   "fichier": "decouverte/caisse-generale-de-securite-sociale-cgss-guyane/fiches/0a23ab44b4.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets/parentalite-ouverture-socio-culturelle-et-scolarite-pour-les-enfants-en-difficulte",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/49002d30c0.txt"
+   "url": "https://www.fondationaphp.fr/nos-appels-a-projets/temps-protege-recherche-en-soins/",
+   "source": "fondation-de-l-ap-hp",
+   "nom": "Fondation de l'AP-HP",
+   "categorie": "etablissement",
+   "fichier": "decouverte/fondation-de-l-ap-hp/fiches/808411e64f.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A166",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/177730effe.txt"
+   "url": "https://gircimediterranee.fr/appel-a-projet/ao-girci-valo-data-2021",
+   "source": "girci-mediterranee",
+   "nom": "GIRCI Méditerranée",
+   "categorie": "etablissement",
+   "fichier": "decouverte/girci-mediterranee/fiches/efca91fce9.txt"
   },
   {
-   "url": "https://www.yvelines.fr/mon-departement/appels-a-projets-subventions/appel-a-projets-fse-insertion-des-jeunes-acces-emploi-des-jeunes-yvelinois/",
-   "source": "conseil-departemental-yvelines",
-   "nom": "Conseil départemental Yvelines",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-yvelines/fiches/1e6e87f7fc.txt"
+   "url": "https://www.canceropole-grandouest.com/appel-projets/inca-aap-plbio-2027-projets-libres-de-recherche-biologie-et-sciences-du-cancer/",
+   "source": "canceropole-grand-ouest-appels-a-projets",
+   "nom": "Cancéropôle Grand Ouest – appels à projets",
+   "categorie": "etablissement",
+   "fichier": "decouverte/canceropole-grand-ouest-appels-a-projets/fiches/490b541d50.txt"
   },
   {
-   "url": "https://www.ladrome.fr/mon-quotidien/sports/le-sport-dans-la-drome/",
-   "source": "drome-commission-des-financeurs",
-   "nom": "Drôme – Commission des financeurs",
-   "categorie": "collectivite",
-   "fichier": "decouverte/drome-commission-des-financeurs/fiches/d50adae01c.txt"
+   "url": "https://gircimediterranee.fr/appel-a-projet/ao-paramed-girci-med-2022",
+   "source": "girci-mediterranee",
+   "nom": "GIRCI Méditerranée",
+   "categorie": "etablissement",
+   "fichier": "decouverte/girci-mediterranee/fiches/1480e4cbb8.txt"
   },
   {
-   "url": "https://www.orleans.fr/actualites?tx_news_pi1%5BoverwriteDemand%5D%5Bcategories%5D=5&cHash=7485d4459d69ab9103f864df8c397e49",
-   "source": "mairie-de-orleans",
-   "nom": "Mairie de Orléans",
-   "categorie": "collectivite",
-   "fichier": "decouverte/mairie-de-orleans/fiches/6dea761bc5.txt"
+   "url": "https://www.fondationdefrance.org/fr/appels-a-projets/etude-interactions-inter-organes",
+   "source": "fondation-de-france",
+   "nom": "Fondation de France",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-france/fiches/6035019250.txt"
   },
   {
-   "url": "https://hautesavoie.fr/rentree-des-classes-les-nouveaux-eleves-de-6e-accueillis-par-les-conseillers-departementaux/",
-   "source": "conseil-departemental-haute-savoie",
-   "nom": "Conseil départemental Haute-Savoie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-haute-savoie/fiches/a927c0b4ab.txt"
+   "url": "https://www.fondationdefrance.org/fr/appels-a-projets/appel-a-manifestation-dinteret-incendies-2026-en-france",
+   "source": "fondation-de-france",
+   "nom": "Fondation de France",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-france/fiches/66cb2a0952.txt"
   },
   {
-   "url": "https://www.valdoise.fr/annuaire/2548/294-libelle.htm",
-   "source": "conseil-departemental-val-d-oise",
-   "nom": "Conseil départemental Val-d'Oise",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-val-d-oise/fiches/731e228c08.txt"
+   "url": "https://www.fondation-arc.org/appels-a-projets/soutien-aux-manifestations-scientifiques/",
+   "source": "fondation-arc",
+   "nom": "Fondation ARC",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-arc/fiches/1299f7a767.txt"
   },
   {
-   "url": "https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/appel-a-projets-poles-touristiques-des-hautes-pyrenees/",
-   "source": "conseil-departemental-hautes-pyrenees",
-   "nom": "Conseil départemental Hautes-Pyrénées",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-hautes-pyrenees/fiches/9f39e07a7d.txt"
+   "url": "https://www.fondation-arc.org/appels-a-projets/projets-fondation-arc/",
+   "source": "fondation-arc",
+   "nom": "Fondation ARC",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-arc/fiches/61da5f98dc.txt"
   },
   {
-   "url": "https://herault.fr/aideProjet/181/321-appel-a-projets-paysages-en-mouvement-pour-une-residence-de-territoire-dans-le-geoparc-terres-d-herault-residence-artistique-en-college-2027-arts-visuels.htm",
-   "source": "conseil-departemental-herault",
-   "nom": "Conseil départemental Hérault",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-herault/fiches/232017dbbb.txt"
+   "url": "https://www.fondationdefrance.org/fr/appels-a-projets-fa/favoriser-lacces-des-femmes-aux-secteurs-des-sciences-technologies-ingenierie-et-mathematiques",
+   "source": "fondation-de-france-appels-a-projets-des-fondations-abritees",
+   "nom": "Fondation de France – appels à projets des fondations abritées",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-france-appels-a-projets-des-fondations-abritees/fiches/3b76c71d9c.txt"
   },
   {
-   "url": "https://www.laregion.fr/Recrutement-de-medecins-generalistes-pour-le-Centre-de-Sante-de-Ma-Region-a-Lacaune",
-   "source": "conseil-regional-occitanie",
-   "nom": "Conseil régional Occitanie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-occitanie/fiches/2cd1b3375a.txt"
+   "url": "https://fondations.institutdefrance.fr/appel-a-projets-solidarite-internationale-2026-fondation-coallia-stephane-hessel",
+   "source": "institut-de-france-fondations",
+   "nom": "Institut de France – fondations",
+   "categorie": "fondation",
+   "fichier": "decouverte/institut-de-france-fondations/fiches/c5b761714b.txt"
   },
   {
-   "url": "https://www.laregion.fr/Europe-en-Occitanie-39538",
-   "source": "conseil-regional-occitanie",
-   "nom": "Conseil régional Occitanie",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-occitanie/fiches/3e526ec824.txt"
+   "url": "https://www.fondationdelavenir.org/appel-projet/appel-a-prix-deux-et-trois-roues-motorises/",
+   "source": "fondation-de-l-avenir",
+   "nom": "Fondation de l'Avenir",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-l-avenir/fiches/fb81cf87b9.txt"
   },
   {
-   "url": "https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures/appel-a-projets-pdi-2027-42305",
-   "source": "conseil-departemental-gers",
-   "nom": "Conseil départemental Gers",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-gers/fiches/12834ef820.txt"
+   "url": "https://www.fondationdelavenir.org/appel-projet/traumatologie-dependance/",
+   "source": "fondation-de-l-avenir",
+   "nom": "Fondation de l'Avenir",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-l-avenir/fiches/a6341d590f.txt"
   },
   {
-   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A658",
-   "source": "region-ile-de-france-aides-et-appels-a-projets",
-   "nom": "Région Île-de-France – aides et appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/031fe34a5d.txt"
+   "url": "https://www.fondationorange.com/fr/newsroom/actualites/2026/appel-projets-apprendre-autrement-france-2026",
+   "source": "fondation-orange",
+   "nom": "Fondation Orange",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-orange/fiches/32a028d28a.txt"
   },
   {
-   "url": "https://regionreunion.com/aides-services/appels-a-projets/aides-services/appels-a-projets/article/appel-a-manifestation-d-interet-valorisation-agricole-de-la-propriete-regionale-du-grand-stella",
-   "source": "conseil-regional-la-reunion",
-   "nom": "Conseil régional La Réunion",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-regional-la-reunion/fiches/36a560e880.txt"
+   "url": "https://www.fondationdefrance.org/fr/appels-a-projets/pour-des-territoires-et-un-habitat-resilients-face-aux-crises-et-catastrophes",
+   "source": "fondation-de-france",
+   "nom": "Fondation de France",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-de-france/fiches/6ea76c9a83.txt"
   },
   {
-   "url": "https://www.paris.fr/pages/appel-a-projets-paris-solidarites-internationales-anciennement-solidev-2027-36706",
-   "source": "ville-de-paris-appels-a-projets",
-   "nom": "Ville de Paris – appels à projets",
-   "categorie": "collectivite",
-   "fichier": "decouverte/ville-de-paris-appels-a-projets/fiches/5706e20f35.txt"
+   "url": "https://www.fondation-ca-solidaritedeveloppement.org/dossier/deposer-un-dossier-aap/",
+   "source": "fondation-credit-agricole-solidarite-et-developpement",
+   "nom": "Fondation Crédit Agricole Solidarité et Développement",
+   "categorie": "fondation",
+   "fichier": "decouverte/fondation-credit-agricole-solidarite-et-developpement/fiches/ca5aad325f.txt"
   },
   {
-   "url": "https://www.somme.fr/services/loisirs-et-sports/",
-   "source": "conseil-departemental-somme",
-   "nom": "Conseil départemental Somme",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-somme/fiches/bf350539f4.txt"
+   "url": "http://www.sfdermato.org/",
+   "source": "societe-francaise-de-dermatologie",
+   "nom": "Société Française de Dermatologie",
+   "categorie": "societe-savante",
+   "fichier": "decouverte/societe-francaise-de-dermatologie/fiches/4e31e9d947.txt"
   },
   {
-   "url": "https://www.valdemarne.fr/le-conseil-departemental/appel-a-candidatures-restauration-ambulante-dans-les-parcs-departementaux",
-   "source": "conseil-departemental-val-de-marne",
-   "nom": "Conseil départemental Val-de-Marne",
-   "categorie": "collectivite",
-   "fichier": "decouverte/conseil-departemental-val-de-marne/fiches/8bfc11de15.txt"
+   "url": "https://www.sfdiabete.org/medical/vie-professionnelle/communiques-de-lansm/appel-candidatures-dexperts-novembre-2015",
+   "source": "societe-francophone-du-diabete-sfd",
+   "nom": "Société Francophone du Diabète (SFD)",
+   "categorie": "societe-savante",
+   "fichier": "decouverte/societe-francophone-du-diabete-sfd/fiches/beaa86f3ba.txt"
   }
  ]
 }

@@ -20,6 +20,7 @@ import argparse
 import json
 import random
 import sys
+import unicodedata
 from collections import Counter
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -149,22 +150,46 @@ def tirer_pages(candidats: list[dict], nombre: int, graine: int) -> list[dict]:
     return tirage
 
 
+def scores_des_liens(sources: list[dict]) -> dict[str, int]:
+    """Score de découverte de chaque lien (mots d'appel à projets dans le texte du lien ou l'adresse) ; 0 = navigation."""
+    scores: dict[str, int] = {}
+    for s in sources:
+        chemin = echantillon.DOSSIER / s["id"] / "liens.json"
+        if chemin.exists():
+            for lien in json.loads(chemin.read_text(encoding="utf-8"))["liens"]:
+                scores.setdefault(lien["href"], int(lien.get("score") or 0))
+    return scores
+
+
+def sans_accents(texte: str) -> str:
+    return unicodedata.normalize("NFKD", texte).encode("ascii", "ignore").decode().lower()
+
+
 def candidats_jamais_traites(sources: list[dict], fiches: list[dict], refus: list[dict], echecs: list[dict],
-                             exclues: set[str]) -> list[dict]:
+                             exclues: set[str], score_min: int = 0, scores: dict[str, int] | None = None,
+                             mots: list[str] | None = None) -> list[dict]:
     """Textes collectés des sources données, jamais traités par le passage local et hors des adresses exclues.
 
     Un texte est « traité » s'il figure dans les fiches, les refus ou les échecs (par fichier ou par adresse) ;
-    une adresse n'est gardée qu'une fois.
+    une adresse n'est gardée qu'une fois. score_min écarte les liens de navigation (score 0 : menus du site),
+    constat du 2026-10-14 : 18 des 50 pages du premier tirage en étaient. mots : le texte de la page doit contenir
+    au moins un de ces mots (sans accents ni majuscules), ce qui écarte menus et contrôles anti-robot sans dépendre
+    du score du lien (les titres d'appels des ARS n'ont souvent aucun mot-clé dans le lien).
     """
     traites = {_normaliser(f["scrape_metadata"]["fichier"]) for f in fiches} | {_normaliser(r["fichier"]) for r in refus} \
         | {_normaliser(e["fichier"]) for e in echecs}
     adresses_traitees = {f["url_source"] for f in fiches} | {r["url"] for r in refus}
+    mots_normalises = [sans_accents(m) for m in (mots or [])]
     candidats, vues = [], set()
     for s in sources:
         for chemin in sorted((echantillon.DOSSIER / s["id"] / "fiches").glob("*.txt")):
             rel = _normaliser(str(chemin.relative_to(echantillon.DOSSIER.parent)))
-            url = echantillon.lire_fiche(chemin)[0]
+            url, texte = echantillon.lire_fiche(chemin)
             if rel in traites or url in adresses_traitees or url in exclues or url in vues:
+                continue
+            if scores is not None and scores.get(url, 0) < score_min:
+                continue
+            if mots_normalises and not any(m in sans_accents(texte) for m in mots_normalises):
                 continue
             vues.add(url)
             candidats.append({"url": url, "source": s["id"], "nom": s["nom"], "categorie": s.get("categorie", ""), "fichier": rel})
@@ -278,16 +303,26 @@ def sortie_locale() -> Path:
     return extraction_locale.SORTIE
 
 
-def tirer(nombre: int, graine: int) -> None:
+def tirer(nombre: int, graine: int, familles: list[str] | None = None, ids: list[str] | None = None,
+          score_min: int = 0, inclure_traites: bool = False, mots: list[str] | None = None) -> None:
+    """Tirage. familles et ids restreignent les sources (second tirage du 2026-10-14 : financeurs de la santé,
+    demande de Monsieur DUCOUT) ; score_min écarte les liens de navigation ; inclure_traites ne retire pas les
+    pages déjà vues par le passage global (les deux moteurs repassent dessus à neuf de toute façon)."""
     sources = extraction_locale.rubriques()
-    fiches = echantillon._charger_liste(sortie_locale())
-    refus = echantillon._charger_liste(sortie_locale().with_name(sortie_locale().stem + "_non_aap.json"))
-    echecs = echantillon._charger_liste(sortie_locale().with_name(sortie_locale().stem + ".errors.json"))
+    if familles or ids:
+        sources = [s for s in sources if s.get("categorie") in (familles or []) or s["id"] in (ids or [])]
+    if inclure_traites:
+        fiches, refus, echecs = [], [], []
+    else:
+        fiches = echantillon._charger_liste(sortie_locale())
+        refus = echantillon._charger_liste(sortie_locale().with_name(sortie_locale().stem + "_non_aap.json"))
+        echecs = echantillon._charger_liste(sortie_locale().with_name(sortie_locale().stem + ".errors.json"))
     exclues = echantillon.adresses_echantillon(echantillon._charger_liste(echantillon.REFERENCE),
                                                echantillon._charger_liste(echantillon.NON_AAP))
-    candidats = candidats_jamais_traites(sources, fiches, refus, echecs, exclues)
+    candidats = candidats_jamais_traites(sources, fiches, refus, echecs, exclues, score_min, scores_des_liens(sources), mots)
     pages = tirer_pages(candidats, nombre, graine)
-    contenu = {"graine": graine, "nombre": len(pages), "candidats": len(candidats), "pages": pages}
+    contenu = {"graine": graine, "nombre": len(pages), "candidats": len(candidats), "familles": familles or [],
+               "ids": ids or [], "score_min": score_min, "inclure_traites": inclure_traites, "mots": mots or [], "pages": pages}
     inchange = PAGES.exists() and json.loads(PAGES.read_text(encoding="utf-8")) == contenu
     if not inchange:
         PAGES.parent.mkdir(exist_ok=True)
@@ -417,6 +452,11 @@ def main() -> int:
     parser.add_argument("--tirer", action="store_true")
     parser.add_argument("--nombre", type=int, default=NOMBRE)
     parser.add_argument("--graine", type=int, default=GRAINE)
+    parser.add_argument("--familles", help="avec --tirer : familles du registre, séparées par des virgules (ex. ars,fondation)")
+    parser.add_argument("--ids", help="avec --tirer : identifiants de sources à ajouter, séparés par des virgules")
+    parser.add_argument("--score-min", type=int, default=0, help="avec --tirer : score minimal du lien (3 = lien d'appel)")
+    parser.add_argument("--inclure-traites", action="store_true", help="avec --tirer : ne pas écarter les pages déjà vues par le passage global")
+    parser.add_argument("--mots", help="avec --tirer : mots dont l'un au moins doit figurer dans le texte de la page, séparés par des virgules")
     parser.add_argument("--extraire-local", action="store_true")
     parser.add_argument("--extraire-api", action="store_true", help="après accord écrit de Monsieur DUCOUT")
     parser.add_argument("--modele", default=extraction_locale.MODELE_DEFAUT, help="modèle de --extraire-local ou --extraire-api")
@@ -429,7 +469,9 @@ def main() -> int:
     parser.add_argument("--modele-api", default=MODELE_API_DEFAUT, help="pour --juger et --rapport")
     args = parser.parse_args()
     if args.tirer:
-        tirer(args.nombre, args.graine)
+        tirer(args.nombre, args.graine, familles=args.familles.split(",") if args.familles else None,
+              ids=args.ids.split(",") if args.ids else None, score_min=args.score_min, inclure_traites=args.inclure_traites,
+              mots=[m.strip() for m in args.mots.split(",")] if args.mots else None)
     if args.extraire_local:
         extraire_local(args.modele, args.limite)
     if args.extraire_api:
