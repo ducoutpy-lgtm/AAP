@@ -14,7 +14,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   réservé aux appels nationaux et « non-precise » sinon ; filtre Source ajouté à la recherche, filtre Financeur sur le
   nom canonique ; rapport des fiches publiées en double `scripts/doublons.py`. Essai à blanc : 149 financeurs
   distincts pour 390 fiches publiées (203 pour 420 dans la base le soir), 101 territoires « france » au lieu de 243,
-  3 non précisés. Ré-import réel en attente de l'accord de Monsieur DUCOUT. Les 10 fiches publiées classées hors
+  3 non précisés. Ré-import réel fait le 2026-10-14 à 23 h 15 sur son accord : 415 fiches publiées, 151 financeurs
+  distincts contre 201, les 18 ARS à une entrée chacune, territoire « National » 108 contre 234, 3 « non précisé »,
+  plus aucune source « extraction_locale » ; 5 groupes de fiches en double (10 fiches) listés par `scripts/doublons.py`,
+  à trancher à la main. Les 10 fiches publiées classées hors
   champ ont été repassées en brouillon (`scripts/migrer_champ.py`, sauvegarde dans `scripts/sauvegardes/`), sur sa
   décision (« oui tu les retires »).
 - Recherche des AAP (changement `filtres-recherche`, 2026-10-14 au soir) : filtres Territoire (libellés des identifiants

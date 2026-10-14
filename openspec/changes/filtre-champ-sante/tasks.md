@@ -35,9 +35,13 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
   cnsa.json : 3 ; extraction_locale.json : 811 fiches, 811 à classer, environ 270 min en local ; fondation_de_france.json :
   64 ; Essai à blanc : 916 fiches à classer ; rien n'a été écrit » ; `--moteur api` : « 0.179 euros estimés », aucun
   appel.)
-- [ ] 2.2 `champ.py --evaluer` sur les 50 pages de la comparaison (référence : verdicts « appel » et commentaires
+- [x] 2.2 `champ.py --evaluer` sur les 50 pages de la comparaison (référence : verdicts « appel » et commentaires
   « hors champ » de Monsieur DUCOUT) avec le modèle local, 0 euro. Fait quand : taux d'accord collé, désaccords
-  listés.
+  listés. (Fait le 2026-10-14 à 23 h 10 sur les 24 fiches du premier tirage, collectivités : classements du modèle local
+  (19 hors champ, 4 médico-social, 1 santé) relus par Monsieur DUCOUT, « les 24 sont justes », enregistrés dans
+  `sources/verdicts_champ.json` ; `champ.py --evaluer --fichier results/comparaison_ollama_qwen3-8b_collectivites.json` :
+  « qwen3:8b : 24 fiches comparées, 24 accords exacts, 24 accords dans / hors champ ». Le second tirage est arrêté sur
+  sa décision ; pas d'évaluation sur ses pages sans sa demande.)
 - [x] 2.3 Accord écrit de Monsieur DUCOUT sur le modèle de la classification rétroactive (local 0 euro ou
   `claude-haiku-5-5`, prix vérifiés le 2026-10-14, coût estimé collé ici), puis, si Haiku : évaluation sur les 50
   pages (0,01 euro estimé) avant les 900 fiches. Fait quand : accord collé, coût réel collé. (Accord du 2026-10-14,

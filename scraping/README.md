@@ -343,6 +343,11 @@ Le champ est écrit dans `scrape_metadata` de chaque fiche (`champ`, `champ_rais
 jamais publiée sans verdict ; le verdict « hors champ » de la validation quotidienne (touche 7) la rejette. Ne pas
 classer `results/extraction_locale.json` pendant que le passage global tourne : il réécrit ce fichier à chaque fiche.
 
+Verdicts de référence du champ : `sources/verdicts_champ.json` (adresse -> champ, relecteur, date). Le 2026-10-14,
+Monsieur DUCOUT a confirmé les 24 classements du modèle local sur le premier tirage de la comparaison (19 hors champ,
+4 médico-social, 1 santé) ; `python champ.py --evaluer --fichier results/comparaison_ollama_qwen3-8b_collectivites.json` :
+24 accords sur 24.
+
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 
 Décision de Monsieur DUCOUT : avant tout appel payant, « lentement et sûrement sur Ollama ». Le second tour corrige

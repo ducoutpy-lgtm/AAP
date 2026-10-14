@@ -546,3 +546,14 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   préfectures, fonds européens) gardent le nom lu, à rattacher à la main dans la table si besoin. Tests : scraping 86
   verts (12 nouveaux), scripts 21 verts (4 nouveaux), lint et build de l'application verts. Ré-import réel en attente
   de l'accord de Monsieur DUCOUT (tâche 2.2).
+- Accord de Monsieur DUCOUT (2026-10-14, 23 h 10) : « oui vas-y pour le ré-import, les 24 sont justes ». Ré-import réel
+  fait : avant, 410 fiches publiées, 201 financeurs distincts, 234 territoires « france », 359 fiches à la source
+  « extraction_locale » ; après, 415 publiées (5 nouvelles fiches du passage global), 151 financeurs distincts, les 18
+  ARS à une entrée chacune dans le filtre, « france » 108, « non-precise » 3, plus aucune source « extraction_locale »,
+  91 sources distinctes. Les fiches closes des cinq connecteurs, que l'import courant ne relit pas, ont reçu les mêmes
+  règles par un passage `--include-expired --source <connecteur>` (105 fiches, aucune création). Écran `/aap/search`
+  vérifié : « 415 AAP disponibles », filtre Financeur à 151 entrées, Source à 91, Territoire à 20 dont « Territoire non
+  précisé ». Rapport des doublons : 5 groupes (10 fiches), deux adresses pour un même appel (paramètres `read_more`,
+  préfixe `/fr/`, deux campagnes d'une fondation), décision fiche par fiche dans la validation quotidienne. Les 24
+  classements du premier tirage sont enregistrés comme verdicts de référence (`scraping/sources/verdicts_champ.json`) :
+  le modèle local fait 24 accords sur 24.

@@ -35,9 +35,16 @@ DUCOUT sur le plan le 2026-10-14 à 22 h 45 (« code maintenant »).
   auvergne-rhone-alpes 18, hauts-de-france 18, centre-val-de-loire 16, occitanie 16, nouvelle-aquitaine 13,
   provence-alpes-cote-d-azur 13, mayotte 12, la-reunion 10, guyane 9, martinique 8, guadeloupe 6, corse 4,
   non-precise 3 ».)
-- [ ] 2.2 Ré-import réel après accord de Monsieur DUCOUT. Fait quand : dans la base, nombre de financeurs distincts
-  et part de `non-precise` collés, avant et après. (Avant, le 2026-10-14 à 22 h 30 : 203 financeurs distincts, 243
-  territoires « france » sur 420 publiées.)
+- [x] 2.2 Ré-import réel après accord de Monsieur DUCOUT. Fait quand : dans la base, nombre de financeurs distincts
+  et part de `non-precise` collés, avant et après. (Accord du 2026-10-14 à 23 h 10 : « oui vas-y pour le ré-import ».
+  Avant, mesure de la base à 23 h : 444 documents, 410 publiées, 201 financeurs distincts, territoires « france » 234,
+  « non-precise » 0, 359 fiches publiées à la source « extraction_locale », 0 avec `sourceNom`. Import réel : « AAP lus :
+  940 | a importer : 411 », « Termine : 5 crees, 406 mis a jour ». Les 28 fiches publiées restantes sans `sourceNom`
+  étaient les fiches closes des cinq connecteurs, que l'import sans `--include-expired` ne relit pas : règles
+  réappliquées par `--include-expired --source <connecteur>` sur chacun (105 fiches, 0 créée, toutes déjà en base,
+  vérifié avant). Après : 449 documents, 415 publiées, 151 financeurs distincts, « france » 108, « non-precise » 3,
+  source « extraction_locale » 0, 91 sources distinctes, 414 fiches publiées avec `sourceNom` (la dernière vient d'un
+  fichier d'échantillon qui n'existe plus).)
 
 ## 3. Application
 
@@ -48,14 +55,23 @@ DUCOUT sur le plan le 2026-10-14 à 22 h 45 (« code maintenant »).
   dans le navigateur de la session : « 410 AAP disponibles », quatre listes (Thématique 4 options, Territoire 15,
   Financeur 202, Source 2 : « Toutes les sources », « Non précisée »), aucune erreur de console. Le choix unique
   « ARS Île-de-France » ne peut se constater qu'après le ré-import 2.2 : sur la base du soir, la liste Financeur porte
-  encore les 201 noms.)
+  encore les 201 noms. Après le ré-import, 23 h 20, écran relu : « 415 AAP disponibles », liste Financeur de 151 noms
+  dont exactement 18 entrées commençant par « ARS », une par ARS ; choix « ARS Île-de-France » : « 24 AAP disponibles » ;
+  liste Source de 91 sites ; liste Territoire de 20 valeurs dont les cinq régions d'outre-mer et « Territoire non
+  précisé » ; aucune erreur de console.)
 
 ## 4. Doublons et documentation
 
 - [x] 4.1 Rapport des doublons : groupes de fiches publiées de même titre normalisé et même financeur, avec adresses.
   Fait quand : rapport collé. (Outil `scripts/doublons.py` plutôt que `scraping/financeurs.py --doublons` : la liste
   des fiches publiées est dans la base, pas dans les fichiers ; lecture seule de la collection, fonction pure
-  `groupes_de_doublons` testée. Rapport à coller après le ré-import 2.2, sur les noms canoniques.)
+  `groupes_de_doublons` testée. Rapport du 2026-10-14 à 23 h 15, après le ré-import : « 415 fiches publiees ; 5 groupes
+  de doublons (10 fiches) » : Fondation des Hôpitaux « Bien-être des soignants, fortes chaleurs » (deux campagnes,
+  cid=73 et cid=74), MSA Beauce Coeur-de-Loire « Appel à projets jeunes » (deux adresses `read_more`), Département du
+  Rhône « CFPA Rhône 2027 » (deux chemins pour la même page), SFMU « IRU 2028 » (adresse avec et sans `/fr/`), MSA
+  Picardie « Appel à projets jeunes » (deux adresses `read_more`). Décision de Monsieur DUCOUT fiche par fiche dans la
+  validation quotidienne ; une normalisation des adresses (`read_more`, préfixe `/fr/`) est une piste pour un
+  changement ultérieur.)
 - [x] 4.2 README racine, README de l'application, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`, rapport
   de critique (section 8). Fait quand : fichiers relus. (Fait le 2026-10-14, 23 h.)
 
