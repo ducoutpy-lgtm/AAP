@@ -63,7 +63,8 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
 ## 4. Rapport et documentation
 
 - [ ] 4.1 `comparaison.py --rapport` : `scraping/COMPARAISON.md` (tableau par moteur, liste des pages, graine, date,
-  coût réel lu dans le journal). Fait quand : rapport collé dans le compte rendu.
+  coût réel lu dans le journal, compte des pages commentées « hors champ » : question de Monsieur DUCOUT du 2026-10-14,
+  section 8 du rapport de critique). Fait quand : rapport collé dans le compte rendu.
 - [ ] 4.2 Documentation : README scraping (outil et commandes), CHANGELOGs, CLAUDE.md (état d'avancement), REPRISE.md,
   section 8 du rapport de critique (résultat). Fait quand : fichiers relus.
 

@@ -240,7 +240,9 @@ def rapport_markdown(infos: dict, pages: list[dict], verdicts: dict, moteurs: li
     lignes = [f"# Comparaison de deux moteurs sur {len(pages)} pages jamais traitées", "",
               f"Changement OpenSpec `comparaison-moteurs-50-pages`. Rapport du {aujourdhui}. Tirage : graine {infos.get('graine')}, "
               f"{infos.get('candidats')} textes candidats (jamais traités par le passage local, hors échantillon), répartition "
-              f"{repartition(pages)}. Jugement de Monsieur DUCOUT : {sum(1 for p in pages if p['url'] in verdicts)} pages sur {len(pages)}.",
+              f"{repartition(pages)}. Jugement de Monsieur DUCOUT : {sum(1 for p in pages if p['url'] in verdicts)} pages sur {len(pages)} ; "
+              f"pages commentées « hors champ » (appels hors santé et médico-social, question du 2026-10-14) : "
+              f"{sum(1 for p in pages if 'hors champ' in (verdicts.get(p['url'], {}).get('commentaire') or '').lower())}.",
               "",
               "Repérage = décisions justes sur les pages jugées (fiche produite sur une page jugée « appel », refus sur une page "
               "jugée « pas un appel »). Qualité = fiches jugées justes parmi les pages jugées « appel » (page sans fiche ou fiche "

@@ -409,7 +409,26 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   (pourcentage sur 50 pages). À faire après le lot 0, dans un changement OpenSpec dédié : mêmes 50 pages pour les deux
   moteurs, verdicts de Monsieur DUCOUT par l'outil de validation, coût estimé avant tout appel (environ 0,03 euro pour
   Haiku au coût moyen constaté, 0 euro pour le modèle local) et accord écrit. Place dans les lots : à fixer par
-  Monsieur DUCOUT, hors instructions 10 à 25.
+  Monsieur DUCOUT, hors instructions 10 à 25. Plan accordé le 2026-10-14 avec une exigence : 50 pages jamais traitées
+  (changement `comparaison-moteurs-50-pages`) ; les deux moteurs ont traité les 50 pages (local 24 fiches, Haiku 20,
+  0,03 euro), jugement de Monsieur DUCOUT en cours.
+- Question de Monsieur DUCOUT pendant ce jugement (2026-10-14) : pourquoi des appels sur l'agriculture ou d'autres
+  thèmes, alors que le projet vise la santé et le médico-social ? Constat vérifié dans le code : aucune étape de la
+  chaîne ne filtre le thème au niveau de la page. La découverte note les liens avec des mots d'appel à projets
+  seulement (`decouverte.score_lien` : « appel à projets », « subvention », « aides », « bourse »...) ; la qualification
+  écarte des sources entières (88 hors santé) mais garde les collectivités, dont les pages listent toutes leurs
+  politiques ; la collecte lit tous les liens retenus ; la question fermée posée aux deux moteurs (« est-ce la fiche
+  d'un appel à projets ? », consigne version 3) ne mentionne pas le champ ; l'import écrit `sectorsTargeted =
+  ["sante", "social"]` en dur (constat P3) ; la validation quotidienne des fiches n'a pas de verdict « hors champ ».
+  Conséquence : le passage global sur les collectivités produit des fiches hors champ marquées « à vérifier », qu'il
+  n'est possible d'écarter aujourd'hui qu'en les déclarant « pas un AAP ». Pour la comparaison en cours, la question
+  jugée reste « est-ce un appel ? », conforme à la consigne des deux moteurs ; les appels hors champ sont signalés
+  par le commentaire « hors champ », compté dans le rapport. Propositions `[À VALIDER — Monsieur DUCOUT]` : (a) verdict
+  « hors champ » dans la validation quotidienne des fiches, reporté à l'import comme rejet (immédiat, 0 euro) ;
+  (b) champ `champ` (santé, médico-social, social, hors champ) décidé par une question fermée supplémentaire du moteur
+  d'extraction, stocké dans `scrape_metadata`, l'import ignorant « hors champ » (Haiku : environ 0,0002 euro par
+  page, moins de 1 euro pour les 2 395 pages ; modèle local possible) ; (c) à terme, mots du champ dès la découverte
+  des liens. Lot : à fixer par Monsieur DUCOUT, avant toute publication des fiches de collectivités.
 - Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
   Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
   publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)

@@ -90,3 +90,13 @@ def test_rapport_markdown_pourcentages_et_liste():
     assert "| Modèle local | qwen3:8b | 2 / 2 | 1 / 1 (100 %) | 1 / 1 (100 %) | 0 | 45 s | 0 euro |" in texte
     assert "| Modèle API | claude-haiku-5-5 | 1 / 2 | 1 / 1 (100 %) | 0 / 1 (0 %) | 0 | 4 s | 0.001 euros |" in texte
     assert "| 2 | Source B | [page](u1) |  | refus | - |  |" in texte
+
+
+def test_rapport_markdown_compte_les_commentaires_hors_champ():
+    pages = [{"url": "u0", "nom": "A", "categorie": "collectivite"}, {"url": "u1", "nom": "B", "categorie": "collectivite"}]
+    verdicts = {"u0": {"page": "appel", "local": "juste", "api": None, "commentaire": "Hors champ : agriculture"},
+                "u1": {"page": "appel", "local": None, "api": None, "commentaire": ""}}
+    texte = comparaison.rapport_markdown({"graine": 1, "candidats": 2}, pages, verdicts,
+                                         [("Modèle local", "local", "m", {}, 0.0, "0 euro"), ("Modèle API", "api", "h", {}, 0.0, "0 euro")],
+                                         "2026-10-14")
+    assert "question du 2026-10-14) : 1." in texte
