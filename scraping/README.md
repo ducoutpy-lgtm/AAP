@@ -343,17 +343,20 @@ python qualification.py --registre --rapport && python registre.py --tableau
 ```
 
 Correspondance : bonne page -> rubrique confirmée ; hors champ -> hors santé ; page morte -> à vérifier (à retrouver) ;
-mauvaise page avec adresse -> `url_aap` corrigée (ancienne adresse dans les notes), rubrique confirmée, source à
-redécouvrir. Les verdicts sont indexés par l'adresse de la page gardée : relancer `--appliquer-pages` après une
+mauvaise page avec adresse -> `url_validee` (avec `validee_par`, `validee_le` ; `url_aap` reste l'adresse
+d'origine, les outils lisent `registre.adresse_aap`), rubrique confirmée, source à redécouvrir. Les verdicts sont indexés par l'adresse de la page gardée : relancer `--appliquer-pages` après une
 redécouverte ne retrouve plus les sources dont la page a changé (« sans source »), ce n'est pas une erreur.
 `--garder-depart` évite que la découverte remplace la page désignée par une autre page du site qui aurait plus de liens ;
 si la page donnée n'a aucun lien d'appel repéré, la source est « aucune rubrique » et sa page sera lue à l'extraction.
 
 Monsieur DUCOUT juge lui-même, dans son navigateur, ce que les robots ont trouvé. `validation.py` est
 un petit serveur local (bibliothèque standard) ; chaque verdict est écrit immédiatement dans un
-fichier JSON de `results/`, clé = adresse, avec commentaire et date ; une relance reprend au premier
-élément non jugé. Deux raccourcis sur le bureau lancent les fichiers `validation_pages.cmd` et
-`validation_manuelle.cmd` (fermer la fenêtre noire arrête le serveur).
+fichier JSON, clé = adresse, avec commentaire et date ; une relance reprend au premier élément non jugé. Les
+verdicts sur les pages et les liens vont dans `results/` ; les verdicts sur les fiches vont dans
+`sources/verdicts_fiches.json` (versionné, lu par l'import : changement `organisation-donnees-validees`).
+Raccourcis sur le bureau : `validation_pages.cmd`, `validation_exclues.cmd`, `validation_manuelle.cmd` (liens) et
+`validation_fiches.cmd` (fiches du modèle local encore ouvertes, option `--ouvertes`, port 8789) ; fermer la
+fenêtre noire arrête le serveur.
 
 | Mode | Commande (depuis `scraping/`) | Question posée | Verdicts (touches 1 à 6) | Fichier |
 |---|---|---|---|---|

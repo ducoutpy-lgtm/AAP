@@ -145,7 +145,7 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Scraping : validation manuelle des pages et des liens | PAGES VALIDÉES ET REPORTÉES | 2026-10-13, changement `validation-manuelle-aap` : `scraping/validation.py` (modes pages / liens / fiches, raccourcis sur le bureau) ; 257 verdicts de Monsieur DUCOUT sur les pages (146 gardées + 111 exclues : 181 bonnes, 47 mauvaises avec adresse, 10 mortes, 18 hors champ) et 34 sur les liens. Changement `recherche-page-aap-par-source` : verdicts reportés au registre (`--appliquer-pages`, 242 rubriques confirmées, 18 hors santé), 50 adresses corrigées et redécouvertes (39 pages rafraîchies, 11 sans lien repéré) ; reste : 10 pages mortes à retrouver, 577 sources sans page, vérification 4.1 par Monsieur DUCOUT |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
-| Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) ; 2026-10-12 : + 6 fiches de l'échantillon (95 en base) ; l'import global ignore `echantillon_*.json` |
+| Jonction scraping -> Firestore | OK, RÈGLES DURCIES | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` ; 2026-10-12 : + 6 fiches de l'échantillon ; 2026-10-14 (changement `organisation-donnees-validees`, audit `docs/AUDIT_DONNEES_2026-10-14.md`) : identifiant = adresse de l'appel (migration faite, 341 documents : 194 publiés dont 150 « à vérifier », 147 brouillons sans date), `status` / `publishedAt` / `validation` jamais réécrits, verdicts de `scraping/sources/verdicts_fiches.json` appliqués (rejetée -> archivé, validée -> badge retiré), fiches sans date en brouillon ; l'import global ignore `echantillon_*`, `controle_*`, `validation_*`, `*_non_aap` |
 | Démo bout en bout testable | OK | 2026-10-09 : AAP scrapés visibles dans « Rechercher des AAP », procédure README section 4 ; 2026-10-13 : consultation sans compte (changement `consultation-aap-sans-compte`, règle Firestore déployée), 95 AAP visibles sur http://localhost:3000/aap/search |
 | Pièces jointes des AAP scrapés | OK (local) | 2026-10-09 : servies depuis le PC en dev (`app/public/documents`) ; Storage codé, inactif (forfait Blaze refusé pour l'instant) |
 | Méthode OpenSpec installée | OK | 2026-10-09 — 8 workflows, config projet |
@@ -209,7 +209,8 @@ Cycle (commandes slash dans Claude Code) :
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
   En cours : `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
-  `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte puis extraction en tâche de fond),
+  `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte finie, extraction en tâche de fond),
+  `organisation-donnees-validees` (2026-10-14 : tâches 1 à 4 faites, vérification 5.1 de Monsieur DUCOUT en attente),
   `validation-manuelle-aap` (outil spécifié et rejoué, vérification 2.1 de Monsieur DUCOUT en attente) ; brouillon
   `recherche-page-aap-par-source` (2026-10-13 nuit : design, specs, tasks 1.1 à 2.1 faites, verdicts reportés, 3.1 et 4.1 en attente) ; `registre-par-annuaires` (2026-10-13, décision « 664 fondations du RNF »
   prise, inventaire des familles à valider, extrait RNF produit). Specs en vigueur :

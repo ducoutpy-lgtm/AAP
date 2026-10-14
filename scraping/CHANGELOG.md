@@ -4,6 +4,16 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (organisation des données validées, 2026-10-14)
+- Registre : `url_validee`, `validee_par`, `validee_le` à côté de `url_aap` (adresse d'origine) ; `registre.adresse_aap`
+  lu par `decouverte.py`, `registre.py --verifier-pages`, `validation.py` ; 42 corrections passées migrées.
+- `validation.py` : verdicts sur les fiches dans `sources/verdicts_fiches.json` (versionné), option `--ouvertes`,
+  migration de `results/validation_manuelle.json` ; `validation_fiches.cmd` ne présente que les fiches ouvertes.
+- `echantillon.py` : `produite_le` et `version_consigne` dans `scrape_metadata` de chaque fiche.
+- Import (`scripts/import_to_firestore.py`) : identifiant dérivé de l'adresse, champs humains jamais réécrits,
+  verdicts appliqués, fiches sans date en brouillon, fichiers de verdicts et pages refusées exclus de l'import
+  global ; `scripts/migrer_identifiants.py` ; tests `scripts/tests/`.
+
 ### Ajouté (extraction locale globale, 2026-10-13 soir)
 - `extraction_locale.py` (changement `extraction-locale-globale`, décision de Monsieur DUCOUT : modèle local, zéro euro,
   fiches à vérifier) : `--collecter` (texte de chaque lien web des 242 rubriques validées, une adresse une fois,

@@ -18,6 +18,11 @@ Usage :
   python scripts/import_to_firestore.py
   python scripts/import_to_firestore.py --source fondation_de_france
   python scripts/import_to_firestore.py --include-expired   # importe aussi les AAP deja clos
+
+Regles (changement organisation-donnees-validees, 2026-10-14) : identifiant = adresse de l'appel ; sur un
+document existant, status, publishedAt et validation ne sont jamais reecrits ; les verdicts de
+scraping/sources/verdicts_fiches.json pilotent le bloc validation (rejetee -> archived, validee -> badge retire
+et champs metier proteges) ; une fiche sans date de cloture entre en brouillon, a corriger.
 """
 from __future__ import annotations
 
@@ -32,6 +37,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS_DIR = ROOT / "scraping" / "results"
 DEFAULT_KEY = ROOT / "scripts" / "serviceAccountKey.json"
+# Verdicts de Monsieur DUCOUT sur les fiches (raccourci « Validation des fiches a verifier »), cle = adresse de
+# l'appel. Fichier versionne, jamais ecrit par un outil automatique (changement organisation-donnees-validees).
+VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
+
+# Champs qu'un humain peut avoir changes dans Firestore (ecran d'administration, verdicts) : jamais reecrits
+# sur un document existant. Pourquoi une liste : l'application lit les champs a plat et les regles filtrent
+# sur status ; proteger par liste ne change pas la forme du document.
+CHAMPS_HUMAINS = ("status", "publishedAt", "validation")
+# Champs metier proteges en plus quand la fiche a ete jugee juste : une fiche validee ne bouge que par un
+# nouveau verdict humain, pas par une nouvelle proposition de l'IA.
+CHAMPS_METIER = ("title", "description", "deadline", "publicationDate", "budgetMin", "budgetMax", "budgetTotal",
+                 "eligibilityCriteria", "requiredDocuments", "structureTypeEligible", "territoriesEligible", "tags")
+# Correspondance verdict du raccourci -> statut de validation du document.
+STATUTS_VALIDATION = {"aap-juste": "validee", "aap-a-corriger": "a_corriger", "pas-un-aap": "rejetee"}
 
 # Identifiant de "financeur" pour les AAP importes automatiquement.
 # Les AAP scrapes n'appartiennent a aucun compte financeur de la plateforme.
@@ -70,6 +89,67 @@ def signature(titre: str, financeur: str, date_cloture: str | None) -> str:
     """Meme formule que scraping/orchestrator.py : import idempotent."""
     base = f"{(titre or '').strip().lower()}|{(financeur or '').strip().lower()}|{date_cloture or ''}"
     return hashlib.sha1(base.encode("utf-8")).hexdigest()[:16]
+
+
+def identifiant(url: str) -> str:
+    """Identifiant Firestore stable : derive de l'adresse de l'appel, pas du texte produit par l'IA.
+
+    Deux moteurs qui reformulent le meme appel donnent ainsi un seul document. Normalisation : domaine en
+    minuscules, fragment #... et barre finale retires.
+    """
+    u = (url or "").strip().split("#")[0].rstrip("/")
+    m = re.match(r"^(https?://[^/]+)(.*)$", u, re.I)
+    if m:
+        u = m.group(1).lower() + m.group(2)
+    return "scraped-" + hashlib.sha1(u.encode("utf-8")).hexdigest()[:16]
+
+
+def appliquer_verdict(doc: dict, verdict: dict | None) -> dict:
+    """Bloc validation et consequences du verdict humain sur un document (fonction pure)."""
+    d = dict(doc)
+    v = (verdict or {}).get("verdict")
+    statut = STATUTS_VALIDATION.get(v, "proposee")
+    d["validation"] = {"statut": statut, "commentaire": (verdict or {}).get("commentaire", ""),
+                       "date": (verdict or {}).get("date", "")}
+    if statut == "validee":
+        d["tags"] = [x for x in d.get("tags", []) if x != "a-verifier"]
+    elif statut == "rejetee":
+        d["status"] = "archived"
+    return d
+
+
+def document_a_envoyer(doc: dict, existe: bool) -> dict:
+    """Ce que l'import ecrit : tout a la creation ; sur un document existant, jamais les champs humains,
+    ni les champs metier si la fiche est validee (fonction pure)."""
+    if not existe:
+        return dict(doc)
+    proteges = set(CHAMPS_HUMAINS)
+    if doc.get("validation", {}).get("statut") == "validee":
+        proteges |= set(CHAMPS_METIER)
+    return {k: v for k, v in doc.items() if k not in proteges}
+
+
+def sans_date_en_attente(doc: dict, today: date) -> dict:
+    """Fiche sans date de cloture : brouillon invisible aux visiteurs, echeance fictive a un an, a corriger."""
+    d = dict(doc)
+    d["deadline"] = datetime(today.year + 1, today.month, today.day, tzinfo=timezone.utc)
+    d["tags"] = d.get("tags", []) + ["sans-date-cloture"]
+    d["status"] = "draft"
+    d["validation"] = {"statut": "a_corriger", "commentaire": "date de cloture absente", "date": today.isoformat()}
+    return d
+
+
+def fusionner(mapped: list[tuple[str, dict]]) -> dict[str, dict]:
+    """Un document par identifiant ; si un connecteur (API Claude) et le modele local ont produit la meme adresse,
+    la version du connecteur l'emporte (fonction pure)."""
+    uniques: dict[str, dict] = {}
+    for sig, doc in mapped:
+        actuel = uniques.get(sig)
+        local_remplace_connecteur = (actuel is not None and doc["scrapeMetadata"]["moteur"] == "ollama"
+                                     and actuel["scrapeMetadata"]["moteur"] != "ollama")
+        if not local_remplace_connecteur:
+            uniques[sig] = doc
+    return uniques
 
 
 def parse_date(value: str | None) -> datetime | None:
@@ -196,6 +276,8 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
         "scrapeMetadata": {
             "source": source_name,
             "signature": signature(titre, financeur, item.get("date_cloture")),
+            "moteur": (item.get("scrape_metadata") or {}).get("moteur") or "connecteur",
+            "modele": (item.get("scrape_metadata") or {}).get("modele") or "",
             "enveloppeGlobale": item.get("enveloppe_globale"),
             "fichiersJoints": [
                 piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
@@ -220,7 +302,10 @@ def load_results(source_filter: str | None) -> list[tuple[str, dict]]:
         # Les fichiers de l'echantillon (echantillon_*.json, controle_*.json) ne sont pas des sorties
         # de connecteur : les fiches Ollama non controlees ne doivent pas partir dans la base par un
         # import global. On ne les lit que sur demande explicite (--source echantillon_claude_code).
-        if source_filter is None and (source_name.startswith("echantillon_") or source_name.startswith("controle_")):
+        # Idem pour les verdicts humains (validation_*.json) et les pages refusees par le modele (*_non_aap.json) :
+        # ce ne sont pas des fiches. Sans ce filtre, ils etaient comptes « incomplets » (audit du 2026-10-14, M4).
+        if source_filter is None and (source_name.startswith(("echantillon_", "controle_", "validation_"))
+                                      or source_name.endswith("_non_aap")):
             continue
         if source_filter and source_name != source_filter:
             continue
@@ -238,11 +323,6 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="n'ecrit rien, affiche le resultat du mapping")
     parser.add_argument("--source", help="n'importer qu'une source (nom du fichier JSON sans extension)")
     parser.add_argument("--include-expired", action="store_true", help="importer aussi les AAP dont la cloture est passee")
-    parser.add_argument(
-        "--include-without-deadline",
-        action="store_true",
-        help="importer les AAP sans date de cloture (AAP permanents) avec une echeance fictive a +365 jours, tag 'sans-date-cloture'",
-    )
     parser.add_argument("--key", default=str(DEFAULT_KEY), help="chemin de la cle de compte de service Firebase")
     parser.add_argument("--bucket", help="bucket Storage (defaut : <project_id>.firebasestorage.app)")
     parser.add_argument(
@@ -260,8 +340,10 @@ def main() -> int:
     now = datetime.now(timezone.utc)
     today = date.today()
     raw = load_results(args.source)
+    verdicts = json.loads(VERDICTS.read_text(encoding="utf-8")) if VERDICTS.exists() else {}
     mapped: list[tuple[str, dict]] = []
-    skipped = {"incomplet": 0, "sans_date_cloture": 0, "expire": 0}
+    skipped = {"incomplet": 0, "expire": 0}
+    en_attente = 0
 
     for source_name, item in raw:
         doc = to_app_aap(item, source_name, now)
@@ -269,25 +351,25 @@ def main() -> int:
             skipped["incomplet"] += 1
             continue
         if "deadline" not in doc:
-            # Le type AAP exige une deadline : sans elle, l'affichage et le tri casseraient.
-            if not args.include_without_deadline:
-                skipped["sans_date_cloture"] += 1
-                continue
-            doc["deadline"] = datetime(today.year + 1, today.month, today.day, tzinfo=timezone.utc)
-            doc["tags"] = doc.get("tags", []) + ["sans-date-cloture"]
-        if not args.include_expired and doc["deadline"].date() < today:
+            # Le type AAP exige une deadline : sans elle, l'affichage et le tri casseraient. Decision de
+            # Monsieur DUCOUT (2026-10-14) : ces fiches entrent en brouillon, en attente de sa validation.
+            doc = sans_date_en_attente(doc, today)
+            en_attente += 1
+        elif not args.include_expired and doc["deadline"].date() < today:
             skipped["expire"] += 1
             continue
-        mapped.append((doc["scrapeMetadata"]["signature"], doc))
+        doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
+        mapped.append((identifiant(doc["externalUrl"]), doc))
 
-    # Deux sources peuvent livrer le meme AAP (ars_idf et ars_idf_local) : meme signature, donc
-    # meme document Firestore. On fusionne ici pour que les compteurs affiches correspondent au
+    # Deux sources peuvent livrer le meme AAP (ars_idf et ars_idf_local, connecteur et modele local) : meme
+    # adresse, donc meme document Firestore. On fusionne ici pour que les compteurs affiches correspondent au
     # nombre reel de documents ecrits (le dernier lu l'emporte).
-    uniques = {sig: doc for sig, doc in mapped}
+    uniques = fusionner(mapped)
     doublons = len(mapped) - len(uniques)
     mapped = list(uniques.items())
 
-    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes) | ignores : {skipped}")
+    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date en brouillon) "
+          f"| ignores : {skipped} | verdicts lus : {len(verdicts)}")
     fichiers = [e for _, d in mapped for e in d["scrapeMetadata"]["fichiersJoints"]]
     sur_disque = [e for e in fichiers if "localPath" in e]
     print(f"Pieces jointes : {len(fichiers)} | disponibles en local (scraping/downloads) : {len(sur_disque)}"
@@ -296,7 +378,8 @@ def main() -> int:
     if args.dry_run:
         for sig, doc in mapped[:10]:
             marque = " - a-verifier" if "a-verifier" in doc["tags"] else ""
-            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {doc['deadline'].date()}{marque}")
+            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {doc['deadline'].date()}{marque} "
+                  f"- {doc['status']} - validation {doc['validation']['statut']}")
         if len(mapped) > 10:
             print(f"  ... et {len(mapped) - 10} autres")
         return 0
@@ -341,14 +424,15 @@ def main() -> int:
             presents += p
         else:
             retirer_champs_internes(doc)
-        ref = col.document(f"scraped-{sig}")
+        ref = col.document(sig)  # sig = identifiant stable derive de l'adresse
         exists = ref.get().exists
         if exists:
             updated += 1
-            batch.set(ref, doc, merge=True)  # conserve views / applicationsCount existants
+            # Jamais status, publishedAt, validation (decisions humaines) ; ni les champs metier si validee.
+            batch.set(ref, document_a_envoyer(doc, True), merge=True)
         else:
             created += 1
-            batch.set(ref, {**doc, "createdAt": now, "publishedAt": now})
+            batch.set(ref, {**doc, "createdAt": now, **({"publishedAt": now} if doc["status"] == "published" else {})})
         pending += 1
         if pending >= 400:  # limite Firestore : 500 operations par batch
             batch.commit()

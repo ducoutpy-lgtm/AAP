@@ -25,10 +25,14 @@ from urllib.parse import parse_qs, urlparse
 import requests
 
 from qualification import texte_sans_balises
+from registre import adresse_aap
 
 ICI = Path(__file__).resolve().parent
 RESULTS = ICI / "results"
-SORTIE = RESULTS / "validation_manuelle.json"
+# Verdicts sur les fiches : fichier versionne dans sources/ (decision humaine, jamais ecrit par un outil automatique),
+# lu par scripts/import_to_firestore.py (changement organisation-donnees-validees). Cle = adresse de l'appel.
+SORTIE = ICI / "sources" / "verdicts_fiches.json"
+ANCIENNE_SORTIE = RESULTS / "validation_manuelle.json"
 VERDICTS = ("aap-juste", "aap-a-corriger", "pas-un-aap", "passer", "liste-d-aap", "appel-permanent",
             "bonne-page", "mauvaise-page", "page-morte", "hors-champ")  # les quatre derniers : mode « pages » (page gardée d'une source)
 ENTETES = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AAP-Sante-validation/0.1", "Accept-Language": "fr"}
@@ -137,6 +141,24 @@ def extrait_page(fiche: dict, maximum: int = 2500) -> str:
     return texte.strip()[:maximum]
 
 
+def fiches_ouvertes(fiches: list[dict], aujourdhui: str) -> list[dict]:
+    """Fiches encore ouvertes (clôture absente ou à venir) : celles que l'application affiche ou met en attente."""
+    return [f for f in fiches if not f.get("date_cloture") or f["date_cloture"] >= aujourdhui]
+
+
+def migrer_anciens_verdicts() -> None:
+    """Une fois : reprend results/validation_manuelle.json dans sources/verdicts_fiches.json sans écraser un verdict."""
+    if not ANCIENNE_SORTIE.exists():
+        return
+    anciens = json.loads(ANCIENNE_SORTIE.read_text(encoding="utf-8"))
+    verdicts = charger_verdicts()
+    repris = {u: v for u, v in anciens.items() if u not in verdicts}
+    if repris:
+        SORTIE.write_text(json.dumps({**verdicts, **repris}, ensure_ascii=False, indent=1), encoding="utf-8")
+    ANCIENNE_SORTIE.rename(ANCIENNE_SORTIE.with_suffix(".json.migre"))
+    print(f"{len(repris)} verdicts repris de {ANCIENNE_SORTIE.name} dans {SORTIE.name}", flush=True)
+
+
 def charger_verdicts() -> dict:
     return json.loads(SORTIE.read_text(encoding="utf-8")) if SORTIE.exists() else {}
 
@@ -221,9 +243,10 @@ def appliquer_verdicts_pages(verdicts: dict, resultats: dict, registre: list[dic
                     poser(sid, "a-verifier", "mauvaise page à l'écran, sans adresse" + suffixe, date)
                     bilan["a_retrouver"].append(sid)
                     continue
-                nouvelle, ancienne = urls[0], s["url_aap"]
+                nouvelle, ancienne = urls[0], adresse_aap(s)
                 if nouvelle != ancienne:
-                    s["url_aap"] = nouvelle
+                    # url_aap (origine) n'est pas touchee : la correction humaine vit dans url_validee.
+                    s["url_validee"], s["validee_par"], s["validee_le"] = nouvelle, RELECTEUR_ECRAN, date
                     autre = f" ; autre page : {urls[1]}" if len(urls) > 1 else ""
                     s["notes"] = ((s.get("notes") or "").rstrip() + f" Adresse corrigée par Monsieur DUCOUT le {date} (ancienne : {ancienne}{autre}).").strip()
                 poser(sid, "rubrique-confirmee", f"adresse donnée à l'écran : {nouvelle}", date)
@@ -321,8 +344,8 @@ def liens_des_rubriques_confirmees(source: str | None = None) -> list[dict]:
             fiches.append({"url_source": href, "titre": " ".join((lien.get("texte") or "").split()) or "(lien sans intitulé)",
                            "financeur": s["nom"], "territoire": s.get("categorie", ""),
                            "enveloppe_globale": "fichier à télécharger" if fichier else None,
-                           "scrape_metadata": {"source": s["id"], "modele": "lien repéré par la découverte", "rubrique": s["url_aap"]},
-                           "extrait": f"Rubrique d'origine : {s['url_aap']}\nIntitulé du lien : {lien.get('texte') or ''}\n"
+                           "scrape_metadata": {"source": s["id"], "modele": "lien repéré par la découverte", "rubrique": adresse_aap(s)},
+                           "extrait": f"Rubrique d'origine : {adresse_aap(s)}\nIntitulé du lien : {lien.get('texte') or ''}\n"
                                       f"Score de la découverte : {lien.get('score', '')}\n\nOuvrir la page officielle pour juger."})
     return fiches
 
@@ -422,6 +445,8 @@ def main() -> int:
     parser.add_argument("--echantillon", type=int, metavar="N",
                         help="avec --liens : première passe de N liens répartis entre les rubriques (un par rubrique à tour de rôle)")
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--ouvertes", action="store_true",
+                        help="avec --fichier : ne présenter que les fiches dont la clôture n'est pas passée ou est absente")
     parser.add_argument("--appliquer-pages", action="store_true",
                         help="reporter les verdicts du mode --pages dans sources/relecture_qualification.json et le registre, sans serveur")
     args = parser.parse_args()
@@ -445,8 +470,11 @@ def main() -> int:
             print(f"Fichier introuvable : {chemin}", file=sys.stderr)
             return 1
         fiches = json.loads(chemin.read_text(encoding="utf-8"))
+        if args.ouvertes:
+            fiches = fiches_ouvertes(fiches, datetime.now().strftime("%Y-%m-%d"))
         for f in fiches:
             f["extrait"] = extrait_page(f)
+        migrer_anciens_verdicts()
     try:
         serveur = ThreadingHTTPServer(("127.0.0.1", args.port), fabriquer_gestionnaire(fiches))
     except OSError:

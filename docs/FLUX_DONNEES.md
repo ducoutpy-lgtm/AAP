@@ -25,7 +25,7 @@ flowchart TB
         F -.->|clos ou sans date : non importé| N[Fiches en attente]
         B --> W[Application<br/>badge À vérifier]
         W -->|HUMAIN : Monsieur DUCOUT<br/>raccourci Validation des fiches| V2[Verdict par fiche<br/>juste / à corriger / pas un appel]
-        V2 -.->|À CONSTRUIRE :<br/>retour dans la base| B
+        V2 -->|import : verdict appliqué<br/>rejetée = archivé, validée = badge retiré| B
     end
     C5[5 connecteurs historiques<br/>ARS IdF, Fondation de France, CNSA, ARS Corse] -->|run.py, API Claude| B
 ```
@@ -55,9 +55,10 @@ Monsieur DUCOUT, prise à l'écran, enregistrée dans un fichier de verdicts rej
 - Validé : les pages des émetteurs (étape 2). C'est la décision prise le 2026-10-13.
 - Pas validé : les émetteurs eux-mêmes (étape 1, pris dans des annuaires de référence), les liens repérés
   (étape 2, mots-clés), et les fiches extraites (étape 3, d'où la marque « à vérifier »).
-- Chaînon manquant : le verdict de Monsieur DUCOUT sur une fiche n'est pas encore renvoyé dans la base.
-  Tant que ce retour n'existe pas, une fiche jugée juste garde son badge et une fiche jugée « pas un
-  appel » reste visible. C'est le prochain changement OpenSpec à ouvrir.
+- Retour des verdicts (fait le 2026-10-14, changement `organisation-donnees-validees`) : le verdict de
+  Monsieur DUCOUT sur une fiche (`scraping/sources/verdicts_fiches.json`) est appliqué par l'import : « pas un
+  appel » archive la fiche, « juste » retire le badge et protège les champs, « à corriger » garde le badge avec
+  le commentaire. L'import ne réécrit jamais un statut ou une validation existants.
 
 ## Chiffres au 2026-10-14, 10 h (source : `extraction_locale.py --bilan`, import à blanc)
 

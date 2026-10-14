@@ -54,3 +54,6 @@ _transfert_reprise.tgz
 
 # Pages collectees par le robot de decouverte (volumineux, regenerable)
 scraping/decouverte/
+
+# Sauvegardes Firestore avant migration (donnees, regenerables)
+scripts/sauvegardes/

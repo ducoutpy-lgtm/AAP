@@ -155,6 +155,14 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   étiquette `a-verifier`, badge « À vérifier » dans l'application. 2 395 adresses web uniques ; 25 à 40 heures de
   calcul prévues par nuits, reprise automatique ; import par lots. Avancement : `extraction_locale.py --bilan`.
 
+- **Organisation des données validées** (2026-10-14, changement `organisation-donnees-validees`, après l'audit
+  `docs/AUDIT_DONNEES_2026-10-14.md` et le schéma `docs/FLUX_DONNEES.md`). Décisions de Monsieur DUCOUT : « pas un
+  appel » = archivé ; identifiant changé maintenant ; fiches sans date en attente. Fait : import protégé (identifiant
+  = adresse, `status` / `validation` jamais réécrits, verdicts de `sources/verdicts_fiches.json` appliqués), registre
+  avec `url_validee`, raccourci « Validation des fiches à vérifier » (fiches ouvertes), migration de la base
+  (341 documents : 194 publiés, 147 brouillons). Reste : vérification 5.1 par Monsieur DUCOUT ; verdicts sur les
+  pages rattachés à l'identifiant de l'émetteur (problème I3 de l'audit), rangement de `results/` (M4).
+
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
 "Lis REPRISE.md. Donne-moi le bilan de mes verdicts dans results/validation_pages.json et results/validation_liens.json

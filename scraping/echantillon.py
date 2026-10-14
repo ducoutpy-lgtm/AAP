@@ -105,6 +105,10 @@ SCHEMA_FICHE = {
                  "pieces_attendues", "territoire", "categories_etablissement"],
 }
 
+# Numero de version de la consigne d'extraction : a incrementer a chaque modification de CONSIGNE ou de
+# CONSIGNE_EST_AAP, pour savoir avec quelle consigne une fiche a ete produite (audit du 2026-10-14, M1).
+VERSION_CONSIGNE = 3  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee
+
 CONSIGNE = (
     "Tu extrais les informations d'un appel à projets français du secteur santé ou médico-social "
     "à partir du texte d'une page web. Réponds uniquement par le JSON demandé. Dates au format "
@@ -428,7 +432,9 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
         duree = round(time.time() - t0, 1)
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": moteur, "modele": modele, "duree_s": duree,
-                                "fichier": rel, "a_relire": a_relire, "ecarts": ecarts, **(metadonnees or {})}
+                                "fichier": rel, "a_relire": a_relire, "ecarts": ecarts,
+                                "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"), "version_consigne": VERSION_CONSIGNE,
+                                **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend

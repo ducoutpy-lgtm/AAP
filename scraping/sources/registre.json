@@ -860,7 +860,7 @@
     "id": "firah",
     "nom": "FIRAH",
     "categorie": "fondation",
-    "url_aap": "https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/",
+    "url_aap": "https://www.firah.org/appels-a-projets.html",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -877,7 +877,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "fondation-caisse-d-epargne-hauts-de-france",
@@ -963,7 +966,7 @@
     "id": "fondation-maladies-rares",
     "nom": "Fondation Maladies Rares",
     "categorie": "fondation",
-    "url_aap": "https://fondation-maladiesrares.org/le-financement-des-projets-scientifiques/",
+    "url_aap": "https://fondation-maladiesrares.org/appels-a-projets/",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -980,7 +983,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://fondation-maladiesrares.org/le-financement-des-projets-scientifiques/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "fondation-fondamental",
@@ -1618,7 +1624,7 @@
     "id": "inserm",
     "nom": "Inserm",
     "categorie": "agence-nationale",
-    "url_aap": "https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets",
+    "url_aap": "https://pro.inserm.fr",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -1635,7 +1641,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "anses-programme-pnr-est",
@@ -1664,7 +1673,7 @@
     "id": "ansm",
     "nom": "ANSM",
     "categorie": "agence-nationale",
-    "url_aap": "https://ansm.sante.fr/vos-demarches/industriel/projet-longue-vie-aux-medicaments-sur-laugmentation-de-la-duree-de-conservation-des-medicaments",
+    "url_aap": "https://ansm.sante.fr/",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -1681,7 +1690,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://ansm.sante.fr/vos-demarches/industriel/projet-longue-vie-aux-medicaments-sur-laugmentation-de-la-duree-de-conservation-des-medicaments",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "etablissement-francais-du-sang-efs",
@@ -1927,7 +1939,7 @@
     "id": "anact",
     "nom": "ANACT",
     "categorie": "agence-nationale",
-    "url_aap": "https://www.anact.fr/realisations-et-projets?f%5B0%5D=realisation_advance%3A302",
+    "url_aap": "https://www.anact.fr/mots-cles/appel-projets",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -1944,7 +1956,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.anact.fr/realisations-et-projets?f%5B0%5D=realisation_advance%3A302",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "inrs",
@@ -2240,7 +2255,7 @@
     "id": "fondation-alzheimer",
     "nom": "Fondation Alzheimer",
     "categorie": "fondation",
-    "url_aap": "https://www.fondation-alzheimer.org/je-suis-chercheur/financement-de-projets/",
+    "url_aap": "https://fondation-alzheimer.org/appels-a-projets/",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -2257,7 +2272,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.fondation-alzheimer.org/je-suis-chercheur/financement-de-projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "france-alzheimer",
@@ -2490,7 +2508,7 @@
     "id": "institut-de-france-fondations",
     "nom": "Institut de France – fondations",
     "categorie": "fondation",
-    "url_aap": "https://fondations.institutdefrance.fr/index.php",
+    "url_aap": "https://www.institutdefrance.fr/vous-avez-un-projet-une-de-nos-fondations-peut-le-soutenir/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -2507,7 +2525,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://fondations.institutdefrance.fr/index.php",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "societe-francaise-de-medecine-d-urgence-sfmu",
@@ -2672,7 +2693,7 @@
     "id": "societe-francaise-de-dermatologie",
     "nom": "Société Française de Dermatologie",
     "categorie": "societe-savante",
-    "url_aap": "https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd",
+    "url_aap": "https://www.sfdermato.org/bourses-et-appels-d-offres/appels-a-projets-et-bourses-sfd.html",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -2689,7 +2710,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "societe-francophone-de-nephrologie-dialyse-et-transplantation-sfndt",
@@ -2814,7 +2838,7 @@
     "id": "plateforme-nationale-pour-la-recherche-sur-la-fin-de-vie",
     "nom": "Plateforme nationale pour la recherche sur la fin de vie",
     "categorie": "societe-savante",
-    "url_aap": "https://www.plateforme-recherche-findevie.fr/projets-recherche",
+    "url_aap": "https://www.plateforme-recherche-findevie.fr/articles",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -2831,7 +2855,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.plateforme-recherche-findevie.fr/projets-recherche",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "fondation-de-l-ap-hp",
@@ -3149,7 +3176,7 @@
     "id": "montpellier-mediterranee-metropole-contrat-de-ville",
     "nom": "Montpellier Méditerranée Métropole – contrat de ville",
     "categorie": "collectivite",
-    "url_aap": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "url_aap": "https://contratdeville.montpellier3m.fr/appel-a-projets",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -3166,13 +3193,16 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "ville-de-montpellier-appels-a-projets",
     "nom": "Ville de Montpellier – appels à projets",
     "categorie": "collectivite",
-    "url_aap": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "url_aap": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-projets-en-cours",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -3189,7 +3219,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "bordeaux-metropole-appels-a-projets",
@@ -3565,7 +3598,7 @@
     "id": "conseil-departemental-oise",
     "nom": "Conseil départemental Oise",
     "categorie": "collectivite",
-    "url_aap": "https://oise.fr/information/portail-des-aides-et-subventions-du-conseil-departemental-de-loise",
+    "url_aap": "https://www.oise.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "identifiee",
     "connecteur": "",
@@ -3582,7 +3615,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://oise.fr/information/portail-des-aides-et-subventions-du-conseil-departemental-de-loise",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-var",
@@ -3850,7 +3886,7 @@
     "id": "conseil-departemental-lot",
     "nom": "Conseil départemental Lot",
     "categorie": "collectivite",
-    "url_aap": "https://www.lot.fr/appels-projets",
+    "url_aap": "https://www.lot.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -3867,7 +3903,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.lot.fr/appels-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-indre",
@@ -3975,7 +4014,7 @@
     "id": "conseil-departemental-yonne",
     "nom": "Conseil départemental Yonne",
     "categorie": "collectivite",
-    "url_aap": "https://www.yonne.fr/mon-departement/les-appels-et-dispositifs-en-cours/",
+    "url_aap": "https://www.yonne.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -3992,7 +4031,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.yonne.fr/mon-departement/les-appels-et-dispositifs-en-cours/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-meuse",
@@ -4078,7 +4120,7 @@
     "id": "conseil-departemental-tarn-et-garonne",
     "nom": "Conseil départemental Tarn-et-Garonne",
     "categorie": "collectivite",
-    "url_aap": "https://www.tarn-et-garonne.gouv.fr/Publications/Appels-a-projets/2026",
+    "url_aap": "https://www.tarnetgaronne.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -4095,7 +4137,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.tarn-et-garonne.gouv.fr/Publications/Appels-a-projets/2026",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-hautes-alpes",
@@ -4272,7 +4317,7 @@
     "id": "conseil-departemental-haute-savoie",
     "nom": "Conseil départemental Haute-Savoie",
     "categorie": "collectivite",
-    "url_aap": "https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/appels-a-projets/",
+    "url_aap": "https://www.hautesavoie.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -4289,7 +4334,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/appels-a-projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-haute-saone",
@@ -4312,7 +4360,7 @@
     "id": "conseil-territorial-de-saint-pierre-et-miquelon",
     "nom": "Conseil territorial de Saint-Pierre-et-Miquelon",
     "categorie": "collectivite",
-    "url_aap": "https://www.vivre-a-spm.fr/travailler-et-entreprendre/les-appels-a-projet/",
+    "url_aap": "http://www.spm-ct975.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -4329,7 +4377,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.vivre-a-spm.fr/travailler-et-entreprendre/les-appels-a-projet/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "gouvernement-de-la-polynesie-francaise",
@@ -4472,7 +4523,7 @@
     "id": "conseil-departemental-correze",
     "nom": "Conseil départemental Corrèze",
     "categorie": "collectivite",
-    "url_aap": "https://www.correze.fr/le-departement/les-appels-projets",
+    "url_aap": "https://www.correze.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -4489,7 +4540,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.correze.fr/le-departement/les-appels-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-maine-et-loire",
@@ -4888,7 +4942,7 @@
     "id": "conseil-departemental-mayotte",
     "nom": "Conseil départemental Mayotte",
     "categorie": "collectivite",
-    "url_aap": "https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026",
+    "url_aap": "https://www.cg976.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "identifiee",
     "connecteur": "",
@@ -4905,7 +4959,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-ain",
@@ -4968,7 +5025,7 @@
     "id": "conseil-departemental-yvelines",
     "nom": "Conseil départemental Yvelines",
     "categorie": "collectivite",
-    "url_aap": "https://www.yvelines.fr/appels-a-projets-subventions/#aap",
+    "url_aap": "https://www.yvelines.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -4985,7 +5042,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.yvelines.fr/appels-a-projets-subventions/#aap",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-indre-et-loire",
@@ -5008,7 +5068,7 @@
     "id": "conseil-departemental-tarn",
     "nom": "Conseil départemental Tarn",
     "categorie": "collectivite",
-    "url_aap": "https://www.tarn.fr/actualites/appel-a-projets-fse-osh-2026-2027",
+    "url_aap": "https://www.tarn.fr/accueil",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5025,7 +5085,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.tarn.fr/actualites/appel-a-projets-fse-osh-2026-2027",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-vienne",
@@ -5071,7 +5134,7 @@
     "id": "conseil-departemental-essonne",
     "nom": "Conseil départemental Essonne",
     "categorie": "collectivite",
-    "url_aap": "https://www.essonne.gouv.fr/Media/Fichiers/PUBLICATIONS/Autres-publications/Appels-a-projet",
+    "url_aap": "https://www.essonne.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5088,7 +5151,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.essonne.gouv.fr/Media/Fichiers/PUBLICATIONS/Autres-publications/Appels-a-projet",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-departemental-alpes-de-haute-provence",
@@ -5316,7 +5382,7 @@
     "id": "conseil-regional-guadeloupe",
     "nom": "Conseil régional Guadeloupe",
     "categorie": "collectivite",
-    "url_aap": "https://www.guadeloupe.gouv.fr/Publications/Appels-a-projets",
+    "url_aap": "https://www.regionguadeloupe.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5333,7 +5399,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.guadeloupe.gouv.fr/Publications/Appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-regional-grand-est",
@@ -5407,7 +5476,7 @@
     "id": "conseil-regional-la-reunion",
     "nom": "Conseil régional La Réunion",
     "categorie": "collectivite",
-    "url_aap": "https://regionreunion.com/aides-services/appels-a-projets/",
+    "url_aap": "https://regionreunion.com/",
     "perimetre": "sante-et-medico-social",
     "statut": "identifiee",
     "connecteur": "",
@@ -5424,7 +5493,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://regionreunion.com/aides-services/appels-a-projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-regional-hauts-de-france",
@@ -5464,7 +5536,7 @@
     "id": "conseil-regional-centre-val-de-loire",
     "nom": "Conseil régional Centre-Val de Loire",
     "categorie": "collectivite",
-    "url_aap": "https://www.centre-valdeloire.fr/appels-projet",
+    "url_aap": "https://www.centre-valdeloire.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5481,13 +5553,16 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.centre-valdeloire.fr/appels-projet",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "collectivite-territoriale-de-guyane",
     "nom": "Collectivité territoriale de Guyane",
     "categorie": "collectivite",
-    "url_aap": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024",
+    "url_aap": "https://www.ctguyane.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5504,7 +5579,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "conseil-regional-normandie",
@@ -5618,7 +5696,7 @@
     "id": "mairie-de-montpellier",
     "nom": "Mairie de Montpellier",
     "categorie": "collectivite",
-    "url_aap": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "url_aap": "https://www.montpellier.fr",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5635,7 +5713,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mairie-de-strasbourg",
@@ -5727,7 +5808,7 @@
     "id": "mairie-de-reims",
     "nom": "Mairie de Reims",
     "categorie": "collectivite",
-    "url_aap": "https://www.grandreims.fr/reimsbusiness/appels-a-projets",
+    "url_aap": "https://www.reims.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5744,7 +5825,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.grandreims.fr/reimsbusiness/appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mairie-de-saint-etienne",
@@ -5875,7 +5959,7 @@
     "id": "mairie-de-villeurbanne",
     "nom": "Mairie de Villeurbanne",
     "categorie": "collectivite",
-    "url_aap": "https://www.villeurbanne.fr/mon-quotidien/mon-emploi-mon-entreprise/appel-a-projets-a-candidature",
+    "url_aap": "https://www.villeurbanne.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -5892,7 +5976,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.villeurbanne.fr/mon-quotidien/mon-emploi-mon-entreprise/appel-a-projets-a-candidature",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mairie-de-clermont-ferrand",
@@ -6638,7 +6725,7 @@
     "id": "caisse-generale-de-securite-sociale-cgss-guyane",
     "nom": "Caisse générale de sécurité sociale (CGSS) - Guyane",
     "categorie": "caisse-nationale",
-    "url_aap": "https://www.cgss-guyane.fr//appel-a-projets/",
+    "url_aap": "https://www.cgss-guyane.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -6655,7 +6742,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.cgss-guyane.fr//appel-a-projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont",
@@ -7088,7 +7178,7 @@
     "id": "mutualite-sociale-agricole-msa-grand-est-accueil-de-sarrebourg",
     "nom": "Mutualité sociale agricole (MSA) Grand Est - accueil de Sarrebourg",
     "categorie": "caisse-nationale",
-    "url_aap": "https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+    "url_aap": "https://lorraine.msa.fr/lfp",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7105,7 +7195,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mutualite-sociale-agricole-msa-mayenne-orne-sarthe-accueil-d-alencon",
@@ -7344,7 +7437,7 @@
     "id": "mutualite-sociale-agricole-msa-meurthe-et-moselle-accueil-de-vanduvre-les-nancy",
     "nom": "Mutualité sociale agricole (MSA) - Meurthe-et-Moselle - accueil de Vandœuvre-lès-Nancy",
     "categorie": "caisse-nationale",
-    "url_aap": "https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+    "url_aap": "http://www.msalorraine.fr",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7361,7 +7454,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "mutualite-sociale-agricole-msa-normandie-accueil-d-evreux",
@@ -7418,7 +7514,7 @@
     "id": "prefecture-vaucluse",
     "nom": "Préfecture - Vaucluse",
     "categorie": "ministere",
-    "url_aap": "https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402/appels-a-projets.html",
+    "url_aap": "https://www.vaucluse.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7435,7 +7531,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402/appels-a-projets.html",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "prefecture-cote-d-or",
@@ -7487,7 +7586,7 @@
     "id": "prefecture-morbihan",
     "nom": "Préfecture - Morbihan",
     "categorie": "ministere",
-    "url_aap": "https://www.morbihan.fr/le-conseil-departemental/appels-a-projets",
+    "url_aap": "https://www.morbihan.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7504,13 +7603,16 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.morbihan.fr/le-conseil-departemental/appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "prefecture-cantal",
     "nom": "Préfecture - Cantal",
     "categorie": "ministere",
-    "url_aap": "https://www.cantal.fr/le-conseil-departemental/les-appels-a-projets/",
+    "url_aap": "https://www.cantal.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7527,7 +7629,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.cantal.fr/le-conseil-departemental/les-appels-a-projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "prefecture-manche",
@@ -7682,7 +7787,7 @@
     "id": "prefecture-rhone",
     "nom": "Préfecture - Rhône",
     "categorie": "ministere",
-    "url_aap": "https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets",
+    "url_aap": "https://www.rhone.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -7699,7 +7804,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "prefecture-jura",
@@ -9355,7 +9463,7 @@
     "id": "direction-regionale-et-interdepartementale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-drieets-unite-departementale-de-paris",
     "nom": "Direction régionale et interdépartementale de l'économie, de l'emploi, du travail et des solidarités (DRIEETS) - Unité départementale de Paris",
     "categorie": "ministere",
-    "url_aap": "https://idf.drieets.gouv.fr/Appels-a-projets-appels-d-offres",
+    "url_aap": "https://idf.drieets.gouv.fr/Paris",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -9372,7 +9480,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://idf.drieets.gouv.fr/Appels-a-projets-appels-d-offres",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-isere",
@@ -11484,7 +11595,7 @@
     "id": "federation-addiction",
     "nom": "Fédération Addiction",
     "categorie": "autre",
-    "url_aap": "https://www.federationaddiction.fr/actualites/projets/",
+    "url_aap": "https://www.federationaddiction.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -11501,7 +11612,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.federationaddiction.fr/actualites/projets/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "synerpa",
@@ -11887,7 +12001,7 @@
     "id": "admical",
     "nom": "Admical",
     "categorie": "autre",
-    "url_aap": "https://admical.org/categories-articles/les-appels-projets",
+    "url_aap": "https://admical.org/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -11904,13 +12018,16 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://admical.org/categories-articles/les-appels-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "avise",
     "nom": "Avise",
     "categorie": "autre",
-    "url_aap": "https://www.avise.org/actualites",
+    "url_aap": "https://www.avise.org/",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -11927,7 +12044,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://www.avise.org/actualites",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "demarches-simplifiees-plateforme-de-depot",
@@ -15226,7 +15346,7 @@
     "id": "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-occitanie",
     "nom": "Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Occitanie",
     "categorie": "ministere",
-    "url_aap": "https://occitanie.dreets.gouv.fr/Appels-a-projets",
+    "url_aap": "https://occitanie.dreets.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -15243,13 +15363,16 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://occitanie.dreets.gouv.fr/Appels-a-projets",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-hauts-de-france",
     "nom": "Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Hauts-de-France",
     "categorie": "ministere",
-    "url_aap": "https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS",
+    "url_aap": "https://hauts-de-france.dreets.gouv.fr/",
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -15266,7 +15389,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-13"
   },
   {
     "id": "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-centre-val-de-loire",

@@ -105,7 +105,9 @@ def test_appliquer_verdicts_pages_correspondance_et_adresse():
     assert relecture["bpi"]["relecture_precedente"]["motif"] == "relu sur texte"  # relecture antérieure conservée
     assert relecture["bpi"]["date"] == "2026-10-13"
     inserm = next(s for s in registre if s["id"] == "inserm")
-    assert inserm["url_aap"] == "https://pro.inserm.fr/agenda"
+    # l'adresse d'origine reste, la correction humaine vit dans url_validee (organisation-donnees-validees)
+    assert inserm["url_aap"] == "https://www.inserm.fr/" and inserm["url_validee"] == "https://pro.inserm.fr/agenda"
+    assert inserm["validee_par"] == validation.RELECTEUR_ECRAN and inserm["validee_le"] == "2026-10-13"
     assert "ancienne : https://www.inserm.fr/" in inserm["notes"] and "autre page : https://autre.fr/" in inserm["notes"]
     assert relecture["inserm"]["verdict"] == "rubrique-confirmee"
     assert bilan["corrigees"] == [("inserm", "https://www.inserm.fr/", "https://pro.inserm.fr/agenda")]

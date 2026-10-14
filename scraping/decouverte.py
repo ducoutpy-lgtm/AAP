@@ -30,6 +30,7 @@ from utils import accept_cookies, ensure_utf8_stdout, make_browser_context, utc_
 
 ICI = Path(__file__).resolve().parent
 REGISTRE = ICI / "sources" / "registre.json"
+from registre import adresse_aap  # noqa: E402  (adresse validee a l'ecran, sinon adresse d'origine)
 DOSSIER = ICI / "decouverte"
 RESULTATS = DOSSIER / "resultats.json"
 RAPPORT = ICI / "DECOUVERTE.md"
@@ -191,7 +192,7 @@ async def ouvrir(page, url: str) -> tuple[int | None, str | None]:
 
 
 async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, garder_depart: bool = False) -> dict:
-    resultat = {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": source["url_aap"],
+    resultat = {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": adresse_aap(source),
                 "statut": "erreur", "url_rubrique": None, "nb_liens_aap": 0, "candidats_visites": [], "erreur": None,
                 "date": utc_now_iso()}
     async with semaphore:
@@ -199,7 +200,7 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, ga
         await contexte.route("**/*", lambda route: route.abort() if route.request.resource_type in ("image", "media", "font") else route.continue_())
         page = await contexte.new_page()
         try:
-            code, erreur = await ouvrir(page, source["url_aap"])
+            code, erreur = await ouvrir(page, adresse_aap(source))
             if erreur or code is None or code >= 400:
                 resultat["statut"] = "bloque" if code in (401, 403, 429, 503) else "erreur"
                 resultat["erreur"] = erreur or f"HTTP {code}"
@@ -241,7 +242,7 @@ async def avec_delai_maximal(browser, source: dict, semaphore: asyncio.Semaphore
     try:
         return await asyncio.wait_for(traiter_source(browser, source, semaphore, garder_depart), timeout=maximum)
     except asyncio.TimeoutError:
-        return {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": source["url_aap"],
+        return {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": adresse_aap(source),
                 "statut": "erreur", "url_rubrique": None, "nb_liens_aap": 0, "candidats_visites": [],
                 "erreur": f"délai maximal de {int(maximum)} s dépassé", "date": utc_now_iso()}
 

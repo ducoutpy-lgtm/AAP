@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié
+- Organisation des données validées (changement `organisation-donnees-validees`, 2026-10-14, suite à
+  `docs/AUDIT_DONNEES_2026-10-14.md`) : identifiant Firestore dérivé de l'adresse de l'appel (341 documents
+  migrés), décisions humaines (`status`, `validation`) jamais réécrites par l'import, verdicts de
+  `scraping/sources/verdicts_fiches.json` appliqués, fiches sans date en brouillon, adresse validée distincte
+  de l'adresse d'origine dans le registre. Schéma des flux : `docs/FLUX_DONNEES.md`.
+
 ### Ajouté
 - Extraction locale globale (changement `extraction-locale-globale`, 2026-10-13 soir) : `scraping/extraction_locale.py`
   extrait avec `qwen3:8b` les pages des 242 rubriques validées (2 395 adresses web uniques), fiches marquées

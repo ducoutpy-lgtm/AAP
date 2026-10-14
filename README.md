@@ -58,9 +58,16 @@ python -m venv .venv                       # environnement Python à la racine (
 .venv\Scripts\python scripts/import_to_firestore.py               # écrit dans la collection Firestore "aap"
 ```
 
-Options utiles : `--include-expired` (AAP dont la clôture est passée) et `--include-without-deadline`
-(AAP sans date, échéance fictive à un an, étiquette `sans-date-cloture`). Sans ces options, seuls les
-AAP encore ouverts sont importés. L'import est rejouable : un second passage met à jour sans dupliquer.
+Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
+sont importés ; une fiche sans date de clôture entre en brouillon (`status: draft`, échéance fictive à un an,
+étiquette `sans-date-cloture`, validation « à corriger »), invisible sans compte, en attente de Monsieur DUCOUT.
+L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
+`organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
+seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits
+(un AAP archivé dans l'administration reste archivé) ; les verdicts de `scraping/sources/verdicts_fiches.json`
+pilotent le bloc `validation` (« pas un AAP » -> archivé, « AAP juste » -> badge « À vérifier » retiré et champs
+métier protégés, « à corriger » -> badge gardé avec le commentaire). Migration des identifiants :
+`scripts/migrer_identifiants.py` (sauvegarde dans `scripts/sauvegardes/`, hors Git).
 
 Pourquoi `grpcio` est fixé en 1.74.0 dans `scripts/requirements.txt` : les versions plus récentes sont
 bloquées par Smart App Control de Windows (constaté le 2026-10-09).
@@ -72,7 +79,7 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
 1. Index et règles Firestore (une fois, nécessite votre compte Google) : depuis `app/`,
    `npm install -g firebase-tools`, `firebase login`, puis
    `firebase deploy --only firestore:rules,firestore:indexes --project aapi-11bc3`.
-2. Import avec les deux options : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired --include-without-deadline`
+2. Import avec l'option : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired`
    (105 AAP lus, 89 documents distincts : les doublons entre sources sont fusionnés).
 3. `cd app && npm run dev`, puis http://localhost:3000 : depuis le 2026-10-13 (changement
    `consultation-aap-sans-compte`), la consultation des AAP ne demande aucun compte : lien « Voir les appels

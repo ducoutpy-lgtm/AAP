@@ -28,6 +28,14 @@ TABLEAU = ICI / "REGISTRE_SOURCES.md"
 
 CHAMPS = ("id", "nom", "categorie", "url_aap", "perimetre", "statut", "connecteur", "notes",
           "derniere_verification", "code_http")
+# Champs facultatifs de l'adresse validee a l'ecran (changement organisation-donnees-validees) : url_aap reste
+# l'adresse d'origine, url_validee celle donnee par Monsieur DUCOUT ; seul validation.py --appliquer-pages l'ecrit.
+CHAMPS_VALIDATION = ("url_validee", "validee_par", "validee_le")
+
+
+def adresse_aap(source: dict) -> str:
+    """Adresse de travail d'une source : celle validee par un humain si elle existe, sinon l'adresse d'origine."""
+    return source.get("url_validee") or source["url_aap"]
 CATEGORIES = ("ars", "ministere", "caisse-nationale", "agence-nationale", "fondation", "europe",
               "collectivite", "societe-savante", "etablissement", "centrale-achat", "autre")
 PERIMETRES = ("sante", "medico-social", "sante-et-medico-social")
@@ -87,6 +95,8 @@ def erreurs_format(sources: list[dict]) -> list[str]:
             erreurs.append(f"{ref} : statut inconnu « {s['statut']} »")
         if s.get("url_aap") and not str(s["url_aap"]).startswith("http"):
             erreurs.append(f"{ref} : url_aap n'est pas une adresse http(s)")
+        if s.get("url_validee") and not str(s["url_validee"]).startswith("http"):
+            erreurs.append(f"{ref} : url_validee n'est pas une adresse http(s)")
         if s.get("id") in ids:
             erreurs.append(f"{ref} : identifiant en double")
         ids.add(s.get("id"))
@@ -109,7 +119,7 @@ def verifier_pages(sources: list[dict], aujourdhui: str, pause: float = 1.0, son
     """Controle chaque page, met a jour le registre et retourne les sources en erreur."""
     en_erreur: list[dict] = []
     for s in sources:
-        code = sonde(s["url_aap"])
+        code = sonde(adresse_aap(s))
         s["code_http"] = code
         s["derniere_verification"] = aujourdhui
         if code == 200:
@@ -173,7 +183,7 @@ def tableau(sources: list[dict], aujourdhui: str) -> str:
             controle = f"{s['derniere_verification']} ({s['code_http']})" if s.get("derniere_verification") else ""
             qualification = (s.get("qualification") or {}).get("verdict", "")
             lignes.append(f"| {s['nom']} | {s['perimetre']} | {LIBELLES_STATUTS[s['statut']]} | {qualification} | "
-                          f"{s.get('connecteur') or ''} | [page]({s['url_aap']}) | {controle} | {s.get('notes', '')} |")
+                          f"{s.get('connecteur') or ''} | [page]({adresse_aap(s)}) | {controle} | {s.get('notes', '')} |")
         lignes.append("")
     return "\n".join(lignes)
 
@@ -207,7 +217,7 @@ def main() -> int:
         if en_erreur:
             print("À revoir :")
             for s in en_erreur:
-                print(f"  - {s['nom']} ({s['code_http'] or 'sans réponse'}) : {s['url_aap']}")
+                print(f"  - {s['nom']} ({s['code_http'] or 'sans réponse'}) : {adresse_aap(s)}")
 
     if args.tableau:
         TABLEAU.write_text(tableau(sources, aujourdhui), encoding="utf-8")
