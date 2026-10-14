@@ -238,8 +238,13 @@ AAP/
 publique des AAP (`/aap/search`, `/aap/:aapId`), connexion (`/login`) et administration (`/admin`, `/admin/aaps`,
 `/admin/utilisateurs`). Les autres modules ci-dessous sont gelés jusqu'au lot 4 : routes retirées de `src/App.tsx`,
 code conservé sans modification, inscription fermée (`/signup` affiche la page 404). Une fiche sans date de clôture
-affiche « Date de clôture non précisée », se classe après les fiches datées et ne peut être publiée depuis
-l'administration qu'après un verdict humain (`validation.statut`).
+affiche « Date de clôture non précisée » et se classe après les fiches datées ; depuis le 2026-10-14 au soir (décision
+de Monsieur DUCOUT) l'import la publie directement avec le badge « À vérifier ».
+
+**Filtres de la recherche** (changement `filtres-recherche`, 2026-10-14 au soir) : Territoire (identifiants écrits par
+l'import, affichés avec leur libellé, `src/utils/territoires.ts`), Thématique (champ classé par le modèle :
+`scrapeMetadata.champ`, « Santé », « Médico-social », « Non classée » tant que la fiche n'est pas classée) et Financeur,
+construits à partir des fiches chargées ; le filtre budget n'écarte pas les fiches sans montant connu.
 
 ### Pour les Porteurs de Projets
 

@@ -19,8 +19,8 @@ Règle « Preuve avant affirmation » : chaque tâche cochée avec sa preuve. Au
 
 ## 2. Documentation
 
-- [ ] 2.1 README de l'application, CHANGELOG, CLAUDE.md (démo), rapport de critique (section 8 : constat des filtres
-  traité). Fait quand : fichiers relus.
+- [x] 2.1 README de l'application, CHANGELOG, CLAUDE.md (démo), rapport de critique (section 8 : constat des filtres
+  traité). Fait quand : fichiers relus. (Fait le 2026-10-14, 22 h.)
 
 ## 3. Vérification
 
