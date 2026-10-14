@@ -491,6 +491,16 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   fiche enregistrée. (3) Accord pour classer les 916 fiches avec `claude-haiku-5-5` (0,18 euro estimé) : les fiches
   des connecteurs sont classées aussitôt, celles du passage local après la fin du passage, qui réécrit son fichier à
   chaque fiche.
+- Constats de Monsieur DUCOUT (2026-10-14, 22 h 30) sur les 420 fiches publiées : régions incohérentes, appels des
+  ARS non labellisés santé, filtre financeur plein de doublons, « base sale ». Mesures : 203 noms de financeurs pour
+  420 fiches (ARS Île-de-France sous six orthographes), 243 territoires « france » par défaut, source « extraction_locale »
+  au lieu de l'émetteur sur les fiches du passage local, 7 titres en double (14 fiches) ; le label santé manquant vient
+  du classement fait pour 21 fiches seulement ce soir. Réponse : changement `nettoyage-financeurs-territoires` préparé
+  (source réelle, financeur canonique par table d'alias, territoire déduit de l'émetteur et des départements, plus de
+  « france » par défaut, rapport des doublons), à lancer sur son accord. Netlify : il ne regarde qu'en local, aucun
+  déploiement avant que tout fonctionne. Vocabulaire : « tirage » = sélection au sort de 50 pages pour comparer les
+  deux moteurs ; « second tirage » = la seconde sélection, chez les financeurs de la santé, après le premier tirage
+  inutilisable.
 - Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
   Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
   publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)
