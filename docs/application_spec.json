@@ -1,0 +1,279 @@
+{
+  "application": {
+    "name": "AAP Santé",
+    "purpose": "Plateforme B2B d'agrégation d'appels à projets du secteur santé et médico-social français : collecte automatisée (robots, API Claude, modèle local Ollama) avec validations humaines, import dans une application React/Firebase où porteurs de projets et financeurs consultent, candidatent et publient.",
+    "version": "app 1.0.0 (package.json) ; chaîne de collecte en cours (changement OpenSpec extraction-locale-globale)",
+    "last_updated": "2026-10-14",
+    "owner": "ARCADIA SASU, Monsieur Pierre-Yves DUCOUT",
+    "repository": "https://github.com/ducoutpy-lgtm/AAP",
+    "companion_document": "docs/CAHIER_DES_CHARGES_APPLICATION.md"
+  },
+  "users_and_roles": [
+    {"role": "visiteur", "description": "Sans compte. Recherche et consultation des AAP publiés.", "routes": ["/", "/aap/search", "/aap/:aapId", "/login", "/signup"], "guards": []},
+    {"role": "porteur", "description": "Établissement ou association cherchant des financements.", "routes": ["/dashboard/porteur", "/aap/:aapId/candidater", "/mes-candidatures", "/recherches-sauvegardees", "/recommandations", "/calendrier", "/messages", "/notifications"], "guards": ["ProtectedRoute", "SubscriptionGuard (active ou trial)", "RoleGuard(porteur)"]},
+    {"role": "financeur", "description": "Organisme qui publie des AAP et évalue les candidatures.", "routes": ["/dashboard/financeur", "/mes-aap", "/aap/nouveau", "/aap/:aapId/edit (gabarit vide)", "/aap/:aapId/candidatures", "/aap/:aapId/candidature/:applicationId/evaluer", "/statistiques"], "guards": ["ProtectedRoute", "SubscriptionGuard", "RoleGuard(financeur)"]},
+    {"role": "admin", "description": "Monsieur DUCOUT. Gestion des utilisateurs et des AAP.", "routes": ["/admin", "/admin/utilisateurs", "/admin/aaps", "/admin/statistiques", "/admin/paiements (gabarit)", "/admin/parametres (gabarit)"], "guards": ["ProtectedRoute", "RoleGuard(admin)"]},
+    {"role": "operateur_collecte", "description": "Monsieur DUCOUT hors application : lance les outils Python, valide pages et fiches, importe.", "routes": [], "guards": []}
+  ],
+  "business_objects": [
+    {
+      "name": "Emetteur",
+      "description": "Organisme susceptible de publier des appels ; une entrée de scraping/sources/registre.json (1 198).",
+      "fields": ["id", "nom", "categorie", "url_aap", "url_validee", "validee_par", "validee_le", "perimetre", "statut", "connecteur", "notes", "derniere_verification", "code_http", "qualification{verdict,date,justification,verdict_modele,relecture}"],
+      "relations": ["decouverte/<id>/ (page, liens, textes)", "sources/relecture_qualification.json[id]", "fiches.scrape_metadata.source"],
+      "statuses": ["qualification.verdict: rubrique-confirmee | hors-sante | pas-d-aap | pdf-seulement | a-verifier"],
+      "source": "annuaires de référence (sources/annuaires), recherche web, saisie de Monsieur DUCOUT",
+      "ai_role": "qualification de la page gardée par le modèle local (qualification.py)",
+      "human_validation": "relecture_qualification.json ; validation des pages à l'écran (results/validation_pages.json) reportée par validation.py --appliquer-pages ; url_validee",
+      "local_processing": "découverte (decouverte.py), sonde HTTP, rapport REGISTRE_SOURCES.md"
+    },
+    {
+      "name": "PageEtLiens",
+      "description": "Page d'un émetteur qui liste ses appels, et liens d'appels repérés par mots-clés.",
+      "fields": ["statut", "url_depart", "url_rubrique", "nb_liens_aap", "candidats_visites", "date", "liens[]{texte,href,score}"],
+      "relations": ["Emetteur.id"],
+      "statuses": ["rubrique-trouvee", "aucune-rubrique", "erreur"],
+      "source": "robot Playwright (decouverte.py)",
+      "ai_role": "aucun (mots-clés)",
+      "human_validation": "verdicts bonne-page, mauvaise-page, page-morte, hors-champ (validation_pages.json)",
+      "local_processing": "collecte du texte de chaque lien (extraction_locale.py --collecter) dans decouverte/<id>/fiches/*.txt"
+    },
+    {
+      "name": "FicheAAP (AapNormalized)",
+      "description": "Appel structuré, format unique de la collecte (scraping/schema.py).",
+      "fields": ["titre", "financeur", "description", "url_source", "date_ouverture", "date_cloture", "montant_min", "montant_max", "enveloppe_globale", "eligibilite[]", "pieces_attendues[]", "territoire", "categories_etablissement[]", "fichiers_joints[]{url,filename,local_path}", "scrape_metadata{source,moteur,modele,duree_s,fichier,a_relire,ecarts,a_verifier,produite_le,version_consigne | scraped_at,last_seen_at,signature}"],
+      "relations": ["Emetteur via scrape_metadata.source", "AAP Firestore via identifiant(url_source)", "verdicts_fiches.json[url_source]"],
+      "statuses": ["a_verifier (bool)", "a_relire (bool)"],
+      "source": "texte des pages collectées",
+      "ai_role": "extraction par API Claude (connecteurs) ou modèle local qwen3:8b (question fermée, extraction JSON, contrôle des formats)",
+      "human_validation": "sources/verdicts_fiches.json : aap-juste | aap-a-corriger | pas-un-aap | passer",
+      "local_processing": "contrôle des formats, mise à null des écarts, écriture au fil de l'eau avec reprise"
+    },
+    {
+      "name": "AAP (Firestore aap)",
+      "description": "Appel tel qu'affiché par l'application (type AAP, app/src/types/index.ts).",
+      "fields": ["financeurId", "financeurName", "title", "description", "sectorsTargeted[]", "territoriesEligible[]", "structureTypeEligible[]", "budgetMin", "budgetMax", "budgetTotal", "deadline", "publicationDate", "eligibilityCriteria", "requiredDocuments[]", "externalUrl", "tags[]", "status", "publishedAt", "createdAt", "updatedAt", "views", "applicationsCount", "source", "scrapeMetadata{source,signature,moteur,modele,enveloppeGlobale,fichiersJoints[],importedAt}", "validation{statut,commentaire,date}"],
+      "relations": ["applications.aapId", "favoriteAap.aapId", "notifications.relatedEntityId"],
+      "statuses": ["status: draft | published | closed | archived", "validation.statut: proposee | a_corriger | validee | rejetee"],
+      "source": "import des fiches (scripts/import_to_firestore.py) ou saisie d'un financeur (CreateAapPage)",
+      "ai_role": "aucun dans l'application ; provenance IA tracée par scrapeMetadata.moteur et l'étiquette a-verifier",
+      "human_validation": "statut changé par l'admin (ManageAAPsPage), bloc validation issu des verdicts ; jamais réécrits par l'import",
+      "local_processing": "tags, territoriesEligible, sectorsTargeted, budgetTotal calculés à l'import ; recommandations et statistiques côté client"
+    },
+    {
+      "name": "User",
+      "description": "Compte de l'application (users/{uid}).",
+      "fields": ["email", "userType", "subscriptionStatus", "subscriptionPlan", "subscriptionId", "stripeCustomerId", "profileComplete", "trialEndsAt", "currentPeriodEnd", "notificationPreferences", "createdAt"],
+      "relations": ["porteurProfiles/{uid}", "financeurProfiles/{uid}", "applications.porteurId / financeurId", "payments.userId"],
+      "statuses": ["userType: porteur | financeur | admin", "subscriptionStatus: active | trial | expired | cancelled"],
+      "source": "inscription (AuthContext), webhook Stripe (non déployé), admin",
+      "ai_role": "aucun",
+      "human_validation": "admin : suspendre / activer (règles Firestore probablement bloquantes, à confirmer)",
+      "local_processing": "essai de 14 jours fixé à l'inscription, jamais expiré automatiquement"
+    },
+    {
+      "name": "Application (candidature)",
+      "description": "Candidature d'un porteur à un AAP (collection applications).",
+      "fields": ["aapId", "porteurId", "financeurId", "projectTitle", "projectDescription", "objectives", "methodology", "timeline", "expectedImpact", "budget{total,breakdown[]}", "team[]", "partners[]", "documents[]", "prequalificationScore", "completenessScore", "conformityScore", "qualityScore", "conformityFlags[]", "suggestions[]", "financeurScore", "financeurNotes", "financeurComments", "status", "statusHistory[]", "createdAt", "updatedAt", "submittedAt"],
+      "relations": ["AAP", "User (porteur, financeur)", "messages.applicationId"],
+      "statuses": ["draft | submitted | under_review | accepted | rejected | pending_info (type) ; shortlisted utilisé par EvaluateApplicationPage hors type"],
+      "source": "formulaire ApplicationFormPage (écrit teamMembers/partnersInvolved au lieu de team/partners : incohérence)",
+      "ai_role": "aucun",
+      "human_validation": "évaluation par le financeur (status, financeurScore, commentaires)",
+      "local_processing": "score de préqualification par la fonction onApplicationCreated (non déployée)"
+    },
+    {
+      "name": "SavedSearch, FavoriteAap, Notification, Message, Payment, Analytics",
+      "description": "Objets secondaires : recherches sauvegardées avec alerte, favoris (non implémentés), notifications, messagerie (collection conversations sans règle), paiements Stripe, statistiques journalières (jamais écrites).",
+      "fields": ["voir app/src/types/index.ts"],
+      "relations": ["User", "AAP", "Application"],
+      "statuses": ["Notification.type: system | new_aap | deadline | status_change | new_message", "Payment.status: succeeded | failed | pending"],
+      "source": "application, Cloud Functions (non déployées)",
+      "ai_role": "aucun",
+      "human_validation": "aucune",
+      "local_processing": "sendDailyAlerts (planifiée, non déployée, ignore les filtres)"
+    }
+  ],
+  "data_sources": [
+    {"type": "annuaire", "description": "Registre national des fondations, listes ARS / départements / FSE, agrégateurs (Fimeco), veille URIOPSS", "files": ["scraping/sources/annuaires/"], "frequency": "par vague, manuel"},
+    {"type": "recherche_web", "description": "Sites des émetteurs : API Tavily (plan gratuit épuisé) puis recherche web de la session Claude Code ; sonde HTTP", "files": ["scraping/recherche_web.py", "scraping/annuaires.py", "scraping/results/recherche_sites.jsonl"]},
+    {"type": "scraping_navigateur", "description": "Pages des émetteurs, liens et textes des appels (Playwright Chromium, pauses, un site à la fois)", "files": ["scraping/decouverte.py", "scraping/extraction_locale.py", "scraping/sources/<connecteur>.py"]},
+    {"type": "telechargement", "description": "Pièces jointes des appels (connecteurs historiques) dans scraping/downloads, servies en local", "files": ["scraping/downloads/"]},
+    {"type": "saisie_manuelle", "description": "AAP créés par un financeur dans l'application ; décisions de Monsieur DUCOUT (familles, adresses, verdicts)", "files": ["app/src/pages/financeur/CreateAapPage.tsx", "scraping/validation.py"]},
+    {"type": "formulaires_application", "description": "Comptes, profils, candidatures, recherches sauvegardées", "files": ["app/src/pages/"]}
+  ],
+  "ai_processing": [
+    {"name": "Qualification des pages", "model": "Ollama mistral:7b-instruct (2026-10-12)", "input": "texte de la page gardée (8 000 caractères)", "output": "verdict + justification", "file": "scraping/qualification.py", "cost": "0 euro", "status": "fait, relu par un humain"},
+    {"name": "Extraction par connecteur", "model": "Anthropic claude-sonnet-4-6, tool use, prompt caching, retry", "input": "page de détail d'un appel", "output": "AapNormalized", "file": "scraping/extractor.py", "cost": "environ 0,03 euro par appel, journal logs/extraction_costs.jsonl", "status": "5 sources opérationnelles"},
+    {"name": "Extraction locale globale", "model": "Ollama qwen3:8b (contexte 16 384, température 0, format JSON contraint)", "input": "texte collecté d'un lien", "output": "refus avec raison, ou AapNormalized avec a_verifier, produite_le, version_consigne", "file": "scraping/extraction_locale.py (chaîne de echantillon.py)", "cost": "0 euro ; 22 s par refus, 69 s par fiche", "status": "en cours : 567 fiches, 478 refus, 17 échecs, 1 116 textes restants au 2026-10-14"},
+    {"name": "Mesure des moteurs", "model": "qwen3:8b, mistral 7b, session Claude Code", "input": "45 textes d'échantillon", "output": "ECHANTILLON.md, seuil 20 justes / 2 fabriquées", "file": "scraping/echantillon.py", "status": "fait ; seuil non atteint, décision prise d'utiliser le modèle local avec marque à vérifier"},
+    {"name": "Recherche des sites", "model": "recherche web de la session Claude Code", "input": "nom d'une fondation", "output": "adresse candidate + sonde", "file": "scraping/annuaires.py", "status": "vague 1 terminée (365/664)"}
+  ],
+  "human_validation": [
+    {"step": "Relecture de la qualification", "actor": "Monsieur DUCOUT (décisions) et session", "file": "scraping/sources/relecture_qualification.json", "effect": "verdict relu appliqué par qualification.py --registre --rapport, verdict du modèle conservé"},
+    {"step": "Validation des pages des émetteurs", "actor": "Monsieur DUCOUT", "tool": "validation_pages.cmd, validation_exclues.cmd (validation.py --pages, ports 8788 / 8790)", "file": "scraping/results/validation_pages.json", "effect": "report au registre par validation.py --appliquer-pages : rubrique confirmée, hors santé, à retrouver, url_validee"},
+    {"step": "Validation des liens (échantillon)", "actor": "Monsieur DUCOUT", "tool": "validation_manuelle.cmd (validation.py --liens, port 8787)", "file": "scraping/results/validation_liens.json", "effect": "aucun consommateur automatique"},
+    {"step": "Validation des fiches à vérifier", "actor": "Monsieur DUCOUT", "tool": "validation_fiches.cmd (validation.py --fichier results/extraction_locale.json --ouvertes, port 8789)", "file": "scraping/sources/verdicts_fiches.json", "effect": "appliqué à l'import : rejetee -> archived, validee -> badge retiré et champs protégés, a_corriger -> badge gardé"},
+    {"step": "Administration des AAP", "actor": "admin", "tool": "/admin/aaps", "file": "Firestore aap.status", "effect": "jamais réécrit par l'import"},
+    {"step": "Évaluation des candidatures", "actor": "financeur", "tool": "/aap/:id/candidature/:id/evaluer", "file": "Firestore applications", "effect": "status, financeurScore, commentaires"},
+    {"step": "Vérification OpenSpec", "actor": "Monsieur DUCOUT", "tool": "dernière tâche de chaque changement", "file": "openspec/changes/*/tasks.md", "effect": "archivage"}
+  ],
+  "local_processing": [
+    {"name": "Sonde HTTP et format du registre", "file": "scraping/registre.py", "output": "code_http, REGISTRE_SOURCES.md avec couverture par famille"},
+    {"name": "Découverte", "file": "scraping/decouverte.py", "output": "decouverte/resultats.json, DECOUVERTE.md"},
+    {"name": "Contrôle des formats et comparaison à la référence", "file": "scraping/echantillon.py", "output": "null + a_relire ; controle_echantillon.json ; ECHANTILLON.md"},
+    {"name": "Import et mappage", "file": "scripts/import_to_firestore.py", "output": "documents aap : identifiant par adresse, tags, territoires, statut, validation"},
+    {"name": "Migration des identifiants", "file": "scripts/migrer_identifiants.py", "output": "sauvegarde scripts/sauvegardes/aap_<date>.json, suppression des anciens identifiants"},
+    {"name": "Recommandations", "file": "app/src/pages/porteur/RecommendationsPage.tsx", "output": "score sur 100 (secteurs 40, territoire 30/20, budget 20, délai 10/5), seuil 50, 10 résultats"},
+    {"name": "Score de préqualification", "file": "app/functions/src/index.ts (onApplicationCreated, non déployée)", "output": "prequalificationScore, completenessScore, conformityFlags, suggestions"},
+    {"name": "Recherche", "file": "app/src/services/aapService.ts, SearchAapPage.tsx", "output": "lecture de tous les AAP publiés puis filtres côté client"},
+    {"name": "Rapports Markdown", "file": "scraping/*.md générés", "output": "REGISTRE_SOURCES.md, DECOUVERTE.md, QUALIFICATION.md, ECHANTILLON.md"}
+  ],
+  "data_lifecycle": {
+    "statuses": [
+      {"object": "Emetteur.qualification.verdict", "values": ["a-verifier", "rubrique-confirmee", "hors-sante", "pas-d-aap", "pdf-seulement"]},
+      {"object": "Emetteur.statut", "values": ["identifiee", "operationnelle", "autres valeurs de registre.py STATUTS"]},
+      {"object": "PageEtLiens.statut", "values": ["rubrique-trouvee", "aucune-rubrique", "erreur"]},
+      {"object": "FicheAAP", "values": ["produite", "refusee (non_aap)", "echec (errors)", "a_relire", "a_verifier"]},
+      {"object": "AAP.status", "values": ["draft", "published", "closed", "archived"]},
+      {"object": "AAP.validation.statut", "values": ["proposee", "a_corriger", "validee", "rejetee"]},
+      {"object": "Application.status", "values": ["draft", "submitted", "under_review", "accepted", "rejected", "pending_info"]},
+      {"object": "User.subscriptionStatus", "values": ["trial", "active", "expired", "cancelled"]}
+    ],
+    "transitions": [
+      {"object": "Emetteur.qualification", "from": "a-verifier", "to": "verdict du modèle", "by": "qualification.py --qualifier"},
+      {"object": "Emetteur.qualification", "from": "verdict du modèle", "to": "verdict relu", "by": "relecture_qualification.json puis --registre"},
+      {"object": "Emetteur.qualification", "from": "tout", "to": "rubrique-confirmee | hors-sante | a-verifier", "by": "validation.py --appliquer-pages (verdicts à l'écran)"},
+      {"object": "FicheAAP", "from": "texte collecté", "to": "fiche | refusée | échec", "by": "extraction_locale.py --extraire"},
+      {"object": "AAP.status", "from": "(création)", "to": "published | draft (sans date) | archived (verdict rejetee)", "by": "import"},
+      {"object": "AAP.status", "from": "published", "to": "closed | archived", "by": "admin ou financeur propriétaire ; jamais l'import sur un document existant"},
+      {"object": "AAP.validation.statut", "from": "proposee", "to": "validee | a_corriger | rejetee", "by": "verdict humain puis import"},
+      {"object": "Application.status", "from": "submitted", "to": "under_review | accepted | rejected | pending_info", "by": "financeur"},
+      {"object": "User.subscriptionStatus", "from": "trial", "to": "active | expired | cancelled", "by": "webhook Stripe (non déployé) ou admin ; aucune expiration automatique de l'essai"}
+    ],
+    "rules": [
+      "Catégories : SOURCE (annuaires, url_aap, decouverte/), IA (qualification.json, results/*.json), VALIDÉ (relecture_qualification.json, validation_pages.json, verdicts_fiches.json, url_validee, Firestore status/validation), DÉRIVÉ (rapports, tags, scores).",
+      "L'import ne réécrit jamais status, publishedAt, validation d'un document existant ; ni les champs métier si validation.statut == validee.",
+      "Identifiant Firestore = scraped-sha1(url_source normalisée)[:16] ; la signature reste un attribut.",
+      "Pour une même adresse, la fiche d'un connecteur l'emporte sur celle du modèle local.",
+      "Fiche sans date de clôture : draft, échéance fictive à un an, tag sans-date-cloture, validation a_corriger.",
+      "Appels clos ignorés par l'import sauf --include-expired.",
+      "Fichiers de décisions humaines (sources/relecture_qualification.json, sources/verdicts_fiches.json) jamais écrits par un outil automatique.",
+      "url_validee n'est écrite que par validation.py --appliquer-pages ; les outils lisent registre.adresse_aap()."
+    ]
+  },
+  "workflows": [
+    {"name": "Constitution du registre", "trigger": "nouvelle famille d'émetteurs", "steps": ["annuaires.py --chercher / --sites", "sonde", "--integrer", "registre.py --tableau"], "actors": ["session", "Monsieur DUCOUT"], "data": ["sources/annuaires", "registre.json", "recherche_sites.jsonl"], "errors": ["site introuvable", "doublon par nom", "sonde SSL"], "result": "entrées identifiees, qualification a-verifier"},
+    {"name": "Découverte, qualification, validation des pages", "trigger": "nouvelles entrées ou adresse corrigée", "steps": ["decouverte.py [--ids --forcer --garder-depart]", "qualification.py --qualifier", "relecture", "validation_pages.cmd", "validation.py --appliquer-pages", "qualification.py --registre --rapport"], "actors": ["robot", "Ollama", "Monsieur DUCOUT"], "data": ["decouverte/", "qualification.json", "relecture_qualification.json", "validation_pages.json", "registre.json"], "errors": ["robot bloqué", "délai 180 s", "page d'accueil jugée"], "result": "242 rubriques confirmées"},
+    {"name": "Extraction locale globale", "trigger": "décision du 2026-10-13", "steps": ["extraction_locale.py --collecter", "--extraire --modele qwen3:8b", "--bilan", "import par lots"], "actors": ["Playwright", "Ollama", "session"], "data": ["decouverte/<id>/fiches/*.txt", "results/extraction_locale.json", "_non_aap.json", ".errors.json"], "errors": ["délai Ollama 600 s", "pages Cloudflare refusées", "arrêt du PC (reprise)"], "result": "fiches a_verifier importées avec badge"},
+    {"name": "Collecte par connecteur", "trigger": "python run.py --source <nom>", "steps": ["list_aaps", "fetch_detail", "cache par url_source", "extractor.py (API Claude)", "validate.py (rapport HTML)"], "actors": ["session", "API Claude"], "data": ["results/<nom>.json", "downloads/", "logs/extraction_costs.jsonl"], "errors": ["429/529/5xx (retry)", "site bloqué"], "result": "fiches avec signature et scraped_at"},
+    {"name": "Import dans l'application", "trigger": "manuel après un lot ou un verdict", "steps": ["lecture results/*.json filtrés", "lecture verdicts_fiches.json", "to_app_aap", "sans_date_en_attente", "appliquer_verdict", "identifiant", "fusionner", "document_a_envoyer", "batch 400"], "actors": ["session ou Monsieur DUCOUT"], "data": ["Firestore aap"], "errors": ["clé de service absente", "Storage refusé sans Blaze"], "result": "341 documents au 2026-10-14"},
+    {"name": "Validation des fiches", "trigger": "raccourci Validation des fiches à vérifier", "steps": ["serveur local port 8789", "fiche par fiche", "verdict écrit", "import"], "actors": ["Monsieur DUCOUT"], "data": ["sources/verdicts_fiches.json"], "errors": ["page officielle non affichable dans un cadre (fenêtre séparée)"], "result": "badge retiré / archivé / commentaire"},
+    {"name": "Parcours porteur", "trigger": "inscription", "steps": ["/signup", "users trial J+14", "/complete-profile", "/abonnement/choisir (continuer l'essai)", "/dashboard/porteur", "/aap/search", "/aap/:id", "/aap/:id/candidater (submitted)", "/mes-candidatures"], "actors": ["porteur"], "data": ["users", "porteurProfiles", "applications"], "errors": ["Google sans document users", "favoris sans action", "savedSearches refusée (à confirmer)"], "result": "candidature soumise"},
+    {"name": "Parcours financeur et admin", "trigger": "connexion", "steps": ["/aap/nouveau", "/mes-aap", "/aap/:id/candidatures", "évaluation", "/admin/aaps : publier, clôturer, archiver, supprimer", "/admin/utilisateurs : suspendre, activer"], "actors": ["financeur", "admin"], "data": ["aap", "applications", "users"], "errors": ["règles Firestore refusent probablement les écritures admin (à confirmer)"], "result": "AAP publié, candidature évaluée"}
+  ],
+  "data_model": [
+    {"store": "Firestore", "collection": "aap", "id": "scraped-<sha1 url>[:16] ou auto", "fields": "voir business_objects.AAP", "constraints": "deadline obligatoire ; lecture publique si published", "indexes": ["status+publishedAt", "status+sectorsTargeted+publishedAt", "financeurId+createdAt"], "traceability": ["createdAt", "updatedAt", "publishedAt", "scrapeMetadata.importedAt", "validation.date"]},
+    {"store": "Firestore", "collection": "users", "id": "uid", "fields": "voir business_objects.User", "constraints": "update propriétaire seulement", "indexes": [], "traceability": ["createdAt"]},
+    {"store": "Firestore", "collection": "porteurProfiles / financeurProfiles", "id": "uid", "fields": "voir cahier 5.5", "constraints": "propriétaire", "indexes": [], "traceability": ["updatedAt"]},
+    {"store": "Firestore", "collection": "applications", "id": "auto", "fields": "voir business_objects.Application", "constraints": "porteur abonné ; update porteur en draft ou financeur", "indexes": ["porteurId+createdAt", "financeurId+createdAt", "aapId+createdAt"], "traceability": ["createdAt", "updatedAt", "submittedAt", "statusHistory"]},
+    {"store": "Firestore", "collection": "savedSearches, favoriteAap, notifications, messages, conversations, payments, analytics", "id": "auto", "fields": "voir app/src/types/index.ts", "constraints": "voir firestore.rules ; conversations sans règle", "indexes": ["notifications userId+createdAt", "messages applicationId+createdAt", "payments userId+paidAt"], "traceability": ["createdAt"]},
+    {"store": "fichier", "collection": "scraping/sources/registre.json", "id": "id", "fields": "voir business_objects.Emetteur", "constraints": "registre.py --verifier-format ; indentation 2", "indexes": [], "traceability": ["derniere_verification", "qualification.date", "validee_le"]},
+    {"store": "fichier", "collection": "scraping/sources/relecture_qualification.json", "id": "id", "fields": ["verdict", "motif", "date", "relecteur", "relecture_precedente"], "constraints": "verdict dans la liste, jamais écrit par un outil automatique", "indexes": [], "traceability": ["date", "relecteur"]},
+    {"store": "fichier", "collection": "scraping/sources/verdicts_fiches.json", "id": "url_source", "fields": ["verdict", "commentaire", "date"], "constraints": "écrit par validation.py seulement", "indexes": [], "traceability": ["date"]},
+    {"store": "fichier", "collection": "scraping/results/*.json", "id": "url_source", "fields": "AapNormalized", "constraints": "echantillon_*, controle_*, validation_*, *_non_aap exclus de l'import global", "indexes": [], "traceability": ["scrape_metadata"]},
+    {"store": "fichier", "collection": "scraping/decouverte/", "id": "id émetteur", "fields": "resultats.json, liens.json, fiches/*.txt, qualification.json", "constraints": "hors Git, régénérable", "indexes": [], "traceability": ["date (resultats)"]}
+  ],
+  "business_rules": [
+    "Schéma unique AapNormalized ; ne pas le modifier sans décision explicite.",
+    "Identifiant Firestore dérivé de l'adresse ; signature = sha1(titre|financeur|clôture) conservée comme attribut et cache.",
+    "Appels clos ignorés par défaut à l'import ; sans date -> brouillon à corriger.",
+    "Import : status, publishedAt, validation jamais réécrits ; champs métier protégés si validee ; connecteur prioritaire sur modèle local.",
+    "Verdicts : pas-un-aap -> archived + rejetee ; aap-juste -> validee et badge retiré ; aap-a-corriger -> a_corriger et badge gardé.",
+    "Toute fiche du modèle local porte a_verifier et l'étiquette a-verifier ; badge À vérifier dans la liste et la fiche.",
+    "Lecture publique des AAP published ; mention Clôturé quand la date est passée.",
+    "Essai de 14 jours à l'inscription ; gardes acceptent active ou trial ; aucune expiration automatique.",
+    "Candidature : création porteur abonné ; modification porteur en draft seulement.",
+    "Registre : adresse de travail = url_validee sinon url_aap ; url_validee écrite seulement par le report des verdicts.",
+    "Relecture de la qualification appliquée par-dessus le verdict du modèle, verdict_modele conservé.",
+    "Un seul travail Ollama à la fois ; modèle Anthropic claude-sonnet-4-6 ; aucun appel payant sans accord.",
+    "Méthode OpenSpec obligatoire ; preuve avant affirmation ; vérification finale par Monsieur DUCOUT.",
+    "Recommandation : score secteurs 40, territoire 30/20, budget 20, délai 10/5, seuil 50, 10 résultats.",
+    "Préqualification : 100 moins 15 par champ vide, 10 si description < 200 caractères, 15 sans budget, 10 sans équipe."
+  ],
+  "integrations": [
+    {"name": "Firebase", "components": ["Auth", "Firestore", "Storage (inactif)", "Functions (non déployées)"], "project": "aapi-11bc3", "config": "app/src/config/firebase.ts, app/firebase.json, firestore.rules, storage.rules, firestore.indexes.json"},
+    {"name": "Stripe", "components": ["Checkout", "webhook"], "status": "non branché : Price IDs fictifs, fonctions non déployées", "config": "app/src/config/stripe.ts, app/functions/src/index.ts"},
+    {"name": "Anthropic API", "model": "claude-sonnet-4-6", "usage": "connecteurs historiques", "config": "scraping/extractor.py, scraping/.env"},
+    {"name": "Ollama", "models": ["qwen3:8b", "mistral:7b-instruct", "llama3.2:3b"], "endpoint": "http://localhost:11434/api/chat", "usage": "qualification, échantillon, extraction locale"},
+    {"name": "Playwright", "usage": "découverte, collecte, connecteurs"},
+    {"name": "Tavily", "usage": "recherche des sites (plan gratuit épuisé)", "config": "scraping/recherche_web.py"},
+    {"name": "Sentry", "status": "installé, non initialisé"},
+    {"name": "Netlify", "status": "déploiement de test, à confirmer"},
+    {"name": "GitHub", "repository": "ducoutpy-lgtm/AAP"},
+    {"name": "OpenSpec CLI", "version": "1.14"}
+  ],
+  "security_and_privacy": [
+    "Données personnelles : comptes, profils (contact, SIRET, adresse), candidatures, messages ; DPO Monsieur DUCOUT ; AIPD reportée après le MVP ; aucun utilisateur externe.",
+    "Appels à projets : données publiques.",
+    "Secrets dans des fichiers ignorés par Git (app/.env, scraping/.env, scripts/serviceAccountKey.json) ; vérification avant chaque commit ; jamais affichés.",
+    "Règles Firestore et Storage : voir cahier 8.1 ; gardes de route côté client non suffisantes seules.",
+    "Compte de service Firebase à droits complets sur le poste de Monsieur DUCOUT.",
+    "Vigilance : essai jamais expiré ; règles de création de savedSearches/favoriteAap/notifications probablement bloquantes ; actions admin non couvertes ; conversations sans règle ; Sentry inactif ; Storage inactif.",
+    "Robots : pauses, un site à la fois, depuis la box domestique ; préfectures et ameli bloquent.",
+    "Essai à blanc avant écriture ; sauvegarde JSON avant migration ; jamais de git push sans demande."
+  ],
+  "known_limits": [
+    "Extraction locale inachevée (1 116 textes restants) ; environ 1 fiche sur 4 à 5 avec un champ faux ; 533 liens PDF/Word/Excel non traités.",
+    "577 émetteurs sans page validée ; 10 pages mortes ; 22 adresses à resonder ; doublons d'émetteurs (Île-de-France, Drôme).",
+    "Verdicts sur les pages indexés par adresse instable ; validation_pages.json et validation_liens.json non versionnés.",
+    "Trois copies de l'échantillon ; grille de contrôle mixte.",
+    "Connecteurs sans nom de modèle dans la fiche ; textes collectés sans date.",
+    "Adresse validée FIRAH pointant vers la Fondation OCIRP (verdict humain à revoir).",
+    "49 appels des connecteurs sans date passés en brouillon le 2026-10-14 (règle à confirmer).",
+    "Champ validation absent du type AAP TypeScript ; pas de validatedBy.",
+    "Cloud Functions non déployées (scores, notifications, alertes, Stripe) ; Blaze refusé.",
+    "Stripe : Price IDs fictifs, redirectToCheckout déprécié (à confirmer), pas de portail client.",
+    "Essai de 14 jours jamais expiré.",
+    "Règles Firestore : création de savedSearches/favoriteAap/notifications probablement refusée (resource.data) ; actions admin non autorisées ; conversations sans règle (à confirmer par test).",
+    "Incohérences de champs : teamMembers/partnersInvolved vs team/partners ; frequency vs alertFrequency ; shortlisted hors type ; profile.effectif inexistant (budget estimé fixe 50 000 euros).",
+    "Candidature créée directement en submitted ; sendDailyAlerts ignore filtres et fréquence ; notifications vers des routes inexistantes.",
+    "Pages gabarit : édition d'AAP, profil, paiements, paramètres, pages légales, 404 ; favoris non implémentés ; connexion Google sans document users.",
+    "Aucun test automatisé côté application ; Sentry non initialisé ; recherche filtrée côté client.",
+    "Pas de veille des changements ; lancements manuels ; Netlify et projet Firebase à confirmer."
+  ],
+  "glossary": [
+    {"term": "AAP", "definition": "Appel à projets, à candidatures, à manifestation d'intérêt, bourse ou prix."},
+    {"term": "Émetteur / source", "definition": "Organisme qui publie des appels ; entrée du registre."},
+    {"term": "Registre", "definition": "scraping/sources/registre.json, 1 198 émetteurs."},
+    {"term": "Annuaire", "definition": "Liste de référence externe d'une famille d'émetteurs."},
+    {"term": "Page validée / rubrique confirmée", "definition": "Page d'un émetteur listant ses appels, jugée bonne par un humain."},
+    {"term": "Découverte", "definition": "Robot qui trouve la page des appels et repère les liens."},
+    {"term": "Qualification", "definition": "Verdict modèle puis humain sur la page gardée."},
+    {"term": "Relecture", "definition": "Correction humaine tracée d'un verdict du modèle."},
+    {"term": "Texte collecté", "definition": "Texte lisible d'une page de lien, enregistré par le navigateur."},
+    {"term": "Extraction", "definition": "Production d'une fiche à partir d'un texte (API Claude ou modèle local)."},
+    {"term": "Fiche", "definition": "Appel structuré au format AapNormalized."},
+    {"term": "Page refusée", "definition": "Texte jugé pas un appel par le modèle."},
+    {"term": "Connecteur", "definition": "Script Python par source utilisant l'API Claude."},
+    {"term": "Modèle local", "definition": "Modèle Ollama sur le poste (qwen3:8b), zéro euro."},
+    {"term": "Échantillon", "definition": "45 textes et 24 fiches de référence pour mesurer les moteurs contre un seuil."},
+    {"term": "Import", "definition": "Copie rejouable des fiches dans Firestore."},
+    {"term": "Lot", "definition": "Import exécuté pendant un passage d'extraction."},
+    {"term": "À vérifier", "definition": "Marque des fiches du modèle local non relues ; badge dans l'application."},
+    {"term": "Verdict", "definition": "Décision humaine sur une page, un lien ou une fiche."},
+    {"term": "Signature", "definition": "sha1 de titre, financeur, clôture ; cache des connecteurs."},
+    {"term": "Changement OpenSpec", "definition": "Dossier proposal/design/specs/tasks obligatoire avant tout code."},
+    {"term": "Blaze", "definition": "Forfait Firebase avec facturation, refusé pour l'instant."}
+  ],
+  "instructions_for_ai": [
+    "Lire dans l'ordre : CLAUDE.md, REPRISE.md, docs/FEUILLE_DE_ROUTE.md, docs/FLUX_DONNEES.md, docs/AUDIT_DONNEES_2026-10-14.md, openspec/specs/*/spec.md, openspec/changes/*/tasks.md.",
+    "Fichiers de code prioritaires : scraping/schema.py, scraping/registre.py, scraping/extraction_locale.py, scraping/validation.py, scripts/import_to_firestore.py, app/src/types/index.ts, app/src/App.tsx, app/firestore.rules.",
+    "Règles absolues : français sans emojis dans les fichiers ; zéro dépense sans accord ; jamais de secret affiché ni commité ; jamais de git push ni d'archivage OpenSpec sans demande ; pas de code hors changement OpenSpec ; preuve avant affirmation, compte rendu terminé par Vérifié / Non vérifié ; confirmation avant toute action destructive.",
+    "Ne pas modifier AapNormalized ni le type AAP sans exigence explicite ; ne pas démarrer FastAPI/PostgreSQL/Next.js ; ne pas supprimer le tag archive/export-v0.",
+    "Modifications risquées : scripts/import_to_firestore.py (respecter CHAMPS_HUMAINS et CHAMPS_METIER), scraping/sources/registre.json (indentation 2, --verifier-format), sources/relecture_qualification.json et sources/verdicts_fiches.json (décisions humaines, jamais écrites par un outil), app/firestore.rules (déployer), echantillon.py CONSIGNE (incrémenter VERSION_CONSIGNE).",
+    "Tester : cd scraping && ../.venv/Scripts/python -m pytest tests -q ; .venv/Scripts/python -m pytest scripts/tests -q ; python registre.py --verifier-format ; python scripts/import_to_firestore.py --dry-run ; cd app && npm run build && npm run lint ; vérification dans le navigateur sur http://localhost:3000/aap/search ; openspec validate <changement>.",
+    "Un seul travail Ollama à la fois ; robots avec pause depuis la box domestique.",
+    "Toute tâche OpenSpec se termine par une vérification manuelle de Monsieur DUCOUT."
+  ]
+}
