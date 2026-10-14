@@ -212,19 +212,18 @@ Cycle (commandes slash dans Claude Code) :
 - Règles d'écriture des artefacts : `openspec/config.yaml` (français, pas d'emojis, coût estimé, etc.).
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
-  (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
+  (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
+  `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
+  `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
   En cours : `lot-0-assainissement` (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de
   Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et
-  testé ; premier tirage de collectivités jugé et rapporté, second tirage chez les financeurs de la santé en cours),
+  testé ; premier tirage de collectivités jugé et rapporté, second tirage chez les financeurs de la santé arrêté le
+  2026-10-14 au soir sur décision de Monsieur DUCOUT, carte graphique rendue au passage global),
   `filtre-champ-sante` (2026-10-14 nuit, instruction 26 validée : définition du champ décidée, `scraping/champ.py`,
   règles d'import et touche 7 faites, classification des connecteurs faite par Haiku, passage local à classer après sa
   fin, import réel et publication des fiches sans date faits le soir, `migrer_champ.py` à lancer après la classification),
   `filtres-recherche` (2026-10-14 soir : filtres de `/aap/search` par territoire, thématique et financeur, faits et
-  vérifiés, documentation et vérification de Monsieur DUCOUT en attente), `nettoyage-financeurs-territoires`
-  (2026-10-14 nuit : tables `financeurs.json` et `departements.json`, modules `financeurs.py` et `territoires.py`,
-  import, filtre Source et ré-import réel faits ; vérification 5.1 faite par Monsieur DUCOUT le 2026-10-14 au soir,
-  toutes les tâches cochées, archivage sur sa demande ;
-  comparaison des moteurs arrêtée au second tirage sur sa décision), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
+  vérifiés, documentation et vérification de Monsieur DUCOUT en attente), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
   `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte finie, extraction en tâche de fond),
   `organisation-donnees-validees` (2026-10-14 : tâches 1 à 4 faites, vérification 5.1 de Monsieur DUCOUT en attente),
   `validation-manuelle-aap` (outil spécifié et rejoué, vérification 2.1 de Monsieur DUCOUT en attente) ; brouillon

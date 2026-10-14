@@ -560,3 +560,7 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
 - Vérification de Monsieur DUCOUT (2026-10-14, 23 h 30) : « ok j'ai vérifié les filtres, c'est bon ». Tâche 5.1 du
   changement `nettoyage-financeurs-territoires` cochée ; toutes les tâches du changement sont faites, archivage
   seulement sur sa demande.
+- Archivage (2026-10-14, 23 h 35) sur demande de Monsieur DUCOUT (« Validé : archiver le changement nettoyage ») :
+  `openspec archive nettoyage-financeurs-territoires`, quatre exigences ajoutées à `openspec/specs/import-aap-scrapes/`
+  (source réelle, financeur canonique, territoire déduit, rapport des doublons), validation de l'ensemble : 16 éléments
+  sans erreur.
