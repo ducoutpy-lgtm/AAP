@@ -9,6 +9,9 @@ des modules gelés modifié.
 configuration ESLint) ; essai à blanc de l'import : « AAP lus : 702 | a importer : 310 (dont 2 doublons fusionnes,
 149 sans date en brouillon) | ignores : {'incomplet': 0, 'expire': 390} | verdicts lus : 0 ».
 
+Règle remplacée le 2026-10-14 au soir (décision de Monsieur DUCOUT, changement `filtre-champ-sante`) : une fiche sans
+date de clôture est publiée avec `deadline` nulle et le badge « à vérifier », et non plus mise en brouillon ; la spec
+de ce changement sur ce point est caduque et sera réconciliée à l'archivage.
 Dépendance d'archivage : la spec `import-aap-scrapes` de ce changement modifie l'exigence « Fiches sans date de
 clôture en attente », qui n'entrera dans `openspec/specs/` qu'à l'archivage du changement `organisation-donnees-validees`
 (vérification 5.1 en attente). Archiver celui-ci d'abord, sur demande de Monsieur DUCOUT.

@@ -65,7 +65,8 @@ CHAMPS_TECHNIQUES = ("financeurId", "financeurName", "sectorsTargeted", "externa
 CHAMPS_ENVOYES = frozenset(CHAMPS_HUMAINS + CHAMPS_METIER + CHAMPS_TECHNIQUES)
 CHAMPS_FICHE = frozenset(AapNormalized.model_fields)
 # Correspondance verdict du raccourci -> statut de validation du document.
-STATUTS_VALIDATION = {"aap-juste": "validee", "aap-a-corriger": "a_corriger", "pas-un-aap": "rejetee"}
+STATUTS_VALIDATION = {"aap-juste": "validee", "aap-a-corriger": "a_corriger", "pas-un-aap": "rejetee",
+                      "hors-champ": "rejetee"}  # verdict « hors champ » de la validation quotidienne (filtre-champ-sante)
 # Statuts qui laissent l'etiquette « A verifier » : fiche jamais relue, ou relue et a corriger (instruction 3 :
 # le statut de validation est la seule source de la fiabilite, quel que soit le moteur).
 STATUTS_A_VERIFIER = ("proposee", "a_corriger")
@@ -180,14 +181,36 @@ def document_a_envoyer(doc: dict, existe: bool) -> dict:
 
 
 def sans_date_en_attente(doc: dict, today: date) -> dict:
-    """Fiche sans date de cloture : brouillon invisible aux visiteurs, deadline nulle (aucune date inventee,
-    reponse Q4 du rapport du 2026-10-14), a corriger par Monsieur DUCOUT."""
+    """Fiche sans date de cloture : publiee avec deadline nulle (aucune date inventee, reponse Q4 du rapport du
+    2026-10-14) et l'etiquette sans-date-cloture, badge « a verifier » par le statut proposee.
+
+    Decision de Monsieur DUCOUT du 2026-10-14 (nuit), qui remplace le brouillon impose par le lot 0 : la fiche est
+    visible dans l'application avec « Date de cloture non precisee » et consideree ouverte jusqu'au 31 decembre de
+    l'annee en cours, sans qu'aucune date soit inscrite dans la base."""
     d = dict(doc)
     d["deadline"] = None
-    d["tags"] = d.get("tags", []) + ["sans-date-cloture"]
-    d["status"] = "draft"
-    d["validation"] = {"statut": "a_corriger", "commentaire": "date de cloture absente", "date": today.isoformat(),
-                       "par": "import (date absente)"}
+    d["tags"] = [t for t in d.get("tags", []) if t != "sans-date-cloture"] + ["sans-date-cloture"]
+    return d
+
+
+CHAMP_HORS, CHAMP_INCERTAIN = "hors-champ", "incertain"
+
+
+def champ_en_attente(doc: dict, today: date) -> dict:
+    """Fiche classee hors champ par le modele (filtre-champ-sante) : brouillon a corriger, jamais publiee sans verdict ;
+    « incertain » : etiquette champ-incertain seulement. Un verdict humain deja applique (validation.par = RELECTEUR)
+    l'emporte toujours sur le modele (fonction pure)."""
+    d = dict(doc)
+    champ = (d.get("scrapeMetadata") or {}).get("champ") or ""
+    tags = [t for t in d.get("tags", []) if t not in ("hors-champ", "champ-incertain")]
+    if champ == CHAMP_INCERTAIN:
+        tags.append("champ-incertain")
+    if champ == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR:
+        tags.append("hors-champ")
+        d["status"] = "draft"
+        d["validation"] = {"statut": "a_corriger", "commentaire": "hors champ (modele)", "date": today.isoformat(),
+                           "par": "import (champ)"}
+    d["tags"] = etiqueter(tags, (d.get("validation") or {}).get("statut", "proposee"))
     return d
 
 
@@ -360,6 +383,10 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
             "signature": signature(titre, financeur, item.get("date_cloture")),
             "moteur": (item.get("scrape_metadata") or {}).get("moteur") or "connecteur",
             "modele": (item.get("scrape_metadata") or {}).get("modele") or "",
+            # Champ (filtre-champ-sante) : reponse du modele a « de quel champ releve cet appel ? », avec sa raison.
+            "champ": (item.get("scrape_metadata") or {}).get("champ") or "",
+            "champRaison": (item.get("scrape_metadata") or {}).get("champ_raison") or "",
+            "champModele": (item.get("scrape_metadata") or {}).get("champ_modele") or "",
             "enveloppeGlobale": item.get("enveloppe_globale"),
             "fichiersJoints": [
                 piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
@@ -427,7 +454,7 @@ def main() -> int:
     verdicts = json.loads(VERDICTS.read_text(encoding="utf-8")) if VERDICTS.exists() else {}
     mapped: list[tuple[str, dict]] = []
     skipped = {"incomplet": 0, "expire": 0}
-    en_attente = 0
+    en_attente, hors_champ = 0, 0
 
     try:
         for source_name, item in raw:
@@ -445,6 +472,8 @@ def main() -> int:
                 skipped["expire"] += 1
                 continue
             doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
+            doc = champ_en_attente(doc, today)
+            hors_champ += "hors-champ" in doc["tags"]
             verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")
             mapped.append((identifiant(doc["externalUrl"]), doc))
     except ChampInconnu as err:
@@ -458,7 +487,7 @@ def main() -> int:
     doublons = len(mapped) - len(uniques)
     mapped = list(uniques.items())
 
-    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date en brouillon) "
+    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date publiees, {hors_champ} hors champ en brouillon)"
           f"| ignores : {skipped} | verdicts lus : {len(verdicts)}")
     fichiers = [e for _, d in mapped for e in d["scrapeMetadata"]["fichiersJoints"]]
     sur_disque = [e for e in fichiers if "localPath" in e]

@@ -188,6 +188,21 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   tirées, toutes de la famille collectivité (seuls textes jamais traités), extraction locale `qwen3:8b` lancée le
   2026-10-14 ; en attente : accord écrit pour Haiku (0,054 euro estimé sur la longueur réelle), jugement des 50 pages par
   Monsieur DUCOUT (`comparaison_juger.cmd`), rapport. État détaillé : `openspec/changes/comparaison-moteurs-50-pages/tasks.md`.
+  Suite du 2026-10-14 au soir : premier tirage (collectivités, jugé inutilisable car sans appel de santé) tout de même
+  jugé et rapporté (`scraping/COMPARAISON_collectivites_2026-10-14.md` : local 45/50 repérage, 19/23 qualité, 3
+  fabrications ; Haiku 47/50, 19/23, 0 fabrication, 0,03 euro) ; second tirage de 50 pages d'appels chez ARS, INCa,
+  CNSA, fondations, sociétés savantes, établissements (`--familles`, `--mots`), extraction locale en cours, Haiku sur
+  accord (0,03 euro), jugement à refaire.
+- **Filtre du champ santé et médico-social** (changement `filtre-champ-sante`, instruction 26 validée le 2026-10-14 au
+  soir) : définition décidée par Monsieur DUCOUT (santé, médico-social, hors champ, incertain ; pas de social ;
+  cybersécurité et rénovation des établissements inclus), consigne et outil `scraping/champ.py` (`--classer`,
+  `--evaluer`, `--rapport`), règles d'import (hors champ -> brouillon à corriger ; verdict « hors champ » touche 7 ->
+  rejeté ; fiches sans date publiées, décision du soir), migrations `scripts/migrer_champ.py` et
+  `scripts/publier_sans_date.py` écrites avec essais à blanc. Fait : connecteurs classés par Haiku (105 fiches, 34 hors
+  champ, 0,03 euro). À faire dans l'ordre : fin du passage global, `champ.py --classer --moteur api` sur
+  `extraction_locale.json` (accord donné), import réel (accord), `migrer_champ.py` (accord), `publier_sans_date.py`
+  (accord), question du champ dans la chaîne (5.1), rapport `CHAMP.md`, documentation. État détaillé :
+  `openspec/changes/filtre-champ-sante/tasks.md`.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

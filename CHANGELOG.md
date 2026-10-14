@@ -6,6 +6,15 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Filtre du champ santé et médico-social (changement `filtre-champ-sante`, instruction 26 du rapport de critique,
+  2026-10-14 au soir) : chaque fiche reçoit un champ (`sante`, `medico-social`, `hors-champ`, `incertain`) par une
+  question fermée au modèle (`scraping/champ.py`, définition décidée par Monsieur DUCOUT), l'import met les fiches
+  hors champ en brouillon à corriger, le verdict « hors champ » de la validation quotidienne rejette la fiche, et les
+  fiches sans date de clôture sont désormais publiées avec « Date de clôture non précisée » au lieu d'entrer en
+  brouillon (décision de Monsieur DUCOUT). L'import ignore les fichiers de la comparaison des moteurs.
+- Comparaison de deux moteurs sur 50 pages (changement `comparaison-moteurs-50-pages`, 2026-10-14) :
+  `scraping/comparaison.py`, premier tirage de collectivités jugé et rapporté, second tirage chez les financeurs de
+  la santé.
 - Lot 0 d'assainissement (changement `lot-0-assainissement`, 2026-10-14, rapport de critique validé par Monsieur
   DUCOUT) : routage de l'application réduit au MVP de consultation (inscription fermée, modules gelés sans
   modification), `validation.statut` seule source de la fiabilité d'une fiche (étiquette `a-verifier` dérivée, `par`),

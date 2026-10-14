@@ -59,9 +59,13 @@ python -m venv .venv                       # environnement Python à la racine (
 ```
 
 Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
-sont importés ; une fiche sans date de clôture entre en brouillon (`status: draft`, `deadline` nulle : plus aucune
-échéance fictive depuis le lot 0 du 2026-10-14, étiquette `sans-date-cloture`, validation « à corriger »), invisible
-sans compte, en attente de Monsieur DUCOUT.
+sont importés ; une fiche sans date de clôture est publiée avec `deadline` nulle (plus aucune échéance fictive depuis
+le lot 0 du 2026-10-14), l'étiquette `sans-date-cloture` et le badge « À vérifier » : l'application affiche « Date de
+clôture non précisée » et la classe après les appels datés (décision de Monsieur DUCOUT du 2026-10-14 au soir, qui
+remplace le brouillon du lot 0 ; `scripts/publier_sans_date.py` publie les brouillons existants, après essai à blanc
+et accord). Une fiche classée hors champ par le modèle (`scrapeMetadata.champ`, changement `filtre-champ-sante`) entre
+en brouillon à corriger, jamais publiée sans verdict ; `scripts/migrer_champ.py` repasse en brouillon les fiches
+publiées avant le filtre ; le verdict « hors champ » de la validation quotidienne (touche 7) rejette la fiche.
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits

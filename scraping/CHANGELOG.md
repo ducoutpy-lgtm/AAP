@@ -4,6 +4,15 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-14 au soir)
+- `comparaison.py` : comparaison de deux moteurs sur 50 pages (tirage reproductible par famille, `--familles`, `--ids`,
+  `--mots`, `--inclure-traites`, `--score-min` ; extraction locale et API sur les mêmes textes ; écran de jugement port
+  8766, `comparaison_juger.cmd` ; rapport `COMPARAISON.md`). `echantillon.extraire` et `extraire_api` acceptent une liste
+  de textes et un fichier de sortie.
+- `champ.py` : filtre du champ santé et médico-social (`--classer` avec essai à blanc et sauvegarde, `--evaluer`,
+  `--rapport`), consigne `CONSIGNE_CHAMP` et `normaliser_champ` dans `echantillon.py`, outil `champ` dans `extractor.py` ;
+  `validation.py` : touche 7 « hors champ » en mode fiches.
+
 ### Modifié (lot 0 d'assainissement, 2026-10-14)
 - `validation.py` : verdicts des pages et des liens dans `sources/verdicts_pages.json` et `sources/verdicts_liens.json`
   (versionnés), option `--migrer-verdicts [--dry-run]` (sauvegarde dans `scripts/sauvegardes/`, fusion sans écraser,

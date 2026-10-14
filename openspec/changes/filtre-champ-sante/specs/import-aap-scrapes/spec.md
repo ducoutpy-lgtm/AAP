@@ -25,6 +25,25 @@ les autres valeurs ne changent rien. Sur un document existant, `status` et `vali
 - **WHEN** un document déjà publié est réimporté avec un champ `hors-champ`
 - **THEN** son statut et sa validation ne changent pas, et seule la migration dédiée peut le repasser en brouillon
 
+### Requirement: Fiche sans date de clôture publiée
+
+Décision de Monsieur DUCOUT du 2026-10-14 (nuit), qui remplace le brouillon imposé aux fiches sans date : l'import
+SHALL publier une fiche sans date de clôture avec `deadline` nulle, `validation.statut = proposee` (badge « à
+vérifier »), l'étiquette `sans-date-cloture`, et SHALL la considérer ouverte jusqu'au 31 décembre de l'année en
+cours pour la règle d'expiration, sans inscrire aucune date dans la base.
+
+#### Scenario: Appel sans date importé
+
+- **WHEN** l'import lit une fiche nouvelle sans date de clôture, dans le champ
+- **THEN** la fiche est publiée, visible sur `/aap/search` avec « Date de clôture non précisée » et le badge « À
+  vérifier », classée après les appels datés
+
+#### Scenario: Brouillons sans date existants publiés
+
+- **WHEN** `scripts/publier_sans_date.py --dry-run` puis, après accord, `scripts/publier_sans_date.py` sont lancés
+- **THEN** les brouillons portant `sans-date-cloture` sans verdict humain et non classés hors champ passent en
+  publié, `validation.statut = proposee`, après sauvegarde JSON, et le compte avant et après est affiché
+
 ### Requirement: Verdict « hors champ » rejeté
 
 L'import SHALL traiter le verdict `hors-champ` de `sources/verdicts_fiches.json` comme `rejetee`, commentaire

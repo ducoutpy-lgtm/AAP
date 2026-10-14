@@ -298,6 +298,26 @@ Mesures par moteur : repérage (décisions justes sur les pages jugées), qualit
 adresses de la liste. Verdicts dans `sources/verdicts_comparaison.json` (versionné, distinct de `verdicts_fiches.json`
 que lit l'import). La liste tirée fait foi : ne pas relancer `--tirer` une fois le passage global avancé.
 
+### Filtre du champ santé et médico-social (changement `filtre-champ-sante`, 2026-10-14)
+
+Définition décidée par Monsieur DUCOUT : `sante` (objet santé, ou bénéficiaire hôpital ou clinique quel que soit l'objet :
+numérique, cybersécurité CaRE, rénovation), `medico-social` (handicap, autonomie, grand âge, établissements et services
+médico-sociaux), `hors-champ` (social sans dimension sanitaire, agriculture, culture, tourisme, environnement...),
+`incertain`. La consigne complète est `CONSIGNE_CHAMP` dans `echantillon.py`, reprise dans `CHAMP.md`.
+
+```bash
+python champ.py --classer --dry-run                                   # fiches à classer par fichier, rien d'écrit
+python champ.py --classer --moteur api --modele claude-haiku-5-5      # après accord ; sauvegarde dans scripts/sauvegardes/
+python champ.py --classer --fichier results/x.json                    # un fichier précis, modèle local par défaut
+python champ.py --evaluer                                             # contre sources/verdicts_champ.json
+python champ.py --rapport                                             # CHAMP.md : part dans le champ par source
+```
+
+Le champ est écrit dans `scrape_metadata` de chaque fiche (`champ`, `champ_raison`, `champ_modele`, `champ_le`,
+`champ_source`) et repris par l'import dans `scrapeMetadata` : une fiche `hors-champ` entre en brouillon à corriger,
+jamais publiée sans verdict ; le verdict « hors champ » de la validation quotidienne (touche 7) la rejette. Ne pas
+classer `results/extraction_locale.json` pendant que le passage global tourne : il réécrit ce fichier à chaque fiche.
+
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 
 Décision de Monsieur DUCOUT : avant tout appel payant, « lentement et sûrement sur Ollama ». Le second tour corrige

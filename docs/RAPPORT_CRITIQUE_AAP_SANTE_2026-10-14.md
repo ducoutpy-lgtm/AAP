@@ -481,6 +481,16 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   numéro un : la faible pertinence des appels détectés. Les collectivités sont donc bien des financeurs à couvrir,
   mais seules leurs pages du champ comptent : le filtre du champ (instruction 26) et la précision de la collecte
   (instruction 27) sont la condition de la promesse du produit.
+- Décisions de Monsieur DUCOUT (2026-10-14, nuit) : (1) les fiches sans date de clôture sont publiées, badge « à
+  vérifier », affichage « Date de clôture non précisée » ; pour la logique de l'application (tri, expiration), un appel
+  sans date est considéré ouvert jusqu'au 31 décembre de l'année en cours ; aucune date n'est inscrite dans la base,
+  ce qui reste cohérent avec la réponse Q4 mais remplace la règle 4 conservée par l'instruction 9 (brouillon imposé
+  aux fiches sans date) ; les 141 brouillons sans date existants seront publiés par une migration, sauf fiches hors
+  champ. (2) Vocabulaire : « fiche » = un appel à projets résumé, résultat visible dans l'application ; « documents »
+  = les pièces jointes d'un appel (cahier des charges, règlement, annexes) ; ne plus employer « document » pour une
+  fiche enregistrée. (3) Accord pour classer les 916 fiches avec `claude-haiku-5-5` (0,18 euro estimé) : les fiches
+  des connecteurs sont classées aussitôt, celles du passage local après la fin du passage, qui réécrit son fichier à
+  chaque fiche.
 - Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
   Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
   publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)

@@ -199,14 +199,43 @@ def test_un_champ_inconnu_fait_echouer_l_import_en_le_nommant():
     assert set(imp.CHAMPS_HUMAINS) | set(imp.CHAMPS_METIER) | set(imp.CHAMPS_TECHNIQUES) == imp.CHAMPS_ENVOYES
 
 
-def test_fiche_sans_date_deadline_nulle_brouillon_a_corriger():
+def test_fiche_sans_date_publiee_deadline_nulle_a_verifier():
+    # Decision de Monsieur DUCOUT du 2026-10-14 (nuit) : une fiche sans date est publiee, « Date de cloture non
+    # precisee », badge « a verifier » ; aucune date inventee.
     ident, doc = document(date_cloture=None)
-    assert doc["deadline"] is None and doc["status"] == "draft" and "sans-date-cloture" in doc["tags"]
-    assert doc["validation"]["statut"] == "a_corriger" and doc["validation"]["par"] == "import (date absente)"
-    assert "a-verifier" in doc["tags"]  # a_corriger garde l'etiquette
+    assert doc["deadline"] is None and doc["status"] == "published" and "sans-date-cloture" in doc["tags"]
+    assert doc["validation"]["statut"] == "proposee" and "a-verifier" in doc["tags"]
     col = FauxCollection()
     imp.ecrire_documents(col, FauxBatch, [(ident, doc)], MAINTENANT)
-    assert col.magasin[ident]["deadline"] is None and "publishedAt" not in col.magasin[ident]
+    assert col.magasin[ident]["deadline"] is None and col.magasin[ident]["status"] == "published"
+
+
+def test_fiche_hors_champ_entre_en_brouillon_a_corriger():
+    doc = {"status": "published", "tags": ["x"], "validation": {"statut": "proposee", "commentaire": "", "date": "", "par": ""},
+           "scrapeMetadata": {"champ": "hors-champ"}}
+    d = imp.champ_en_attente(doc, date(2026, 10, 14))
+    assert d["status"] == "draft" and d["validation"]["statut"] == "a_corriger" and d["validation"]["par"] == "import (champ)"
+    assert "hors-champ" in d["tags"] and "a-verifier" in d["tags"] and "x" in d["tags"]
+
+
+def test_fiche_incertaine_garde_son_statut_avec_etiquette():
+    doc = {"status": "published", "tags": [], "validation": {"statut": "proposee", "commentaire": "", "date": "", "par": ""},
+           "scrapeMetadata": {"champ": "incertain"}}
+    d = imp.champ_en_attente(doc, date(2026, 10, 14))
+    assert d["status"] == "published" and "champ-incertain" in d["tags"] and "a-verifier" in d["tags"]
+
+
+def test_verdict_humain_l_emporte_sur_le_champ_du_modele():
+    doc = {"status": "published", "tags": [], "validation": {"statut": "validee", "commentaire": "", "date": "", "par": imp.RELECTEUR},
+           "scrapeMetadata": {"champ": "hors-champ"}}
+    d = imp.champ_en_attente(doc, date(2026, 10, 14))
+    assert d["status"] == "published" and d["validation"]["statut"] == "validee"
+    assert "hors-champ" not in d["tags"] and "a-verifier" not in d["tags"]
+
+
+def test_verdict_hors_champ_rejette_et_archive():
+    d = imp.appliquer_verdict({"status": "published", "tags": []}, {"verdict": "hors-champ", "commentaire": "agricole", "date": "2026-10-14"})
+    assert d["validation"]["statut"] == "rejetee" and d["status"] == "archived"
 
 
 def test_fusionner_prefere_le_connecteur_au_modele_local():

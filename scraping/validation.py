@@ -109,6 +109,7 @@ function afficher(){
   h+=`<button class="corr" onclick="envoyer('aap-a-corriger')">${lien?'2. AAP, mais douteux (commentaire)':'2. AAP, fiche à corriger'}</button>`;
   h+=`<button class="non" onclick="envoyer('pas-un-aap')">3. Pas un appel à projets</button>`;
   h+=`<button onclick="envoyer('passer')">4. Passer</button>`;
+  if(!lien){h+=`<button class="non" onclick="envoyer('hors-champ')">7. Hors champ : ni santé ni médico-social</button>`;}
   if(lien){h+=`<button class="corr" onclick="envoyer('liste-d-aap')">5. Page qui recense des AAP (pas un AAP précis)</button>`;
    h+=`<button class="corr" onclick="envoyer('appel-permanent')">6. On peut candidater, sans sujet ni montant précis</button>`;}}
  h+=`<button onclick="aller(-1)">&larr; Précédente</button><button onclick="aller(1)">Suivante &rarr;</button></div>`;
@@ -135,7 +136,7 @@ function aller(d){i=Math.max(0,Math.min(fiches.length-1,i+d));afficher();}
 document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'){if(e.key==='Enter')envoyer(verdicts[fiches[i].url_source]?.verdict||'passer',true);return;}
  const page=(fiches[i]?.scrape_metadata?.modele||'').startsWith('page');
  const m=(page?{'1':'bonne-page','2':'mauvaise-page','3':'page-morte','4':'passer','5':'hors-champ'}
-  :{'1':'aap-juste','2':'aap-a-corriger','3':'pas-un-aap','4':'passer','5':'liste-d-aap','6':'appel-permanent'})[e.key]; if(m)envoyer(m);
+  :{'1':'aap-juste','2':'aap-a-corriger','3':'pas-un-aap','4':'passer','5':'liste-d-aap','6':'appel-permanent','7':'hors-champ'})[e.key]; if(m)envoyer(m);
  if(e.key==='ArrowLeft')aller(-1); if(e.key==='ArrowRight')aller(1);});
 document.getElementById('cadre').onload=()=>window.focus();  // garde les touches 1 à 4 actives après le chargement du cadre
 const caseFenetre=document.getElementById('fenetre'); caseFenetre.checked=modeFenetre;

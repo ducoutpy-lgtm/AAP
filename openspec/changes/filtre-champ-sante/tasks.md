@@ -38,25 +38,56 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
 - [ ] 2.2 `champ.py --evaluer` sur les 50 pages de la comparaison (référence : verdicts « appel » et commentaires
   « hors champ » de Monsieur DUCOUT) avec le modèle local, 0 euro. Fait quand : taux d'accord collé, désaccords
   listés.
-- [ ] 2.3 Accord écrit de Monsieur DUCOUT sur le modèle de la classification rétroactive (local 0 euro ou
+- [x] 2.3 Accord écrit de Monsieur DUCOUT sur le modèle de la classification rétroactive (local 0 euro ou
   `claude-haiku-5-5`, prix vérifiés le 2026-10-14, coût estimé collé ici), puis, si Haiku : évaluation sur les 50
-  pages (0,01 euro estimé) avant les 900 fiches. Fait quand : accord collé, coût réel collé.
+  pages (0,01 euro estimé) avant les 900 fiches. Fait quand : accord collé, coût réel collé. (Accord du 2026-10-14,
+  nuit : « ok, haiku pour classer les 916 fiches, vas-y » ; coût estimé 0,179 euro ; l'évaluation préalable est
+  remplacée par la table des 24 fiches du premier tirage classées en local, à corriger par Monsieur DUCOUT.)
 - [ ] 2.4 Classification des fiches du passage global et des connecteurs. Fait quand : répartition des cinq réponses
-  collée, coût réel collé, sauvegardes listées.
+  collée, coût réel collé, sauvegardes listées. (Connecteurs faits le 2026-10-14 à 21 h 49 : 105 fiches, « santé 55,
+  médico-social 14, hors champ 34, incertain 2 », 105 appels, 0,027 euro, sauvegarde `scripts/sauvegardes/champ_2026-10-14_2149/` ;
+  les 34 hors champ sont des appels Fondation de France hors santé (transition écologique, ruralité, petite enfance,
+  jeunes). Passage local (`extraction_locale.json`) : à classer après la fin du passage global, qui réécrit son fichier
+  à chaque fiche.)
 
 ## 3. Import et validation quotidienne
 
-- [ ] 3.1 `scripts/import_to_firestore.py` : règle `hors-champ` et `incertain` à la création (fonction pure testée sur
+- [x] 3.1 `scripts/import_to_firestore.py` : règle `hors-champ` et `incertain` à la création (fonction pure testée sur
   le faux Firestore : brouillon, a_corriger, étiquettes), verdict `hors-champ` dans `STATUTS_VALIDATION`, liste
   blanche inchangée (champ dans `scrapeMetadata`). Fait quand : pytest scripts vert, essai à blanc de l'import collé
-  avec le compte des fiches hors champ.
-- [ ] 3.2 `validation.py` : touche 7 « hors champ » en mode fiches, `VERDICTS` étendu, test. Fait quand : pytest vert,
-  écran ouvert par la session et verdict d'essai écrit puis retiré.
+  avec le compte des fiches hors champ. (Fait le 2026-10-14, nuit : `champ_en_attente` (un verdict humain l'emporte),
+  `champ`, `champRaison`, `champModele` dans `scrapeMetadata`, verdict `hors-champ` -> rejetee ; tests
+  `test_fiche_hors_champ_entre_en_brouillon_a_corriger`, `test_fiche_incertaine_garde_son_statut_avec_etiquette`,
+  `test_verdict_humain_l_emporte_sur_le_champ_du_modele`, `test_verdict_hors_champ_rejette_et_archive` ; pytest scripts
+  17 verts ; essai à blanc : « AAP lus : 921 | a importer : 405 (dont 2 doublons fusionnes, 196 sans date publiees,
+  21 hors champ en brouillon) | ignores : {'incomplet': 0, 'expire': 514} ».)
+- [x] 3.2 `validation.py` : touche 7 « hors champ » en mode fiches, `VERDICTS` étendu, test. Fait quand : pytest vert,
+  écran ouvert par la session et verdict d'essai écrit puis retiré. (Fait le 2026-10-14, nuit : bouton « 7. Hors champ :
+  ni santé ni médico-social » et touche 7 en mode fiches ; `VERDICTS` contenait déjà `hors-champ` ; écran lancé par la
+  session sur le port 8799 et page lue : bouton présent, touche 7 câblée ; aucun verdict d'essai écrit, le fichier
+  `verdicts_fiches.json` est intact ; pytest scraping 74 verts.)
+- [x] 3.3 Fiches sans date publiées (décision de Monsieur DUCOUT du 2026-10-14, nuit) : `sans_date_en_attente`
+  devient « sans date publiée » (deadline nulle, publié, proposee, étiquette `sans-date-cloture`), règle d'expiration
+  au 31 décembre de l'année en cours sans date inscrite ; tests sur le faux Firestore. Fait quand : pytest scripts
+  vert, essai à blanc collé (plus de « draft » pour les fiches sans date). (Fait le 2026-10-14, nuit :
+  `test_fiche_sans_date_publiee_deadline_nulle_a_verifier` ; essai à blanc : « 196 sans date publiees » ; la fiche sans
+  date n'a pas de date et n'est donc jamais écartée comme expirée : ouverte jusqu'au 31 décembre, rien d'inscrit.)
 
 ## 4. Migration des fiches publiées
 
 - [ ] 4.1 `scripts/migrer_champ.py` : sauvegarde JSON, `--dry-run` (compte, cinq exemples), accord écrit, exécution.
-  Fait quand : compte avant et après collé, `/aap/search` relu dans le navigateur.
+  Fait quand : compte avant et après collé, `/aap/search` relu dans le navigateur. (Script écrit ; essai à blanc du
+  2026-10-14, nuit, connecteurs seuls classés : « 34 fiches classees hors champ dans les fichiers de resultats ; 10 fiches
+  publiees a repasser en brouillon ; 0 publiees avec verdict humain », exemples Fondation de France (réveillons de la
+  solidarité, solutions fondées sur la nature, eau du Grand Ouest, ruralité, art en milieu rural). À relancer après la
+  classification du passage local ; exécution après accord.)
+- [ ] 4.2 `scripts/publier_sans_date.py` : les brouillons `sans-date-cloture` sans verdict humain et non hors champ
+  passent en publié, proposee ; sauvegarde JSON, `--dry-run`, accord écrit (donné en principe le 2026-10-14 : « oui je
+  veux qu'elles soient publiées »), exécution après la classification et l'import. Fait quand : compte avant et après
+  collé, `/aap/search` relu. (Script écrit ; essai à blanc du 2026-10-14, nuit : « 141 fiches portent l'etiquette
+  sans-date-cloture ; 141 en brouillon ; 120 a publier ; 0 avec verdict humain ; 21 hors champ, conservees en brouillon ».
+  Ordre impératif : classification du passage local, import réel, `migrer_champ.py`, puis ce script, sinon des fiches
+  hors champ sans date seraient publiées.)
 
 ## 5. Chaîne d'extraction et registre
 
