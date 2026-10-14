@@ -213,8 +213,10 @@ Cycle (commandes slash dans Claude Code) :
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
-  En cours : `lot-0-assainissement` (2026-10-14 : instructions 1 à 9 et 17 du rapport de critique, tâches et accords
-  en attente dans son `tasks.md`), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
+  En cours : `lot-0-assainissement` (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de
+  Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et
+  testé, 50 pages de collectivités jamais traitées tirées, extraction locale lancée, accord API puis jugement de
+  Monsieur DUCOUT en attente), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
   `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte finie, extraction en tâche de fond),
   `organisation-donnees-validees` (2026-10-14 : tâches 1 à 4 faites, vérification 5.1 de Monsieur DUCOUT en attente),
   `validation-manuelle-aap` (outil spécifié et rejoué, vérification 2.1 de Monsieur DUCOUT en attente) ; brouillon

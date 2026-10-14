@@ -1,4 +1,5 @@
 """Tests des fonctions pures de l'échantillon d'extraction (sans réseau, sans Ollama)."""
+import json
 import sys
 from pathlib import Path
 
@@ -173,3 +174,37 @@ def test_fiches_par_adresse_lit_toutes_les_rubriques_sans_doublon(tmp_path, monk
     resultats = {"a": {"id": "a", "nom": "A"}, "b": {"id": "b", "nom": "B"}, "c": {"id": "c", "nom": "sans dossier"}}
     fiches = echantillon.fiches_par_adresse(resultats, {"https://x/aap-1", "https://x/aap-2"})
     assert [(r["id"], c.name) for r, c in fiches] == [("a", "1.txt"), ("b", "2.txt")]
+
+
+def test_extraire_accepte_une_liste_explicite_de_textes(tmp_path, monkeypatch):
+    # Comparaison sur 50 pages : extraire() reçoit la liste des textes au lieu de lire les rubriques ; le modèle
+    # local est remplacé par une fonction qui refuse tout, aucun appel réel.
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "a.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-a\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(echantillon, "appeler_ollama", lambda *a, **k: {"est_aap": False, "raison": "pas un appel"})
+    sortie = tmp_path / "results" / "comparaison_ollama_test.json"
+    echantillon.extraire([], "ollama", "test", None, chemin_sortie=sortie, fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    refus = json.loads(sortie.with_name(sortie.stem + "_non_aap.json").read_text(encoding="utf-8"))
+    assert [r["url"] for r in refus] == ["https://x/page-a"] and not sortie.exists()
+
+
+def test_extraire_api_accepte_adresses_et_fichier_de_sortie(tmp_path, monkeypatch):
+    # Même chose pour le moteur api : adresses et fichier de sortie explicites ; la question fermée est remplacée
+    # par une fonction qui refuse, donc aucun appel payant et aucune ligne dans le journal.
+    import extractor
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "b.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-b\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "DOSSIER", tmp_path / "decouverte")
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(echantillon, "cout_cumule", lambda *a, **k: 0.0)
+    monkeypatch.setattr(extractor, "est_un_aap", lambda *a, **k: {"est_aap": False, "raison": "pas un appel"})
+    sortie = tmp_path / "results" / "comparaison_api_test.json"
+    echantillon.extraire_api({"src": {"id": "src", "nom": "Source"}}, "claude-haiku-5-5", None, 5.0,
+                             adresses={"https://x/page-b"}, chemin_sortie=sortie)
+    refus = json.loads(sortie.with_name(sortie.stem + "_non_aap.json").read_text(encoding="utf-8"))
+    assert [r["url"] for r in refus] == ["https://x/page-b"] and not sortie.exists()

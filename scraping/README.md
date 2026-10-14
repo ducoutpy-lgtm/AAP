@@ -279,6 +279,25 @@ le 2026-10-14 (ligne `api_claude-haiku-5-5` de `ECHANTILLON.md`) : 45 textes, 21
 textes sont trouvés par adresse dans toutes les rubriques découvertes (`fiches_par_adresse`), sans dépendre de la rubrique
 retenue par famille ; une relance de la commande reprend sans refaire les textes déjà traités.
 
+### Comparaison de deux moteurs sur 50 pages jamais traitées (changement `comparaison-moteurs-50-pages`, 2026-10-14)
+
+Demande de Monsieur DUCOUT : comparer le modèle local et `claude-haiku-5-5` sur les mêmes 50 pages tirées au sort parmi
+les textes collectés que le passage global n'a jamais traités, en jugeant lui-même chaque page (appel ou non) et chaque
+fiche (juste ou à corriger). Outil `comparaison.py`, étapes séparées :
+
+```bash
+python comparaison.py --tirer                                   # sources/comparaison_pages.json (graine 2026, par famille)
+python comparaison.py --extraire-local --modele qwen3:8b        # 0 euro -> results/comparaison_ollama_qwen3-8b.json
+python comparaison.py --extraire-api --modele claude-haiku-5-5  # après accord écrit, plafond cumulé 5 euros
+python comparaison.py --juger                                   # écran http://localhost:8766 (raccourci comparaison_juger.cmd)
+python comparaison.py --rapport                                 # COMPARAISON.md
+```
+
+Mesures par moteur : repérage (décisions justes sur les pages jugées), qualité (fiches justes parmi les pages jugées
+« appel »), fabrications (fiches sur des pages jugées « pas un appel »), durée, coût réel lu dans le journal pour les
+adresses de la liste. Verdicts dans `sources/verdicts_comparaison.json` (versionné, distinct de `verdicts_fiches.json`
+que lit l'import). La liste tirée fait foi : ne pas relancer `--tirer` une fois le passage global avancé.
+
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 
 Décision de Monsieur DUCOUT : avant tout appel payant, « lentement et sûrement sur Ollama ». Le second tour corrige

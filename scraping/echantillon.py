@@ -443,13 +443,16 @@ def _ecrire_json(chemin: Path, donnees) -> None:
 
 
 def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None,
-             chemin_sortie: Path | None = None, metadonnees: dict | None = None) -> None:
+             chemin_sortie: Path | None = None, metadonnees: dict | None = None,
+             fiches: list[tuple[dict, Path]] | None = None) -> None:
     """Question fermée, extraction, contrôle des formats avec seconde chance ; écriture au fil de l'eau, reprise.
 
     chemin_sortie et metadonnees servent à l'extraction locale globale (extraction_locale.py) : un autre fichier
-    de sortie que celui de l'échantillon, et des champs ajoutés à scrape_metadata (a_verifier).
+    de sortie que celui de l'échantillon, et des champs ajoutés à scrape_metadata (a_verifier). fiches sert à la
+    comparaison sur 50 pages (comparaison.py) : une liste explicite de (rubrique, chemin) au lieu des textes des
+    rubriques.
     """
-    fiches = fiches_disponibles(rubriques)[:limite]
+    fiches = (fiches if fiches is not None else fiches_disponibles(rubriques))[:limite]
     RESULTS.mkdir(exist_ok=True)
     chemin_sortie = chemin_sortie or fichier_sortie(moteur, modele)
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
@@ -517,7 +520,8 @@ def charger_env() -> None:
             os.environ[cle.strip()] = valeur.strip().strip('"').strip("'")
 
 
-def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: float) -> None:
+def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: float,
+                 adresses: set[str] | None = None, chemin_sortie: Path | None = None) -> None:
     """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, deux appels par texte, arrêt au plafond.
 
     Même protocole que le modèle local (question fermée puis extraction, contrôle des formats) pour que la comparaison
@@ -528,10 +532,13 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
     charger_env()
     if modele not in extractor.TARIFS_USD_PAR_MTOK:
         raise SystemExit(f"Tarif inconnu pour {modele} : l'ajouter à TARIFS_USD_PAR_MTOK (extractor.py) avant tout appel.")
-    adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
+    # adresses et chemin_sortie : la comparaison sur 50 pages (comparaison.py) passe ses propres adresses et son
+    # propre fichier ; sans eux, les 45 adresses de l'échantillon et le fichier de l'échantillon.
+    if adresses is None:
+        adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
     fiches = fiches_par_adresse(resultats, adresses)[:limite]
     RESULTS.mkdir(exist_ok=True)
-    chemin_sortie = fichier_sortie("api", modele)
+    chemin_sortie = chemin_sortie or fichier_sortie("api", modele)
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
     chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
     sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)

@@ -181,6 +181,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   lot 0 consigné dans la section 8 du rapport : les filtres territoire, secteur et budget de `/aap/search` ne
   correspondent pas aux valeurs importées (libellés contre identifiants), proposition pour le lot 1 à valider.
   État détaillé : `openspec/changes/lot-0-assainissement/tasks.md`.
+- Comparaison de deux moteurs sur 50 pages jamais traitées (changement `comparaison-moteurs-50-pages`, demande de
+  Monsieur DUCOUT du 2026-10-14, plan accordé) : outil `scraping/comparaison.py` écrit et testé (tirage reproductible,
+  extraction locale et API sur les mêmes textes, écran de jugement sur le port 8766, rapport `COMPARAISON.md`) ; 50 pages
+  tirées, toutes de la famille collectivité (seuls textes jamais traités), extraction locale `qwen3:8b` lancée le
+  2026-10-14 ; en attente : accord écrit pour Haiku (0,054 euro estimé sur la longueur réelle), jugement des 50 pages par
+  Monsieur DUCOUT (`comparaison_juger.cmd`), rapport. État détaillé : `openspec/changes/comparaison-moteurs-50-pages/tasks.md`.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

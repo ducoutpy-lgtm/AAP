@@ -1,0 +1,357 @@
+{
+ "graine": 2026,
+ "nombre": 50,
+ "candidats": 765,
+ "pages": [
+  {
+   "url": "https://oise.fr/actions/sante-social-solidarite/emploi-insertion/appels-a-projets",
+   "source": "conseil-departemental-oise",
+   "nom": "Conseil départemental Oise",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-oise/fiches/adb32636c4.txt"
+  },
+  {
+   "url": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Planification-eologique-Modernisation-des-entreprises-d-exploitation-forestiere-en-Guyane",
+   "source": "collectivite-territoriale-de-guyane",
+   "nom": "Collectivité territoriale de Guyane",
+   "categorie": "collectivite",
+   "fichier": "decouverte/collectivite-territoriale-de-guyane/fiches/e9cefaabe9.txt"
+  },
+  {
+   "url": "https://www.ladrome.fr/mon-quotidien/numerique/travailler-autrement/",
+   "source": "drome-commission-des-financeurs",
+   "nom": "Drôme – Commission des financeurs",
+   "categorie": "collectivite",
+   "fichier": "decouverte/drome-commission-des-financeurs/fiches/4718d373fc.txt"
+  },
+  {
+   "url": "https://www.ladrome.fr/mon-quotidien/solidarites/stop-maltraitance/",
+   "source": "drome-commission-des-financeurs",
+   "nom": "Drôme – Commission des financeurs",
+   "categorie": "collectivite",
+   "fichier": "decouverte/drome-commission-des-financeurs/fiches/5004f1160d.txt"
+  },
+  {
+   "url": "https://www.paris.fr/pages/appel-a-projets-pour-l-organisation-de-marches-de-producteurs-a-paris-en-2027-35825",
+   "source": "ville-de-paris-appels-a-projets",
+   "nom": "Ville de Paris – appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/ville-de-paris-appels-a-projets/fiches/5f6a8630c1.txt"
+  },
+  {
+   "url": "https://lozere.fr/node/23539",
+   "source": "conseil-departemental-lozere",
+   "nom": "Conseil départemental Lozère",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-lozere/fiches/463cdf4525.txt"
+  },
+  {
+   "url": "https://www.cg971.fr/aap-promouvoir-lintegration-sociale-des-personnes-exposees-au-risque-de-pauvrete-ou-dexclusion-sociale/",
+   "source": "conseil-departemental-guadeloupe",
+   "nom": "Conseil départemental Guadeloupe",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-guadeloupe/fiches/71c5debff4.txt"
+  },
+  {
+   "url": "https://www.ledepartement66.fr/appels-a-projet-programmation-culturelle-2024-2025-de-spectacles-vivants-et-dateliers-dart-plastiques-et-visuels/",
+   "source": "conseil-departemental-pyrenees-orientales",
+   "nom": "Conseil départemental Pyrénées-Orientales",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-pyrenees-orientales/fiches/10755861c1.txt"
+  },
+  {
+   "url": "https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026/Appel-a-projet-pour-les-journees-europeennes-du-patrimoine-2026",
+   "source": "conseil-departemental-mayotte",
+   "nom": "Conseil départemental Mayotte",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-mayotte/fiches/b2b2ea4513.txt"
+  },
+  {
+   "url": "https://www.laregion.fr/Prix-Claude-Nougaro-39650",
+   "source": "conseil-regional-occitanie",
+   "nom": "Conseil régional Occitanie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-occitanie/fiches/3329f1ab3a.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A1348",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/c605712df7.txt"
+  },
+  {
+   "url": "https://www.laregion.fr/mentions-legales",
+   "source": "conseil-regional-occitanie",
+   "nom": "Conseil régional Occitanie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-occitanie/fiches/a4a70659a3.txt"
+  },
+  {
+   "url": "https://www.laregion.fr/Investir-dans-les-equipements-et-installations-de-production-d-energies-a-partir-de",
+   "source": "conseil-regional-occitanie",
+   "nom": "Conseil régional Occitanie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-occitanie/fiches/2b21fbfb0f.txt"
+  },
+  {
+   "url": "https://www.vosges.fr/donnees-personnelles/",
+   "source": "conseil-departemental-vosges",
+   "nom": "Conseil départemental Vosges",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-vosges/fiches/5965a93190.txt"
+  },
+  {
+   "url": "https://www.ladrome.fr/mon-quotidien/education/college-pour-tous/",
+   "source": "drome-commission-des-financeurs",
+   "nom": "Drôme – Commission des financeurs",
+   "categorie": "collectivite",
+   "fichier": "decouverte/drome-commission-des-financeurs/fiches/8f4b07b5af.txt"
+  },
+  {
+   "url": "https://www.le64.fr/favoriser-linsertion-professionnelle-des-personnes-eloignees-du-marche-du-travail",
+   "source": "conseil-departemental-pyrenees-atlantiques",
+   "nom": "Conseil départemental Pyrénées-Atlantiques",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-pyrenees-atlantiques/fiches/d7f2daa2b0.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A589",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/8d47ba6c1a.txt"
+  },
+  {
+   "url": "https://www.cg971.fr/appel-a-projets-fse-2025-ateliers-chantiers-dinsertion-guadoi1671/",
+   "source": "conseil-departemental-guadeloupe",
+   "nom": "Conseil départemental Guadeloupe",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-guadeloupe/fiches/65dd64424d.txt"
+  },
+  {
+   "url": "http://www.ledepartement66.fr/?post_type=profil&p=13163",
+   "source": "conseil-departemental-pyrenees-orientales",
+   "nom": "Conseil départemental Pyrénées-Orientales",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-pyrenees-orientales/fiches/61f2cdc90a.txt"
+  },
+  {
+   "url": "https://www.maine-et-loire.fr/aides-et-services/professionnels/appels-a-projets/nature-en-ville",
+   "source": "conseil-departemental-maine-et-loire",
+   "nom": "Conseil départemental Maine-et-Loire",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-maine-et-loire/fiches/581262981c.txt"
+  },
+  {
+   "url": "https://herault.fr/328-partenaires.htm",
+   "source": "conseil-departemental-herault",
+   "nom": "Conseil départemental Hérault",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-herault/fiches/dc7a59a091.txt"
+  },
+  {
+   "url": "https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/aides-de-leurope-pour-le-territoire/",
+   "source": "mairie-de-rennes",
+   "nom": "Mairie de Rennes",
+   "categorie": "collectivite",
+   "fichier": "decouverte/mairie-de-rennes/fiches/5742a83718.txt"
+  },
+  {
+   "url": "https://www.essonne.gouv.fr/info-cookies",
+   "source": "conseil-departemental-essonne",
+   "nom": "Conseil départemental Essonne",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-essonne/fiches/a97c08d957.txt"
+  },
+  {
+   "url": "https://le64.fr/ouverture-du-teleservice-demande-de-subvention-autonomie-prevention-de-la-perte-dautonomie-0",
+   "source": "conseil-departemental-pyrenees-atlantiques",
+   "nom": "Conseil départemental Pyrénées-Atlantiques",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-pyrenees-atlantiques/fiches/aecd29d08a.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A616",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/906cd7a83c.txt"
+  },
+  {
+   "url": "https://aidescd30.gard.fr/",
+   "source": "conseil-departemental-gard",
+   "nom": "Conseil départemental Gard",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-gard/fiches/afd72c2449.txt"
+  },
+  {
+   "url": "https://www.seine-et-marne.fr/fr/appels-projet-subventions/festivals-et-manifestations-culturelles-et-artistiques",
+   "source": "conseil-departemental-seine-et-marne",
+   "nom": "Conseil départemental Seine-et-Marne",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-seine-et-marne/fiches/e0d31c60da.txt"
+  },
+  {
+   "url": "https://www.savoie.fr/web/sw_180135/appel-a-projets-commission-des-financeurs-pour-la-prevention-de-la-perte-d-autonomie-2027-2029",
+   "source": "conseil-departemental-savoie",
+   "nom": "Conseil départemental Savoie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-savoie/fiches/9440b0b719.txt"
+  },
+  {
+   "url": "https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024/Appel-a-projet-DILCRAH",
+   "source": "collectivite-territoriale-de-guyane",
+   "nom": "Collectivité territoriale de Guyane",
+   "categorie": "collectivite",
+   "fichier": "decouverte/collectivite-territoriale-de-guyane/fiches/7bf8a3a44a.txt"
+  },
+  {
+   "url": "https://www.centre-valdeloire.fr/appels-projet/projeunes-donne-vie-tes-projets-de-lycee",
+   "source": "conseil-regional-centre-val-de-loire",
+   "nom": "Conseil régional Centre-Val de Loire",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-centre-val-de-loire/fiches/bf7e6698df.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A229",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/5f51021295.txt"
+  },
+  {
+   "url": "https://www.collectivitedemartinique.mq/appels_a_projets/appel-a-projets-parcours-de-la-3eme-chance-accompagner-les-jeunes-vers-une-reinsertion-durable/",
+   "source": "collectivite-territoriale-de-martinique",
+   "nom": "Collectivité territoriale de Martinique",
+   "categorie": "collectivite",
+   "fichier": "decouverte/collectivite-territoriale-de-martinique/fiches/1fc1f105aa.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets/concours-deloquence-sur-la-citoyennete-avec-lassociation-trouve-ta-voix",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/a10eee4446.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets/parentalite-ouverture-socio-culturelle-et-scolarite-pour-les-enfants-en-difficulte",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/49002d30c0.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A166",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/177730effe.txt"
+  },
+  {
+   "url": "https://www.yvelines.fr/mon-departement/appels-a-projets-subventions/appel-a-projets-fse-insertion-des-jeunes-acces-emploi-des-jeunes-yvelinois/",
+   "source": "conseil-departemental-yvelines",
+   "nom": "Conseil départemental Yvelines",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-yvelines/fiches/1e6e87f7fc.txt"
+  },
+  {
+   "url": "https://www.ladrome.fr/mon-quotidien/sports/le-sport-dans-la-drome/",
+   "source": "drome-commission-des-financeurs",
+   "nom": "Drôme – Commission des financeurs",
+   "categorie": "collectivite",
+   "fichier": "decouverte/drome-commission-des-financeurs/fiches/d50adae01c.txt"
+  },
+  {
+   "url": "https://www.orleans.fr/actualites?tx_news_pi1%5BoverwriteDemand%5D%5Bcategories%5D=5&cHash=7485d4459d69ab9103f864df8c397e49",
+   "source": "mairie-de-orleans",
+   "nom": "Mairie de Orléans",
+   "categorie": "collectivite",
+   "fichier": "decouverte/mairie-de-orleans/fiches/6dea761bc5.txt"
+  },
+  {
+   "url": "https://hautesavoie.fr/rentree-des-classes-les-nouveaux-eleves-de-6e-accueillis-par-les-conseillers-departementaux/",
+   "source": "conseil-departemental-haute-savoie",
+   "nom": "Conseil départemental Haute-Savoie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-haute-savoie/fiches/a927c0b4ab.txt"
+  },
+  {
+   "url": "https://www.valdoise.fr/annuaire/2548/294-libelle.htm",
+   "source": "conseil-departemental-val-d-oise",
+   "nom": "Conseil départemental Val-d'Oise",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-val-d-oise/fiches/731e228c08.txt"
+  },
+  {
+   "url": "https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/appel-a-projets-poles-touristiques-des-hautes-pyrenees/",
+   "source": "conseil-departemental-hautes-pyrenees",
+   "nom": "Conseil départemental Hautes-Pyrénées",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-hautes-pyrenees/fiches/9f39e07a7d.txt"
+  },
+  {
+   "url": "https://herault.fr/aideProjet/181/321-appel-a-projets-paysages-en-mouvement-pour-une-residence-de-territoire-dans-le-geoparc-terres-d-herault-residence-artistique-en-college-2027-arts-visuels.htm",
+   "source": "conseil-departemental-herault",
+   "nom": "Conseil départemental Hérault",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-herault/fiches/232017dbbb.txt"
+  },
+  {
+   "url": "https://www.laregion.fr/Recrutement-de-medecins-generalistes-pour-le-Centre-de-Sante-de-Ma-Region-a-Lacaune",
+   "source": "conseil-regional-occitanie",
+   "nom": "Conseil régional Occitanie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-occitanie/fiches/2cd1b3375a.txt"
+  },
+  {
+   "url": "https://www.laregion.fr/Europe-en-Occitanie-39538",
+   "source": "conseil-regional-occitanie",
+   "nom": "Conseil régional Occitanie",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-occitanie/fiches/3e526ec824.txt"
+  },
+  {
+   "url": "https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures/appel-a-projets-pdi-2027-42305",
+   "source": "conseil-departemental-gers",
+   "nom": "Conseil départemental Gers",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-gers/fiches/12834ef820.txt"
+  },
+  {
+   "url": "https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=theme%3A658",
+   "source": "region-ile-de-france-aides-et-appels-a-projets",
+   "nom": "Région Île-de-France – aides et appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/region-ile-de-france-aides-et-appels-a-projets/fiches/031fe34a5d.txt"
+  },
+  {
+   "url": "https://regionreunion.com/aides-services/appels-a-projets/aides-services/appels-a-projets/article/appel-a-manifestation-d-interet-valorisation-agricole-de-la-propriete-regionale-du-grand-stella",
+   "source": "conseil-regional-la-reunion",
+   "nom": "Conseil régional La Réunion",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-regional-la-reunion/fiches/36a560e880.txt"
+  },
+  {
+   "url": "https://www.paris.fr/pages/appel-a-projets-paris-solidarites-internationales-anciennement-solidev-2027-36706",
+   "source": "ville-de-paris-appels-a-projets",
+   "nom": "Ville de Paris – appels à projets",
+   "categorie": "collectivite",
+   "fichier": "decouverte/ville-de-paris-appels-a-projets/fiches/5706e20f35.txt"
+  },
+  {
+   "url": "https://www.somme.fr/services/loisirs-et-sports/",
+   "source": "conseil-departemental-somme",
+   "nom": "Conseil départemental Somme",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-somme/fiches/bf350539f4.txt"
+  },
+  {
+   "url": "https://www.valdemarne.fr/le-conseil-departemental/appel-a-candidatures-restauration-ambulante-dans-les-parcs-departementaux",
+   "source": "conseil-departemental-val-de-marne",
+   "nom": "Conseil départemental Val-de-Marne",
+   "categorie": "collectivite",
+   "fichier": "decouverte/conseil-departemental-val-de-marne/fiches/8bfc11de15.txt"
+  }
+ ]
+}
