@@ -61,6 +61,9 @@ export default function AapDetailPage() {
     if (aapId) {
       loadAap();
     }
+    // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
+    // seulement quand les valeurs listées changent).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aapId]);
 
   const loadAap = async () => {
@@ -116,7 +119,7 @@ export default function AapDetailPage() {
 
   const daysLeft = getDaysUntilDeadline(aap.deadline);
   const closed = isClosed(daysLeft);
-  const isUrgent = !closed && daysLeft <= 7;
+  const isUrgent = daysLeft !== null && !closed && daysLeft <= 7;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -157,9 +160,11 @@ export default function AapDetailPage() {
             <div className="text-center">
               <div className={`flex items-center justify-center gap-2 mb-2 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
                 <Calendar className="h-5 w-5" />
-                <span className="text-2xl font-bold">{closed ? 'Clôturé' : daysLeft}</span>
+                <span className="text-2xl font-bold">{closed ? 'Clôturé' : daysLeft ?? 'Non précisée'}</span>
               </div>
-              <p className="text-sm text-gray-600">{closed ? 'Candidatures fermées' : 'Jours restants'}</p>
+              <p className="text-sm text-gray-600">
+                {closed ? 'Candidatures fermées' : daysLeft === null ? 'Date de clôture' : 'Jours restants'}
+              </p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 text-gray-900 mb-2">
@@ -397,7 +402,7 @@ export default function AapDetailPage() {
             <div className="flex justify-between">
               <span className="text-gray-600">Date limite de candidature:</span>
               <span className={`font-semibold ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
-                {formatDate(aap.deadline)}
+                {aap.deadline ? formatDate(aap.deadline) : 'Date de clôture non précisée'}
               </span>
             </div>
             {closed && (

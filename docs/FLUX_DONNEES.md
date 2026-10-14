@@ -45,10 +45,10 @@ Monsieur DUCOUT, prise à l'écran, enregistrée dans un fichier de verdicts rej
 | Page refusée | Texte jugé « pas la fiche d'un appel » (liste, article, page bloquée) | `results/extraction_locale_non_aap.json` | Modèle local |
 | Échec | Texte trop long pour le modèle (délai dépassé) | `results/extraction_locale.errors.json` | Automatique |
 | Fiche | Un appel structuré : titre, financeur, dates, montants, description | fichier ci-dessus, puis Firestore | Modèle local, marque « à vérifier » |
-| Import | Copie des fiches dans la base de l'application, sans doublon, en ignorant les appels clos et sans date | `scripts/import_to_firestore.py` | Automatique, rejouable |
+| Import | Copie des fiches dans la base de l'application, sans doublon, en ignorant les appels clos ; les appels sans date entrent en brouillon avec `deadline` nulle (lot 0, 2026-10-14) | `scripts/import_to_firestore.py` | Automatique, rejouable |
 | Lot | Un import exécuté pendant l'extraction, sur tout ce qui a été produit jusque-là | journal de session | Session |
-| À vérifier | Marque posée sur toute fiche venue du modèle local (environ 1 champ faux sur 4 fiches) | étiquette `a-verifier` dans Firestore, badge dans l'application | Automatique ; levée par un verdict humain (à construire) |
-| Verdict | Décision de Monsieur DUCOUT sur une page ou une fiche, avec commentaire | `results/validation_pages.json`, `validation_liens.json`, `validation_manuelle.json` | Monsieur DUCOUT |
+| À vérifier | Marque posée sur toute fiche sans verdict humain ou à corriger (`validation.statut` = `proposee` ou `a_corriger`, quel que soit le moteur, depuis le lot 0 du 2026-10-14 ; modèle local : environ 1 champ faux sur 4 fiches) | étiquette `a-verifier` dans Firestore, badge dans l'application | Automatique ; levée par un verdict humain (à construire) |
+| Verdict | Décision de Monsieur DUCOUT sur une page ou une fiche, avec commentaire | `sources/verdicts_pages.json`, `verdicts_liens.json`, `verdicts_fiches.json` (versionnés ; pages et liens déplacés de `results/` par le lot 0, 2026-10-14) | Monsieur DUCOUT |
 
 ## Ce qui est validé par un humain aujourd'hui, et ce qui ne l'est pas
 

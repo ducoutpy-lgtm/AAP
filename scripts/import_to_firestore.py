@@ -23,6 +23,11 @@ Regles (changement organisation-donnees-validees, 2026-10-14) : identifiant = ad
 document existant, status, publishedAt et validation ne sont jamais reecrits ; les verdicts de
 scraping/sources/verdicts_fiches.json pilotent le bloc validation (rejetee -> archived, validee -> badge retire
 et champs metier proteges) ; une fiche sans date de cloture entre en brouillon, a corriger.
+
+Regles ajoutees par le lot 0 (changement lot-0-assainissement, rapport du 2026-10-14) : validation.statut est la
+seule source de la fiabilite d'une fiche, l'etiquette a-verifier en decoule (proposee ou a_corriger) ; validation.par
+est renseigne ; seuls les champs d'une liste blanche partent vers Firestore, un champ inconnu arrete l'import a blanc
+comme en reel en le nommant ; une fiche sans date de cloture recoit deadline = null (aucune date inventee).
 """
 from __future__ import annotations
 
@@ -37,6 +42,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS_DIR = ROOT / "scraping" / "results"
 DEFAULT_KEY = ROOT / "scripts" / "serviceAccountKey.json"
+# Le schema des fiches (scraping/schema.py) est la source de verite des champs qu'une fiche lue peut porter.
+sys.path.insert(0, str(ROOT / "scraping"))
+from schema import AapNormalized  # noqa: E402
 # Verdicts de Monsieur DUCOUT sur les fiches (raccourci « Validation des fiches a verifier »), cle = adresse de
 # l'appel. Fichier versionne, jamais ecrit par un outil automatique (changement organisation-donnees-validees).
 VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
@@ -49,8 +57,23 @@ CHAMPS_HUMAINS = ("status", "publishedAt", "validation")
 # nouveau verdict humain, pas par une nouvelle proposition de l'IA.
 CHAMPS_METIER = ("title", "description", "deadline", "publicationDate", "budgetMin", "budgetMax", "budgetTotal",
                  "eligibilityCriteria", "requiredDocuments", "structureTypeEligible", "territoriesEligible", "tags")
+# Champs techniques ecrits par l'import, ni humains ni metier. Les trois listes forment la liste blanche des champs
+# envoyes a Firestore (rapport du 2026-10-14, instruction 5) : un champ ajoute au document sans etre classe ici
+# arrete l'import, a blanc comme en reel, avant toute ecriture (voir verifier_champs).
+CHAMPS_TECHNIQUES = ("financeurId", "financeurName", "sectorsTargeted", "externalUrl", "source", "scrapeMetadata",
+                     "views", "applicationsCount", "createdAt", "updatedAt")
+CHAMPS_ENVOYES = frozenset(CHAMPS_HUMAINS + CHAMPS_METIER + CHAMPS_TECHNIQUES)
+CHAMPS_FICHE = frozenset(AapNormalized.model_fields)
 # Correspondance verdict du raccourci -> statut de validation du document.
 STATUTS_VALIDATION = {"aap-juste": "validee", "aap-a-corriger": "a_corriger", "pas-un-aap": "rejetee"}
+# Statuts qui laissent l'etiquette « A verifier » : fiche jamais relue, ou relue et a corriger (instruction 3 :
+# le statut de validation est la seule source de la fiabilite, quel que soit le moteur).
+STATUTS_A_VERIFIER = ("proposee", "a_corriger")
+RELECTEUR = "Monsieur DUCOUT"
+
+
+class ChampInconnu(ValueError):
+    """Un champ hors liste blanche : l'import s'arrete en le nommant plutot que de l'ecrire sans le savoir."""
 
 # Identifiant de "financeur" pour les AAP importes automatiquement.
 # Les AAP scrapes n'appartiennent a aucun compte financeur de la plateforme.
@@ -105,17 +128,44 @@ def identifiant(url: str) -> str:
 
 
 def appliquer_verdict(doc: dict, verdict: dict | None) -> dict:
-    """Bloc validation et consequences du verdict humain sur un document (fonction pure)."""
+    """Bloc validation et consequences du verdict humain sur un document (fonction pure).
+
+    Sans verdict, un bloc validation deja pose par l'import (fiche sans date : a_corriger) est conserve, sinon la
+    fiche est « proposee ». L'etiquette a-verifier decoule du statut (instruction 3) ; « rejetee » archive.
+    """
     d = dict(doc)
     v = (verdict or {}).get("verdict")
-    statut = STATUTS_VALIDATION.get(v, "proposee")
-    d["validation"] = {"statut": statut, "commentaire": (verdict or {}).get("commentaire", ""),
-                       "date": (verdict or {}).get("date", "")}
-    if statut == "validee":
-        d["tags"] = [x for x in d.get("tags", []) if x != "a-verifier"]
-    elif statut == "rejetee":
+    if v in STATUTS_VALIDATION:
+        d["validation"] = {"statut": STATUTS_VALIDATION[v], "commentaire": verdict.get("commentaire", ""),
+                           "date": verdict.get("date", ""), "par": RELECTEUR}
+    elif not d.get("validation"):
+        d["validation"] = {"statut": "proposee", "commentaire": "", "date": "", "par": ""}
+    statut = d["validation"]["statut"]
+    d["tags"] = etiqueter(d.get("tags", []), statut)
+    if statut == "rejetee":
         d["status"] = "archived"
     return d
+
+
+def etiqueter(tags: list[str], statut: str) -> list[str]:
+    """L'etiquette a-verifier suit le statut de validation, et rien d'autre (fonction pure)."""
+    sans = [t for t in tags if t != "a-verifier"]
+    return sans + ["a-verifier"] if statut in STATUTS_A_VERIFIER else sans
+
+
+def verifier_champs(doc: dict, origine: str) -> None:
+    """Liste blanche : toute cle du document envoye doit etre classee humaine, metier ou technique."""
+    inconnus = sorted(set(doc) - CHAMPS_ENVOYES)
+    if inconnus:
+        raise ChampInconnu(f"champ inconnu « {inconnus[0]} » dans le document {origine} : le classer dans "
+                           "CHAMPS_HUMAINS, CHAMPS_METIER ou CHAMPS_TECHNIQUES de import_to_firestore.py")
+
+
+def verifier_fiche(item: dict, origine: str) -> None:
+    """Une fiche lue ne porte que les champs du schema AapNormalized : un connecteur qui change de schema est signale."""
+    inconnus = sorted(set(item) - CHAMPS_FICHE)
+    if inconnus:
+        raise ChampInconnu(f"champ inconnu « {inconnus[0]} » dans une fiche de {origine} : hors du schema AapNormalized")
 
 
 def document_a_envoyer(doc: dict, existe: bool) -> dict:
@@ -130,12 +180,14 @@ def document_a_envoyer(doc: dict, existe: bool) -> dict:
 
 
 def sans_date_en_attente(doc: dict, today: date) -> dict:
-    """Fiche sans date de cloture : brouillon invisible aux visiteurs, echeance fictive a un an, a corriger."""
+    """Fiche sans date de cloture : brouillon invisible aux visiteurs, deadline nulle (aucune date inventee,
+    reponse Q4 du rapport du 2026-10-14), a corriger par Monsieur DUCOUT."""
     d = dict(doc)
-    d["deadline"] = datetime(today.year + 1, today.month, today.day, tzinfo=timezone.utc)
+    d["deadline"] = None
     d["tags"] = d.get("tags", []) + ["sans-date-cloture"]
     d["status"] = "draft"
-    d["validation"] = {"statut": "a_corriger", "commentaire": "date de cloture absente", "date": today.isoformat()}
+    d["validation"] = {"statut": "a_corriger", "commentaire": "date de cloture absente", "date": today.isoformat(),
+                       "par": "import (date absente)"}
     return d
 
 
@@ -232,6 +284,38 @@ def retirer_champs_internes(doc: dict) -> None:
         entree.pop("_storagePath", None)
 
 
+def ecrire_documents(col, nouveau_batch, mapped: list[tuple[str, dict]], now: datetime, bucket=None) -> dict:
+    """Ecrit les documents par lots de 400 (limite Firestore : 500 operations). Retourne les compteurs.
+
+    col : la collection Firestore (ou son faux en memoire dans les tests) ; nouveau_batch : fabrique de lots
+    (db.batch). Regles : creation complete ; sur un document existant, jamais les champs humains (status,
+    publishedAt, validation) ni, si la fiche est validee, les champs metier.
+    """
+    compteurs = {"crees": 0, "mis_a_jour": 0, "envoyes": 0, "presents": 0}
+    batch, pending = nouveau_batch(), 0
+    for sig, doc in mapped:
+        if bucket is not None:
+            e, p = envoyer_fichiers(bucket, doc)
+            compteurs["envoyes"] += e
+            compteurs["presents"] += p
+        else:
+            retirer_champs_internes(doc)
+        ref = col.document(sig)  # sig = identifiant stable derive de l'adresse
+        if ref.get().exists:
+            compteurs["mis_a_jour"] += 1
+            batch.set(ref, document_a_envoyer(doc, True), merge=True)
+        else:
+            compteurs["crees"] += 1
+            batch.set(ref, {**doc, "createdAt": now, **({"publishedAt": now} if doc["status"] == "published" else {})})
+        pending += 1
+        if pending >= 400:
+            batch.commit()
+            batch, pending = nouveau_batch(), 0
+    if pending:
+        batch.commit()
+    return compteurs
+
+
 def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
     """Mappe un AapNormalized vers le type AAP de l'application. Retourne None si inexploitable."""
     titre = (item.get("titre") or "").strip()
@@ -247,10 +331,8 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
         tags.append(item["territoire"].strip())
     for cat in item.get("categories_etablissement") or []:
         tags.append(cat.strip())
-    # Fiches produites par le modele local (extraction_locale.py) : etiquette a-verifier derivee de la
-    # provenance, affichee « A verifier » dans l'application (changement extraction-locale-globale).
-    if (item.get("scrape_metadata") or {}).get("moteur") == "ollama":
-        tags.append("a-verifier")
+    # L'etiquette a-verifier n'est plus posee ici d'apres le moteur : elle decoule du statut de validation
+    # (appliquer_verdict), seule source de la fiabilite d'une fiche (lot 0, instruction 3).
 
     doc = {
         "financeurId": SCRAPED_FINANCEUR_ID,
@@ -345,21 +427,27 @@ def main() -> int:
     skipped = {"incomplet": 0, "expire": 0}
     en_attente = 0
 
-    for source_name, item in raw:
-        doc = to_app_aap(item, source_name, now)
-        if doc is None:
-            skipped["incomplet"] += 1
-            continue
-        if "deadline" not in doc:
-            # Le type AAP exige une deadline : sans elle, l'affichage et le tri casseraient. Decision de
-            # Monsieur DUCOUT (2026-10-14) : ces fiches entrent en brouillon, en attente de sa validation.
-            doc = sans_date_en_attente(doc, today)
-            en_attente += 1
-        elif not args.include_expired and doc["deadline"].date() < today:
-            skipped["expire"] += 1
-            continue
-        doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
-        mapped.append((identifiant(doc["externalUrl"]), doc))
+    try:
+        for source_name, item in raw:
+            verifier_fiche(item, f"{source_name}.json")
+            doc = to_app_aap(item, source_name, now)
+            if doc is None:
+                skipped["incomplet"] += 1
+                continue
+            if "deadline" not in doc:
+                # Pas de date de cloture : aucune date inventee (reponse Q4 du rapport du 2026-10-14) ; la fiche
+                # entre en brouillon avec deadline nulle, en attente de la validation de Monsieur DUCOUT.
+                doc = sans_date_en_attente(doc, today)
+                en_attente += 1
+            elif not args.include_expired and doc["deadline"].date() < today:
+                skipped["expire"] += 1
+                continue
+            doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
+            verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")
+            mapped.append((identifiant(doc["externalUrl"]), doc))
+    except ChampInconnu as err:
+        print(f"Import arrete, rien n'est ecrit : {err}", file=sys.stderr)
+        return 1
 
     # Deux sources peuvent livrer le meme AAP (ars_idf et ars_idf_local, connecteur et modele local) : meme
     # adresse, donc meme document Firestore. On fusionne ici pour que les compteurs affiches correspondent au
@@ -378,7 +466,8 @@ def main() -> int:
     if args.dry_run:
         for sig, doc in mapped[:10]:
             marque = " - a-verifier" if "a-verifier" in doc["tags"] else ""
-            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {doc['deadline'].date()}{marque} "
+            cloture = doc["deadline"].date() if doc.get("deadline") else "non precisee"
+            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {cloture}{marque} "
                   f"- {doc['status']} - validation {doc['validation']['statut']}")
         if len(mapped) > 10:
             print(f"  ... et {len(mapped) - 10} autres")
@@ -414,35 +503,9 @@ def main() -> int:
             print("Rien n'a ete ecrit. Rattacher un compte de facturation au projet, ou relancer sans --vers-storage.", file=sys.stderr)
             return 1
 
-    created = updated = envoyes = presents = 0
-    batch = db.batch()
-    pending = 0
-    for sig, doc in mapped:
-        if bucket is not None:
-            e, p = envoyer_fichiers(bucket, doc)
-            envoyes += e
-            presents += p
-        else:
-            retirer_champs_internes(doc)
-        ref = col.document(sig)  # sig = identifiant stable derive de l'adresse
-        exists = ref.get().exists
-        if exists:
-            updated += 1
-            # Jamais status, publishedAt, validation (decisions humaines) ; ni les champs metier si validee.
-            batch.set(ref, document_a_envoyer(doc, True), merge=True)
-        else:
-            created += 1
-            batch.set(ref, {**doc, "createdAt": now, **({"publishedAt": now} if doc["status"] == "published" else {})})
-        pending += 1
-        if pending >= 400:  # limite Firestore : 500 operations par batch
-            batch.commit()
-            batch = db.batch()
-            pending = 0
-    if pending:
-        batch.commit()
-
-    print(f"Termine : {created} crees, {updated} mis a jour, collection 'aap'. "
-          f"Pieces jointes : {envoyes} envoyees dans Storage, {presents} deja presentes.")
+    c = ecrire_documents(col, db.batch, mapped, now, bucket)
+    print(f"Termine : {c['crees']} crees, {c['mis_a_jour']} mis a jour, collection 'aap'. "
+          f"Pieces jointes : {c['envoyes']} envoyees dans Storage, {c['presents']} deja presentes.")
     return 0
 
 

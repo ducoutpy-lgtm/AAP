@@ -3,6 +3,11 @@
 On envoie le texte d une fiche AAP a Claude, on lui impose un schema d outil
 qui garantit un JSON valide. C est la brique qui remplace la logique fragile
 de parsers HTML specifiques a chaque source.
+
+Lot 0 (rapport du 2026-10-14, instruction 17) : le modele est un parametre des fonctions (defaut MODEL), les
+tarifs forment une table par modele (le journal des couts reste exact quel que soit le modele), et une question
+fermee « est-ce la fiche d un appel ? » (est_un_aap) permet la mesure sur l echantillon avec le meme protocole que
+le modele local. Un modele sans tarif connu est refuse avant tout appel.
 """
 from __future__ import annotations
 
@@ -17,11 +22,21 @@ from utils import append_jsonl, utc_now_iso
 # Modele surchargable via env pour faciliter les tests de regression.
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6")
 
-# Tarifs publics Sonnet 4.x (USD / million de tokens) - a reverifier a chaque facturation.
-PRICE_INPUT_USD_PER_MTOK = 3.0
-PRICE_OUTPUT_USD_PER_MTOK = 15.0
-PRICE_CACHE_WRITE_USD_PER_MTOK = 3.75
-PRICE_CACHE_READ_USD_PER_MTOK = 0.30
+# Tarifs publics (USD / million de tokens), a reverifier a chaque facturation. Sonnet 4.6 : modele des connecteurs.
+# Haiku 5.5 et Sonnet 5.5 : candidats de la mesure sur l echantillon, prix lus le 2026-10-14 sur
+# platform.claude.com/docs/en/about-claude/pricing (Haiku 5.5 : tarif des requetes de 100 000 tokens au plus,
+# jamais depasse ici puisque le texte est borne a MAX_TEXT_CHARS).
+TARIFS_USD_PAR_MTOK = {
+    "claude-sonnet-4-6": {"entree": 3.0, "sortie": 15.0, "cache_ecriture": 3.75, "cache_lecture": 0.30},
+    "claude-sonnet-5-5": {"entree": 2.0, "sortie": 10.0, "cache_ecriture": 2.50, "cache_lecture": 0.10},
+    "claude-haiku-5-5": {"entree": 0.10, "sortie": 0.50, "cache_ecriture": 0.125, "cache_lecture": 0.01},
+}
+# Anciens noms (Sonnet 4.x) conserves pour la documentation et les estimations.
+PRICE_INPUT_USD_PER_MTOK = TARIFS_USD_PAR_MTOK["claude-sonnet-4-6"]["entree"]
+PRICE_OUTPUT_USD_PER_MTOK = TARIFS_USD_PAR_MTOK["claude-sonnet-4-6"]["sortie"]
+PRICE_CACHE_WRITE_USD_PER_MTOK = TARIFS_USD_PAR_MTOK["claude-sonnet-4-6"]["cache_ecriture"]
+PRICE_CACHE_READ_USD_PER_MTOK = TARIFS_USD_PAR_MTOK["claude-sonnet-4-6"]["cache_lecture"]
+EURO_PAR_DOLLAR = 0.92  # taux arrondi du journal des couts (cost_eur_approx)
 
 # Limite de contexte envoye a Claude (protection cout + context window).
 MAX_TEXT_CHARS = 80_000
@@ -40,6 +55,15 @@ def _get_client() -> Anthropic:
             )
         _client = Anthropic()
     return _client
+
+
+def cout_usd(model: str, input_tokens: int, output_tokens: int, cache_write: int = 0, cache_read: int = 0) -> float:
+    """Cout d un appel aux tarifs du modele (fonction pure). Modele sans tarif : erreur, avant tout appel."""
+    if model not in TARIFS_USD_PAR_MTOK:
+        raise ValueError(f"tarif inconnu pour le modele {model} : l ajouter a TARIFS_USD_PAR_MTOK (extractor.py) avant tout appel")
+    t = TARIFS_USD_PAR_MTOK[model]
+    return (input_tokens * t["entree"] + output_tokens * t["sortie"]
+            + cache_write * t["cache_ecriture"] + cache_read * t["cache_lecture"]) / 1_000_000
 
 
 EXTRACTION_TOOL = {
@@ -102,6 +126,21 @@ EXTRACTION_TOOL = {
     },
 }
 
+# Question fermee posee avant l extraction par le moteur api de l echantillon : meme forme que pour le modele local
+# (echantillon.py, CONSIGNE_EST_AAP, passee en consigne systeme), pour que la comparaison des moteurs soit loyale.
+EST_AAP_TOOL = {
+    "name": "est_aap",
+    "description": "Dit si le texte est la fiche d un appel a projets precis auquel on peut candidater.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "est_aap": {"type": "boolean", "description": "true si la page est la fiche d UN appel precis"},
+            "raison": {"type": "string", "description": "Une phrase en francais"},
+        },
+        "required": ["est_aap", "raison"],
+    },
+}
+
 
 SYSTEM_PROMPT = (
     "Tu es un extracteur de donnees d appels a projets (AAP) pour le secteur "
@@ -112,32 +151,14 @@ SYSTEM_PROMPT = (
 )
 
 
-def extract_aap(
-    text: str,
-    url: str,
-    financeur_hint: str = "",
-    source: str = "",
-) -> dict:
-    """Appelle Claude pour extraire un AAP a partir du texte d une page.
+def _appeler(model: str, system_text: str, tool: dict, user_content: str, max_tokens: int,
+             source: str, url: str, etape: str) -> dict:
+    """Un appel qui force l outil donne, avec reprise sur erreurs transitoires et une ligne dans le journal des couts.
 
-    Retourne le dict conforme au schema EXTRACTION_TOOL (sans url_source ni fichiers).
-    Leve une RuntimeError si aucune extraction n a pu etre produite.
-    Effet de bord : log une ligne JSONL dans logs/extraction_costs.jsonl
-    avec les tokens consommes et le cout estime.
+    Le tarif du modele est verifie avant l appel : un modele inconnu n est jamais facture a l aveugle.
     """
+    cout_usd(model, 0, 0)
     client = _get_client()
-
-    if len(text) > MAX_TEXT_CHARS:
-        print(f"  [warn] texte tronque de {len(text)} a {MAX_TEXT_CHARS} chars")
-    user_content = (
-        f"URL source : {url}\n"
-        f"Financeur probable : {financeur_hint or 'a determiner'}\n\n"
-        f"Contenu de la page :\n"
-        f"-----\n"
-        f"{text[:MAX_TEXT_CHARS]}\n"
-        f"-----\n\n"
-        f"Extrait les informations de l AAP en appelant l outil extract_aap."
-    )
 
     # Retry avec backoff exponentiel sur erreurs transitoires
     # (529 overloaded, 429 rate limit, erreurs reseau)
@@ -145,21 +166,20 @@ def extract_aap(
     last_err: Exception | None = None
     for attempt in range(4):
         try:
-            # cache_control sur le dernier tool : le schema (~600 tokens) sera
-            # mis en cache pour les appels suivants du meme run.
-            cached_tool = {**EXTRACTION_TOOL, "cache_control": {"type": "ephemeral"}}
+            # cache_control sur le dernier tool : le schema sera mis en cache pour les appels suivants du meme run.
+            cached_tool = {**tool, "cache_control": {"type": "ephemeral"}}
             resp = client.messages.create(
-                model=MODEL,
-                max_tokens=8192,
+                model=model,
+                max_tokens=max_tokens,
                 system=[
                     {
                         "type": "text",
-                        "text": SYSTEM_PROMPT,
+                        "text": system_text,
                         "cache_control": {"type": "ephemeral"},
                     }
                 ],
                 tools=[cached_tool],
-                tool_choice={"type": "tool", "name": "extract_aap"},
+                tool_choice={"type": "tool", "name": tool["name"]},
                 messages=[{"role": "user", "content": user_content}],
             )
             break
@@ -186,29 +206,68 @@ def extract_aap(
     out_tok = getattr(usage, "output_tokens", 0) or 0
     cache_write = getattr(usage, "cache_creation_input_tokens", 0) or 0
     cache_read = getattr(usage, "cache_read_input_tokens", 0) or 0
-
-    cost_usd = (
-        in_tok * PRICE_INPUT_USD_PER_MTOK
-        + out_tok * PRICE_OUTPUT_USD_PER_MTOK
-        + cache_write * PRICE_CACHE_WRITE_USD_PER_MTOK
-        + cache_read * PRICE_CACHE_READ_USD_PER_MTOK
-    ) / 1_000_000
+    cost = cout_usd(model, in_tok, out_tok, cache_write, cache_read)
 
     append_jsonl(COST_LOG_FILE, {
         "timestamp": utc_now_iso(),
         "source": source,
         "url": url,
-        "model": MODEL,
+        "model": model,
+        "etape": etape,
         "input_tokens": in_tok,
         "output_tokens": out_tok,
         "cache_creation_tokens": cache_write,
         "cache_read_tokens": cache_read,
-        "cost_usd": round(cost_usd, 6),
-        "cost_eur_approx": round(cost_usd * 0.92, 6),
+        "cost_usd": round(cost, 6),
+        "cost_eur_approx": round(cost * EURO_PAR_DOLLAR, 6),
     })
 
     for block in resp.content:
-        if block.type == "tool_use" and block.name == "extract_aap":
+        if block.type == "tool_use" and block.name == tool["name"]:
             return dict(block.input)
 
-    raise RuntimeError("Claude n a pas produit d appel a l outil extract_aap.")
+    raise RuntimeError(f"Claude n a pas produit d appel a l outil {tool['name']}.")
+
+
+def extract_aap(
+    text: str,
+    url: str,
+    financeur_hint: str = "",
+    source: str = "",
+    model: str | None = None,
+) -> dict:
+    """Appelle Claude pour extraire un AAP a partir du texte d une page.
+
+    Retourne le dict conforme au schema EXTRACTION_TOOL (sans url_source ni fichiers).
+    Leve une RuntimeError si aucune extraction n a pu etre produite.
+    Effet de bord : log une ligne JSONL dans logs/extraction_costs.jsonl
+    avec les tokens consommes et le cout estime aux tarifs du modele (MODEL par defaut).
+    """
+    if len(text) > MAX_TEXT_CHARS:
+        print(f"  [warn] texte tronque de {len(text)} a {MAX_TEXT_CHARS} chars")
+    user_content = (
+        f"URL source : {url}\n"
+        f"Financeur probable : {financeur_hint or 'a determiner'}\n\n"
+        f"Contenu de la page :\n"
+        f"-----\n"
+        f"{text[:MAX_TEXT_CHARS]}\n"
+        f"-----\n\n"
+        f"Extrait les informations de l AAP en appelant l outil extract_aap."
+    )
+    return _appeler(model or MODEL, SYSTEM_PROMPT, EXTRACTION_TOOL, user_content, 8192, source, url, "extraction")
+
+
+def est_un_aap(text: str, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:
+    """Question fermee « est-ce la fiche d un appel a projets ? » : {est_aap: bool, raison: str}.
+
+    consigne : la consigne systeme (CONSIGNE_EST_AAP de echantillon.py), identique a celle du modele local.
+    """
+    user_content = (
+        f"URL source : {url}\n\n"
+        f"Texte de la page :\n"
+        f"-----\n"
+        f"{text[:MAX_TEXT_CHARS]}\n"
+        f"-----\n\n"
+        f"Reponds en appelant l outil est_aap."
+    )
+    return _appeler(model or MODEL, consigne, EST_AAP_TOOL, user_content, 1024, source, url, "est_aap")

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP } from '../../types';
 import { Card } from '../../components/ui/Card';
@@ -37,6 +37,9 @@ export default function ManageAAPsPage() {
 
   useEffect(() => {
     applyFilters();
+    // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
+    // seulement quand les valeurs listées changent).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, statusFilter, aaps]);
 
   const loadAaps = async () => {
@@ -150,11 +153,16 @@ export default function ManageAAPsPage() {
     return <Badge variant={variants[status]}>{labels[status]}</Badge>;
   };
 
-  const formatDate = (date: any): string => {
+  const formatDate = (date: Timestamp | Date | null | undefined): string => {
     if (!date) return '-';
-    const dateObj = date.toDate ? date.toDate() : new Date(date);
+    const dateObj = date instanceof Date ? date : date.toDate();
     return dateObj.toLocaleDateString('fr-FR');
   };
+
+  // Publication soumise au verdict humain (rapport du 2026-10-14, instruction 9) : une fiche « proposee » ou
+  // « a_corriger » ne se publie pas depuis l'administration ; un AAP sans bloc validation (saisi à la main) garde le bouton.
+  const publiable = (aap: AAPWithId): boolean =>
+    !aap.validation || (aap.validation.statut !== 'proposee' && aap.validation.statut !== 'a_corriger');
 
   if (loading) {
     return (
@@ -237,7 +245,7 @@ export default function ManageAAPsPage() {
               <Filter className="h-5 w-5 text-gray-400" />
               <select
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
+                onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
                 <option value="all">Tous les statuts</option>
@@ -284,7 +292,7 @@ export default function ManageAAPsPage() {
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4 text-gray-400" />
                       <p className="font-medium text-gray-900">
-                        {formatDate(aap.deadline)}
+                        {aap.deadline ? formatDate(aap.deadline) : 'Non précisée'}
                       </p>
                     </div>
                   </div>
@@ -328,7 +336,7 @@ export default function ManageAAPsPage() {
                     Voir
                   </Button>
 
-                  {aap.status === 'draft' && (
+                  {aap.status === 'draft' && publiable(aap) && (
                     <Button
                       variant="primary"
                       size="sm"

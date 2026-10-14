@@ -17,7 +17,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = (location.state as any)?.from?.pathname;
+  const from = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname;
 
   const getRedirectPath = async () => {
     if (from && from !== '/') {
@@ -63,8 +63,8 @@ export default function LoginPage() {
 
       const redirectPath = await getRedirectPath();
       navigate(redirectPath, { replace: true });
-    } catch (err: any) {
-      setError(err.message || 'Échec de la connexion');
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : 'Échec de la connexion');
     } finally {
       setLoading(false);
     }
@@ -82,8 +82,8 @@ export default function LoginPage() {
 
       const redirectPath = await getRedirectPath();
       navigate(redirectPath, { replace: true });
-    } catch (err: any) {
-      setError(err.message || 'Échec de la connexion avec Google');
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : 'Échec de la connexion avec Google');
     } finally {
       setLoading(false);
     }
@@ -174,12 +174,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
-            Pas encore de compte ?{' '}
-            <Link to="/signup" className="font-medium text-primary-600 hover:text-primary-700">
-              S'inscrire
-            </Link>
-          </p>
         </div>
       </div>
     </div>

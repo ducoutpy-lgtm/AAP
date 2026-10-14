@@ -4,6 +4,20 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (lot 0 d'assainissement, 2026-10-14)
+- `validation.py` : verdicts des pages et des liens dans `sources/verdicts_pages.json` et `sources/verdicts_liens.json`
+  (versionnés), option `--migrer-verdicts [--dry-run]` (sauvegarde dans `scripts/sauvegardes/`, fusion sans écraser,
+  anciens fichiers renommés `.json.migre`), option `--dry-run` sur `--appliquer-pages` ; raccourcis `.cmd` mis à jour.
+- `extractor.py` : modèle en paramètre, table de tarifs par modèle (`TARIFS_USD_PAR_MTOK`, prix vérifiés le
+  2026-10-14), question fermée `est_un_aap`, champ `etape` dans le journal des coûts ; modèle sans tarif refusé.
+- `echantillon.py` : moteur `api` sur les 45 textes de l'échantillon, plafond de dépense (`--plafond`, 5 euros),
+  coût réel dans le rapport ; tests des fonctions pures. Mesure du 2026-10-14 avec `claude-haiku-5-5` : 40 textes
+  traités (les 5 textes FIRAH existent mais leur rubrique n'est plus retenue par la sélection par famille), 16 fiches, 14 justes sur 15 comparées, 1 fabriquée, 4 pages de référence
+  refusées à tort à la question fermée, seuil 20/2 non atteint, 0,02 euro pour 56 appels.
+- Import (`scripts/import_to_firestore.py`) : étiquette `a-verifier` dérivée de `validation.statut`, `validation.par`,
+  liste blanche des champs (`ChampInconnu`), `deadline` nulle pour une fiche sans date, écriture extraite en
+  `ecrire_documents` testée sur un faux Firestore ; `scripts/migrer_echeances.py`.
+
 ### Modifié (organisation des données validées, 2026-10-14)
 - Registre : `url_validee`, `validee_par`, `validee_le` à côté de `url_aap` (adresse d'origine) ; `registre.adresse_aap`
   lu par `decouverte.py`, `registre.py --verifier-pages`, `validation.py` ; 42 corrections passées migrées.

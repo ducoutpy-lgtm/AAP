@@ -2,6 +2,10 @@
 
 Usage :
   python validation.py --fichier results/echantillon_ollama_qwen3-8b.json [--port 8765]
+  python validation.py --pages            # pages gardées des sources (verdicts dans sources/verdicts_pages.json)
+  python validation.py --liens            # liens des rubriques confirmées (verdicts dans sources/verdicts_liens.json)
+  python validation.py --migrer-verdicts [--dry-run]   # une fois : results/validation_*.json -> sources/ (lot 0)
+  python validation.py --appliquer-pages [--dry-run]   # reporter les verdicts sur les pages au registre
 
 Ouvre ensuite http://localhost:8765 dans n'importe quel navigateur. Pour chaque fiche : les champs proposés
 par le modèle, un extrait du texte de la page gardée, un lien vers la page officielle, et quatre boutons
@@ -16,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import shutil
 import sys
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -33,6 +38,13 @@ RESULTS = ICI / "results"
 # lu par scripts/import_to_firestore.py (changement organisation-donnees-validees). Cle = adresse de l'appel.
 SORTIE = ICI / "sources" / "verdicts_fiches.json"
 ANCIENNE_SORTIE = RESULTS / "validation_manuelle.json"
+# Verdicts a l'ecran sur les pages gardees et sur les liens : fichiers versionnes dans sources/ (lot 0 du rapport du
+# 2026-10-14, instruction 7), cle = adresse de la page ou du lien. Les anciens emplacements dans results/ (hors Git)
+# sont migres une fois par --migrer-verdicts, avec sauvegarde dans scripts/sauvegardes/.
+VERDICTS_PAGES = ICI / "sources" / "verdicts_pages.json"
+VERDICTS_LIENS = ICI / "sources" / "verdicts_liens.json"
+ANCIENS_VERDICTS = {RESULTS / "validation_pages.json": VERDICTS_PAGES, RESULTS / "validation_liens.json": VERDICTS_LIENS}
+SAUVEGARDES = ICI.parent / "scripts" / "sauvegardes"
 VERDICTS = ("aap-juste", "aap-a-corriger", "pas-un-aap", "passer", "liste-d-aap", "appel-permanent",
             "bonne-page", "mauvaise-page", "page-morte", "hors-champ")  # les quatre derniers : mode « pages » (page gardée d'une source)
 ENTETES = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AAP-Sante-validation/0.1", "Accept-Language": "fr"}
@@ -161,6 +173,35 @@ def migrer_anciens_verdicts() -> None:
 
 def charger_verdicts() -> dict:
     return json.loads(SORTIE.read_text(encoding="utf-8")) if SORTIE.exists() else {}
+
+
+def migrer_verdicts(dry_run: bool) -> int:
+    """Déplace une fois les verdicts de results/ (hors Git) vers sources/ (versionné) : sauvegarde, copie, renommage.
+
+    Règle de Monsieur DUCOUT pour toute migration : sauvegarde JSON dans scripts/sauvegardes/, essai à blanc, accord,
+    puis écriture. Un verdict déjà présent dans le nouveau fichier n'est jamais écrasé par l'ancien ; l'ancien fichier
+    est renommé en .json.migre pour que la migration ne se rejoue pas par accident.
+    """
+    dossier = SAUVEGARDES / f"verdicts_{datetime.now().strftime('%Y-%m-%d_%H%M')}"
+    for ancien, nouveau in ANCIENS_VERDICTS.items():
+        if not ancien.exists():
+            print(f"{ancien.name} : absent, rien à migrer")
+            continue
+        anciens = json.loads(ancien.read_text(encoding="utf-8"))
+        existants = json.loads(nouveau.read_text(encoding="utf-8")) if nouveau.exists() else {}
+        fusion = {**anciens, **existants}
+        print(f"{ancien.name} : {len(anciens)} verdicts -> {nouveau.name} ({len(existants)} déjà présents, "
+              f"{len(fusion) - len(existants)} repris, {len(fusion)} au total)")
+        if dry_run:
+            continue
+        dossier.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ancien, dossier / ancien.name)
+        nouveau.parent.mkdir(exist_ok=True)
+        nouveau.write_text(json.dumps(fusion, ensure_ascii=False, indent=1), encoding="utf-8")
+        ancien.rename(ancien.with_suffix(".json.migre"))
+    print("Essai à blanc : rien n'a été écrit." if dry_run
+          else f"Sauvegarde : {dossier} ; anciens fichiers renommés en .json.migre ; penser à git add sources/verdicts_*.json")
+    return 0
 
 
 def apercu_page(url: str, maximum: int = 4000) -> str:
@@ -303,7 +344,7 @@ def fabriquer_gestionnaire(fiches: list[dict]):
             verdicts = charger_verdicts()
             verdicts[donnees["url"]] = {"verdict": donnees["verdict"], "commentaire": (donnees.get("commentaire") or "").strip(),
                                         "modele": donnees.get("modele", ""), "date": datetime.now().strftime("%Y-%m-%d %H:%M")}
-            RESULTS.mkdir(exist_ok=True)
+            SORTIE.parent.mkdir(exist_ok=True)
             SORTIE.write_text(json.dumps(verdicts, ensure_ascii=False, indent=1), encoding="utf-8")
             print(f"  {donnees['verdict']:15} {donnees['url'][:80]}", flush=True)
             self._repondre(200, b'{"ok": true}', "application/json")
@@ -398,16 +439,32 @@ def echantillonner(fiches: list[dict], nombre: int, graine: int = 0) -> list[dic
     return choisis
 
 
-def appliquer_pages_fichiers() -> int:
-    """Option --appliquer-pages : lit les verdicts et la découverte, écrit la relecture et le registre, affiche le bilan."""
+def chemin_verdicts_pages() -> Path:
+    """Le fichier versionné s'il existe, sinon l'ancien emplacement (avant --migrer-verdicts)."""
+    ancien = RESULTS / "validation_pages.json"
+    return VERDICTS_PAGES if VERDICTS_PAGES.exists() or not ancien.exists() else ancien
+
+
+def appliquer_pages_fichiers(dry_run: bool = False) -> int:
+    """Option --appliquer-pages : lit les verdicts et la découverte, affiche le bilan, puis écrit la relecture et le
+    registre. Avec --dry-run : le bilan seul, rien d'écrit (preuve de non-régression après la migration des verdicts)."""
     import registre as module_registre
     from qualification import RELECTURE
-    verdicts = json.loads((RESULTS / "validation_pages.json").read_text(encoding="utf-8"))
+    chemin = chemin_verdicts_pages()
+    verdicts = json.loads(chemin.read_text(encoding="utf-8"))
     resultats = json.loads((ICI / "decouverte" / "resultats.json").read_text(encoding="utf-8"))
     sources = module_registre.charger()
     relecture_fichier = json.loads(RELECTURE.read_text(encoding="utf-8")) if RELECTURE.exists() else {}
     entrees = {k: v for k, v in relecture_fichier.items() if not k.startswith("_")}
     relecture, bilan = appliquer_verdicts_pages(verdicts, resultats, sources, entrees, datetime.now().strftime("%Y-%m-%d"))
+    print(f"{bilan['lus']} verdicts lus ({chemin.name}) : {bilan['confirmees']} sources confirmées (plus {bilan['deja_confirmees']} déjà confirmées), "
+          f"{len(bilan['corrigees'])} adresses corrigées, {len(bilan['a_retrouver'])} à retrouver, {bilan['hors_champ']} hors champ, "
+          f"{bilan['ignores']} ignorés (passer), {len(bilan['sans_source'])} sans source")
+    for url in bilan["sans_source"]:
+        print(f"  sans source : {url}")
+    if dry_run:
+        print("Essai à blanc : relecture et registre non écrits.")
+        return 0
     erreurs = module_registre.erreurs_format(sources)
     if erreurs:
         print("Registre invalide après correction, rien n'est écrit :", *erreurs[:5], sep="\n  ", file=sys.stderr)
@@ -416,11 +473,6 @@ def appliquer_pages_fichiers() -> int:
     sortie = {k: v for k, v in relecture_fichier.items() if k.startswith("_")}
     sortie.update(relecture)
     RELECTURE.write_text(json.dumps(sortie, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"{bilan['lus']} verdicts lus : {bilan['confirmees']} sources confirmées (plus {bilan['deja_confirmees']} déjà confirmées), "
-          f"{len(bilan['corrigees'])} adresses corrigées, {len(bilan['a_retrouver'])} à retrouver, {bilan['hors_champ']} hors champ, "
-          f"{bilan['ignores']} ignorés (passer), {len(bilan['sans_source'])} sans source")
-    for url in bilan["sans_source"]:
-        print(f"  sans source : {url}")
     print(f"Relecture écrite : {RELECTURE.name} ({len(relecture)} sources) ; registre écrit. Enchaîner :")
     print("  python qualification.py --registre --rapport && python registre.py --tableau")
     if bilan["corrigees"]:
@@ -449,16 +501,22 @@ def main() -> int:
                         help="avec --fichier : ne présenter que les fiches dont la clôture n'est pas passée ou est absente")
     parser.add_argument("--appliquer-pages", action="store_true",
                         help="reporter les verdicts du mode --pages dans sources/relecture_qualification.json et le registre, sans serveur")
+    parser.add_argument("--migrer-verdicts", action="store_true",
+                        help="déplacer une fois results/validation_pages.json et validation_liens.json vers sources/ (sauvegarde, copie, renommage)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="avec --appliquer-pages ou --migrer-verdicts : afficher ce qui serait fait sans rien écrire")
     args = parser.parse_args()
+    if args.migrer_verdicts:
+        return migrer_verdicts(args.dry_run)
     if args.appliquer_pages:
-        return appliquer_pages_fichiers()
+        return appliquer_pages_fichiers(args.dry_run)
     global SORTIE
     if args.pages:
-        SORTIE = RESULTS / "validation_pages.json"
+        SORTIE = VERDICTS_PAGES
         fiches = pages_gardees(tuple(v.strip() for v in args.verdicts.split(",")))
         chemin = Path(f"pages gardées des sources « {args.verdicts} »")
     elif args.liens:
-        SORTIE = RESULTS / "validation_liens.json"  # verdicts sur les liens, à part des verdicts sur les fiches
+        SORTIE = VERDICTS_LIENS  # verdicts sur les liens, à part des verdicts sur les fiches
         fiches = liens_des_rubriques_confirmees(args.source)
         if args.echantillon:
             fiches = echantillonner(fiches, args.echantillon)
@@ -475,6 +533,10 @@ def main() -> int:
         for f in fiches:
             f["extrait"] = extrait_page(f)
         migrer_anciens_verdicts()
+    for ancien, nouveau in ANCIENS_VERDICTS.items():
+        if ancien.exists() and not nouveau.exists():
+            print(f"Attention : {ancien.name} n'a pas encore été migré vers {nouveau.name} ; "
+                  "lancer validation.py --migrer-verdicts --dry-run puis --migrer-verdicts", file=sys.stderr)
     try:
         serveur = ThreadingHTTPServer(("127.0.0.1", args.port), fabriquer_gestionnaire(fiches))
     except OSError:

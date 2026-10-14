@@ -120,3 +120,42 @@ def test_comparer_fiche_accepte_une_valeur_confirmee_par_la_page():
     assert echantillon.comparer_fiche({**produite, "date_cloture": "2024-10-06"}, reference, page)["date_cloture"] is False
     assert echantillon.date_dans_texte("2026-11-08", "Date limite : 8 novembre 2026") is True
     assert echantillon.date_dans_texte("2026-11-08", "Date limite : 08/11/2026") is True
+
+
+# ---------------------------------------------------------------- moteur api (lot 0, instruction 17), sans aucun appel
+
+def test_adresses_echantillon_reference_et_hors_sujet():
+    ref = [{"url_source": "https://a"}, {"url_source": "https://b"}]
+    non = [{"url": "https://b"}, {"url": "https://c"}]
+    assert echantillon.adresses_echantillon(ref, non) == {"https://a", "https://b", "https://c"}
+
+
+def test_cout_cumule_lit_le_journal_par_modele(tmp_path):
+    import json
+    journal = tmp_path / "couts.jsonl"
+    journal.write_text("\n".join(json.dumps(l) for l in [
+        {"model": "claude-haiku-5-5", "cost_eur_approx": 0.010},
+        {"model": "claude-sonnet-4-6", "cost_eur_approx": 0.500},
+        {"model": "claude-haiku-5-5", "cost_eur_approx": 0.005}]) + "\n", encoding="utf-8")
+    assert abs(echantillon.cout_cumule("claude-haiku-5-5", journal) - 0.015) < 1e-9
+    assert echantillon.cout_cumule("inconnu", journal) == 0.0
+    assert echantillon.cout_cumule("claude-haiku-5-5", tmp_path / "absent.jsonl") == 0.0
+
+
+def test_estimation_plafond_et_noms_de_sortie():
+    tarifs = {"entree": 0.10, "sortie": 0.50}
+    estimation = echantillon.estimation_appel_euros(4000, tarifs)  # un texte de 4 000 caractères
+    assert 0 < estimation < 0.01
+    assert echantillon.plafond_atteint(4.999, estimation, 5.0) is True  # 4,999 + ~0,001 > 5
+    assert echantillon.plafond_atteint(0.0, estimation, 5.0) is False
+    assert echantillon.fichier_sortie("api", "claude-haiku-5-5").name == "echantillon_api_claude-haiku-5-5.json"
+    assert echantillon.cle_controle("api", "claude-haiku-5-5") == "api_claude-haiku-5-5"
+
+
+def test_tarifs_par_modele_dans_extractor():
+    import extractor
+    assert extractor.cout_usd("claude-haiku-5-5", 1_000_000, 0) == 0.10
+    assert extractor.cout_usd("claude-haiku-5-5", 0, 1_000_000) == 0.50
+    assert extractor.cout_usd("claude-sonnet-4-6", 1_000_000, 1_000_000) == 18.0
+    with pytest.raises(ValueError, match="tarif inconnu"):
+        extractor.cout_usd("modele-sans-tarif", 1, 1)

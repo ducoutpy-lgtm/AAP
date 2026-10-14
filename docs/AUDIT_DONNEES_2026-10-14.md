@@ -10,8 +10,11 @@ catégories demandées : SOURCE (brut), IA (proposé), VALIDÉ (humain), DÉRIV�
 
 Traités le jour même : C1 (champs humains jamais réécrits), C2 (verdicts lus par l'import), C3 (`url_validee`),
 I2 (identifiant = adresse, base migrée), M1 (`produite_le`, `version_consigne`), M4 en partie (fichiers de
-verdicts et pages refusées exclus de l'import). Restent : I1 (blocs séparés), I3 (verdicts des pages par
-identifiant d'émetteur), I4, I5, M2, M3, M5, M6.
+verdicts et pages refusées exclus de l'import). Lot 0 du rapport de critique (changement `lot-0-assainissement`,
+2026-10-14) : I4 (un seul statut `validation.statut`, étiquette dérivée), C1 renforcé (liste blanche des champs),
+verdicts des pages et des liens versionnés dans `sources/`, plus d'échéance fictive (`deadline` nulle), cinq tests
+du plan de correction écrits (`scripts/tests/`). Restent : I1 (blocs séparés), I3 (verdicts des pages par
+identifiant d'émetteur), I5, M2, M3, M5, M6.
 
 ## État actuel
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { User } from '../../types';
 import { Card } from '../../components/ui/Card';
@@ -21,6 +21,10 @@ interface UserWithId extends User {
   uid: string;
 }
 
+// Date de création d'un compte (Timestamp Firestore ou Date) au format français
+const dateCreation = (valeur: Timestamp | Date): string =>
+  (valeur instanceof Date ? valeur : valeur.toDate()).toLocaleDateString('fr-FR');
+
 export default function ManageUsersPage() {
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserWithId[]>([]);
@@ -36,6 +40,9 @@ export default function ManageUsersPage() {
 
   useEffect(() => {
     applyFilters();
+    // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
+    // seulement quand les valeurs listées changent).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, userTypeFilter, statusFilter, users]);
 
   const loadUsers = async () => {
@@ -112,7 +119,7 @@ export default function ManageUsersPage() {
       'Type': user.userType,
       'Statut': user.subscriptionStatus,
       'Plan': user.subscriptionPlan || 'Aucun',
-      'Date création': (user.createdAt as any)?.toDate ? (user.createdAt as any).toDate().toLocaleDateString('fr-FR') : new Date(user.createdAt as any).toLocaleDateString('fr-FR'),
+      'Date création': dateCreation(user.createdAt),
     }));
 
     const csv = [
@@ -236,7 +243,7 @@ export default function ManageUsersPage() {
               <Filter className="h-5 w-5 text-gray-400" />
               <select
                 value={userTypeFilter}
-                onChange={(e) => setUserTypeFilter(e.target.value as any)}
+                onChange={(e) => setUserTypeFilter(e.target.value as typeof userTypeFilter)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
                 <option value="all">Tous les types</option>
@@ -248,7 +255,7 @@ export default function ManageUsersPage() {
             {/* Status Filter */}
             <select
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
+              onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
               className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
               <option value="all">Tous les statuts</option>
@@ -329,7 +336,7 @@ export default function ManageUsersPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center text-sm text-gray-600">
                           <Calendar className="h-4 w-4 mr-1" />
-                          {(user.createdAt as any)?.toDate ? (user.createdAt as any).toDate().toLocaleDateString('fr-FR') : new Date(user.createdAt as any).toLocaleDateString('fr-FR')}
+                          {dateCreation(user.createdAt)}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

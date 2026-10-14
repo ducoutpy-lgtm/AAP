@@ -6,6 +6,16 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Lot 0 d'assainissement (changement `lot-0-assainissement`, 2026-10-14, rapport de critique validé par Monsieur
+  DUCOUT) : routage de l'application réduit au MVP de consultation (inscription fermée, modules gelés sans
+  modification), `validation.statut` seule source de la fiabilité d'une fiche (étiquette `a-verifier` dérivée, `par`),
+  liste blanche des champs de l'import, `deadline` nulle pour les fiches sans date (type `AAP` nullable, bloc
+  `validation` dans le type), règles Firestore du MVP (actions admin, collections gelées en écriture interdite),
+  verdicts des pages et des liens versionnés dans `scraping/sources/`, mesure d'un modèle API sur l'échantillon
+  sous plafond. Verdicts migrés et règles déployées le 2026-10-14 après accord de Monsieur DUCOUT ; 141 échéances
+  fictives passées à `null` par Monsieur DUCOUT le 2026-10-14 ; mesure API `claude-haiku-5-5` faite le 2026-10-14 après
+  accord (40 textes, 14 justes et 1 fabriquée sur 15 comparées, seuil non atteint, coût réel 0,02 euro,
+  `scraping/ECHANTILLON.md`).
 - Organisation des données validées (changement `organisation-donnees-validees`, 2026-10-14, suite à
   `docs/AUDIT_DONNEES_2026-10-14.md`) : identifiant Firestore dérivé de l'adresse de l'appel (341 documents
   migrés), décisions humaines (`status`, `validation`) jamais réécrites par l'import, verdicts de
@@ -13,6 +23,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   de l'adresse d'origine dans le registre. Schéma des flux : `docs/FLUX_DONNEES.md`.
 
 ### Ajouté
+- Lot 0 : configuration ESLint de l'application, tests des règles Firestore sur l'émulateur (`npm run test:rules`,
+  JDK 21), cinq tests de l'audit sur un faux Firestore (`scripts/tests/`), `scripts/migrer_echeances.py`, options
+  `--migrer-verdicts` et `--appliquer-pages --dry-run` de `validation.py`, moteur `api` de `echantillon.py`.
 - Extraction locale globale (changement `extraction-locale-globale`, 2026-10-13 soir) : `scraping/extraction_locale.py`
   extrait avec `qwen3:8b` les pages des 242 rubriques validées (2 395 adresses web uniques), fiches marquées
   « à vérifier » ; l'import pose l'étiquette `a-verifier` et l'application affiche le badge « À vérifier ».

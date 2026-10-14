@@ -9,7 +9,7 @@
     "companion_document": "docs/CAHIER_DES_CHARGES_APPLICATION.md"
   },
   "users_and_roles": [
-    {"role": "visiteur", "description": "Sans compte. Recherche et consultation des AAP publiés.", "routes": ["/", "/aap/search", "/aap/:aapId", "/login", "/signup"], "guards": []},
+    {"role": "visiteur", "description": "Sans compte. Recherche et consultation des AAP publiés.", "routes": ["/", "/aap/search", "/aap/:aapId", "/login"], "guards": []},
     {"role": "porteur", "description": "Établissement ou association cherchant des financements.", "routes": ["/dashboard/porteur", "/aap/:aapId/candidater", "/mes-candidatures", "/recherches-sauvegardees", "/recommandations", "/calendrier", "/messages", "/notifications"], "guards": ["ProtectedRoute", "SubscriptionGuard (active ou trial)", "RoleGuard(porteur)"]},
     {"role": "financeur", "description": "Organisme qui publie des AAP et évalue les candidatures.", "routes": ["/dashboard/financeur", "/mes-aap", "/aap/nouveau", "/aap/:aapId/edit (gabarit vide)", "/aap/:aapId/candidatures", "/aap/:aapId/candidature/:applicationId/evaluer", "/statistiques"], "guards": ["ProtectedRoute", "SubscriptionGuard", "RoleGuard(financeur)"]},
     {"role": "admin", "description": "Monsieur DUCOUT. Gestion des utilisateurs et des AAP.", "routes": ["/admin", "/admin/utilisateurs", "/admin/aaps", "/admin/statistiques", "/admin/paiements (gabarit)", "/admin/parametres (gabarit)"], "guards": ["ProtectedRoute", "RoleGuard(admin)"]},
@@ -24,7 +24,7 @@
       "statuses": ["qualification.verdict: rubrique-confirmee | hors-sante | pas-d-aap | pdf-seulement | a-verifier"],
       "source": "annuaires de référence (sources/annuaires), recherche web, saisie de Monsieur DUCOUT",
       "ai_role": "qualification de la page gardée par le modèle local (qualification.py)",
-      "human_validation": "relecture_qualification.json ; validation des pages à l'écran (results/validation_pages.json) reportée par validation.py --appliquer-pages ; url_validee",
+      "human_validation": "relecture_qualification.json ; validation des pages à l'écran (sources/verdicts_pages.json) reportée par validation.py --appliquer-pages ; url_validee",
       "local_processing": "découverte (decouverte.py), sonde HTTP, rapport REGISTRE_SOURCES.md"
     },
     {
@@ -35,7 +35,7 @@
       "statuses": ["rubrique-trouvee", "aucune-rubrique", "erreur"],
       "source": "robot Playwright (decouverte.py)",
       "ai_role": "aucun (mots-clés)",
-      "human_validation": "verdicts bonne-page, mauvaise-page, page-morte, hors-champ (validation_pages.json)",
+      "human_validation": "verdicts bonne-page, mauvaise-page, page-morte, hors-champ (sources/verdicts_pages.json)",
       "local_processing": "collecte du texte de chaque lien (extraction_locale.py --collecter) dans decouverte/<id>/fiches/*.txt"
     },
     {
@@ -52,7 +52,7 @@
     {
       "name": "AAP (Firestore aap)",
       "description": "Appel tel qu'affiché par l'application (type AAP, app/src/types/index.ts).",
-      "fields": ["financeurId", "financeurName", "title", "description", "sectorsTargeted[]", "territoriesEligible[]", "structureTypeEligible[]", "budgetMin", "budgetMax", "budgetTotal", "deadline", "publicationDate", "eligibilityCriteria", "requiredDocuments[]", "externalUrl", "tags[]", "status", "publishedAt", "createdAt", "updatedAt", "views", "applicationsCount", "source", "scrapeMetadata{source,signature,moteur,modele,enveloppeGlobale,fichiersJoints[],importedAt}", "validation{statut,commentaire,date}"],
+      "fields": ["financeurId", "financeurName", "title", "description", "sectorsTargeted[]", "territoriesEligible[]", "structureTypeEligible[]", "budgetMin", "budgetMax", "budgetTotal", "deadline", "publicationDate", "eligibilityCriteria", "requiredDocuments[]", "externalUrl", "tags[]", "status", "publishedAt", "createdAt", "updatedAt", "views", "applicationsCount", "source", "scrapeMetadata{source,signature,moteur,modele,enveloppeGlobale,fichiersJoints[],importedAt}", "validation{statut,commentaire,date,par}"],
       "relations": ["applications.aapId", "favoriteAap.aapId", "notifications.relatedEntityId"],
       "statuses": ["status: draft | published | closed | archived", "validation.statut: proposee | a_corriger | validee | rejetee"],
       "source": "import des fiches (scripts/import_to_firestore.py) ou saisie d'un financeur (CreateAapPage)",
@@ -111,8 +111,8 @@
   ],
   "human_validation": [
     {"step": "Relecture de la qualification", "actor": "Monsieur DUCOUT (décisions) et session", "file": "scraping/sources/relecture_qualification.json", "effect": "verdict relu appliqué par qualification.py --registre --rapport, verdict du modèle conservé"},
-    {"step": "Validation des pages des émetteurs", "actor": "Monsieur DUCOUT", "tool": "validation_pages.cmd, validation_exclues.cmd (validation.py --pages, ports 8788 / 8790)", "file": "scraping/results/validation_pages.json", "effect": "report au registre par validation.py --appliquer-pages : rubrique confirmée, hors santé, à retrouver, url_validee"},
-    {"step": "Validation des liens (échantillon)", "actor": "Monsieur DUCOUT", "tool": "validation_manuelle.cmd (validation.py --liens, port 8787)", "file": "scraping/results/validation_liens.json", "effect": "aucun consommateur automatique"},
+    {"step": "Validation des pages des émetteurs", "actor": "Monsieur DUCOUT", "tool": "validation_pages.cmd, validation_exclues.cmd (validation.py --pages, ports 8788 / 8790)", "file": "scraping/sources/verdicts_pages.json", "effect": "report au registre par validation.py --appliquer-pages : rubrique confirmée, hors santé, à retrouver, url_validee"},
+    {"step": "Validation des liens (échantillon)", "actor": "Monsieur DUCOUT", "tool": "validation_manuelle.cmd (validation.py --liens, port 8787)", "file": "scraping/sources/verdicts_liens.json", "effect": "aucun consommateur automatique"},
     {"step": "Validation des fiches à vérifier", "actor": "Monsieur DUCOUT", "tool": "validation_fiches.cmd (validation.py --fichier results/extraction_locale.json --ouvertes, port 8789)", "file": "scraping/sources/verdicts_fiches.json", "effect": "appliqué à l'import : rejetee -> archived, validee -> badge retiré et champs protégés, a_corriger -> badge gardé"},
     {"step": "Administration des AAP", "actor": "admin", "tool": "/admin/aaps", "file": "Firestore aap.status", "effect": "jamais réécrit par l'import"},
     {"step": "Évaluation des candidatures", "actor": "financeur", "tool": "/aap/:id/candidature/:id/evaluer", "file": "Firestore applications", "effect": "status, financeurScore, commentaires"},
@@ -152,11 +152,11 @@
       {"object": "User.subscriptionStatus", "from": "trial", "to": "active | expired | cancelled", "by": "webhook Stripe (non déployé) ou admin ; aucune expiration automatique de l'essai"}
     ],
     "rules": [
-      "Catégories : SOURCE (annuaires, url_aap, decouverte/), IA (qualification.json, results/*.json), VALIDÉ (relecture_qualification.json, validation_pages.json, verdicts_fiches.json, url_validee, Firestore status/validation), DÉRIVÉ (rapports, tags, scores).",
+      "Catégories : SOURCE (annuaires, url_aap, decouverte/), IA (qualification.json, results/*.json), VALIDÉ (relecture_qualification.json, verdicts_pages.json, verdicts_liens.json, verdicts_fiches.json, url_validee, Firestore status/validation), DÉRIVÉ (rapports, tags, scores).",
       "L'import ne réécrit jamais status, publishedAt, validation d'un document existant ; ni les champs métier si validation.statut == validee.",
       "Identifiant Firestore = scraped-sha1(url_source normalisée)[:16] ; la signature reste un attribut.",
       "Pour une même adresse, la fiche d'un connecteur l'emporte sur celle du modèle local.",
-      "Fiche sans date de clôture : draft, échéance fictive à un an, tag sans-date-cloture, validation a_corriger.",
+      "Fiche sans date de clôture : draft, deadline null (plus d'échéance fictive depuis le lot 0, réponse Q4), tag sans-date-cloture, validation a_corriger (par : import).",
       "Appels clos ignorés par l'import sauf --include-expired.",
       "Fichiers de décisions humaines (sources/relecture_qualification.json, sources/verdicts_fiches.json) jamais écrits par un outil automatique.",
       "url_validee n'est écrite que par validation.py --appliquer-pages ; les outils lisent registre.adresse_aap()."
@@ -169,11 +169,11 @@
     {"name": "Collecte par connecteur", "trigger": "python run.py --source <nom>", "steps": ["list_aaps", "fetch_detail", "cache par url_source", "extractor.py (API Claude)", "validate.py (rapport HTML)"], "actors": ["session", "API Claude"], "data": ["results/<nom>.json", "downloads/", "logs/extraction_costs.jsonl"], "errors": ["429/529/5xx (retry)", "site bloqué"], "result": "fiches avec signature et scraped_at"},
     {"name": "Import dans l'application", "trigger": "manuel après un lot ou un verdict", "steps": ["lecture results/*.json filtrés", "lecture verdicts_fiches.json", "to_app_aap", "sans_date_en_attente", "appliquer_verdict", "identifiant", "fusionner", "document_a_envoyer", "batch 400"], "actors": ["session ou Monsieur DUCOUT"], "data": ["Firestore aap"], "errors": ["clé de service absente", "Storage refusé sans Blaze"], "result": "341 documents au 2026-10-14"},
     {"name": "Validation des fiches", "trigger": "raccourci Validation des fiches à vérifier", "steps": ["serveur local port 8789", "fiche par fiche", "verdict écrit", "import"], "actors": ["Monsieur DUCOUT"], "data": ["sources/verdicts_fiches.json"], "errors": ["page officielle non affichable dans un cadre (fenêtre séparée)"], "result": "badge retiré / archivé / commentaire"},
-    {"name": "Parcours porteur", "trigger": "inscription", "steps": ["/signup", "users trial J+14", "/complete-profile", "/abonnement/choisir (continuer l'essai)", "/dashboard/porteur", "/aap/search", "/aap/:id", "/aap/:id/candidater (submitted)", "/mes-candidatures"], "actors": ["porteur"], "data": ["users", "porteurProfiles", "applications"], "errors": ["Google sans document users", "favoris sans action", "savedSearches refusée (à confirmer)"], "result": "candidature soumise"},
+    {"name": "Parcours porteur (gelé depuis le lot 0 du 2026-10-14 : routes retirées, inscription fermée)", "trigger": "inscription", "steps": ["/signup", "users trial J+14", "/complete-profile", "/abonnement/choisir (continuer l'essai)", "/dashboard/porteur", "/aap/search", "/aap/:id", "/aap/:id/candidater (submitted)", "/mes-candidatures"], "actors": ["porteur"], "data": ["users", "porteurProfiles", "applications"], "errors": ["Google sans document users", "favoris sans action", "savedSearches refusée (à confirmer)"], "result": "candidature soumise"},
     {"name": "Parcours financeur et admin", "trigger": "connexion", "steps": ["/aap/nouveau", "/mes-aap", "/aap/:id/candidatures", "évaluation", "/admin/aaps : publier, clôturer, archiver, supprimer", "/admin/utilisateurs : suspendre, activer"], "actors": ["financeur", "admin"], "data": ["aap", "applications", "users"], "errors": ["règles Firestore refusent probablement les écritures admin (à confirmer)"], "result": "AAP publié, candidature évaluée"}
   ],
   "data_model": [
-    {"store": "Firestore", "collection": "aap", "id": "scraped-<sha1 url>[:16] ou auto", "fields": "voir business_objects.AAP", "constraints": "deadline obligatoire ; lecture publique si published", "indexes": ["status+publishedAt", "status+sectorsTargeted+publishedAt", "financeurId+createdAt"], "traceability": ["createdAt", "updatedAt", "publishedAt", "scrapeMetadata.importedAt", "validation.date"]},
+    {"store": "Firestore", "collection": "aap", "id": "scraped-<sha1 url>[:16] ou auto", "fields": "voir business_objects.AAP", "constraints": "deadline nullable (null = non précisée, fiche en draft a_corriger) ; lecture publique si published ; écriture administrateur seulement", "indexes": ["status+publishedAt", "status+sectorsTargeted+publishedAt", "financeurId+createdAt"], "traceability": ["createdAt", "updatedAt", "publishedAt", "scrapeMetadata.importedAt", "validation.date"]},
     {"store": "Firestore", "collection": "users", "id": "uid", "fields": "voir business_objects.User", "constraints": "update propriétaire seulement", "indexes": [], "traceability": ["createdAt"]},
     {"store": "Firestore", "collection": "porteurProfiles / financeurProfiles", "id": "uid", "fields": "voir cahier 5.5", "constraints": "propriétaire", "indexes": [], "traceability": ["updatedAt"]},
     {"store": "Firestore", "collection": "applications", "id": "auto", "fields": "voir business_objects.Application", "constraints": "porteur abonné ; update porteur en draft ou financeur", "indexes": ["porteurId+createdAt", "financeurId+createdAt", "aapId+createdAt"], "traceability": ["createdAt", "updatedAt", "submittedAt", "statusHistory"]},
@@ -209,7 +209,7 @@
     {"name": "Playwright", "usage": "découverte, collecte, connecteurs"},
     {"name": "Tavily", "usage": "recherche des sites (plan gratuit épuisé)", "config": "scraping/recherche_web.py"},
     {"name": "Sentry", "status": "installé, non initialisé"},
-    {"name": "Netlify", "status": "déploiement de test, à confirmer"},
+    {"name": "Netlify", "status": "déploiement de test en ligne (vérifié le 2026-10-14 ; bundle antérieur au lot 0, à redéployer)"},
     {"name": "GitHub", "repository": "ducoutpy-lgtm/AAP"},
     {"name": "OpenSpec CLI", "version": "1.14"}
   ],
@@ -226,11 +226,11 @@
   "known_limits": [
     "Extraction locale inachevée (1 116 textes restants) ; environ 1 fiche sur 4 à 5 avec un champ faux ; 533 liens PDF/Word/Excel non traités.",
     "577 émetteurs sans page validée ; 10 pages mortes ; 22 adresses à resonder ; doublons d'émetteurs (Île-de-France, Drôme).",
-    "Verdicts sur les pages indexés par adresse instable ; validation_pages.json et validation_liens.json non versionnés.",
+    "Verdicts sur les pages indexés par adresse instable (verdicts_pages.json et verdicts_liens.json versionnés dans sources/ depuis le lot 0).",
     "Trois copies de l'échantillon ; grille de contrôle mixte.",
     "Connecteurs sans nom de modèle dans la fiche ; textes collectés sans date.",
     "Adresse validée FIRAH pointant vers la Fondation OCIRP (verdict humain à revoir).",
-    "49 appels des connecteurs sans date passés en brouillon le 2026-10-14 (règle à confirmer).",
+    "49 appels des connecteurs sans date passés en brouillon le 2026-10-14 (règle confirmée par Monsieur DUCOUT, réponse Q6 du rapport de critique).",
     "Champ validation absent du type AAP TypeScript ; pas de validatedBy.",
     "Cloud Functions non déployées (scores, notifications, alertes, Stripe) ; Blaze refusé.",
     "Stripe : Price IDs fictifs, redirectToCheckout déprécié (à confirmer), pas de portail client.",
@@ -240,7 +240,7 @@
     "Candidature créée directement en submitted ; sendDailyAlerts ignore filtres et fréquence ; notifications vers des routes inexistantes.",
     "Pages gabarit : édition d'AAP, profil, paiements, paramètres, pages légales, 404 ; favoris non implémentés ; connexion Google sans document users.",
     "Aucun test automatisé côté application ; Sentry non initialisé ; recherche filtrée côté client.",
-    "Pas de veille des changements ; lancements manuels ; Netlify et projet Firebase à confirmer."
+    "Pas de veille des changements ; lancements manuels ; Netlify en ligne et projet Firebase actif (vérifiés le 2026-10-14)."
   ],
   "glossary": [
     {"term": "AAP", "definition": "Appel à projets, à candidatures, à manifestation d'intérêt, bourse ou prix."},

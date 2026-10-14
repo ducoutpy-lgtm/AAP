@@ -118,3 +118,25 @@ def test_appliquer_verdicts_pages_correspondance_et_adresse():
     # écart de redécouverte : la page gardée de l'Inserm est encore sur l'ancien domaine
     assert validation.ecarts_redecouverte(bilan["corrigees"], resultats) == [("inserm", "https://pro.inserm.fr/agenda", "https://www.inserm.fr/vieux")]
     assert validation.ecarts_redecouverte(bilan["corrigees"], {"inserm": {"url_rubrique": "https://pro.inserm.fr/agenda2"}}) == []
+
+
+def test_migrer_verdicts_sauvegarde_copie_sans_ecraser_et_renomme(tmp_path, monkeypatch):
+    """Lot 0, instruction 7 : essai a blanc sans ecriture, puis sauvegarde, fusion sans ecraser, renommage des anciens."""
+    import json
+    import validation
+    ancien_pages, nouveau_pages = tmp_path / "results" / "validation_pages.json", tmp_path / "sources" / "verdicts_pages.json"
+    ancien_liens, nouveau_liens = tmp_path / "results" / "validation_liens.json", tmp_path / "sources" / "verdicts_liens.json"
+    ancien_pages.parent.mkdir()
+    nouveau_pages.parent.mkdir()
+    ancien_pages.write_text(json.dumps({"https://a": {"verdict": "bonne-page"}, "https://b": {"verdict": "page-morte"}}), encoding="utf-8")
+    nouveau_pages.write_text(json.dumps({"https://b": {"verdict": "bonne-page"}}), encoding="utf-8")  # plus recent : a garder
+    ancien_liens.write_text(json.dumps({"https://l": {"verdict": "aap-juste"}}), encoding="utf-8")
+    monkeypatch.setattr(validation, "ANCIENS_VERDICTS", {ancien_pages: nouveau_pages, ancien_liens: nouveau_liens})
+    monkeypatch.setattr(validation, "SAUVEGARDES", tmp_path / "sauvegardes")
+    assert validation.migrer_verdicts(dry_run=True) == 0
+    assert ancien_pages.exists() and not nouveau_liens.exists()  # l'essai a blanc n'ecrit rien
+    assert validation.migrer_verdicts(dry_run=False) == 0
+    assert json.loads(nouveau_pages.read_text(encoding="utf-8")) == {"https://a": {"verdict": "bonne-page"}, "https://b": {"verdict": "bonne-page"}}
+    assert json.loads(nouveau_liens.read_text(encoding="utf-8")) == {"https://l": {"verdict": "aap-juste"}}
+    assert not ancien_pages.exists() and ancien_pages.with_suffix(".json.migre").exists()
+    assert len(list((tmp_path / "sauvegardes").glob("verdicts_*/validation_*.json"))) == 2

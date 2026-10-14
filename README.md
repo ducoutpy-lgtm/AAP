@@ -59,8 +59,9 @@ python -m venv .venv                       # environnement Python à la racine (
 ```
 
 Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
-sont importés ; une fiche sans date de clôture entre en brouillon (`status: draft`, échéance fictive à un an,
-étiquette `sans-date-cloture`, validation « à corriger »), invisible sans compte, en attente de Monsieur DUCOUT.
+sont importés ; une fiche sans date de clôture entre en brouillon (`status: draft`, `deadline` nulle : plus aucune
+échéance fictive depuis le lot 0 du 2026-10-14, étiquette `sans-date-cloture`, validation « à corriger »), invisible
+sans compte, en attente de Monsieur DUCOUT.
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits
@@ -68,6 +69,13 @@ seul document) ; sur un document existant, `status`, `publishedAt` et `validatio
 pilotent le bloc `validation` (« pas un AAP » -> archivé, « AAP juste » -> badge « À vérifier » retiré et champs
 métier protégés, « à corriger » -> badge gardé avec le commentaire). Migration des identifiants :
 `scripts/migrer_identifiants.py` (sauvegarde dans `scripts/sauvegardes/`, hors Git).
+
+Règles ajoutées par le lot 0 du rapport de critique (changement `lot-0-assainissement`, 2026-10-14) : `validation.statut` est la seule source de la
+fiabilité d'une fiche et l'étiquette `a-verifier` en découle (`proposee` ou `a_corriger`, quel que soit le moteur) ;
+`validation.par` est renseigné ; seuls les champs d'une liste blanche partent vers Firestore, un champ inconnu arrête
+l'import à blanc comme en réel en le nommant. Migration des échéances fictives vers `deadline` nulle :
+`.venv\Scripts\python scripts/migrer_echeances.py --dry-run` puis sans option (sauvegarde JSON d'abord).
+Tests de l'import (faux Firestore en mémoire) : `.venv\Scripts\python -m pytest scripts/tests -q`.
 
 Pourquoi `grpcio` est fixé en 1.74.0 dans `scripts/requirements.txt` : les versions plus récentes sont
 bloquées par Smart App Control de Windows (constaté le 2026-10-09).

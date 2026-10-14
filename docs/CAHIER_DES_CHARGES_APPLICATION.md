@@ -82,7 +82,7 @@ flowchart LR
 ```
 
 - Frontend : React 18, TypeScript, Vite 5, Tailwind 3, react-router 6, react-query, react-hook-form, zod,
-  recharts ; `app/src`. Déploiement de test Netlify (à confirmer, lien dans `CLAUDE.md`).
+  recharts ; `app/src`. Déploiement de test Netlify (en ligne, vérifié le 2026-10-14 ; lien dans `CLAUDE.md`).
 - Backend : aucun serveur propre. Firebase Auth (e-mail et mot de passe, Google), Firestore (base de
   données documentaire, projet `aapi-11bc3`), Storage (codé, inactif faute de forfait Blaze), Cloud
   Functions (`app/functions/src/index.ts`, Node 18, région europe-west1, non déployées).
@@ -120,7 +120,7 @@ flowchart LR
   erreur, `url_depart`, `url_rubrique`, `nb_liens_aap`, `candidats_visites`, `date`), `decouverte/<id>/rubrique.html`,
   `decouverte/<id>/liens.json` (`texte`, `href`, `score`), `decouverte/<id>/fiches/<sha1 10>.txt` (texte lisible
   d'un lien, adresse en première ligne). Dossier hors Git, régénérable.
-- Validation humaine : `results/validation_pages.json` (clé = adresse de la page, verdicts `bonne-page`,
+- Validation humaine : `sources/verdicts_pages.json` (déplacé de `results/` par le lot 0, 2026-10-14 ; clé = adresse de la page, verdicts `bonne-page`,
   `mauvaise-page` avec adresse en commentaire, `page-morte`, `hors-champ`, `passer`) ; reportée au registre
   par `validation.py --appliquer-pages`.
 
@@ -285,7 +285,7 @@ ne sont plus réécrits non plus ; `rejetee` archive ; une fiche sans date de cl
 
 ### 7.7 Parcours d'un porteur dans l'application
 
-- Inscription (`/signup`, e-mail et mot de passe, e-mail de vérification) -> document `users` en `trial`
+- Inscription (`/signup`, e-mail et mot de passe, e-mail de vérification ; route retirée du MVP le 2026-10-14, lot 0) -> document `users` en `trial`
   (`trialEndsAt` J+14) -> `/complete-profile` -> `/abonnement/choisir` (Stripe non fonctionnel ; lien
   « continuer avec l'essai ») -> `/dashboard/porteur` -> recherche -> fiche -> `/aap/:id/candidater`
   (formulaire multi-étapes, créé directement en `submitted`) -> `/mes-candidatures`.
@@ -330,7 +330,7 @@ sur la validation.
 | `scraping/sources/verdicts_fiches.json` | objet `url -> {verdict, commentaire, date}` | `url_source` | oui |
 | `scraping/decouverte/resultats.json`, `<id>/liens.json`, `<id>/fiches/*.txt`, `qualification.json` | voir 5.2 | `id`, adresse | non (régénérable) |
 | `scraping/results/<connecteur>.json`, `extraction_locale.json` | liste de fiches AapNormalized | `url_source` | non |
-| `scraping/results/validation_pages.json`, `validation_liens.json` | objet `url -> verdict` | adresse de la page ou du lien | non (à verser dans `sources/`, voir 12) |
+| `scraping/sources/verdicts_pages.json`, `verdicts_liens.json` | objet `url -> verdict` | adresse de la page ou du lien | oui depuis le lot 0 (2026-10-14) |
 | `scraping/logs/extraction_costs.jsonl` | une ligne par appel API (modèle, tokens, coût) | horodatage | non |
 
 ### 8.3 Traçabilité présente et manquante
@@ -348,8 +348,9 @@ Règles explicites (code et `CLAUDE.md`) :
 2. Identifiant d'un appel importé = sha1 de l'adresse normalisée ; la signature (titre, financeur, clôture)
    reste un attribut et sert au cache des connecteurs.
 3. L'import ignore par défaut les appels clos (`deadline < aujourd'hui`) ; `--include-expired` les importe.
-4. Fiche sans date de clôture : brouillon, échéance fictive à un an, étiquette `sans-date-cloture`,
-   validation « à corriger » ; jamais publiée sans décision humaine.
+4. Fiche sans date de clôture : brouillon, `deadline` nulle (plus d'échéance fictive depuis le lot 0, réponse Q4 du
+   rapport de critique), étiquette `sans-date-cloture`, validation « à corriger » ; jamais publiée sans décision
+   humaine (bouton « Publier » masqué tant que `validation.statut` vaut `proposee` ou `a_corriger`).
 5. L'import ne réécrit jamais `status`, `publishedAt`, `validation` d'un document existant ; une fiche
    validée garde ses champs métier.
 6. Verdict « pas un AAP » = archivé (pas supprimé) ; « AAP juste » = badge « À vérifier » retiré ;
@@ -433,7 +434,7 @@ Collecte :
   champ faux, d'où la marque « À vérifier » ; 533 liens vers des fichiers PDF, Word, Excel non traités.
 - 577 émetteurs sans page validée, 10 pages mortes à retrouver, 22 adresses à resonder.
 - Verdicts sur les pages indexés par l'adresse de la page (devient orpheline après redécouverte) ;
-  `validation_pages.json` et `validation_liens.json` non versionnés (dans `results/`).
+  `validation_pages.json` et `validation_liens.json` : versionnés dans `sources/` depuis le lot 0 (`verdicts_pages.json`, `verdicts_liens.json`).
 - Trois copies de l'échantillon (`echantillon_ollama*.json`, `echantillon_claude_code.json`,
   `echantillon_valides.json`) et une grille mêlant colonnes manuelles et automatiques.
 - Connecteurs historiques sans nom de modèle dans la fiche ; textes collectés sans date.
@@ -443,8 +444,8 @@ Collecte :
 
 Jonction et base :
 - 49 appels des connecteurs historiques sans date de clôture passés en brouillon par la règle du 2026-10-14
-  (décision à confirmer : la règle visait les fiches du modèle local).
-- Champ `validation` écrit dans Firestore mais absent du type `AAP` TypeScript ; pas de `validatedBy`.
+  (règle confirmée par Monsieur DUCOUT le 2026-10-14, réponse Q6 du rapport de critique).
+- Champ `validation` ajouté au type `AAP` TypeScript le 2026-10-14 (lot 0), avec `par` (relecteur).
 - Blocs source / proposition / affichage non séparés dans le document (champs à plat) ; `tags` mêle provenance
   et contenu.
 
@@ -466,7 +467,8 @@ Application :
 - Pages gabarit : `/aap/:id/edit`, `/profil`, `/admin/paiements`, `/admin/parametres`, pages légales, 404.
 - Favoris non implémentés ; connexion Google sans document `users` ; aucun test automatisé côté application ;
   Sentry non initialisé ; recherche filtrée côté client après lecture de tous les appels publiés.
-- Déploiement Netlify et activité du projet Firebase : à confirmer.
+- Déploiement Netlify et projet Firebase : vérifiés le 2026-10-14 (site en ligne avec un bundle antérieur au lot 0,
+  inscription encore accessible par l'accueil tant qu'il n'est pas redéployé ; projet `aapi-11bc3` actif).
 
 ## 13. Glossaire
 

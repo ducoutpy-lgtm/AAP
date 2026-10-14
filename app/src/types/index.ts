@@ -71,6 +71,19 @@ export interface ContactPerson {
 
 export type AapStatus = 'draft' | 'published' | 'closed' | 'archived';
 
+// Fiabilité d'une fiche, seule source de vérité (rapport de critique validé le 2026-10-14, instruction 3) :
+// écrite par scripts/import_to_firestore.py à partir des verdicts humains de scraping/sources/verdicts_fiches.json,
+// jamais par l'application. L'étiquette a-verifier des tags en découle (proposee ou a_corriger).
+export type ValidationStatut = 'proposee' | 'a_corriger' | 'validee' | 'rejetee';
+
+export interface AapValidation {
+  statut: ValidationStatut;
+  commentaire: string;
+  date: string;
+  // Relecteur : « Monsieur DUCOUT » après un verdict humain, « import (date absente) » pour une fiche sans date
+  par: string;
+}
+
 export interface AAP {
   id?: string;
   financeurId: string;
@@ -84,7 +97,9 @@ export interface AAP {
   budgetMin?: number;
   budgetMax?: number;
   budgetTotal?: number;
-  deadline: Timestamp | Date;
+  // null = date de clôture non précisée (réponse Q4 du rapport du 2026-10-14) : plus d'échéance fictive ;
+  // une telle fiche reste en brouillon, à corriger, jusqu'à un verdict humain.
+  deadline: Timestamp | Date | null;
   publicationDate?: Timestamp | Date;
   startDate?: Timestamp | Date;
   endDate?: Timestamp | Date;
@@ -110,6 +125,8 @@ export interface AAP {
     // storagePath : copie dans Firebase Storage (présent seulement après un import --vers-storage)
     fichiersJoints?: { url: string; filename: string; fichierLocal?: string; storagePath?: string }[];
   };
+  // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
+  validation?: AapValidation;
 }
 
 export type ApplicationStatus =

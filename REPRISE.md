@@ -76,7 +76,8 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
 - **Validation manuelle** (2026-10-13, changement `validation-manuelle-aap`, tâches 1.1 à 1.3 faites, vérification 2.1 par
   Monsieur DUCOUT en attente) : `scraping/validation.py`, deux raccourcis sur son bureau (« Validation des pages des
   sources » : les 155 pages gardées, port 8788 ; « Validation manuelle des AAP » : échantillon de 60 liens, un par
-  source, port 8787). Verdicts dans `results/validation_pages.json` et `results/validation_liens.json` (34 verdicts sur
+  source, port 8787). Verdicts dans `results/validation_pages.json` et `results/validation_liens.json` (déplacés dans
+  `sources/verdicts_pages.json` et `sources/verdicts_liens.json` par le lot 0 du 2026-10-14 ; 34 verdicts sur
   les liens à midi ; aucun sur les pages). Ses commentaires ont déjà donné deux verdicts de plus (page qui recense des
   appels, appel permanent) et une grille de critères proposée (nature, thème, état, destinataires), non décidée.
   Leçon du jour (règle « Preuve avant affirmation » dans CLAUDE.md) : j'ai affirmé que la découverte gardait de
@@ -163,11 +164,26 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   (341 documents : 194 publiés, 147 brouillons). Reste : vérification 5.1 par Monsieur DUCOUT ; verdicts sur les
   pages rattachés à l'identifiant de l'émetteur (problème I3 de l'audit), rangement de `results/` (M4).
 
+- **Lot 0 du rapport de critique** (2026-10-14, changement `lot-0-assainissement`, rapport
+  `docs/RAPPORT_CRITIQUE_AAP_SANTE_2026-10-14.md` validé par Monsieur DUCOUT, instructions 1 à 9 et 17). Fait et prouvé :
+  routage réduit au MVP (`/signup` en 404, liens d'inscription retirés), configuration ESLint créée (lint vert),
+  `validation.statut` seule source de fiabilité (étiquette `a-verifier` dérivée, `par`), liste blanche des champs de
+  l'import, `deadline` nulle pour les fiches sans date (type `AAP` nullable, bloc `validation` dans le type), cinq tests
+  de l'audit sur un faux Firestore, verdicts des pages et des liens migrés dans `sources/` le 2026-10-14 après accord
+  (257 pages, 34 liens, sauvegarde dans `scripts/sauvegardes/`), règles Firestore du MVP testées sur l'émulateur
+  (`npm run test:rules`, JDK 21) et déployées le 2026-10-14 après accord, moteur `api` de l'échantillon sous plafond
+  (`echantillon.py --moteur api`), 141 échéances fictives passées à `null` par Monsieur DUCOUT depuis son terminal le
+  2026-10-14 (contrôle « 141 deja a null » ; le classificateur de sécurité de Claude Code avait refusé la mise à jour
+  groupée à la session). Mesure API faite le 2026-10-14 après accord : `claude-haiku-5-5`, 40 textes, 14 justes et 1 fabriquée sur 15 comparées,
+  4 pages de référence refusées à tort, seuil non atteint, coût réel 0,02 euro (`scraping/ECHANTILLON.md`). Constat hors
+  lot 0 consigné dans la section 8 du rapport : les filtres territoire, secteur et budget de `/aap/search` ne
+  correspondent pas aux valeurs importées (libellés contre identifiants), proposition pour le lot 1 à valider.
+  État détaillé : `openspec/changes/lot-0-assainissement/tasks.md`.
+
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md. Donne-moi le bilan de mes verdicts dans results/validation_pages.json et results/validation_liens.json
-(sources vérifiées, pas de supposition), puis ce qui reste à décider (vérification 2.1 de l'outil, grille de critères,
-moteur d'extraction 3.2), et attends."
+"Lis REPRISE.md et openspec/changes/lot-0-assainissement/tasks.md. Donne-moi ce qui reste à faire ou à valider dans le
+lot 0 (sources vérifiées, pas de supposition), puis attends mes accords."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 
@@ -179,5 +195,10 @@ moteur d'extraction 3.2), et attends."
 ../.venv/Scripts/python extraction_locale.py --bilan                        # avancement du passage local
 ../.venv/Scripts/python extraction_locale.py --extraire --modele qwen3:8b   # reprend où il s'est arrêté
 ../.venv/Scripts/python ../scripts/import_to_firestore.py --source extraction_locale   # depuis AAP/, import d'un lot
+../.venv/Scripts/python validation.py --migrer-verdicts --dry-run                       # lot 0 : fait le 2026-10-14, plus rien à migrer
+../.venv/Scripts/python validation.py --appliquer-pages --dry-run                       # bilan seul, rien d'écrit
+../.venv/Scripts/python echantillon.py --extraire --moteur api --modele claude-haiku-5-5 --limite 1   # fait le 2026-10-14 ; une relance saute les textes déjà traités
+../.venv/Scripts/python ../scripts/migrer_echeances.py --dry-run                        # lot 0 : fait le 2026-10-14, contrôle attendu « 141 deja a null »
+cd ../app && npm run lint && npm run build && npm run test:rules                        # test:rules : JDK 21 en tête du PATH
 openspec validate <changement> ; openspec archive <changement> --yes
 ```

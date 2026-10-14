@@ -28,6 +28,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Le contexte et son hook vivent dans le même fichier (patron courant) ; la règle du rechargement à chaud
+// n'accepte que des composants, elle est désactivée pour cette seule ligne.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {

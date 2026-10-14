@@ -97,7 +97,7 @@ export const aapService = {
 
   // Mettre à jour un AAP
   async updateAap(aapId: string, data: Partial<CreateAapData>): Promise<void> {
-    const updateData: any = {
+    const updateData: Record<string, unknown> = {
       ...data,
       updatedAt: Timestamp.now(),
     };
@@ -129,7 +129,7 @@ export const aapService = {
 
   // Changer le statut d'un AAP
   async updateAapStatus(aapId: string, status: AapStatus): Promise<void> {
-    const updateData: any = {
+    const updateData: Record<string, unknown> = {
       status,
       updatedAt: Timestamp.now(),
     };
@@ -174,7 +174,7 @@ export const aapService = {
     budgetMin?: number;
     budgetMax?: number;
   }): Promise<AAP[]> {
-    let q = query(
+    const q = query(
       collection(db, 'aap'),
       where('status', '==', 'published'),
       orderBy('publishedAt', 'desc')

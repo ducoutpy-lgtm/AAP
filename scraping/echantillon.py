@@ -10,13 +10,20 @@ Usage :
   python echantillon.py --verifier results/echantillon_claude_code.json
   python echantillon.py --estimer                   # coût API Anthropic estimé, sans appel
   python echantillon.py --rapport                   # ECHANTILLON.md à partir des résultats et de la grille de contrôle
+  python echantillon.py --extraire --moteur api --modele claude-haiku-5-5 [--limite 1] [--plafond 5]
+                                                    # mesure d'un modèle Anthropic sur les 45 textes de l'échantillon
+                                                    # (results/echantillon_api_<modele>.json), coût réel dans logs/
+  python echantillon.py --controler --moteur api --modele claude-haiku-5-5
 
 Second tour (changement extraction-ollama-second-tour) : pour chaque texte, le modèle local répond d'abord
 à la question fermée « est-ce la fiche d'un appel à projets ? » ; l'extraction n'a lieu que si oui ; les
 formats (dates, montants, financeur) sont contrôlés, redemandés une fois au modèle en citant l'écart, puis
 mis à null avec la marque « à relire » si l'écart persiste.
 
-Aucun appel à l'API Anthropic n'est fait par ce script.
+Aucun appel à l'API Anthropic n'est fait par ce script, sauf avec --moteur api (lot 0 du rapport du 2026-10-14,
+instruction 17) : les 45 textes de l'échantillon seulement, deux appels par texte (question fermée puis extraction),
+arrêt automatique avant de dépasser le plafond (--plafond, 5 euros par défaut, cumulé sur toutes les exécutions du
+modèle), et seulement après l'accord écrit de Monsieur DUCOUT sur le modèle, son prix et le coût estimé.
 """
 from __future__ import annotations
 
@@ -24,6 +31,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -60,6 +68,9 @@ MAX_CARACTERES = 80_000  # même borne que extractor.py
 PRIX_ENTREE, PRIX_SORTIE = 3.0, 15.0
 TOKENS_SORTIE_PAR_FICHE = 1662  # moyenne constatée sur 363 extractions (logs/extraction_costs.jsonl)
 EURO_PAR_DOLLAR = 0.95  # taux arrondi [A VALIDER - Monsieur DUCOUT]
+# Moteur api : journal des coûts réels (écrit par extractor.py) et plafond de dépense par défaut (réponse Q3, 5 euros).
+JOURNAL_COUTS = ICI / "logs" / "extraction_costs.jsonl"
+PLAFOND_EUROS = 5.0
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
 CHAMPS_CONTROLES = ("titre", "financeur", "date_cloture", "montant")
@@ -306,6 +317,40 @@ def verdict_seuil(justes: int, fabriquees: int) -> str:
     return "seuil atteint" if justes >= SEUIL_JUSTES and fabriquees <= SEUIL_FABRIQUEES else "seuil non atteint"
 
 
+def adresses_echantillon(reference: list[dict], non_aap: list[dict]) -> set[str]:
+    """Les 45 adresses de l'échantillon : fiches de référence (24) et pages jugées hors sujet (21)."""
+    return {f["url_source"] for f in reference} | {n["url"] for n in non_aap}
+
+
+def cout_cumule(modele: str, journal: Path = JOURNAL_COUTS) -> float:
+    """Euros déjà dépensés avec ce modèle d'après le journal des coûts, toutes exécutions confondues."""
+    if not journal.exists():
+        return 0.0
+    total = 0.0
+    for ligne in journal.read_text(encoding="utf-8").splitlines():
+        if ligne.strip():
+            d = json.loads(ligne)
+            if d.get("model") == modele:
+                total += float(d.get("cost_eur_approx") or 0)
+    return total
+
+
+def estimation_appel_euros(caracteres: int, tarifs: dict, euro_par_dollar: float = 0.92) -> float:
+    """Coût estimé des deux appels d'un texte (question fermée puis extraction) aux tarifs donnés (USD par million).
+
+    Hypothèses prudentes : 4 caractères par token et 30 % de tokens en plus (découpage plus fin des modèles récents) ;
+    sortie moyenne constatée par fiche, plus 200 tokens pour la question fermée.
+    """
+    tokens_entree = caracteres / 4 * 1.3
+    usd = 2 * tokens_entree / 1e6 * tarifs["entree"] + (TOKENS_SORTIE_PAR_FICHE + 200) / 1e6 * tarifs["sortie"]
+    return usd * euro_par_dollar
+
+
+def plafond_atteint(cumul: float, estimation: float, plafond: float) -> bool:
+    """Vrai si l'appel suivant ferait dépasser le plafond : on s'arrête avant, jamais après."""
+    return cumul + estimation > plafond
+
+
 # ---------------------------------------------------------------- collecte (navigateur)
 
 JS_TEXTE = """() => {
@@ -443,6 +488,84 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
           f"{time.time() - debut:.0f} s pour ce passage ({modele}) -> {chemin_sortie.name}")
 
 
+def charger_env() -> None:
+    """Lit scraping/.env (clé API) comme run.py le fait avec load_dotenv(override=True), sans dépendance :
+    une ligne CLE=VALEUR par variable, les lignes vides et les commentaires ignorés. La valeur n'est jamais affichée."""
+    chemin = ICI / ".env"
+    if not chemin.exists():
+        return
+    for ligne in chemin.read_text(encoding="utf-8").splitlines():
+        ligne = ligne.strip()
+        if ligne and not ligne.startswith("#") and "=" in ligne:
+            cle, valeur = ligne.split("=", 1)
+            os.environ[cle.strip()] = valeur.strip().strip('"').strip("'")
+
+
+def extraire_api(rubriques: list[dict], modele: str, limite: int | None, plafond: float) -> None:
+    """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, deux appels par texte, arrêt au plafond.
+
+    Même protocole que le modèle local (question fermée puis extraction, contrôle des formats) pour que la comparaison
+    soit loyale ; pas de seconde chance payante : un écart de format est neutralisé et la fiche marquée à relire.
+    Reprise comme l'extraction locale (textes déjà traités sautés), sorties par modèle, coût réel dans le journal.
+    """
+    import extractor
+    charger_env()
+    if modele not in extractor.TARIFS_USD_PAR_MTOK:
+        raise SystemExit(f"Tarif inconnu pour {modele} : l'ajouter à TARIFS_USD_PAR_MTOK (extractor.py) avant tout appel.")
+    adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
+    fiches = [(r, c) for r, c in fiches_disponibles(rubriques) if lire_fiche(c)[0] in adresses][:limite]
+    RESULTS.mkdir(exist_ok=True)
+    chemin_sortie = fichier_sortie("api", modele)
+    chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
+    chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
+    sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)
+    deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | {e["fichier"] for e in echecs} | {r["fichier"] for r in refusees})
+    print(f"{len(fiches)} textes de l'échantillon ({sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} déjà traités) ; "
+          f"coût cumulé de {modele} : {cout_cumule(modele):.3f} euros ; plafond {plafond:.2f} euros")
+    tarifs, nouvelles = extractor.TARIFS_USD_PAR_MTOK[modele], 0
+    for i, (rubrique, chemin) in enumerate(fiches, 1):
+        rel = str(chemin.relative_to(ICI))
+        if rel in deja:
+            continue
+        url, texte = lire_fiche(chemin)
+        texte = texte.split("\n", 1)[1] if "\n" in texte else texte  # saute le texte du lien
+        cumul, estimation = cout_cumule(modele), estimation_appel_euros(len(texte), tarifs, extractor.EURO_PAR_DOLLAR)
+        if plafond_atteint(cumul, estimation, plafond):
+            print(f"Plafond : {cumul:.3f} euros dépensés, texte suivant estimé {estimation:.3f} euros, plafond {plafond:.2f} euros. "
+                  "Arrêt avant l'appel ; les fiches déjà produites sont conservées.")
+            break
+        t0 = time.time()
+        try:
+            avis = extractor.est_un_aap(texte, url, CONSIGNE_EST_AAP, source=rubrique["id"], model=modele)
+            if not avis.get("est_aap"):
+                refusees.append({"fichier": rel, "url": url, "source": rubrique["id"], "raison": avis.get("raison", ""),
+                                 "duree_s": round(time.time() - t0, 1)})
+                _ecrire_json(chemin_refus, refusees)
+                print(f"[{i}/{len(fiches)}] refusée {chemin.name} {avis.get('raison', '')[:70]}")
+                continue
+            brut = extractor.extract_aap(texte, url, financeur_hint=rubrique["nom"], source=rubrique["id"], model=modele)
+            ecarts, a_relire = ecarts_format(brut), False
+            if ecarts:
+                brut, a_relire = neutraliser(brut, ecarts), True
+            fiche = valider_fiche(brut, url, rubrique["nom"])
+        except Exception as err:
+            echecs.append({"fichier": rel, "erreur": type(err).__name__ + ": " + str(err).splitlines()[0][:160]})
+            _ecrire_json(chemin_echecs, echecs)
+            print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
+            continue
+        duree = round(time.time() - t0, 1)
+        d = fiche.model_dump()
+        d["scrape_metadata"] = {"source": rubrique["id"], "moteur": "api", "modele": modele, "duree_s": duree, "fichier": rel,
+                                "a_relire": a_relire, "ecarts": ecarts, "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                                "version_consigne": VERSION_CONSIGNE}
+        sortie.append(d)
+        nouvelles += 1
+        _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend
+        print(f"[{i}/{len(fiches)}] ok {duree:5.1f}s  {fiche.titre[:60]}" + ("  (à relire)" if a_relire else ""))
+    print(f"\n{len(refusees)} pages refusées, {len(sortie)} réussites ({nouvelles} nouvelles), {len(echecs)} échecs ; "
+          f"coût cumulé de {modele} : {cout_cumule(modele):.3f} euros -> {chemin_sortie.name}")
+
+
 def controler(moteur: str, modele: str) -> None:
     """Compare les fiches produites aux fiches de référence et remplit la grille de contrôle sous la clé du modèle."""
     cle = cle_controle(moteur, modele)
@@ -505,14 +628,27 @@ def charger_sorties() -> dict[str, list[dict]]:
     for cle, chemin in (("ollama", RESULTS / "echantillon_ollama.json"), ("claude_code", REFERENCE)):
         if chemin.exists():
             sorties[cle] = _charger_liste(chemin)
-    for chemin in sorted(RESULTS.glob("echantillon_ollama_*.json")):
-        if chemin.name.endswith(".errors.json") or chemin.stem.endswith("_non_aap"):
-            continue
-        sorties["ollama_" + chemin.stem[len("echantillon_ollama_"):]] = _charger_liste(chemin)
+    for prefixe in ("ollama", "api"):
+        for chemin in sorted(RESULTS.glob(f"echantillon_{prefixe}_*.json")):
+            if chemin.name.endswith(".errors.json") or chemin.stem.endswith("_non_aap"):
+                continue
+            sorties[f"{prefixe}_" + chemin.stem[len(f"echantillon_{prefixe}_"):]] = _charger_liste(chemin)
     return sorties
 
 
-def rapport(sorties: dict[str, list[dict]], controle: dict, estimation: dict | None, non_aap: list[dict] | None = None) -> str:
+def couts_api() -> dict[str, str]:
+    """Coût réel de chaque moteur api, lu dans le journal des coûts, pour la colonne Coût du rapport."""
+    couts = {}
+    for chemin in sorted(RESULTS.glob("echantillon_api_*.json")):
+        if chemin.name.endswith(".errors.json") or chemin.stem.endswith("_non_aap"):
+            continue
+        modele = chemin.stem[len("echantillon_api_"):]
+        couts["api_" + modele] = f"{cout_cumule(modele):.2f} euros (journal des coûts)"
+    return couts
+
+
+def rapport(sorties: dict[str, list[dict]], controle: dict, estimation: dict | None, non_aap: list[dict] | None = None,
+            couts: dict[str, str] | None = None) -> str:
     hors_sujet = {n["url"] for n in non_aap or []}
     lignes = ["# Extraction sur échantillon : comparaison des moteurs", "",
               "Généré par `python scraping/echantillon.py --rapport`. Contrôle : pour chaque fiche, titre, "
@@ -530,7 +666,7 @@ def rapport(sorties: dict[str, list[dict]], controle: dict, estimation: dict | N
         justes = sum(fiche_juste(c) for c in controlees)
         fabriquees = sum(1 for f in fiches if f["url_source"] in hors_sujet)
         temps = sum(f.get("scrape_metadata", {}).get("duree_s", 0) for f in fiches)
-        cout = "0 euro"
+        cout = (couts or {}).get(moteur, "0 euro")
         lignes.append(f"| {moteur} | {len(fiches)} | {len(controlees)} | {justes} | {fabriquees} | {temps:.0f} s | {cout} | "
                       f"{verdict_seuil(justes, fabriquees)} |")
     if estimation:
@@ -561,9 +697,12 @@ def main() -> int:
     parser.add_argument("--collecter", action="store_true")
     parser.add_argument("--extraire", action="store_true")
     parser.add_argument("--controler", action="store_true", help="comparer les fiches du modèle aux fiches de référence")
-    parser.add_argument("--moteur", default="ollama", choices=["ollama", "claude_code"],
-                        help="claude_code sert seulement à --controler (auto-contrôle du comparateur)")
+    parser.add_argument("--moteur", default="ollama", choices=["ollama", "claude_code", "api"],
+                        help="claude_code sert seulement à --controler (auto-contrôle du comparateur) ; "
+                             "api : modèle Anthropic sur les 45 textes de l'échantillon, sous plafond, après accord")
     parser.add_argument("--modele", default="mistral:7b-instruct")
+    parser.add_argument("--plafond", type=float, default=PLAFOND_EUROS,
+                        help="avec --moteur api : dépense maximale en euros, cumulée sur toutes les exécutions du modèle (défaut 5)")
     parser.add_argument("--limite", type=int, help="n'extraire que les N premières fiches (essai)")
     parser.add_argument("--verifier", metavar="FICHIER")
     parser.add_argument("--estimer", action="store_true")
@@ -576,7 +715,10 @@ def main() -> int:
     if args.collecter:
         asyncio.run(collecter(rubriques))
     if args.extraire:
-        extraire(rubriques, args.moteur, args.modele, args.limite)
+        if args.moteur == "api":
+            extraire_api(rubriques, args.modele, args.limite, args.plafond)
+        else:
+            extraire(rubriques, args.moteur, args.modele, args.limite)
     if args.controler:
         controler(args.moteur, args.modele)
     if args.verifier:
@@ -595,7 +737,7 @@ def main() -> int:
             estimation = {"nb_fiches": len(fiches), "euros": e["euros"], "euros_global": g["euros"], "total_liens": total_liens}
         chemin_non_aap = RESULTS / "echantillon_non_aap.json"
         non_aap = json.loads(chemin_non_aap.read_text(encoding="utf-8")) if chemin_non_aap.exists() else []
-        RAPPORT.write_text(rapport(charger_sorties(), controle, estimation, non_aap), encoding="utf-8")
+        RAPPORT.write_text(rapport(charger_sorties(), controle, estimation, non_aap, couts_api()), encoding="utf-8")
         print(f"Rapport écrit : {RAPPORT.name}")
     if not any([args.collecter, args.extraire, args.controler, args.verifier, args.estimer, args.rapport]):
         parser.print_help()

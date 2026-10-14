@@ -27,5 +27,13 @@
     }
   },
   "include": ["src"],
+  // Lot 0 (2026-10-14, instruction 1 du rapport de critique) : trois pages des modules gelés, plus importées par
+  // App.tsx, appellent deadline.toDate() et ne compilent plus avec deadline nullable ; elles sortent de la
+  // compilation plutôt que d'être modifiées. À retirer d'ici quand leurs routes reviendront (lot 4).
+  "exclude": [
+    "src/pages/common/CalendarPage.tsx",
+    "src/pages/porteur/RecommendationsPage.tsx",
+    "src/pages/financeur/MyAapPage.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

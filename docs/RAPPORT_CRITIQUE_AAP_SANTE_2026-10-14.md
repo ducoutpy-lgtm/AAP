@@ -360,3 +360,68 @@ Importance : environ un cinquième des liens repérés ; les traiter ajoute une 
 Vérifié : contenu des quatre documents fournis. Non vérifié ou supposé : état du code, du déploiement Netlify, du
 projet Firebase, prix des modèles API, existence d'une sauvegarde Firestore sur le plan gratuit, unicité du point
 d'accès `aapService.ts`.
+
+## 8. Réponses données au lot 0 (2026-10-14, hors section 7)
+
+Questions posées par Claude Code dans le plan du changement `lot-0-assainissement` et tranchées par Monsieur DUCOUT
+le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapport reste la référence unique.
+
+- Pages légales gabarit (`/cgu`, `/confidentialite`, `/mentions-legales`) : conservées dans le routage du MVP.
+- Liens « Créer un compte » (sept sur l'accueil, un sur la connexion) : retirés ; l'accueil garde le lien
+  « Voir les appels à projets » de l'en-tête.
+- Trois fichiers gelés qui ne compilent plus avec `deadline` nullable (`CalendarPage`, `RecommendationsPage`,
+  `MyAapPage`) : exclus de la compilation dans `tsconfig.json`, non modifiés (instruction 1 respectée) ; à réintégrer au
+  lot 4. Fichier considéré comme gelé en plus de la liste de l'instruction 1 : `SignupPage.tsx` (inscription).
+- Journal d'import (instruction 14) et scission `results/connecteurs/` / `results/essais/` (instruction 21), cités dans
+  le tableau du lot 0 : exclus du lot 0, reportés conformément à la mission « instructions 1 à 9 et 17 ».
+- Étiquette « À vérifier » dérivée de `validation.statut` quel que soit le moteur : appliquée à la lettre ; les fiches
+  des connecteurs sans verdict portent donc le badge jusqu'à un verdict.
+- Configuration ESLint absente : créée (gabarit Vite) ; les fichiers des modules gelés sont ignorés par le lint plutôt
+  que corrigés ; les fichiers du MVP ont été typés (plus de `any`).
+- Instruction 17 : modèle `claude-haiku-5-5`, prix vérifiés le 2026-10-14 sur la page officielle des tarifs (0,10 USD en
+  entrée et 0,50 USD en sortie par million de tokens pour une requête de 100 000 tokens au plus), coût estimé 0,05 euro
+  pour les 45 textes, plafond 5 euros (détail : `openspec/changes/lot-0-assainissement/design.md`, décision 9).
+- Réponse Q5, état vérifié le 2026-10-14 : le site Netlify répond (code 200) et son bundle contient la route `/signup`
+  et le lien « Créer un compte » (inscription accessible par l'accueil jusqu'au prochain déploiement) ; l'adresse directe
+  `/signup` renvoie 404 faute de règle de redirection Netlify ; le projet Firebase `aapi-11bc3` est listé actif par la
+  CLI Firebase. Non vérifié : correspondance entre le bundle déployé et le dépôt.
+- Prérequis constatés : l'émulateur Firestore exige un JDK 21 (Eclipse Temurin déjà installé sur le poste, placé en tête
+  du PATH pour la commande de test) ; `anthropic` et `python-dotenv`, déclarés dans `scraping/requirements.txt`,
+  manquaient dans `.venv` et ont été installés ; `vitest` 2 et `@firebase/rules-unit-testing` 3.0.4 ajoutés en
+  dépendances de développement (versions compatibles avec Vite 5 et firebase 10).
+- Accords donnés le 2026-10-14 après le compte rendu du lot 0 : migration des verdicts (faite : 257 pages et 34 liens
+  dans `scraping/sources/`, sauvegarde `scripts/sauvegardes/verdicts_2026-10-14_1514`, bilan du report inchangé) ;
+  déploiement des règles Firestore (fait, « Deploy complete! », lecture publique vérifiée sur `/aap/search`) ; migration
+  des 141 échéances fictives (accord donné ; l'exécution par la session a été refusée par le classificateur de sécurité
+  de Claude Code ; faite par Monsieur DUCOUT depuis son terminal le 2026-10-14 : « 0 avec une echeance fictive a
+  migrer ; 141 deja a null », sauvegarde `scripts/sauvegardes/echeances_2026-10-14_1523.json`). Mesure API
+  (instruction 17) : accord donné le 2026-10-14 (fonds disponibles sur le compte Anthropic, budget accepté jusqu'à
+  10 dollars ; plafond du rapport conservé à 5 euros). Résultat : `claude-haiku-5-5`, 40 textes traités pour 45
+  adresses (les 5 textes FIRAH de la référence existent mais la rubrique FIRAH, retombée à 2 liens après sa
+  redécouverte du 13 octobre, n'est plus retenue par la sélection par famille de l'échantillon ; proposition
+  `[À VALIDER — Monsieur DUCOUT]` : lire les textes de l'échantillon par adresse et non par rubrique choisie, puis
+  mesurer les 5 textes manquants, environ 0,003 euro), 16 fiches, 14 justes sur 15 comparées, 1 fabriquée,
+  4 pages de référence refusées à tort à la question fermée (pages présentant un appel clos avec ses résultats,
+  bourses SFMU) ; seuil 20 justes / 2 fabriquées non atteint, le maximum atteignable étant 19 tant que les 5 textes
+  manquent ; coût réel 0,022 euro pour 56 appels (`scraping/ECHANTILLON.md`). Aucun autre appel sans nouvel accord.
+- Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
+  Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
+  publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)
+  alors que l'import écrit des identifiants en minuscules sans accent (`corse` 5 fiches, `ile-de-france` 23,
+  `normandie` 8, `france` 107, les autres régions de 3 à 8) ; la comparaison exacte ne trouve donc jamais rien.
+  Même cause pour le secteur : la liste propose dix secteurs génériques (environnement, énergie, numérique...) alors
+  que toutes les fiches importées portent `["sante", "social"]` (constat P3) : « Santé » renvoie tout, les autres
+  rien, et « social » n'est pas proposé ; la distinction santé / médico-social n'est pas extraite aujourd'hui. Budget :
+  `budgetMin` renseigné sur 22 fiches et `budgetMax` sur 56 ; une borne saisie élimine les fiches sans montant. Hors
+  lot 0 (aucune instruction 1 à 9 ne porte sur les filtres). Proposition pour le lot 1, à côté de l'instruction 11
+  `[À VALIDER — Monsieur DUCOUT]` : construire les listes de filtres à partir des valeurs réellement présentes
+  (identifiants des régions avec libellé d'affichage, secteurs effectifs, « Territoire non précisé » après
+  l'instruction 20), et ne pas exclure d'un filtre budget les fiches sans montant connu.
+- Constat après la migration des échéances (2026-10-14, deux documents relus) : les 141 brouillons sans date portent
+  `validation.statut = proposee` et non `a_corriger`, trace du défaut corrigé au lot 0 (l'ancien import écrasait
+  `a_corriger` par `proposee`). L'import ne réécrit jamais `validation` sur un document existant (`document_a_envoyer`),
+  ils resteront donc `proposee` sans migration. Sans effet sur le public (brouillons invisibles) ni sur le bouton
+  « Publier » (masqué pour les deux statuts) ; effet sur les compteurs par `validation.statut` de l'instruction 12 et
+  sur le commentaire « date de cloture absente », absent. Proposition `[À VALIDER — Monsieur DUCOUT]` : migration
+  unique (sauvegarde JSON, essai à blanc, accord) posant `validation = { a_corriger, « date de cloture absente »,
+  date du jour, par « import (date absente) » }` sur ces 141 documents, au lot 1 avec l'instruction 12.

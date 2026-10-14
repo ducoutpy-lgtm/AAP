@@ -243,7 +243,8 @@ pour une agence de l'eau). Non retenu sans entraînement spécifique ; résultat
 
 Avant de dépenser des crédits API sur les 3 748 liens découverts, `echantillon.py` compare trois moteurs sur un
 échantillon : le modèle local Ollama, la session Claude Code elle-même (fiches écrites à la main à partir du texte des
-pages), et une estimation du coût de l'API Anthropic sans aucun appel. Aucun appel à l'API n'est fait par ce script.
+pages), et une estimation du coût de l'API Anthropic sans aucun appel. Aucun appel à l'API n'est fait par ce script,
+sauf avec le moteur `api` décrit plus bas.
 
 ```bash
 python echantillon.py --collecter                 # texte de 5 fiches au plus pour 10 rubriques (navigateur)
@@ -263,6 +264,19 @@ pour l'extraction ; il reste l'outil de tri gratuit. Les fichiers `echantillon_*
 ignorés par l'import global de `scripts/import_to_firestore.py` (import possible seulement par `--source`).
 Le 2026-10-12, les 6 fiches validées encore ouvertes et du champ santé (`results/echantillon_valides.json`) ont été
 importées dans Firestore par `python scripts/import_to_firestore.py --source echantillon_valides` (95 AAP scrapés en base).
+
+Moteur `api` (lot 0 du rapport de critique, 2026-10-14, instruction 17) : `python echantillon.py --extraire --moteur api
+--modele claude-haiku-5-5 [--limite 1] [--plafond 5]` mesure un modèle Anthropic sur les 45 textes de l'échantillon
+seulement (24 références, 21 pages hors sujet), deux appels par texte (question fermée `est_aap` puis extraction, même
+protocole que le modèle local ; un écart de format est neutralisé et la fiche marquée à relire, sans seconde chance
+payante). Coût réel dans `logs/extraction_costs.jsonl` aux tarifs du modèle (`extractor.TARIFS_USD_PAR_MTOK`, prix
+vérifiés le 2026-10-14 sur la page officielle), arrêt automatique avant l'appel qui dépasserait le plafond (5 euros par
+défaut, cumulé sur toutes les exécutions du modèle), clé lue dans `scraping/.env`. Aucun appel sans l'accord écrit de
+Monsieur DUCOUT. Ensuite `--controler --moteur api --modele claude-haiku-5-5` puis `--rapport` (colonne Coût lue dans
+le journal). Prérequis : `anthropic` et `python-dotenv` installés dans `.venv` (`scraping/requirements.txt`). Mesure faite
+le 2026-10-14 (ligne `api_claude-haiku-5-5` de `ECHANTILLON.md`) : 40 textes traités, 16 fiches, 14 justes sur 15 comparées,
+1 fabriquée, 4 pages de référence refusées à tort à la question fermée, seuil non atteint, coût réel 0,02 euro ; une relance
+de la commande reprend sans refaire les textes déjà traités.
 
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 
@@ -337,6 +351,7 @@ Report des verdicts du mode « pages » au registre (changement `recherche-page-
 
 ```bash
 python validation.py --appliquer-pages            # relecture + adresses corrigées, une seule fois, AVANT la redécouverte
+python validation.py --appliquer-pages --dry-run  # bilan seul, rien d'écrit (preuve de non-régression)
 python qualification.py --registre --rapport && python registre.py --tableau
 ..\.venv\Scripts\python decouverte.py --forcer --garder-depart --ids <identifiants corrigés>   # garde la page donnée
 ..\.venv\Scripts\python decouverte.py --rapport
@@ -351,19 +366,22 @@ si la page donnée n'a aucun lien d'appel repéré, la source est « aucune rubr
 
 Monsieur DUCOUT juge lui-même, dans son navigateur, ce que les robots ont trouvé. `validation.py` est
 un petit serveur local (bibliothèque standard) ; chaque verdict est écrit immédiatement dans un
-fichier JSON, clé = adresse, avec commentaire et date ; une relance reprend au premier élément non jugé. Les
-verdicts sur les pages et les liens vont dans `results/` ; les verdicts sur les fiches vont dans
-`sources/verdicts_fiches.json` (versionné, lu par l'import : changement `organisation-donnees-validees`).
+fichier JSON, clé = adresse, avec commentaire et date ; une relance reprend au premier élément non jugé. Depuis
+le lot 0 (2026-10-14), tous les verdicts sont versionnés dans `sources/` : `verdicts_pages.json` (pages gardées),
+`verdicts_liens.json` (liens) et `verdicts_fiches.json` (fiches, lu par l'import : changement
+`organisation-donnees-validees`). Migration des anciens fichiers de `results/` : `python validation.py --migrer-verdicts
+--dry-run` puis sans `--dry-run` (copie dans `scripts/sauvegardes/`, fusion sans écraser un verdict, anciens fichiers
+renommés `.json.migre`).
 Raccourcis sur le bureau : `validation_pages.cmd`, `validation_exclues.cmd`, `validation_manuelle.cmd` (liens) et
 `validation_fiches.cmd` (fiches du modèle local encore ouvertes, option `--ouvertes`, port 8789) ; fermer la
 fenêtre noire arrête le serveur.
 
 | Mode | Commande (depuis `scraping/`) | Question posée | Verdicts (touches 1 à 6) | Fichier |
 |---|---|---|---|---|
-| Pages | `python validation.py --pages --port 8788` | la page gardée par la découverte est-elle la page des appels de cet organisme ? (155 rubriques confirmées) | bonne page / mauvaise page (bonne adresse saisie dans le champ) / page morte / passer / des appels mais jamais santé | `results/validation_pages.json` |
-| Sources exclues | `python validation.py --pages --verdicts hors-sante,a-verifier,pas-d-aap,pdf-seulement --port 8790` (raccourci « Validation des sources exclues ») | même question, pour les sources que la qualification a écartées ; verdict actuel et motif affichés ; les sources sans page gardée sont ignorées (leur nombre est affiché) | les mêmes | `results/validation_pages.json` |
-| Liens | `python validation.py --liens --echantillon 60 --port 8787` (`--source <id>` pour une seule source) | ce lien est-il un appel à projets ? | appel / appel douteux / pas un appel / passer / page qui recense des appels / appel permanent sans sujet ni montant | `results/validation_liens.json` |
-| Fiches | `python validation.py --fichier results/echantillon_ollama_qwen3-8b.json` | la fiche extraite est-elle juste ? | juste / à corriger / pas un appel / passer | `results/validation_manuelle.json` |
+| Pages | `python validation.py --pages --port 8788` | la page gardée par la découverte est-elle la page des appels de cet organisme ? (155 rubriques confirmées) | bonne page / mauvaise page (bonne adresse saisie dans le champ) / page morte / passer / des appels mais jamais santé | `sources/verdicts_pages.json` |
+| Sources exclues | `python validation.py --pages --verdicts hors-sante,a-verifier,pas-d-aap,pdf-seulement --port 8790` (raccourci « Validation des sources exclues ») | même question, pour les sources que la qualification a écartées ; verdict actuel et motif affichés ; les sources sans page gardée sont ignorées (leur nombre est affiché) | les mêmes | `sources/verdicts_pages.json` |
+| Liens | `python validation.py --liens --echantillon 60 --port 8787` (`--source <id>` pour une seule source) | ce lien est-il un appel à projets ? | appel / appel douteux / pas un appel / passer / page qui recense des appels / appel permanent sans sujet ni montant | `sources/verdicts_liens.json` |
+| Fiches | `python validation.py --fichier results/echantillon_ollama_qwen3-8b.json` | la fiche extraite est-elle juste ? | juste / à corriger / pas un appel / passer | `sources/verdicts_fiches.json` |
 
 La page officielle s'ouvre dans une fenêtre séparée du navigateur, toujours la même (option
 décochable pour revenir à un cadre dans la page ; beaucoup de sites publics refusent le cadre). Le

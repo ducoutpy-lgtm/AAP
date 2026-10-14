@@ -123,10 +123,20 @@ firebase functions:config:set app.url="http://localhost:3000"
 
 ### 4. Firestore Security Rules
 
-Les règles de sécurité Firestore sont dans `firestore.rules`. Déployer avec:
+Les règles de sécurité Firestore sont dans `firestore.rules`. Depuis le lot 0 du rapport de critique (2026-10-14) :
+lecture publique des AAP publiés, lecture et actions (publier, clôturer, archiver, supprimer) réservées à
+l'administrateur sur `aap`, suspension et activation d'un utilisateur par l'administrateur sur `users`, écriture
+interdite dans les collections des modules gelés. Tests sur l'émulateur Firestore (`tests/rules/`) :
 
 ```bash
-firebase deploy --only firestore:rules
+npm run test:rules
+```
+
+Prérequis : un JDK 21 en tête du PATH (la CLI Firebase refuse Java 11 : « no longer supports Java version before 21 ») ;
+l'émulateur est téléchargé au premier lancement. Déployer, après accord de Monsieur DUCOUT :
+
+```bash
+firebase deploy --only firestore:rules --project aapi-11bc3
 ```
 
 ### 5. Firestore Indexes
@@ -176,6 +186,14 @@ npm run build
 
 Les fichiers buildés seront dans le dossier `dist/`
 
+### Lint
+
+```bash
+npm run lint
+```
+
+Configuration `.eslintrc.cjs` créée le 2026-10-14 (gabarit Vite) ; les fichiers des modules gelés y sont ignorés.
+
 ## 📁 Structure du projet
 
 ```
@@ -215,6 +233,13 @@ AAP/
 ```
 
 ## ✨ Fonctionnalités
+
+**Périmètre du MVP depuis le 2026-10-14** (lot 0 du rapport de critique, décision de Monsieur DUCOUT) : consultation
+publique des AAP (`/aap/search`, `/aap/:aapId`), connexion (`/login`) et administration (`/admin`, `/admin/aaps`,
+`/admin/utilisateurs`). Les autres modules ci-dessous sont gelés jusqu'au lot 4 : routes retirées de `src/App.tsx`,
+code conservé sans modification, inscription fermée (`/signup` affiche la page 404). Une fiche sans date de clôture
+affiche « Date de clôture non précisée », se classe après les fiches datées et ne peut être publiée depuis
+l'administration qu'après un verdict humain (`validation.statut`).
 
 ### Pour les Porteurs de Projets
 

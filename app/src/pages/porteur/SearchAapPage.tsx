@@ -8,7 +8,7 @@ import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
-import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
+import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 
 export default function SearchAapPage() {
   const navigate = useNavigate();
@@ -61,6 +61,9 @@ export default function SearchAapPage() {
 
   useEffect(() => {
     applyFilters();
+    // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
+    // seulement quand les valeurs listées changent).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, filters, aaps]);
 
   const loadAaps = async () => {
@@ -126,7 +129,8 @@ export default function SearchAapPage() {
       result = result.filter(aap => aap.budgetMin && aap.budgetMin <= max);
     }
 
-    setFilteredAaps(result);
+    // Appels sans date de clôture classés après les datés, ordre des datés conservé (réponse Q4, 2026-10-14)
+    setFilteredAaps(datesDAbord(result));
   };
 
   const resetFilters = () => {
@@ -275,7 +279,7 @@ export default function SearchAapPage() {
                 {filteredAaps.map(aap => {
                   const daysLeft = getDaysUntilDeadline(aap.deadline);
                   const closed = isClosed(daysLeft);
-                  const isUrgent = !closed && daysLeft <= 7;
+                  const isUrgent = daysLeft !== null && !closed && daysLeft <= 7;
 
                   return (
                     <Card

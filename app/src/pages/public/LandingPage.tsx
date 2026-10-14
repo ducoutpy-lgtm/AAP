@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Search, Target, TrendingUp, Shield, Zap, Users } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
 
 export default function LandingPage() {
   return (
@@ -21,9 +20,6 @@ export default function LandingPage() {
               <Link to="/login" className="text-gray-700 hover:text-primary-600">
                 Connexion
               </Link>
-              <Link to="/signup">
-                <Button>Commencer</Button>
-              </Link>
             </div>
           </div>
         </div>
@@ -39,20 +35,8 @@ export default function LandingPage() {
             <p className="text-xl text-gray-600 mb-8">
               Centralisez votre recherche d'appels à projets et simplifiez vos candidatures avec notre plateforme intelligente
             </p>
-            <div className="flex items-center justify-center gap-4">
-              <Link to="/signup?type=porteur">
-                <Button size="lg">
-                  <Users className="mr-2 h-5 w-5" />
-                  Je suis porteur de projet
-                </Button>
-              </Link>
-              <Link to="/signup?type=financeur">
-                <Button size="lg" variant="secondary">
-                  <TrendingUp className="mr-2 h-5 w-5" />
-                  Je suis financeur
-                </Button>
-              </Link>
-            </div>
+            {/* Inscription fermée (lot 0 du rapport du 2026-10-14) : les boutons vers /signup sont retirés ;
+                la consultation des appels se fait par le lien « Voir les appels à projets » de l'en-tête. */}
           </div>
         </div>
       </section>
@@ -194,9 +178,6 @@ export default function LandingPage() {
                   <span>Suivi des candidatures</span>
                 </li>
               </ul>
-              <Link to="/signup?type=porteur">
-                <Button fullWidth>Essayer gratuitement</Button>
-              </Link>
               <p className="text-sm text-gray-500 text-center mt-4">
                 ou 299,99€/an (2 mois offerts)
               </p>
@@ -234,9 +215,6 @@ export default function LandingPage() {
                   <span>Support prioritaire</span>
                 </li>
               </ul>
-              <Link to="/signup?type=financeur">
-                <Button fullWidth>Essayer gratuitement</Button>
-              </Link>
               <p className="text-sm text-gray-500 text-center mt-4">
                 ou 999,99€/an (2 mois offerts)
               </p>
@@ -254,11 +232,6 @@ export default function LandingPage() {
           <p className="text-xl text-primary-100 mb-8">
             Rejoignez des centaines d'organisations qui utilisent déjà AAP Platform
           </p>
-          <Link to="/signup">
-            <Button size="lg" variant="secondary">
-              Commencer gratuitement
-            </Button>
-          </Link>
         </div>
       </section>
 
