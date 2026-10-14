@@ -557,3 +557,6 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   préfixe `/fr/`, deux campagnes d'une fondation), décision fiche par fiche dans la validation quotidienne. Les 24
   classements du premier tirage sont enregistrés comme verdicts de référence (`scraping/sources/verdicts_champ.json`) :
   le modèle local fait 24 accords sur 24.
+- Vérification de Monsieur DUCOUT (2026-10-14, 23 h 30) : « ok j'ai vérifié les filtres, c'est bon ». Tâche 5.1 du
+  changement `nettoyage-financeurs-territoires` cochée ; toutes les tâches du changement sont faites, archivage
+  seulement sur sa demande.

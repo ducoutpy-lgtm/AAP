@@ -222,7 +222,8 @@ Cycle (commandes slash dans Claude Code) :
   `filtres-recherche` (2026-10-14 soir : filtres de `/aap/search` par territoire, thématique et financeur, faits et
   vérifiés, documentation et vérification de Monsieur DUCOUT en attente), `nettoyage-financeurs-territoires`
   (2026-10-14 nuit : tables `financeurs.json` et `departements.json`, modules `financeurs.py` et `territoires.py`,
-  import, filtre Source et ré-import réel faits et vérifiés ; vérification 5.1 de Monsieur DUCOUT en attente ;
+  import, filtre Source et ré-import réel faits ; vérification 5.1 faite par Monsieur DUCOUT le 2026-10-14 au soir,
+  toutes les tâches cochées, archivage sur sa demande ;
   comparaison des moteurs arrêtée au second tirage sur sa décision), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
   `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte finie, extraction en tâche de fond),
   `organisation-donnees-validees` (2026-10-14 : tâches 1 à 4 faites, vérification 5.1 de Monsieur DUCOUT en attente),

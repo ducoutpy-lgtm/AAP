@@ -77,5 +77,6 @@ DUCOUT sur le plan le 2026-10-14 à 22 h 45 (« code maintenant »).
 
 ## 5. Vérification
 
-- [ ] 5.1 Monsieur DUCOUT filtre par financeur, par source et par territoire, et constate l'absence de doublons dans
-  la liste des financeurs.
+- [x] 5.1 Monsieur DUCOUT filtre par financeur, par source et par territoire, et constate l'absence de doublons dans
+  la liste des financeurs. (Fait le 2026-10-14 à 23 h 30 : « ok j'ai vérifié les filtres, c'est bon ». Toutes les tâches
+  sont faites ; archivage du changement seulement sur sa demande.)
