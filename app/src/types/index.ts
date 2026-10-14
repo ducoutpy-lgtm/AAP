@@ -124,6 +124,10 @@ export interface AAP {
     // fichierLocal : chemin relatif à scraping/downloads, servi sous /documents/ en développement
     // storagePath : copie dans Firebase Storage (présent seulement après un import --vers-storage)
     fichiersJoints?: { url: string; filename: string; fichierLocal?: string; storagePath?: string }[];
+    // champ : réponse du modèle à « de quel champ relève cet appel ? » (sante, medico-social, hors-champ, incertain),
+    // changement filtre-champ-sante du 2026-10-14 ; absent tant que la fiche n'est pas classée
+    champ?: string;
+    champRaison?: string;
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;

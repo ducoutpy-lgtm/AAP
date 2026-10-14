@@ -87,7 +87,13 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
   collé, `/aap/search` relu. (Script écrit ; essai à blanc du 2026-10-14, nuit : « 141 fiches portent l'etiquette
   sans-date-cloture ; 141 en brouillon ; 120 a publier ; 0 avec verdict humain ; 21 hors champ, conservees en brouillon ».
   Ordre impératif : classification du passage local, import réel, `migrer_champ.py`, puis ce script, sinon des fiches
-  hors champ sans date seraient publiées.)
+  hors champ sans date seraient publiées.) Décision de Monsieur DUCOUT (2026-10-14, 22 h) : « mets-moi tout ce que tu
+  peux », import réel puis publication lancés sans attendre la classification du passage local ; import réel : « AAP
+  lus : 922 | a importer : 406 (196 sans date publiees, 21 hors champ en brouillon) | Termine : 103 crees, 303 mis a
+  jour » ; publication : « Publiees : 123 fiches sans date, a verifier », sauvegarde
+  `scripts/sauvegardes/sans_date_publiees_2026-10-14_2213.json` ; collection après coup : 420 publiées (382 à vérifier,
+  172 sans date, 397 non classées), 24 brouillons. Les fiches hors champ du passage local publiées ce soir seront
+  repassées en brouillon par `migrer_champ.py` après la classification (4.1).
 
 ## 5. Chaîne d'extraction et registre
 

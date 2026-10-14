@@ -61,8 +61,10 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
 
 - [ ] 2b.1 Extraction locale `qwen3:8b` des 50 nouvelles pages (lancée le 2026-10-14 au soir, 0 euro). Fait quand :
   compte des fiches et des refus collé, durée collée.
-- [ ] 2b.2 Accord écrit de Monsieur DUCOUT pour Haiku sur les 50 nouvelles pages (coût estimé 0,03 euro, même modèle
+- [x] 2b.2 Accord écrit de Monsieur DUCOUT pour Haiku sur les 50 nouvelles pages (coût estimé 0,03 euro, même modèle
   et mêmes prix qu'en 2.1), puis extraction. Fait quand : compte des fiches et des refus collé, coût réel collé.
+  (Accord du 2026-10-14, nuit : « ok vas-y pour haiku sur le second tirage » ; fait : « 9 pages refusées, 41 réussites
+  (41 nouvelles), 0 échecs », 328 s, 93 appels, 0,050 euro sur ces 50 adresses, cumul du modèle 0,134 euro.)
 
 ## 3. Jugement
 

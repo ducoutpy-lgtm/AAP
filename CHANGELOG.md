@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Recherche des AAP (changement `filtres-recherche`, 2026-10-14 au soir) : filtres Territoire (libellés des identifiants
+  réellement présents), Thématique (santé, médico-social, non classée, d'après le champ classé) et Financeur construits
+  à partir des fiches chargées ; le filtre budget n'écarte plus les fiches sans montant connu. Import réel du soir :
+  420 AAP publiés, dont les fiches sans date de clôture (décision de Monsieur DUCOUT).
 - Filtre du champ santé et médico-social (changement `filtre-champ-sante`, instruction 26 du rapport de critique,
   2026-10-14 au soir) : chaque fiche reçoit un champ (`sante`, `medico-social`, `hors-champ`, `incertain`) par une
   question fermée au modèle (`scraping/champ.py`, définition décidée par Monsieur DUCOUT), l'import met les fiches

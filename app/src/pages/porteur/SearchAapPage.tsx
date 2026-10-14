@@ -9,6 +9,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
+import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
 
 export default function SearchAapPage() {
   const navigate = useNavigate();
@@ -17,43 +18,17 @@ export default function SearchAapPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
-    sector: '',
+    thematique: '',
     territory: '',
+    financeur: '',
     budgetMin: '',
     budgetMax: '',
   });
 
-  // Secteurs disponibles
-  const sectors = [
-    'environnement',
-    'energie',
-    'sante',
-    'numerique',
-    'agriculture',
-    'industrie',
-    'economie-sociale',
-    'education',
-    'culture',
-    'recherche',
-  ];
-
-  // Régions françaises
-  const territories = [
-    'Auvergne-Rhône-Alpes',
-    'Bourgogne-Franche-Comté',
-    'Bretagne',
-    'Centre-Val de Loire',
-    'Corse',
-    'Grand Est',
-    'Hauts-de-France',
-    'Île-de-France',
-    'Normandie',
-    'Nouvelle-Aquitaine',
-    'Occitanie',
-    'Pays de la Loire',
-    'Provence-Alpes-Côte d\'Azur',
-    'National',
-  ];
+  // Options des filtres construites à partir des fiches chargées (changement filtres-recherche, 2026-10-14) : les
+  // identifiants de territoire écrits par l'import, affichés avec leur libellé ; les financeurs présents.
+  const territoiresPresents = valeursPresentes(aaps.flatMap(aap => aap.territoriesEligible ?? []), libelleTerritoire);
+  const financeursPresents = valeursPresentes(aaps.map(aap => aap.financeurName || 'Non spécifié'));
 
   useEffect(() => {
     loadAaps();
@@ -103,30 +78,35 @@ export default function SearchAapPage() {
       );
     }
 
-    // Filtre par secteur
-    if (filters.sector) {
-      result = result.filter(aap =>
-        aap.sectorsTargeted?.includes(filters.sector)
-      );
+    // Filtre par thématique (champ classé par le modèle : santé, médico-social, sinon non classée)
+    if (filters.thematique) {
+      result = result.filter(aap => thematique(aap) === filters.thematique);
     }
 
-    // Filtre par territoire
+    // Filtre par territoire : comparaison sur l'identifiant enregistré (ile-de-france, france...)
     if (filters.territory) {
       result = result.filter(aap =>
         aap.territoriesEligible?.includes(filters.territory)
       );
     }
 
-    // Filtre par budget min
-    if (filters.budgetMin) {
-      const min = parseFloat(filters.budgetMin);
-      result = result.filter(aap => aap.budgetMax && aap.budgetMax >= min);
+    // Filtre par financeur
+    if (filters.financeur) {
+      result = result.filter(aap => (aap.financeurName || 'Non spécifié') === filters.financeur);
     }
 
-    // Filtre par budget max
+    // Filtres par budget : une fiche sans montant connu n'est pas écartée, elle est classée après les fiches chiffrées
+    if (filters.budgetMin) {
+      const min = parseFloat(filters.budgetMin);
+      result = result.filter(aap => aap.budgetMax == null || aap.budgetMax >= min);
+    }
     if (filters.budgetMax) {
       const max = parseFloat(filters.budgetMax);
-      result = result.filter(aap => aap.budgetMin && aap.budgetMin <= max);
+      result = result.filter(aap => aap.budgetMin == null || aap.budgetMin <= max);
+    }
+    if (filters.budgetMin || filters.budgetMax) {
+      const chiffree = (aap: AAP) => aap.budgetMin != null || aap.budgetMax != null;
+      result = [...result.filter(chiffree), ...result.filter(aap => !chiffree(aap))];
     }
 
     // Appels sans date de clôture classés après les datés, ordre des datés conservé (réponse Q4, 2026-10-14)
@@ -136,8 +116,9 @@ export default function SearchAapPage() {
   const resetFilters = () => {
     setSearchTerm('');
     setFilters({
-      sector: '',
+      thematique: '',
       territory: '',
+      financeur: '',
       budgetMin: '',
       budgetMax: '',
     });
@@ -190,20 +171,20 @@ export default function SearchAapPage() {
                 </div>
               </div>
 
-              {/* Secteur */}
+              {/* Thématique */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Secteur
+                  Thématique
                 </label>
                 <select
-                  value={filters.sector}
-                  onChange={(e) => setFilters({ ...filters, sector: e.target.value })}
+                  value={filters.thematique}
+                  onChange={(e) => setFilters({ ...filters, thematique: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
-                  <option value="">Tous les secteurs</option>
-                  {sectors.map(sector => (
-                    <option key={sector} value={sector}>
-                      {sector.charAt(0).toUpperCase() + sector.slice(1)}
+                  <option value="">Toutes les thématiques</option>
+                  {Object.entries(LIBELLES_THEMATIQUES).map(([id, libelle]) => (
+                    <option key={id} value={id}>
+                      {libelle}
                     </option>
                   ))}
                 </select>
@@ -220,9 +201,28 @@ export default function SearchAapPage() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Tous les territoires</option>
-                  {territories.map(territory => (
+                  {territoiresPresents.map(territory => (
                     <option key={territory} value={territory}>
-                      {territory}
+                      {libelleTerritoire(territory)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Financeur */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Financeur
+                </label>
+                <select
+                  value={filters.financeur}
+                  onChange={(e) => setFilters({ ...filters, financeur: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Tous les financeurs</option>
+                  {financeursPresents.map(financeur => (
+                    <option key={financeur} value={financeur}>
+                      {financeur}
                     </option>
                   ))}
                 </select>
@@ -353,7 +353,7 @@ export default function SearchAapPage() {
                           <MapPin className="h-4 w-4" />
                           <span>
                             {aap.territoriesEligible && aap.territoriesEligible.length > 0
-                              ? aap.territoriesEligible[0]
+                              ? libelleTerritoire(aap.territoriesEligible[0])
                               : 'Non spécifié'}
                           </span>
                         </div>

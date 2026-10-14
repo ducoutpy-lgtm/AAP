@@ -503,7 +503,11 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   lot 0 (aucune instruction 1 à 9 ne porte sur les filtres). Proposition pour le lot 1, à côté de l'instruction 11
   `[À VALIDER — Monsieur DUCOUT]` : construire les listes de filtres à partir des valeurs réellement présentes
   (identifiants des régions avec libellé d'affichage, secteurs effectifs, « Territoire non précisé » après
-  l'instruction 20), et ne pas exclure d'un filtre budget les fiches sans montant connu.
+  l'instruction 20), et ne pas exclure d'un filtre budget les fiches sans montant connu. Fait le 2026-10-14 au soir à
+  la demande de Monsieur DUCOUT (« pouvoir les classer et les manipuler par territoire, par thématique »), changement
+  `filtres-recherche` : filtres Territoire (libellés des identifiants présents), Thématique (champ santé /
+  médico-social / non classée) et Financeur ; vérifié dans le navigateur sur 420 fiches publiées (Normandie 15,
+  Médico-social 5, égaux aux comptes de la base).
 - Constat après la migration des échéances (2026-10-14, deux documents relus) : les 141 brouillons sans date portent
   `validation.statut = proposee` et non `a_corriger`, trace du défaut corrigé au lot 0 (l'ancien import écrasait
   `a_corriger` par `proposee`). L'import ne réécrit jamais `validation` sur un document existant (`document_a_envoyer`),
