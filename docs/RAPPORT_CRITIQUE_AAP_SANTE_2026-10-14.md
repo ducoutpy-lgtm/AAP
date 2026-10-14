@@ -425,8 +425,10 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   jugée reste « est-ce un appel ? », conforme à la consigne des deux moteurs ; les appels hors champ sont signalés
   par le commentaire « hors champ », compté dans le rapport. Propositions `[À VALIDER — Monsieur DUCOUT]` : (a) verdict
   « hors champ » dans la validation quotidienne des fiches, reporté à l'import comme rejet (immédiat, 0 euro) ;
-  (b) champ `champ` (santé, médico-social, social, hors champ) décidé par une question fermée supplémentaire du moteur
-  d'extraction, stocké dans `scrape_metadata`, l'import ignorant « hors champ » (Haiku : environ 0,0002 euro par
+  (b) champ `champ` (santé, médico-social, hors champ ; définition décidée par Monsieur DUCOUT le soir même : santé et
+  médico-social des établissements, y compris numérique, cybersécurité CaRE ANS/ANSSI et rénovation des hôpitaux et
+  cliniques, sans volet social, ni insertion par l'emploi, ni jeunesse, ni logement) décidé par une question fermée
+  supplémentaire du moteur d'extraction, stocké dans `scrape_metadata`, l'import ignorant « hors champ » (Haiku : environ 0,0002 euro par
   page, moins de 1 euro pour les 2 395 pages ; modèle local possible) ; (c) à terme, mots du champ dès la découverte
   des liens. Lot : à fixer par Monsieur DUCOUT, avant toute publication des fiches de collectivités.
 - Question de Monsieur DUCOUT (2026-10-14, soir) : pourquoi les efforts ne se concentrent-ils pas sur les appels de

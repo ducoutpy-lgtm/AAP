@@ -12,8 +12,10 @@ Instruction 26, lot 1, première brique.
 
 ## What Changes
 
-- Définition écrite du champ en quatre réponses, `sante`, `medico-social`, `social-assimile` (social, solidarité,
-  appels mixtes où la santé est un des objets), `hors-champ`, plus `incertain` `[A VALIDER - Monsieur DUCOUT]`.
+- Définition écrite du champ en trois réponses, `sante`, `medico-social`, `hors-champ`, plus `incertain`, décidée par
+  Monsieur DUCOUT le 2026-10-14 : santé et médico-social des établissements, y compris numérique, cybersécurité
+  (CaRE, ANS, ANSSI) et rénovation des hôpitaux et cliniques ; pas de volet social, ni insertion par l'emploi, ni
+  jeunesse, ni logement.
 - Question fermée `champ` dans la chaîne d'extraction, après l'acceptation d'une page, moteur local et moteur API ;
   réponse et raison dans `scrape_metadata`, consigne version 4, schéma `AapNormalized` inchangé.
 - Outil `scraping/champ.py` : classification rétroactive des fiches existantes (environ 900) avec essai à blanc,

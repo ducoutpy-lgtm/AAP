@@ -36,21 +36,29 @@ Non-Goals : changer le schéma ; requalifier les sources automatiquement ; corri
 
 ## Decisions
 
-### Décision 1 : définition du champ en quatre réponses, plus « incertain »
+### Décision 1 : définition du champ, décidée par Monsieur DUCOUT le 2026-10-14 au soir
 
-- `sante` : soins, prévention, santé publique, santé mentale, addictions, recherche en santé, e-santé et numérique
-  en santé, établissements de santé.
-- `medico-social` : handicap, autonomie, personnes âgées, aide à domicile, protection de l'enfance, établissements
-  et services médico-sociaux.
-- `social-assimile` : social et solidarité (pauvreté, exclusion, insertion sociale, hébergement accompagné,
-  parentalité, aidants, inclusion) et appels mixtes où la santé ou le médico-social est un des objets (sport-santé,
-  culture-santé, alimentation et santé, santé-environnement).
-- `hors-champ` : agriculture, économie, tourisme, patrimoine, culture générale, environnement sans objet de santé,
-  énergie, numérique hors santé, recherche hors santé, éducation générale, et tout le reste.
+Ses mots : « enlève la partie sociale des recherches : pas d'insertion par l'emploi, pas la jeunesse, pas le
+logement, etc. Uniquement santé, médical, clinique ; ça peut donc être aussi des appels à projets comme CaRE qui
+finance des logiciels, mises à jour, audits cybersécurité pour les hôpitaux et cliniques (ANS ou ANSSI), ça peut
+être aussi des programmes de rénovation des hôpitaux ou des cliniques, etc. »
+
+Trois réponses, plus « incertain » :
+- `sante` : tout appel dont l'objet est la santé (soins, prévention, santé publique, santé mentale, addictions,
+  recherche en santé, e-santé) ou dont le bénéficiaire est un établissement de santé, hôpital ou clinique, quel
+  que soit l'objet : numérique et cybersécurité (CaRE, ANS, ANSSI, logiciels, audits), rénovation, investissement
+  immobilier et équipements, qualité, attractivité et formation des professionnels de santé.
+- `medico-social` : handicap, autonomie, grand âge, et tout appel dont le bénéficiaire est un établissement ou
+  service médico-social (EHPAD, SSIAD, IME, ESAT, services à domicile), quel que soit l'objet.
+- `hors-champ` : le social sans dimension sanitaire (insertion par l'emploi, jeunesse, logement, pauvreté,
+  parentalité, protection de l'enfance hors établissement médico-social), agriculture, économie, tourisme,
+  patrimoine, culture, sport, environnement, énergie, numérique hors établissements de santé, recherche hors
+  santé, éducation, et tout le reste. Les appels mixtes (culture et santé, sport sur ordonnance) sont dans le champ
+  seulement si un établissement de santé ou médico-social en est bénéficiaire ou si la santé en est l'objet.
 - `incertain` : le modèle ne tranche pas ; la fiche reste « à vérifier » avec l'étiquette `champ-incertain`.
-Pourquoi quatre réponses et pas oui / non : « assimilé » demandé par Monsieur DUCOUT ; une réponse graduée permet
-de publier le cœur sans hésiter et de laisser l'humain trancher les cas mixtes. Liste `[A VALIDER - Monsieur DUCOUT]`,
-écrite dans la consigne et dans `CHAMP.md`.
+Pourquoi le bénéficiaire compte autant que l'objet : un hôpital qui cherche un financement de rénovation ou de
+cybersécurité est exactement le client du produit (business plan : « ne ratez plus aucun financement pertinent »).
+Liste écrite mot pour mot dans la consigne et dans `CHAMP.md`.
 
 ### Décision 2 : une question fermée, posée au texte de la page
 

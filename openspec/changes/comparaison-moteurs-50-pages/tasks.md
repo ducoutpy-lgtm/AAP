@@ -32,6 +32,14 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
   2026-10-14 : « 26 pages refusées, 24 réussites (24 nouvelles), 0 échecs, 2501 s pour ce passage (qwen3:8b) » ;
   0 fiche à relire ; 50 pages avec un résultat local ; le journal des coûts n'a reçu aucune ligne de ce passage.)
 
+- [x] 1.4 L'import global ignore les sorties de la comparaison (`comparaison_*.json`), qui sont des fiches de mesure
+  et non des fiches à publier (défaut repéré le 2026-10-14 au soir : sans ce filtre, le prochain import réel aurait
+  lu les fiches de la comparaison et échoué sur ses fichiers de refus). Fait quand : test dans `scripts/tests`, pytest
+  vert, essai à blanc de l'import sans ligne « comparaison ». (Fait le 2026-10-14 au soir :
+  `test_load_results_ignore_les_sorties_de_la_comparaison`, pytest scripts 13 verts ; essai à blanc : 0 ligne
+  mentionnant « comparaison », bilan « AAP lus : 917 | a importer : 402 (dont 2 doublons fusionnes, 196 sans date en
+  brouillon) | ignores : {'incomplet': 0, 'expire': 513} | verdicts lus : 0 ».)
+
 ## 2. Extraction par le modèle API
 
 - [x] 2.1 Accord écrit de Monsieur DUCOUT sur : modèle `claude-haiku-5-5`, prix vérifiés le 2026-10-14 (0,10 et 0,50

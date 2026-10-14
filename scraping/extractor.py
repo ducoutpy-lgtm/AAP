@@ -141,6 +141,20 @@ EST_AAP_TOOL = {
     },
 }
 
+# Question fermee du champ (filtre-champ-sante) : meme consigne que le modele local (echantillon.CONSIGNE_CHAMP).
+CHAMP_TOOL = {
+    "name": "champ",
+    "description": "Dit de quel champ releve l appel : sante, medico-social, hors-champ ou incertain.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "champ": {"type": "string", "enum": ["sante", "medico-social", "hors-champ", "incertain"]},
+            "raison": {"type": "string", "description": "Une phrase en francais"},
+        },
+        "required": ["champ", "raison"],
+    },
+}
+
 
 SYSTEM_PROMPT = (
     "Tu es un extracteur de donnees d appels a projets (AAP) pour le secteur "
@@ -271,3 +285,19 @@ def est_un_aap(text: str, url: str, consigne: str, source: str = "", model: str 
         f"Reponds en appelant l outil est_aap."
     )
     return _appeler(model or MODEL, consigne, EST_AAP_TOOL, user_content, 1024, source, url, "est_aap")
+
+
+def champ_aap(text: str, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:
+    """Question fermee « de quel champ releve cet appel ? » : {champ: str, raison: str} (filtre-champ-sante).
+
+    consigne : CONSIGNE_CHAMP de echantillon.py, identique a celle du modele local.
+    """
+    user_content = (
+        f"URL source : {url}\n\n"
+        f"Texte de la page :\n"
+        f"-----\n"
+        f"{text[:MAX_TEXT_CHARS]}\n"
+        f"-----\n\n"
+        f"Reponds en appelant l outil champ."
+    )
+    return _appeler(model or MODEL, consigne, CHAMP_TOOL, user_content, 1024, source, url, "champ")

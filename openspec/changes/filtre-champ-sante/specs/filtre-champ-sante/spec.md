@@ -4,9 +4,11 @@
 
 ### Requirement: Définition écrite du champ
 
-Le projet SHALL disposer d'une définition écrite du champ en quatre réponses (`sante`, `medico-social`,
-`social-assimile`, `hors-champ`) plus `incertain`, validée par Monsieur DUCOUT, reprise mot pour mot dans la
-consigne des modèles et dans `scraping/CHAMP.md`.
+Le projet SHALL disposer d'une définition écrite du champ en trois réponses (`sante`, `medico-social`,
+`hors-champ`) plus `incertain`, décidée par Monsieur DUCOUT le 2026-10-14 (santé et médico-social des
+établissements, y compris numérique, cybersécurité et rénovation des hôpitaux et cliniques ; pas de volet social :
+ni insertion par l'emploi, ni jeunesse, ni logement), reprise mot pour mot dans la consigne des modèles et dans
+`scraping/CHAMP.md`.
 
 #### Scenario: Même définition partout
 
@@ -22,7 +24,7 @@ local comme pour le moteur API, et SHALL enregistrer `champ`, `champ_raison`, `c
 #### Scenario: Fiche produite avec son champ
 
 - **WHEN** une page est acceptée puis extraite par l'un des deux moteurs
-- **THEN** la fiche porte un champ parmi les cinq valeurs et une raison en une phrase, et `version_consigne` vaut 4
+- **THEN** la fiche porte un champ parmi les quatre valeurs et une raison en une phrase, et `version_consigne` vaut 4
 
 #### Scenario: Page refusée
 

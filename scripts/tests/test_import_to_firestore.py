@@ -215,3 +215,14 @@ def test_fusionner_prefere_le_connecteur_au_modele_local():
     assert imp.fusionner([("id1", c), ("id1", o)])["id1"] is c
     assert imp.fusionner([("id1", o), ("id1", c)])["id1"] is c
     assert imp.fusionner([("id1", o)])["id1"] is o
+
+
+def test_load_results_ignore_les_sorties_de_la_comparaison(tmp_path, monkeypatch):
+    # 2026-10-14 : les fichiers comparaison_*.json (mesure des moteurs) ne sont pas des fiches a publier ; sans ce
+    # filtre l'import global les aurait lus et aurait echoue sur leurs fichiers de refus.
+    (tmp_path / "ars_x.json").write_text('[{"titre": "a"}]', encoding="utf-8")
+    (tmp_path / "comparaison_api_h.json").write_text('[{"titre": "b"}]', encoding="utf-8")
+    (tmp_path / "comparaison_ollama_q_non_aap_collectivites.json").write_text('[{"fichier": "x"}]', encoding="utf-8")
+    (tmp_path / "echantillon_x.json").write_text('[{"titre": "c"}]', encoding="utf-8")
+    monkeypatch.setattr(imp, "RESULTS_DIR", tmp_path)
+    assert [(s, i["titre"]) for s, i in imp.load_results(None)] == [("ars_x", "a")]

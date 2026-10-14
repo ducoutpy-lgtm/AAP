@@ -386,7 +386,9 @@ def load_results(source_filter: str | None) -> list[tuple[str, dict]]:
         # import global. On ne les lit que sur demande explicite (--source echantillon_claude_code).
         # Idem pour les verdicts humains (validation_*.json) et les pages refusees par le modele (*_non_aap.json) :
         # ce ne sont pas des fiches. Sans ce filtre, ils etaient comptes « incomplets » (audit du 2026-10-14, M4).
-        if source_filter is None and (source_name.startswith(("echantillon_", "controle_", "validation_"))
+        # Idem pour les sorties de la comparaison des moteurs (comparaison_*.json, 2026-10-14) : des fiches de mesure,
+        # pas des fiches a publier.
+        if source_filter is None and (source_name.startswith(("echantillon_", "controle_", "validation_", "comparaison_"))
                                       or source_name.endswith("_non_aap")):
             continue
         if source_filter and source_name != source_filter:

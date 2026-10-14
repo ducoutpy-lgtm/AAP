@@ -94,6 +94,42 @@ CONSIGNE_EST_AAP = (
     "raison : une phrase en français."
 )
 
+# Question fermée du champ (changement filtre-champ-sante, instruction 26 du rapport de critique). Définition décidée
+# par Monsieur DUCOUT le 2026-10-14 : santé et médico-social des établissements, y compris numérique, cybersécurité
+# et rénovation des hôpitaux et cliniques ; pas de volet social (ni insertion par l'emploi, ni jeunesse, ni logement).
+# Même texte pour le modèle local (schéma JSON) et pour le moteur api (outil forcé de extractor.py).
+CHAMPS = ("sante", "medico-social", "hors-champ", "incertain")
+CONSIGNE_CHAMP = (
+    "Tu lis le texte d'une page web d'un organisme français qui décrit un appel à projets, un appel à candidatures, "
+    "une bourse ou un prix. Réponds en JSON. champ : « sante » si l'objet de l'appel est la santé (soins, prévention, "
+    "santé publique, santé mentale, addictions, recherche en santé, e-santé) ou si le bénéficiaire est un établissement "
+    "de santé, hôpital ou clinique, quel que soit l'objet (numérique, cybersécurité comme CaRE, ANS ou ANSSI, logiciels, "
+    "audits, rénovation, investissement immobilier, équipements, qualité, attractivité et formation des professionnels "
+    "de santé) ; « medico-social » si l'objet est le handicap, l'autonomie ou le grand âge, ou si le bénéficiaire est "
+    "un établissement ou service médico-social (EHPAD, SSIAD, IME, ESAT, services à domicile), quel que soit l'objet ; "
+    "« hors-champ » pour le social sans dimension sanitaire (insertion par l'emploi, jeunesse, logement, pauvreté, "
+    "parentalité, protection de l'enfance hors établissement médico-social), l'agriculture, l'économie, le tourisme, "
+    "le patrimoine, la culture, le sport, l'environnement, l'énergie, le numérique hors établissements de santé, la "
+    "recherche hors santé, l'éducation et tout le reste ; un appel mixte (culture et santé, sport sur ordonnance) est "
+    "dans le champ seulement si un établissement de santé ou médico-social en est bénéficiaire ou si la santé en est "
+    "l'objet ; « incertain » si le texte ne permet pas de trancher. raison : une phrase en français."
+)
+SCHEMA_CHAMP = {
+    "type": "object",
+    "properties": {"champ": {"type": "string", "enum": list(CHAMPS)}, "raison": {"type": "string"}},
+    "required": ["champ", "raison"],
+}
+
+
+def normaliser_champ(reponse: dict | None) -> tuple[str, str]:
+    """(champ, raison) ; toute valeur inattendue devient « incertain » : le modèle ne décide jamais plus que prévu."""
+    brut = str((reponse or {}).get("champ") or "").strip().lower().replace("_", "-").replace(" ", "-")
+    brut = brut.replace("é", "e")
+    champ = {"sante": "sante", "medico-social": "medico-social", "hors-champ": "hors-champ", "horschamp": "hors-champ",
+             "incertain": "incertain"}.get(brut, "incertain")
+    return champ, str((reponse or {}).get("raison") or "").strip()
+
+
 # Même structure que l'outil Claude de extractor.py, exprimée en schéma JSON pour Ollama.
 SCHEMA_FICHE = {
     "type": "object",
@@ -118,7 +154,8 @@ SCHEMA_FICHE = {
 
 # Numero de version de la consigne d'extraction : a incrementer a chaque modification de CONSIGNE ou de
 # CONSIGNE_EST_AAP, pour savoir avec quelle consigne une fiche a ete produite (audit du 2026-10-14, M1).
-VERSION_CONSIGNE = 3  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee
+VERSION_CONSIGNE = 3  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee ;
+# 4 : question du champ dans la chaine (filtre-champ-sante, tache 5.1, a activer apres la fin du passage global)
 
 CONSIGNE = (
     "Tu extrais les informations d'un appel à projets français du secteur santé ou médico-social "
