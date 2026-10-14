@@ -80,7 +80,10 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
   2026-10-14, nuit, connecteurs seuls classés : « 34 fiches classees hors champ dans les fichiers de resultats ; 10 fiches
   publiees a repasser en brouillon ; 0 publiees avec verdict humain », exemples Fondation de France (réveillons de la
   solidarité, solutions fondées sur la nature, eau du Grand Ouest, ruralité, art en milieu rural). À relancer après la
-  classification du passage local ; exécution après accord.)
+  classification du passage local ; exécution après accord.) Exécuté le 2026-10-14 à 22 h 51 sur décision de Monsieur
+  DUCOUT (« oui tu les retires ») : « 10 fiches publiees a repasser en brouillon ; 0 publiees avec verdict humain »,
+  « Sauvegarde : scripts/sauvegardes/champ_publiees_2026-10-14_2251.json (10 fiches) », « Migrees : 10 fiches » ;
+  `/aap/search` relu : 410 AAP disponibles (420 avant). À relancer après la classification du passage local.
 - [ ] 4.2 `scripts/publier_sans_date.py` : les brouillons `sans-date-cloture` sans verdict humain et non hors champ
   passent en publié, proposee ; sauvegarde JSON, `--dry-run`, accord écrit (donné en principe le 2026-10-14 : « oui je
   veux qu'elles soient publiées »), exécution après la classification et l'import. Fait quand : compte avant et après

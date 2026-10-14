@@ -244,7 +244,11 @@ de Monsieur DUCOUT) l'import la publie directement avec le badge « À vérifier
 **Filtres de la recherche** (changement `filtres-recherche`, 2026-10-14 au soir) : Territoire (identifiants écrits par
 l'import, affichés avec leur libellé, `src/utils/territoires.ts`), Thématique (champ classé par le modèle :
 `scrapeMetadata.champ`, « Santé », « Médico-social », « Non classée » tant que la fiche n'est pas classée) et Financeur,
-construits à partir des fiches chargées ; le filtre budget n'écarte pas les fiches sans montant connu.
+construits à partir des fiches chargées ; le filtre budget n'écarte pas les fiches sans montant connu. Depuis le changement
+`nettoyage-financeurs-territoires` (2026-10-14 au soir) : le filtre Financeur porte sur le nom canonique écrit par l'import
+(une seule entrée par ARS), un filtre Source (site d'origine de la fiche, `scrapeMetadata.sourceNom`) est ajouté, les
+cinq régions d'outre-mer ont leur libellé et une fiche sans territoire reconnu affiche « Territoire non précisé » au
+lieu de « National ».
 
 ### Pour les Porteurs de Projets
 

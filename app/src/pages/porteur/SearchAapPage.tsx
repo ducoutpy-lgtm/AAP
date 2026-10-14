@@ -21,14 +21,17 @@ export default function SearchAapPage() {
     thematique: '',
     territory: '',
     financeur: '',
+    source: '',
     budgetMin: '',
     budgetMax: '',
   });
 
   // Options des filtres construites à partir des fiches chargées (changement filtres-recherche, 2026-10-14) : les
-  // identifiants de territoire écrits par l'import, affichés avec leur libellé ; les financeurs présents.
+  // identifiants de territoire écrits par l'import, affichés avec leur libellé ; les financeurs présents (nom canonique
+  // écrit par l'import, changement nettoyage-financeurs-territoires) ; les sources (site d'origine de la fiche).
   const territoiresPresents = valeursPresentes(aaps.flatMap(aap => aap.territoriesEligible ?? []), libelleTerritoire);
   const financeursPresents = valeursPresentes(aaps.map(aap => aap.financeurName || 'Non spécifié'));
+  const sourcesPresentes = valeursPresentes(aaps.map(aap => aap.scrapeMetadata?.sourceNom || 'Non précisée'));
 
   useEffect(() => {
     loadAaps();
@@ -90,9 +93,14 @@ export default function SearchAapPage() {
       );
     }
 
-    // Filtre par financeur
+    // Filtre par financeur (nom canonique)
     if (filters.financeur) {
       result = result.filter(aap => (aap.financeurName || 'Non spécifié') === filters.financeur);
+    }
+
+    // Filtre par source : site d'origine de la fiche (nom de l'émetteur du registre écrit par l'import)
+    if (filters.source) {
+      result = result.filter(aap => (aap.scrapeMetadata?.sourceNom || 'Non précisée') === filters.source);
     }
 
     // Filtres par budget : une fiche sans montant connu n'est pas écartée, elle est classée après les fiches chiffrées
@@ -119,6 +127,7 @@ export default function SearchAapPage() {
       thematique: '',
       territory: '',
       financeur: '',
+      source: '',
       budgetMin: '',
       budgetMax: '',
     });
@@ -223,6 +232,25 @@ export default function SearchAapPage() {
                   {financeursPresents.map(financeur => (
                     <option key={financeur} value={financeur}>
                       {financeur}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Source : site d'origine de la fiche */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Source (site d'origine)
+                </label>
+                <select
+                  value={filters.source}
+                  onChange={(e) => setFilters({ ...filters, source: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Toutes les sources</option>
+                  {sourcesPresentes.map(source => (
+                    <option key={source} value={source}>
+                      {source}
                     </option>
                   ))}
                 </select>

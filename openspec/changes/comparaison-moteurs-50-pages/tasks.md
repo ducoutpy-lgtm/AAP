@@ -60,7 +60,10 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
 ## 2 bis. Second tirage (financeurs de la santé)
 
 - [ ] 2b.1 Extraction locale `qwen3:8b` des 50 nouvelles pages (lancée le 2026-10-14 au soir, 0 euro). Fait quand :
-  compte des fiches et des refus collé, durée collée.
+  compte des fiches et des refus collé, durée collée. (Arrêtée le 2026-10-14 à 22 h 50, à la 28e page sur 50, sur
+  décision de Monsieur DUCOUT (« 1 : passage global ») : la carte graphique revient au passage global ; résultats
+  partiels conservés dans `results/comparaison_ollama_qwen3-8b.json` et `_non_aap.json`. Le jugement 3.2 et le rapport
+  4.1 du second tirage ne seront repris que sur sa demande.)
 - [x] 2b.2 Accord écrit de Monsieur DUCOUT pour Haiku sur les 50 nouvelles pages (coût estimé 0,03 euro, même modèle
   et mêmes prix qu'en 2.1), puis extraction. Fait quand : compte des fiches et des refus collé, coût réel collé.
   (Accord du 2026-10-14, nuit : « ok vas-y pour haiku sur le second tirage » ; fait : « 9 pages refusées, 41 réussites

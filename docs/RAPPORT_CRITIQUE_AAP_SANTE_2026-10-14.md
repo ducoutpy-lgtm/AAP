@@ -526,3 +526,23 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   sur le commentaire « date de cloture absente », absent. Proposition `[À VALIDER — Monsieur DUCOUT]` : migration
   unique (sauvegarde JSON, essai à blanc, accord) posant `validation = { a_corriger, « date de cloture absente »,
   date du jour, par « import (date absente) » }` sur ces 141 documents, au lot 1 avec l'instruction 12.
+- Décisions de Monsieur DUCOUT (2026-10-14, 22 h 45), en réponse aux quatre questions du compte rendu : (1) « passage
+  global » : la comparaison des moteurs s'arrête au premier résultat, l'extraction locale du second tirage est
+  interrompue à la 28e page sur 50 (Haiku avait fini les 50) et la carte graphique revient au passage global ; (2) « code
+  maintenant » : le changement `nettoyage-financeurs-territoires` est codé la nuit même ; (3) « fais-le » : les 24
+  classements du modèle sur le premier tirage lui sont présentés pour relecture ; (4) « oui tu les retires » : les appels
+  hors champ (agricole, culturel, insertion, environnement) publiés sont retirés de l'affichage, c'est-à-dire repassés en
+  brouillon à corriger, pas supprimés (`scripts/migrer_champ.py`, 10 fiches, sauvegarde
+  `scripts/sauvegardes/champ_publiees_2026-10-14_2251.json`).
+- Nettoyage codé (2026-10-14, 23 h) : tables `scraping/sources/financeurs.json` (1 198 financeurs du registre, 1 964
+  alias, nom lu par l'IA rattaché par ses mots sans accents ni mots vides, règle « ARS de la région citée ») et
+  `scraping/sources/departements.json` (101 départements, anciennes régions, 61 villes), modules `financeurs.py` et
+  `territoires.py`, import : source réelle, financeur canonique (`financeurExtrait` conservé), territoire déduit
+  (jamais « france » par défaut, « non-precise » affiché « Territoire non précisé ») ; filtre Source dans la recherche ;
+  `scripts/doublons.py`. Essai à blanc de l'import : 933 fiches lues, 390 à publier, 149 financeurs distincts (260 fiches
+  au nom canonique) contre 203 pour 420 dans la base, territoires « france » 101 contre 243, « non-precise » 3,
+  Île-de-France 53, Bourgogne-Franche-Comté 25, Normandie 20, Grand Est 20. Sur les fichiers de l'import, 572 fiches
+  sur 932 sont rattachées à un nom canonique ; les 360 autres (267 noms : départements, DRAAF, DREETS, MSA locales,
+  préfectures, fonds européens) gardent le nom lu, à rattacher à la main dans la table si besoin. Tests : scraping 86
+  verts (12 nouveaux), scripts 21 verts (4 nouveaux), lint et build de l'application verts. Ré-import réel en attente
+  de l'accord de Monsieur DUCOUT (tâche 2.2).

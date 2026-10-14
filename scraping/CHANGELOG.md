@@ -5,6 +5,15 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Ajouté (2026-10-14 au soir)
+- `financeurs.py` et `sources/financeurs.json` (changement `nettoyage-financeurs-territoires`) : table des financeurs
+  canoniques construite depuis le registre (`--construire`, 1 198 financeurs, 1 964 alias, fusion sans écraser les
+  alias à la main), rattachement d'un nom lu par l'IA par ses mots sans accents ni mots vides, règle « ARS de la
+  région citée », rapport des noms non rattachés (`--non-rattaches` : 572 fiches rattachées sur 932).
+- `territoires.py` et `sources/departements.json` : 101 départements -> région (outre-mer compris), anciennes régions et
+  provinces, 61 grandes villes ; `territoire_depuis(texte, emetteur)` lit les régions du texte puis du nom de
+  l'émetteur, « france » seulement pour un appel national, « non-precise » sinon. Utilisés par l'import.
+- `comparaison.py` : extraction locale du second tirage arrêtée le 2026-10-14 à 22 h 50 à la 28e page sur 50, sur
+  décision de Monsieur DUCOUT (carte graphique rendue au passage global) ; Haiku avait fini les 50 pages.
 - `comparaison.py` : comparaison de deux moteurs sur 50 pages (tirage reproductible par famille, `--familles`, `--ids`,
   `--mots`, `--inclure-traites`, `--score-min` ; extraction locale et API sur les mêmes textes ; écran de jugement port
   8766, `comparaison_juger.cmd` ; rapport `COMPARAISON.md`). `echantillon.extraire` et `extraire_api` acceptent une liste

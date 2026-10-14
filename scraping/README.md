@@ -150,6 +150,31 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+### Financeurs canoniques et territoires (changement `nettoyage-financeurs-territoires`, 2026-10-14)
+
+Pourquoi : le nom du financeur était recopié tel quel depuis chaque page (203 noms pour 420 fiches publiées, l'ARS
+Île-de-France sous six orthographes) et le territoire valait « france » dès que le texte n'était pas une région écrite
+à la lettre (243 fiches sur 420). Deux tables de référence, relues par `scripts/import_to_firestore.py` :
+
+```bash
+python financeurs.py --construire      # sources/financeurs.json depuis le registre (nom canonique, alias ; fusion sans écraser la main)
+python financeurs.py --non-rattaches   # noms de financeurs lus dans les fichiers de l'import qui restent sans nom canonique
+```
+
+- `sources/financeurs.json` : une entrée par émetteur du registre (`nom` sans le suffixe qui décrit la page, sigle seul
+  quand il est développé entre parenthèses, `categorie`, `alias`). Un nom lu par l'IA est rattaché quand ses mots, sans
+  accents ni mots vides et dans n'importe quel ordre, sont ceux d'un alias ; un nom qui commence par « ARS » ou
+  « Agence régionale de santé » est rattaché à l'ARS de la région qu'il cite (« ARS Paca et Conseil départemental de
+  Vaucluse » -> ARS Provence-Alpes-Côte d'Azur), sinon à l'ARS émettrice de la fiche. Les autres noms restent tels
+  quels ; les alias se complètent à la main dans le fichier (la reconstruction les conserve). Le 2026-10-14 au soir :
+  1 198 financeurs, 1 964 alias, 572 fiches rattachées sur 932, 360 (267 noms) laissées telles quelles.
+- `sources/departements.json` et `territoires.py` : 101 départements -> région (outre-mer compris), anciennes régions
+  et provinces, 61 grandes villes et préfectures. `territoire_depuis(texte, emetteur)` lit les régions dans le texte du
+  territoire (expressions les plus longues d'abord : « Pays de la Loire » n'est pas le département de la Loire), puis
+  dans le nom de l'émetteur ; un émetteur national (caisse nationale, ministère, agence, Europe, société savante) donne
+  « france », sinon « non-precise ». Limites écrites dans l'en-tête du module : le nom nu « Loire » n'est pas lu (le
+  fleuve), les numéros de département non plus, « Nord » seul est le département du Nord.
+
 ### Annuaires de référence et couverture (changement `registre-par-annuaires`, 2026-10-13)
 
 Le registre n'est plus constitué de mémoire : chaque famille d'émetteurs est adossée à un annuaire de référence

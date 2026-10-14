@@ -128,6 +128,12 @@ export interface AAP {
     // changement filtre-champ-sante du 2026-10-14 ; absent tant que la fiche n'est pas classée
     champ?: string;
     champRaison?: string;
+    // Changement nettoyage-financeurs-territoires (2026-10-14) : source = identifiant de l'émetteur du registre,
+    // sourceNom son nom lisible, fichier le fichier de résultats d'origine, financeurExtrait le nom du financeur
+    // tel que l'IA l'a lu (financeurName porte le nom canonique)
+    sourceNom?: string;
+    fichier?: string;
+    financeurExtrait?: string;
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;

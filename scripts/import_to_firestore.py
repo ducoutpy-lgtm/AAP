@@ -28,6 +28,11 @@ Regles ajoutees par le lot 0 (changement lot-0-assainissement, rapport du 2026-1
 seule source de la fiabilite d'une fiche, l'etiquette a-verifier en decoule (proposee ou a_corriger) ; validation.par
 est renseigne ; seuls les champs d'une liste blanche partent vers Firestore, un champ inconnu arrete l'import a blanc
 comme en reel en le nommant ; une fiche sans date de cloture recoit deadline = null (aucune date inventee).
+
+Regles du changement nettoyage-financeurs-territoires (2026-10-14, constat de Monsieur DUCOUT : base « sale ») :
+scrapeMetadata.source est l'emetteur du registre (sourceNom, fichier), financeurName est le nom canonique de
+scraping/sources/financeurs.json (le nom lu par l'IA reste dans financeurExtrait), territoriesEligible est deduit du
+texte puis de l'emetteur (scraping/territoires.py), « france » seulement pour un appel national, « non-precise » sinon.
 """
 from __future__ import annotations
 
@@ -36,6 +41,7 @@ import hashlib
 import json
 import re
 import sys
+from collections import Counter
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -48,6 +54,13 @@ from schema import AapNormalized  # noqa: E402
 # Verdicts de Monsieur DUCOUT sur les fiches (raccourci « Validation des fiches a verifier »), cle = adresse de
 # l'appel. Fichier versionne, jamais ecrit par un outil automatique (changement organisation-donnees-validees).
 VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
+# Registre des emetteurs et table des financeurs canoniques (changement nettoyage-financeurs-territoires) : la source
+# reelle d'une fiche est son emetteur du registre, le financeur est ramene a un nom unique, le territoire est deduit.
+import financeurs  # noqa: E402
+import registre  # noqa: E402
+import territoires  # noqa: E402
+EMETTEURS = financeurs.index_emetteurs(registre.charger())
+FINANCEURS = financeurs.charger()
 
 # Champs qu'un humain peut avoir changes dans Firestore (ecran d'administration, verdicts) : jamais reecrits
 # sur un document existant. Pourquoi une liste : l'application lit les champs a plat et les regles filtrent
@@ -79,35 +92,6 @@ class ChampInconnu(ValueError):
 # Identifiant de "financeur" pour les AAP importes automatiquement.
 # Les AAP scrapes n'appartiennent a aucun compte financeur de la plateforme.
 SCRAPED_FINANCEUR_ID = "scraped"
-
-# Correspondance territoire (texte libre du scraping) -> valeur REGIONS de l'application
-# (app/src/pages/financeur/CreateAapPage.tsx). Comparaison insensible a la casse et aux accents.
-REGIONS = {
-    "auvergne-rhone-alpes": "auvergne-rhone-alpes",
-    "bourgogne-franche-comte": "bourgogne-franche-comte",
-    "bretagne": "bretagne",
-    "centre-val-de-loire": "centre-val-de-loire",
-    "corse": "corse",
-    "grand-est": "grand-est",
-    "hauts-de-france": "hauts-de-france",
-    "ile-de-france": "ile-de-france",
-    "normandie": "normandie",
-    "nouvelle-aquitaine": "nouvelle-aquitaine",
-    "occitanie": "occitanie",
-    "pays-de-la-loire": "pays-de-la-loire",
-    "provence-alpes-cote-d-azur": "provence-alpes-cote-d-azur",
-    "paca": "provence-alpes-cote-d-azur",
-}
-
-
-def _slug(text: str) -> str:
-    """Normalise un texte : minuscules, sans accents, tirets."""
-    import unicodedata
-
-    text = unicodedata.normalize("NFKD", text or "").encode("ascii", "ignore").decode()
-    text = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return text
-
 
 def signature(titre: str, financeur: str, date_cloture: str | None) -> str:
     """Meme formule que scraping/orchestrator.py : import idempotent."""
@@ -236,18 +220,6 @@ def parse_date(value: str | None) -> datetime | None:
         return None
 
 
-def map_territoires(territoire: str | None) -> list[str]:
-    if not territoire:
-        return ["france"]
-    s = _slug(territoire)
-    found = [v for k, v in REGIONS.items() if k in s]
-    if found:
-        return sorted(set(found))
-    if "national" in s or "france" in s:
-        return ["france"]
-    return ["france"]  # inconnu : on reste visible pour tous, le texte brut est conserve dans tags
-
-
 def parse_budget_total(enveloppe: str | None) -> int | None:
     """Extrait un montant entier d'une chaine du type '2 500 000 euros'. Retourne None si ambigu."""
     if not enveloppe:
@@ -348,6 +320,10 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
 
     deadline = parse_date(item.get("date_cloture"))
     publication = parse_date(item.get("date_ouverture"))
+    # Emetteur du registre dont vient la fiche (scrape_metadata.source du passage local, ou connecteur), nom canonique
+    # du financeur (None quand rien ne rattache le nom lu : il est alors garde tel quel).
+    emetteur = financeurs.emetteur_de(item, source_name, EMETTEURS)
+    nom_canonique = financeurs.canonique(financeur, emetteur["id"] if emetteur else None, FINANCEURS)
 
     tags = [source_name]
     if item.get("territoire"):
@@ -359,13 +335,13 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
 
     doc = {
         "financeurId": SCRAPED_FINANCEUR_ID,
-        "financeurName": financeur,
+        "financeurName": nom_canonique or financeur,
         "title": titre,
         "description": (item.get("description") or "").strip(),
         # Specialisation sante : tous les AAP scrapes relevent du secteur "sante" ou "social"
         # de l'application. [A VALIDER - Monsieur DUCOUT : affiner par source si besoin]
         "sectorsTargeted": ["sante", "social"],
-        "territoriesEligible": map_territoires(item.get("territoire")),
+        "territoriesEligible": territoires.territoire_depuis(item.get("territoire"), emetteur),
         "structureTypeEligible": item.get("categories_etablissement") or [],
         "budgetMin": item.get("montant_min"),
         "budgetMax": item.get("montant_max"),
@@ -379,7 +355,12 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
         "status": "published",
         "source": "scraped",
         "scrapeMetadata": {
-            "source": source_name,
+            # Source reelle : l'emetteur du registre quand la fiche le porte ou que le fichier est un connecteur connu ;
+            # sinon le nom du fichier. Le fichier d'origine reste dans « fichier », le nom lu par l'IA dans « financeurExtrait ».
+            "source": emetteur["id"] if emetteur else source_name,
+            "sourceNom": emetteur["nom"] if emetteur else source_name,
+            "fichier": source_name,
+            "financeurExtrait": financeur,
             "signature": signature(titre, financeur, item.get("date_cloture")),
             "moteur": (item.get("scrape_metadata") or {}).get("moteur") or "connecteur",
             "modele": (item.get("scrape_metadata") or {}).get("modele") or "",
@@ -489,6 +470,15 @@ def main() -> int:
 
     print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date publiees, {hors_champ} hors champ en brouillon)"
           f"| ignores : {skipped} | verdicts lus : {len(verdicts)}")
+    # Mesure du nettoyage (changement nettoyage-financeurs-territoires) : noms de financeurs distincts et part des
+    # fiches rattachees a un nom canonique, repartition des territoires.
+    publies = [d for _, d in mapped if d["status"] == "published"]
+    noms = {d["financeurName"] for d in publies}
+    rattachees = sum(1 for d in publies
+                     if financeurs.canonique(d["scrapeMetadata"]["financeurExtrait"], d["scrapeMetadata"]["source"], FINANCEURS))
+    repartition = Counter(t for d in publies for t in d["territoriesEligible"])
+    print(f"Fiches publiees : {len(publies)} | financeurs distincts : {len(noms)} ({rattachees} fiches au nom canonique) "
+          f"| territoires : {dict(repartition.most_common())}")
     fichiers = [e for _, d in mapped for e in d["scrapeMetadata"]["fichiersJoints"]]
     sur_disque = [e for e in fichiers if "localPath" in e]
     print(f"Pieces jointes : {len(fichiers)} | disponibles en local (scraping/downloads) : {len(sur_disque)}"

@@ -17,6 +17,11 @@ export const LIBELLES_TERRITOIRES: Record<string, string> = {
   occitanie: 'Occitanie',
   'pays-de-la-loire': 'Pays de la Loire',
   'provence-alpes-cote-d-azur': "Provence-Alpes-Côte d'Azur",
+  guadeloupe: 'Guadeloupe',
+  martinique: 'Martinique',
+  guyane: 'Guyane',
+  'la-reunion': 'La Réunion',
+  mayotte: 'Mayotte',
   france: 'National, toute la France',
   'non-precise': 'Territoire non précisé',
 };

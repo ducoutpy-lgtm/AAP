@@ -66,6 +66,15 @@ remplace le brouillon du lot 0 ; `scripts/publier_sans_date.py` publie les broui
 et accord). Une fiche classée hors champ par le modèle (`scrapeMetadata.champ`, changement `filtre-champ-sante`) entre
 en brouillon à corriger, jamais publiée sans verdict ; `scripts/migrer_champ.py` repasse en brouillon les fiches
 publiées avant le filtre ; le verdict « hors champ » de la validation quotidienne (touche 7) rejette la fiche.
+Nettoyage des financeurs et des territoires (changement `nettoyage-financeurs-territoires`, 2026-10-14 au soir,
+constat de Monsieur DUCOUT : « base sale ») : `scrapeMetadata.source` est l'émetteur du registre (`sourceNom` son nom,
+`fichier` le fichier de résultats d'origine) ; `financeurName` est le nom canonique de `scraping/sources/financeurs.json`
+(table construite depuis le registre par `scraping/financeurs.py --construire`, alias complétables à la main, nom lu
+par l'IA conservé dans `scrapeMetadata.financeurExtrait`, noms restés sans rattachement : `--non-rattaches`) ;
+`territoriesEligible` est déduit du texte du territoire (régions, départements et grandes villes de
+`scraping/sources/departements.json`, lus par `scraping/territoires.py`) puis du nom de l'émetteur, `france` seulement
+pour un appel national, `non-precise` sinon (affiché « Territoire non précisé »). Fiches publiées en double (même titre,
+même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine).
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits

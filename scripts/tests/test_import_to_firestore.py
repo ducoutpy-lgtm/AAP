@@ -255,3 +255,66 @@ def test_load_results_ignore_les_sorties_de_la_comparaison(tmp_path, monkeypatch
     (tmp_path / "echantillon_x.json").write_text('[{"titre": "c"}]', encoding="utf-8")
     monkeypatch.setattr(imp, "RESULTS_DIR", tmp_path)
     assert [(s, i["titre"]) for s, i in imp.load_results(None)] == [("ars_x", "a")]
+
+
+# ---------------------------------------------------------------- nettoyage : source reelle, financeur canonique, territoire
+# (changement nettoyage-financeurs-territoires, 2026-10-14) : petit registre et petite table, pour ne pas dependre du vrai.
+
+import financeurs  # noqa: E402
+
+REGISTRE_TEST = [
+    {"id": "ars-normandie", "nom": "ARS Normandie", "categorie": "ars", "connecteur": ""},
+    {"id": "ars-ile-de-france", "nom": "ARS Île-de-France", "categorie": "ars", "connecteur": "ars_idf, ars_idf_local"},
+    {"id": "cnsa", "nom": "CNSA (Caisse nationale de solidarité pour l'autonomie)", "categorie": "caisse-nationale",
+     "connecteur": "cnsa"},
+]
+
+
+@pytest.fixture
+def petit_registre(monkeypatch):
+    monkeypatch.setattr(imp, "EMETTEURS", financeurs.index_emetteurs(REGISTRE_TEST))
+    monkeypatch.setattr(imp, "FINANCEURS", financeurs.construire(REGISTRE_TEST))
+
+
+def test_source_reelle_emetteur_du_registre_et_fichier_conserve(petit_registre):
+    local = fiche(financeur="ARS Normandie", scrape_metadata={"moteur": "ollama", "modele": "q", "source": "ars-normandie"})
+    doc = imp.to_app_aap(local, "extraction_locale", MAINTENANT)
+    m = doc["scrapeMetadata"]
+    assert (m["source"], m["sourceNom"], m["fichier"]) == ("ars-normandie", "ARS Normandie", "extraction_locale")
+    assert doc["territoriesEligible"] == ["normandie"]  # la fiche ne dit rien : territoire de l'emetteur
+    doc = imp.to_app_aap(fiche(financeur="ARS Île-de-France"), "ars_idf", MAINTENANT)  # connecteur connu du registre
+    assert doc["scrapeMetadata"]["source"] == "ars-ile-de-france" and doc["scrapeMetadata"]["fichier"] == "ars_idf"
+    doc = imp.to_app_aap(fiche(), "ars_test", MAINTENANT)  # fichier inconnu du registre : le nom du fichier reste
+    assert doc["scrapeMetadata"]["source"] == "ars_test" and doc["scrapeMetadata"]["sourceNom"] == "ars_test"
+    imp.verifier_champs(doc, "test")  # les nouveaux champs sont dans scrapeMetadata, la liste blanche ne bouge pas
+
+
+def test_six_orthographes_un_financeur_nom_extrait_conserve(petit_registre):
+    noms = ["ARS Île-de-France", "ARS Ile-de-France", "Agence régionale de santé Île-de-France", "ARS IDF",
+            "Agence Régionale de Santé (ARS) Île-de-France", "ARS Île-de-France – Délégation départementale de l'Essonne"]
+    docs = [imp.to_app_aap(fiche(financeur=n), "ars_idf", MAINTENANT) for n in noms]
+    assert {d["financeurName"] for d in docs} == {"ARS Île-de-France"}
+    assert [d["scrapeMetadata"]["financeurExtrait"] for d in docs] == noms
+    inconnu = imp.to_app_aap(fiche(financeur="Département du Rhône"), "ars_test", MAINTENANT)
+    assert inconnu["financeurName"] == "Département du Rhône"  # rien ne le rattache : garde tel quel
+
+
+def test_territoire_deduit_jamais_france_par_defaut(petit_registre):
+    assert imp.to_app_aap(fiche(territoire="Calvados et Manche"), "ars_test", MAINTENANT)["territoriesEligible"] == ["normandie"]
+    assert imp.to_app_aap(fiche(territoire="National"), "ars_test", MAINTENANT)["territoriesEligible"] == ["france"]
+    assert imp.to_app_aap(fiche(territoire="Grand Ouest"), "ars_test", MAINTENANT)["territoriesEligible"] == ["non-precise"]
+    assert imp.to_app_aap(fiche(), "ars_test", MAINTENANT)["territoriesEligible"] == ["non-precise"]
+    cnsa = imp.to_app_aap(fiche(financeur="CNSA", scrape_metadata={"moteur": "ollama", "modele": "q", "source": "cnsa"}),
+                          "extraction_locale", MAINTENANT)
+    assert cnsa["territoriesEligible"] == ["france"] and cnsa["financeurName"] == "CNSA"  # emetteur national
+
+
+def test_groupes_de_doublons_meme_titre_normalise_et_meme_financeur():
+    import doublons
+
+    fiches = [("a", {"title": "Appel à projets ESMS numérique 2026", "financeurName": "ARS Normandie"}),
+              ("b", {"title": "ESMS Numérique 2026 : appel à projets", "financeurName": "ARS Normandie"}),
+              ("c", {"title": "Appel à projets ESMS numérique 2026", "financeurName": "ARS Bretagne"}),
+              ("d", {"title": "Autre appel", "financeurName": "ARS Normandie"})]
+    groupes = doublons.groupes_de_doublons(fiches)
+    assert [[i for i, _ in g] for g in groupes] == [["a", "b"]]

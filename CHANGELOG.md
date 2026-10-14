@@ -6,6 +6,17 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Nettoyage de la base (changement `nettoyage-financeurs-territoires`, 2026-10-14 au soir, constat de Monsieur DUCOUT :
+  « base sale », filtres incohérents) : l'import écrit la source réelle de chaque fiche (émetteur du registre, nom et
+  fichier d'origine dans `scrapeMetadata`), un nom de financeur canonique (table `scraping/sources/financeurs.json`
+  construite depuis le registre, nom lu par l'IA conservé) et un territoire déduit du texte puis de l'émetteur
+  (`scraping/sources/departements.json`, 101 départements, outre-mer, anciennes régions, grandes villes), « france »
+  réservé aux appels nationaux et « non-precise » sinon ; filtre Source ajouté à la recherche, filtre Financeur sur le
+  nom canonique ; rapport des fiches publiées en double `scripts/doublons.py`. Essai à blanc : 149 financeurs
+  distincts pour 390 fiches publiées (203 pour 420 dans la base le soir), 101 territoires « france » au lieu de 243,
+  3 non précisés. Ré-import réel en attente de l'accord de Monsieur DUCOUT. Les 10 fiches publiées classées hors
+  champ ont été repassées en brouillon (`scripts/migrer_champ.py`, sauvegarde dans `scripts/sauvegardes/`), sur sa
+  décision (« oui tu les retires »).
 - Recherche des AAP (changement `filtres-recherche`, 2026-10-14 au soir) : filtres Territoire (libellés des identifiants
   réellement présents), Thématique (santé, médico-social, non classée, d'après le champ classé) et Financeur construits
   à partir des fiches chargées ; le filtre budget n'écarte plus les fiches sans montant connu. Import réel du soir :
