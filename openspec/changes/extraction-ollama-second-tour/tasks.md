@@ -20,7 +20,7 @@ fabriquées sur les 21 pages hors sujet.
 ## 3. Documentation et décision
 
 - [x] 3.1 README scraping (section Extraction sur échantillon), `scraping/CHANGELOG.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`. Fait quand : fichiers relus.
-- [ ] 3.2 Décision de Monsieur DUCOUT : lecture de `ECHANTILLON.md`, choix du moteur du passage global (modèle local ayant atteint le seuil, sinon estimation API au changement suivant). Fait quand : décision inscrite dans `CLAUDE.md` et `REPRISE.md`.
+- [x] 3.2 Décision de Monsieur DUCOUT : lecture de `ECHANTILLON.md`, choix du moteur du passage global (modèle local ayant atteint le seuil, sinon estimation API au changement suivant). Fait quand : décision inscrite dans `CLAUDE.md` et `REPRISE.md`. (Décision du 2026-10-13 soir : « extraction au modèle local sur les 242 pages validées, zéro euro, fiches marquées à vérifier, avec le risque d'erreurs mesuré » ; le seuil n'était pas atteint, Monsieur DUCOUT a préféré le modèle local à l'API ; inscrite dans `CLAUDE.md` et `REPRISE.md`, mise en oeuvre par le changement `extraction-locale-globale`.)
 
 ## Workflow follow-up
 

@@ -150,6 +150,33 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+### Annuaires de référence et couverture (changement `registre-par-annuaires`, 2026-10-13)
+
+Le registre n'est plus constitué de mémoire : chaque famille d'émetteurs est adossée à un annuaire de référence
+(`sources/annuaires/familles.json` : annuaire, adresse, date, total, vague) et `REGISTRE_SOURCES.md` commence par
+le taux de couverture de chaque famille (entrées rapprochées de l'annuaire / total, ou « couverture non mesurée »).
+Première vague : les fondations reconnues d'utilité publique et d'entreprise du Registre national des fonds et
+fondations (ministère de l'Intérieur, data.gouv.fr), actives, à domaine santé-social.
+
+```bash
+python annuaires.py --rnf <opendata-donnees-fonds-fondations.zip>   # extrait sources/annuaires/rnf_fondations_sante_social.csv (664)
+python annuaires.py --rapprocher                                     # correspondances par nom avec le registre (sûres / douteuses)
+python annuaires.py --chercher 100                                   # recherche du site par l'API Tavily (clé TAVILY_API_KEY dans .env)
+python annuaires.py --sites candidats.json                           # inscription manuelle de sites {numero_rnf: adresse}, vérifiés
+python annuaires.py --integrer                                       # une entrée « identifiée » par fondation ayant un site trouvé
+python registre.py --verifier-format --tableau
+```
+
+Aucune adresse n'est devinée : un site n'est inscrit que si son domaine porte le nom de la fondation (nom compact,
+domaine « fondation » plus un mot du nom, mot distinctif ou sigle ; annuaires et réseaux sociaux écartés) et si la
+page répond en citant ce nom. Les recherches sont journalisées dans `results/recherche_sites.jsonl` ; les
+fondations « incertaines » restent dans l'extrait sans site. Le moteur gratuit sans clé refuse les requêtes
+automatiques et l'API Google est fermée aux nouveaux clients : Tavily (1 000 crédits par mois sans carte) est le
+moteur retenu. Quand le quota Tavily est atteint, la session cherche elle-même avec son moteur de recherche et
+applique la même vérification (adresse choisie dans les résultats, sonde code 200 + mot du nom, journal avec
+`moteur: session` et une note) ; les organismes qui existent déjà au registre reçoivent leur `id_registre` au lieu
+d'une nouvelle entrée.
+
 ## Découverte des rubriques appels à projets
 
 Avant d'écrire un connecteur, savoir où chaque source publie. `decouverte.py` ouvre la page de chaque
@@ -276,6 +303,72 @@ texte (le modèle déborde sur le processeur avec un contexte de 16 384 jetons),
 Le comparateur a été relu par sondage (5 fiches par modèle) et corrigé deux fois : il accepte une échéance ou un titre
 confirmés par le texte de la page, et compare les montants cités quel que soit le champ. La décision du moteur du
 passage global revient à Monsieur DUCOUT (tâche 3.2 du changement).
+
+## Extraction locale globale (changement `extraction-locale-globale`, 2026-10-13)
+
+Décision de Monsieur DUCOUT (2026-10-13, soir) : extraire les pages des 242 rubriques validées avec le modèle local
+`qwen3:8b`, à zéro euro, fiches marquées « à vérifier », en acceptant le risque mesuré sur l'échantillon (environ une
+fiche sur quatre avec un champ faux, une page hors sujet sur vingt transformée en fiche). `extraction_locale.py`
+réutilise la chaîne d'`echantillon.py` (question fermée, extraction, contrôle des formats, écriture fiche par fiche avec
+reprise) sur toutes les sources en « rubrique confirmée », dans l'ordre ARS, caisses nationales, fondations, agences,
+ministères, sociétés savantes, établissements, Europe, autres, puis collectivités (listes les plus mixtes en dernier).
+
+```bash
+python extraction_locale.py --bilan                      # avancement, sans appel au modèle
+python extraction_locale.py --collecter                  # texte de chaque lien web des 242 sources (navigateur, reprise)
+python extraction_locale.py --extraire --modele qwen3:8b # fiches -> results/extraction_locale.json (reprise automatique)
+python ../scripts/import_to_firestore.py --source extraction_locale   # import d'un lot (rejouable), depuis la racine
+```
+
+- Une adresse citée par deux sources (Région et Conseil régional d'Île-de-France, Drôme et sa commission des
+  financeurs) n'est lue et extraite qu'une fois ; les fichiers PDF, Word, Excel et ZIP restent hors périmètre
+  (2 395 adresses web uniques pour 3 236 liens).
+- Chaque fiche porte `scrape_metadata.moteur = "ollama"`, `modele`, `source` (identifiant du registre) et
+  `a_verifier = true` ; l'import ajoute l'étiquette `a-verifier` et l'application affiche le badge « À vérifier » dans
+  la liste et la fiche. Pages refusées dans `results/extraction_locale_non_aap.json`, échecs dans
+  `results/extraction_locale.errors.json`.
+- Temps machine estimé d'après l'échantillon (22 s par page refusée, 69 s par fiche) : environ 4 heures de collecte,
+  puis 25 à 40 heures de calcul sur la carte graphique, en plusieurs nuits ; l'outil reprend là où il s'est arrêté.
+  L'import ignore les appels déjà clos.
+
+## Validation manuelle (changement `validation-manuelle-aap`, 2026-10-13)
+
+Report des verdicts du mode « pages » au registre (changement `recherche-page-aap-par-source`) :
+
+```bash
+python validation.py --appliquer-pages            # relecture + adresses corrigées, une seule fois, AVANT la redécouverte
+python qualification.py --registre --rapport && python registre.py --tableau
+..\.venv\Scripts\python decouverte.py --forcer --garder-depart --ids <identifiants corrigés>   # garde la page donnée
+..\.venv\Scripts\python decouverte.py --rapport
+```
+
+Correspondance : bonne page -> rubrique confirmée ; hors champ -> hors santé ; page morte -> à vérifier (à retrouver) ;
+mauvaise page avec adresse -> `url_aap` corrigée (ancienne adresse dans les notes), rubrique confirmée, source à
+redécouvrir. Les verdicts sont indexés par l'adresse de la page gardée : relancer `--appliquer-pages` après une
+redécouverte ne retrouve plus les sources dont la page a changé (« sans source »), ce n'est pas une erreur.
+`--garder-depart` évite que la découverte remplace la page désignée par une autre page du site qui aurait plus de liens ;
+si la page donnée n'a aucun lien d'appel repéré, la source est « aucune rubrique » et sa page sera lue à l'extraction.
+
+Monsieur DUCOUT juge lui-même, dans son navigateur, ce que les robots ont trouvé. `validation.py` est
+un petit serveur local (bibliothèque standard) ; chaque verdict est écrit immédiatement dans un
+fichier JSON de `results/`, clé = adresse, avec commentaire et date ; une relance reprend au premier
+élément non jugé. Deux raccourcis sur le bureau lancent les fichiers `validation_pages.cmd` et
+`validation_manuelle.cmd` (fermer la fenêtre noire arrête le serveur).
+
+| Mode | Commande (depuis `scraping/`) | Question posée | Verdicts (touches 1 à 6) | Fichier |
+|---|---|---|---|---|
+| Pages | `python validation.py --pages --port 8788` | la page gardée par la découverte est-elle la page des appels de cet organisme ? (155 rubriques confirmées) | bonne page / mauvaise page (bonne adresse saisie dans le champ) / page morte / passer / des appels mais jamais santé | `results/validation_pages.json` |
+| Sources exclues | `python validation.py --pages --verdicts hors-sante,a-verifier,pas-d-aap,pdf-seulement --port 8790` (raccourci « Validation des sources exclues ») | même question, pour les sources que la qualification a écartées ; verdict actuel et motif affichés ; les sources sans page gardée sont ignorées (leur nombre est affiché) | les mêmes | `results/validation_pages.json` |
+| Liens | `python validation.py --liens --echantillon 60 --port 8787` (`--source <id>` pour une seule source) | ce lien est-il un appel à projets ? | appel / appel douteux / pas un appel / passer / page qui recense des appels / appel permanent sans sujet ni montant | `results/validation_liens.json` |
+| Fiches | `python validation.py --fichier results/echantillon_ollama_qwen3-8b.json` | la fiche extraite est-elle juste ? | juste / à corriger / pas un appel / passer | `results/validation_manuelle.json` |
+
+La page officielle s'ouvre dans une fenêtre séparée du navigateur, toujours la même (option
+décochable pour revenir à un cadre dans la page ; beaucoup de sites publics refusent le cadre). Le
+texte de la page, lu par le serveur, est affiché à droite dans tous les cas. Entrée dans le champ de
+commentaire l'enregistre sans changer d'élément ; les flèches permettent de revenir en arrière.
+`--echantillon N` prend un lien par source à tour de rôle (ordre tiré au sort avec une graine fixe :
+même liste à chaque lancement). Les liens cassés (gabarits non remplis, crochets dans l'adresse) sont
+écartés. Tests : `tests/test_validation.py`.
 
 ## Ajouter une source
 

@@ -167,6 +167,10 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
         tags.append(item["territoire"].strip())
     for cat in item.get("categories_etablissement") or []:
         tags.append(cat.strip())
+    # Fiches produites par le modele local (extraction_locale.py) : etiquette a-verifier derivee de la
+    # provenance, affichee « A verifier » dans l'application (changement extraction-locale-globale).
+    if (item.get("scrape_metadata") or {}).get("moteur") == "ollama":
+        tags.append("a-verifier")
 
     doc = {
         "financeurId": SCRAPED_FINANCEUR_ID,
@@ -291,7 +295,8 @@ def main() -> int:
 
     if args.dry_run:
         for sig, doc in mapped[:10]:
-            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {doc['deadline'].date()}")
+            marque = " - a-verifier" if "a-verifier" in doc["tags"] else ""
+            print(f"  [{sig}] {doc['financeurName']} - {doc['title'][:70]} - cloture {doc['deadline'].date()}{marque}")
         if len(mapped) > 10:
             print(f"  ... et {len(mapped) - 10} autres")
         return 0

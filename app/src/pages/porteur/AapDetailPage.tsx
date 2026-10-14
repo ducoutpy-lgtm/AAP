@@ -136,6 +136,10 @@ export default function AapDetailPage() {
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-gray-900 mb-3">{aap.title}</h1>
+              {/* Fiche produite par le modèle local, non relue : mention À vérifier (étiquette a-verifier posée à l'import) */}
+              {aap.tags?.includes('a-verifier') && (
+                <div className="mb-3"><Badge variant="warning">À vérifier</Badge></div>
+              )}
               <div className="flex items-center gap-2 text-gray-600 mb-2">
                 <Building className="h-5 w-5" />
                 <span className="text-lg">{aap.financeurName}</span>

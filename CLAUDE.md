@@ -138,10 +138,11 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : tests | A FAIRE | aucun test |
 | Appli web : pages placeholder | A FAIRE | édition AAP, profil, pages légales, mot de passe oublié |
 | Scraping : 5 sources | OK | voir ci-dessus |
-| Scraping : registre des sources | OK | 2026-10-09 : 847 sources, 657 pages vérifiées (deux extensions) |
+| Scraping : registre des sources | EN COURS (annuaires) | 2026-10-09 : 847 sources ; 2026-10-13 (`registre-par-annuaires`) : familles adossées à des annuaires de référence avec taux de couverture (`REGISTRE_SOURCES.md`), vague 1 fondations du RNF terminée : 365 / 664 (54 %), 1 198 sources ; recherche des sites par Tavily (191) puis par la recherche web de la session (445 fondations : 165 sites inscrits, 271 sans site dont 62 hors champ non cherchées, 9 déjà au registre), 22 adresses à resonder ; agrégateur Fimeco Walter Allinial, 10 financeurs de la veille URIOPSS PACA-Corse et famille PLIE (annuaire fse.gouv.fr) ajoutés à sa demande |
 | Scraping : découverte des rubriques AAP | OK | 2026-10-12 : 847 sources explorées, 270 rubriques candidates, 3 748 liens candidats (repérés par mots-clés, NON vérifiés : l'échantillon a montré 21 pages hors sujet sur 45) ; préfectures et ameli bloquent le robot (voir README scraping) |
 | Scraping : qualification des sources | OK | 2026-10-12 : 270 rubriques relues par Ollama (sondage 83 % d'accord), puis relecture manuelle (changement `relecture-qualification`, `scraping/sources/relecture_qualification.json`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier (`scraping/qualification.py`, `QUALIFICATION.md`, champ `qualification` du registre avec verdict du modèle conservé) |
-| Scraping : extraction des AAP découverts | ÉCHANTILLON FAIT, MOTEUR À DÉCIDER | `extraction-echantillon-aap` (archivé) : 24 fiches Claude Code justes, Ollama premier tour 9 justes sur 41 ; `extraction-ollama-second-tour` (2026-10-13, décision 3.2 en attente) : mistral 7b 15 justes sur 23 et 13 fabriquées, qwen3:8b 16 sur 21 et 1 fabriquée, seuil 20/2 non atteint (`scraping/ECHANTILLON.md`). API estimée 99 euros pour 3 748 liens avant qualification ; 6 fiches importées |
+| Scraping : extraction des AAP découverts | PASSAGE LOCAL EN COURS | `extraction-echantillon-aap` (archivé) : 24 fiches Claude Code justes, Ollama premier tour 9 justes sur 41 ; `extraction-ollama-second-tour` : mistral 7b 15 justes sur 23 et 13 fabriquées, qwen3:8b 16 sur 21 et 1 fabriquée, seuil 20/2 non atteint (`scraping/ECHANTILLON.md`). Décision 3.2 de Monsieur DUCOUT (2026-10-13 soir) : passage global au modèle local `qwen3:8b`, zéro euro, fiches « à vérifier » (changement `extraction-locale-globale`, `scraping/extraction_locale.py`, 2 395 adresses web uniques des 242 rubriques validées, 25 à 40 h de calcul par nuits, import par lots avec étiquette `a-verifier`) ; API estimée 99 euros pour 3 748 liens avant qualification ; 6 fiches de l'échantillon importées |
+| Scraping : validation manuelle des pages et des liens | PAGES VALIDÉES ET REPORTÉES | 2026-10-13, changement `validation-manuelle-aap` : `scraping/validation.py` (modes pages / liens / fiches, raccourcis sur le bureau) ; 257 verdicts de Monsieur DUCOUT sur les pages (146 gardées + 111 exclues : 181 bonnes, 47 mauvaises avec adresse, 10 mortes, 18 hors champ) et 34 sur les liens. Changement `recherche-page-aap-par-source` : verdicts reportés au registre (`--appliquer-pages`, 242 rubriques confirmées, 18 hors santé), 50 adresses corrigées et redécouvertes (39 pages rafraîchies, 11 sans lien repéré) ; reste : 10 pages mortes à retrouver, 577 sources sans page, vérification 4.1 par Monsieur DUCOUT |
 | Scraping : connecteur générique ARS (18 ARS) | A FAIRE | prochain changement ; collecte gratuite, extraction sur une ARS d'abord |
 | Scraping : autres sources du registre | A FAIRE | une source ou famille par changement, dans l'ordre du registre |
 | Jonction scraping -> Firestore | OK | 2026-10-09 : 89 AAP importés dans `aapi-11bc3` (doublons fusionnés, import rejouable) ; 2026-10-12 : + 6 fiches de l'échantillon (95 en base) ; l'import global ignore `echantillon_*.json` |
@@ -163,6 +164,25 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 - Modifier un cahier des charges dans `docs/` sans en informer explicitement.
 - Committer une clé (Anthropic, Firebase, Stripe). Tout est dans des `.env` ignorés par Git.
 - Supprimer la branche ou le tag d'archive.
+
+---
+
+## Preuve avant affirmation (règle de travail, décidée par Monsieur DUCOUT le 2026-10-13)
+
+Pourquoi : la session du 2026-10-13 a produit des affirmations fausses (« la découverte garde de mauvaises
+pages ») corrigées après coup, et un outil construit « en essai » hors OpenSpec, sans scénario rejouable.
+Monsieur DUCOUT préfère une contradiction immédiate à une correction deux jours plus tard.
+
+1. Toute phrase sur l'état du projet vient d'un fichier ou d'une commande exécutés dans la session, source
+   nommée ; sinon écrire « non vérifié ».
+2. Quand Monsieur DUCOUT pose un diagnostic, le contrôler dans les données avant d'acquiescer, et le
+   contredire si les données le disent.
+3. Aucun statut (feuille de route, tableau d'avancement) ne change sans la commande qui le prouve, résultat
+   collé dans le compte rendu.
+4. Pas d'outil hors OpenSpec, même « en essai » : scénarios WHEN / THEN avant le code, rejoués par la session
+   avec preuve visible avant de dire « ça marche », puis par Monsieur DUCOUT.
+5. Une modification à la fois : la faire, la prouver, la faire valider, puis la suivante.
+6. Chaque compte rendu finit par deux lignes : « Vérifié : ... » et « Non vérifié ou supposé : ... ».
 
 ---
 
@@ -188,7 +208,11 @@ Cycle (commandes slash dans Claude Code) :
 - Prérequis : CLI `openspec` installé sur le poste (`npm install -g @fission-ai/openspec@latest`, Node >= 20.19).
 - Changements archivés : `demo-aap-scrapes-visibles`, `pieces-jointes-aap`, `registre-des-sources`, `registre-des-sources-2`
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13).
-  En cours : `extraction-ollama-second-tour` (tours faits, décision 3.2 de Monsieur DUCOUT en attente). Specs en vigueur :
+  En cours : `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
+  `extraction-locale-globale` (2026-10-13 soir : outil, import et badge faits, collecte puis extraction en tâche de fond),
+  `validation-manuelle-aap` (outil spécifié et rejoué, vérification 2.1 de Monsieur DUCOUT en attente) ; brouillon
+  `recherche-page-aap-par-source` (2026-10-13 nuit : design, specs, tasks 1.1 à 2.1 faites, verdicts reportés, 3.1 et 4.1 en attente) ; `registre-par-annuaires` (2026-10-13, décision « 664 fondations du RNF »
+  prise, inventaire des familles à valider, extrait RNF produit). Specs en vigueur :
   `import-aap-scrapes`, `consultation-aap-scrapes`, `registre-sources`, `decouverte-rubriques-aap`, `qualification-sources`.
 - Reprise d'une session : lire d'abord `REPRISE.md` (racine) et `docs/FEUILLE_DE_ROUTE.md` (huit grandes étapes, état), puis `openspec/changes/*/tasks.md` (cases cochées = fait), `scraping/DECOUVERTE.md`,
   `scraping/QUALIFICATION.md` (section « Relecture manuelle » : corrections humaines des verdicts du modèle). Ouvrir la session dans CE dossier (AAP), jamais dans Scrapling.

@@ -10,8 +10,8 @@ flowchart LR
     classDef encours fill:#FAEEDA,stroke:#854F0B,color:#633806
     classDef afaire fill:#F1EFE8,stroke:#5F5E5A,color:#444441
 
-    S1["1. Sources<br/>847 émetteurs"]:::fait
-    S2["2. Pages des AAP<br/>155 rubriques confirmées"]:::fait
+    S1["1. Sources<br/>1 198 émetteurs, couverture mesurée"]:::encours
+    S2["2. Pages des AAP<br/>155 pages à valider à la main"]:::encours
     S3["3. Extraction<br/>moteur à décider"]:::encours
     S4["4. Veille<br/>à concevoir"]:::afaire
     S5["5. Base consolidée<br/>95 AAP en base"]:::encours
@@ -29,9 +29,9 @@ Légende : vert = fait, orange = en cours, gris = à faire.
 
 | Étape | État | Ce qui existe | Ce qui manque |
 |---|---|---|---|
-| 1. Récupérer le fichier des sources | Fait | `scraping/sources/registre.json` : 847 émetteurs, 657 adresses qui répondent, outil `registre.py`, vue `REGISTRE_SOURCES.md` | Mise à jour périodique du registre (non planifiée) |
-| 2. Identifier les pages des AAP | Fait | Découverte (`decouverte.py`, 270 rubriques), qualification par le modèle local puis relecture manuelle tracée (`relecture_qualification.json`) : 155 rubriques confirmées, 20 à vérifier à la main | 577 sources sans page gardée (préfectures qui bloquent le robot, sites sans rubrique repérée) ; les 20 « à vérifier » |
-| 3. Scraper les données | En cours | 5 connecteurs historiques (105 AAP) ; échantillon de 45 textes mesuré avec trois moteurs (`ECHANTILLON.md`) ; second tour local : qwen3:8b 16 fiches justes sur 21, mistral 7b 15 sur 23, seuil de 20 non atteint ; outil de validation manuelle `validation.py` en essai | Décision du moteur par Monsieur DUCOUT (modèle local, troisième tour, ou API Anthropic après estimation) ; passage global sur les 155 rubriques ; lecture des PDF |
+| 1. Récupérer le fichier des sources | En cours (repris le 2026-10-13) | `scraping/sources/registre.json` : 1 133 émetteurs ; inventaire de 24 familles avec annuaire de référence (`sources/annuaires/familles.json`) et taux de couverture en tête de `REGISTRE_SOURCES.md` ; vague 1 terminée : 664 fondations du Registre national, 365 rapprochées ou créées (54 %) ; famille PLIE ajoutée | 22 adresses à resonder, vagues 2 et 3 (fonds de dotation, abritées, agrégateurs, régions, mutuelles, conférences des financeurs...), rapprochement des familles déjà couvertes |
+| 2. Identifier les pages des AAP | Pages validées par Monsieur DUCOUT et reportées (2026-10-13 nuit) | Découverte (`decouverte.py`, 270 rubriques), qualification par le modèle local puis relecture manuelle tracée (`relecture_qualification.json`) : 155 rubriques confirmées, 20 à vérifier à la main | Aucune des 155 pages gardées n'a encore été vue par Monsieur DUCOUT. Le 2026-10-13, la validation de 27 liens a fait croire à de mauvaises pages (Directions.fr, Territoire de Belfort) ; vérification faite, la découverte avait bien gardé la page des appels de ces deux organismes, ce sont des liens de cette page qui étaient hors sujet. Fait le 2026-10-13 : 257 pages validées à l'écran (181 bonnes, 47 corrigées, 10 mortes, 18 hors champ), verdicts reportés au registre (242 rubriques confirmées), 50 adresses redécouvertes. Reste : 10 pages mortes et 577 sources sans page à chercher par le web, lot par lot, avec validation à l'écran |
+| 3. Scraper les données | Passage local en cours (décision du 2026-10-13 soir) | 5 connecteurs historiques (105 AAP) ; échantillon de 45 textes mesuré avec trois moteurs (`ECHANTILLON.md`) ; second tour local : qwen3:8b 16 fiches justes sur 21, mistral 7b 15 sur 23, seuil de 20 non atteint ; décision de Monsieur DUCOUT : passage global au modèle local `qwen3:8b`, zéro euro, fiches « à vérifier » (`scraping/extraction_locale.py`, 2 395 adresses web uniques des 242 rubriques validées, import par lots, badge « À vérifier » dans l'application) | Fin du passage (25 à 40 h de calcul par nuits), vérification humaine des fiches (`validation.py --fiches`), lecture des PDF (533 liens vers des fichiers) |
 | 4. Surveiller les nouveaux AAP | À faire | Principe validé : garder les pages, comparer chaque jour, ne re-traiter que ce qui change | Tout le code ; dépend de l'étape 3 |
 | 5. Base consolidée des AAP | En cours | Firestore `aapi-11bc3`, collection `aap`, 95 AAP dédoublonnés par signature, import rejouable (`scripts/import_to_firestore.py`) | Consolidation après le passage global ; stockage des pièces jointes en ligne (forfait Blaze refusé pour l'instant) |
 | 6. Application de consultation | Fait (preuve) | Recherche par mot, filtres secteur, territoire, budget ; fiche complète, pièces jointes, mention « Clôturé » ; consultation sans compte depuis le 2026-10-13 | Favoris, alertes, export, filtres fins (type d'établissement) |
@@ -55,5 +55,6 @@ le passage global, puis la veille.
 
 ## Historique des mises à jour
 
+- 2026-10-13 (soir) : étape 2 repassée « à valider à la main » : les pages gardées n'ont jamais été vues par un humain ; les deux « mauvaises pages » signalées étaient en fait des liens hors sujet d'une page juste.
 - 2026-10-13 : création, après les changements `relecture-qualification`, `extraction-echantillon-aap`,
   `consultation-aap-sans-compte` et le second tour d'extraction.

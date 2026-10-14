@@ -31,5 +31,8 @@
     "allow": [
       "WebFetch"
     ]
+  },
+  "env": {
+    "CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION": "1000"
   }
 }

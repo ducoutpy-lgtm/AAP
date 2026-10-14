@@ -311,6 +311,10 @@ export default function SearchAapPage() {
 
                       {/* Tags secteurs */}
                       <div className="flex flex-wrap gap-2 mb-4">
+                        {/* Fiche produite par le modèle local, non relue : mention À vérifier (étiquette a-verifier posée à l'import) */}
+                        {aap.tags?.includes('a-verifier') && (
+                          <Badge variant="warning">À vérifier</Badge>
+                        )}
                         {aap.sectorsTargeted?.slice(0, 3).map(sector => (
                           <Badge key={sector} variant="gray">
                             {sector}

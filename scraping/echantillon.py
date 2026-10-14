@@ -377,15 +377,21 @@ def _ecrire_json(chemin: Path, donnees) -> None:
     chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None) -> None:
-    """Question fermée, extraction, contrôle des formats avec seconde chance ; écriture au fil de l'eau, reprise."""
+def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None,
+             chemin_sortie: Path | None = None, metadonnees: dict | None = None) -> None:
+    """Question fermée, extraction, contrôle des formats avec seconde chance ; écriture au fil de l'eau, reprise.
+
+    chemin_sortie et metadonnees servent à l'extraction locale globale (extraction_locale.py) : un autre fichier
+    de sortie que celui de l'échantillon, et des champs ajoutés à scrape_metadata (a_verifier).
+    """
     fiches = fiches_disponibles(rubriques)[:limite]
     RESULTS.mkdir(exist_ok=True)
-    chemin_sortie = fichier_sortie(moteur, modele)
+    chemin_sortie = chemin_sortie or fichier_sortie(moteur, modele)
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
     chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
     sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)
     deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | {e["fichier"] for e in echecs} | {r["fichier"] for r in refusees})
+    print(f"{sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} pages déjà traitées sur {len(fiches)}")
     debut, nouvelles = time.time(), 0
     for i, (rubrique, chemin) in enumerate(fiches, 1):
         rel = str(chemin.relative_to(ICI))
@@ -422,7 +428,7 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
         duree = round(time.time() - t0, 1)
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": moteur, "modele": modele, "duree_s": duree,
-                                "fichier": rel, "a_relire": a_relire, "ecarts": ecarts}
+                                "fichier": rel, "a_relire": a_relire, "ecarts": ecarts, **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend

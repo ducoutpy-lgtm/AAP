@@ -8,15 +8,27 @@
  },
  "fondation-alzheimer": {
   "verdict": "rubrique-confirmee",
-  "motif": "prix Joël Ménard pour jeunes médecins chercheurs : recherche médicale",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://www.fondation-alzheimer.org/je-suis-chercheur/financement-de-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "prix Joël Ménard pour jeunes médecins chercheurs : recherche médicale",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  }
  },
  "interreg-sudoe": {
   "verdict": "rubrique-confirmee",
-  "motif": "appel ciblant le vieillissement de la population (autonomie), relevé au sondage",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://interreg-sudoe.eu/fr/futurs-appels-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appel ciblant le vieillissement de la population (autonomie), relevé au sondage",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-gard": {
   "verdict": "rubrique-confirmee",
@@ -50,9 +62,15 @@
  },
  "societe-francaise-de-geriatrie-et-gerontologie-sfgg": {
   "verdict": "rubrique-confirmee",
-  "motif": "prix Chaffoteaux : recherche en gériatrie",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://sfgg.org/actualites/appels-a-participation-bourses-et-prix/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "prix Chaffoteaux : recherche en gériatrie",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
+  }
  },
  "france-life-imaging-reseaux-thematiques-de-recherche": {
   "verdict": "rubrique-confirmee",
@@ -67,28 +85,52 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "ministere-de-l-enseignement-superieur-et-de-la-recherche": {
-  "verdict": "hors-sante",
-  "motif": "coopérations internationales, prix Joliot-Curie, contrats doctoraux handicap (accès des étudiants, pas de santé)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "coopérations internationales, prix Joliot-Curie, contrats doctoraux handicap (accès des étudiants, pas de santé)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-meurthe-et-moselle": {
-  "verdict": "a-verifier",
-  "motif": "page vide pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "page vide pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-aube": {
-  "verdict": "a-verifier",
-  "motif": "page vide pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "page vide pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-doubs": {
-  "verdict": "a-verifier",
-  "motif": "page vide pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "page vide pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-alpes-maritimes": {
   "verdict": "rubrique-confirmee",
@@ -97,28 +139,52 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-isere": {
-  "verdict": "a-verifier",
-  "motif": "liste non rendue pour le robot (filtre Solidarités : 3 appels) : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "liste non rendue pour le robot (filtre Solidarités : 3 appels) : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "region-ile-de-france-aides-et-appels-a-projets": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : guichet régional de 347 aides par public et thématique, la santé y figure (ex. AlimenTaSanté) mais noyée",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : guichet régional de 347 aides par public et thématique, la santé y figure (ex. AlimenTaSanté) mais noyée",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-regional-ile-de-france": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : même page, guichet régional de 347 aides où la santé est noyée",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : même page, guichet régional de 347 aides où la santé est noyée",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-yonne": {
   "verdict": "rubrique-confirmee",
-  "motif": "AMI 2027-2029 prévention de la perte d'autonomie, avis d'appel à projet social et médico-social",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://www.yonne.fr/mon-departement/les-appels-et-dispositifs-en-cours/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "AMI 2027-2029 prévention de la perte d'autonomie, avis d'appel à projet social et médico-social",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-vosges": {
   "verdict": "rubrique-confirmee",
@@ -127,10 +193,16 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "conseil-departemental-moselle": {
-  "verdict": "rubrique-confirmee",
-  "motif": "services autonomie à domicile, proches aidants, « Avec ma santé », isolement des seniors",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "services autonomie à domicile, proches aidants, « Avec ma santé », isolement des seniors",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-mayenne": {
   "verdict": "rubrique-confirmee",
@@ -151,10 +223,16 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "conseil-departemental-seine-et-marne": {
-  "verdict": "hors-sante",
-  "motif": "culture, sport, para-sport",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "culture, sport, para-sport",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-allier": {
   "verdict": "rubrique-confirmee",
@@ -163,16 +241,28 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "drome-commission-des-financeurs": {
-  "verdict": "a-verifier",
-  "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-drome": {
-  "verdict": "a-verifier",
-  "motif": "même page : liste non rendue pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "même page : liste non rendue pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-savoie": {
   "verdict": "rubrique-confirmee",
@@ -181,28 +271,52 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "conseil-departemental-gironde": {
-  "verdict": "hors-sante",
-  "motif": "ventes immobilières, conseil des jeunes, concours citoyenneté",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "ventes immobilières, conseil des jeunes, concours citoyenneté",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-pas-de-calais": {
-  "verdict": "hors-sante",
-  "motif": "soutien à la filière halieutique",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "soutien à la filière halieutique",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-val-de-marne": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : appel 2026 pour 222 mesures d'accueil de mineurs de l'ASE (établissements sociaux, pas médico-sociaux)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : appel 2026 pour 222 mesures d'accueil de mineurs de l'ASE (établissements sociaux, pas médico-sociaux)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-aude": {
-  "verdict": "rubrique-confirmee",
-  "motif": "appels isolement social des seniors, #moisenior 2027, places pour mineurs non accompagnés",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appels isolement social des seniors, #moisenior 2027, places pour mineurs non accompagnés",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-orne": {
   "verdict": "rubrique-confirmee",
@@ -211,10 +325,16 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "conseil-departemental-yvelines": {
-  "verdict": "hors-sante",
-  "motif": "FSE insertion des jeunes, AMI occupation du domaine public",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.yvelines.fr/appels-a-projets-subventions/#aap",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "FSE insertion des jeunes, AMI occupation du domaine public",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-territoire-de-belfort": {
   "verdict": "rubrique-confirmee",
@@ -223,34 +343,64 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "conseil-departemental-saone-et-loire": {
-  "verdict": "pas-d-aap",
-  "motif": "article sur le téléservice de demande d'aide 2027, aucun appel listé",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "pas-d-aap",
+   "motif": "article sur le téléservice de demande d'aide 2027, aucun appel listé",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-hautes-alpes": {
-  "verdict": "a-verifier",
-  "motif": "page vide pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "page vide pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "mairie-de-bordeaux": {
-  "verdict": "hors-sante",
-  "motif": "prix des jeunes associations ; page du CCAS presque vide",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "prix des jeunes associations ; page du CCAS presque vide",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-regional-centre-val-de-loire": {
-  "verdict": "hors-sante",
-  "motif": "Humain et Tech, diversification, formation, vie étudiante, recherche générale",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.centre-valdeloire.fr/appels-projet",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "Humain et Tech, diversification, formation, vie étudiante, recherche générale",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "metropole-aix-marseille-provence-contrat-de-ville": {
-  "verdict": "hors-sante",
-  "motif": "contrat de ville, projet alimentaire territorial, locaux et immobilier",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "contrat de ville, projet alimentaire territorial, locaux et immobilier",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "caisse-generale-de-securite-sociale-cgss-martinique": {
   "verdict": "rubrique-confirmee",
@@ -266,15 +416,27 @@
  },
  "mutualite-sociale-agricole-msa-grand-est-accueil-de-sarrebourg": {
   "verdict": "rubrique-confirmee",
-  "motif": "appel à projets Bien-être psychologique (Label Vie)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appel à projets Bien-être psychologique (Label Vie)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "mutualite-sociale-agricole-msa-meurthe-et-moselle-accueil-de-vanduvre-les-nancy": {
   "verdict": "rubrique-confirmee",
-  "motif": "même page : appel à projets Bien-être psychologique (Label Vie)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "même page : appel à projets Bien-être psychologique (Label Vie)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "mutualite-sociale-agricole-msa-nouvelle-aquitaine-accueil-de-libourne": {
   "verdict": "rubrique-confirmee",
@@ -283,28 +445,52 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "mutualite-sociale-agricole-msa-occitanie-accueil-de-carcassonne": {
-  "verdict": "hors-sante",
-  "motif": "appel Grandir en milieu rural (jeunesse)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "appel Grandir en milieu rural (jeunesse)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "anses-programme-pnr-est": {
-  "verdict": "hors-sante",
-  "motif": "AMI techniques (vaccins faune sauvage, génotypage) ; page du programme PNR-EST non trouvée",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "AMI techniques (vaccins faune sauvage, génotypage) ; page du programme PNR-EST non trouvée",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "bpifrance-france-2030": {
-  "verdict": "hors-sante",
-  "motif": "industrie, clusters Eureka, espace de données",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "industrie, clusters Eureka, espace de données",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "fondation-maladies-rares": {
   "verdict": "rubrique-confirmee",
-  "motif": "appels à projets conjoints maladies rares (MASFD, GRI, AFMF) ; la page gardée datait de 2019",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://fondation-maladiesrares.org/le-financement-des-projets-scientifiques/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appels à projets conjoints maladies rares (MASFD, GRI, AFMF) ; la page gardée datait de 2019",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "ihu-mediterranee-infection": {
   "verdict": "rubrique-confirmee",
@@ -313,22 +499,40 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "girci-est": {
-  "verdict": "a-verifier",
-  "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "liste des appels non rendue pour le robot : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-nouvelle-aquitaine": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : appel 2026 lutte contre la précarité menstruelle (santé publique, financeur hors santé)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : appel 2026 lutte contre la précarité menstruelle (santé publique, financeur hors santé)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "le-compte-asso-subventions-de-l-etat": {
-  "verdict": "hors-sante",
-  "motif": "FDVA, mentorat, solidarité internationale",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "FDVA, mentorat, solidarité internationale",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "anr": {
   "verdict": "rubrique-confirmee",
@@ -338,45 +542,87 @@
  },
  "conseil-departemental-tarn": {
   "verdict": "rubrique-confirmee",
-  "motif": "appel commission des financeurs de la prévention de la perte d'autonomie visible dans les actualités",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://www.tarn.fr/actualites/appel-a-projets-fse-osh-2026-2027",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appel commission des financeurs de la prévention de la perte d'autonomie visible dans les actualités",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-correze": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : rubriques dédiées Autonomie et Action sociale visibles par leur nom, contenu non lisible par le robot",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.correze.fr/le-departement/les-appels-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : rubriques dédiées Autonomie et Action sociale visibles par leur nom, contenu non lisible par le robot",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-mayotte": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : rubrique AAP, AMI, AAC du Département-Région, vide au 2026-10-12",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : rubrique AAP, AMI, AAC du Département-Région, vide au 2026-10-12",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "avise": {
-  "verdict": "hors-sante",
-  "motif": "agenda d'appels de tiers (innovation sociale, finance durable)",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.avise.org/actualites",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "agenda d'appels de tiers (innovation sociale, finance durable)",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "conseil-departemental-tarn-et-garonne": {
   "verdict": "rubrique-confirmee",
-  "motif": "appels prévention santé et remobilisation, création de 35 places d'accueil et d'hébergement, CDCA ; site refuse le robot",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://www.tarn-et-garonne.gouv.fr/Publications/Appels-a-projets/2026",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appels prévention santé et remobilisation, création de 35 places d'accueil et d'hébergement, CDCA ; site refuse le robot",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "mairie-de-reims": {
-  "verdict": "hors-sante",
-  "motif": "appels culturels et postes à pourvoir",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.grandreims.fr/reimsbusiness/appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "appels culturels et postes à pourvoir",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "mairie-de-villeurbanne": {
-  "verdict": "hors-sante",
-  "motif": "foodtrucks, marchés, cité éducative",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.villeurbanne.fr/mon-quotidien/mon-emploi-mon-entreprise/appel-a-projets-a-candidature",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "hors-sante",
+   "motif": "foodtrucks, marchés, cité éducative",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "girci-soho-sud-ouest-outre-mer-hospitalier": {
   "verdict": "rubrique-confirmee",
@@ -385,39 +631,645 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-occitanie": {
-  "verdict": "a-verifier",
-  "motif": "délai dépassé ; un appel à candidatures mandataires judiciaires vu : ouvrir à la main",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://occitanie.dreets.gouv.fr/Appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "délai dépassé ; un appel à candidatures mandataires judiciaires vu : ouvrir à la main",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "inserm": {
   "verdict": "rubrique-confirmee",
-  "motif": "appels Horizon 2050 et équipements en cancérologie : recherche médicale",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "appels Horizon 2050 et équipements en cancérologie : recherche médicale",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "iresp": {
   "verdict": "rubrique-confirmee",
-  "motif": "programmes Autonomie, Addictions, MESSIDORE ; la page gardée listait les appels clos",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://iresp.net/financements/programmes-et-appels/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "programmes Autonomie, Addictions, MESSIDORE ; la page gardée listait les appels clos",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "fondation-pour-la-recherche-medicale-frm": {
-  "verdict": "a-verifier",
-  "motif": "cas limite à trancher : programmes de recherche en biologie et santé, mais seule la page des appels clôturés est connue, page des appels en cours à retrouver",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.frm.org/fr/programmes",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "a-verifier",
+   "motif": "cas limite à trancher : programmes de recherche en biologie et santé, mais seule la page des appels clôturés est connue, page des appels en cours à retrouver",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "firah": {
   "verdict": "rubrique-confirmee",
-  "motif": "quatre appels de recherche appliquée sur le handicap en 2026 ; la page gardée listait les lauréats",
-  "date": "2026-10-12",
-  "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  "motif": "adresse donnée à l'écran : https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran",
+  "relecture_precedente": {
+   "verdict": "rubrique-confirmee",
+   "motif": "quatre appels de recherche appliquée sur le handicap en 2026 ; la page gardée listait les lauréats",
+   "date": "2026-10-12",
+   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+  }
  },
  "canceropole-est-appels-a-projets": {
   "verdict": "rubrique-confirmee",
   "motif": "appel générique 2027, PLBIO, bourses ; la page gardée listait les résultats",
   "date": "2026-10-12",
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
+ },
+ "fondation-malakoff-humanis-handicap": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://newsroom.malakoffhumanis.com/appel-a-projets.html",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "dgos-programmes-de-recherche-hospitaliere-phrc-phrip-preps-prme": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://sante.gouv.fr/systeme-de-sante/innovation-et-recherche/l-innovation-et-la-recherche-clinique/appels-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "ansm": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://ansm.sante.fr/vos-demarches/industriel/projet-longue-vie-aux-medicaments-sur-laugmentation-de-la-duree-de-conservation-des-medicaments",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fondation-aesio": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://fondation.aesio.fr/soumettre-un-projet",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "societe-francaise-de-dermatologie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "plateforme-nationale-pour-la-recherche-sur-la-fin-de-vie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.plateforme-recherche-findevie.fr/projets-recherche",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-haute-savoie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/appels-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-territorial-de-saint-pierre-et-miquelon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.vivre-a-spm.fr/travailler-et-entreprendre/les-appels-a-projet/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-essonne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.essonne.gouv.fr/Media/Fichiers/PUBLICATIONS/Autres-publications/Appels-a-projet",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-alpes-de-haute-provence": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "caisse-generale-de-securite-sociale-cgss-guyane": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.cgss-guyane.fr//appel-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "federation-addiction": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.federationaddiction.fr/actualites/projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "admical": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://admical.org/categories-articles/les-appels-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fondation-credit-agricole-solidarite-et-developpement": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fse-france": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-seine-normandie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-rhin-meuse": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-artois-picardie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-loire-bretagne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://aides-redevances.eau-loire-bretagne.fr/home/aides/appels-a-projets-1.html",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-adour-garonne": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "agence-de-l-eau-rhone-mediterranee-corse": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "anact": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.anact.fr/realisations-et-projets?f%5B0%5D=realisation_advance%3A302",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fonds-national-pour-la-science-ouverte": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fondation-groupe-pasteur-mutualite": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "institut-de-france-fondations": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://fondations.institutdefrance.fr/index.php",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "ville-de-montpellier-appels-a-projets": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "montpellier-mediterranee-metropole-contrat-de-ville": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-montpellier": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-cotes-d-armor": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-oise": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://oise.fr/information/portail-des-aides-et-subventions-du-conseil-departemental-de-loise",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-vaucluse": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-lot": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.lot.fr/appels-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-departemental-calvados": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "gouvernement-de-nouvelle-caledonie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-regional-guadeloupe": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.guadeloupe.gouv.fr/Publications/Appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "conseil-regional-la-reunion": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://regionreunion.com/aides-services/appels-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "collectivite-territoriale-de-guyane": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-nice": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-lille": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-rennes": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-toulon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-brest": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-amiens": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-nancy": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-saint-denis-de-la-reunion": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mairie-de-cayenne": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-alsace-moselle": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-sud-champagne-accueil-de-troyes": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-nouvelle-aquitaine-accueil-de-nontron": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-alpes-vaucluse-accueil-d-avignon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-picardie-accueil-de-laon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "mutualite-sociale-agricole-msa-beauce-coeur-de-loire-accueil-de-chartres": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-vaucluse": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402/appels-a-projets.html",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-cote-d-or": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-ille-et-vilaine": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-morbihan": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.morbihan.fr/le-conseil-departemental/appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-cantal": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.cantal.fr/le-conseil-departemental/les-appels-a-projets/",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-manche": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-aveyron": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-nievre": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-seine-maritime": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-val-d-oise": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "prefecture-rhone": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "haut-commissariat-de-la-republique-nouvelle-caledonie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-bouches-du-rhone": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-ille-et-vilaine": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-et-interdepartementale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-drieets-unite-departementale-de-paris": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://idf.drieets.gouv.fr/Appels-a-projets-appels-d-offres",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-generale-de-la-cohesion-des-populations-dgcopop-guyane": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-deets-guadeloupe": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-deets-la-reunion": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-occitanie-siege-de-toulouse": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-centre-val-de-loire": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-de-l-alimentation-de-l-agriculture-et-de-la-foret-daaf-martinique": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-grand-est-site-de-metz": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-corse": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-normandie-site-de-rouen": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-de-l-alimentation-de-l-agriculture-et-de-la-foret-daaf-mayotte": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-bretagne": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-bourgogne-franche-comte-siege-de-dijon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-auvergne-rhone-alpes-site-de-lyon": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-de-l-alimentation-de-l-agriculture-et-de-la-foret-daaf-guadeloupe": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-pays-de-la-loire": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-nouvelle-aquitaine-site-de-poitiers": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-provence-alpes-cote-d-azur": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-et-interdepartementale-de-l-alimentation-de-l-agriculture-et-de-la-foret-driaaf-ile-de-france": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "maison-departementale-des-personnes-handicapees-mdph-moselle": {
+  "verdict": "a-verifier",
+  "motif": "page morte à l'écran, adresse à retrouver",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "interreg-rhin-superieur": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "interreg-poctefa-france-espagne-andorre": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "interreg-alcotra-france-italie": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "uriopss-paca-corse": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-hauts-de-france": {
+  "verdict": "rubrique-confirmee",
+  "motif": "adresse donnée à l'écran : https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-grand-est": {
+  "verdict": "hors-sante",
+  "motif": "hors champ à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-bourgogne-franche-comte": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-pays-de-la-loire": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-normandie": {
+  "verdict": "rubrique-confirmee",
+  "motif": "bonne page vue à l'écran",
+  "date": "2026-10-13",
+  "relecteur": "Monsieur DUCOUT, validation à l'écran"
  }
 }

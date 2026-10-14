@@ -27,7 +27,7 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
 | Étape | Outil | État |
 |---|---|---|
 | 1. Registre des émetteurs (qui publie des AAP) | `scraping/registre.py`, `sources/registre.json` | 847 sources ; 657 adresses répondent. "Page vérifiée" veut dire que l'adresse répond, pas qu'elle contient des AAP. |
-| 2. Découverte des rubriques (où ils publient) | `scraping/decouverte.py`, `DECOUVERTE.md` | 270 rubriques candidates et 3 748 liens candidats, repérés par mots-clés, NON vérifiés. Pages gardées dans `scraping/decouverte/` (hors Git). |
+| 2. Découverte des rubriques (où ils publient) | `scraping/decouverte.py`, `DECOUVERTE.md` | 270 rubriques candidates et 3 748 liens candidats, repérés par mots-clés, NON vérifiés. Pages gardées dans `scraping/decouverte/` (hors Git). 2026-10-13 : les 155 pages gardées des rubriques confirmées n'ont jamais été vues par un humain ; à valider par Monsieur DUCOUT avec le raccourci « Validation des pages des sources » (mode `--pages`). |
 | 3. Qualification des sources (publient-ils vraiment des AAP ?) | `scraping/qualification.py`, `QUALIFICATION.md`, `sources/relecture_qualification.json` | FAIT le 2026-10-12 : 270 rubriques relues par le modèle, puis relecture manuelle (changement `relecture-qualification`) : 155 confirmées, 88 hors santé, 6 sans AAP, 20 à vérifier. Verdict relu dans le registre (champ `qualification`, verdict du modèle conservé) et `QUALIFICATION.md`. |
 | 4. Extraction des fiches (page -> fiche AAP) | `scraping/echantillon.py`, `ECHANTILLON.md` | ÉCHANTILLON FAIT (changement `extraction-echantillon-aap`, validation 3.4 en attente). 45 textes, 24 fiches Claude Code justes sur 24, Ollama 9 justes sur 41, 21 pages hors sujet, API estimée 99 euros pour 3 748 liens (avant qualification). 6 fiches ouvertes du champ santé importées dans Firestore. |
 | 5. Import dans l'application | `scripts/import_to_firestore.py` | OK : 95 AAP en base (89 des 5 connecteurs historiques + 6 de l'échantillon), visibles dans "Rechercher des AAP" SANS compte depuis le 2026-10-13 (changement `consultation-aap-sans-compte`), pièces jointes servies depuis le PC. |
@@ -47,7 +47,7 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   parfois (sondage obligatoire). La décision "Claude API pour le produit final" n'est pas remise
   en cause.
 
-## Où en est le projet (mis à jour le 2026-10-12, nuit)
+## Où en est le projet (mis à jour le 2026-10-13, midi)
 
 - Changement `relecture-qualification` (validé par Monsieur DUCOUT et archivé le 2026-10-12) : les 133 "hors santé" ont été relus avec
   Monsieur DUCOUT. 10 passés en confirmée sur le motif du modèle, 60 pages relues par la session (sans Ollama ni API),
@@ -73,16 +73,56 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   exactes jugées sévèrement, 3 sont des enveloppes financières manquées). Carte graphique : 8 Go (RTX 5060 portable) :
   les Qwen de 17 et 23 Go installés ne tiennent pas, non testés. Le comparateur automatique a été corrigé deux fois après
   sondage (échéance ou titre confirmés par la page ; montants cités quel que soit le champ) ; sondage final 5/5 et 4/5.
-- Essai du 2026-10-13 au matin, à la demande de Monsieur DUCOUT : **logiciel de validation manuelle** `scraping/validation.py`
-  (serveur local, bibliothèque standard, NON commité, hors changement OpenSpec pour l'instant). Lancement :
-  `../.venv/Scripts/python validation.py --fichier results/echantillon_ollama_qwen3-8b.json --port 8787` puis
-  http://localhost:8787 dans n'importe quel navigateur (le port 8765 est pris par un autre programme du poste). Une fiche
-  à la fois, extrait de la page, lien vers la page officielle, boutons 1 à 4 (juste / à corriger / pas un AAP / passer),
-  verdicts dans `results/validation_manuelle.json` (rejouable). Au moment de la pause, aucun verdict n'avait encore été donné.
-  Suite envisagée si la méthode lui convient : changement OpenSpec (correction directe des champs dans la page, fichier
-  cumulatif d'exemples validés), puis exemples validés dans la consigne (niveau 1, zéro euro), puis réglage fin d'un
-  modèle léger à poids ouverts quand le jeu dépasse quelques centaines d'exemples (niveau 2, LoRA, 3 milliards de
-  paramètres en local sur 8 Go, ou 8 milliards sur une carte louée avec son accord). Pas de réglage fin des modèles Claude.
+- **Validation manuelle** (2026-10-13, changement `validation-manuelle-aap`, tâches 1.1 à 1.3 faites, vérification 2.1 par
+  Monsieur DUCOUT en attente) : `scraping/validation.py`, deux raccourcis sur son bureau (« Validation des pages des
+  sources » : les 155 pages gardées, port 8788 ; « Validation manuelle des AAP » : échantillon de 60 liens, un par
+  source, port 8787). Verdicts dans `results/validation_pages.json` et `results/validation_liens.json` (34 verdicts sur
+  les liens à midi ; aucun sur les pages). Ses commentaires ont déjà donné deux verdicts de plus (page qui recense des
+  appels, appel permanent) et une grille de critères proposée (nature, thème, état, destinataires), non décidée.
+  Leçon du jour (règle « Preuve avant affirmation » dans CLAUDE.md) : j'ai affirmé que la découverte gardait de
+  mauvaises pages sans ouvrir `decouverte/resultats.json`, qui prouvait le contraire ; vérifier avant d'acquiescer.
+- **Registre par annuaires** (2026-10-13 après-midi, changement `registre-par-annuaires`, tâches 1.1 à 2.3 faites, 2.1 en cours) :
+  Monsieur DUCOUT trouvait une source manquante « toutes les cinq » ; cause : registre constitué de mémoire, sans annuaire de
+  référence. Inventaire de 24 familles validé (`scraping/sources/annuaires/familles.json`), taux de couverture en tête de
+  `REGISTRE_SOURCES.md`. Vague 1 décidée par lui : 664 fondations RUP et d'entreprise santé-social du Registre national des
+  fonds et fondations (`annuaires.py`). Décisions : aucune fusion des 35 rapprochements douteux ; recherche des sites par
+  l'API Tavily avec les clés du projet Scrapling (le moteur gratuit refuse, Google est fermé, Brave exige une carte).
+  Résultat Tavily : 191 / 664 (172 créées), puis les deux clés ont atteint la limite de leur plan (code 432). Sur sa
+  consigne « continue avec ta recherche web toi-même » (2026-10-13 soir), la session a cherché 203 fondations de plus avec
+  son propre moteur de recherche (choix lu dans les résultats, chaque adresse vérifiée par la sonde code 200 + mot du nom,
+  journal `results/recherche_sites.jsonl` avec `moteur: session` et une note par fondation) : 100 sites inscrits et
+  intégrés (`--integrer` : 1 123 sources), 96 sans site identifiable, 8 rapprochées d'une entrée déjà au registre (7 de la session, 1 de la vague Tavily)
+  (FRM, Fondation Alzheimer, Ramsay Santé, Force, Saint-Joseph Marseille, Avenir, APICIL, ARC : `id_registre` posé, un
+  doublon créé par `--integrer` supprimé), 16 adresses à resonder (SSL ou connexion refusée). Couverture 298 / 664 (44 %),
+  242 fondations jamais cherchées (quota de 200 recherches par tour atteint). Suite : relancer la recherche sur les 242
+  (nouveau tour), resonder les 16, puis découverte et qualification sur les nouvelles entrées (tâche 3.1), validation des
+  pages par Monsieur DUCOUT. Beaucoup de fondations d'entreprise n'ont que le site de l'entreprise : la découverte devra y
+  chercher la page de la fondation.
+  Sources ajoutées à sa demande : UDAF 91, préfecture de région IdF (politique de la ville, 403), DITP ; adresse de la
+  Fondation Crédit Mutuel Alliance Fédérale corrigée ; agrégateur Fimeco Walter Allinial (pages Digital et Numérique,
+  Santé Maladie et Handicap) ajouté le 2026-10-13 soir ; veille PDF des AAP de l'URIOPSS PACA-Corse (lien SharePoint,
+  82 appels) : 21 de ses 32 financeurs étaient au registre, 10 ajoutés (1 133 sources).
+- **Verdicts reportés** (2026-10-13 nuit, changement `recherche-page-aap-par-source`, tâches 1.1 à 2.1 faites) : Monsieur
+  DUCOUT a validé à l'écran les 257 pages (146 gardées, 111 exclues) : 181 bonnes, 47 mauvaises avec adresse, 10 mortes,
+  18 hors champ ; le modèle local avait exclu à tort 68 des 88 « hors santé » (préfectures, DREETS, DRAAF, MSA, départements,
+  villes). `validation.py --appliquer-pages` a écrit la relecture (relecteur « Monsieur DUCOUT, validation à l'écran ») et
+  corrigé 50 adresses ; `qualification.py --registre --rapport` : 242 rubriques confirmées, 18 hors santé, 873 à vérifier
+  (les entrées nouvelles du registre reçoivent « à vérifier » tant qu'elles ne sont pas découvertes). Redécouverte des 50
+  sources corrigées avec `decouverte.py --garder-depart` : 39 pages rafraîchies, 11 sans lien d'appel repéré (Maladies
+  rares, ANSM, AÉSIO, Alzheimer, SFGG, Yonne, Saint-Pierre-et-Miquelon, Fédération Addiction, ANACT, Reims, DREETS
+  Occitanie : la page donnée est l'appel lui-même ou un formulaire, à traiter à l'extraction). Attention : lancer
+  `--appliquer-pages` une seule fois avant la redécouverte, les verdicts sont indexés par l'adresse de l'ancienne page.
+  Reste : 10 pages mortes à retrouver (Moselle, Aude, Alpes-de-Haute-Provence, Groupe Pasteur Mutualité, Vaucluse, Lille,
+  Carsat Alsace-Moselle, Nièvre, DEETS Guadeloupe, MDPH Moselle), 577 sources sans page, vérification 4.1.
+- Vague 1 terminée (2026-10-13 nuit) : 445 fondations traitées par la recherche web de la session, 365 / 664 (54 %),
+  1 198 sources, 22 adresses à resonder ; famille « PLIE et organismes intermédiaires FSE+ » ajoutée (annuaire :
+  fse.gouv.fr, 2 100 appels FSE+ dont ceux des PLIE ; annuaire Alliance Villes Emploi réservé aux adhérents).
+- Brouillon initial `recherche-page-aap-par-source` : appliquer les verdicts « mauvaise page » au
+  registre, puis recherche web « nom de l'organisme appels à projets » pour les sources mal servies ou sans page,
+  validation humaine avant toute entrée dans le registre. Design et tâches après les premiers verdicts sur les pages.
+- Réglage fin envisagé plus tard, à partir des verdicts : exemples validés dans la consigne (niveau 1, zéro euro),
+  puis réglage fin d'un modèle léger à poids ouverts au-delà de quelques centaines d'exemples (niveau 2, carte louée
+  avec son accord). Pas de réglage fin des modèles Claude.
 - **Tâche suivante : décision de Monsieur DUCOUT (tâche 3.2)**, trois options honnêtes : (a) qwen3:8b pour le passage
   global malgré le seuil non atteint, avec sondage humain renforcé sur les montants ; (b) un troisième tour pour gagner
   les points manquants (contexte réduit pour tenir en mémoire graphique et éviter les délais dépassés, relance des
@@ -109,10 +149,17 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
 - Règle d'exploitation d'Ollama : un seul travail à la fois sur le modèle ; ne pas lancer un autre modèle
   (Qwen 27B) ni un calcul lourd sur le processeur pendant un passage.
 
+- **Extraction locale globale** (2026-10-13 soir, changement `extraction-locale-globale`). Décision de Monsieur DUCOUT :
+  extraire les pages des 242 rubriques validées avec `qwen3:8b`, zéro euro, fiches marquées « à vérifier », risque de
+  l'échantillon accepté. Outil `scraping/extraction_locale.py` (`--collecter`, `--extraire`, `--bilan`), import avec
+  étiquette `a-verifier`, badge « À vérifier » dans l'application. 2 395 adresses web uniques ; 25 à 40 heures de
+  calcul prévues par nuits, reprise automatique ; import par lots. Avancement : `extraction_locale.py --bilan`.
+
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
-"Lis REPRISE.md. Donne-moi le bilan de mes verdicts dans results/validation_manuelle.json s'il y en a, puis le récapitulatif
-d'ECHANTILLON.md et les trois options pour le moteur, et attends ma décision."
+"Lis REPRISE.md. Donne-moi le bilan de mes verdicts dans results/validation_pages.json et results/validation_liens.json
+(sources vérifiées, pas de supposition), puis ce qui reste à décider (vérification 2.1 de l'outil, grille de critères,
+moteur d'extraction 3.2), et attends."
 
 ## Commandes utiles (depuis `AAP/scraping`, environnement `../.venv`)
 
@@ -121,5 +168,8 @@ d'ECHANTILLON.md et les trois options pour le moteur, et attends ma décision."
 ../.venv/Scripts/python qualification.py --qualifier      # reprend où il s'est arrêté
 ../.venv/Scripts/python qualification.py --registre --rapport
 ../.venv/Scripts/python echantillon.py --extraire --moteur ollama
+../.venv/Scripts/python extraction_locale.py --bilan                        # avancement du passage local
+../.venv/Scripts/python extraction_locale.py --extraire --modele qwen3:8b   # reprend où il s'est arrêté
+../.venv/Scripts/python ../scripts/import_to_firestore.py --source extraction_locale   # depuis AAP/, import d'un lot
 openspec validate <changement> ; openspec archive <changement> --yes
 ```

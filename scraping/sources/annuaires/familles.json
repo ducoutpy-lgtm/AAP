@@ -1,0 +1,233 @@
+{
+ "_note": "Inventaire validé par Monsieur DUCOUT le 2026-10-13 ; total null = couverture non mesurée ; vague 0 = déjà couverte, à rapprocher ; les totaux sans date sont des estimations à confirmer sur l'annuaire.",
+ "familles": [
+  {
+   "famille": "Fondations reconnues d'utilité publique et d'entreprise (santé-social)",
+   "categorie_registre": "fondation",
+   "annuaire": "Registre national des fonds et fondations (RNF), ministère de l'Intérieur",
+   "adresse": "https://www.data.gouv.fr/datasets/fichiers-relatifs-aux-registre-national-des-fonds-et-fondations-rnf",
+   "date": "2026-10-01",
+   "total": 664,
+   "vague": 1,
+   "extrait": "sources/annuaires/rnf_fondations_sante_social.csv"
+  },
+  {
+   "famille": "Fonds de dotation (santé-social)",
+   "categorie_registre": "fondation",
+   "annuaire": "RNF",
+   "adresse": "https://www.data.gouv.fr/datasets/fichiers-relatifs-aux-registre-national-des-fonds-et-fondations-rnf",
+   "date": "2026-10-01",
+   "total": 2661,
+   "vague": 2
+  },
+  {
+   "famille": "Fondations abritées",
+   "categorie_registre": "fondation",
+   "annuaire": "Annuaire des fondations abritées de la Fondation de France, puis autres abritantes",
+   "adresse": "https://www.fondationdefrance.org/fr/annuaire-des-fondations",
+   "date": null,
+   "total": null,
+   "vague": 2
+  },
+  {
+   "famille": "Agrégateurs et relais (UDAF, Admical, appelsaprojets.org, Centre français des fonds et fondations, Aides-territoires)",
+   "categorie_registre": "autre",
+   "annuaire": "liste fixe ; UDAF : page d'accueil de l'UNAF (96 sites)",
+   "adresse": "https://www.unaf.fr/",
+   "date": "2026-10-13",
+   "total": 105,
+   "vague": 2
+  },
+  {
+   "famille": "Agences nationales de santé et de recherche",
+   "categorie_registre": "agence-nationale",
+   "annuaire": "liste fixe vérifiée sur l'annuaire de l'administration (DILA)",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": null,
+   "total": 25,
+   "vague": 3
+  },
+  {
+   "famille": "Ministères et programmes nationaux",
+   "categorie_registre": "ministere",
+   "annuaire": "liste fixe",
+   "adresse": null,
+   "date": null,
+   "total": 12,
+   "vague": 3
+  },
+  {
+   "famille": "ARS",
+   "categorie_registre": "ars",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": "2026-10-09",
+   "total": 18,
+   "vague": 0
+  },
+  {
+   "famille": "Sécurité sociale (CPAM, CAF, Carsat, MSA, caisses nationales)",
+   "categorie_registre": "caisse-nationale",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": "2026-10-09",
+   "total": 256,
+   "vague": 0
+  },
+  {
+   "famille": "Conférences des financeurs de la prévention de la perte d'autonomie",
+   "categorie_registre": "collectivite",
+   "annuaire": "une par département (départements et ARS)",
+   "adresse": null,
+   "date": null,
+   "total": 101,
+   "vague": 3
+  },
+  {
+   "famille": "Prévoyance, retraite complémentaire, groupes de protection sociale",
+   "categorie_registre": "autre",
+   "annuaire": "listes CTIP et Agirc-Arrco",
+   "adresse": "https://ctip.asso.fr/",
+   "date": null,
+   "total": 40,
+   "vague": 3
+  },
+  {
+   "famille": "Mutuelles",
+   "categorie_registre": "autre",
+   "annuaire": "liste ACPR des organismes agréés, Mutualité Française",
+   "adresse": "https://acpr.banque-france.fr/",
+   "date": null,
+   "total": null,
+   "vague": 3
+  },
+  {
+   "famille": "Régions",
+   "categorie_registre": "collectivite",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": null,
+   "total": 18,
+   "vague": 3
+  },
+  {
+   "famille": "Départements",
+   "categorie_registre": "collectivite",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": "2026-10-09",
+   "total": 101,
+   "vague": 0
+  },
+  {
+   "famille": "Métropoles, communautés urbaines, grandes villes et CCAS",
+   "categorie_registre": "collectivite",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": null,
+   "total": 77,
+   "vague": 3
+  },
+  {
+   "famille": "État déconcentré (préfectures, DREETS, DDETS, DRAJES, DRAC, rectorats)",
+   "categorie_registre": "ministere",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": "2026-10-09",
+   "total": 241,
+   "vague": 3
+  },
+  {
+   "famille": "Europe (EU4Health, Horizon Europe, FSE+, FEDER, Interreg, Erasmus+)",
+   "categorie_registre": "europe",
+   "annuaire": "portail Funding and Tenders",
+   "adresse": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/",
+   "date": null,
+   "total": 12,
+   "vague": 3
+  },
+  {
+   "famille": "Sociétés savantes et conseils nationaux professionnels",
+   "categorie_registre": "societe-savante",
+   "annuaire": "Fédération des spécialités médicales",
+   "adresse": "https://www.specialitesmedicales.org/",
+   "date": null,
+   "total": 47,
+   "vague": 3
+  },
+  {
+   "famille": "Fédérations et associations nationales qui financent",
+   "categorie_registre": "societe-savante",
+   "annuaire": "liste fixe",
+   "adresse": null,
+   "date": null,
+   "total": 40,
+   "vague": 3
+  },
+  {
+   "famille": "Recherche (cancéropôles, GIRCI, instituts Carnot santé, IHU, EIT Health)",
+   "categorie_registre": "agence-nationale",
+   "annuaire": "listes fixes",
+   "adresse": null,
+   "date": null,
+   "total": 37,
+   "vague": 3
+  },
+  {
+   "famille": "URPS et ordres professionnels",
+   "categorie_registre": "autre",
+   "annuaire": "fédérations nationales des URPS",
+   "adresse": null,
+   "date": null,
+   "total": 170,
+   "vague": 4
+  },
+  {
+   "famille": "Fonds de formation (OPCO Santé, Uniformation, ANFH)",
+   "categorie_registre": "autre",
+   "annuaire": "liste fixe",
+   "adresse": null,
+   "date": null,
+   "total": 3,
+   "vague": 3
+  },
+  {
+   "famille": "Banques coopératives à mécénat régional",
+   "categorie_registre": "fondation",
+   "annuaire": "listes des groupes ; fondations dans le RNF",
+   "adresse": null,
+   "date": null,
+   "total": 86,
+   "vague": 2
+  },
+  {
+   "famille": "Collectivités à statut particulier et outre-mer",
+   "categorie_registre": "collectivite",
+   "annuaire": "DILA",
+   "adresse": "https://lannuaire.service-public.fr/",
+   "date": null,
+   "total": 6,
+   "vague": 3
+  },
+  {
+   "famille": "Préfectures de région (SGAR) : politique de la ville, cohésion sociale",
+   "categorie_registre": "ministere",
+   "annuaire": "prefectures-regions.gouv.fr (une page par région)",
+   "adresse": "https://www.prefectures-regions.gouv.fr/",
+   "date": "2026-10-13",
+   "total": 13,
+   "vague": 3,
+   "note": "Ajoutée le 2026-10-13 à la demande de Monsieur DUCOUT (Île-de-France). Le site refuse les requêtes simples (code 403) : passer par le navigateur piloté."
+  },
+  {
+   "famille": "PLIE (plans locaux pour l'insertion et l'emploi) et organismes intermédiaires FSE+",
+   "categorie_registre": "collectivite",
+   "annuaire": "liste des appels à projets du programme national FSE+ (fse.gouv.fr, filtre priorité 1 et zone) ; l'annuaire du réseau Alliance Villes Emploi est réservé aux adhérents ; la DGEFP comptait en 2022 17 PLIE ou regroupements de PLIE parmi 115 organismes intermédiaires",
+   "adresse": "https://fse.gouv.fr/les-appels-a-projets",
+   "date": "2026-10-13",
+   "total": 17,
+   "vague": 3,
+   "note": "Demande de Monsieur DUCOUT du 2026-10-13 (« regarde le PLIE aussi »). Les appels des PLIE passent par le FSE+ : la source fse-france (page jugée bonne à l'écran) les recense ; la découverte devra en extraire les appels dont l'émetteur est un PLIE plutôt que chercher 150 sites de PLIE un par un. Total = organismes intermédiaires PLIE (2022), non vérifié pour 2026."
+  }
+ ]
+}

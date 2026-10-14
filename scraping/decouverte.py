@@ -190,7 +190,7 @@ async def ouvrir(page, url: str) -> tuple[int | None, str | None]:
         return None, type(err).__name__ + ": " + str(err).splitlines()[0][:160]
 
 
-async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore) -> dict:
+async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, garder_depart: bool = False) -> dict:
     resultat = {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": source["url_aap"],
                 "statut": "erreur", "url_rubrique": None, "nb_liens_aap": 0, "candidats_visites": [], "erreur": None,
                 "date": utc_now_iso()}
@@ -207,7 +207,9 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore) ->
             await accept_cookies(page)
             base = page.url.split("#")[0]
             pages = [await lire_page(page)]
-            for url in candidats(pages[0][1], base):
+            # garder_depart : adresse donnée par Monsieur DUCOUT à l'écran (spec decouverte-rubriques-aap,
+            # « Redécouverte d'une source corrigée ») ; on ne cherche pas une autre page, on relit celle-là.
+            for url in ([] if garder_depart else candidats(pages[0][1], base)):
                 await asyncio.sleep(1.0)
                 code, erreur = await ouvrir(page, url)
                 if erreur or code is None or code >= 400:
@@ -233,18 +235,18 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore) ->
             await contexte.close()
 
 
-async def avec_delai_maximal(browser, source: dict, semaphore: asyncio.Semaphore, maximum: float = 180.0) -> dict:
+async def avec_delai_maximal(browser, source: dict, semaphore: asyncio.Semaphore, maximum: float = 180.0, garder_depart: bool = False) -> dict:
     """Garde-fou : une source ne peut pas bloquer le passage plus de 3 minutes (page qui ne finit
     jamais de charger, fermeture de contexte qui pend)."""
     try:
-        return await asyncio.wait_for(traiter_source(browser, source, semaphore), timeout=maximum)
+        return await asyncio.wait_for(traiter_source(browser, source, semaphore, garder_depart), timeout=maximum)
     except asyncio.TimeoutError:
         return {"id": source["id"], "nom": source["nom"], "categorie": source["categorie"], "url_depart": source["url_aap"],
                 "statut": "erreur", "url_rubrique": None, "nb_liens_aap": 0, "candidats_visites": [],
                 "erreur": f"délai maximal de {int(maximum)} s dépassé", "date": utc_now_iso()}
 
 
-async def lancer(sources: list[dict], parallele: int) -> None:
+async def lancer(sources: list[dict], parallele: int, garder_depart: bool = False) -> None:
     from playwright.async_api import async_playwright
 
     resultats = charger_resultats()
@@ -254,7 +256,7 @@ async def lancer(sources: list[dict], parallele: int) -> None:
         # pilote (ERR_HTTP2_PROTOCOL_ERROR sur 99 sources le 2026-10-09) ; en HTTP/1.1 ils repondent.
         browser = await p.chromium.launch(headless=True, args=["--disable-http2"])
         try:
-            taches = [asyncio.create_task(avec_delai_maximal(browser, s, semaphore)) for s in sources]
+            taches = [asyncio.create_task(avec_delai_maximal(browser, s, semaphore, garder_depart=garder_depart)) for s in sources]
             for i, tache in enumerate(asyncio.as_completed(taches), 1):
                 r = await tache
                 resultats[r["id"]] = r
@@ -306,6 +308,8 @@ def main() -> int:
     parser.add_argument("--parallele", type=int, default=4, help="pages ouvertes en parallèle (défaut 4)")
     parser.add_argument("--forcer", action="store_true", help="retraiter les sources déjà faites")
     parser.add_argument("--rapport", action="store_true", help="écrire DECOUVERTE.md et s'arrêter")
+    parser.add_argument("--garder-depart", action="store_true",
+                        help="garder la page de départ comme rubrique sans visiter d'autres candidats (adresse donnée à l'écran)")
     args = parser.parse_args()
 
     registre = json.loads(REGISTRE.read_text(encoding="utf-8"))
@@ -329,7 +333,7 @@ def main() -> int:
         print("Rien à traiter (tout est déjà fait ; --forcer pour recommencer).")
         return 0
     print(f"{len(sources)} sources à traiter, {args.parallele} en parallèle.")
-    asyncio.run(lancer(sources, args.parallele))
+    asyncio.run(lancer(sources, args.parallele, args.garder_depart))
     return 0
 
 

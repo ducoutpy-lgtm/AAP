@@ -4,6 +4,71 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (extraction locale globale, 2026-10-13 soir)
+- `extraction_locale.py` (changement `extraction-locale-globale`, décision de Monsieur DUCOUT : modèle local, zéro euro,
+  fiches à vérifier) : `--collecter` (texte de chaque lien web des 242 rubriques validées, une adresse une fois,
+  2 395 adresses uniques), `--extraire --modele qwen3:8b` (chaîne de l'échantillon, sortie
+  `results/extraction_locale.json` avec `a_verifier`, reprise), `--bilan`. `echantillon.extraire` accepte un chemin de
+  sortie et des métadonnées ajoutées. Tests `tests/test_extraction_locale.py`.
+- Import : étiquette `a-verifier` sur les fiches du modèle local ; application : badge « À vérifier » dans la liste et
+  la fiche.
+
+### Ajouté (verdicts et registre, 2026-10-13 nuit)
+- `validation.py --appliquer-pages` (changement `recherche-page-aap-par-source`) : report des 257 verdicts du mode
+  « pages » dans `sources/relecture_qualification.json` (relecteur « Monsieur DUCOUT, validation à l'écran ») et dans le
+  registre : 64 sources confirmées, 50 adresses corrigées, 10 à retrouver, 18 hors champ ; fonction pure
+  `appliquer_verdicts_pages`, test. Après `qualification.py --registre --rapport` : 242 rubriques confirmées, 18 hors santé.
+- `decouverte.py --garder-depart` : la page de départ est gardée telle quelle (adresse donnée à l'écran), sans visite
+  d'autres candidats. Redécouverte des 50 sources corrigées : 39 pages rafraîchies, 11 sans lien d'appel repéré
+  (la page donnée est elle-même l'appel ou un formulaire) ; le navigateur piloté dépasse le délai après une trentaine de
+  sources, d'où trois passages.
+- Vague 1 des fondations terminée : 445 fondations traitées par la recherche web de la session (165 sites inscrits,
+  271 sans site dont 62 hors champ non cherchées, 9 rapprochées d'entrées existantes), 65 entrées de plus au registre
+  (1 198 sources), couverture 365 / 664 ; 22 adresses plausibles à resonder.
+- Famille « PLIE et organismes intermédiaires FSE+ » dans `sources/annuaires/familles.json` (annuaire : liste des appels
+  FSE+ de fse.gouv.fr), à la demande de Monsieur DUCOUT.
+
+### Ajouté (registre, 2026-10-13 soir)
+- Vague 1, suite : recherche web de la session pour 203 fondations (journal `results/recherche_sites.jsonl`, `moteur: session`,
+  note par fondation), 100 sites inscrits et intégrés (1 123 sources), 8 rapprochements manuels avec des entrées existantes (7 de la session, 1 de la vague Tavily),
+  un doublon supprimé (`fondation-avenir-recherche-medicale-appliquee`), couverture 298 / 664.
+- Sources `fimeco-walter-allinial-aap-digital-et-numerique` et `fimeco-walter-allinial-aap-sante-maladie-et-handicap`
+  (agrégateur d'AAP tenu par un cabinet comptable), ajoutées à la demande de Monsieur DUCOUT.
+- Veille mensuelle des AAP de l'URIOPSS PACA-Corse (PDF SharePoint du 2026-10-01, 82 appels, 32 financeurs) transmise par
+  Monsieur DUCOUT : lien noté sur `uriopss-paca-corse`, 21 financeurs déjà au registre, 10 ajoutés (FAPE EDF, Fondation
+  RAJA-Marcovici, fonds A2micile, France Active PACA, Pépinière d'avenirs, Silver Valley, ministère des Sports, ASP fonds
+  accessibilité, fonds IMPACT Electro Dépôt, ANDES) ; 1 133 sources.
+
+### Ajouté (registre, 2026-10-13)
+- `registre.py --tableau` : tableau « Couverture par famille » en tête de `REGISTRE_SOURCES.md` (entrées rapprochées de l'annuaire /
+  total, ou « couverture non mesurée »), lu dans `sources/annuaires/familles.json`.
+- Vague 1 des fondations : `annuaires.py --chercher N` (recherche Tavily, `recherche_web.py`, sélection du site par règles et
+  vérification de la page) et `--integrer` : 172 fondations créées au registre (1 022 sources), couverture 191 / 664.
+- Sources `prefecture-region-ile-de-france-politique-de-la-ville` (page refusant les requêtes simples, code 403, statut
+  identifiée) et `ditp-modernisation-gouv-appels-a-projet` (page vérifiée), ajoutées à la demande de Monsieur DUCOUT ; 850 sources.
+- Vague 1 des fondations (`annuaires.py --rapprocher`, `--sites`, `--integrer`) : 19 correspondances sûres, 35 douteuses
+  tranchées « organismes à part », 16 sites trouvés et vérifiés par recherche web de la session au 2026-10-13 (630 restants).
+- `annuaires.py --rnf` : extrait versionné du Registre national des fonds et fondations (vague 1 : 664 fondations RUP et
+  d'entreprise actives à domaine santé-social, sur 4 072 actives), colonnes « site trouvé » et « identifiant du registre » à
+  remplir sans rien deviner. Tests `tests/test_annuaires.py`.
+- Source `udaf-91-essonne` (UDAF de l'Essonne, page « Appels à projets » : relais de 20 appels pour ses associations,
+  dont aidants, santé mentale, handicap), ajoutée à la demande de Monsieur DUCOUT ; 848 sources. Famille UDAF à étudier :
+  la page d'accueil de l'UNAF liste 96 sites d'UDAF.
+- Source `fondation-credit-mutuel-alliance-federale` : adresse corrigée vers le site propre de la fondation (elle pointait sur
+  la liste des fondations abritées de la Fondation de France) ; découverte et qualification à relancer sur la bonne page.
+
+### Ajouté (validation manuelle, changement `validation-manuelle-aap`, 2026-10-13)
+- `validation.py` : serveur local de validation humaine, trois modes (`--pages` : page gardée de chaque rubrique
+  confirmée ; `--liens` avec `--echantillon N` et `--source` : liens repérés ; fiches extraites par défaut), page
+  officielle dans une fenêtre séparée ou un cadre, texte de la page lu par le serveur, commentaire enregistré par
+  Entrée, verdicts écrits à chaque clic dans `results/validation_pages.json`, `validation_liens.json` ou
+  `validation_manuelle.json`, reprise au premier élément non jugé, liens cassés écartés. Lanceurs
+  `validation_pages.cmd` et `validation_manuelle.cmd`. Tests `tests/test_validation.py`.
+- `validation.py --pages --verdicts <liste>` : relecture des sources exclues par la qualification (hors santé, à vérifier,
+  sans AAP, PDF seulement : 115 pages gardées, 577 sources sans page ignorées), verdict actuel et motif affichés,
+  verdict « des appels, mais jamais santé ni médico-social ». Lanceur `validation_exclues.cmd`. Demande de Monsieur DUCOUT
+  après le cas Bpifrance (exclue sur ses appels du jour).
+
 ### Ajouté (second tour d'extraction Ollama avec seuil, 2026-10-13)
 - `echantillon.py` : question fermée « fiche d'un appel à projets ? » avant extraction (pages refusées gardées avec la
   raison), contrôle strict des formats avec seconde demande au modèle puis champ mis à null et marque `a_relire`, fichier

@@ -13,6 +13,7 @@ que l'outil tourne sans l'environnement complet du scraping.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
 import time
@@ -130,11 +131,37 @@ def decompte(sources: list[dict]) -> str:
     return f"{len(sources)} sources : " + ", ".join(parts)
 
 
+def couverture(sources: list[dict], dossier: Path = ICI / "sources" / "annuaires") -> list[str]:
+    """Une ligne par famille d'émetteurs : entrées du registre rapprochées de l'annuaire / total de l'annuaire.
+
+    Pourquoi (changement registre-par-annuaires) : sans dénominateur, on ne sait pas ce qui manque. Le taux n'est
+    mesuré que pour les familles qui ont un extrait d'annuaire rapproché (colonne id_registre) ; les autres affichent
+    « couverture non mesurée ».
+    """
+    fichier = dossier / "familles.json"
+    if not fichier.exists():
+        return []
+    familles = json.loads(fichier.read_text(encoding="utf-8"))["familles"]
+    ids = {s["id"] for s in sources}
+    lignes = ["## Couverture par famille (annuaires de référence)", "", "| Famille | Couverture | Annuaire |", "|---|---|---|"]
+    for f in familles:
+        extrait = f.get("extrait")
+        if extrait and (ICI / extrait).exists() and f.get("total"):
+            with (ICI / extrait).open(encoding="utf-8", newline="") as fe:
+                n = sum(1 for l in csv.DictReader(fe, delimiter=";") if l.get("id_registre") in ids)
+            mesure = f"{n} / {f['total']} ({100 * n // f['total']} %)"
+        else:
+            mesure = "couverture non mesurée" + (f" (total estimé {f['total']})" if f.get("total") else "")
+        annuaire = f["annuaire"] + (f", {f['date']}" if f.get("date") else "")
+        lignes.append(f"| {f['famille']} | {mesure} | {annuaire} |")
+    return lignes + [""]
+
+
 def tableau(sources: list[dict], aujourdhui: str) -> str:
     lignes = ["# Registre des sources d'appels à projets", "",
               f"Généré le {aujourdhui} par `python scraping/registre.py --tableau` à partir de",
               "`scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).", "",
-              f"**{decompte(sources)}.**", ""]
+              f"**{decompte(sources)}.**", ""] + couverture(sources)
     for categorie in CATEGORIES:
         groupe = [s for s in sources if s["categorie"] == categorie]
         if not groupe:

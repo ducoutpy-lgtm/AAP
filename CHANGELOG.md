@@ -6,6 +6,25 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Extraction locale globale (changement `extraction-locale-globale`, 2026-10-13 soir) : `scraping/extraction_locale.py`
+  extrait avec `qwen3:8b` les pages des 242 rubriques validées (2 395 adresses web uniques), fiches marquées
+  « à vérifier » ; l'import pose l'étiquette `a-verifier` et l'application affiche le badge « À vérifier ».
+- Verdicts de Monsieur DUCOUT sur les 257 pages reportés au registre (`validation.py --appliquer-pages`, changement
+  `recherche-page-aap-par-source`), 50 adresses corrigées et redécouvertes (`decouverte.py --garder-depart`) ; vague 1 des
+  fondations terminée (365 / 664, 1 198 sources) ; famille PLIE ajoutée à l'inventaire.
+- Registre : vague 1 poursuivie par la recherche web de la session (203 fondations, 100 sites inscrits), 1 123 sources,
+  couverture 298 / 664 ; agrégateur Fimeco Walter Allinial ajouté (deux pages) ; veille URIOPSS PACA-Corse exploitée
+  (10 financeurs ajoutés, 1 133 sources).
+- Registre : 172 fondations de la vague 1 créées (1 022 sources), couverture mesurée 191 / 664 en tête de `REGISTRE_SOURCES.md` ;
+  recherche des sites par l'API Tavily (clés du projet Scrapling, limite de plan atteinte après 191).
+- Changement OpenSpec `registre-par-annuaires` (2026-10-13) : familles d'émetteurs adossées à des annuaires de référence avec taux de
+  couverture ; première vague = 664 fondations reconnues d'utilité publique et d'entreprise à domaine santé-social, extraites du
+  Registre national des fonds et fondations (`scraping/annuaires.py`, `scraping/sources/annuaires/`).
+- Registre : source UDAF de l'Essonne ajoutée (848 sources) ; famille UDAF (96 sites listés par l'UNAF) à étudier.
+- Outil de validation manuelle des pages et des liens dans le navigateur de Monsieur DUCOUT (changement OpenSpec
+  `validation-manuelle-aap`, 2026-10-13, vérification 2.1 par Monsieur DUCOUT en attente) ; brouillon de changement
+  `recherche-page-aap-par-source` (recherche web de la page des appels de chaque source). Règle « Preuve avant
+  affirmation » ajoutée dans `CLAUDE.md`. Feuille de route : étape 2 repassée « à valider à la main ».
 - Second tour d'extraction par le modèle local (changement OpenSpec `extraction-ollama-second-tour`, 2026-10-13, en
   attente de la décision de Monsieur DUCOUT) : question fermée avant extraction, contrôle des formats, contrôle
   automatique contre les fiches de référence, seuil de décision. Résultat : mistral 7b 15 fiches justes sur 23 et
