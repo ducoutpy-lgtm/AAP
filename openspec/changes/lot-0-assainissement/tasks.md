@@ -142,6 +142,15 @@ clôture en attente », qui n'entrera dans `openspec/specs/` qu'à l'archivage d
   atteint » ; `ECHANTILLON.md` : « api_claude-haiku-5-5 | 16 | 16 | 14 | 1 | 122 s | 0.02 euros » ; journal : 56 appels,
   97 124 tokens d'entrée, 26 801 de sortie, 0,0237 USD soit 0,022 euro. Le maximum atteignable est 19 justes tant que
   les 5 textes FIRAH manquent.)
+- [x] 6.4 Lecture par adresse (accord de Monsieur DUCOUT du 2026-10-14) : `fiches_par_adresse` dans `echantillon.py`
+  (toutes les rubriques découvertes, un texte par adresse), test, scénario ajouté à la spec ; puis les 5 textes FIRAH
+  (`--extraire --moteur api --modele claude-haiku-5-5`, reprise, environ 0,003 euro), `--controler`, `--rapport`.
+  Fait quand : « 45 textes de l'échantillon (40 déjà traités) » affiché, 0 adresse non traitée, contrôle et coût collés.
+  (Fait le 2026-10-14 : pytest scraping 55 verts ; « 45 textes de l'échantillon (40 déjà traités) » ; « 24 pages
+  refusées, 21 réussites (5 nouvelles), 0 échecs ; coût cumulé de claude-haiku-5-5 : 0.028 euros » ; contrôle :
+  « 20 fiches comparées à la référence : 19 justes sur les quatre champs ; 1 fabriquées à tort ; 0 sans référence ;
+  seuil non atteint (au moins 20 justes, au plus 2 fabriquées) » ; `ECHANTILLON.md` : « api_claude-haiku-5-5 | 21 | 21 |
+  19 | 1 | 157 s | 0.03 euros » ; `openspec validate` valide.)
 
 ## 7. Documentation
 

@@ -174,8 +174,10 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   (`npm run test:rules`, JDK 21) et déployées le 2026-10-14 après accord, moteur `api` de l'échantillon sous plafond
   (`echantillon.py --moteur api`), 141 échéances fictives passées à `null` par Monsieur DUCOUT depuis son terminal le
   2026-10-14 (contrôle « 141 deja a null » ; le classificateur de sécurité de Claude Code avait refusé la mise à jour
-  groupée à la session). Mesure API faite le 2026-10-14 après accord : `claude-haiku-5-5`, 40 textes, 14 justes et 1 fabriquée sur 15 comparées,
-  4 pages de référence refusées à tort, seuil non atteint, coût réel 0,02 euro (`scraping/ECHANTILLON.md`). Constat hors
+  groupée à la session). Mesure API faite le 2026-10-14 après accord : `claude-haiku-5-5`, 45 textes (lecture par adresse), 19 justes et
+  1 fabriquée sur 20 comparées, 4 pages de référence refusées à tort, seuil 20/2 manqué d'une fiche, coût réel 0,03 euro
+  (`scraping/ECHANTILLON.md`). Demande de Monsieur DUCOUT : comparaison local / Haiku sur 50 pages chacun, à cadrer
+  après le lot 0 dans un changement OpenSpec dédié (section 8 du rapport). Constat hors
   lot 0 consigné dans la section 8 du rapport : les filtres territoire, secteur et budget de `/aap/search` ne
   correspondent pas aux valeurs importées (libellés contre identifiants), proposition pour le lot 1 à valider.
   État détaillé : `openspec/changes/lot-0-assainissement/tasks.md`.

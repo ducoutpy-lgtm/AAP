@@ -12,7 +12,7 @@ Seuil fixé par Monsieur DUCOUT (2026-10-13) pour retenir un modèle local : au 
 | claude_code | 24 | 24 | 24 | 0 | 0 s | 0 euro | seuil atteint |
 | ollama_mistral-7b-instruct | 36 | 36 | 15 | 13 | 1194 s | 0 euro | seuil non atteint |
 | ollama_qwen3-8b | 22 | 22 | 16 | 1 | 1509 s | 0 euro | seuil non atteint |
-| api_claude-haiku-5-5 | 16 | 16 | 14 | 1 | 122 s | 0.02 euros (journal des coûts) | seuil non atteint |
+| api_claude-haiku-5-5 | 21 | 21 | 19 | 1 | 157 s | 0.03 euros (journal des coûts) | seuil non atteint |
 | api_anthropic (estimation, aucun appel) | 480 | - | - | - | - | 12.61 euros (90.5 euros pour 3446 liens) | - |
 
 Pages lues par la session et jugées hors sujet (liste, présentation, page sans rapport) : 21. Le moteur Ollama, lui, produit une fiche pour chaque page, y compris celles-là : voir la colonne « hors sujet » ci-dessous.
@@ -41,11 +41,11 @@ T = titre, F = financeur, D = date de clôture, M = montant ; oui / non / vide =
 | fhf-hauts-de-france-appels-a-projets | [page](https://www.fhf-hdf.fr/2026/06/03/appel-a-projets-2026-vers-un-hopital-alzheimer-friendly-20-septembre-2026/) |  | oui oui non oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
 | fhf-hauts-de-france-appels-a-projets | [page](https://www.fhf-hdf.fr/2026/06/09/aap-fondation-des-hopitaux-2026-ameliorer-le-quotidien-des-personnes-agees-24-septembre/) |  | oui oui non oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
 | fhf-hauts-de-france-appels-a-projets | [page](https://www.fhf-hdf.fr/2026/09/08/aac-prix-qualite-2026-de-lars-hauts-de-france-8-novembre-2026/) |  | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
-| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2021.html) |  | oui oui non non | oui oui oui oui | oui oui oui oui | oui oui oui oui | non produite ou non contrôlée |
-| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2022.html) |  | oui oui oui non | oui oui oui oui | oui oui oui oui | oui oui oui oui | non produite ou non contrôlée |
-| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2023.html) |  | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | non produite ou non contrôlée |
-| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2024.html) |  | oui oui oui non | oui oui oui oui | oui oui oui oui | non produite ou non contrôlée | non produite ou non contrôlée |
-| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2025.html) |  | oui oui non oui | oui oui oui oui | oui oui non oui | oui oui oui oui | non produite ou non contrôlée |
+| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2021.html) |  | oui oui non non | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
+| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2022.html) |  | oui oui oui non | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
+| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2023.html) |  | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
+| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2024.html) |  | oui oui oui non | oui oui oui oui | oui oui oui oui | non produite ou non contrôlée | oui oui oui oui |
+| firah | [page](https://www.firah.org/fr/appel-a-projets-general-2025.html) |  | oui oui non oui | oui oui oui oui | oui oui non oui | oui oui oui oui | oui oui oui oui |
 | region-ile-de-france-aides-et-appels-a-projets | [page](https://www.iledefrance.fr/aides-et-appels-a-projets/appel-candidature-au-label-patrimoine-dinteret-regional-en-faveur-du-patrimoine-non-protege) |  | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui | oui oui oui oui |
 | region-ile-de-france-aides-et-appels-a-projets | [page](https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A241) | oui | non non non non | non produite ou non contrôlée | non non non non | non produite ou non contrôlée | non produite ou non contrôlée |
 | region-ile-de-france-aides-et-appels-a-projets | [page](https://www.iledefrance.fr/aides-et-appels-a-projets?f%5B0%5D=public%3A244) | oui | non non non non | non produite ou non contrôlée | non non non non | non produite ou non contrôlée | non produite ou non contrôlée |

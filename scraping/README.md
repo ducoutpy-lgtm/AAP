@@ -274,9 +274,10 @@ vérifiés le 2026-10-14 sur la page officielle), arrêt automatique avant l'app
 défaut, cumulé sur toutes les exécutions du modèle), clé lue dans `scraping/.env`. Aucun appel sans l'accord écrit de
 Monsieur DUCOUT. Ensuite `--controler --moteur api --modele claude-haiku-5-5` puis `--rapport` (colonne Coût lue dans
 le journal). Prérequis : `anthropic` et `python-dotenv` installés dans `.venv` (`scraping/requirements.txt`). Mesure faite
-le 2026-10-14 (ligne `api_claude-haiku-5-5` de `ECHANTILLON.md`) : 40 textes traités, 16 fiches, 14 justes sur 15 comparées,
-1 fabriquée, 4 pages de référence refusées à tort à la question fermée, seuil non atteint, coût réel 0,02 euro ; une relance
-de la commande reprend sans refaire les textes déjà traités.
+le 2026-10-14 (ligne `api_claude-haiku-5-5` de `ECHANTILLON.md`) : 45 textes, 21 fiches, 19 justes sur 20 comparées,
+1 fabriquée, 4 pages de référence refusées à tort à la question fermée, seuil manqué d'une fiche, coût réel 0,03 euro. Les
+textes sont trouvés par adresse dans toutes les rubriques découvertes (`fiches_par_adresse`), sans dépendre de la rubrique
+retenue par famille ; une relance de la commande reprend sans refaire les textes déjà traités.
 
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 

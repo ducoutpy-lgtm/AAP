@@ -159,3 +159,17 @@ def test_tarifs_par_modele_dans_extractor():
     assert extractor.cout_usd("claude-sonnet-4-6", 1_000_000, 1_000_000) == 18.0
     with pytest.raises(ValueError, match="tarif inconnu"):
         extractor.cout_usd("modele-sans-tarif", 1, 1)
+
+
+def test_fiches_par_adresse_lit_toutes_les_rubriques_sans_doublon(tmp_path, monkeypatch):
+    # Lot 0 (2026-10-14) : les cinq textes FIRAH n'étaient plus lus parce que la rubrique n'était plus retenue par
+    # famille ; les textes de l'échantillon sont désormais trouvés par adresse, un texte par adresse.
+    monkeypatch.setattr(echantillon, "DOSSIER", tmp_path)
+    for rubrique, nom, url in [("a", "1", "https://x/aap-1"), ("b", "2", "https://x/aap-2"),
+                               ("b", "3", "https://x/hors-echantillon"), ("b", "4", "https://x/aap-1")]:
+        dossier = tmp_path / rubrique / "fiches"
+        dossier.mkdir(parents=True, exist_ok=True)
+        (dossier / f"{nom}.txt").write_text(url + "\ntexte", encoding="utf-8")
+    resultats = {"a": {"id": "a", "nom": "A"}, "b": {"id": "b", "nom": "B"}, "c": {"id": "c", "nom": "sans dossier"}}
+    fiches = echantillon.fiches_par_adresse(resultats, {"https://x/aap-1", "https://x/aap-2"})
+    assert [(r["id"], c.name) for r, c in fiches] == [("a", "1.txt"), ("b", "2.txt")]

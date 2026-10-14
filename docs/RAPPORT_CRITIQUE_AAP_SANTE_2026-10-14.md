@@ -396,14 +396,20 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   de Claude Code ; faite par Monsieur DUCOUT depuis son terminal le 2026-10-14 : « 0 avec une echeance fictive a
   migrer ; 141 deja a null », sauvegarde `scripts/sauvegardes/echeances_2026-10-14_1523.json`). Mesure API
   (instruction 17) : accord donné le 2026-10-14 (fonds disponibles sur le compte Anthropic, budget accepté jusqu'à
-  10 dollars ; plafond du rapport conservé à 5 euros). Résultat : `claude-haiku-5-5`, 40 textes traités pour 45
-  adresses (les 5 textes FIRAH de la référence existent mais la rubrique FIRAH, retombée à 2 liens après sa
-  redécouverte du 13 octobre, n'est plus retenue par la sélection par famille de l'échantillon ; proposition
-  `[À VALIDER — Monsieur DUCOUT]` : lire les textes de l'échantillon par adresse et non par rubrique choisie, puis
-  mesurer les 5 textes manquants, environ 0,003 euro), 16 fiches, 14 justes sur 15 comparées, 1 fabriquée,
-  4 pages de référence refusées à tort à la question fermée (pages présentant un appel clos avec ses résultats,
-  bourses SFMU) ; seuil 20 justes / 2 fabriquées non atteint, le maximum atteignable étant 19 tant que les 5 textes
-  manquent ; coût réel 0,022 euro pour 56 appels (`scraping/ECHANTILLON.md`). Aucun autre appel sans nouvel accord.
+  10 dollars ; plafond du rapport conservé à 5 euros). Résultat : `claude-haiku-5-5`. Première passe : 40 textes
+  traités pour 45 adresses, les 5 textes FIRAH de la référence existant mais leur rubrique, retombée à 2 liens après sa
+  redécouverte du 13 octobre, n'étant plus retenue par la sélection par famille ; 14 justes sur 15 comparées. Sur
+  accord de Monsieur DUCOUT le même jour, l'outil lit désormais les textes de l'échantillon par adresse
+  (`fiches_par_adresse`) et les 5 textes FIRAH ont été mesurés. Résultat final : 45 textes, 21 fiches, 19 justes sur
+  20 comparées, 1 fabriquée, 4 pages de référence refusées à tort à la question fermée (pages présentant un appel clos
+  avec ses résultats, bourses SFMU) ; seuil 20 justes / 2 fabriquées manqué d'une fiche ; coût réel 0,03 euro pour
+  66 appels (`scraping/ECHANTILLON.md`). Aucun autre appel sans nouvel accord.
+- Demande de Monsieur DUCOUT (2026-10-14, après la mesure) : refaire une comparaison entre le modèle local (qwen3:8b)
+  et `claude-haiku-5-5` sur 50 pages chacun, en jugeant à la fois le repérage des appels et la qualité des fiches
+  (pourcentage sur 50 pages). À faire après le lot 0, dans un changement OpenSpec dédié : mêmes 50 pages pour les deux
+  moteurs, verdicts de Monsieur DUCOUT par l'outil de validation, coût estimé avant tout appel (environ 0,03 euro pour
+  Haiku au coût moyen constaté, 0 euro pour le modèle local) et accord écrit. Place dans les lots : à fixer par
+  Monsieur DUCOUT, hors instructions 10 à 25.
 - Question de Monsieur DUCOUT (2026-10-14) : le filtre « Territoire » de `/aap/search` ne renvoie rien pour Corse,
   Île-de-France ou Normandie. Constat vérifié dans le code (`SearchAapPage.tsx`) et dans Firestore (194 fiches
   publiées) : la liste déroulante propose des libellés (« Corse », « Île-de-France », « Normandie », « National »)

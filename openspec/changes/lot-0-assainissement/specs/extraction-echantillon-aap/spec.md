@@ -22,6 +22,18 @@ calculé aux tarifs de ce modèle.
 - **THEN** `ECHANTILLON.md` montre pour ce modèle les fiches justes sur 24, les fiches fabriquées sur 21 pages hors
   sujet, le coût réel lu dans le journal et le verdict « seuil atteint » ou « seuil non atteint »
 
+### Requirement: Lecture des textes de l'échantillon par adresse
+
+Le moteur `api` SHALL trouver les textes de l'échantillon par leur adresse dans toutes les rubriques découvertes, un
+texte par adresse, sans dépendre de la rubrique retenue par famille.
+
+#### Scenario: Rubrique écartée par la sélection par famille
+
+- **WHEN** la rubrique d'un texte de l'échantillon n'est plus celle que la sélection par famille retient (cas FIRAH
+  après la redécouverte du 13 octobre 2026)
+- **THEN** le moteur `api` lit quand même ce texte, et chacune des 45 adresses de l'échantillon dont le fichier existe
+  est traitée une seule fois
+
 ### Requirement: Plafond de dépense et accord préalable
 
 Le moteur `api` SHALL s'arrêter avant l'appel qui ferait dépasser le plafond (5 euros par défaut, cumulé sur toutes

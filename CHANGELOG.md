@@ -14,8 +14,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   verdicts des pages et des liens versionnés dans `scraping/sources/`, mesure d'un modèle API sur l'échantillon
   sous plafond. Verdicts migrés et règles déployées le 2026-10-14 après accord de Monsieur DUCOUT ; 141 échéances
   fictives passées à `null` par Monsieur DUCOUT le 2026-10-14 ; mesure API `claude-haiku-5-5` faite le 2026-10-14 après
-  accord (40 textes, 14 justes et 1 fabriquée sur 15 comparées, seuil non atteint, coût réel 0,02 euro,
-  `scraping/ECHANTILLON.md`).
+  accord (45 textes lus par adresse, 19 justes et 1 fabriquée sur 20 comparées, seuil 20/2 manqué d'une fiche, coût
+  réel 0,03 euro, `scraping/ECHANTILLON.md`).
 - Organisation des données validées (changement `organisation-donnees-validees`, 2026-10-14, suite à
   `docs/AUDIT_DONNEES_2026-10-14.md`) : identifiant Firestore dérivé de l'adresse de l'appel (341 documents
   migrés), décisions humaines (`status`, `validation`) jamais réécrites par l'import, verdicts de

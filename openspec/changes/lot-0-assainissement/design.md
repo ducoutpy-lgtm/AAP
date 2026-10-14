@@ -158,11 +158,14 @@ nouvel accord et dans le même plafond cumulé.
 Résultat (2026-10-14, accord donné, budget accepté jusqu'à 10 dollars, plafond conservé à 5 euros) : 40 textes
 traités pour 45 adresses : les 5 textes FIRAH « appel-a-projets-general » 2021 à 2025 de la référence existent dans
 `decouverte/firah/fiches/` mais la rubrique FIRAH, redécouverte le 13 octobre avec 2 liens d'AAP, n'est plus retenue
-par `choisir_rubriques` (une rubrique par famille, celle qui a le plus de liens : Fondation de France, 20) ; 16 fiches (15 de la référence, 1 page hors sujet extraite à tort, 1 à relire),
-24 refus à la question fermée dont 4 à tort (pages Interreg présentant un appel clos avec ses résultats, bourses
-SFMU) ; contrôle : 14 justes sur 15 comparées, 1 fabriquée, seuil 20/2 non atteint, maximum atteignable 19 tant que
-les textes manquent ; coût réel 0,022 euro pour 56 appels (122 s), soit environ 0,0005 euro par texte. Estimation
-dérivée, non mesurée : environ 2 euros pour les 3 748 liens au même coût moyen par texte.
+par `choisir_rubriques` (une rubrique par famille, celle qui a le plus de liens : Fondation de France, 20) ; 16 fiches, 14 justes sur
+15 comparées à cette première passe. Sur accord de Monsieur DUCOUT le même jour, `fiches_par_adresse` lit les textes de
+l'échantillon par adresse dans toutes les rubriques découvertes et les 5 textes FIRAH ont été mesurés. Résultat final :
+45 textes, 21 fiches (20 de la référence, 1 page hors sujet extraite à tort), 24 refus à la question fermée dont 4 à
+tort (pages Interreg présentant un appel clos avec ses résultats, bourses SFMU) ; contrôle : 19 justes sur 20
+comparées, 1 fabriquée, seuil 20/2 manqué d'une fiche ; coût réel 0,028 euro pour 66 appels (157 s), soit environ
+0,0006 euro par texte. Estimation dérivée, non mesurée : environ 2 euros pour les 3 748 liens au même coût moyen par
+texte.
 
 ### Décision 10 : configuration ESLint absente
 

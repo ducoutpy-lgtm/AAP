@@ -12,8 +12,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   2026-10-14), question fermée `est_un_aap`, champ `etape` dans le journal des coûts ; modèle sans tarif refusé.
 - `echantillon.py` : moteur `api` sur les 45 textes de l'échantillon, plafond de dépense (`--plafond`, 5 euros),
   coût réel dans le rapport ; tests des fonctions pures. Mesure du 2026-10-14 avec `claude-haiku-5-5` : 40 textes
-  traités (les 5 textes FIRAH existent mais leur rubrique n'est plus retenue par la sélection par famille), 16 fiches, 14 justes sur 15 comparées, 1 fabriquée, 4 pages de référence
-  refusées à tort à la question fermée, seuil 20/2 non atteint, 0,02 euro pour 56 appels.
+  traités (les 5 textes FIRAH existent mais leur rubrique n'est plus retenue par la sélection par famille), puis lecture par adresse
+  (`fiches_par_adresse`, toutes les rubriques découvertes, un texte par adresse) et 5 textes FIRAH mesurés : 21 fiches,
+  19 justes sur 20 comparées, 1 fabriquée, 4 pages de référence refusées à tort à la question fermée, seuil 20/2 manqué
+  d'une fiche, 0,03 euro pour 66 appels.
 - Import (`scripts/import_to_firestore.py`) : étiquette `a-verifier` dérivée de `validation.statut`, `validation.par`,
   liste blanche des champs (`ChampInconnu`), `deadline` nulle pour une fiche sans date, écriture extraite en
   `ecrire_documents` testée sur un faux Firestore ; `scripts/migrer_echeances.py`.

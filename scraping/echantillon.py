@@ -409,6 +409,22 @@ def fiches_disponibles(rubriques: list[dict]) -> list[tuple[dict, Path]]:
     return fiches
 
 
+def fiches_par_adresse(resultats: dict, adresses: set[str]) -> list[tuple[dict, Path]]:
+    """Textes de l'échantillon trouvés par adresse dans toutes les rubriques découvertes, un texte par adresse.
+
+    Pourquoi (lot 0, 2026-10-14) : la sélection par famille (choisir_rubriques) a écarté la rubrique FIRAH après sa
+    redécouverte, et cinq textes de référence n'étaient plus lus par la mesure api.
+    """
+    fiches, vues = [], set()
+    for rubrique in resultats.values():
+        for chemin in sorted((DOSSIER / rubrique["id"] / "fiches").glob("*.txt")):
+            adresse = lire_fiche(chemin)[0]
+            if adresse in adresses and adresse not in vues:
+                vues.add(adresse)
+                fiches.append((rubrique, chemin))
+    return fiches
+
+
 def appeler_ollama(modele: str, messages: list[dict], schema: dict) -> dict:
     corps = {"model": modele, "stream": False, "format": schema, "options": {"temperature": 0, "num_ctx": 16384},
              "messages": messages}
@@ -501,7 +517,7 @@ def charger_env() -> None:
             os.environ[cle.strip()] = valeur.strip().strip('"').strip("'")
 
 
-def extraire_api(rubriques: list[dict], modele: str, limite: int | None, plafond: float) -> None:
+def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: float) -> None:
     """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, deux appels par texte, arrêt au plafond.
 
     Même protocole que le modèle local (question fermée puis extraction, contrôle des formats) pour que la comparaison
@@ -513,7 +529,7 @@ def extraire_api(rubriques: list[dict], modele: str, limite: int | None, plafond
     if modele not in extractor.TARIFS_USD_PAR_MTOK:
         raise SystemExit(f"Tarif inconnu pour {modele} : l'ajouter à TARIFS_USD_PAR_MTOK (extractor.py) avant tout appel.")
     adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
-    fiches = [(r, c) for r, c in fiches_disponibles(rubriques) if lire_fiche(c)[0] in adresses][:limite]
+    fiches = fiches_par_adresse(resultats, adresses)[:limite]
     RESULTS.mkdir(exist_ok=True)
     chemin_sortie = fichier_sortie("api", modele)
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
@@ -716,7 +732,7 @@ def main() -> int:
         asyncio.run(collecter(rubriques))
     if args.extraire:
         if args.moteur == "api":
-            extraire_api(rubriques, args.modele, args.limite, args.plafond)
+            extraire_api(resultats, args.modele, args.limite, args.plafond)
         else:
             extraire(rubriques, args.moteur, args.modele, args.limite)
     if args.controler:
