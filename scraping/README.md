@@ -392,9 +392,11 @@ le lot 0 (2026-10-14), tous les verdicts sont versionnés dans `sources/` : `ver
 `organisation-donnees-validees`). Migration des anciens fichiers de `results/` : `python validation.py --migrer-verdicts
 --dry-run` puis sans `--dry-run` (copie dans `scripts/sauvegardes/`, fusion sans écraser un verdict, anciens fichiers
 renommés `.json.migre`).
-Raccourcis sur le bureau : `validation_pages.cmd`, `validation_exclues.cmd`, `validation_manuelle.cmd` (liens) et
+Lanceurs dans `scraping/` : `validation_pages.cmd`, `validation_exclues.cmd`, `validation_manuelle.cmd` (liens) et
 `validation_fiches.cmd` (fiches du modèle local encore ouvertes, option `--ouvertes`, port 8789) ; fermer la
-fenêtre noire arrête le serveur.
+fenêtre noire arrête le serveur. Depuis le 2026-10-14, à la demande de Monsieur DUCOUT, un seul raccourci reste sur son
+bureau, « Validation des fiches a verifier » (`validation_fiches.cmd`), usage quotidien ; les trois autres raccourcis,
+dont les campagnes sont terminées, ont été envoyés à la corbeille, les `.cmd` restant utilisables depuis `scraping/`.
 
 | Mode | Commande (depuis `scraping/`) | Question posée | Verdicts (touches 1 à 6) | Fichier |
 |---|---|---|---|---|

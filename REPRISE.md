@@ -74,9 +74,10 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   les Qwen de 17 et 23 Go installés ne tiennent pas, non testés. Le comparateur automatique a été corrigé deux fois après
   sondage (échéance ou titre confirmés par la page ; montants cités quel que soit le champ) ; sondage final 5/5 et 4/5.
 - **Validation manuelle** (2026-10-13, changement `validation-manuelle-aap`, tâches 1.1 à 1.3 faites, vérification 2.1 par
-  Monsieur DUCOUT en attente) : `scraping/validation.py`, deux raccourcis sur son bureau (« Validation des pages des
+  Monsieur DUCOUT en attente) : `scraping/validation.py`, lanceurs `.cmd` dans `scraping/` (« Validation des pages des
   sources » : les 155 pages gardées, port 8788 ; « Validation manuelle des AAP » : échantillon de 60 liens, un par
-  source, port 8787). Verdicts dans `results/validation_pages.json` et `results/validation_liens.json` (déplacés dans
+  source, port 8787). Depuis le 2026-10-14, seul le raccourci « Validation des fiches a verifier » reste sur son bureau
+  (usage quotidien), les trois autres ont été envoyés à la corbeille à sa demande. Verdicts dans `results/validation_pages.json` et `results/validation_liens.json` (déplacés dans
   `sources/verdicts_pages.json` et `sources/verdicts_liens.json` par le lot 0 du 2026-10-14 ; 34 verdicts sur
   les liens à midi ; aucun sur les pages). Ses commentaires ont déjà donné deux verdicts de plus (page qui recense des
   appels, appel permanent) et une grille de critères proposée (nature, thème, état, destinataires), non décidée.

@@ -21,18 +21,27 @@ affirmation » : chaque tâche cochée avec sa preuve. Règles absolues : aucun 
   (Fait le 2026-10-14 : `test_extraire_accepte_une_liste_explicite_de_textes` et
   `test_extraire_api_accepte_adresses_et_fichier_de_sortie`, moteurs remplacés par des refus ; journal des coûts :
   66 lignes `claude-haiku-5-5`, inchangé.)
-- [ ] 1.3 `comparaison.py --extraire-local --modele qwen3:8b` sur les 50 textes (0 euro, pendant le passage global).
-  Fait quand : compte des fiches et des refus collé, durée cumulée collée, journal des coûts inchangé.
+- [x] 1.3 `comparaison.py --extraire-local --modele qwen3:8b` sur les 50 textes (0 euro, pendant le passage global).
+  Fait quand : compte des fiches et des refus collé, durée cumulée collée, journal des coûts inchangé. (Fait le
+  2026-10-14 : « 26 pages refusées, 24 réussites (24 nouvelles), 0 échecs, 2501 s pour ce passage (qwen3:8b) » ;
+  0 fiche à relire ; 50 pages avec un résultat local ; le journal des coûts n'a reçu aucune ligne de ce passage.)
 
 ## 2. Extraction par le modèle API
 
-- [ ] 2.1 Accord écrit de Monsieur DUCOUT sur : modèle `claude-haiku-5-5`, prix vérifiés le 2026-10-14 (0,10 et 0,50
+- [x] 2.1 Accord écrit de Monsieur DUCOUT sur : modèle `claude-haiku-5-5`, prix vérifiés le 2026-10-14 (0,10 et 0,50
   USD par million de tokens), coût estimé 0,03 euro pour 50 textes (moins de 0,10 euro avec marge), recalculé sur
   la longueur réelle des 50 textes tirés (183 708 caractères, 3 674 en moyenne : 0,054 euro estimé, deux appels par
   texte) et présenté avec la liste, plafond cumulé 5 euros. Puis `--extraire-api
-  --modele claude-haiku-5-5 --limite 1`. Fait quand : lignes du journal collées (sans clé).
-- [ ] 2.2 Les 49 autres textes. Fait quand : « 50 textes (1 déjà traités) » affiché, compte des fiches et des refus
-  collé, coût cumulé collé.
+  --modele claude-haiku-5-5 --limite 1`. Fait quand : lignes du journal collées (sans clé). (Accord donné le 2026-10-14
+  (« accord pour haiku, vas-y ») ; premier texte (ladrome.fr, travailler autrement) refusé à la question fermée
+  « La page présente les tiers-lieux, les fablabs... » ; journal : étape `est_aap`, 951 tokens d'entrée, 111 de sortie,
+  0,000221 USD soit 0,000204 euro ; pas d'étape extraction puisque refusée ; cumul du modèle 0,028 euro.)
+- [x] 2.2 Les 49 autres textes. Fait quand : « 50 textes (1 déjà traités) » affiché, compte des fiches et des refus
+  collé, coût cumulé collé. (Fait le 2026-10-14 : « 50 textes de l'échantillon (1 déjà traités) » ; « 30 pages refusées,
+  20 réussites (20 nouvelles), 0 échecs ; coût cumulé de claude-haiku-5-5 : 0.058 euros » ; 0 fiche à relire ; durée
+  184 s ; coût sur les 50 adresses lu dans le journal : 70 appels, 0,0296 euro (estimation 0,054) ; cumul du modèle
+  depuis l'échantillon 0,058 euro, plafond 5 euros. Avant jugement : les deux moteurs prennent la même décision fiche /
+  refus sur 46 pages sur 50 (local 24 fiches, Haiku 20).)
 
 ## 3. Jugement
 
