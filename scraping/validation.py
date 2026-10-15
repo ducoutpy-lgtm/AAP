@@ -97,6 +97,12 @@ function afficher(){
  if(page && f.verdict_actuel) h+=`<tr><td>Verdict actuel</td><td>${esc(f.verdict_actuel)}</td></tr><tr><td>Motif</td><td>${esc(f.motif||'')}</td></tr>`;
  if(lien && !page) h+=`<tr><td>Rubrique d'origine</td><td><a href="${esc(f.scrape_metadata.rubrique)}" target="_blank" rel="noopener">${esc(f.scrape_metadata.rubrique)}</a></td></tr>`;
  h+='</table>';
+ const ver=f.scrape_metadata?.verification;
+ if(ver){const d=ver.douteux||[];
+  h+=`<p class="controle">Contrôle par le modèle (${esc(ver.modele)}, ${esc((ver.le||'').slice(0,10))}) : `
+   +(d.length?`<b>${d.length} champ(s) douteux</b> : `+d.map(k=>`${esc(k)} (${esc(ver.champs?.[k]?.verdict)}${ver.champs?.[k]?.correction?', page : '+esc(ver.champs[k].correction):''})`).join(' ; '):'aucun doute')
+   +(ver.est_un_appel===false?' ; <b>la page ne décrit pas un appel précis selon le modèle</b>':'')
+   +'. Ce contrôle ne remplace pas votre verdict.</p>';}
  h+=`<details open><summary>${lien?'Texte de la page (récupéré par le serveur)':'Extrait du texte de la page gardée'}</summary><div class="extrait" id="extrait">${esc(f.texte_page||f.extrait||'(texte indisponible)')}</div></details>`;
  h+=`<p><input id="com" placeholder="${page?'Adresse de la bonne page, ou commentaire':'Commentaire (champ faux, valeur attendue...)'}" value="${esc(v?.commentaire||'')}"></p>`;
  h+=`<div class="boutons">`;
@@ -152,6 +158,14 @@ def extrait_page(fiche: dict, maximum: int = 2500) -> str:
     contenu = chemin.read_text(encoding="utf-8", errors="ignore")
     texte = contenu.split("\n", 2)[2] if contenu.count("\n") >= 2 else contenu  # saute l'adresse et le texte du lien
     return texte.strip()[:maximum]
+
+
+def douteuses_d_abord(fiches: list[dict]) -> list[dict]:
+    """Fiches que le modèle a jugées douteuses (verification-assistee-haiku, scrape_metadata.verification.douteux) en
+    tête, les plus douteuses d'abord, ordre d'origine conservé entre fiches égales (tri stable)."""
+    def nb_douteux(f: dict) -> int:
+        return len(((f.get("scrape_metadata") or {}).get("verification") or {}).get("douteux") or [])
+    return sorted(fiches, key=lambda f: -nb_douteux(f))
 
 
 def fiches_ouvertes(fiches: list[dict], aujourdhui: str) -> list[dict]:
@@ -531,6 +545,7 @@ def main() -> int:
         fiches = json.loads(chemin.read_text(encoding="utf-8"))
         if args.ouvertes:
             fiches = fiches_ouvertes(fiches, datetime.now().strftime("%Y-%m-%d"))
+        fiches = douteuses_d_abord(fiches)  # les fiches signalées par le contrôle du modèle se relisent en premier
         for f in fiches:
             f["extrait"] = extrait_page(f)
         migrer_anciens_verdicts()

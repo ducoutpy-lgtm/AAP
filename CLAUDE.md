@@ -217,7 +217,9 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `acces-administration` (2026-10-15 : aucun compte admin n'existait ; `scripts/creer_admin.py` et page
+  En cours : `verification-assistee-haiku` (2026-10-15 : contrôle des 283 fiches publiables par Haiku, 0,15 euro, 74
+  douteuses hors description, outil de validation trié, résumé importé ; documentation faite, vérification de Monsieur
+  DUCOUT en attente), `acces-administration` (2026-10-15 : aucun compte admin n'existait ; `scripts/creer_admin.py` et page
   `/reset-password` faits, lint et build verts ; Monsieur DUCOUT lance le script et choisit son mot de passe par
   « Mot de passe oublié ? » ; compteurs par statut de validation, instruction 12, à faire ensuite), `lot-0-assainissement`
   (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et

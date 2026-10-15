@@ -75,6 +75,10 @@ par l'IA conservé dans `scrapeMetadata.financeurExtrait`, noms restés sans rat
 `scraping/sources/departements.json`, lus par `scraping/territoires.py`) puis du nom de l'émetteur, `france` seulement
 pour un appel national, `non-precise` sinon (affiché « Territoire non précisé »). Fiches publiées en double (même titre,
 même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine).
+Contrôle des fiches par le modèle (changement `verification-assistee-haiku`, 2026-10-15) : `scraping/verification.py`
+relit chaque fiche publiable à côté de sa page et liste les champs douteux ; l'import en reporte le résumé dans
+`scrapeMetadata.verification`, sans toucher au statut ni à l'étiquette « à vérifier » ; l'outil de validation présente
+les fiches douteuses en premier.
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits

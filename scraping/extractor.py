@@ -156,6 +156,42 @@ CHAMP_TOOL = {
 }
 
 
+# Verification d une fiche contre le texte de sa page (changement verification-assistee-haiku, 2026-10-15) : un verdict
+# par champ, une correction lue sur la page quand la fiche est fausse ou incomplete. Les champs sont ceux que
+# l application affiche ; la consigne est dans verification.py (CONSIGNE_VERIFICATION).
+CHAMPS_VERIFIES = ("titre", "financeur", "date_ouverture", "date_cloture", "montant_min", "montant_max",
+                   "enveloppe_globale", "territoire", "description")
+VERDICTS_VERIFICATION = ("juste", "faux", "fabrique", "manquant", "vide", "incertain")
+VERIFICATION_TOOL = {
+    "name": "verification",
+    "description": "Compare chaque champ de la fiche au texte de la page et donne un verdict par champ.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "est_un_appel": {"type": "boolean", "description": "true si la page decrit UN appel precis"},
+            "remarque": {"type": "string", "description": "Une phrase en francais, ou vide"},
+            "champs": {
+                "type": "object",
+                "properties": {
+                    nom: {
+                        "type": "object",
+                        "properties": {
+                            "verdict": {"type": "string", "enum": list(VERDICTS_VERIFICATION)},
+                            "correction": {"type": ["string", "null"], "description": "Valeur lue sur la page si faux ou manquant"},
+                            "raison": {"type": "string", "description": "Une phrase courte en francais"},
+                        },
+                        "required": ["verdict", "raison"],
+                    }
+                    for nom in CHAMPS_VERIFIES
+                },
+                "required": list(CHAMPS_VERIFIES),
+            },
+        },
+        "required": ["est_un_appel", "champs"],
+    },
+}
+
+
 SYSTEM_PROMPT = (
     "Tu es un extracteur de donnees d appels a projets (AAP) pour le secteur "
     "sante et medico-social francais. Tu n inventes aucune donnee : si une "
@@ -285,6 +321,25 @@ def est_un_aap(text: str, url: str, consigne: str, source: str = "", model: str 
         f"Reponds en appelant l outil est_aap."
     )
     return _appeler(model or MODEL, consigne, EST_AAP_TOOL, user_content, 1024, source, url, "est_aap")
+
+
+def verifier_fiche(text: str, fiche: dict, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:
+    """Relecture d une fiche contre le texte de sa page : un verdict par champ (verification-assistee-haiku).
+
+    fiche : les seuls champs verifies, tels que la fiche les porte ; consigne : CONSIGNE_VERIFICATION de verification.py.
+    """
+    import json as _json
+
+    user_content = (
+        f"URL source : {url}\n\n"
+        f"Fiche produite par l extracteur (JSON) :\n{_json.dumps(fiche, ensure_ascii=False, indent=1)}\n\n"
+        f"Texte de la page :\n"
+        f"-----\n"
+        f"{text[:MAX_TEXT_CHARS]}\n"
+        f"-----\n\n"
+        f"Reponds en appelant l outil verification."
+    )
+    return _appeler(model or MODEL, consigne, VERIFICATION_TOOL, user_content, 2048, source, url, "verification")
 
 
 def champ_aap(text: str, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:

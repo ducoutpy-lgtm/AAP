@@ -602,3 +602,11 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   (instruction 12) prévus dans le même changement.
 - Vérification de Monsieur DUCOUT (2026-10-15, 10 h 30) : « ça y est je suis connecté je vois l'admin ». Compte
   administrateur créé par lui avec le script, mot de passe choisi par l'e-mail de Firebase, espace `/admin` ouvert.
+- Contrôle des fiches par le modèle (2026-10-15, 10 h 40 à 11 h 10, changement `verification-assistee-haiku`, accord
+  « 1 ok ») : essai à blanc 283 fiches publiables, 0,096 euro estimé ; réel 284 appels, 0,154 euro (le modèle a répondu
+  plus long que prévu), cumul Haiku 0,52 euro. Résultat : 283 fiches contrôlées, 129 sans doute, 74 douteuses sur une
+  date, un montant, le financeur, le titre ou le territoire, 80 douteuses sur la seule description (le modèle relève des
+  nuances de formulation : à prendre avec prudence), 39 pages qui ne décrivent pas un appel précis selon lui. Par champ :
+  dates d'ouverture 19 fausses et 22 fabriquées, dates de clôture 5 fausses et 18 manquantes, montants 10 faux,
+  enveloppe 14 manquantes, titres 2 faux et 1 fabriqué. L'outil de validation présente ces fiches en premier ;
+  `VERIFICATION.md` les liste ; ré-import du résumé : 529 fiches mises à jour, aucune créée.

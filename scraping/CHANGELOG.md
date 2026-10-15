@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-15)
+- `verification.py` et `extractor.verifier_fiche` (changement `verification-assistee-haiku`) : contrôle de chaque fiche
+  publiable par le modèle, verdict par champ (juste, faux avec valeur lue, fabriqué, manquant, vide, incertain), essai à
+  blanc, plafond, sauvegarde, rapport `VERIFICATION.md` ; 283 fiches, 0,15 euro réel. `validation.py` : fiches douteuses
+  en premier et bloc « Contrôle par le modèle » dans l'écran des fiches.
+
 ### Modifié (2026-10-15)
 - `sources/relecture_qualification.json` et registre : 35 sources dont aucune fiche n'est dans le champ santé ou
   médico-social (familles agriculture, emploi et solidarités, préfectures, agences de l'eau, mairies, plus FSE+,

@@ -379,6 +379,13 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
         "applicationsCount": 0,
         "updatedAt": now,
     }
+    verification = (item.get("scrape_metadata") or {}).get("verification")
+    if verification:
+        # Controle de la fiche par le modele (verification-assistee-haiku) : resume seulement, le detail par champ reste
+        # dans les fichiers de resultats ; la mention « relue » depend du seul verdict humain (validation.statut).
+        doc["scrapeMetadata"]["verification"] = {"modele": verification.get("modele", ""), "le": verification.get("le", ""),
+                                                  "douteux": list(verification.get("douteux") or []),
+                                                  "estUnAppel": verification.get("est_un_appel")}
     # Firestore refuse les None dans certains SDK ; on les retire pour rester propre.
     return {k: v for k, v in doc.items() if v is not None}
 

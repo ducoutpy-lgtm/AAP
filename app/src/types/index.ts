@@ -134,6 +134,9 @@ export interface AAP {
     sourceNom?: string;
     fichier?: string;
     financeurExtrait?: string;
+    // Contrôle de la fiche par le modèle (changement verification-assistee-haiku, 2026-10-15) : champs jugés douteux,
+    // résumé seulement ; ne vaut pas relecture humaine (validation.statut reste la seule source de fiabilité)
+    verification?: { modele: string; le: string; douteux: string[]; estUnAppel?: boolean | null };
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;

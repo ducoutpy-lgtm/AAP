@@ -348,6 +348,24 @@ Monsieur DUCOUT a confirmé les 24 classements du modèle local sur le premier t
 4 médico-social, 1 santé) ; `python champ.py --evaluer --fichier results/comparaison_ollama_qwen3-8b_collectivites.json` :
 24 accords sur 24.
 
+### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
+
+Pourquoi : relire à la main 308 fiches publiées prend des jours ; pour 0,03 centime par fiche, `claude-haiku-5-5` relit
+chaque fiche à côté du texte de sa page et dit, champ par champ (titre, financeur, dates, montants, territoire,
+description), si la valeur est juste, fausse (avec la valeur lue sur la page), fabriquée (absente de la page),
+manquante, vide ou incertaine, et si la page décrit bien un appel précis. Ce contrôle ne vaut pas relecture : la mention
+« relue » reste réservée aux verdicts de Monsieur DUCOUT (décision du 2026-10-15), qui relit d'abord les fiches douteuses.
+
+```bash
+python verification.py --verifier --dry-run        # fiches à vérifier (champ santé, médico-social ou incertain, encore ouvertes), coût estimé
+python verification.py --verifier                  # après accord : écriture dans scrape_metadata.verification, sauvegarde, plafond cumulé
+python verification.py --rapport                   # VERIFICATION.md : verdicts par champ, part douteuse par source, fiches douteuses
+```
+
+Un champ est « douteux » s'il est faux, fabriqué ou manquant. L'outil de validation (`validation.py --fiches`) présente
+les fiches douteuses en premier et affiche les champs douteux avec la valeur lue sur la page ; l'import reporte un résumé
+(modèle, date, champs douteux) dans `scrapeMetadata.verification`, sans toucher au statut ni à l'étiquette « à vérifier ».
+
 ### Second tour du modèle local (changement `extraction-ollama-second-tour`, 2026-10-13)
 
 Décision de Monsieur DUCOUT : avant tout appel payant, « lentement et sûrement sur Ollama ». Le second tour corrige

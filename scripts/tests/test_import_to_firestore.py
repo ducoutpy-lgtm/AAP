@@ -330,3 +330,15 @@ def test_profil_admin_impose_le_role_et_garde_le_reste():
     promu = creer_admin.profil_admin("a@b.fr", existant, "T0")
     assert promu["userType"] == "admin" and promu["createdAt"] == "T-1" and promu["notificationPreferences"] == {"email": False}
     assert promu["profileComplete"] is True and promu["email"] == "a@b.fr"
+
+
+def test_import_reporte_le_resume_du_controle_du_modele():
+    # verification-assistee-haiku : le resume (champs douteux) part dans scrapeMetadata, le detail reste dans les fichiers.
+    v = {"modele": "claude-haiku-5-5", "le": "2026-10-15T11:00:00", "douteux": ["date_cloture"], "est_un_appel": True,
+         "champs": {"date_cloture": {"verdict": "faux", "correction": "2026-11-30", "raison": "page"}}}
+    doc = imp.to_app_aap(fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "verification": v}), "x", MAINTENANT)
+    assert doc["scrapeMetadata"]["verification"] == {"modele": "claude-haiku-5-5", "le": "2026-10-15T11:00:00",
+                                                     "douteux": ["date_cloture"], "estUnAppel": True}
+    assert "champs" not in doc["scrapeMetadata"]["verification"]
+    imp.verifier_champs(doc, "test")
+    assert "verification" not in imp.to_app_aap(fiche(), "x", MAINTENANT)["scrapeMetadata"]
