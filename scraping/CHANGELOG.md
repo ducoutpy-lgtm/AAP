@@ -5,6 +5,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Modifié (2026-10-15)
+- `sources/relecture_qualification.json` et registre : 35 sources dont aucune fiche n'est dans le champ santé ou
+  médico-social (familles agriculture, emploi et solidarités, préfectures, agences de l'eau, mairies, plus FSE+,
+  Fondation Orange, Le Compte Asso, Avise, Interreg Sudoe, DGCOPOP Guyane, FNSO et le conseil régional de La Réunion ;
+  191 fiches) passent « hors-sante » sur décision de Monsieur DUCOUT : 207 rubriques confirmées au lieu de 242, le
+  prochain passage ne les collecte plus. Les 65 sources sans verdict reçoivent « a-verifier » au passage de
+  `qualification.py --registre`. `QUALIFICATION.md` et `REGISTRE_SOURCES.md` régénérés.
 - `extraction_locale.py` : passage global terminé à 7 h 40 (2 178 textes, 1 086 fiches dont 2 à relire, 1 070 pages
   refusées, 22 échecs, 28,6 h de calcul, 0 euro).
 - `champ.py` : classement du champ des 1 086 fiches du passage local par `claude-haiku-5-5` (santé 312, médico-social

@@ -579,3 +579,15 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   vérifier), 261 brouillons dont 258 hors champ, 105 financeurs distincts. `scraping/CHAMP.md` : part dans le champ par
   source, ARS 93 à 100 %, CNSA, INCa, Fondation ARC 100 %, FHF Hauts-de-France 97 %, Fondation de France 44 %,
   collectivités 0 à 42 %, DRAAF et DREETS 0 % (sources à revoir dans le registre).
+- Décisions de Monsieur DUCOUT (2026-10-15, 9 h 40) : accord pour l'étape 1 du lot 1 (question du champ posée par le
+  robot au moment de la lecture, puis avertissement « non relue » pour le visiteur, instruction 11) ; accord pour
+  retirer de la collecte les sources à 0 % dans le champ. Fait : 35 sources (DRAAF, DAAF, DREETS, DDETS, DRIEETS,
+  préfectures, agences de l'eau, mairies, FSE+, Fondation Orange, Le Compte Asso, Avise, Interreg Sudoe, DGCOPOP
+  Guyane, FNSO, conseil régional de La Réunion ; 191 fiches) passées « hors-sante » par
+  `sources/relecture_qualification.json` et `qualification.py --registre --rapport` : 207 rubriques confirmées au lieu
+  de 242. Gardées malgré 0 % : 30 sources que Monsieur DUCOUT a nommées comme financeurs à couvrir (conseils
+  régionaux et départementaux, collectivités territoriales, ANR, Bpifrance France 2030, MSA, ministères), 86 fiches.
+  Constats pour ses questions : il n'existe aucun compte administrateur (collection `users` : 3 porteurs, 1
+  financeur, aucun compte à son nom ; Firebase Auth : 3 comptes), d'où un espace `/admin` jamais vu ; devis d'une
+  vérification des fiches par `claude-haiku-5-5` sur les textes réels (573 fiches dans le champ, 2 708 caractères en
+  moyenne) : 0,19 euro, soit 0,03 centime par fiche, 0,10 euro pour les 308 fiches publiées.

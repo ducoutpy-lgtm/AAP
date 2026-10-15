@@ -19,16 +19,10 @@
   }
  },
  "interreg-sudoe": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://interreg-sudoe.eu/fr/futurs-appels-a-projets/",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "rubrique-confirmee",
-   "motif": "appel ciblant le vieillissement de la population (autonomie), relevé au sondage",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code, décisions de Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "conseil-departemental-gard": {
   "verdict": "rubrique-confirmee",
@@ -511,28 +505,16 @@
   }
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-nouvelle-aquitaine": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "a-verifier",
-   "motif": "cas limite à trancher : appel 2026 lutte contre la précarité menstruelle (santé publique, financeur hors santé)",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "le-compte-asso-subventions-de-l-etat": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "hors-sante",
-   "motif": "FDVA, mentorat, solidarité internationale",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "anr": {
   "verdict": "rubrique-confirmee",
@@ -577,16 +559,10 @@
   }
  },
  "avise": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://www.avise.org/actualites",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "hors-sante",
-   "motif": "agenda d'appels de tiers (innovation sociale, finance durable)",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "conseil-departemental-tarn-et-garonne": {
   "verdict": "rubrique-confirmee",
@@ -601,28 +577,16 @@
   }
  },
  "mairie-de-reims": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://www.grandreims.fr/reimsbusiness/appels-a-projets",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "hors-sante",
-   "motif": "appels culturels et postes à pourvoir",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "mairie-de-villeurbanne": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://www.villeurbanne.fr/mon-quotidien/mon-emploi-mon-entreprise/appel-a-projets-a-candidature",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "hors-sante",
-   "motif": "foodtrucks, marchés, cité éducative",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "girci-soho-sud-ouest-outre-mer-hospitalier": {
   "verdict": "rubrique-confirmee",
@@ -631,16 +595,10 @@
   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-occitanie": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://occitanie.dreets.gouv.fr/Appels-a-projets",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran",
-  "relecture_precedente": {
-   "verdict": "a-verifier",
-   "motif": "délai dépassé ; un appel à candidatures mandataires judiciaires vu : ouvrir à la main",
-   "date": "2026-10-12",
-   "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
-  }
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 1 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "inserm": {
   "verdict": "rubrique-confirmee",
@@ -781,10 +739,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "fse-france": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 12 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "agence-de-l-eau-seine-normandie": {
   "verdict": "rubrique-confirmee",
@@ -793,16 +751,16 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "agence-de-l-eau-rhin-meuse": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agence de l'eau ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "agence-de-l-eau-artois-picardie": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agence de l'eau ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "agence-de-l-eau-loire-bretagne": {
   "verdict": "rubrique-confirmee",
@@ -829,10 +787,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "fonds-national-pour-la-science-ouverte": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "fondation-groupe-pasteur-mutualite": {
   "verdict": "a-verifier",
@@ -907,10 +865,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "conseil-regional-la-reunion": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://regionreunion.com/aides-services/appels-a-projets/",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 16 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "collectivite-territoriale-de-guyane": {
   "verdict": "rubrique-confirmee",
@@ -919,10 +877,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "mairie-de-nice": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "mairie-de-lille": {
   "verdict": "a-verifier",
@@ -931,16 +889,16 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "mairie-de-rennes": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 1 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "mairie-de-toulon": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 9 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "mairie-de-brest": {
   "verdict": "rubrique-confirmee",
@@ -949,10 +907,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "mairie-de-amiens": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "mairie-de-nancy": {
   "verdict": "hors-sante",
@@ -1027,10 +985,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "prefecture-ille-et-vilaine": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 6 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "prefecture-morbihan": {
   "verdict": "rubrique-confirmee",
@@ -1045,10 +1003,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "prefecture-manche": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "prefecture-aveyron": {
   "verdict": "rubrique-confirmee",
@@ -1075,10 +1033,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "prefecture-rhone": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "haut-commissariat-de-la-republique-nouvelle-caledonie": {
   "verdict": "rubrique-confirmee",
@@ -1087,28 +1045,28 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-bouches-du-rhone": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DDETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-departementale-de-l-emploi-du-travail-et-des-solidarites-ddets-ille-et-vilaine": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 5 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DDETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-et-interdepartementale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-drieets-unite-departementale-de-paris": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://idf.drieets.gouv.fr/Appels-a-projets-appels-d-offres",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DRIEETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-generale-de-la-cohesion-des-populations-dgcopop-guyane": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-deets-guadeloupe": {
   "verdict": "a-verifier",
@@ -1123,22 +1081,22 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-occitanie-siege-de-toulouse": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-centre-val-de-loire": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 11 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-de-l-alimentation-de-l-agriculture-et-de-la-foret-daaf-martinique": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-grand-est-site-de-metz": {
   "verdict": "rubrique-confirmee",
@@ -1165,22 +1123,22 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-bretagne": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-bourgogne-franche-comte-siege-de-dijon": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 13 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-auvergne-rhone-alpes-site-de-lyon": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-de-l-alimentation-de-l-agriculture-et-de-la-foret-daaf-guadeloupe": {
   "verdict": "hors-sante",
@@ -1243,10 +1201,10 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-hauts-de-france": {
-  "verdict": "rubrique-confirmee",
-  "motif": "adresse donnée à l'écran : https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-grand-est": {
   "verdict": "hors-sante",
@@ -1255,21 +1213,39 @@
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-bourgogne-franche-comte": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 12 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-pays-de-la-loire": {
-  "verdict": "rubrique-confirmee",
-  "motif": "bonne page vue à l'écran",
-  "date": "2026-10-13",
-  "relecteur": "Monsieur DUCOUT, validation à l'écran"
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  },
  "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-normandie": {
   "verdict": "rubrique-confirmee",
   "motif": "bonne page vue à l'écran",
   "date": "2026-10-13",
   "relecteur": "Monsieur DUCOUT, validation à l'écran"
+ },
+ "fondation-orange": {
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 6 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
+ },
+ "direction-regionale-de-l-economie-de-l-emploi-du-travail-et-des-solidarites-dreets-centre-val-de-loire": {
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 5 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
+ },
+ "mairie-de-marseille": {
+  "verdict": "hors-sante",
+  "motif": "0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15",
+  "date": "2026-10-15",
+  "relecteur": "Monsieur DUCOUT"
  }
 }

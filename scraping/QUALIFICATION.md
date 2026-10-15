@@ -1,9 +1,9 @@
 # Qualification des sources
 
-Généré le 2026-10-13 par `python scraping/qualification.py --rapport`. Verdict calculé à partir des
+Généré le 2026-10-15 par `python scraping/qualification.py --rapport`. Verdict calculé à partir des
 réponses du modèle local Ollama sur la page de rubrique gardée par `decouverte.py` ; sondage manuel ci-dessous.
 
-**270 sources qualifiées sur 1133 : 242 rubrique confirmée, 0 PDF seulement, 18 hors santé, 0 pas d'AAP, 10 à vérifier ; 863 sources sans page gardée (à vérifier).**
+**270 sources qualifiées sur 1198 : 207 rubrique confirmée, 0 PDF seulement, 53 hors santé, 0 pas d'AAP, 10 à vérifier ; 928 sources sans page gardée (à vérifier).**
 
 ## Sondage manuel
 
@@ -19,7 +19,7 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 
 ## Relecture manuelle
 
-166 verdicts corrigés à la relecture (fichier `sources/relecture_qualification.json`) ; le verdict du modèle est conservé. Les décomptes ci-dessus et ci-dessous utilisent le verdict relu.
+169 verdicts corrigés à la relecture (fichier `sources/relecture_qualification.json`) ; le verdict du modèle est conservé. Les décomptes ci-dessus et ci-dessous utilisent le verdict relu.
 
 | Source | Verdict du modèle | Verdict relu | Motif | Page |
 |---|---|---|---|---|
@@ -33,8 +33,8 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Fondation Maladies Rares | hors santé | rubrique confirmée | adresse donnée à l'écran : https://fondation-maladiesrares.org/le-financement-des-projets-scientifiques/ | [page](https://fondation-maladiesrares.org/appels-a-projets-2019-de-fondation/) |
 | Fondation Crédit Agricole Solidarité et Développement | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.fondation-ca-solidaritedeveloppement.org/appel-a-projets/aide-sociale-a-lenfance-accompagner-les-jeunes-dans-leur-vie-dadulte/) |
 | Fondation ARC | hors santé | rubrique confirmée | douze appels de recherche sur le cancer : recherche médicale | [page](https://www.fondation-arc.org/appels-a-projets/) |
-| FSE+ France | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://fse.gouv.fr/les-appels-a-projets) |
-| Interreg Sudoe | hors santé | rubrique confirmée | adresse donnée à l'écran : https://interreg-sudoe.eu/fr/futurs-appels-a-projets/ | [page](https://interreg-sudoe.eu/fr/4eme-appel-a-projets/) |
+| FSE+ France | hors santé | hors santé | 0 fiche dans le champ sur 12 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://fse.gouv.fr/les-appels-a-projets) |
+| Interreg Sudoe | hors santé | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://interreg-sudoe.eu/fr/4eme-appel-a-projets/) |
 | Hauts-de-Seine – appels à projets | hors santé | rubrique confirmée | fonds de mobilité pour les services d'aide à domicile : médico-social | [page](https://www.hauts-de-seine.fr/mon-departement/les-hauts-de-seine/le-conseil-departemental/les-appels-a-projet) |
 | Rhône – appels à candidatures prévention | hors santé | rubrique confirmée | AMI CPOM services autonomie à domicile 2027, appel à candidatures conférence des financeurs 2027 | [page](https://www.rhone.fr/jcms/tl1_2008811/fr/appels-a-projets) |
 | Drôme – Commission des financeurs | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/) |
@@ -44,18 +44,19 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | ANSES – programme PNR-EST | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.anses.fr/fr/appels-et-consultations/avis-appel-manifestation-interet) |
 | ANSM | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://ansm.sante.fr/vos-demarches/industriel/projet-longue-vie-aux-medicaments-sur-laugmentation-de-la-duree-de-conservation-des-medicaments | [page](https://ansm.sante.fr/actualites/renouvellement-du-comite-dinterface-avec-les-associations-de-patients-appel-a-candidatures-ouvert-jusquau-30-septembre-2026) |
 | Inserm | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets | [page](https://pro.inserm.fr/) |
-| Agence de l'eau Rhin-Meuse | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.eau-rhin-meuse.fr/actualites/appel-projets) |
+| Agence de l'eau Rhin-Meuse | hors santé | hors santé | 0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agence de l'eau ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.eau-rhin-meuse.fr/actualites/appel-projets) |
 | Agence de l'eau Seine-Normandie | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.eau-seine-normandie.fr/appels_a_projets) |
 | Agence de l'eau Adour-Garonne | hors santé | hors santé | hors champ à l'écran | [page](https://eau-grandsudouest.fr/actualites/appel-projets-pse-pour-reconquete-qualite-eaux-brutes-captages-pour-eau-potable) |
-| Agence de l'eau Artois-Picardie | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.eau-artois-picardie.fr/la-jeunesse-pour-leau-appel-projets/appel-manifestation-dinteret-2026-faire-emerger-des-projets) |
+| Agence de l'eau Artois-Picardie | hors santé | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agence de l'eau ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.eau-artois-picardie.fr/la-jeunesse-pour-leau-appel-projets/appel-manifestation-dinteret-2026-faire-emerger-des-projets) |
 | Agence de l'eau Loire-Bretagne | hors santé | rubrique confirmée | adresse donnée à l'écran : https://aides-redevances.eau-loire-bretagne.fr/home/aides/appels-a-projets-1.html | [page](https://aides-redevances.eau-loire-bretagne.fr/home/aides/appels-a-projets-1/poissons-migrateurs-amphihalins-appel-a-projets-2027.html) |
 | Agence de l'eau Rhône Méditerranée Corse | hors santé | hors santé | hors champ à l'écran | [page](https://www.eaurmc.fr/jcms/vmr_35832/fr/bilans-des-appels-a-projets-passes) |
 | ANACT | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.anact.fr/realisations-et-projets?f%5B0%5D=realisation_advance%3A302 | [page](https://www.anact.fr/fact/appel-projets-travail-climat-aura-occitanie-paca) |
-| Fonds national pour la science ouverte | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.ouvrirlascience.fr/category/fnso/appels-a-projets-fnso/) |
+| Fonds national pour la science ouverte | hors santé | hors santé | 0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.ouvrirlascience.fr/category/fnso/appels-a-projets-fnso/) |
 | Fondation Groupe Pasteur Mutualité | hors santé | à vérifier | page morte à l'écran, adresse à retrouver | [page](https://www.gpm.fr/appel-a-candidature/) |
 | Fondation AÉSIO | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://fondation.aesio.fr/soumettre-un-projet | [page](https://fondation.aesio.fr/actualites/appel-projets-reponses-questions-frequentes) |
 | Fondation Le Souffle | hors santé | rubrique confirmée | bourses et appels à projets de recherche en santé respiratoire ; le modèle n'avait lu que la liste des cookies | [page](https://www.lesouffle.org/appels-projets-recherche) |
 | Fondation Alzheimer | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.fondation-alzheimer.org/je-suis-chercheur/financement-de-projets/ | [page](https://www.fondation-alzheimer.org/je-suis-chercheur/financement-de-projets/les-prix-de-la-fondation/) |
+| Fondation Orange | rubrique confirmée | hors santé | 0 fiche dans le champ sur 6 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.fondationorange.com/fr/le-calendrier-des-appels-projets) |
 | Institut de France – fondations | hors santé | rubrique confirmée | adresse donnée à l'écran : https://fondations.institutdefrance.fr/index.php | [page](https://fondations.institutdefrance.fr/appel-a-projets-solidarite-internationale-2026-fondation-coallia-stephane-hessel) |
 | Société Française de Gériatrie et Gérontologie (SFGG) | hors santé | rubrique confirmée | adresse donnée à l'écran : https://sfgg.org/actualites/appels-a-participation-bourses-et-prix/ | [page](https://sfgg.org/actualites/appels-a-participation-bourses-et-prix/prix-chaffoteaux/) |
 | Société Française de Dermatologie | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd | [page](https://www.sfdermato.org/page-46-resultats-des-appels-a-projet-et-bourses-sfd) |
@@ -102,19 +103,20 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Gouvernement de Nouvelle-Calédonie | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://gouv.nc/actualites/01-10-2026/lancement-de-lappel-projets-du-fonds-pacifique-2027) |
 | Conseil régional Île-de-France | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.iledefrance.fr/aides-et-appels-a-projets) |
 | Conseil régional Guadeloupe | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.guadeloupe.gouv.fr/Publications/Appels-a-projets | [page](https://www.regionguadeloupe.fr/appel-a-projets) |
-| Conseil régional La Réunion | pas d'AAP | rubrique confirmée | adresse donnée à l'écran : https://regionreunion.com/aides-services/appels-a-projets/ | [page](https://regionreunion.com/) |
+| Conseil régional La Réunion | pas d'AAP | hors santé | 0 fiche dans le champ sur 16 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://regionreunion.com/) |
 | Conseil régional Centre-Val de Loire | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.centre-valdeloire.fr/appels-projet | [page](https://www.centre-valdeloire.fr/appels-projet/recherche-et-innovation-campagne-2026-des-appels-projets) |
 | Collectivité territoriale de Guyane | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.guyane.gouv.fr/Publications/Appels-a-Projets/2024 | [page](https://www.ctguyane.fr/appel-a-candidatures-residences-croisees-france-bresil-langues-et-savoirs-autochtones-par-dela-les-frontieres/) |
-| Mairie de Nice | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.nice.fr/tag/appel-a-projet/) |
+| Mairie de Marseille | rubrique confirmée | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.marseille.fr/economie/commerce/appels-manifestation-d-interet-de-la-ville-de-marseille) |
+| Mairie de Nice | hors santé | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.nice.fr/tag/appel-a-projet/) |
 | Mairie de Bordeaux | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.bordeaux.fr/appels-projets) |
-| Mairie de Rennes | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/) |
+| Mairie de Rennes | hors santé | hors santé | 0 fiche dans le champ sur 1 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/) |
 | Mairie de Montpellier | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets | [page](https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets) |
 | Mairie de Lille | hors santé | à vérifier | page morte à l'écran, adresse à retrouver | [page](https://www.lille.fr/Votre-Mairie/La-commande-publique-et-les-appels-a-manifestation-d-interet/Appels-a-manifestation-d-interet-pour-l-occupation-du-domaine-public) |
-| Mairie de Toulon | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://demarches.toulon.fr/infos_demarches/appel-a-projets/) |
-| Mairie de Reims | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://www.grandreims.fr/reimsbusiness/appels-a-projets | [page](https://www.reims.fr/) |
+| Mairie de Toulon | hors santé | hors santé | 0 fiche dans le champ sur 9 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://demarches.toulon.fr/infos_demarches/appel-a-projets/) |
+| Mairie de Reims | rubrique confirmée | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.reims.fr/) |
 | Mairie de Brest | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://brest.fr/participer-agir/repondre-un-appel-projets) |
-| Mairie de Villeurbanne | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://www.villeurbanne.fr/mon-quotidien/mon-emploi-mon-entreprise/appel-a-projets-a-candidature | [page](https://www.villeurbanne.fr/) |
-| Mairie de Amiens | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.amiens.fr/Institutions/Appel-a-candidatures) |
+| Mairie de Villeurbanne | rubrique confirmée | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.villeurbanne.fr/) |
+| Mairie de Amiens | hors santé | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; mairie ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.amiens.fr/Institutions/Appel-a-candidatures) |
 | Mairie de Nancy | pas d'AAP | hors santé | hors champ à l'écran | [page](https://www.nancy.fr/culture/appels-a-candidature) |
 | Mairie de Cayenne | hors santé | hors santé | hors champ à l'écran | [page](https://ville-cayenne.fr/evenements/appel-a-candidature-implantation-dequipements-de-telecommunication-electroniques-pylones-du-fort-ceperou/) |
 | Mairie de Saint-Denis-de-La-Réunion | hors santé | hors santé | hors champ à l'écran | [page](https://www.saintdenis.re/appel-a-manifestation-d-interet-kiosque-communal) |
@@ -134,36 +136,36 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Mutualité sociale agricole (MSA) Picardie - accueil de Laon | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://picardie.msa.fr/lfp/appel-a-projets-jeunes) |
 | Mutualité sociale agricole (MSA) Beauce Coeur-de-Loire - accueil de Chartres | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://bcl.msa.fr/lfp/appel-a-projets-jeunes) |
 | Préfecture - Côte-d'Or | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.cote-dor.gouv.fr/Actions-de-l-Etat/Appels-a-projets) |
-| Préfecture - Ille-et-Vilaine | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.ille-et-vilaine.gouv.fr/Publications/Appel-a-projets) |
+| Préfecture - Ille-et-Vilaine | hors santé | hors santé | 0 fiche dans le champ sur 6 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.ille-et-vilaine.gouv.fr/Publications/Appel-a-projets) |
 | Mutualité sociale agricole (MSA) - Meurthe-et-Moselle - accueil de Vandœuvre-lès-Nancy | hors santé | rubrique confirmée | adresse donnée à l'écran : https://lorraine.msa.fr/lfp/partenaire-collectivite-action-sociale | [page](https://lorraine.msa.fr/lfp) |
 | Préfecture - Cantal | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.cantal.fr/le-conseil-departemental/les-appels-a-projets/ | [page](https://www.cantal.gouv.fr/Actualites/Economie-Emploi/Appel-a-projets-2026-2028-pour-le-Dispositif-Local-d-Accompagnement-DLA) |
-| Préfecture - Manche | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.manche.gouv.fr/Publications/Appels-a-projets) |
+| Préfecture - Manche | hors santé | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.manche.gouv.fr/Publications/Appels-a-projets) |
 | Préfecture - Aveyron | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.aveyron.gouv.fr/Publications/Appels-a-projet) |
 | Préfecture - Nièvre | hors santé | à vérifier | page morte à l'écran, adresse à retrouver | [page](https://www.nievre.gouv.fr/Publications/Appels-a-projets/Contrat-d-engagement-jeunes-volet-Jeunes-en-rupture) |
 | Préfecture - Seine-Maritime | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.seine-maritime.gouv.fr/Publications/Appels-a-projets) |
 | Préfecture - Val-d'Oise | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.val-doise.gouv.fr/Publications/Appels-a-projets) |
 | Préfecture - Vaucluse | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402/appels-a-projets.html | [page](https://www.vaucluse.gouv.fr/Actions-de-l-Etat/Securite/Prevention-de-la-delinquance-et-de-la-radicalisation/Prevention-de-la-radicalisation/Appel-a-projet-2026-FIPD-radicalisation) |
-| Préfecture - Rhône | à vérifier | rubrique confirmée | adresse donnée à l'écran : https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets | [page](https://www.rhone.gouv.fr/) |
+| Préfecture - Rhône | à vérifier | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; préfecture ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.rhone.gouv.fr/) |
 | Haut-commissariat de la République - Nouvelle-Calédonie | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://www.nouvelle-caledonie.gouv.fr/Actions-de-l-Etat/Appels-a-projets) |
 | Préfecture - Morbihan | à vérifier | rubrique confirmée | adresse donnée à l'écran : https://www.morbihan.fr/le-conseil-departemental/appels-a-projets | [page](https://www.morbihan.gouv.fr/Publications/Appels-a-manifestation-d-interet/Ouverture-de-l-appel-a-manifestation-d-interet-2021-pour-la-labellisation-Point-conseil-budget) |
-| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Bouches-du-Rhône | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://paca.dreets.gouv.fr/appels-projets) |
+| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Bouches-du-Rhône | hors santé | hors santé | 0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DDETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://paca.dreets.gouv.fr/appels-projets) |
 | Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Isère | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://auvergne-rhone-alpes.dreets.gouv.fr/appels-projets) |
-| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Ille-et-Vilaine | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://bretagne.dreets.gouv.fr/Appels-a-projets) |
-| Direction générale de la cohésion des populations (DGCOPOP) - Guyane | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://guyane.deets.gouv.fr/Appel-a-projet-FSE-Favoriser-l-acces-au-logement-et-la-prevention-des-violences) |
-| Direction régionale et interdépartementale de l'économie, de l'emploi, du travail et des solidarités (DRIEETS) - Unité départementale de Paris | hors santé | rubrique confirmée | adresse donnée à l'écran : https://idf.drieets.gouv.fr/Appels-a-projets-appels-d-offres | [page](https://idf.drieets.gouv.fr/Paris) |
+| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Ille-et-Vilaine | hors santé | hors santé | 0 fiche dans le champ sur 5 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DDETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://bretagne.dreets.gouv.fr/Appels-a-projets) |
+| Direction générale de la cohésion des populations (DGCOPOP) - Guyane | hors santé | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://guyane.deets.gouv.fr/Appel-a-projet-FSE-Favoriser-l-acces-au-logement-et-la-prevention-des-violences) |
+| Direction régionale et interdépartementale de l'économie, de l'emploi, du travail et des solidarités (DRIEETS) - Unité départementale de Paris | hors santé | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DRIEETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://idf.drieets.gouv.fr/Paris) |
 | Direction de l'économie, de l'emploi, du travail et des solidarités (DEETS) - La Réunion | hors santé | hors santé | hors champ à l'écran | [page](https://reunion.deets.gouv.fr/APPEL-A-CANDIDATURE-renouvellement-des-membres-des-conseils-de-familles-des) |
 | Direction de l'économie, de l'emploi, du travail et des solidarités (DEETS) - Guadeloupe | à vérifier | à vérifier | page morte à l'écran, adresse à retrouver | [page](https://guadeloupe.deets.gouv.fr/) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Occitanie - Siège de Toulouse | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.occitanie.agriculture.gouv.fr/appels-a-projets-r1452.html) |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Occitanie - Siège de Toulouse | hors santé | hors santé | 0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://draaf.occitanie.agriculture.gouv.fr/appels-a-projets-r1452.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Grand Est - Site de Metz | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.grand-est.agriculture.gouv.fr/appels-a-projets-r22.html) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Centre-Val de Loire | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.centre-val-de-loire.agriculture.gouv.fr/appels-a-projets-m18.html) |
-| Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Martinique | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://daaf.martinique.agriculture.gouv.fr/appels-a-projets-consultations-r23.html) |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Centre-Val de Loire | hors santé | hors santé | 0 fiche dans le champ sur 11 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://draaf.centre-val-de-loire.agriculture.gouv.fr/appels-a-projets-m18.html) |
+| Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Martinique | hors santé | hors santé | 0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://daaf.martinique.agriculture.gouv.fr/appels-a-projets-consultations-r23.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Corse | hors santé | hors santé | hors champ à l'écran | [page](https://draaf.corse.agriculture.gouv.fr/appel-a-projets-le-fonds-strategique-de-la-foret-et-du-bois-fsfb-soutient-le-a2247.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Normandie - Site de Rouen | hors santé | hors santé | hors champ à l'écran | [page](https://draaf.normandie.agriculture.gouv.fr/avis-d-appel-a-candidatures-de-la-safer-a236.html) |
 | Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Mayotte | hors santé | hors santé | hors champ à l'écran | [page](https://daaf.mayotte.agriculture.gouv.fr/appel-a-projets-2024-aide-a-l-encadrement-administratif-dans-les-structures-a683.html) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bretagne | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.bretagne.agriculture.gouv.fr/nos-appels-a-projets-r22.html) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bourgogne-Franche-Comté - Siège de Dijon | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.bourgogne-franche-comte.agriculture.gouv.fr/aides-et-appels-a-projets-en-cours-r22.html) |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bretagne | hors santé | hors santé | 0 fiche dans le champ sur 7 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://draaf.bretagne.agriculture.gouv.fr/nos-appels-a-projets-r22.html) |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bourgogne-Franche-Comté - Siège de Dijon | hors santé | hors santé | 0 fiche dans le champ sur 13 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://draaf.bourgogne-franche-comte.agriculture.gouv.fr/aides-et-appels-a-projets-en-cours-r22.html) |
 | Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Guadeloupe | hors santé | hors santé | hors champ à l'écran | [page](https://daaf.guadeloupe.agriculture.gouv.fr/appels-a-projets-r23.html) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Auvergne-Rhône-Alpes - Site de Lyon | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://draaf.auvergne-rhone-alpes.agriculture.gouv.fr/liste-des-appels-a-projets-a-manifestation-d-interet-a-candidature-prets-de-a5475.html) |
+| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Auvergne-Rhône-Alpes - Site de Lyon | hors santé | hors santé | 0 fiche dans le champ sur 3 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; agriculture (DRAAF) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://draaf.auvergne-rhone-alpes.agriculture.gouv.fr/liste-des-appels-a-projets-a-manifestation-d-interet-a-candidature-prets-de-a5475.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Pays de la Loire | hors santé | hors santé | hors champ à l'écran | [page](https://draaf.pays-de-la-loire.agriculture.gouv.fr/appel-a-candidature-pour-l-agrement-des-structures-de-conseil-et-d-a2188.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Nouvelle-Aquitaine - Site de Poitiers | hors santé | hors santé | hors champ à l'écran | [page](https://draaf.nouvelle-aquitaine.agriculture.gouv.fr/appels-a-projets-r209.html) |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Provence-Alpes-Côte d'Azur | hors santé | hors santé | hors champ à l'écran | [page](https://draaf.paca.agriculture.gouv.fr/guichets-appel-a-manifestation-d-interet-et-appel-a-projets-2026-r872.html) |
@@ -180,31 +182,32 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Fédération Addiction | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://www.federationaddiction.fr/actualites/projets/ | [page](https://www.federationaddiction.fr/actualites/publics/femmes/lancement-de-lappel-a-candidatures-pour-faire-partie-du-groupe-de-travail-femmes-addictions/) |
 | Uriopss PACA-Corse | PDF seulement | rubrique confirmée | bonne page vue à l'écran | [page](https://www.uriopss-pacac.fr/actualites/recensement-des-appels-projets-0) |
 | Admical | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://admical.org/categories-articles/les-appels-projets | [page](https://admical.org/actualit%C3%A9s/la-fondation-dentreprise-ocirp-lance-son-appel-projets-lieux-alternatifs-du-prendre-soin) |
-| Avise | hors santé | rubrique confirmée | adresse donnée à l'écran : https://www.avise.org/actualites | [page](https://www.avise.org/) |
-| Le Compte Asso (subventions de l'État) | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://associations.gouv.fr/appels-projets) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Occitanie | rubrique confirmée | rubrique confirmée | adresse donnée à l'écran : https://occitanie.dreets.gouv.fr/Appels-a-projets | [page](https://occitanie.dreets.gouv.fr/) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Nouvelle-Aquitaine | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://nouvelle-aquitaine.dreets.gouv.fr/Marches-publics-et-appels-a-projets) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Hauts-de-France | hors santé | rubrique confirmée | adresse donnée à l'écran : https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS | [page](https://hauts-de-france.dreets.gouv.fr/Points-Conseil-Budget-lancement-d-un-appel-a-projets) |
+| Avise | hors santé | hors santé | 0 fiche dans le champ sur 2 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://www.avise.org/) |
+| Le Compte Asso (subventions de l'État) | hors santé | hors santé | 0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; nommée par Monsieur DUCOUT ou hors champ par nature ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://associations.gouv.fr/appels-projets) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Centre-Val de Loire | rubrique confirmée | hors santé | 0 fiche dans le champ sur 5 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://centre-val-de-loire.dreets.gouv.fr/Marches-publics-et-appels-a-projets) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Occitanie | rubrique confirmée | hors santé | 0 fiche dans le champ sur 1 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://occitanie.dreets.gouv.fr/) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Nouvelle-Aquitaine | hors santé | hors santé | 0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://nouvelle-aquitaine.dreets.gouv.fr/Marches-publics-et-appels-a-projets) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Hauts-de-France | hors santé | hors santé | 0 fiche dans le champ sur 4 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://hauts-de-france.dreets.gouv.fr/Points-Conseil-Budget-lancement-d-un-appel-a-projets) |
 | Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Grand Est | hors santé | hors santé | hors champ à l'écran | [page](https://grand-est.dreets.gouv.fr/appel-projets-label-point-conseil-budget) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Bourgogne-Franche-Comté | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://bourgogne-franche-comte.dreets.gouv.fr/appels-projets) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Bourgogne-Franche-Comté | hors santé | hors santé | 0 fiche dans le champ sur 12 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://bourgogne-franche-comte.dreets.gouv.fr/appels-projets) |
 | Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Normandie | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://normandie.dreets.gouv.fr/Appels-a-projets) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Pays de la Loire | hors santé | rubrique confirmée | bonne page vue à l'écran | [page](https://pays-de-la-loire.dreets.gouv.fr/Appel-a-projets) |
+| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Pays de la Loire | hors santé | hors santé | 0 fiche dans le champ sur 8 classées par le filtre du champ (CHAMP.md du 2026-10-15) ; emploi et solidarités (DREETS) ; retrait décidé par Monsieur DUCOUT le 2026-10-15 | [page](https://pays-de-la-loire.dreets.gouv.fr/Appel-a-projets) |
 
 ## Par famille
 
 | Famille | Qualifiées | rubrique confirmée | PDF seulement | hors santé | pas d'AAP | à vérifier | Sans page |
 |---|---|---|---|---|---|---|---|
 | ars | 19 | 19 | 0 | 0 | 0 | 0 | 0 |
-| ministere | 46 | 34 | 0 | 10 | 0 | 2 | 107 |
+| ministere | 46 | 15 | 0 | 29 | 0 | 2 | 107 |
 | caisse-nationale | 23 | 22 | 0 | 0 | 0 | 1 | 243 |
-| agence-nationale | 17 | 15 | 0 | 2 | 0 | 0 | 18 |
-| fondation | 23 | 22 | 0 | 0 | 0 | 1 | 294 |
-| europe | 5 | 2 | 0 | 3 | 0 | 0 | 8 |
-| collectivite | 111 | 102 | 0 | 3 | 0 | 6 | 119 |
+| agence-nationale | 17 | 12 | 0 | 5 | 0 | 0 | 18 |
+| fondation | 23 | 21 | 0 | 1 | 0 | 1 | 359 |
+| europe | 5 | 0 | 0 | 5 | 0 | 0 | 8 |
+| collectivite | 111 | 94 | 0 | 11 | 0 | 6 | 119 |
 | societe-savante | 6 | 6 | 0 | 0 | 0 | 0 | 12 |
 | etablissement | 10 | 10 | 0 | 0 | 0 | 0 | 21 |
 | centrale-achat | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
-| autre | 10 | 10 | 0 | 0 | 0 | 0 | 37 |
+| autre | 10 | 8 | 0 | 2 | 0 | 0 | 37 |
 
 ## Sources confirmées
 
@@ -235,10 +238,8 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Indre-et-Loire | collectivite | html | 14 | [page](https://www.touraine.fr/services/espace-pros/appels-a-projets.html) |
 | Conseil régional Grand Est | collectivite | html | 14 | [page](https://www.grandest.fr/aides/) |
 | Conseil régional Occitanie | collectivite | html | 14 | [page](https://www.laregion.fr/Les-aides-et-appels-a-projets) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bourgogne-Franche-Comté - Siège de Dijon | ministere | html | 14 | [page](https://draaf.bourgogne-franche-comte.agriculture.gouv.fr/aides-et-appels-a-projets-en-cours-r22.html) |
 | Fondation de France | fondation | html | 13 | [page](https://www.fondationdefrance.org/fr/appels-a-projets) |
 | FIRAH | fondation | html | 13 | [page](https://www.firah.org/fr/laureats-des-appels-a-projets-precedents.html) |
-| FSE+ France | europe | html | 13 | [page](https://fse.gouv.fr/les-appels-a-projets) |
 | Fondation Crédit Mutuel Alliance Fédérale | fondation | html | 13 | [page](https://www.fondationdefrance.org/fr/appels-a-projets-fa) |
 | ARS Centre-Val de Loire | ars | html | 12 | [page](https://www.centre-val-de-loire.ars.sante.fr/liste-appels-projet-candidature) |
 | Fondation ARC | fondation | html | 12 | [page](https://www.fondation-arc.org/appels-a-projets/) |
@@ -255,10 +256,8 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Vosges | collectivite | html | 11 | [page](https://www.vosges.fr/mon-departement/appels-a-projets/) |
 | Conseil départemental Creuse | collectivite | mixte | 11 | [page](https://www.creuse.fr/Appels-a-projets-candidatures-55) |
 | Conseil départemental Hautes-Pyrénées | collectivite | html | 11 | [page](https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/) |
-| Mairie de Toulon | collectivite | html | 11 | [page](https://demarches.toulon.fr/infos_demarches/appel-a-projets/) |
 | Préfecture - Côte-d'Or | ministere | html | 11 | [page](https://www.cote-dor.gouv.fr/Actions-de-l-Etat/Appels-a-projets) |
 | Maison départementale des personnes handicapées (MDPH) - Hautes-Pyrénées | collectivite | html | 11 | [page](https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Bourgogne-Franche-Comté | ministere | html | 11 | [page](https://bourgogne-franche-comte.dreets.gouv.fr/appels-projets) |
 | ARS Bretagne | ars | html | 10 | [page](https://www.bretagne.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS Auvergne-Rhône-Alpes | ars | html | 10 | [page](https://www.auvergne-rhone-alpes.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS Normandie | ars | html | 10 | [page](https://www.normandie.ars.sante.fr/liste-appels-projet-candidature) |
@@ -273,7 +272,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Haute-Garonne | collectivite | html | 10 | [page](https://www.haute-garonne.fr/appels-projetscandidatures-en-cours) |
 | Conseil départemental Cantal | collectivite | html | 10 | [page](https://www.cantal.fr/le-conseil-departemental/les-appels-a-projets/) |
 | Préfecture - Aveyron | ministere | html | 10 | [page](https://www.aveyron.gouv.fr/Publications/Appels-a-projet) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Centre-Val de Loire | ministere | html | 10 | [page](https://draaf.centre-val-de-loire.agriculture.gouv.fr/appels-a-projets-m18.html) |
 | Cancéropôle Grand Ouest – appels à projets | etablissement | html | 10 | [page](https://www.canceropole-grandouest.com/appel-projets/) |
 | ARS Hauts-de-France | ars | html | 9 | [page](https://www.hauts-de-france.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS Mayotte | ars | html | 9 | [page](https://www.mayotte.ars.sante.fr/appels-projets-candidature-manifestation-dinteret) |
@@ -287,16 +285,12 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Tarn-et-Garonne | collectivite | html | 8 | [page](https://www.tarnetgaronne.fr/) |
 | Conseil départemental Seine-et-Marne | collectivite | html | 8 | [page](https://www.seine-et-marne.fr/fr/appels-projet-subventions) |
 | Conseil départemental Val-d'Oise | collectivite | html | 8 | [page](https://www.valdoise.fr/108-appels-a-projets.htm) |
-| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Bouches-du-Rhône | ministere | html | 8 | [page](https://paca.dreets.gouv.fr/appels-projets) |
-| Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Martinique | ministere | html | 8 | [page](https://daaf.martinique.agriculture.gouv.fr/appels-a-projets-consultations-r23.html) |
 | CNSA (Caisse nationale de solidarité pour l'autonomie) | caisse-nationale | html | 7 | [page](https://www.cnsa.fr/appels-projets) |
 | ARS Guadeloupe | ars | html | 7 | [page](https://www.guadeloupe.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS La Réunion | ars | html | 7 | [page](https://www.lareunion.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS Guyane | ars | html | 7 | [page](https://www.guyane.ars.sante.fr/liste-appels-projet-candidature) |
 | Appelaprojets.org | autre | html | 7 | [page](https://www.appelaprojets.org/appelprojet) |
 | Inserm | agence-nationale | html | 7 | [page](https://pro.inserm.fr/) |
-| Agence de l'eau Rhin-Meuse | agence-nationale | html | 7 | [page](https://www.eau-rhin-meuse.fr/actualites/appel-projets) |
-| Fondation Orange | fondation | html | 7 | [page](https://www.fondationorange.com/fr/le-calendrier-des-appels-projets) |
 | Ville de Paris – politique de la ville | collectivite | html | 7 | [page](https://www.paris.fr/pages/repondre-a-un-appel-a-projets-5412) |
 | Conseil départemental Allier | collectivite | html | 7 | [page](https://www.allier.fr/285-appels-a-projets.htm) |
 | Conseil départemental Haute-Savoie | collectivite | html | 7 | [page](https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/) |
@@ -304,12 +298,7 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Collectivité territoriale de Martinique | collectivite | mixte | 7 | [page](https://www.collectivitedemartinique.mq/appels-a-projet/) |
 | Mairie de Bordeaux | collectivite | html | 7 | [page](https://www.bordeaux.fr/appels-projets) |
 | Caisse de sécurité sociale (CSSM) de Mayotte - accueil de Mamoudzou | caisse-nationale | html | 7 | [page](https://www.cssm.fr/page/appels-a-projets-prevention-sante-2026) |
-| Préfecture - Ille-et-Vilaine | ministere | html | 7 | [page](https://www.ille-et-vilaine.gouv.fr/Publications/Appel-a-projets) |
-| Préfecture - Manche | ministere | html | 7 | [page](https://www.manche.gouv.fr/Publications/Appels-a-projets) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Occitanie - Siège de Toulouse | ministere | html | 7 | [page](https://draaf.occitanie.agriculture.gouv.fr/appels-a-projets-r1452.html) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Bretagne | ministere | html | 7 | [page](https://draaf.bretagne.agriculture.gouv.fr/nos-appels-a-projets-r22.html) |
 | GIRCI Grand Ouest | etablissement | html | 7 | [page](https://www.chu-hugo.fr/transitions/appels-a-projets/) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Pays de la Loire | ministere | html | 7 | [page](https://pays-de-la-loire.dreets.gouv.fr/Appel-a-projets) |
 | Fondation de l'AP-HP | etablissement | html | 6 | [page](https://www.fondationaphp.fr/nos-appels-a-projets/) |
 | Conseil départemental Gard | collectivite | html | 6 | [page](https://www.gard.fr/information/appel-a-projets) |
 | Conseil départemental Morbihan | collectivite | html | 6 | [page](https://www.morbihan.fr/le-conseil-departemental/appels-a-projets) |
@@ -318,14 +307,9 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Gironde | collectivite | html | 6 | [page](https://www.gironde.fr/linstitution/appels-projets) |
 | Conseil départemental Pas-de-Calais | collectivite | html | 6 | [page](https://www.pasdecalais.fr/appels-projets-et-appels-candidatures-et-manifestation-dinteret) |
 | Conseil départemental Tarn | collectivite | html | 6 | [page](https://www.tarn.fr/accueil) |
-| Mairie de Rennes | collectivite | html | 6 | [page](https://metropole.rennes.fr/appels-a-projets-partenariats-et-cooperations/) |
 | Mairie de Brest | collectivite | html | 6 | [page](https://brest.fr/participer-agir/repondre-un-appel-projets) |
-| Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Ille-et-Vilaine | ministere | html | 6 | [page](https://bretagne.dreets.gouv.fr/Appels-a-projets) |
 | GIRCI SOHO (Sud-Ouest Outre-Mer Hospitalier) | etablissement | html | 6 | [page](https://www.girci-soho.fr/) |
 | Uriopss Hauts-de-France | autre | html | 6 | [page](https://www.uriopss-hdf.fr/actualites) |
-| Le Compte Asso (subventions de l'État) | autre | html | 6 | [page](https://associations.gouv.fr/appels-projets) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Centre-Val de Loire | ministere | html | 6 | [page](https://centre-val-de-loire.dreets.gouv.fr/Marches-publics-et-appels-a-projets) |
-| Fonds national pour la science ouverte | agence-nationale | html | 5 | [page](https://www.ouvrirlascience.fr/category/fnso/appels-a-projets-fnso/) |
 | Société Française d'Étude et de Traitement de la Douleur (SFETD) | societe-savante | html | 5 | [page](https://www.sfetd-douleur.org/prix-et-appel-doffre/) |
 | Conseil départemental Jura | collectivite | html | 5 | [page](https://www.jura.fr/appels-a-projets/) |
 | Conseil départemental Var | collectivite | html | 5 | [page](https://var.fr/home/-/asset_publisher/GFXyOm7YlV2U/content/les-appels-a-projet/maximized?p_r_p_assetEntryId=1624415&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U_redirect=https%3A%2F%2Fvar.fr%2Fhome%3Fp_p_id%3Dcom_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_r_p_assetEntryId%3D1624415%26_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U_cur%3D0%26p_r_p_resetCur%3Dfalse) |
@@ -340,7 +324,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Fondation des Hôpitaux | fondation | html | 4 | [page](https://appel-a-projet.fondationhopitaux.fr/) |
 | ARS Occitanie | ars | html | 4 | [page](https://www.occitanie.ars.sante.fr/liste-appels-projet-candidature) |
 | Conseil départemental Gers | collectivite | html | 4 | [page](https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures) |
-| Direction régionale de l'alimentation, de l'agriculture et de la forêt (Draaf) - Auvergne-Rhône-Alpes - Site de Lyon | ministere | html | 4 | [page](https://draaf.auvergne-rhone-alpes.agriculture.gouv.fr/liste-des-appels-a-projets-a-manifestation-d-interet-a-candidature-prets-de-a5475.html) |
 | Société Française de Médecine d'Urgence (SFMU) | societe-savante | html | 3 | [page](https://www.sfmu.org/fr/la-recherche/appel-a-projet/) |
 | ARS Corse | ars | html | 3 | [page](https://www.corse.ars.sante.fr/liste-appels-projet-candidature) |
 | ARS Martinique | ars | html | 3 | [page](https://www.martinique.ars.sante.fr/liste-appels-projet-candidature) |
@@ -354,10 +337,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Corrèze | collectivite | html | 3 | [page](https://www.correze.fr/) |
 | Conseil départemental Orne | collectivite | html | 3 | [page](https://www.orne.fr/services/marches-publics-enquete-publique-aap-ami/appels-projets-appel-manifestation-dinteret) |
 | Conseil départemental Yvelines | collectivite | html | 3 | [page](https://www.yvelines.fr/appels-a-projets-subventions/) |
-| Mairie de Marseille | collectivite | html | 3 | [page](https://www.marseille.fr/economie/commerce/appels-manifestation-d-interet-de-la-ville-de-marseille) |
-| Mairie de Amiens | collectivite | html | 3 | [page](https://www.amiens.fr/Institutions/Appel-a-candidatures) |
-| Avise | autre | html | 3 | [page](https://www.avise.org/) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Nouvelle-Aquitaine | ministere | html | 3 | [page](https://nouvelle-aquitaine.dreets.gouv.fr/Marches-publics-et-appels-a-projets) |
 | Deux-Sèvres – appels à projets | collectivite | html | 2 | [page](https://www.deux-sevres.fr/services-en-ligne/tous-les-appels-projets) |
 | Conseil départemental Hauts-de-Seine | collectivite | html | 2 | [page](https://www.hauts-de-seine.fr/mon-departement/les-hauts-de-seine/le-conseil-departemental/les-appels-a-projet) |
 | Conseil départemental Côtes-d'Armor | collectivite | html | 2 | [page](https://cotesdarmor.fr/le-departement/publications-reglementaires/appels-manifestation-d-interet) |
@@ -367,13 +346,9 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Manche | collectivite | html | 2 | [page](https://www.manche.fr/les-appels-a-projets/) |
 | Conseil départemental Charente | collectivite | html | 2 | [page](https://www.lacharente.fr/actualite/appel-a-projets) |
 | Conseil départemental Deux-Sèvres | collectivite | html | 2 | [page](https://www.deux-sevres.fr/services-en-ligne/tous-les-appels-projets) |
-| Mairie de Nice | collectivite | html | 2 | [page](https://www.nice.fr/tag/appel-a-projet/) |
 | Mairie de Montpellier | collectivite | html | 2 | [page](https://www.montpellier.fr/vie-quotidienne/vivre-ici/appels-a-candidatures-a-projets) |
-| Mairie de Reims | collectivite | html | 2 | [page](https://www.reims.fr/) |
-| Mairie de Villeurbanne | collectivite | html | 2 | [page](https://www.villeurbanne.fr/) |
 | Mutualité sociale agricole (MSA) Grand Est - accueil de Sarrebourg | caisse-nationale | html | 2 | [page](https://lorraine.msa.fr/lfp) |
 | Mutualité sociale agricole (MSA) - Meurthe-et-Moselle - accueil de Vandœuvre-lès-Nancy | caisse-nationale | html | 2 | [page](https://lorraine.msa.fr/lfp) |
-| Direction régionale et interdépartementale de l'économie, de l'emploi, du travail et des solidarités (DRIEETS) - Unité départementale de Paris | ministere | html | 2 | [page](https://idf.drieets.gouv.fr/Paris) |
 | Maison de l'Autonomie (MDA) - Alpes-Maritimes | collectivite | html | 2 | [page](https://mda.departement06.fr/appel-projets) |
 | Essonne – Commission des financeurs | collectivite | html | 1 | [page](https://demarche.numerique.gouv.fr/commencer/appel-a-projet-commission-des-financeurs-de-la-pre) |
 | Conseil départemental Essonne | collectivite | html | 1 | [page](https://www.essonne.fr/appel-projets-candidatures) |
@@ -383,7 +358,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Fondation APICIL | fondation | html | 1 | [page](https://www.fondation-apicil.org/appel-a-projets/) |
 | Fondation Malakoff Humanis Handicap | fondation | html | 1 | [page](https://newsroom.malakoffhumanis.com/actualites/la-fondation-malakoff-humanis-handicap-lance-un-appel-a-projet-pour-soutenir-les-innovations-technologiques-et-numeriques-permettant-de-favoriser-lacces-a-lemploi-et-a-la-sante-des-personnes-en-situation-de-handicap-e6dd-63a59.html) |
 | Fondation Crédit Agricole Solidarité et Développement | fondation | html | 1 | [page](https://www.fondation-ca-solidaritedeveloppement.org/appel-a-projets/aide-sociale-a-lenfance-accompagner-les-jeunes-dans-leur-vie-dadulte/) |
-| Interreg Sudoe | europe | html | 1 | [page](https://interreg-sudoe.eu/fr/4eme-appel-a-projets/) |
 | Hauts-de-Seine – appels à projets | collectivite | html | 1 | [page](https://www.hauts-de-seine.fr/mon-departement/les-hauts-de-seine/le-conseil-departemental/les-appels-a-projet) |
 | Métropole de Lyon – Commission des financeurs | collectivite | html | 1 | [page](https://commissiondesfinanceurs.grandlyon.com/) |
 | Collectivité européenne d'Alsace – Commission des financeurs | collectivite | html | 1 | [page](https://www.alsace.eu/actualites/appel-a-projets-2026-commission-financeurs) |
@@ -391,7 +365,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Ministère de l'Enseignement supérieur et de la Recherche | ministere | html | 1 | [page](https://www.enseignementsup-recherche.gouv.fr/fr/appel-projets-appel-candidatures) |
 | ANSM | agence-nationale | html | 1 | [page](https://ansm.sante.fr/actualites/renouvellement-du-comite-dinterface-avec-les-associations-de-patients-appel-a-candidatures-ouvert-jusquau-30-septembre-2026) |
 | Health Data Hub | agence-nationale | html | 1 | [page](https://health-data-hub.fr/aap-gd4h) |
-| Agence de l'eau Artois-Picardie | agence-nationale | html | 1 | [page](https://www.eau-artois-picardie.fr/la-jeunesse-pour-leau-appel-projets/appel-manifestation-dinteret-2026-faire-emerger-des-projets) |
 | Agence de l'eau Loire-Bretagne | agence-nationale | html | 1 | [page](https://aides-redevances.eau-loire-bretagne.fr/home/aides/appels-a-projets-1/poissons-migrateurs-amphihalins-appel-a-projets-2027.html) |
 | ANACT | agence-nationale | html | 1 | [page](https://www.anact.fr/fact/appel-projets-travail-climat-aura-occitanie-paca) |
 | Fondation AÉSIO | fondation | html | 1 | [page](https://fondation.aesio.fr/actualites/appel-projets-reponses-questions-frequentes) |
@@ -431,14 +404,11 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Préfecture - Cantal | ministere | html | 1 | [page](https://www.cantal.gouv.fr/Actualites/Economie-Emploi/Appel-a-projets-2026-2028-pour-le-Dispositif-Local-d-Accompagnement-DLA) |
 | Préfecture - Val-d'Oise | ministere | html | 1 | [page](https://www.val-doise.gouv.fr/Publications/Appels-a-projets) |
 | Préfecture - Vaucluse | ministere | pdf | 1 | [page](https://www.vaucluse.gouv.fr/Actions-de-l-Etat/Securite/Prevention-de-la-delinquance-et-de-la-radicalisation/Prevention-de-la-radicalisation/Appel-a-projet-2026-FIPD-radicalisation) |
-| Direction générale de la cohésion des populations (DGCOPOP) - Guyane | ministere | html | 1 | [page](https://guyane.deets.gouv.fr/Appel-a-projet-FSE-Favoriser-l-acces-au-logement-et-la-prevention-des-violences) |
 | IHU Méditerranée Infection | etablissement | html | 1 | [page](https://ihu-medinfection.com/appel-a-projet-aap-mi2-2026/) |
 | GIRCI Est | etablissement | html | 1 | [page](https://girci-est.fr/appels-a-projets/) |
 | Fédération Addiction | autre | html | 1 | [page](https://www.federationaddiction.fr/actualites/publics/femmes/lancement-de-lappel-a-candidatures-pour-faire-partie-du-groupe-de-travail-femmes-addictions/) |
 | Uriopss PACA-Corse | autre | pdf | 1 | [page](https://www.uriopss-pacac.fr/actualites/recensement-des-appels-projets-0) |
 | Admical | autre | html | 1 | [page](https://admical.org/actualit%C3%A9s/la-fondation-dentreprise-ocirp-lance-son-appel-projets-lieux-alternatifs-du-prendre-soin) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Occitanie | ministere | html | 1 | [page](https://occitanie.dreets.gouv.fr/) |
-| Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Hauts-de-France | ministere | html | 1 | [page](https://hauts-de-france.dreets.gouv.fr/Points-Conseil-Budget-lancement-d-un-appel-a-projets) |
 | Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Normandie | ministere | html | 1 | [page](https://normandie.dreets.gouv.fr/Appels-a-projets) |
 | Fondation Maladies Rares | fondation | html | 0 | [page](https://fondation-maladiesrares.org/appels-a-projets-2019-de-fondation/) |
 | DGOS – programmes de recherche hospitalière (PHRC, PHRIP, PREPS, PRME) | ministere | html | 0 | [page](https://sante.gouv.fr/systeme-de-sante/innovation-et-recherche/l-innovation-et-la-recherche-clinique/appels-a-projets/programmes-recherche) |
@@ -448,8 +418,6 @@ réponses du modèle local Ollama sur la page de rubrique gardée par `decouvert
 | Conseil départemental Oise | collectivite | html | 0 | [page](https://oise.fr/) |
 | Conseil départemental Aube | collectivite | html | 0 | [page](https://www.aube.fr/le-departement/budget-et-documents-reglementaires/appels-a-projets/) |
 | Conseil départemental Alpes-Maritimes | collectivite | html | 0 | [page](https://www.departement06.fr/appels-projets-solidarite-sociale) |
-| Conseil régional La Réunion | collectivite | html | 0 | [page](https://regionreunion.com/) |
-| Préfecture - Rhône | ministere |  |  | [page](https://www.rhone.gouv.fr/) |
 | Préfecture - Morbihan | ministere |  |  | [page](https://www.morbihan.gouv.fr/Publications/Appels-a-manifestation-d-interet/Ouverture-de-l-appel-a-manifestation-d-interet-2021-pour-la-labellisation-Point-conseil-budget) |
 | Direction départementale de l'emploi, du travail et des solidarités (DDETS) - Isère | ministere | html | 0 | [page](https://auvergne-rhone-alpes.dreets.gouv.fr/appels-projets) |
 
