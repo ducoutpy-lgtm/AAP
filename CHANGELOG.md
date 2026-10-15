@@ -15,7 +15,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   place »), le contrôle vaut relecture : l'import écrit la décision du modèle dans `validation` (validée, rejetée et
   archivée, ou à corriger ; un verdict humain l'emporte), applique ses corrections de dates et de montants ;
   `scripts/appliquer_controle.py` fait de même pour les fiches déjà en base (essai à blanc : 231 validées, 39 rejetées,
-  8 à corriger sur 278) ; l'outil de validation ne présente plus que les 6 fiches restantes.
+  8 à corriger sur 278, exécution réelle à 12 h 31 sur son accord, sauvegarde `controle_2026-10-15_1231.json`) ; base :
+  270 publiées dont 231 validées par le modèle, 39 archivées, 38 badges « à vérifier » contre 307 ; l'outil de validation
+  ne présente plus que les 6 fiches restantes.
 - Accès à l'administration (changement `acces-administration`, 2026-10-15, demande de Monsieur DUCOUT : « le lien
   /admin ne fonctionne pas ») : script `scripts/creer_admin.py` (compte Firebase Auth créé sans mot de passe ou
   retrouvé, profil `users` avec le rôle admin, essai à blanc, idempotent) et page `/reset-password` « Mot de passe

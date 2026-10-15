@@ -617,4 +617,6 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   appliquées ; rejetée et archivée si la page n'est pas un appel ; à corriger si doute sur titre, financeur ou
   territoire), appliqué par l'import aux nouvelles fiches et par `scripts/appliquer_controle.py` aux fiches en base.
   Essai à blanc : 278 fiches, 231 validées, 39 rejetées, 8 à corriger ; corrections : 32 dates d'ouverture, 18 dates de
-  clôture, 16 enveloppes, 12 montants. Outil de validation : 6 fiches restantes sur 486. Exécution réelle après accord.
+  clôture, 16 enveloppes, 12 montants. Outil de validation : 6 fiches restantes sur 486. Exécution réelle à 12 h 31 sur son accord (« 1. ok ») : 278 fiches
+  mises à jour, sauvegarde `controle_2026-10-15_1231.json` ; base : 270 publiées (231 validées par le modèle, 8 à corriger,
+  31 proposées closes non contrôlées), 39 archivées, 38 badges « à vérifier » contre 307.

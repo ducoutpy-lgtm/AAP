@@ -55,8 +55,12 @@ sauvegarde avant écriture, aucun `git push`, aucun archivage sans demande.
   conservé, connecteur préféré au modèle local pour une même adresse). Fait quand : essai à blanc collé. (Fait le
   2026-10-15 : « a_corriger 8, correction date_cloture 18, correction date_ouverture 32, correction enveloppe_globale 16,
   correction montant_max 8, correction montant_min 4, rejetee 39, validee 231 ; 278 fiches a mettre a jour ».)
-- [ ] 4.3 Exécution réelle de `appliquer_controle.py` après l'accord de Monsieur DUCOUT ; sortie et sauvegarde collées ;
-  ré-import ; compte des fiches « à vérifier » dans l'application collé.
+- [x] 4.3 Exécution réelle de `appliquer_controle.py` après l'accord de Monsieur DUCOUT ; sortie et sauvegarde collées ;
+  compte des fiches « à vérifier » dans l'application collé. (Fait le 2026-10-15 à 12 h 31, accord « 1. ok » : « Sauvegarde :
+  scripts/sauvegardes/controle_2026-10-15_1231.json (278 fiches) ; Mises a jour : 278 fiches » ; second essai à blanc
+  « deja appliquee 278, 0 fiches a mettre a jour ». Base : 569 documents, 270 publiées (231 validées par le modèle, 8 à
+  corriger, 31 proposées non contrôlées car closes), 39 archivées, 260 brouillons ; 38 publiées avec badge « à vérifier »
+  contre 307 avant.)
 - [x] 4.4 Documentation (README scraping, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`, rapport section 8).
   (Fait le 2026-10-15.)
 - [ ] 4.5 Monsieur DUCOUT ouvre la validation (6 fiches restantes attendues) et l'application (fiches sans badge « à
