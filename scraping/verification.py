@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import sys
 import time
@@ -87,6 +88,84 @@ def normaliser_verification(reponse: dict | None, modele: str, origine: str, mai
 def douteux(fiche: dict) -> list[str]:
     """Champs douteux d'une fiche vérifiée (liste vide si non vérifiée ou sans doute)."""
     return list(((fiche.get("scrape_metadata") or {}).get("verification") or {}).get("douteux") or [])
+
+
+# Décision du modèle (demande de Monsieur DUCOUT du 2026-10-15, midi : « je pense que je t'avais demandé d'utiliser
+# Haiku pour contrôler et valider toutes ces fiches ») : le contrôle vaut relecture. Une fiche sans doute, ou dont les
+# doutes portent sur des champs que la page permet de corriger (dates, montants), est validée au nom du modèle avec
+# ses corrections ; une page qui ne décrit pas un appel est rejetée ; un doute sur le titre, le financeur ou le
+# territoire reste à relire par Monsieur DUCOUT. La description n'est pas bloquante (nuances de formulation).
+CHAMPS_DATES = ("date_ouverture", "date_cloture")
+CHAMPS_MONTANTS = ("montant_min", "montant_max", "enveloppe_globale")
+CHAMPS_NON_BLOQUANTS = ("description",)
+MOTIF_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+MOTIF_MONTANT = re.compile(r"^\d[\d\s]*$")
+
+
+def decision_du_modele(fiche: dict) -> dict | None:
+    """Ce que le contrôle du modèle décide pour une fiche : None si non contrôlée, sinon
+    {statut: validee | rejetee | a_corriger, corrections: {champ: valeur ou None}, a_relire: [champs], commentaire}."""
+    ver = (fiche.get("scrape_metadata") or {}).get("verification")
+    if not ver:
+        return None
+    if ver.get("est_un_appel") is False:
+        return {"statut": "rejetee", "corrections": {}, "a_relire": [],
+                "commentaire": "la page ne décrit pas un appel précis (contrôle du modèle)"}
+    corrections, a_relire = {}, []
+    for nom in ver.get("douteux") or []:
+        if nom in CHAMPS_NON_BLOQUANTS:
+            continue
+        champ = (ver.get("champs") or {}).get(nom) or {}
+        verdict, correction = champ.get("verdict"), (champ.get("correction") or "").strip()
+        if nom in CHAMPS_DATES:
+            if MOTIF_DATE.match(correction):
+                corrections[nom] = correction
+            elif verdict in ("faux", "fabrique"):
+                corrections[nom] = None  # valeur contredite ou inventée, sans valeur lisible : retirée
+            elif verdict == "manquant":
+                a_relire.append(nom)
+        elif nom in CHAMPS_MONTANTS:
+            if MOTIF_MONTANT.match(correction):
+                nombre = int(re.sub(r"\s", "", correction))
+                corrections[nom] = str(nombre) if nom == "enveloppe_globale" else nombre
+            elif verdict in ("faux", "fabrique"):
+                corrections[nom] = None
+            elif verdict == "manquant":
+                a_relire.append(nom)
+        else:
+            a_relire.append(nom)
+    if a_relire:
+        statut, texte = "a_corriger", "à relire : " + ", ".join(a_relire)
+    else:
+        statut, texte = "validee", "aucun doute" if not corrections else ""
+    if corrections:
+        detail = ", ".join(f"{k} -> {v if v is not None else 'retiré'}" for k, v in corrections.items())
+        texte = (texte + " ; " if texte else "") + "corrigé d'après la page : " + detail
+    return {"statut": statut, "corrections": corrections, "a_relire": a_relire,
+            "commentaire": texte + " (contrôle du modèle)"}
+
+
+def appliquer_corrections(fiche: dict, decision: dict | None) -> dict:
+    """Copie de la fiche avec les corrections décidées (valeurs lues sur la page par le modèle)."""
+    if not decision or not decision["corrections"]:
+        return fiche
+    corrigee = dict(fiche)
+    corrigee.update(decision["corrections"])
+    return corrigee
+
+
+def restantes_a_relire(fiches: list[dict]) -> list[dict]:
+    """Fiches que Monsieur DUCOUT doit encore relire : dans le champ (les hors champ sont déjà écartées) et dont le
+    contrôle du modèle n'a pas tranché (non contrôlée, ou à corriger)."""
+    retenues = []
+    for f in fiches:
+        if (f.get("scrape_metadata") or {}).get("champ") == "hors-champ":
+            continue
+        d = decision_du_modele(f)
+        if d and d["statut"] in ("validee", "rejetee"):
+            continue
+        retenues.append(f)
+    return retenues
 
 
 def a_verifier(fiches: list[dict], aujourdhui: str) -> list[dict]:

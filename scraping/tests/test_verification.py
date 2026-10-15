@@ -74,3 +74,38 @@ def test_bilan_et_rapport_markdown():
     assert "| ars-normandie | 2 | 1 | 50 % |" in md
     assert "Fiche douteuse / pipe" in md and "date_cloture (faux, page : 2026-11-30)" in md and "financeur (manquant, page : ARS Normandie)" in md
     assert "Fiche sûre" not in md.split("## Fiches douteuses")[1]
+
+
+def controlee(douteux=(), est_un_appel=True, champ="sante", **champs):
+    ver = {"modele": "m", "le": "2026-10-15T11:00:00", "est_un_appel": est_un_appel, "douteux": list(douteux),
+           "champs": {nom: {"verdict": verdict, "correction": correction} for nom, (verdict, correction) in champs.items()}}
+    return {"titre": "t", "date_ouverture": "2026-01-01", "date_cloture": None, "montant_max": 5000,
+            "scrape_metadata": {"champ": champ, "verification": ver}}
+
+
+def test_decision_du_modele_valide_corrige_ou_laisse_a_relire():
+    # Demande du 2026-10-15 : le contrôle vaut relecture, les corrections lisibles sont appliquées
+    assert v.decision_du_modele({"titre": "t"}) is None  # fiche non contrôlée
+    assert v.decision_du_modele(controlee())["statut"] == "validee"
+    assert v.decision_du_modele(controlee(["description"], description=("faux", None)))["statut"] == "validee"
+    d = v.decision_du_modele(controlee(["date_cloture", "date_ouverture", "montant_max", "enveloppe_globale"],
+                                       date_cloture=("manquant", "2026-04-30"), date_ouverture=("fabrique", None),
+                                       montant_max=("faux", "36 000"), enveloppe_globale=("manquant", "910000")))
+    assert d["statut"] == "validee"
+    assert d["corrections"] == {"date_cloture": "2026-04-30", "date_ouverture": None, "montant_max": 36000,
+                                "enveloppe_globale": "910000"}
+    assert "corrigé d'après la page" in d["commentaire"] and "contrôle du modèle" in d["commentaire"]
+    corrigee = v.appliquer_corrections(controlee(), d)
+    assert corrigee["date_cloture"] == "2026-04-30" and corrigee["date_ouverture"] is None and corrigee["montant_max"] == 36000
+    # Doute sur le titre ou montant « incertain » : Monsieur DUCOUT relit
+    d2 = v.decision_du_modele(controlee(["titre", "montant_min"], titre=("faux", "autre"), montant_min=("faux", "incertain")))
+    assert d2["statut"] == "a_corriger" and d2["a_relire"] == ["titre"] and d2["corrections"] == {"montant_min": None}
+    # Page qui ne décrit pas un appel : rejetée
+    assert v.decision_du_modele(controlee(est_un_appel=False))["statut"] == "rejetee"
+
+
+def test_restantes_a_relire_ecarte_hors_champ_et_fiches_tranchees():
+    fiches = [controlee(champ="hors-champ"), controlee(), controlee(est_un_appel=False),
+              controlee(["titre"], titre=("faux", "x")), {"titre": "jamais contrôlée", "scrape_metadata": {"champ": "sante"}}]
+    restantes = v.restantes_a_relire(fiches)
+    assert [f["titre"] for f in restantes] == ["t", "jamais contrôlée"] and restantes[0]["scrape_metadata"]["verification"]["douteux"] == ["titre"]

@@ -31,12 +31,33 @@ remplace pas le verdict humain.
 - **THEN** la première fiche présentée est une fiche douteuse, avec la liste de ses champs douteux et les valeurs lues
   sur la page ; une fiche sans doute affiche « aucun doute »
 
-### Requirement: Le contrôle ne vaut pas relecture
+### Requirement: Le contrôle du modèle vaut relecture, sauf verdict humain
 
-L'import SHALL reporter seulement un résumé du contrôle (modèle, date, champs douteux) dans `scrapeMetadata` et SHALL
-laisser `validation.statut`, l'étiquette « à vérifier » et la publication inchangés.
+Décision de Monsieur DUCOUT du 2026-10-15 (midi), qui remplace la règle du matin : la mention « relue » n'est plus
+réservée à ses verdicts. Pour une fiche dans le champ sans verdict humain, l'import et la migration
+`scripts/appliquer_controle.py` SHALL écrire la décision du contrôle au nom du modèle (`validation.par` = modèle) :
+« validee » quand aucun champ n'est douteux hors description, ou quand les seuls doutes portent sur des dates ou des
+montants que la page permet de corriger (corrections appliquées, valeurs illisibles retirées) ; « rejetee » (archivée)
+quand la page ne décrit pas un appel précis ; « a_corriger » quand un doute porte sur le titre, le financeur ou le
+territoire, ou sur un montant « manquant » sans valeur. Un verdict humain SHALL toujours l'emporter. L'outil de
+validation SHALL ne présenter que les fiches restantes (hors champ et fiches tranchées écartées).
 
 #### Scenario: Fiche contrôlée sans doute
 
-- **WHEN** une fiche contrôlée sans aucun champ douteux est importée
-- **THEN** elle garde `validation.statut = proposee` et l'étiquette `a-verifier`, et porte `scrapeMetadata.verification.douteux = []`
+- **WHEN** une fiche contrôlée sans champ douteux, ou douteuse sur la seule description, est importée ou migrée
+- **THEN** elle passe `validation.statut = validee`, `validation.par = claude-haiku-5-5`, sans étiquette `a-verifier`
+
+#### Scenario: Date de clôture lue sur la page
+
+- **WHEN** la fiche n'a pas de date de clôture et le contrôle a lu `2026-11-30` sur la page
+- **THEN** la fiche est validée avec `deadline = 2026-11-30` et le commentaire « corrigé d'après la page : date_cloture -> 2026-11-30 »
+
+#### Scenario: Doute sur le titre
+
+- **WHEN** le contrôle juge le titre faux
+- **THEN** la fiche passe « a_corriger » au nom du modèle, garde l'étiquette `a-verifier` et reste présentée à Monsieur DUCOUT
+
+#### Scenario: Verdict humain existant
+
+- **WHEN** la fiche porte déjà `validation.par = Monsieur DUCOUT`
+- **THEN** rien ne change

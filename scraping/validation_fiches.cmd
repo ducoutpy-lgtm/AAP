@@ -8,7 +8,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 set PORT=8789
 echo Validation des fiches a verifier : fiches produites par le modele local (results\extraction_locale.json).
-echo Fiches ouvertes seulement. Verdicts enregistres dans sources\verdicts_fiches.json (lus par l import). Fermer cette fenetre pour arreter.
+echo Fiches ouvertes, dans le champ, non tranchees par le controle du modele. Verdicts enregistres dans sources\verdicts_fiches.json (lus par l import). Fermer cette fenetre pour arreter.
 echo.
 rem Le navigateur s ouvre deux secondes apres, le temps que le serveur demarre.
 start "" /min cmd /c "timeout /t 2 >nul & start "" http://localhost:%PORT%"

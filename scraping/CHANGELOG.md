@@ -9,6 +9,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   publiable par le modèle, verdict par champ (juste, faux avec valeur lue, fabriqué, manquant, vide, incertain), essai à
   blanc, plafond, sauvegarde, rapport `VERIFICATION.md` ; 283 fiches, 0,15 euro réel. `validation.py` : fiches douteuses
   en premier et bloc « Contrôle par le modèle » dans l'écran des fiches.
+- `verification.decision_du_modele`, `appliquer_corrections`, `restantes_a_relire` (2026-10-15, midi, décision de
+  Monsieur DUCOUT : le contrôle vaut relecture) : fiche sans doute ou corrigeable (dates, montants lus sur la page)
+  validée au nom du modèle, page sans appel rejetée, doute sur titre, financeur ou territoire laissé à relire ;
+  `validation.py` ne présente plus que les fiches restantes (6 sur 486).
 
 ### Modifié (2026-10-15)
 - `sources/relecture_qualification.json` et registre : 35 sources dont aucune fiche n'est dans le champ santé ou

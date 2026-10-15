@@ -31,6 +31,7 @@ import requests
 
 from qualification import texte_sans_balises
 from registre import adresse_aap
+import verification
 
 ICI = Path(__file__).resolve().parent
 RESULTS = ICI / "results"
@@ -545,6 +546,11 @@ def main() -> int:
         fiches = json.loads(chemin.read_text(encoding="utf-8"))
         if args.ouvertes:
             fiches = fiches_ouvertes(fiches, datetime.now().strftime("%Y-%m-%d"))
+        # Depuis le 2026-10-15 (midi) : les fiches hors champ et celles que le contrôle du modèle a tranchées
+        # (validées ou rejetées en son nom) ne sont plus présentées ; restent les non contrôlées et les « à relire ».
+        avant = len(fiches)
+        fiches = verification.restantes_a_relire(fiches)
+        print(f"{avant} fiches lues, {len(fiches)} restent à relire (hors champ et fiches tranchées par le contrôle du modèle écartées)")
         fiches = douteuses_d_abord(fiches)  # les fiches signalées par le contrôle du modèle se relisent en premier
         for f in fiches:
             f["extrait"] = extrait_page(f)

@@ -353,8 +353,16 @@ Monsieur DUCOUT a confirmé les 24 classements du modèle local sur le premier t
 Pourquoi : relire à la main 308 fiches publiées prend des jours ; pour 0,03 centime par fiche, `claude-haiku-5-5` relit
 chaque fiche à côté du texte de sa page et dit, champ par champ (titre, financeur, dates, montants, territoire,
 description), si la valeur est juste, fausse (avec la valeur lue sur la page), fabriquée (absente de la page),
-manquante, vide ou incertaine, et si la page décrit bien un appel précis. Ce contrôle ne vaut pas relecture : la mention
-« relue » reste réservée aux verdicts de Monsieur DUCOUT (décision du 2026-10-15), qui relit d'abord les fiches douteuses.
+manquante, vide ou incertaine, et si la page décrit bien un appel précis.
+
+Depuis le 2026-10-15 à midi (décision de Monsieur DUCOUT : « j'ai payé pour qu'il le fasse à ma place »), ce contrôle
+vaut relecture : `verification.decision_du_modele` valide au nom du modèle une fiche sans doute (la description, où le
+modèle relève des nuances, n'est pas bloquante) ou dont les doutes portent sur des dates ou des montants lisibles sur la
+page (corrections appliquées, valeurs inventées retirées) ; rejette (archive) une page qui ne décrit pas un appel
+précis ; laisse « à corriger » un doute sur le titre, le financeur ou le territoire. Un verdict de Monsieur DUCOUT
+l'emporte toujours. L'import applique cette décision aux nouvelles fiches ; `scripts/appliquer_controle.py` l'applique
+aux fiches déjà en base (sauvegarde, essai à blanc). L'outil de validation ne présente plus que les fiches restantes
+(hors champ et fiches tranchées écartées : 6 sur 486 le 2026-10-15).
 
 ```bash
 python verification.py --verifier --dry-run        # fiches à vérifier (champ santé, médico-social ou incertain, encore ouvertes), coût estimé

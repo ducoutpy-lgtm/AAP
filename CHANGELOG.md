@@ -10,8 +10,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   `scraping/verification.py` relit chaque fiche publiable à côté de sa page avec `claude-haiku-5-5` et donne un verdict
   par champ ; 283 fiches contrôlées pour 0,15 euro, 129 sans doute, 74 douteuses sur une date, un montant, le financeur,
   le titre ou le territoire, 80 sur la seule description ; l'outil de validation présente les fiches douteuses en
-  premier avec la valeur lue sur la page ; l'import reporte le résumé dans `scrapeMetadata.verification` sans toucher
-  au statut (la mention « relue » reste réservée aux verdicts humains) ; rapport `scraping/VERIFICATION.md`.
+  premier avec la valeur lue sur la page ; l'import reporte le résumé dans `scrapeMetadata.verification` ; rapport
+  `scraping/VERIFICATION.md`. Le même jour à midi, sur décision de Monsieur DUCOUT (« j'ai payé pour qu'il le fasse à ma
+  place »), le contrôle vaut relecture : l'import écrit la décision du modèle dans `validation` (validée, rejetée et
+  archivée, ou à corriger ; un verdict humain l'emporte), applique ses corrections de dates et de montants ;
+  `scripts/appliquer_controle.py` fait de même pour les fiches déjà en base (essai à blanc : 231 validées, 39 rejetées,
+  8 à corriger sur 278) ; l'outil de validation ne présente plus que les 6 fiches restantes.
 - Accès à l'administration (changement `acces-administration`, 2026-10-15, demande de Monsieur DUCOUT : « le lien
   /admin ne fonctionne pas ») : script `scripts/creer_admin.py` (compte Firebase Auth créé sans mot de passe ou
   retrouvé, profil `users` avec le rôle admin, essai à blanc, idempotent) et page `/reset-password` « Mot de passe

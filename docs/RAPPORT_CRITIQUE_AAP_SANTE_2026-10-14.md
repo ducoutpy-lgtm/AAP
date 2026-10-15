@@ -610,3 +610,11 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   dates d'ouverture 19 fausses et 22 fabriquées, dates de clôture 5 fausses et 18 manquantes, montants 10 faux,
   enveloppe 14 manquantes, titres 2 faux et 1 fabriqué. L'outil de validation présente ces fiches en premier ;
   `VERIFICATION.md` les liste ; ré-import du résumé : 529 fiches mises à jour, aucune créée.
+- Décision de Monsieur DUCOUT (2026-10-15, midi) : « je t'avais demandé d'utiliser Haiku pour contrôler et valider
+  toutes ces fiches [...] j'ai payé pour qu'il le fasse à ma place ». La règle du matin (« relue » réservée à ses
+  verdicts) est abandonnée : le contrôle vaut relecture. Codé et testé : `verification.decision_du_modele` (validée si
+  aucun doute hors description ou si les doutes portent sur des dates et montants lisibles sur la page, corrections
+  appliquées ; rejetée et archivée si la page n'est pas un appel ; à corriger si doute sur titre, financeur ou
+  territoire), appliqué par l'import aux nouvelles fiches et par `scripts/appliquer_controle.py` aux fiches en base.
+  Essai à blanc : 278 fiches, 231 validées, 39 rejetées, 8 à corriger ; corrections : 32 dates d'ouverture, 18 dates de
+  clôture, 16 enveloppes, 12 montants. Outil de validation : 6 fiches restantes sur 486. Exécution réelle après accord.

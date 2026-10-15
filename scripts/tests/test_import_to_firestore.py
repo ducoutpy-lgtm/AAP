@@ -342,3 +342,48 @@ def test_import_reporte_le_resume_du_controle_du_modele():
     assert "champs" not in doc["scrapeMetadata"]["verification"]
     imp.verifier_champs(doc, "test")
     assert "verification" not in imp.to_app_aap(fiche(), "x", MAINTENANT)["scrapeMetadata"]
+
+
+def test_le_controle_du_modele_vaut_relecture_sauf_verdict_humain():
+    # Demande de Monsieur DUCOUT du 2026-10-15 (midi) : Haiku valide a sa place ; son verdict a lui l'emporte toujours.
+    import verification  # noqa: E402
+    ver = {"modele": "claude-haiku-5-5", "le": "2026-10-15T11:00:00", "douteux": ["date_cloture"], "est_un_appel": True,
+           "champs": {"date_cloture": {"verdict": "manquant", "correction": "2026-11-30", "raison": "page"}}}
+    item = fiche(date_cloture=None, scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "sante", "verification": ver})
+    decision = verification.decision_du_modele(item)
+    doc = imp.to_app_aap(verification.appliquer_corrections(item, decision), "x", MAINTENANT)
+    doc = imp.appliquer_verdict(doc, None)
+    doc = imp.appliquer_decision_du_modele(imp.champ_en_attente(doc, AUJOURDHUI), decision)
+    assert doc["deadline"].date().isoformat() == "2026-11-30"
+    assert doc["validation"]["statut"] == "validee" and doc["validation"]["par"] == "claude-haiku-5-5"
+    assert "a-verifier" not in doc["tags"] and doc["status"] == "published"
+    imp.verifier_champs(doc, "test")
+    # Rejet par le modele : archive
+    ver_non = {**ver, "est_un_appel": False, "douteux": []}
+    item_non = fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "sante", "verification": ver_non})
+    d_non = verification.decision_du_modele(item_non)
+    doc_non = imp.appliquer_decision_du_modele(imp.appliquer_verdict(imp.to_app_aap(item_non, "x", MAINTENANT), None), d_non)
+    assert doc_non["validation"]["statut"] == "rejetee" and doc_non["status"] == "archived"
+    # Verdict humain existant : rien ne bouge
+    humain = imp.appliquer_verdict(imp.to_app_aap(item, "x", MAINTENANT), {"verdict": "aap-a-corriger", "commentaire": "c"})
+    assert imp.appliquer_decision_du_modele(humain, decision)["validation"]["par"] == imp.RELECTEUR
+    # Fiche hors champ : le brouillon hors champ reste
+    hors = imp.champ_en_attente(imp.appliquer_verdict(imp.to_app_aap(
+        fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "hors-champ", "verification": ver}), "x", MAINTENANT), None), AUJOURDHUI)
+    assert imp.appliquer_decision_du_modele(hors, decision)["validation"]["statut"] == "a_corriger"
+
+
+def test_appliquer_controle_modifications_n_ecrit_que_le_necessaire():
+    # Migration appliquer_controle.py : validation au nom du modele, tags, champs corriges ; status seulement si rejetee.
+    import appliquer_controle as ac  # noqa: E402
+    import verification  # noqa: E402
+    ver = {"modele": "claude-haiku-5-5", "le": "2026-10-15T11:00:00", "douteux": ["date_cloture", "enveloppe_globale"],
+           "est_un_appel": True, "champs": {"date_cloture": {"verdict": "manquant", "correction": "2026-11-30"},
+                                            "enveloppe_globale": {"verdict": "manquant", "correction": "910000"}}}
+    item = fiche(date_cloture=None, scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "sante", "verification": ver})
+    maj = ac.modifications(item, "x", verification.decision_du_modele(item), MAINTENANT, AUJOURDHUI)
+    assert set(maj) == {"validation", "tags", "deadline", "budgetTotal", "scrapeMetadata.enveloppeGlobale"}
+    assert maj["validation"]["statut"] == "validee" and maj["deadline"].date().isoformat() == "2026-11-30"
+    assert maj["budgetTotal"] == 910000 and "a-verifier" not in maj["tags"] and "sans-date-cloture" not in maj["tags"]
+    rejet = fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "sante", "verification": {**ver, "est_un_appel": False, "douteux": []}})
+    assert ac.modifications(rejet, "x", verification.decision_du_modele(rejet), MAINTENANT, AUJOURDHUI)["status"] == "archived"

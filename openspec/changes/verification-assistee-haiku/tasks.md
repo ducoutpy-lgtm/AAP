@@ -38,5 +38,26 @@ sauvegarde avant écriture, aucun `git push`, aucun archivage sans demande.
 
 - [x] 3.1 README scraping, README racine, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`, rapport section 8.
   (Fait le 2026-10-15.)
-- [ ] 3.2 Monsieur DUCOUT ouvre la validation, voit une fiche douteuse en premier avec les valeurs lues sur la page, et
-  lit `VERIFICATION.md`.
+- [x] 3.2 Monsieur DUCOUT ouvre la validation, voit une fiche douteuse en premier avec les valeurs lues sur la page, et
+  lit `VERIFICATION.md`. (Ouverte le 2026-10-15 à midi : « j'ai toujours 486 fiches à valider ! pourquoi c'est pas validé
+  par Haiku, j'ai payé pour qu'il le fasse à ma place » : la règle « relue réservée à ses verdicts » n'était pas ce qu'il
+  voulait ; section 4.)
+
+## 4. Le contrôle vaut relecture (décision de Monsieur DUCOUT du 2026-10-15, midi)
+
+- [x] 4.1 `verification.decision_du_modele` (validee / rejetee / a_corriger, corrections lisibles dates et montants),
+  `appliquer_corrections`, `restantes_a_relire` ; `import_to_firestore.appliquer_decision_du_modele` ; `validation.py`
+  ne présente que les fiches restantes. Fait quand : tests verts ; écran de validation relu par la session. (Fait le
+  2026-10-15 : pytest scraping 92, scripts 25 verts ; écran sur le port 8790 : « 486 fiches lues, 6 restent à relire ».
+  Décisions sur `extraction_locale.json` : 224 validées, 29 rejetées, 6 à relire ; corrections : date_ouverture 30,
+  date_cloture 17, enveloppe 16, montant_max 8, montant_min 4.)
+- [x] 4.2 `scripts/appliquer_controle.py` (migration des fiches déjà en base, sauvegarde, essai à blanc, verdict humain
+  conservé, connecteur préféré au modèle local pour une même adresse). Fait quand : essai à blanc collé. (Fait le
+  2026-10-15 : « a_corriger 8, correction date_cloture 18, correction date_ouverture 32, correction enveloppe_globale 16,
+  correction montant_max 8, correction montant_min 4, rejetee 39, validee 231 ; 278 fiches a mettre a jour ».)
+- [ ] 4.3 Exécution réelle de `appliquer_controle.py` après l'accord de Monsieur DUCOUT ; sortie et sauvegarde collées ;
+  ré-import ; compte des fiches « à vérifier » dans l'application collé.
+- [x] 4.4 Documentation (README scraping, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`, rapport section 8).
+  (Fait le 2026-10-15.)
+- [ ] 4.5 Monsieur DUCOUT ouvre la validation (6 fiches restantes attendues) et l'application (fiches sans badge « à
+  vérifier », 39 fiches archivées absentes).

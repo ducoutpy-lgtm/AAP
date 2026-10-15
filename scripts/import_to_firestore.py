@@ -59,6 +59,7 @@ VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
 import financeurs  # noqa: E402
 import registre  # noqa: E402
 import territoires  # noqa: E402
+import verification  # noqa: E402
 EMETTEURS = financeurs.index_emetteurs(registre.charger())
 FINANCEURS = financeurs.charger()
 
@@ -128,6 +129,22 @@ def appliquer_verdict(doc: dict, verdict: dict | None) -> dict:
     statut = d["validation"]["statut"]
     d["tags"] = etiqueter(d.get("tags", []), statut)
     if statut == "rejetee":
+        d["status"] = "archived"
+    return d
+
+
+def appliquer_decision_du_modele(doc: dict, decision: dict | None) -> dict:
+    """Le controle du modele vaut relecture (demande de Monsieur DUCOUT du 2026-10-15, midi) : sur une fiche sans
+    verdict humain et dans le champ, le statut decide par scraping/verification.decision_du_modele (validee,
+    rejetee, a_corriger) est ecrit au nom du modele ; rejetee archive. Un verdict humain l'emporte (fonction pure)."""
+    if not decision or (doc.get("validation") or {}).get("par") == RELECTEUR or "hors-champ" in doc.get("tags", []):
+        return doc
+    d = dict(doc)
+    ver = (d.get("scrapeMetadata") or {}).get("verification") or {}
+    d["validation"] = {"statut": decision["statut"], "commentaire": decision["commentaire"],
+                       "date": (ver.get("le") or "")[:10], "par": ver.get("modele") or "modele"}
+    d["tags"] = etiqueter(d.get("tags", []), decision["statut"])
+    if decision["statut"] == "rejetee":
         d["status"] = "archived"
     return d
 
@@ -447,7 +464,8 @@ def main() -> int:
     try:
         for source_name, item in raw:
             verifier_fiche(item, f"{source_name}.json")
-            doc = to_app_aap(item, source_name, now)
+            decision = verification.decision_du_modele(item)
+            doc = to_app_aap(verification.appliquer_corrections(item, decision), source_name, now)
             if doc is None:
                 skipped["incomplet"] += 1
                 continue
@@ -461,6 +479,7 @@ def main() -> int:
                 continue
             doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
             doc = champ_en_attente(doc, today)
+            doc = appliquer_decision_du_modele(doc, decision)
             hors_champ += "hors-champ" in doc["tags"]
             verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")
             mapped.append((identifiant(doc["externalUrl"]), doc))
