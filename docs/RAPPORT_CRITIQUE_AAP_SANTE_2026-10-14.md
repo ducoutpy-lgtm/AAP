@@ -564,3 +564,8 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   `openspec archive nettoyage-financeurs-territoires`, quatre exigences ajoutées à `openspec/specs/import-aap-scrapes/`
   (source réelle, financeur canonique, territoire déduit, rapport des doublons), validation de l'ensemble : 16 éléments
   sans erreur.
+- Fin du passage global (2026-10-15, 7 h 40) : 2 178 textes traités, 1 086 fiches produites (2 à relire), 1 070 pages
+  refusées, 22 échecs, 28,6 h de calcul cumulé, 0 euro ; points horaires envoyés de 23 h 35 à 7 h 46 à la demande de
+  Monsieur DUCOUT, PC maintenu éveillé. Décision de Monsieur DUCOUT (7 h 17) : « arrête après la fin estimée, je
+  relancerai tout seul après » ; aucune étape suivante lancée (classement du champ par Haiku, ré-import,
+  `migrer_champ.py`, rapport), à relancer par lui.
