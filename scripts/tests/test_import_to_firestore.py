@@ -318,3 +318,15 @@ def test_groupes_de_doublons_meme_titre_normalise_et_meme_financeur():
               ("d", {"title": "Autre appel", "financeurName": "ARS Normandie"})]
     groupes = doublons.groupes_de_doublons(fiches)
     assert [[i for i, _ in g] for g in groupes] == [["a", "b"]]
+
+
+def test_profil_admin_impose_le_role_et_garde_le_reste():
+    import creer_admin
+
+    neuf = creer_admin.profil_admin("a@b.fr", None, "T0")
+    assert neuf["userType"] == "admin" and neuf["profileComplete"] is True and neuf["createdAt"] == "T0"
+    assert neuf["subscriptionStatus"] == "active" and neuf["subscriptionPlan"] is None
+    existant = {"userType": "porteur", "createdAt": "T-1", "notificationPreferences": {"email": False}, "profileComplete": False}
+    promu = creer_admin.profil_admin("a@b.fr", existant, "T0")
+    assert promu["userType"] == "admin" and promu["createdAt"] == "T-1" and promu["notificationPreferences"] == {"email": False}
+    assert promu["profileComplete"] is True and promu["email"] == "a@b.fr"

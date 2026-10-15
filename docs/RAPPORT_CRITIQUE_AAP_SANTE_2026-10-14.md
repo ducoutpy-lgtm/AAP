@@ -591,3 +591,12 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   financeur, aucun compte à son nom ; Firebase Auth : 3 comptes), d'où un espace `/admin` jamais vu ; devis d'une
   vérification des fiches par `claude-haiku-5-5` sur les textes réels (573 fiches dans le champ, 2 708 caractères en
   moyenne) : 0,19 euro, soit 0,03 centime par fiche, 0,10 euro pour les 308 fiches publiées.
+- Décisions de Monsieur DUCOUT (2026-10-15, 10 h) : accord pour la vérification des fiches assistée par Haiku
+  (0,10 euro estimé sur les 308 fiches publiées, mention « relue » réservée à ses verdicts), à cadrer dans un changement
+  OpenSpec ; « le lien http://localhost:3000/admin ne fonctionne pas, fais ce qu'il faut ». Constats : `/admin` renvoie
+  vers `/login` (normal sans compte) ; aucun compte admin ; fournisseur Google désactivé dans Firebase (le bouton
+  échoue) ; le lien « Mot de passe oublié ? » menait à la page 404. Changement `acces-administration` : script
+  `scripts/creer_admin.py` (compte Firebase Auth créé sans mot de passe ou retrouvé, profil `users` avec le rôle admin,
+  essai à blanc) que Monsieur DUCOUT lance lui-même, et page `/reset-password` (e-mail de réinitialisation Firebase)
+  pour choisir son mot de passe : aucun mot de passe ne transite par la session. Compteurs par statut de validation
+  (instruction 12) prévus dans le même changement.

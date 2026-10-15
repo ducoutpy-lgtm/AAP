@@ -85,7 +85,9 @@ Son module `src/services/export.ts` pourra être porté dans `app/` quand l'expo
   (`/signup` en 404) ; modules gelés jusqu'au lot 4 (liste dans `openspec/changes/lot-0-assainissement/design.md`),
   ne jamais les modifier. `npm run lint` (configuration créée le 2026-10-14, fichiers gelés ignorés), `npm run
   test:rules` (émulateur Firestore, JDK 21 en tête du PATH). `deadline` nullable et bloc `validation` dans le type `AAP`.
-- Rôles : `porteur`, `financeur`, `admin` (champ `users/{uid}.userType`).
+- Rôles : `porteur`, `financeur`, `admin` (champ `users/{uid}.userType`). Compte administrateur : `scripts/creer_admin.py
+  --email <adresse>` (2026-10-15, sans mot de passe ; mot de passe choisi via `/reset-password`). Fournisseur Google
+  désactivé dans Firebase : le bouton « Google » de `/login` ne fonctionne pas.
 - Abonnement : essai 14 jours à l'inscription ; Stripe **non branché** (Cloud Functions non déployées).
 - Détail complet (routes, collections Firestore, limites connues) : `docs/resume_application_web_2026-10.md`.
 
@@ -215,8 +217,10 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `lot-0-assainissement` (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de
-  Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et
+  En cours : `acces-administration` (2026-10-15 : aucun compte admin n'existait ; `scripts/creer_admin.py` et page
+  `/reset-password` faits, lint et build verts ; Monsieur DUCOUT lance le script et choisit son mot de passe par
+  « Mot de passe oublié ? » ; compteurs par statut de validation, instruction 12, à faire ensuite), `lot-0-assainissement`
+  (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et
   testé ; premier tirage de collectivités jugé et rapporté, second tirage chez les financeurs de la santé arrêté le
   2026-10-14 au soir sur décision de Monsieur DUCOUT, carte graphique rendue au passage global),
   `filtre-champ-sante` (2026-10-14 nuit, instruction 26 validée : définition du champ décidée, `scraping/champ.py`,

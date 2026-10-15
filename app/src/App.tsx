@@ -6,6 +6,7 @@ import { RoleGuard } from './components/guards/RoleGuard';
 // Pages publiques
 import LandingPage from './pages/public/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 
 // Consultation publique des AAP
 import SearchAapPage from './pages/porteur/SearchAapPage';
@@ -41,6 +42,9 @@ function App() {
           {/* Routes publiques */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
+          {/* Mot de passe oublié : lien présent sur la page de connexion, page ajoutée le 2026-10-15
+              (changement acces-administration) ; e-mail et saisie du nouveau mot de passe gérés par Firebase */}
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Consultation publique : les AAP publiés sont lisibles sans compte
               (changement OpenSpec consultation-aap-sans-compte). */}

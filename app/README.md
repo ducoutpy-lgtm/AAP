@@ -241,6 +241,14 @@ code conservé sans modification, inscription fermée (`/signup` affiche la page
 affiche « Date de clôture non précisée » et se classe après les fiches datées ; depuis le 2026-10-14 au soir (décision
 de Monsieur DUCOUT) l'import la publie directement avec le badge « À vérifier ».
 
+**Espace d'administration et compte administrateur** (changement `acces-administration`, 2026-10-15) : `/admin`,
+`/admin/aaps` et `/admin/utilisateurs` sont réservés aux comptes dont `users/{uid}.userType` vaut `admin`. Aucun compte de
+ce type n'existait et l'inscription est fermée : le script `scripts/creer_admin.py --email <adresse>` (essai à blanc avec
+`--dry-run`) crée le compte Firebase Auth sans mot de passe, ou le retrouve, et écrit le profil avec le rôle admin. Le mot
+de passe se choisit ensuite par « Mot de passe oublié ? » sur `/login` : la page `/reset-password` envoie l'e-mail de
+réinitialisation de Firebase. Le fournisseur Google n'est pas activé dans le projet Firebase : le bouton « Google » de la
+page de connexion ne fonctionne pas.
+
 **Filtres de la recherche** (changement `filtres-recherche`, 2026-10-14 au soir) : Territoire (identifiants écrits par
 l'import, affichés avec leur libellé, `src/utils/territoires.ts`), Thématique (champ classé par le modèle :
 `scrapeMetadata.champ`, « Santé », « Médico-social », « Non classée » tant que la fiche n'est pas classée) et Financeur,

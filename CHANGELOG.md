@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté
+- Accès à l'administration (changement `acces-administration`, 2026-10-15, demande de Monsieur DUCOUT : « le lien
+  /admin ne fonctionne pas ») : script `scripts/creer_admin.py` (compte Firebase Auth créé sans mot de passe ou
+  retrouvé, profil `users` avec le rôle admin, essai à blanc, idempotent) et page `/reset-password` « Mot de passe
+  oublié » (e-mail de réinitialisation Firebase), dont le lien existait sur la page de connexion mais menait à la 404.
+  Constat : aucun compte admin n'existait, fournisseur Google désactivé.
+
 ### Modifié
 - Fin du passage global d'extraction locale (2026-10-15, 7 h 40 : 2 178 textes, 1 086 fiches, 1 070 pages refusées,
   22 échecs, 28,6 h, 0 euro) puis classement du champ des 1 086 fiches par `claude-haiku-5-5` sur l'accord de Monsieur
