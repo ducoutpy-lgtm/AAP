@@ -600,3 +600,5 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   essai à blanc) que Monsieur DUCOUT lance lui-même, et page `/reset-password` (e-mail de réinitialisation Firebase)
   pour choisir son mot de passe : aucun mot de passe ne transite par la session. Compteurs par statut de validation
   (instruction 12) prévus dans le même changement.
+- Vérification de Monsieur DUCOUT (2026-10-15, 10 h 30) : « ça y est je suis connecté je vois l'admin ». Compte
+  administrateur créé par lui avec le script, mot de passe choisi par l'e-mail de Firebase, espace `/admin` ouvert.

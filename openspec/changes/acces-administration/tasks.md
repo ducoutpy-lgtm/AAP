@@ -15,8 +15,9 @@ lui-même avec le script.
 - [x] 1.2 Page `/reset-password` et route publique ; lint et build verts ; page relue dans le navigateur. (Fait le
   2026-10-15 : lint et build verts ; page ouverte dans le navigateur de la session : titre « Mot de passe oublié », un
   champ, bouton « Envoyer le lien », aucune erreur de console.)
-- [ ] 1.3 Monsieur DUCOUT lance le script, demande l'e-mail de réinitialisation, choisit son mot de passe, se connecte
-  et ouvre `/admin`. Fait quand : il confirme voir le tableau de bord.
+- [x] 1.3 Monsieur DUCOUT lance le script, demande l'e-mail de réinitialisation, choisit son mot de passe, se connecte
+  et ouvre `/admin`. Fait quand : il confirme voir le tableau de bord. (Fait le 2026-10-15 à 10 h 30 : « ça y est je suis
+  connecté je vois l'admin ».)
 
 ## 2. Suivi de la validation (instruction 12)
 
