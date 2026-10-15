@@ -47,12 +47,16 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
   pages (0,01 euro estimé) avant les 900 fiches. Fait quand : accord collé, coût réel collé. (Accord du 2026-10-14,
   nuit : « ok, haiku pour classer les 916 fiches, vas-y » ; coût estimé 0,179 euro ; l'évaluation préalable est
   remplacée par la table des 24 fiches du premier tirage classées en local, à corriger par Monsieur DUCOUT.)
-- [ ] 2.4 Classification des fiches du passage global et des connecteurs. Fait quand : répartition des cinq réponses
+- [x] 2.4 Classification des fiches du passage global et des connecteurs. Fait quand : répartition des cinq réponses
   collée, coût réel collé, sauvegardes listées. (Connecteurs faits le 2026-10-14 à 21 h 49 : 105 fiches, « santé 55,
   médico-social 14, hors champ 34, incertain 2 », 105 appels, 0,027 euro, sauvegarde `scripts/sauvegardes/champ_2026-10-14_2149/` ;
   les 34 hors champ sont des appels Fondation de France hors santé (transition écologique, ruralité, petite enfance,
-  jeunes). Passage local (`extraction_locale.json`) : à classer après la fin du passage global, qui réécrit son fichier
-  à chaque fiche.)
+  jeunes). Passage local (`extraction_locale.json`) fait le 2026-10-15 de 8 h 22 à 8 h 49, après la fin du passage
+  global (7 h 40 : 1 086 fiches, 1 070 refus, 22 échecs, 28,6 h) et sur l'accord de Monsieur DUCOUT (« ok vas-y pour
+  haiku sur les fiches du passage local ») : essai à blanc « 1086 fiches à classer, 0.207 euros estimés » ; réel :
+  1 086 fiches, « santé 312, médico-social 209, hors champ 513, incertain 52 », 1 086 appels, 0,231 euro réel lu dans le
+  journal (étape `champ` du 2026-10-15), cumul Haiku 0,365 euro pour un plafond de 5 euros, sauvegarde
+  `scripts/sauvegardes/champ_2026-10-15_0822/`.)
 
 ## 3. Import et validation quotidienne
 
@@ -79,7 +83,7 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
 
 ## 4. Migration des fiches publiées
 
-- [ ] 4.1 `scripts/migrer_champ.py` : sauvegarde JSON, `--dry-run` (compte, cinq exemples), accord écrit, exécution.
+- [x] 4.1 `scripts/migrer_champ.py` : sauvegarde JSON, `--dry-run` (compte, cinq exemples), accord écrit, exécution.
   Fait quand : compte avant et après collé, `/aap/search` relu dans le navigateur. (Script écrit ; essai à blanc du
   2026-10-14, nuit, connecteurs seuls classés : « 34 fiches classees hors champ dans les fichiers de resultats ; 10 fiches
   publiees a repasser en brouillon ; 0 publiees avec verdict humain », exemples Fondation de France (réveillons de la
@@ -87,7 +91,13 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
   classification du passage local ; exécution après accord.) Exécuté le 2026-10-14 à 22 h 51 sur décision de Monsieur
   DUCOUT (« oui tu les retires ») : « 10 fiches publiees a repasser en brouillon ; 0 publiees avec verdict humain »,
   « Sauvegarde : scripts/sauvegardes/champ_publiees_2026-10-14_2251.json (10 fiches) », « Migrees : 10 fiches » ;
-  `/aap/search` relu : 410 AAP disponibles (420 avant). À relancer après la classification du passage local.
+  `/aap/search` relu : 410 AAP disponibles (420 avant). À relancer après la classification du passage local. Relancé
+  le 2026-10-15 à 8 h 51, après le classement et le ré-import (« AAP lus : 1191 | a importer : 529 (256 sans date
+  publiees, 248 hors champ en brouillon) », « Termine : 120 crees, 409 mis a jour ») : « 545 fiches classees hors champ ;
+  147 fiches publiees a repasser en brouillon ; 0 publiees avec verdict humain », sauvegarde
+  `scripts/sauvegardes/champ_publiees_2026-10-15_0851.json`, « Migrees : 147 fiches ». Base après coup : 569 documents,
+  308 publiées (santé 172, médico-social 106, incertain 29, non classée 1 ; 131 sans date ; 307 à vérifier),
+  261 brouillons dont 258 hors champ, 105 financeurs distincts.
 - [ ] 4.2 `scripts/publier_sans_date.py` : les brouillons `sans-date-cloture` sans verdict humain et non hors champ
   passent en publié, proposee ; sauvegarde JSON, `--dry-run`, accord écrit (donné en principe le 2026-10-14 : « oui je
   veux qu'elles soient publiées »), exécution après la classification et l'import. Fait quand : compte avant et après
@@ -106,8 +116,12 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
 
 - [ ] 5.1 Question `champ` dans `echantillon.extraire`, `extraire_api` et `extraction_locale.py` (après la fin du
   passage global en cours, consigne version 4). Fait quand : pytest vert ; un texte extrait en local porte son champ.
-- [ ] 5.2 `champ.py --rapport` : `scraping/CHAMP.md` (définition, répartition, part par source, sources à revoir).
-  Fait quand : rapport collé, `git diff` vide sur `sources/registre.json`.
+- [x] 5.2 `champ.py --rapport` : `scraping/CHAMP.md` (définition, répartition, part par source, sources à revoir).
+  Fait quand : rapport collé, `git diff` vide sur `sources/registre.json`. (Fait le 2026-10-15 à 8 h 55 : « Rapport écrit :
+  CHAMP.md (1191 fiches) », « Répartition : hors-champ 547, sante 367, medico-social 223, incertain 54 » ; part dans le
+  champ par source : ARS de 93 à 100 %, CNSA, INCa, Fondation ARC, GIRCI Méditerranée 100 %, FHF Hauts-de-France 97 %,
+  Inserm 95 %, Fondation de France 44 %, collectivités de 0 à 42 %, DRAAF et DREETS 0 % ; `git status` : `sources/registre.json`
+  inchangé.)
 
 ## 6. Documentation
 

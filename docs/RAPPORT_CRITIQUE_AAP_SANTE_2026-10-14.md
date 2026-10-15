@@ -569,3 +569,13 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   Monsieur DUCOUT, PC maintenu éveillé. Décision de Monsieur DUCOUT (7 h 17) : « arrête après la fin estimée, je
   relancerai tout seul après » ; aucune étape suivante lancée (classement du champ par Haiku, ré-import,
   `migrer_champ.py`, rapport), à relancer par lui.
+- Accord de Monsieur DUCOUT (2026-10-15, 8 h 20) : « ok vas-y pour haiku sur les fiches du passage local ». Essai à
+  blanc : 1 086 fiches à classer, 0,207 euro estimé, cumul Haiku avant 0,134 euro, plafond 5 euros. Classement fait de
+  8 h 22 à 8 h 49 : santé 312, médico-social 209, hors champ 513, incertain 52 ; 1 086 appels, 0,231 euro réel (journal
+  des coûts, étape `champ`), cumul 0,365 euro. Ré-import : « AAP lus : 1191 | a importer : 529 (256 sans date publiees,
+  248 hors champ en brouillon) », « 120 crees, 409 mis a jour ». Retrait des appels hors champ publiés
+  (`migrer_champ.py`, sauvegarde `champ_publiees_2026-10-15_0851.json`) : 147 fiches en brouillon. Base après coup :
+  569 documents, 308 publiées (santé 172, médico-social 106, incertain 29, non classée 1 ; 131 sans date ; 307 à
+  vérifier), 261 brouillons dont 258 hors champ, 105 financeurs distincts. `scraping/CHAMP.md` : part dans le champ par
+  source, ARS 93 à 100 %, CNSA, INCa, Fondation ARC 100 %, FHF Hauts-de-France 97 %, Fondation de France 44 %,
+  collectivités 0 à 42 %, DRAAF et DREETS 0 % (sources à revoir dans le registre).

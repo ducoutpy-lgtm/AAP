@@ -6,6 +6,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Fin du passage global d'extraction locale (2026-10-15, 7 h 40 : 2 178 textes, 1 086 fiches, 1 070 pages refusées,
+  22 échecs, 28,6 h, 0 euro) puis classement du champ des 1 086 fiches par `claude-haiku-5-5` sur l'accord de Monsieur
+  DUCOUT (santé 312, médico-social 209, hors champ 513, incertain 52 ; 0,23 euro réel), ré-import (120 fiches créées,
+  409 mises à jour) et retrait des 147 appels hors champ publiés (`scripts/migrer_champ.py`, sauvegarde). Base : 308
+  fiches publiées (santé 172, médico-social 106, incertain 29), 261 brouillons dont 258 hors champ. Rapport du champ
+  par source : `scraping/CHAMP.md`.
 - Nettoyage de la base (changement `nettoyage-financeurs-territoires`, 2026-10-14 au soir, constat de Monsieur DUCOUT :
   « base sale », filtres incohérents) : l'import écrit la source réelle de chaque fiche (émetteur du registre, nom et
   fichier d'origine dans `scrapeMetadata`), un nom de financeur canonique (table `scraping/sources/financeurs.json`

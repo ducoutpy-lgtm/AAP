@@ -4,6 +4,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-10-15)
+- `extraction_locale.py` : passage global terminé à 7 h 40 (2 178 textes, 1 086 fiches dont 2 à relire, 1 070 pages
+  refusées, 22 échecs, 28,6 h de calcul, 0 euro).
+- `champ.py` : classement du champ des 1 086 fiches du passage local par `claude-haiku-5-5` (santé 312, médico-social
+  209, hors champ 513, incertain 52 ; 1 086 appels, 0,23 euro réel pour 0,21 estimé, cumul 0,37 euro) ; rapport
+  `CHAMP.md` écrit (1 191 fiches, part dans le champ par source).
+
 ### Ajouté (2026-10-14 au soir)
 - `financeurs.py` et `sources/financeurs.json` (changement `nettoyage-financeurs-territoires`) : table des financeurs
   canoniques construite depuis le registre (`--construire`, 1 198 financeurs, 1 964 alias, fusion sans écraser les
