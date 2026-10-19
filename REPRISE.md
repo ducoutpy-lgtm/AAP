@@ -217,6 +217,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Dégel de l'application complète (2026-10-19, après-midi, `degel-application-complete`, décisions de Monsieur DUCOUT :
+  tout lancer, pages légales rédigées, tests faits, MFA à la fin, Blaze activé par lui, Google à activer par lui) :
+  routes rétablies, lint et build verts sur tout le code, règles Firestore rouvertes (23 tests), pages légales, `npm test`
+  12 tests. Reste : accord pour déployer les règles (2.2), parcours connectés à jouer par Monsieur DUCOUT avec des comptes
+  de test (3.1 à 3.4), ses données d'entreprise dans `app/src/pages/legal/editeur.ts`, puis fonctions serveur quand Blaze
+  est confirmé.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

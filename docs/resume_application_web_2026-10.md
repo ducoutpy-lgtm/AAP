@@ -176,8 +176,9 @@ Dernier build : `npm run build` OK, bundle ≈ 917 kB (221 kB gzip). Aucune erre
 ## 8. Ce qui reste à faire / limites connues
 
 **Fonctionnel**
-- Pages placeholder : édition d'un AAP, page profil, gestion paiements admin, paramètres admin, pages légales (CGU, confidentialité, mentions légales).
-- Mot de passe oublié : lien présent (`/reset-password`) mais route non créée (la fonction `resetPassword` existe dans `AuthContext`).
+- Pages placeholder : édition d'un AAP, page profil, gestion paiements admin, paramètres admin. Pages légales rédigées le 2026-10-19 (`src/pages/legal/`, données d'entreprise à valider par Monsieur DUCOUT dans `editeur.ts`).
+- Mot de passe oublié : fait le 2026-10-15 (`/reset-password`).
+- Modules gelés par le lot 0 (2026-10-14) et dégelés le 2026-10-19 (`degel-application-complete`) : parcours connectés à vérifier avec des comptes de test ; règles Firestore rouvertes, déploiement après accord.
 - Préqualification automatique des candidatures (scores `completenessScore`, `conformityScore`) : champs prévus, calcul non implémenté.
 - Alertes email (recherches sauvegardées) : dépendent de la Cloud Function `sendDailyAlerts`, non déployée.
 
@@ -185,7 +186,7 @@ Dernier build : `npm run build` OK, bundle ≈ 917 kB (221 kB gzip). Aucune erre
 - Stripe : UI de choix de plan présente, mais `createCheckoutSession` / `stripeWebhook` (Cloud Functions) ne sont pas déployées et les Price IDs de `src/config/stripe.ts` sont à remplacer. Les comptes restent en `trial` tant que ce n'est pas branché.
 
 **Technique**
-- Pas de tests (unitaires ni E2E).
+- Tests : règles Firestore sur l'émulateur (`npm run test:rules`, 23), `npm test` (12 tests Vitest : utilitaires et pages légales) ; pas de test de bout en bout.
 - Bundle > 500 kB : prévoir du code-splitting (`React.lazy` par page).
 - `firestore.indexes.json` : les requêtes composées (ex. `orderBy` + `where`) peuvent demander des index ; Firebase propose un lien de création dans la console au premier appel.
 - Les stats admin chargent les collections entières côté client ; à remplacer par des agrégats (collection `analytics`) quand le volume grossit.

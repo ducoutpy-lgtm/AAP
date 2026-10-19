@@ -47,12 +47,16 @@ déploiement Firebase sans accord écrit, la session ne crée aucun compte sur l
 
 ## 5. Tests
 
-- [ ] 5.1 `npm test` : Vitest, Testing Library, jsdom ; tests de `relecture.ts` et `territoires.ts`, rendu de la carte
+- [x] 5.1 `npm test` : Vitest, Testing Library, jsdom ; tests de `relecture.ts` et `territoires.ts`, rendu de la carte
   de recherche et de la fiche avec des données en mémoire, rendu des pages légales. Fait quand : compte des tests collé.
+  (Fait le 2026-10-19 : `vitest.config.ts` (jsdom pour `src/`, node pour `tests/rules/`), `src/test/setup.ts`,
+  `relecture.test.ts` 6 tests, `territoires.test.ts` 3 tests, `legal.test.tsx` 3 tests : « Tests 12 passed (12) ». La
+  carte de recherche et la fiche ne sont pas testées en rendu : elles chargent Firebase au montage, il faudrait d'abord
+  en extraire un composant pur ; reporté, noté ici plutôt que forcé.)
 
 ## 6. Documentation et vérification
 
-- [ ] 6.1 README de l'application, README racine, CHANGELOG racine, CLAUDE.md (périmètre du MVP, état d'avancement,
+- [x] 6.1 README de l'application, README racine, CHANGELOG racine, CLAUDE.md (périmètre du MVP, état d'avancement,
   modules gelés retirés), REPRISE.md, `docs/resume_application_web_2026-10.md`, `docs/FEUILLE_DE_ROUTE.md`, rapport
-  section 8.
+  section 8. (Fait le 2026-10-19 ; le README racine ne décrit pas les écrans, inchangé.)
 - [ ] 6.2 Monsieur DUCOUT rejoue les scénarios de la spec et lit les pages légales (données d'entreprise à compléter).

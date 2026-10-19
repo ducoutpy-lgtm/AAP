@@ -35,8 +35,8 @@ Légende : vert = fait, orange = en cours, gris = à faire.
 | 4. Surveiller les nouveaux AAP | À faire | Principe validé : garder les pages, comparer chaque jour, ne re-traiter que ce qui change | Tout le code ; dépend de l'étape 3 |
 | 5. Base consolidée des AAP | En cours | Firestore `aapi-11bc3`, collection `aap`, 95 AAP dédoublonnés par signature, import rejouable (`scripts/import_to_firestore.py`) | Consolidation après le passage global ; stockage des pièces jointes en ligne (forfait Blaze refusé pour l'instant) |
 | 6. Application de consultation | Fait (preuve) | Recherche par mot, filtres secteur, territoire, budget ; fiche complète, pièces jointes, mention « Clôturé » ; consultation sans compte depuis le 2026-10-13 | Favoris, alertes, export, filtres fins (type d'établissement) |
-| 7. Comptes clients | En cours | Inscription avec essai de 14 jours, connexion par e-mail, rôles porteur / financeur / admin | Redirection défectueuse après connexion, bouton Google inactif, Stripe non branché, fonctions serveur non déployées |
-| 8. Espace financeurs | À faire | Pages codées en avril : publication d'AAP, candidatures, évaluation, statistiques | Non testé depuis la reprise ; fonctions serveur non déployées |
+| 7. Comptes clients | Dégelé le 2026-10-19, vérification en cours | Inscription rouverte avec essai de 14 jours, connexion par e-mail, mot de passe oublié, rôles porteur / financeur / admin, règles Firestore testées | Parcours à jouer par Monsieur DUCOUT avec des comptes de test ; bouton Google à activer dans la console Firebase ; Stripe non branché ; fonctions serveur non déployées (Blaze en cours) |
+| 8. Espace financeurs | Dégelé le 2026-10-19, vérification en cours | Pages d'avril rétablies : publication d'AAP, candidatures, évaluation, statistiques ; messagerie, notifications, calendrier | Non testé avec des comptes ; fonctions serveur non déployées |
 
 ## Chemin critique
 

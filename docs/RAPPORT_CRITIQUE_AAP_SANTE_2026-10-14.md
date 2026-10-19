@@ -650,3 +650,13 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   (« 1 exécute ») : `scripts/reporter_valeurs_api.py`, 183 fiches mises à jour (descriptions quatre fois plus longues,
   critères, pièces, 83 titres corrigés d'une apostrophe ou d'une majuscule, 29 montants, 7 dates de clôture), 43 fiches
   API closes non contrôlées laissées telles quelles, aucune fiche validée rétrogradée ; base 289 publiées, 254 validées.
+- Décisions de Monsieur DUCOUT (2026-10-19, après-midi) sur l'application complète : fiches V4 vérifiées par lui ;
+  connexion Google à activer par lui si gratuit (c'est gratuit) ; « compte porteur, inscription, profil, recherche
+  sauvegardée, candidature : on le lance ; espace financeur : on le lance ; messagerie, notification, calendrier : on le
+  lance ; pages légales : il faut que tu rédiges tout ; MFA quand tout sera validé ; les tests, il faut le faire ».
+  Changement `degel-application-complete` : routes rétablies, 26 `any` typés, dates nulles gérées, lint et build verts
+  sur tout le code ; règles Firestore des modules rouvertes, 23 tests émulateur verts ; pages légales rédigées (onze
+  champs d'entreprise à valider) ; `npm test` 12 tests ; `/signup`, redirection de `/dashboard/porteur` vers `/login`
+  et `/mentions-legales` relus par la session. Restent : déploiement des règles (accord), parcours connectés joués par
+  Monsieur DUCOUT, fonctions serveur après Blaze. Les lots 4 et 5 du plan sont ainsi avancés sur sa décision, avant le
+  lot 2 (fraîcheur) et le lot 3 (couverture), qui restent à faire.

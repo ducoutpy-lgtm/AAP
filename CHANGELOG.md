@@ -6,6 +6,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Dégel de l'application complète (changement `degel-application-complete`, 2026-10-19, décision de Monsieur DUCOUT :
+  « on le lance ») : routes d'avril rétablies (inscription, profil, abonnement, porteur, financeur, messagerie,
+  notifications, calendrier, statistiques), lint et compilation sur tout le code (26 `any` typés, dates de clôture
+  nulles gérées, `utils/dates.ts`), règles Firestore des modules rouvertes et testées (23 tests émulateur), pages
+  légales rédigées (`src/pages/legal/`, onze champs d'entreprise à valider), `npm test` (12 tests Vitest et Testing
+  Library). Fonctions serveur non déployées (Blaze en cours d'activation par Monsieur DUCOUT).
 - V4, extraction par l'API (changement `extraction-api-v4`, 2026-10-19, décision de Monsieur DUCOUT : V3 locale figée
   sous l'étiquette `v3-local`, V4 avec `claude-haiku-5-5`, devis écrit avant tout appel) : `extraction_locale.py --moteur
   api` avec devis, plafond, reprise ; passage de 1 808 textes en 2 h 30 pour 1,33 euro (856 fiches, 951 refus), contrôle

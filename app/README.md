@@ -241,6 +241,22 @@ code conservé sans modification, inscription fermée (`/signup` affiche la page
 affiche « Date de clôture non précisée » et se classe après les fiches datées ; depuis le 2026-10-14 au soir (décision
 de Monsieur DUCOUT) l'import la publie directement avec le badge « À vérifier ».
 
+**Dégel de l'application complète** (changement `degel-application-complete`, 2026-10-19, décision de Monsieur DUCOUT) :
+les modules gelés par le lot 0 sont de retour, avec leurs gardes d'origine (connexion, abonnement actif ou essai, rôle) :
+inscription `/signup` (essai de 14 jours), `/complete-profile`, abonnement (écrans seulement, Stripe non branché),
+porteur (`/dashboard/porteur`, `/aap/:id/candidater`, `/mes-candidatures`, `/recherches-sauvegardees`,
+`/recommandations`), financeur (`/dashboard/financeur`, `/mes-aap`, `/aap/nouveau`, `/aap/:id/candidatures`,
+`/aap/:id/candidature/:cid/evaluer`, `/statistiques`), communs (`/messages`, `/notifications`, `/calendrier`),
+`/admin/statistiques`. Pourquoi : voir toute l'application fonctionner avec les 289 appels publiés. Les fonctions
+serveur (notifications automatiques, alertes e-mail, paiement) restent non déployées tant que le forfait Blaze n'est pas
+confirmé. Les règles Firestore rouvrent les écritures des collections des modules (profils, candidatures, recherches,
+favoris, notifications, messages ; création d'un appel par un financeur abonné à son nom) et restent testées sur
+l'émulateur (`npm run test:rules`, 23 tests). Pages légales rédigées dans `src/pages/legal/` (mentions légales, CGU,
+politique de confidentialité) avec les données d'entreprise à valider surlignées. Tests : `npm test` (Vitest,
+Testing Library, jsdom) couvre `utils/relecture.ts`, `utils/territoires.ts` et le rendu des pages légales, sans aucun
+appel Firebase. La session ne crée aucun compte sur le vrai projet : les parcours connectés sont vérifiés par Monsieur
+DUCOUT avec des comptes de test.
+
 **Espace d'administration et compte administrateur** (changement `acces-administration`, 2026-10-15) : `/admin`,
 `/admin/aaps` et `/admin/utilisateurs` sont réservés aux comptes dont `users/{uid}.userType` vaut `admin`. Aucun compte de
 ce type n'existait et l'inscription est fermée : le script `scripts/creer_admin.py --email <adresse>` (essai à blanc avec

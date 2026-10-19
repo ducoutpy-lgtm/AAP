@@ -80,11 +80,17 @@ Son module `src/services/export.ts` pourra être porté dans `app/` quand l'expo
 - Déploiement de test : Netlify `https://teal-twilight-a7fcf3.netlify.app/` `[À VALIDER — encore en ligne ?]`
 - Commandes : `cd app && npm install && npm run dev` (port 3000), `npm run build`, `npm run lint`
 - Variables : `app/.env` (copier `app/.env.example`), jamais commité.
-- Périmètre du MVP depuis le 2026-10-14 (lot 0 du rapport de critique) : routes `/`, `/login`, `/aap/search`,
-  `/aap/:aapId`, `/admin`, `/admin/aaps`, `/admin/utilisateurs`, pages légales gabarit et 404 ; inscription fermée
-  (`/signup` en 404) ; modules gelés jusqu'au lot 4 (liste dans `openspec/changes/lot-0-assainissement/design.md`),
-  ne jamais les modifier. `npm run lint` (configuration créée le 2026-10-14, fichiers gelés ignorés), `npm run
-  test:rules` (émulateur Firestore, JDK 21 en tête du PATH). `deadline` nullable et bloc `validation` dans le type `AAP`.
+- Périmètre : du 2026-10-14 (lot 0) au 2026-10-19, consultation publique et administration seules, modules gelés ;
+  depuis le 2026-10-19 (changement `degel-application-complete`, décision de Monsieur DUCOUT « on le lance »), toutes
+  les routes d'avril sont rétablies : inscription (`/signup`, essai 14 jours), profil, abonnement (Stripe non branché),
+  porteur (tableau de bord, candidature, mes candidatures, recherches sauvegardées, recommandations), financeur
+  (tableau de bord, mes appels, nouvel appel, candidatures, évaluation, statistiques), messagerie, notifications,
+  calendrier, statistiques d'administration, pages légales rédigées (`src/pages/legal/`, champs d'entreprise à valider).
+  Toute l'application est lintée et compilée (`npm run lint`, `npm run build`) ; `npm test` (Vitest, Testing Library,
+  jsdom : utilitaires et pages légales) ; `npm run test:rules` (émulateur Firestore, JDK 21 en tête du PATH, 23 tests).
+  Règles Firestore des modules rouvertes en écriture (déploiement après accord). `deadline` nullable et bloc
+  `validation` dans le type `AAP`. Fonctions serveur toujours non déployées (Blaze accepté le 2026-10-19, activé par
+  Monsieur DUCOUT lui-même).
 - Rôles : `porteur`, `financeur`, `admin` (champ `users/{uid}.userType`). Compte administrateur : `scripts/creer_admin.py
   --email <adresse>` (2026-10-15, sans mot de passe ; mot de passe choisi via `/reset-password`). Fournisseur Google
   désactivé dans Firebase : le bouton « Google » de `/login` ne fonctionne pas.
@@ -142,8 +148,9 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : phases 1 à 8 du CDC | OK | auth, profils, AAP, candidature, évaluation, messagerie, admin |
 | Appli web : Cloud Functions | A FAIRE | écrites dans `app/functions/`, non déployées |
 | Appli web : Stripe | A FAIRE | Price IDs à remplacer, functions à déployer |
-| Appli web : tests | EN COURS | 2026-10-14 (lot 0) : tests des règles Firestore sur l'émulateur (`npm run test:rules`, JDK 21 requis, 13 verts) ; aucun test de rendu |
-| Appli web : pages placeholder | A FAIRE | édition AAP, profil, pages légales, mot de passe oublié |
+| Appli web : tests | EN COURS | 2026-10-14 (lot 0) : tests des règles Firestore sur l'émulateur (`npm run test:rules`, JDK 21 requis, 13 verts) ; 2026-10-19 (dégel) : 23 tests de règles, `npm test` 12 tests (mention de relecture, territoires, pages légales) ; aucun test de bout en bout |
+| Appli web : pages placeholder | EN COURS | 2026-10-19 : pages légales rédigées (données d'entreprise à valider), mot de passe oublié fait le 2026-10-15 ; restent édition d'un AAP, profil, paiements et paramètres admin |
+| Appli web : dégel des modules | FAIT (code), VÉRIFICATION EN COURS | 2026-10-19 (`degel-application-complete`) : routes, lint, compilation, règles Firestore testées, pages légales, tests ; parcours connectés à jouer par Monsieur DUCOUT avec des comptes de test ; règles à déployer après accord |
 | Scraping : 5 sources | OK | voir ci-dessus |
 | Scraping : registre des sources | EN COURS (annuaires) | 2026-10-09 : 847 sources ; 2026-10-13 (`registre-par-annuaires`) : familles adossées à des annuaires de référence avec taux de couverture (`REGISTRE_SOURCES.md`), vague 1 fondations du RNF terminée : 365 / 664 (54 %), 1 198 sources ; recherche des sites par Tavily (191) puis par la recherche web de la session (445 fondations : 165 sites inscrits, 271 sans site dont 62 hors champ non cherchées, 9 déjà au registre), 22 adresses à resonder ; agrégateur Fimeco Walter Allinial, 10 financeurs de la veille URIOPSS PACA-Corse et famille PLIE (annuaire fse.gouv.fr) ajoutés à sa demande |
 | Scraping : découverte des rubriques AAP | OK | 2026-10-12 : 847 sources explorées, 270 rubriques candidates, 3 748 liens candidats (repérés par mots-clés, NON vérifiés : l'échantillon a montré 21 pages hors sujet sur 45) ; préfectures et ameli bloquent le robot (voir README scraping) |
