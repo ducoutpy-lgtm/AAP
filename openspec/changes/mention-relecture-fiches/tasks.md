@@ -23,7 +23,7 @@ aucun `git push`, aucun archivage sans demande, ré-import réel après essai à
 
 ## 3. Documentation et vérification
 
-- [ ] 3.1 README de l'application, README racine, CHANGELOG racine, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`,
-  rapport section 8.
+- [x] 3.1 README de l'application, README racine, CHANGELOG racine, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`,
+  rapport section 8. (Fait le 2026-10-19 ; le README racine ne décrit pas les écrans, inchangé.)
 - [ ] 3.2 Monsieur DUCOUT ouvre `/aap/search`, voit la mention et la date sur une fiche, active le filtre « relues
   seulement » et ouvre un lien officiel depuis la liste.
