@@ -114,8 +114,16 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
 
 ## 5. Chaîne d'extraction et registre
 
-- [ ] 5.1 Question `champ` dans `echantillon.extraire`, `extraire_api` et `extraction_locale.py` (après la fin du
+- [x] 5.1 Question `champ` dans `echantillon.extraire`, `extraire_api` et `extraction_locale.py` (après la fin du
   passage global en cours, consigne version 4). Fait quand : pytest vert ; un texte extrait en local porte son champ.
+  (Fait le 2026-10-19 : `poser_question_champ`, `question_champ_sans_echec`, `metadonnees_champ` dans `echantillon.py`,
+  appel après l'extraction dans les deux moteurs, `champ.py` réutilise la fonction ; pytest scraping 95 verts dont trois
+  tests nouveaux. Preuve réelle sur le texte `decouverte/ars-ile-de-france/fiches/2a9520a754.txt` avec qwen3:8b, zéro
+  euro : fiche « Label Culture et Santé en Île-de-France 2027-2029 » produite avec `version_consigne 4` et les cinq clés
+  du champ, mais la question du champ a dépassé le délai de 600 s (le modèle local a généré plus de 8 000 jetons de
+  réflexion) : champ « incertain », raison « échec : TimeoutError » ; la fiche n'est pas perdue, 668 s en tout contre 50 s
+  pour cette page le 2026-10-15. Constat à trancher : la question du champ en local est lente avec qwen3:8b ; Haiku l'a
+  classée en 1 s pour 0,02 centime.)
 - [x] 5.2 `champ.py --rapport` : `scraping/CHAMP.md` (définition, répartition, part par source, sources à revoir).
   Fait quand : rapport collé, `git diff` vide sur `sources/registre.json`. (Fait le 2026-10-15 à 8 h 55 : « Rapport écrit :
   CHAMP.md (1191 fiches) », « Répartition : hors-champ 547, sante 367, medico-social 223, incertain 54 » ; part dans le
