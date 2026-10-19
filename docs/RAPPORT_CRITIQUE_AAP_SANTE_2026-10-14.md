@@ -646,4 +646,7 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   accord « ok continue ». Import réel « 54 crees, 483 mis a jour », décision du modèle sur 14 fiches, 4 appels hors champ
   publiés repassés en brouillon. Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Coût total de la journée : 1,46 euro, cumul Haiku 1,98 euro sur 5.
   Point ouvert : l'import protège les champs métier d'une fiche validée, donc les fiches validées par le modèle le
-  2026-10-15 gardent leurs valeurs locales même quand l'API a lu mieux ; migration à décider.
+  2026-10-15 gardent leurs valeurs locales même quand l'API a lu mieux ; migration à décider. Décidée et faite à 15 h 29
+  (« 1 exécute ») : `scripts/reporter_valeurs_api.py`, 183 fiches mises à jour (descriptions quatre fois plus longues,
+  critères, pièces, 83 titres corrigés d'une apostrophe ou d'une majuscule, 29 montants, 7 dates de clôture), 43 fiches
+  API closes non contrôlées laissées telles quelles, aucune fiche validée rétrogradée ; base 289 publiées, 254 validées.

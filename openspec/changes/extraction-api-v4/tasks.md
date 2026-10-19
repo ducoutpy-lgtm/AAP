@@ -36,9 +36,17 @@ cumulé 5 euros, aucun `git push`, aucun archivage sans demande. V3 conservée s
   création) ; `appliquer_controle.py` : essai à blanc « 14 fiches a mettre a jour » puis réel, sauvegarde
   `controle_2026-10-19_1315.json` ; `migrer_champ.py` : 4 fiches publiées classées hors champ par l'API repassées en
   brouillon (Dalloz, poissons migrateurs, Shoah, doctorants SHS ; sauvegarde `champ_publiees_2026-10-19_1317.json`). Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Coût total de la V4 : 1,46 euro, cumul Haiku 1,98 euro sur 5.)
-- [ ] 2.3 `scripts/reporter_valeurs_api.py` (accord du 2026-10-19 « 1 ok ») : les champs métier des fiches validées par le
+- [x] 2.3 `scripts/reporter_valeurs_api.py` (accord du 2026-10-19 « 1 ok ») : les champs métier des fiches validées par le
   modèle à partir de la V3 prennent les valeurs de la fiche API ; verdict humain et brouillons hors champ intouchés ;
   essai à blanc, sauvegarde, exécution après accord. Fait quand : pytest scripts vert ; essai à blanc collé ; réel collé.
+  (Fait le 2026-10-19 : pytest scripts 27 verts ; premier essai à blanc 226 fiches dont 40 validées qui seraient
+  redescendues « proposee » faute de contrôle de la fiche API close : garde ajoutée ; essai à blanc retenu « a mettre a
+  jour 183, absente de la base 442, brouillon hors champ conservee 157, fiche API non controlee conservee 43, identique
+  31 », champs : description 178, tags 169, éligibilité 159, types de structure 155, pièces 152, titre 83, date de
+  publication 50, validation 37 (commentaires, 1 à corriger -> validée, 1 proposée -> à corriger), montants 29, clôture 7 ;
+  accord « 1 exécute » ; réel à 15 h 29 : « Mises a jour : 183 fiches », sauvegarde `valeurs_api_2026-10-19_1529.json` ;
+  second essai à blanc : 0 à mettre à jour, 214 identiques. Base : 623 documents, 289 publiées, validées 254, proposées
+  27, à corriger 8.)
 
 ## 3. Documentation et vérification
 
