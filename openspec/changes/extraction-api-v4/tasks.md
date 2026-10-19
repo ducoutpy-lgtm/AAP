@@ -21,8 +21,13 @@ cumulé 5 euros, aucun `git push`, aucun archivage sans demande. V3 conservée s
 
 ## 2. Passage global
 
-- [ ] 2.1 Devis du passage complet collé ici, accord écrit de Monsieur DUCOUT, lancement, bilan (fiches, refus, échecs,
-  durée, coût réel lu dans le journal).
+- [x] 2.1 Devis du passage complet collé ici, accord écrit de Monsieur DUCOUT, lancement, bilan (fiches, refus, échecs,
+  durée, coût réel lu dans le journal). (Devis : 1 808 textes, 2,26 euros au plus ; accord « accord 1 et 2 » ; lancé le
+  2026-10-19 à 10 h 10, fini à 12 h 40 : « 951 pages refusées, 856 réussites, 1 échec ; coût cumulé 1.850 euros », soit
+  1,33 euro réel pour le passage ; 7,8 s par fiche en moyenne ; champ : santé 293, médico-social 212, incertain 26, hors
+  champ 325 ; 5 fiches à relire pour écart de format ; échec unique : une page de la Ville de Paris refusée par le schéma
+  (`ValidationError`). Recouvrement avec la V3 : 807 adresses communes, 49 trouvées par l'API seule, 279 par le local
+  seul (pages acceptées par le local et refusées par l'API). Fiches API ouvertes : 353, dont 218 dans le champ.)
 - [ ] 2.2 Contrôle des fiches API par `verification.py` (devis puis accord), décision du modèle appliquée
   (`appliquer_controle.py`, essai à blanc puis accord), import, compte des fiches publiées collé.
 
