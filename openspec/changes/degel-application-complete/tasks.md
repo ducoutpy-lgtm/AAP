@@ -6,15 +6,22 @@ déploiement Firebase sans accord écrit, la session ne crée aucun compte sur l
 
 ## 1. Dégel technique
 
-- [ ] 1.1 `App.tsx` : routes d'avant le lot 0 rétablies (plus `/reset-password`) ; `.eslintrc.cjs` et `tsconfig.json`
+- [x] 1.1 `App.tsx` : routes d'avant le lot 0 rétablies (plus `/reset-password`) ; `.eslintrc.cjs` et `tsconfig.json`
   sans exclusion de module ; `CalendarPage`, `RecommendationsPage`, `MyAapPage` : date de clôture nulle gérée. Fait
   quand : lint et build verts ; `/signup` affiche le formulaire et `/dashboard/porteur` renvoie vers `/login`, relus par
-  la session.
+  la session. (Fait le 2026-10-19 : 26 `any` des pages d'avril typés (`catch (err)` avec `err instanceof Error`,
+  collections lues typées `User`, `AAP`, `Application`, profil `PorteurProfile`), convertisseur `utils/dates.ts`,
+  règle `exhaustive-deps` coupée pour ces pages (même motif que les commentaires existants) ; lint et build verts ;
+  `/signup` : formulaire « Créer un compte » avec choix porteur ou financeur ; `/dashboard/porteur` sans compte :
+  redirigé vers `/login` ; `/mentions-legales` : texte affiché.)
 
 ## 2. Règles Firestore
 
-- [ ] 2.1 `firestore.rules` : écritures des modules rouvertes (design, décision 3), tests émulateur étendus (une règle,
-  un test). Fait quand : `npm run test:rules` vert, compte des tests collé.
+- [x] 2.1 `firestore.rules` : écritures des modules rouvertes (design, décision 3), tests émulateur étendus (une règle,
+  un test). Fait quand : `npm run test:rules` vert, compte des tests collé. (Fait le 2026-10-19 : `npm run test:rules`
+  avec JDK 21 en tête du PATH, « Tests 23 passed (23) » : 13 du lot 0 conservés ou adaptés, 10 nouveaux sur la
+  création d'appel par un financeur, les profils, les candidatures, les recherches, favoris, notifications, messages,
+  et l'interdiction d'écrire payments et analytics.)
 - [ ] 2.2 Déploiement des règles après accord écrit (`firebase deploy --only firestore:rules`), sortie collée.
 
 ## 3. Inscription, profils, parcours
@@ -32,9 +39,11 @@ déploiement Firebase sans accord écrit, la session ne crée aucun compte sur l
 
 ## 4. Pages légales
 
-- [ ] 4.1 `MentionsLegalesPage`, `CguPage`, `ConfidentialitePage` rédigées (ARCADIA SASU, DPO Monsieur DUCOUT, champs
+- [x] 4.1 `MentionsLegalesPage`, `CguPage`, `ConfidentialitePage` rédigées (ARCADIA SASU, DPO Monsieur DUCOUT, champs
   inconnus `[À VALIDER — Monsieur DUCOUT]`), routes branchées. Fait quand : les trois pages relues par la session, lint
-  et build verts.
+  et build verts. (Fait le 2026-10-19 : `src/pages/legal/` (gabarit `LegalLayout`, données `editeur.ts`), onze champs à
+  valider surlignés en jaune : capital, SIREN, adresse, e-mail de contact, hébergeur définitif, région Firebase, grille
+  tarifaire, clause de juridiction, durées de conservation, outil de mesure ; `/mentions-legales` relu par la session.)
 
 ## 5. Tests
 

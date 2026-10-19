@@ -1,4 +1,5 @@
-// Tests des règles Firestore du MVP (lot 0 du rapport du 2026-10-14, instruction 8), joués sur l'émulateur :
+// Tests des règles Firestore (lot 0 du 2026-10-14, puis dégel des modules du 2026-10-19, changement
+// degel-application-complete), joués sur l'émulateur :
 //   npm run test:rules   (firebase emulators:exec --only firestore --project demo-aap "npx vitest run tests/rules")
 // Chaque test porte le nom de la règle qu'il protège. Le jeu de données est écrit sans règles avant chaque test.
 import { readFileSync } from 'node:fs';
@@ -33,16 +34,26 @@ beforeEach(async () => {
     const db = ctx.firestore();
     await setDoc(doc(db, 'users/admin1'), { userType: 'admin', subscriptionStatus: 'active' });
     await setDoc(doc(db, 'users/porteur1'), { userType: 'porteur', subscriptionStatus: 'trial' });
+    await setDoc(doc(db, 'users/porteur2'), { userType: 'porteur', subscriptionStatus: 'trial' });
+    await setDoc(doc(db, 'users/expire'), { userType: 'porteur', subscriptionStatus: 'expired' });
+    await setDoc(doc(db, 'users/f1'), { userType: 'financeur', subscriptionStatus: 'active' });
     await setDoc(doc(db, 'aap/publie'), { status: 'published', financeurId: 'scraped', title: 'Publié' });
     await setDoc(doc(db, 'aap/brouillon'), { status: 'draft', financeurId: 'scraped', title: 'Brouillon' });
+    await setDoc(doc(db, 'aap/du-financeur'), { status: 'draft', financeurId: 'f1', title: 'Appel du financeur' });
     await setDoc(doc(db, 'applications/c1'), { porteurId: 'porteur1', financeurId: 'f1', status: 'draft' });
+    await setDoc(doc(db, 'applications/c2'), { porteurId: 'porteur1', financeurId: 'f1', status: 'submitted' });
     await setDoc(doc(db, 'savedSearches/s1'), { userId: 'porteur1', name: 'ma recherche' });
+    await setDoc(doc(db, 'notifications/n1'), { userId: 'porteur1', read: false });
+    await setDoc(doc(db, 'messages/m1'), { senderId: 'f1', receiverId: 'porteur1', read: false });
   });
 });
 
 const visiteur = () => env.unauthenticatedContext().firestore();
 const admin = () => env.authenticatedContext('admin1').firestore();
 const porteur = () => env.authenticatedContext('porteur1').firestore();
+const porteur2 = () => env.authenticatedContext('porteur2').firestore();
+const expire = () => env.authenticatedContext('expire').firestore();
+const financeur = () => env.authenticatedContext('f1').firestore();
 
 describe('aap : consultation publique et actions de l’administrateur', () => {
   it('un visiteur lit un AAP publié et liste les AAP publiés', async () => {
@@ -98,20 +109,91 @@ describe('users : propriétaire et administrateur', () => {
   });
 });
 
-describe('collections gelées : lecture inchangée, écriture interdite', () => {
-  it('le porteur lit sa candidature mais ne la modifie pas', async () => {
-    await assertSucceeds(getDoc(doc(porteur(), 'applications/c1')));
-    await assertFails(updateDoc(doc(porteur(), 'applications/c1'), { status: 'submitted' }));
+describe('aap : création et modification par un financeur (dégel du 2026-10-19)', () => {
+  it('un financeur abonné crée un appel à son nom, pas au nom d’un autre', async () => {
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/nouveau'), { status: 'draft', financeurId: 'f1', title: 'Mon appel' }));
+    await assertFails(setDoc(doc(financeur(), 'aap/usurpe'), { status: 'draft', financeurId: 'autre', title: 'x' }));
   });
 
-  it('le porteur lit sa recherche sauvegardée mais ne crée ni ne modifie', async () => {
-    await assertSucceeds(getDoc(doc(porteur(), 'savedSearches/s1')));
-    await assertFails(setDoc(doc(porteur(), 'savedSearches/s2'), { userId: 'porteur1', name: 'x' }));
-    await assertFails(updateDoc(doc(porteur(), 'savedSearches/s1'), { name: 'y' }));
+  it('le financeur modifie et supprime son appel, pas celui d’un autre ni une fiche importée', async () => {
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/publie'), { title: 'détourné' }));
+    await assertSucceeds(deleteDoc(doc(financeur(), 'aap/du-financeur')));
   });
 
-  it('même l’administrateur n’écrit pas dans les collections gelées', async () => {
-    await assertFails(setDoc(doc(admin(), 'notifications/n1'), { userId: 'porteur1', read: false }));
-    await assertFails(updateDoc(doc(admin(), 'applications/c1'), { status: 'accepted' }));
+  it('le financeur lit son brouillon ; un porteur en essai aussi (abonnement), un compte expiré non', async () => {
+    await assertSucceeds(getDoc(doc(financeur(), 'aap/du-financeur')));
+    await assertSucceeds(getDoc(doc(porteur(), 'aap/du-financeur')));
+    await assertFails(getDoc(doc(expire(), 'aap/brouillon')));
+  });
+});
+
+describe('profils : le propriétaire écrit, l’administrateur lit', () => {
+  it('un porteur écrit son profil, pas celui d’un autre', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'porteurProfiles/porteur1'), { userId: 'porteur1', structureName: 'EHPAD Test' }));
+    await assertFails(setDoc(doc(porteur(), 'porteurProfiles/porteur2'), { userId: 'porteur2', structureName: 'x' }));
+    await assertSucceeds(getDoc(doc(admin(), 'porteurProfiles/porteur1')));
+  });
+
+  it('un financeur écrit son profil financeur', async () => {
+    await assertSucceeds(setDoc(doc(financeur(), 'financeurProfiles/f1'), { userId: 'f1', organizationName: 'ARS Test' }));
+    await assertFails(getDoc(doc(porteur(), 'financeurProfiles/f1')));
+  });
+});
+
+describe('candidatures : porteur en brouillon, financeur en évaluation', () => {
+  it('un porteur en essai crée une candidature à son nom et la modifie en brouillon', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/nouvelle'), { porteurId: 'porteur1', financeurId: 'f1', status: 'draft' }));
+    await assertFails(setDoc(doc(porteur(), 'applications/usurpee'), { porteurId: 'porteur2', financeurId: 'f1', status: 'draft' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'applications/c1'), { projectTitle: 'Projet' }));
+    await assertFails(updateDoc(doc(porteur2(), 'applications/c1'), { projectTitle: 'volé' }));
+  });
+
+  it('une candidature soumise n’est plus modifiable par le porteur, le financeur l’évalue', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'applications/c2'), { projectTitle: 'trop tard' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'applications/c2'), { status: 'accepted' }));
+    await assertSucceeds(getDoc(doc(financeur(), 'applications/c2')));
+  });
+
+  it('le porteur supprime un brouillon, pas une candidature soumise ; un compte expiré ne crée rien', async () => {
+    await assertSucceeds(deleteDoc(doc(porteur(), 'applications/c1')));
+    await assertFails(deleteDoc(doc(porteur(), 'applications/c2')));
+    await assertFails(setDoc(doc(expire(), 'applications/x'), { porteurId: 'expire', financeurId: 'f1', status: 'draft' }));
+  });
+});
+
+describe('recherches sauvegardées, favoris, notifications, messages', () => {
+  it('le porteur crée, modifie et supprime sa recherche sauvegardée, pas celle d’un autre', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'savedSearches/s2'), { userId: 'porteur1', name: 'nouvelle' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'savedSearches/s1'), { name: 'renommée' }));
+    await assertFails(updateDoc(doc(porteur2(), 'savedSearches/s1'), { name: 'volée' }));
+    await assertSucceeds(deleteDoc(doc(porteur(), 'savedSearches/s1')));
+  });
+
+  it('un favori se crée au nom de son propriétaire seulement', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'favoriteAap/fav1'), { userId: 'porteur1', aapId: 'publie' }));
+    await assertFails(setDoc(doc(porteur(), 'favoriteAap/fav2'), { userId: 'porteur2', aapId: 'publie' }));
+  });
+
+  it('le destinataire lit et marque lue sa notification ; l’administrateur en crée une', async () => {
+    await assertSucceeds(getDoc(doc(porteur(), 'notifications/n1')));
+    await assertSucceeds(updateDoc(doc(porteur(), 'notifications/n1'), { read: true }));
+    await assertFails(getDoc(doc(porteur2(), 'notifications/n1')));
+    await assertSucceeds(setDoc(doc(admin(), 'notifications/n2'), { userId: 'porteur1', read: false }));
+  });
+
+  it('un compte abonné envoie un message en son nom ; le destinataire le lit et le marque lu', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'messages/m2'), { senderId: 'porteur1', receiverId: 'f1', content: 'Bonjour' }));
+    await assertFails(setDoc(doc(porteur(), 'messages/m3'), { senderId: 'f1', receiverId: 'porteur1', content: 'usurpé' }));
+    await assertSucceeds(getDoc(doc(porteur(), 'messages/m1')));
+    await assertSucceeds(updateDoc(doc(porteur(), 'messages/m1'), { read: true }));
+    await assertFails(getDoc(doc(porteur2(), 'messages/m1')));
+  });
+});
+
+describe('paiements et statistiques : fonctions serveur seulement', () => {
+  it('même l’administrateur n’écrit pas dans payments ni analytics', async () => {
+    await assertFails(setDoc(doc(admin(), 'payments/p1'), { userId: 'porteur1', amount: 1 }));
+    await assertFails(setDoc(doc(admin(), 'analytics/a1'), { totalUsers: 1 }));
   });
 });

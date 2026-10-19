@@ -2,9 +2,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Règles du MVP « consultation publique fiable » (rapport de critique validé le 2026-10-14, lot 0,
-    // instruction 8) : seules les collections aap et users sont actives ; les collections des modules gelés
-    // sont en écriture interdite jusqu'au lot 4 (leurs lectures restent celles d'avant).
+    // Règles de l'application complète (changement degel-application-complete du 2026-10-19, décision de Monsieur
+    // DUCOUT). Elles reprennent les règles d'avant le lot 0 pour les collections des modules, en gardant les acquis du
+    // lot 0 : lecture publique des appels publiés, administrateur seul à modifier un appel importé, document users
+    // créé par son propriétaire. payments et analytics restent écrites par les fonctions serveur seulement.
 
     // Fonctions d'aide
     function isAuthenticated() {
@@ -28,72 +29,102 @@ service cloud.firestore {
       return isAuthenticated() && userData().userType == 'admin';
     }
 
+    function isPorteur() {
+      return isAuthenticated() && userData().userType == 'porteur';
+    }
+
+    function isFinanceur() {
+      return isAuthenticated() && userData().userType == 'financeur';
+    }
+
     // Utilisateurs
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
-      // Création par le propriétaire seulement : le document naît avec le compte (l'inscription publique est fermée)
+      // Création par le propriétaire seulement : le document naît avec le compte
       allow create: if isOwner(userId);
       // Mise à jour : le propriétaire, ou l'administrateur (suspendre / activer écrit subscriptionStatus)
       allow update: if isOwner(userId) || isAdmin();
       allow delete: if isOwner(userId) || isAdmin();
     }
 
-    // AAP (appels à projets)
-    match /aap/{aapId} {
-      // Lecture : un AAP publié est public (lisible sans compte) ; les autres statuts sont lisibles par
-      // l'administrateur et par les comptes avec abonnement. Les requêtes de liste sans compte doivent
-      // filtrer sur status == 'published'.
-      allow read: if resource.data.status == 'published' || isAdmin() || hasActiveSubscription();
-
-      // Écriture : administrateur seulement (publier, clôturer, archiver, supprimer). La création par un
-      // financeur appartient au module gelé ; l'import des fiches passe par le SDK admin, hors de ces règles.
-      allow create, update, delete: if isAdmin();
-    }
-
-    // Collections des modules gelés : lectures d'avant, aucune écriture
-
+    // Profils
     match /porteurProfiles/{userId} {
       allow read: if isOwner(userId) || isAdmin();
-      allow write: if false;
+      allow write: if isOwner(userId);
     }
 
     match /financeurProfiles/{userId} {
       allow read: if isOwner(userId) || isAdmin();
-      allow write: if false;
+      allow write: if isOwner(userId);
     }
 
+    // AAP (appels à projets)
+    match /aap/{aapId} {
+      // Lecture : un AAP publié est public (lisible sans compte) ; les autres statuts sont lisibles par
+      // l'administrateur, par les comptes avec abonnement et par le financeur auteur. Les requêtes de liste sans
+      // compte doivent filtrer sur status == 'published'.
+      allow read: if resource.data.status == 'published' || isAdmin() || hasActiveSubscription();
+
+      // Création : un financeur abonné, pour son propre compte (financeurId = son identifiant). Les fiches
+      // importées (financeurId 'scraped') passent par le SDK admin, hors de ces règles.
+      allow create: if isFinanceur() && hasActiveSubscription() && request.resource.data.financeurId == request.auth.uid;
+
+      // Mise à jour et suppression : l'administrateur (publier, clôturer, archiver, supprimer, y compris les fiches
+      // importées), ou le financeur auteur de l'appel.
+      allow update, delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
+    }
+
+    // Candidatures
     match /applications/{applicationId} {
+      // Lecture : porteur propriétaire, financeur de l'AAP, administrateur
       allow read: if isAuthenticated() && (
         resource.data.porteurId == request.auth.uid ||
         resource.data.financeurId == request.auth.uid ||
         isAdmin()
       );
-      allow write: if false;
+
+      // Création : un porteur abonné, pour son propre compte
+      allow create: if isPorteur() && hasActiveSubscription() && request.resource.data.porteurId == request.auth.uid;
+
+      // Mise à jour : le porteur propriétaire tant que la candidature est en brouillon, ou le financeur (évaluation)
+      allow update: if isAuthenticated() && (
+        (resource.data.porteurId == request.auth.uid && resource.data.status == 'draft') ||
+        resource.data.financeurId == request.auth.uid
+      );
+
+      // Suppression : le porteur propriétaire, en brouillon seulement
+      allow delete: if isOwner(resource.data.porteurId) && resource.data.status == 'draft';
     }
 
+    // Recherches sauvegardées et favoris : le propriétaire seulement (userId dans le document)
     match /savedSearches/{searchId} {
-      allow read: if isOwner(resource.data.userId);
-      allow write: if false;
+      allow read, update, delete: if isOwner(resource.data.userId);
+      allow create: if isOwner(request.resource.data.userId);
     }
 
     match /favoriteAap/{favoriteId} {
-      allow read: if isOwner(resource.data.userId);
-      allow write: if false;
+      allow read, update, delete: if isOwner(resource.data.userId);
+      allow create: if isOwner(request.resource.data.userId);
     }
 
+    // Notifications : le destinataire les lit, les marque lues et les supprime ; l'administrateur peut en créer.
+    // Les notifications automatiques viennent des fonctions serveur (SDK admin), hors de ces règles.
     match /notifications/{notificationId} {
-      allow read: if isOwner(resource.data.userId);
-      allow write: if false;
+      allow read, update, delete: if isOwner(resource.data.userId);
+      allow create: if isOwner(request.resource.data.userId) || isAdmin();
     }
 
+    // Messages : expéditeur et destinataire lisent ; un compte abonné écrit en son nom ; le destinataire marque lu
     match /messages/{messageId} {
       allow read: if isAuthenticated() && (
         resource.data.senderId == request.auth.uid ||
         resource.data.receiverId == request.auth.uid
       );
-      allow write: if false;
+      allow create: if hasActiveSubscription() && request.resource.data.senderId == request.auth.uid;
+      allow update: if isOwner(resource.data.receiverId);
     }
 
+    // Paiements et statistiques agrégées : écrits par les fonctions serveur seulement
     match /payments/{paymentId} {
       allow read: if isOwner(resource.data.userId) || isAdmin();
       allow write: if false;
