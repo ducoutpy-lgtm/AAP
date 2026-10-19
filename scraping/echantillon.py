@@ -589,7 +589,8 @@ def charger_env() -> None:
 
 
 def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: float,
-                 adresses: set[str] | None = None, chemin_sortie: Path | None = None) -> None:
+                 adresses: set[str] | None = None, chemin_sortie: Path | None = None,
+                 fiches: list[tuple[dict, Path]] | None = None, metadonnees: dict | None = None) -> None:
     """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, trois appels par texte depuis la consigne 4
     (question fermée, extraction, question du champ), arrêt au plafond.
 
@@ -603,16 +604,20 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
         raise SystemExit(f"Tarif inconnu pour {modele} : l'ajouter à TARIFS_USD_PAR_MTOK (extractor.py) avant tout appel.")
     # adresses et chemin_sortie : la comparaison sur 50 pages (comparaison.py) passe ses propres adresses et son
     # propre fichier ; sans eux, les 45 adresses de l'échantillon et le fichier de l'échantillon.
-    if adresses is None:
-        adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
-    fiches = fiches_par_adresse(resultats, adresses)[:limite]
+    # fiches et metadonnees : le passage global V4 (extraction_locale.py --moteur api, changement extraction-api-v4)
+    # passe la liste des textes des rubriques confirmees et a_verifier, comme extraire() pour le modele local.
+    if fiches is None:
+        if adresses is None:
+            adresses = adresses_echantillon(_charger_liste(REFERENCE), _charger_liste(NON_AAP))
+        fiches = fiches_par_adresse(resultats, adresses)
+    fiches = fiches[:limite]
     RESULTS.mkdir(exist_ok=True)
     chemin_sortie = chemin_sortie or fichier_sortie("api", modele)
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
     chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
     sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)
     deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | {e["fichier"] for e in echecs} | {r["fichier"] for r in refusees})
-    print(f"{len(fiches)} textes de l'échantillon ({sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} déjà traités) ; "
+    print(f"{len(fiches)} textes ({sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} déjà traités) ; "
           f"coût cumulé de {modele} : {cout_cumule(modele):.3f} euros ; plafond {plafond:.2f} euros")
     tarifs, nouvelles = extractor.TARIFS_USD_PAR_MTOK[modele], 0
     for i, (rubrique, chemin) in enumerate(fiches, 1):
@@ -650,7 +655,7 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": "api", "modele": modele, "duree_s": duree, "fichier": rel,
                                 "a_relire": a_relire, "ecarts": ecarts, "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
-                                "version_consigne": VERSION_CONSIGNE, **champ}
+                                "version_consigne": VERSION_CONSIGNE, **champ, **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend

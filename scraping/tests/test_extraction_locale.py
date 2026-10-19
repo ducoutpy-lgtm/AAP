@@ -37,3 +37,25 @@ def test_bilan_compteurs_et_estimation():
     assert "Pages refusées (pas la fiche d'un appel) : 1" in texte
     assert "Textes restant à traiter : 5" in texte
     assert "h estimées" in texte
+
+
+def test_textes_restants_et_devis(tmp_path, monkeypatch):
+    # V4 (extraction-api-v4) : le devis compte les textes non traités par le fichier de sortie API et écrit un maximum.
+    import json
+    import echantillon
+    monkeypatch.setattr(el, "ICI", tmp_path)
+    a, b = tmp_path / "decouverte" / "s" / "fiches" / "a.txt", tmp_path / "decouverte" / "s" / "fiches" / "b.txt"
+    a.parent.mkdir(parents=True)
+    a.write_text("https://x/a\nlien\n\ntexte", encoding="utf-8")
+    b.write_text("https://x/b\nlien\n\ntexte", encoding="utf-8")
+    sortie = tmp_path / "results" / "extraction_api.json"
+    sortie.parent.mkdir()
+    sortie.write_text(json.dumps([{"scrape_metadata": {"fichier": str(a.relative_to(tmp_path))}}]), encoding="utf-8")
+    restants = extraction_locale.textes_restants([({"id": "s"}, a), ({"id": "s"}, b)], sortie)
+    assert [c for _, c in restants] == [b]
+    tarifs = {"entree": 0.10, "sortie": 0.50}
+    texte = extraction_locale.devis([3400] * 1808, "claude-haiku-5-5", tarifs, 0.519, 5.0, 0.95)
+    assert texte.startswith("Devis : 1808 textes restants") and "claude-haiku-5-5" in texte and "déjà dépensé pour ce modèle 0.519" in texte
+    attendu = sum(echantillon.estimation_appel_euros(3400, tarifs, 0.95) for _ in range(1808))
+    assert f"{attendu:.2f} euros au plus" in texte and "DÉPASSEMENT" not in texte
+    assert "DÉPASSEMENT" in extraction_locale.devis([3400] * 1808, "m", tarifs, 4.9, 5.0, 0.95)

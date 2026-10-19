@@ -10,8 +10,14 @@ Usage (depuis scraping/, environnement .venv) :
   python extraction_locale.py --collecter [--ids a,b]      # texte de chaque lien web (navigateur), une adresse une fois
   python extraction_locale.py --extraire --modele qwen3:8b [--limite N] [--ids a,b]
                                                            # fiches -> results/extraction_locale.json (reprise)
+  python extraction_locale.py --extraire --moteur api --dry-run
+                                                           # V4 : devis (textes restants, coût estimé, cumul, plafond), aucun appel
+  python extraction_locale.py --extraire --moteur api [--modele claude-haiku-5-5] [--plafond 5] [--limite N]
+                                                           # V4, après accord écrit : fiches -> results/extraction_api.json
 
-Aucun appel à l'API Anthropic n'est fait par ce script.
+V4 (changement extraction-api-v4, décision de Monsieur DUCOUT du 2026-10-19) : même chaîne, moteur API payant ; le
+devis est écrit avant tout appel, le plafond cumulé arrête l'outil avant l'appel qui le dépasserait. Sans --moteur api,
+aucun appel à l'API Anthropic n'est fait par ce script.
 """
 from __future__ import annotations
 
@@ -28,7 +34,9 @@ from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, RESULTS, JS_TEXTE, lire_
 
 REGISTRE = ICI / "sources" / "registre.json"
 SORTIE = RESULTS / "extraction_locale.json"
+SORTIE_API = RESULTS / "extraction_api.json"  # V4 : fiches du moteur API, fichier à part (la V3 reste intacte)
 MOTEUR, MODELE_DEFAUT = "ollama", "qwen3:8b"
+MODELE_API_DEFAUT, PLAFOND_DEFAUT = "claude-haiku-5-5", 5.0
 # Familles du registre dans l'ordre de traitement : les plus proches du champ santé d'abord, les collectivités
 # (listes mixtes, 1 528 liens) en dernier (design, décision 4).
 ORDRE_FAMILLES = ["ars", "caisse-nationale", "fondation", "agence-nationale", "ministere", "societe-savante",
@@ -38,6 +46,24 @@ DUREE_REFUS_S, DUREE_FICHE_S = 22, 69
 
 
 # ---------------------------------------------------------------- fonctions pures (testées)
+
+def textes_restants(fiches: list[tuple[dict, Path]], chemin_sortie: Path) -> list[tuple[dict, Path]]:
+    """Textes pas encore traités par le fichier de sortie donné (fiches, refus, échecs) : ce que le devis compte."""
+    deja = {d["scrape_metadata"]["fichier"] for d in echantillon._charger_liste(chemin_sortie)}
+    deja |= {e["fichier"] for e in echantillon._charger_liste(chemin_sortie.with_name(chemin_sortie.stem + ".errors.json"))}
+    deja |= {r["fichier"] for r in echantillon._charger_liste(chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json"))}
+    return [(r, c) for r, c in fiches if str(c.relative_to(ICI)) not in deja]
+
+
+def devis(caracteres: list[int], modele: str, tarifs: dict, cumul: float, plafond: float, euro_par_dollar: float) -> str:
+    """Texte du devis écrit avant tout appel payant (règle de Monsieur DUCOUT) : hypothèse prudente de trois appels par
+    texte (question fermée, extraction, champ), donc un maximum ; le coût réel se lit ensuite dans le journal."""
+    estime = sum(echantillon.estimation_appel_euros(c, tarifs, euro_par_dollar) for c in caracteres)
+    return (f"Devis : {len(caracteres)} textes restants, {sum(caracteres):,} caractères ; modèle {modele}, tarif "
+            f"{tarifs['entree']} USD entrée et {tarifs['sortie']} USD sortie par million de jetons ; coût estimé "
+            f"{estime:.2f} euros au plus (trois appels par texte) ; déjà dépensé pour ce modèle {cumul:.3f} euros ; "
+            f"plafond {plafond:.2f} euros" + (" : DÉPASSEMENT possible, l'outil s'arrêtera avant" if cumul + estime > plafond else ""))
+
 
 def sources_confirmees(registre: list[dict], ids: set[str] | None = None) -> list[dict]:
     """Sources en rubrique confirmée, dans l'ordre des familles puis du registre ; limitées à ids si donné."""
@@ -152,18 +178,39 @@ def main() -> int:
     parser.add_argument("--collecter", action="store_true")
     parser.add_argument("--extraire", action="store_true")
     parser.add_argument("--bilan", action="store_true")
-    parser.add_argument("--modele", default=MODELE_DEFAUT)
+    parser.add_argument("--modele", help=f"{MODELE_DEFAUT} en local, {MODELE_API_DEFAUT} avec --moteur api")
+    parser.add_argument("--moteur", choices=["ollama", "api"], default=MOTEUR, help="ollama (V3, défaut) ou api (V4, payant)")
+    parser.add_argument("--plafond", type=float, default=PLAFOND_DEFAUT, help="avec --moteur api : dépense cumulée maximale en euros")
+    parser.add_argument("--dry-run", action="store_true", help="avec --moteur api : écrire le devis, n'appeler rien")
     parser.add_argument("--limite", type=int, help="n'extraire que les N premiers textes (essai)")
     parser.add_argument("--ids", help="identifiants de sources séparés par des virgules")
     args = parser.parse_args()
+    modele = args.modele or (MODELE_API_DEFAUT if args.moteur == "api" else MODELE_DEFAUT)
 
     ids = {i.strip() for i in args.ids.split(",")} if args.ids else None
     sources = rubriques(ids)
 
     if args.collecter:
         asyncio.run(collecter(sources))
-    if args.extraire:
-        echantillon.extraire(sources, MOTEUR, args.modele, args.limite, chemin_sortie=SORTIE,
+    if args.extraire and args.moteur == "api":
+        import extractor
+        if modele not in extractor.TARIFS_USD_PAR_MTOK:
+            print(f"Tarif inconnu pour {modele} : l'ajouter à extractor.TARIFS_USD_PAR_MTOK avant tout appel.", file=sys.stderr)
+            return 1
+        fiches = textes_restants(echantillon.fiches_disponibles(sources), SORTIE_API)[:args.limite]
+        caracteres = []
+        for _, chemin in fiches:
+            _, texte = lire_fiche(chemin)
+            caracteres.append(len(texte.split("\n", 1)[1] if "\n" in texte else texte))
+        print(devis(caracteres, modele, extractor.TARIFS_USD_PAR_MTOK[modele], echantillon.cout_cumule(modele), args.plafond,
+                    extractor.EURO_PAR_DOLLAR))
+        if args.dry_run:
+            print("Essai à blanc : aucun appel, rien d'écrit.")
+            return 0
+        echantillon.extraire_api({}, modele, args.limite, args.plafond, chemin_sortie=SORTIE_API,
+                                 fiches=echantillon.fiches_disponibles(sources), metadonnees={"a_verifier": True})
+    elif args.extraire:
+        echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE,
                              metadonnees={"a_verifier": True})
     if args.bilan:
         nb_liens = sum(len(l) for l in liens_par_source(sources).values())

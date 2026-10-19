@@ -168,6 +168,11 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
   décidée par Monsieur DUCOUT : avant tout appel payant, un second tour d'extraction Ollama à zéro euro est mesuré contre
   les 24 fiches de référence de l'échantillon, avec un seuil fixé à l'avance ; l'API n'est retenue que si le seuil n'est
   pas atteint.
+  Décision du 2026-10-19 (Monsieur DUCOUT) : « garde la V3, crée la V4 avec modèle API payant ». V3 = extraction locale
+  (étiquette Git `v3-local`, `results/extraction_locale.json` conservé) ; V4 = même chaîne avec `claude-haiku-5-5`
+  (changement `extraction-api-v4`, `results/extraction_api.json`). Règle absolue : le coût supposé est écrit et accepté
+  avant tout appel à l'API, plafond cumulé 5 euros. But : voir vite les appels qualifiés et publiés sans relecture
+  manuelle, puis construire l'application complète.
 - Modifier un cahier des charges dans `docs/` sans en informer explicitement.
 - Committer une clé (Anthropic, Firebase, Stripe). Tout est dans des `.env` ignorés par Git.
 - Supprimer la branche ou le tag d'archive.

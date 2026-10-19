@@ -266,3 +266,23 @@ def test_extraire_api_pose_la_question_du_champ(tmp_path, monkeypatch):
                              adresses={"https://x/page-d"}, chemin_sortie=sortie)
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
     assert fiche["scrape_metadata"]["champ"] == "medico-social" and fiche["scrape_metadata"]["version_consigne"] == 4
+
+
+def test_extraire_api_accepte_une_liste_de_textes_et_des_metadonnees(tmp_path, monkeypatch):
+    # V4 : extraire_api reçoit les textes des rubriques confirmées et a_verifier, comme extraire() ; aucun appel payant.
+    import extractor
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "e.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-e\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(echantillon, "cout_cumule", lambda *a, **k: 0.0)
+    monkeypatch.setattr(extractor, "est_un_aap", lambda *a, **k: {"est_aap": True, "raison": "appel"})
+    monkeypatch.setattr(extractor, "extract_aap", lambda *a, **k: dict(FICHE_BRUTE))
+    monkeypatch.setattr(extractor, "champ_aap", lambda *a, **k: {"champ": "sante", "raison": "soins"})
+    sortie = tmp_path / "results" / "extraction_api.json"
+    echantillon.extraire_api({}, "claude-haiku-5-5", None, 5.0, chemin_sortie=sortie,
+                             fiches=[({"id": "src", "nom": "Source"}, chemin)], metadonnees={"a_verifier": True})
+    [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
+    m = fiche["scrape_metadata"]
+    assert m["moteur"] == "api" and m["a_verifier"] is True and m["champ"] == "sante" and m["version_consigne"] == 4
