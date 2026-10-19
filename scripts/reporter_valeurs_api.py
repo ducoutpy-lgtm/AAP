@@ -8,7 +8,8 @@ les memes pages avec l'API, mieux notee a la comparaison du 2026-10-14. Un verdi
 
 Ce que fait le script, pour chaque fiche de results/extraction_api.json presente dans la base :
   1. recalcule le document comme l'import le ferait (corrections du controle, champ, decision du modele) ;
-  2. passe si la fiche porte un verdict humain, ou si elle est en brouillon hors champ ;
+  2. passe si la fiche porte un verdict humain, si elle est en brouillon hors champ, ou si la fiche API n'a pas
+     ete controlee par le modele (close) : une fiche validee ne redescend jamais en « proposee » ;
   3. compare les champs metier et la validation ; ne retient que ce qui change ;
   4. --dry-run : comptes par champ et cinq exemples, rien d'ecrit ;
   5. sinon : sauvegarde JSON dans scripts/sauvegardes/valeurs_api_<date>.json, puis ecriture des seuls champs changes.
@@ -97,6 +98,11 @@ def main() -> int:
             continue
         if "hors-champ" in (d.get("tags") or []):
             bilan["brouillon hors champ, conservee"] += 1
+            continue
+        if verification.decision_du_modele(item) is None:
+            # Fiche API close ou non controlee : ses valeurs n'ont pas ete relues, la fiche en base (validee d'apres
+            # le controle de la V3) reste telle quelle plutot que de redescendre en « proposee ».
+            bilan["fiche API non controlee, conservee"] += 1
             continue
         nouveau = document_api(item, source_name, now, today)
         if "hors-champ" in nouveau["tags"]:
