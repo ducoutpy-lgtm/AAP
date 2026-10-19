@@ -386,6 +386,9 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
             "champRaison": (item.get("scrape_metadata") or {}).get("champ_raison") or "",
             "champModele": (item.get("scrape_metadata") or {}).get("champ_modele") or "",
             "enveloppeGlobale": item.get("enveloppe_globale"),
+            # Date de lecture de la page par le moteur (mention-relecture-fiches) : produite_le (local, API) ou scraped_at
+            "extraitLe": (item.get("scrape_metadata") or {}).get("produite_le")
+            or (item.get("scrape_metadata") or {}).get("scraped_at") or "",
             "fichiersJoints": [
                 piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
                 for f in item.get("fichiers_joints") or []

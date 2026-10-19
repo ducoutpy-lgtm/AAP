@@ -387,3 +387,10 @@ def test_appliquer_controle_modifications_n_ecrit_que_le_necessaire():
     assert maj["budgetTotal"] == 910000 and "a-verifier" not in maj["tags"] and "sans-date-cloture" not in maj["tags"]
     rejet = fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "sante", "verification": {**ver, "est_un_appel": False, "douteux": []}})
     assert ac.modifications(rejet, "x", verification.decision_du_modele(rejet), MAINTENANT, AUJOURDHUI)["status"] == "archived"
+
+
+def test_import_pose_la_date_d_extraction():
+    # mention-relecture-fiches : extraitLe = produite_le (local, API), sinon scraped_at (connecteur), sinon vide.
+    assert imp.to_app_aap(fiche(scrape_metadata={"moteur": "api", "modele": "h", "produite_le": "2026-10-19T10:12:00"}), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == "2026-10-19T10:12:00"
+    assert imp.to_app_aap(fiche(scrape_metadata={"scraped_at": "2026-10-09T08:00:00"}), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == "2026-10-09T08:00:00"
+    assert imp.to_app_aap(fiche(), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == ""

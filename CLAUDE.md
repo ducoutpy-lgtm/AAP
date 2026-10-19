@@ -222,7 +222,10 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `verification-assistee-haiku` (2026-10-15 : contrôle des 283 fiches publiables par Haiku, 0,15 euro, 74
+  En cours : `extraction-api-v4` (2026-10-19 : V4 par l'API, devis 2,26 euros au plus accepté, essai 5 textes 0,01 euro,
+  passage global lancé à 10 h 10), `mention-relecture-fiches` (2026-10-19, instruction 11 : mentions « Relue », « Contrôlée
+  par le modèle », « Non relue », date d'extraction, lien officiel, filtre « Relecture », lint et build verts, écran
+  vérifié : 231 fiches relues sur 270 ; ré-import pour `extraitLe` à faire avec l'import V4), `verification-assistee-haiku` (2026-10-15 : contrôle des 283 fiches publiables par Haiku, 0,15 euro, 74
   douteuses hors description, outil de validation trié, résumé importé ; midi, décision de Monsieur DUCOUT : le contrôle
   vaut relecture, `verification.decision_du_modele` et `scripts/appliquer_controle.py` codés et testés, essai à blanc 231
   validées, 39 rejetées, 8 à corriger ; exécution réelle faite à 12 h 31 sur son accord : 278 fiches, sauvegarde `controle_2026-10-15_1231.json` ; base 270 publiées dont 231 validées par le modèle, 38 badges « à vérifier » contre 307), `acces-administration` (2026-10-15 : aucun compte admin n'existait ; `scripts/creer_admin.py` et page

@@ -256,6 +256,14 @@ pour les fiches saisies à la main) ; chaque fiche montre son badge de validatio
 modèle), la date et le commentaire. Pourquoi : la liste par `status` (brouillon, publié) ne dit pas si une fiche a été
 relue ni par qui.
 
+**Mention de relecture, date d'extraction et lien officiel** (changement `mention-relecture-fiches`, 2026-10-19,
+instruction 11 du rapport de critique) : la liste et la fiche affichent, pour chaque appel scrapé, « Relue par Monsieur
+DUCOUT », « Contrôlée par le modèle » ou « Non relue : informations extraites automatiquement », déduit de `validation`
+par `src/utils/relecture.ts` ; la date « Informations extraites le ... » (`scrapeMetadata.extraitLe`, posé par l'import)
+et le lien « Annonce officielle », cliquable dans la liste sans ouvrir la fiche et placé sous le titre de la fiche. Le
+filtre « Relecture » garde les fiches validées, par Monsieur DUCOUT ou par le modèle. Pourquoi : un visiteur doit savoir
+ce qui a été relu et pouvoir vérifier à la source.
+
 **Filtres de la recherche** (changement `filtres-recherche`, 2026-10-14 au soir) : Territoire (identifiants écrits par
 l'import, affichés avec leur libellé, `src/utils/territoires.ts`), Thématique (champ classé par le modèle :
 `scrapeMetadata.champ`, « Santé », « Médico-social », « Non classée » tant que la fiche n'est pas classée) et Financeur,

@@ -629,3 +629,14 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   chaîne d'extraction par les deux moteurs, après l'extraction d'une page acceptée (consigne version 4) ; un échec de
   la question laisse la fiche « incertain » sans la perdre ; `champ.py --classer` devient un rattrapage. Tests scraping
   95 verts ; preuve sur un texte réel en local (voir `tasks.md`, 5.1). Documentation (6.1) faite.
+- Décisions de Monsieur DUCOUT (2026-10-19, matin) : V3 (modèle local) conservée sous l'étiquette Git `v3-local`, V4
+  par l'API payante (« tu dois toujours me donner le coût supposé avant de lancer des appels ») ; changement
+  `extraction-api-v4` : devis 1 808 textes, 2,26 euros au plus, essai de 5 textes (0,01 euro, 5 fiches justes, 8 à 12 s
+  par page), passage global lancé à 10 h 10 sur son accord. Forfait Blaze accepté (il l'active), connexion Google à
+  activer par lui, MFA reportée à la fin.
+- Instruction 11 (2026-10-19, changement `mention-relecture-fiches`, accord « 1 : ok ») : mentions « Relue par Monsieur
+  DUCOUT », « Contrôlée par le modèle », « Non relue : informations extraites automatiquement » dans la liste et la fiche
+  (`app/src/utils/relecture.ts`), date « Informations extraites le ... » (`scrapeMetadata.extraitLe`, posé au prochain
+  ré-import), lien « Annonce officielle » en évidence, filtre « Relecture ». Lint et build verts ; écran vérifié par la
+  session : 20 mentions « Contrôlée par le modèle » et 20 liens officiels sur la première page, filtre « relues
+  seulement » : 231 fiches, égal au compte des fiches validées de la base.

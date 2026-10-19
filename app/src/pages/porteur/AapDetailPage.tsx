@@ -5,6 +5,7 @@ import { ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
+import { mentionRelecture, dateExtraction } from '../../utils/relecture';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -139,9 +140,28 @@ export default function AapDetailPage() {
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-gray-900 mb-3">{aap.title}</h1>
-              {/* Fiche produite par le modèle local, non relue : mention À vérifier (étiquette a-verifier posée à l'import) */}
-              {aap.tags?.includes('a-verifier') && (
-                <div className="mb-3"><Badge variant="warning">À vérifier</Badge></div>
+              {/* Mention de relecture, date d'extraction et lien officiel en évidence (mention-relecture-fiches, instruction 11) */}
+              {(mentionRelecture(aap) || aap.externalUrl) && (
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
+                  {mentionRelecture(aap) && (
+                    <>
+                      <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
+                      {mentionRelecture(aap)!.detail && <span>{mentionRelecture(aap)!.detail.trim()}</span>}
+                    </>
+                  )}
+                  {dateExtraction(aap) && <span>Informations extraites le {dateExtraction(aap)}</span>}
+                  {aap.externalUrl && (
+                    <a
+                      href={aap.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary-600 hover:underline inline-flex items-center gap-1 font-medium"
+                    >
+                      Annonce officielle
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
               )}
               <div className="flex items-center gap-2 text-gray-600 mb-2">
                 <Building className="h-5 w-5" />

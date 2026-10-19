@@ -137,6 +137,9 @@ export interface AAP {
     // Contrôle de la fiche par le modèle (changement verification-assistee-haiku, 2026-10-15) : champs jugés douteux,
     // résumé seulement ; ne vaut pas relecture humaine (validation.statut reste la seule source de fiabilité)
     verification?: { modele: string; le: string; douteux: string[]; estUnAppel?: boolean | null };
+    // Date à laquelle le moteur a lu la page (produite_le du passage local ou API, scraped_at d'un connecteur), ISO ;
+    // changement mention-relecture-fiches (2026-10-19), affichée « Informations extraites le ... »
+    extraitLe?: string;
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;

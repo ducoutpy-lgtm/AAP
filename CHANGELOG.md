@@ -6,6 +6,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Mention de relecture sur les fiches (changement `mention-relecture-fiches`, 2026-10-19, instruction 11) : « Relue par
+  Monsieur DUCOUT », « Contrôlée par le modèle » ou « Non relue : informations extraites automatiquement » dans la liste
+  et la fiche, date « Informations extraites le ... » (`scrapeMetadata.extraitLe` écrit par l'import, posé au prochain
+  ré-import), lien « Annonce officielle » en évidence, filtre « Relecture » (231 fiches relues ou contrôlées sur 270 le
+  2026-10-19). Remplace le badge « À vérifier ».
 - Contrôle des fiches par le modèle (changement `verification-assistee-haiku`, 2026-10-15, accord de Monsieur DUCOUT) :
   `scraping/verification.py` relit chaque fiche publiable à côté de sa page avec `claude-haiku-5-5` et donne un verdict
   par champ ; 283 fiches contrôlées pour 0,15 euro, 129 sans doute, 74 douteuses sur une date, un montant, le financeur,

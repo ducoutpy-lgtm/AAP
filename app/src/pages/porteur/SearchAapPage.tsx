@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP } from '../../types';
+import { mentionRelecture, estRelue, dateExtraction } from '../../utils/relecture';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
+import {
+  ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
 
@@ -22,6 +24,7 @@ export default function SearchAapPage() {
     territory: '',
     financeur: '',
     source: '',
+    relecture: '',
     budgetMin: '',
     budgetMax: '',
   });
@@ -98,6 +101,11 @@ export default function SearchAapPage() {
       result = result.filter(aap => (aap.financeurName || 'Non spécifié') === filters.financeur);
     }
 
+    // Filtre « fiches relues ou contrôlées seulement » (mention-relecture-fiches) : validation.statut = validee
+    if (filters.relecture === 'relues') {
+      result = result.filter(aap => estRelue(aap));
+    }
+
     // Filtre par source : site d'origine de la fiche (nom de l'émetteur du registre écrit par l'import)
     if (filters.source) {
       result = result.filter(aap => (aap.scrapeMetadata?.sourceNom || 'Non précisée') === filters.source);
@@ -128,6 +136,7 @@ export default function SearchAapPage() {
       territory: '',
       financeur: '',
       source: '',
+      relecture: '',
       budgetMin: '',
       budgetMax: '',
     });
@@ -256,6 +265,21 @@ export default function SearchAapPage() {
                 </select>
               </div>
 
+              {/* Relecture (mention-relecture-fiches) : fiches validées par Monsieur DUCOUT ou par le modèle */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Relecture
+                </label>
+                <select
+                  value={filters.relecture}
+                  onChange={(e) => setFilters({ ...filters, relecture: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Toutes les fiches</option>
+                  <option value="relues">Fiches relues ou contrôlées seulement</option>
+                </select>
+              </div>
+
               {/* Budget */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -341,12 +365,30 @@ export default function SearchAapPage() {
                         {aap.description}
                       </p>
 
+                      {/* Mention de relecture, date d'extraction et lien officiel (mention-relecture-fiches, instruction 11) */}
+                      {(mentionRelecture(aap) || aap.externalUrl) && (
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
+                          {mentionRelecture(aap) && (
+                            <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
+                          )}
+                          {dateExtraction(aap) && <span>Informations extraites le {dateExtraction(aap)}</span>}
+                          {aap.externalUrl && (
+                            <a
+                              href={aap.externalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-primary-600 hover:underline inline-flex items-center gap-1 font-medium"
+                            >
+                              Annonce officielle
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          )}
+                        </div>
+                      )}
+
                       {/* Tags secteurs */}
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {/* Fiche produite par le modèle local, non relue : mention À vérifier (étiquette a-verifier posée à l'import) */}
-                        {aap.tags?.includes('a-verifier') && (
-                          <Badge variant="warning">À vérifier</Badge>
-                        )}
                         {aap.sectorsTargeted?.slice(0, 3).map(sector => (
                           <Badge key={sector} variant="gray">
                             {sector}

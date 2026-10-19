@@ -208,8 +208,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   (`scripts/creer_admin.py`, mot de passe par `/reset-password`), espace `/admin` ouvert ; le 2026-10-19, `/admin/aaps`
   montre les compteurs et le filtre par `validation.statut` (base : proposée 54, à corriger 245, validée 231, rejetée
   39) et, sur chaque fiche, relecteur, date et commentaire. Reste : vérification 3.2 par Monsieur DUCOUT (la page exige
-  une connexion que la session ne fait pas). Ensuite, lot 1 : question du champ dans la chaîne d'extraction
-  (`filtre-champ-sante` 5.1), dates de collecte et mention « non relue » (instructions 10 et 11).
+  une connexion que la session ne fait pas).
+- 2026-10-19, décisions de Monsieur DUCOUT : V3 (modèle local) figée sous l'étiquette Git `v3-local`, V4 par l'API
+  (`extraction-api-v4`, devis 2,26 euros au plus accepté, passage lancé à 10 h 10, fichier `results/extraction_api.json`) ;
+  forfait Blaze accepté (il l'active lui-même) ; connexion Google à activer par lui ; MFA à la fin. Instruction 11 faite
+  (`mention-relecture-fiches` : mentions de relecture, date d'extraction, lien officiel, filtre « Relecture »). Reste
+  pour la V4 : fin du passage, contrôle Haiku (devis), décision du modèle, import (pose aussi `extraitLe`).
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 
