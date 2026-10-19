@@ -75,7 +75,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2">
             <Target className="h-10 w-10 text-primary-600" />
-            <span className="text-3xl font-bold text-gray-900">AAP Platform</span>
+            <span className="text-3xl font-bold text-gray-900">AAP Santé</span>
           </Link>
         </div>
 

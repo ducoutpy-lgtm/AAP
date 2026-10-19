@@ -22,7 +22,10 @@ déploiement Firebase sans accord écrit, la session ne crée aucun compte sur l
   avec JDK 21 en tête du PATH, « Tests 23 passed (23) » : 13 du lot 0 conservés ou adaptés, 10 nouveaux sur la
   création d'appel par un financeur, les profils, les candidatures, les recherches, favoris, notifications, messages,
   et l'interdiction d'écrire payments et analytics.)
-- [ ] 2.2 Déploiement des règles après accord écrit (`firebase deploy --only firestore:rules`), sortie collée.
+- [x] 2.2 Déploiement des règles après accord écrit (`firebase deploy --only firestore:rules`), sortie collée. (Fait le
+  2026-10-19, accord « 1 oui deploie regle de securite » : `firebase deploy --only firestore:rules --project aapi-11bc3`,
+  « rules file firestore.rules compiled successfully ; released rules firestore.rules to cloud.firestore ; Deploy
+  complete! ».)
 
 ## 3. Inscription, profils, parcours
 

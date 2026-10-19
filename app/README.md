@@ -241,6 +241,11 @@ code conservé sans modification, inscription fermée (`/signup` affiche la page
 affiche « Date de clôture non précisée » et se classe après les fiches datées ; depuis le 2026-10-14 au soir (décision
 de Monsieur DUCOUT) l'import la publie directement avec le badge « À vérifier ».
 
+**Lancer l'application depuis le bureau** : raccourci « AAP Sante » (`lancer_application.cmd`, 2026-10-19) : démarre le
+serveur local sur le port 3000 et ouvre le navigateur sur la recherche ; fermer la fenêtre noire arrête le serveur. Nom
+affiché « AAP Santé » depuis le 2026-10-19 (nom provisoire décidé par Monsieur DUCOUT). Connexion Google activée dans la
+console Firebase le même jour.
+
 **Dégel de l'application complète** (changement `degel-application-complete`, 2026-10-19, décision de Monsieur DUCOUT) :
 les modules gelés par le lot 0 sont de retour, avec leurs gardes d'origine (connexion, abonnement actif ou essai, rôle) :
 inscription `/signup` (essai de 14 jours), `/complete-profile`, abonnement (écrans seulement, Stripe non branché),

@@ -93,7 +93,9 @@ Son module `src/services/export.ts` pourra être porté dans `app/` quand l'expo
   Monsieur DUCOUT lui-même).
 - Rôles : `porteur`, `financeur`, `admin` (champ `users/{uid}.userType`). Compte administrateur : `scripts/creer_admin.py
   --email <adresse>` (2026-10-15, sans mot de passe ; mot de passe choisi via `/reset-password`). Fournisseur Google
-  désactivé dans Firebase : le bouton « Google » de `/login` ne fonctionne pas.
+  activé par Monsieur DUCOUT dans la console Firebase le 2026-10-19 : le bouton « Google » de `/login` et `/signup`
+  fonctionne. Nom affiché de l'application : « AAP Santé » depuis le 2026-10-19 (sa décision, nom provisoire).
+  Raccourci « AAP Sante » sur son bureau (`app/lancer_application.cmd`, serveur local port 3000).
 - Abonnement : essai 14 jours à l'inscription ; Stripe **non branché** (Cloud Functions non déployées).
 - Détail complet (routes, collections Firestore, limites connues) : `docs/resume_application_web_2026-10.md`.
 

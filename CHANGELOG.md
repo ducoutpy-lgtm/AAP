@@ -6,6 +6,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Nom affiché « AAP Santé » (2026-10-19, décision de Monsieur DUCOUT, nom provisoire) à la place de « AAP Platform » ;
+  raccourci « AAP Sante » sur son bureau (`app/lancer_application.cmd` : serveur local puis navigateur sur la recherche) ;
+  règles Firestore du dégel déployées sur `aapi-11bc3` après accord ; connexion Google activée par lui dans la console.
 - Dégel de l'application complète (changement `degel-application-complete`, 2026-10-19, décision de Monsieur DUCOUT :
   « on le lance ») : routes d'avril rétablies (inscription, profil, abonnement, porteur, financeur, messagerie,
   notifications, calendrier, statistiques), lint et compilation sur tout le code (26 `any` typés, dates de clôture

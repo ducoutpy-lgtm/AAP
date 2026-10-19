@@ -10,7 +10,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Target className="h-8 w-8 text-primary-600" />
-              <span className="text-2xl font-bold text-gray-900">AAP Platform</span>
+              <span className="text-2xl font-bold text-gray-900">AAP Santé</span>
             </div>
             <div className="flex items-center gap-4">
               {/* Consultation publique des AAP, sans compte (spec consultation-aap-scrapes) */}
@@ -230,7 +230,7 @@ export default function LandingPage() {
             Prêt à commencer ?
           </h2>
           <p className="text-xl text-primary-100 mb-8">
-            Rejoignez des centaines d'organisations qui utilisent déjà AAP Platform
+            Rejoignez des centaines d'organisations qui utilisent déjà AAP Santé
           </p>
         </div>
       </section>
@@ -242,7 +242,7 @@ export default function LandingPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Target className="h-6 w-6 text-primary-400" />
-                <span className="text-lg font-bold text-white">AAP Platform</span>
+                <span className="text-lg font-bold text-white">AAP Santé</span>
               </div>
               <p className="text-sm">
                 La plateforme de référence pour les appels à projets en France
@@ -278,7 +278,7 @@ export default function LandingPage() {
           </div>
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; 2025 AAP Platform. Tous droits réservés.</p>
+            <p>&copy; 2025 AAP Santé. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
