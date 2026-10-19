@@ -43,7 +43,7 @@ def test_textes_restants_et_devis(tmp_path, monkeypatch):
     # V4 (extraction-api-v4) : le devis compte les textes non traités par le fichier de sortie API et écrit un maximum.
     import json
     import echantillon
-    monkeypatch.setattr(el, "ICI", tmp_path)
+    monkeypatch.setattr(extraction_locale, "ICI", tmp_path)
     a, b = tmp_path / "decouverte" / "s" / "fiches" / "a.txt", tmp_path / "decouverte" / "s" / "fiches" / "b.txt"
     a.parent.mkdir(parents=True)
     a.write_text("https://x/a\nlien\n\ntexte", encoding="utf-8")
