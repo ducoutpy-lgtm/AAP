@@ -341,7 +341,15 @@ python champ.py --rapport                                             # CHAMP.md
 Le champ est écrit dans `scrape_metadata` de chaque fiche (`champ`, `champ_raison`, `champ_modele`, `champ_le`,
 `champ_source`) et repris par l'import dans `scrapeMetadata` : une fiche `hors-champ` entre en brouillon à corriger,
 jamais publiée sans verdict ; le verdict « hors champ » de la validation quotidienne (touche 7) la rejette. Ne pas
-classer `results/extraction_locale.json` pendant que le passage global tourne : il réécrit ce fichier à chaque fiche.
+classer `results/extraction_locale.json` pendant qu'un passage d'extraction tourne : il réécrit ce fichier à chaque fiche.
+
+Depuis le 2026-10-19 (consigne version 4, tâche 5.1), la question du champ est posée dans la chaîne d'extraction
+elle-même, par les deux moteurs (`echantillon.extraire` pour le modèle local, `extraire_api` pour l'API), juste après
+l'extraction d'une page acceptée : une fiche nouvelle porte son champ dès sa production, sans classement rétroactif.
+Pourquoi après l'extraction et non avant : une page refusée à la question « est-ce un appel ? » ne coûte ainsi aucun
+appel de plus. Un échec de cette question (modèle injoignable) ne perd pas la fiche : champ `incertain`, raison
+« échec : ... », que `champ.py --classer` reprend ensuite. Pour le moteur API, l'estimation du coût compte désormais
+trois appels par texte.
 
 Verdicts de référence du champ : `sources/verdicts_champ.json` (adresse -> champ, relecteur, date). Le 2026-10-14,
 Monsieur DUCOUT a confirmé les 24 classements du modèle local sur le premier tirage de la comparaison (19 hors champ,

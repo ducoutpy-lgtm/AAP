@@ -625,3 +625,7 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   fiche, badge, relecteur, date et commentaire de validation. Lint et build verts. Mesure en lecture seule de la base :
   569 documents, proposée 54, à corriger 245, validée 231, rejetée 39 ; `status` : publiées 270, brouillons 260,
   archivées 39. La page exige une connexion : les compteurs à l'écran sont à comparer par Monsieur DUCOUT.
+- Instruction 26, suite (2026-10-19, changement `filtre-champ-sante` 5.1) : la question du champ est posée dans la
+  chaîne d'extraction par les deux moteurs, après l'extraction d'une page acceptée (consigne version 4) ; un échec de
+  la question laisse la fiche « incertain » sans la perdre ; `champ.py --classer` devient un rattrapage. Tests scraping
+  95 verts ; preuve sur un texte réel en local (voir `tasks.md`, 5.1). Documentation (6.1) faite.

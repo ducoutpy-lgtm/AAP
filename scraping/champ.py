@@ -133,12 +133,9 @@ def rapport_markdown(fiches: list[dict], registre: dict[str, dict], aujourdhui: 
 # ---------------------------------------------------------------- étapes
 
 def poser_la_question(moteur: str, modele: str, texte: str, url: str, source: str) -> dict:
-    if moteur == "api":
-        import extractor
-        return extractor.champ_aap(texte, url, CONSIGNE_CHAMP, source=source, model=modele)
-    page = f"URL source : {url}\n\nTexte de la page :\n{texte}"
-    return echantillon.appeler_ollama(modele, [{"role": "system", "content": CONSIGNE_CHAMP},
-                                               {"role": "user", "content": page}], SCHEMA_CHAMP)
+    """Même question que la chaîne d'extraction (echantillon.poser_question_champ, consigne 4) : ici en rattrapage,
+    pour les fiches produites avant la consigne 4 ou dont la question a échoué."""
+    return echantillon.poser_question_champ(moteur, modele, texte, url, source)
 
 
 def classer(fichiers: list[Path], moteur: str, modele: str, limite: int | None, plafond: float, dry_run: bool) -> int:

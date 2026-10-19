@@ -21,7 +21,8 @@ formats (dates, montants, financeur) sont contrôlés, redemandés une fois au m
 mis à null avec la marque « à relire » si l'écart persiste.
 
 Aucun appel à l'API Anthropic n'est fait par ce script, sauf avec --moteur api (lot 0 du rapport du 2026-10-14,
-instruction 17) : les 45 textes de l'échantillon seulement, deux appels par texte (question fermée puis extraction),
+instruction 17) : les 45 textes de l'échantillon seulement, deux appels par texte (question fermée puis extraction ;
+trois depuis la consigne 4, qui ajoute la question du champ),
 arrêt automatique avant de dépasser le plafond (--plafond, 5 euros par défaut, cumulé sur toutes les exécutions du
 modèle), et seulement après l'accord écrit de Monsieur DUCOUT sur le modèle, son prix et le coût estimé.
 """
@@ -121,6 +122,22 @@ SCHEMA_CHAMP = {
 }
 
 
+def metadonnees_champ(reponse: dict | None, modele: str, maintenant: str, origine: str = "page") -> dict:
+    """Ce que la chaîne écrit dans scrape_metadata après la question du champ (mêmes clés que champ.py --classer),
+    pour qu'une fiche produite avec la consigne 4 n'ait plus besoin du classement rétroactif."""
+    champ, raison = normaliser_champ(reponse)
+    return {"champ": champ, "champ_raison": raison, "champ_modele": modele, "champ_le": maintenant, "champ_source": origine}
+
+
+def poser_question_champ(moteur: str, modele: str, texte: str, url: str, source: str) -> dict:
+    """Question fermée du champ posée au texte d'une page : modèle local (schéma JSON) ou moteur api (outil forcé)."""
+    if moteur == "api":
+        import extractor
+        return extractor.champ_aap(texte, url, CONSIGNE_CHAMP, source=source, model=modele)
+    page = f"URL source : {url}\n\nTexte de la page :\n{texte}"
+    return appeler_ollama(modele, [{"role": "system", "content": CONSIGNE_CHAMP}, {"role": "user", "content": page}], SCHEMA_CHAMP)
+
+
 def normaliser_champ(reponse: dict | None) -> tuple[str, str]:
     """(champ, raison) ; toute valeur inattendue devient « incertain » : le modèle ne décide jamais plus que prévu."""
     brut = str((reponse or {}).get("champ") or "").strip().lower().replace("_", "-").replace(" ", "-")
@@ -154,8 +171,10 @@ SCHEMA_FICHE = {
 
 # Numero de version de la consigne d'extraction : a incrementer a chaque modification de CONSIGNE ou de
 # CONSIGNE_EST_AAP, pour savoir avec quelle consigne une fiche a ete produite (audit du 2026-10-14, M1).
-VERSION_CONSIGNE = 3  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee ;
-# 4 : question du champ dans la chaine (filtre-champ-sante, tache 5.1, a activer apres la fin du passage global)
+VERSION_CONSIGNE = 4  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee ;
+# 4 : question du champ posee dans la chaine apres l'extraction (filtre-champ-sante, tache 5.1, 2026-10-19) : la fiche
+# porte champ, champ_raison, champ_modele, champ_le, champ_source des sa production. Un echec de cette question ne perd
+# pas la fiche : champ « incertain », raison « echec : ... », champ.py --classer la reprendra.
 
 CONSIGNE = (
     "Tu extrais les informations d'un appel à projets français du secteur santé ou médico-social "
@@ -373,13 +392,14 @@ def cout_cumule(modele: str, journal: Path = JOURNAL_COUTS) -> float:
 
 
 def estimation_appel_euros(caracteres: int, tarifs: dict, euro_par_dollar: float = 0.92) -> float:
-    """Coût estimé des deux appels d'un texte (question fermée puis extraction) aux tarifs donnés (USD par million).
+    """Coût estimé des trois appels d'un texte (question fermée, extraction, question du champ depuis la consigne 4)
+    aux tarifs donnés (USD par million).
 
     Hypothèses prudentes : 4 caractères par token et 30 % de tokens en plus (découpage plus fin des modèles récents) ;
-    sortie moyenne constatée par fiche, plus 200 tokens pour la question fermée.
+    sortie moyenne constatée par fiche, plus 200 tokens pour chacune des deux questions fermées.
     """
     tokens_entree = caracteres / 4 * 1.3
-    usd = 2 * tokens_entree / 1e6 * tarifs["entree"] + (TOKENS_SORTIE_PAR_FICHE + 200) / 1e6 * tarifs["sortie"]
+    usd = 3 * tokens_entree / 1e6 * tarifs["entree"] + (TOKENS_SORTIE_PAR_FICHE + 400) / 1e6 * tarifs["sortie"]
     return usd * euro_par_dollar
 
 
@@ -479,6 +499,16 @@ def _ecrire_json(chemin: Path, donnees) -> None:
     chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def question_champ_sans_echec(moteur: str, modele: str, texte: str, url: str, source: str) -> dict:
+    """Pose la question du champ et renvoie les métadonnées ; un échec (réseau, modèle) donne « incertain » avec la
+    raison « échec : ... » plutôt que de perdre une fiche déjà extraite."""
+    try:
+        reponse = poser_question_champ(moteur, modele, texte, url, source)
+    except Exception as err:  # noqa: BLE001 - toute erreur du modèle ou du réseau : la fiche est conservée
+        reponse = {"champ": "incertain", "raison": "échec : " + type(err).__name__ + ": " + str(err).splitlines()[0][:120]}
+    return metadonnees_champ(reponse, modele, time.strftime("%Y-%m-%dT%H:%M:%S"))
+
+
 def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None,
              chemin_sortie: Path | None = None, metadonnees: dict | None = None,
              fiches: list[tuple[dict, Path]] | None = None) -> None:
@@ -530,12 +560,13 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
             _ecrire_json(chemin_echecs, echecs)
             print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
             continue
+        champ = question_champ_sans_echec(moteur, modele, texte, url, rubrique["id"])
         duree = round(time.time() - t0, 1)
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": moteur, "modele": modele, "duree_s": duree,
                                 "fichier": rel, "a_relire": a_relire, "ecarts": ecarts,
                                 "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"), "version_consigne": VERSION_CONSIGNE,
-                                **(metadonnees or {})}
+                                **champ, **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend
@@ -559,7 +590,8 @@ def charger_env() -> None:
 
 def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: float,
                  adresses: set[str] | None = None, chemin_sortie: Path | None = None) -> None:
-    """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, deux appels par texte, arrêt au plafond.
+    """Moteur api (lot 0, instruction 17) : les 45 textes de l'échantillon, trois appels par texte depuis la consigne 4
+    (question fermée, extraction, question du champ), arrêt au plafond.
 
     Même protocole que le modèle local (question fermée puis extraction, contrôle des formats) pour que la comparaison
     soit loyale ; pas de seconde chance payante : un écart de format est neutralisé et la fiche marquée à relire.
@@ -613,11 +645,12 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
             _ecrire_json(chemin_echecs, echecs)
             print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
             continue
+        champ = question_champ_sans_echec("api", modele, texte, url, rubrique["id"])
         duree = round(time.time() - t0, 1)
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": "api", "modele": modele, "duree_s": duree, "fichier": rel,
                                 "a_relire": a_relire, "ecarts": ecarts, "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
-                                "version_consigne": VERSION_CONSIGNE}
+                                "version_consigne": VERSION_CONSIGNE, **champ}
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend

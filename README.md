@@ -77,8 +77,11 @@ pour un appel national, `non-precise` sinon (affiché « Territoire non précis�
 même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine).
 Contrôle des fiches par le modèle (changement `verification-assistee-haiku`, 2026-10-15) : `scraping/verification.py`
 relit chaque fiche publiable à côté de sa page et liste les champs douteux ; l'import en reporte le résumé dans
-`scrapeMetadata.verification`, sans toucher au statut ni à l'étiquette « à vérifier » ; l'outil de validation présente
-les fiches douteuses en premier.
+`scrapeMetadata.verification`. Depuis le 2026-10-15 à midi (décision de Monsieur DUCOUT), ce contrôle vaut relecture :
+une fiche sans doute, ou corrigeable d'après la page (dates, montants), est validée au nom du modèle ; une page qui
+n'est pas un appel est rejetée ; un doute sur le titre, le financeur ou le territoire reste à relire. Les fiches déjà en
+base ont reçu cette décision par `scripts/appliquer_controle.py` (essai à blanc, sauvegarde) ; l'outil de validation ne
+présente plus que les fiches restantes.
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits

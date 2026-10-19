@@ -28,6 +28,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   au 2026-10-19 : proposée 54, à corriger 245, validée 231, rejetée 39 (569 documents).
 
 ### Modifié
+- Question du champ dans la chaîne d'extraction (changement `filtre-champ-sante` 5.1, 2026-10-19) : les fiches
+  nouvelles, extraites en local ou par l'API, portent leur champ (santé, médico-social, hors champ, incertain) dès
+  leur production, consigne version 4 ; le classement rétroactif `champ.py --classer` ne sert plus qu'en rattrapage.
 - Fin du passage global d'extraction locale (2026-10-15, 7 h 40 : 2 178 textes, 1 086 fiches, 1 070 pages refusées,
   22 échecs, 28,6 h, 0 euro) puis classement du champ des 1 086 fiches par `claude-haiku-5-5` sur l'accord de Monsieur
   DUCOUT (santé 312, médico-social 209, hors champ 513, incertain 52 ; 0,23 euro réel), ré-import (120 fiches créées,

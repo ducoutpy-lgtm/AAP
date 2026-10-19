@@ -125,8 +125,9 @@ aucun archivage sans demande ; schéma `AapNormalized` et type `AAP` inchangés.
 
 ## 6. Documentation
 
-- [ ] 6.1 README scraping, README racine (import), CHANGELOGs, CLAUDE.md (état d'avancement, règle du champ),
-  REPRISE.md, `docs/FLUX_DONNEES.md`, rapport de critique (section 8 : résultat). Fait quand : fichiers relus.
+- [x] 6.1 README scraping, README racine (import), CHANGELOGs, CLAUDE.md (état d'avancement, règle du champ),
+  REPRISE.md, `docs/FLUX_DONNEES.md`, rapport de critique (section 8 : résultat). Fait quand : fichiers relus. (Fait le
+  2026-10-19 ; le README racine décrivait déjà la règle d'import du champ, inchangée.)
 
 ## 7. Vérification
 

@@ -201,8 +201,9 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   `scripts/publier_sans_date.py` écrites avec essais à blanc. Fait : connecteurs classés par Haiku (105 fiches, 34 hors
   champ, 0,03 euro). À faire dans l'ordre : fin du passage global, `champ.py --classer --moteur api` sur
   `extraction_locale.json` (accord donné), import réel (accord), `migrer_champ.py` (accord), `publier_sans_date.py`
-  (accord), question du champ dans la chaîne (5.1), rapport `CHAMP.md`, documentation. État détaillé :
-  `openspec/changes/filtre-champ-sante/tasks.md`.
+  (accord), question du champ dans la chaîne (5.1), rapport `CHAMP.md`, documentation. Tout est fait au 2026-10-19
+  (5.1 : consigne version 4, les deux moteurs posent la question du champ après l'extraction) ; reste la vérification
+  7.1 de Monsieur DUCOUT. État détaillé : `openspec/changes/filtre-champ-sante/tasks.md`.
 - Administration (changement `acces-administration`, 2026-10-15 et 2026-10-19) : compte admin créé par Monsieur DUCOUT
   (`scripts/creer_admin.py`, mot de passe par `/reset-password`), espace `/admin` ouvert ; le 2026-10-19, `/admin/aaps`
   montre les compteurs et le filtre par `validation.statut` (base : proposée 54, à corriger 245, validée 231, rejetée

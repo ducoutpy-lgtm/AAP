@@ -208,3 +208,61 @@ def test_extraire_api_accepte_adresses_et_fichier_de_sortie(tmp_path, monkeypatc
                              adresses={"https://x/page-b"}, chemin_sortie=sortie)
     refus = json.loads(sortie.with_name(sortie.stem + "_non_aap.json").read_text(encoding="utf-8"))
     assert [r["url"] for r in refus] == ["https://x/page-b"] and not sortie.exists()
+
+
+FICHE_BRUTE = {"titre": "Appel santé mentale", "financeur": "ARS Test", "description": "Soutien aux CMP.",
+               "date_ouverture": "2026-01-10", "date_cloture": "2026-12-31", "montant_min": None, "montant_max": 50000,
+               "enveloppe_globale": None, "eligibilite": [], "pieces_attendues": [], "territoire": "Bretagne",
+               "categories_etablissement": ["psychiatrie"]}
+
+
+def test_extraire_pose_la_question_du_champ_apres_l_extraction(tmp_path, monkeypatch):
+    # filtre-champ-sante 5.1 (consigne 4) : trois réponses du modèle local dans l'ordre (est_aap, fiche, champ) ;
+    # la fiche produite porte son champ et la version 4, sans classement rétroactif.
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "c.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-c\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    reponses = iter([{"est_aap": True, "raison": "appel"}, FICHE_BRUTE, {"champ": "Santé", "raison": "santé mentale"}])
+    appels = []
+    def faux_ollama(modele, messages, schema):
+        appels.append(messages[0]["content"][:40])
+        return next(reponses)
+    monkeypatch.setattr(echantillon, "appeler_ollama", faux_ollama)
+    sortie = tmp_path / "results" / "extraction_test.json"
+    echantillon.extraire([], "ollama", "test", None, chemin_sortie=sortie, metadonnees={"a_verifier": True},
+                         fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
+    meta = fiche["scrape_metadata"]
+    assert meta["champ"] == "sante" and meta["champ_raison"] == "santé mentale" and meta["champ_modele"] == "test"
+    assert meta["champ_source"] == "page" and meta["version_consigne"] == 4 and meta["a_verifier"] is True
+    assert len(appels) == 3 and appels[2].startswith(echantillon.CONSIGNE_CHAMP[:40])
+
+
+def test_echec_de_la_question_du_champ_ne_perd_pas_la_fiche(monkeypatch):
+    def plante(*a, **k):
+        raise ConnectionError("Ollama injoignable")
+    monkeypatch.setattr(echantillon, "poser_question_champ", plante)
+    meta = echantillon.question_champ_sans_echec("ollama", "test", "texte", "https://x", "src")
+    assert meta["champ"] == "incertain" and meta["champ_raison"].startswith("échec : ConnectionError")
+
+
+def test_extraire_api_pose_la_question_du_champ(tmp_path, monkeypatch):
+    # Moteur api : troisième appel (extractor.champ_aap) remplacé par une fonction locale, aucun appel payant.
+    import extractor
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "d.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-d\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "DOSSIER", tmp_path / "decouverte")
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(echantillon, "cout_cumule", lambda *a, **k: 0.0)
+    monkeypatch.setattr(extractor, "est_un_aap", lambda *a, **k: {"est_aap": True, "raison": "appel"})
+    monkeypatch.setattr(extractor, "extract_aap", lambda *a, **k: dict(FICHE_BRUTE))
+    monkeypatch.setattr(extractor, "champ_aap", lambda *a, **k: {"champ": "medico-social", "raison": "EHPAD"})
+    sortie = tmp_path / "results" / "comparaison_api_test2.json"
+    echantillon.extraire_api({"src": {"id": "src", "nom": "Source"}}, "claude-haiku-5-5", None, 5.0,
+                             adresses={"https://x/page-d"}, chemin_sortie=sortie)
+    [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
+    assert fiche["scrape_metadata"]["champ"] == "medico-social" and fiche["scrape_metadata"]["version_consigne"] == 4

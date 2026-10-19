@@ -4,6 +4,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-10-19)
+- `echantillon.py` (changement `filtre-champ-sante`, tâche 5.1) : consigne version 4, la question du champ
+  (`poser_question_champ`, `question_champ_sans_echec`, `metadonnees_champ`) est posée par les deux moteurs après
+  l'extraction d'une page acceptée ; la fiche porte `champ`, `champ_raison`, `champ_modele`, `champ_le`, `champ_source`
+  dès sa production ; un échec donne « incertain » sans perdre la fiche ; estimation API à trois appels par texte.
+  `champ.py --classer` réutilise la même fonction, en rattrapage. Trois tests ajoutés (95 verts).
+
 ### Ajouté (2026-10-15)
 - `verification.py` et `extractor.verifier_fiche` (changement `verification-assistee-haiku`) : contrôle de chaque fiche
   publiable par le modèle, verdict par champ (juste, faux avec valeur lue, fabriqué, manquant, vide, incertain), essai à

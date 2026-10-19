@@ -231,7 +231,8 @@ Cycle (commandes slash dans Claude Code) :
   `filtre-champ-sante` (2026-10-14 nuit, instruction 26 validée : définition du champ décidée, `scraping/champ.py`,
   règles d'import et touche 7 faites, classification des connecteurs puis, le 2026-10-15, du passage local faite par
   Haiku (0,26 euro en tout), import réel, publication des fiches sans date, `migrer_champ.py` (10 puis 147 fiches) et
-  `CHAMP.md` faits ; restent la question du champ dans la chaîne d'extraction (5.1), la documentation (6) et la
+  `CHAMP.md` faits ; 2026-10-19 : question du champ posée dans la chaîne d'extraction par les deux moteurs (5.1,
+  consigne version 4, 95 tests verts, preuve sur un texte en local) et documentation (6) faites ; reste la
   vérification de Monsieur DUCOUT (7)),
   `filtres-recherche` (2026-10-14 soir : filtres de `/aap/search` par territoire, thématique et financeur, faits et
   vérifiés, documentation et vérification de Monsieur DUCOUT en attente), `extraction-ollama-second-tour` (tours faits, décision 3.2 prise le 2026-10-13 soir : modèle local, à archiver),
