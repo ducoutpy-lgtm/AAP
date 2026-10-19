@@ -408,3 +408,26 @@ def test_reporter_valeurs_api_ne_retient_que_les_ecarts():
     maj = rva.ecarts(existant, nouveau)
     assert maj == {"budgetMax": 36000}
     assert rva.ecarts(nouveau, nouveau) == {}
+
+
+def test_import_pose_collecte_le_et_derniere_vue_meme_sur_une_fiche_validee():
+    # fraicheur-dates-collecte : collecteLe depuis collecte_le (sinon scraped_at), derniereVueLe = date de l'import,
+    # champs techniques donc envoyes aussi sur un document existant valide.
+    d = imp.to_app_aap(fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "collecte_le": "2026-10-13T16:58:00", "produite_le": "2026-10-19T10:00:00"}), "x", MAINTENANT)
+    assert d["scrapeMetadata"]["collecteLe"] == "2026-10-13T16:58:00" and d["scrapeMetadata"]["derniereVueLe"] == MAINTENANT.isoformat()
+    assert imp.to_app_aap(fiche(scrape_metadata={"scraped_at": "2026-10-09T08:00:00"}), "x", MAINTENANT)["scrapeMetadata"]["collecteLe"] == "2026-10-09T08:00:00"
+    valide = imp.appliquer_verdict(d, {"verdict": "aap-juste", "commentaire": "", "date": "2026-10-19"})
+    envoye = imp.document_a_envoyer(valide, existe=True)
+    assert "scrapeMetadata" in envoye and "title" not in envoye and envoye["validation"]["par"] == imp.RELECTEUR
+
+
+def test_un_verdict_humain_atteint_un_document_existant():
+    # Constat du 2026-10-19 : validation etait protegee meme quand un verdict humain venait d'etre donne.
+    doc = imp.appliquer_verdict({"title": "T", "status": "published", "publishedAt": 1, "tags": ["a-verifier"]},
+                                {"verdict": "aap-juste", "commentaire": "", "date": "2026-10-19"})
+    envoye = imp.document_a_envoyer(doc, existe=True)
+    assert envoye["validation"]["par"] == imp.RELECTEUR and "publishedAt" not in envoye
+    assert "title" not in envoye and "tags" not in envoye  # validee : les champs metier, tags compris, restent proteges
+    rejet = imp.appliquer_verdict({"title": "T", "status": "published", "publishedAt": 1, "tags": []},
+                                  {"verdict": "hors-champ", "commentaire": "", "date": "2026-10-19"})
+    assert imp.document_a_envoyer(rejet, existe=True)["status"] == "archived"

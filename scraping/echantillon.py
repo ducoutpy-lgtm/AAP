@@ -221,11 +221,32 @@ def nom_fiche(url: str) -> str:
     return hashlib.sha1(url.encode("utf-8")).hexdigest()[:10] + ".txt"
 
 
+# Ligne d'en-tête datée des textes collectés (lot 2, instruction 10, changement fraicheur-dates-collecte, 2026-10-19) :
+# première ligne « # collecte_le <date ISO> » ; les fichiers antérieurs commencent par l'adresse et restent lisibles.
+EN_TETE_COLLECTE = "# collecte_le "
+
+
+def en_tete_collecte(maintenant: str | None = None) -> str:
+    return EN_TETE_COLLECTE + (maintenant or time.strftime("%Y-%m-%dT%H:%M:%S")) + "\n"
+
+
 def lire_fiche(chemin: Path) -> tuple[str, str]:
-    """Retourne (adresse d'origine, texte) ; l'adresse est la première ligne du fichier."""
+    """Retourne (adresse d'origine, texte) ; l'adresse est la première ligne du fichier, après l'en-tête daté s'il existe."""
     contenu = chemin.read_text(encoding="utf-8")
+    if contenu.startswith(EN_TETE_COLLECTE):
+        contenu = contenu.partition("\n")[2]
     premiere, _, reste = contenu.partition("\n")
     return premiere.strip(), reste.strip()
+
+
+def date_collecte(chemin: Path) -> str:
+    """Date de collecte du texte (ISO) : l'en-tête daté, sinon la date de modification du fichier (les textes ne sont
+    jamais réécrits, c'est donc la date réelle de la lecture de la page)."""
+    with chemin.open(encoding="utf-8") as f:
+        premiere = f.readline()
+    if premiere.startswith(EN_TETE_COLLECTE):
+        return premiere[len(EN_TETE_COLLECTE):].strip()
+    return time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(chemin.stat().st_mtime))
 
 
 def valider_fiche(brut: dict, url: str, financeur_defaut: str) -> AapNormalized:
@@ -447,7 +468,7 @@ async def collecter(rubriques: list[dict]) -> None:
                     if len(texte) < 200:
                         print(f"  {rubrique['id']} : {lien['href']} -> texte trop court, ignoré")
                         continue
-                    chemin.write_text(f"{lien['href']}\n{lien['texte']}\n\n{texte}", encoding="utf-8")
+                    chemin.write_text(en_tete_collecte() + f"{lien['href']}\n{lien['texte']}\n\n{texte}", encoding="utf-8")
                     gardees += 1
                     await asyncio.sleep(2.0)  # rythme humain
                 await contexte.close()
@@ -565,7 +586,7 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": moteur, "modele": modele, "duree_s": duree,
                                 "fichier": rel, "a_relire": a_relire, "ecarts": ecarts,
-                                "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"), "version_consigne": VERSION_CONSIGNE,
+                                "collecte_le": date_collecte(chemin), "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"), "version_consigne": VERSION_CONSIGNE,
                                 **champ, **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
@@ -573,6 +594,52 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
         print(f"[{i}/{len(fiches)}] ok {duree:5.0f}s  {fiche.titre[:60]}" + ("  (à relire)" if a_relire else ""))
     print(f"\n{len(refusees)} pages refusées, {len(sortie)} réussites ({nouvelles} nouvelles), {len(echecs)} échecs, "
           f"{time.time() - debut:.0f} s pour ce passage ({modele}) -> {chemin_sortie.name}")
+
+
+def dater_collecte(dry_run: bool) -> int:
+    """Pose collecte_le sur les fiches des fichiers de résultats lus par l'import qui n'en ont pas : date de collecte
+    du texte cité dans scrape_metadata.fichier, sinon scraped_at d'un connecteur. Sauvegarde avant écriture."""
+    import shutil
+    from datetime import datetime
+    ignores = ("echantillon_", "controle_", "validation_", "comparaison_")
+    fichiers = sorted(c for c in RESULTS.glob("*.json")
+                      if not c.name.startswith(ignores) and not c.name.endswith(("_non_aap.json", ".errors.json")))
+    bilan, a_ecrire = {}, {}
+    for chemin in fichiers:
+        fiches = _charger_liste(chemin)
+        if not isinstance(fiches, list) or not fiches or not isinstance(fiches[0], dict) or "url_source" not in fiches[0]:
+            continue
+        datees = sans = 0
+        for f in fiches:
+            meta = f.setdefault("scrape_metadata", {})
+            if meta.get("collecte_le"):
+                continue
+            texte = ICI / meta["fichier"] if meta.get("fichier") else None
+            if texte is not None and texte.is_file():
+                meta["collecte_le"] = date_collecte(texte)
+            elif meta.get("scraped_at"):
+                meta["collecte_le"] = meta["scraped_at"]
+            else:
+                sans += 1
+                continue
+            datees += 1
+        bilan[chemin.name] = (len(fiches), datees, sans)
+        if datees:
+            a_ecrire[chemin] = fiches
+    for nom, (n, datees, sans) in bilan.items():
+        print(f"{nom} : {n} fiches, {datees} à dater, {sans} sans texte ni scraped_at")
+    if dry_run:
+        print(f"Essai à blanc : {sum(d for _, d, _ in bilan.values())} fiches à dater ; rien n'a été écrit.")
+        return 0
+    if not a_ecrire:
+        return 0
+    dossier = ICI.parent / "scripts" / "sauvegardes" / f"collecte_{datetime.now().strftime('%Y-%m-%d_%H%M')}"
+    dossier.mkdir(parents=True, exist_ok=True)
+    for chemin, fiches in a_ecrire.items():
+        shutil.copy2(chemin, dossier / chemin.name)
+        _ecrire_json(chemin, fiches)
+    print(f"{sum(d for _, d, _ in bilan.values())} fiches datées ; sauvegardes dans {dossier}")
+    return 0
 
 
 def charger_env() -> None:
@@ -654,7 +721,7 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
         duree = round(time.time() - t0, 1)
         d = fiche.model_dump()
         d["scrape_metadata"] = {"source": rubrique["id"], "moteur": "api", "modele": modele, "duree_s": duree, "fichier": rel,
-                                "a_relire": a_relire, "ecarts": ecarts, "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                                "a_relire": a_relire, "ecarts": ecarts, "collecte_le": date_collecte(chemin), "produite_le": time.strftime("%Y-%m-%dT%H:%M:%S"),
                                 "version_consigne": VERSION_CONSIGNE, **champ, **(metadonnees or {})}
         sortie.append(d)
         nouvelles += 1
@@ -805,11 +872,16 @@ def main() -> int:
     parser.add_argument("--verifier", metavar="FICHIER")
     parser.add_argument("--estimer", action="store_true")
     parser.add_argument("--rapport", action="store_true")
+    parser.add_argument("--dater-collecte", action="store_true",
+                        help="poser collecte_le sur les fiches existantes depuis la date de leur texte (fraicheur-dates-collecte)")
+    parser.add_argument("--dry-run", action="store_true", help="avec --dater-collecte : afficher sans écrire")
     args = parser.parse_args()
 
     resultats = json.loads(RESULTATS_DECOUVERTE.read_text(encoding="utf-8"))
     rubriques = choisir_rubriques(resultats)
 
+    if args.dater_collecte:
+        return dater_collecte(args.dry_run)
     if args.collecter:
         asyncio.run(collecter(rubriques))
     if args.extraire:

@@ -660,3 +660,14 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   et `/mentions-legales` relus par la session. Restent : déploiement des règles (accord), parcours connectés joués par
   Monsieur DUCOUT, fonctions serveur après Blaze. Les lots 4 et 5 du plan sont ainsi avancés sur sa décision, avant le
   lot 2 (fraîcheur) et le lot 3 (couverture), qui restent à faire.
+- 2026-10-19, 16 h 30 : règles Firestore déployées sur son accord (« Deploy complete! ») ; application renommée « AAP
+  Santé » (nom provisoire, sa décision) ; raccourci « AAP Sante » sur son bureau (`app/lancer_application.cmd`) ;
+  connexion Google activée par lui dans la console. Question Docker posée par lui : le serveur local peut tourner dans un
+  conteneur mais n'y gagne rien pour un poste unique ; le raccourci suffit, Docker reviendra pour l'hébergement.
+- Instruction 10 (2026-10-19, 17 h, changement `fraicheur-dates-collecte`) : en-tête `# collecte_le` sur les textes,
+  `collecte_le` dans les fiches des deux moteurs, `collecteLe` et `derniereVueLe` à l'import ; rattrapage des 2 047
+  fiches existantes (sauvegarde `collecte_2026-10-19_1649`), import « 0 crees, 537 mis a jour », 228 fiches publiées sur
+  289 portent les deux dates (les 61 autres sont closes). Constat et correction : les six premiers verdicts de Monsieur
+  DUCOUT (16 h 15, cinq « AAP juste », un « hors champ ») n'atteignaient pas la base, `validation` étant protégée sur
+  tout document existant ; désormais un verdict humain réécrit `validation` et `status`, test ajouté, six documents
+  conformes après import.

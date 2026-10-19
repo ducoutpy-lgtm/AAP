@@ -286,3 +286,29 @@ def test_extraire_api_accepte_une_liste_de_textes_et_des_metadonnees(tmp_path, m
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
     m = fiche["scrape_metadata"]
     assert m["moteur"] == "api" and m["a_verifier"] is True and m["champ"] == "sante" and m["version_consigne"] == 4
+
+
+def test_lire_fiche_et_date_collecte_avec_et_sans_en_tete(tmp_path):
+    # fraicheur-dates-collecte : en-tête « # collecte_le » sauté par lire_fiche ; sans en-tête, date du fichier
+    nouveau = tmp_path / "n.txt"
+    nouveau.write_text(echantillon.en_tete_collecte("2026-10-20T09:00:00") + "https://x/n\nlien\n\ntexte", encoding="utf-8")
+    assert echantillon.lire_fiche(nouveau) == ("https://x/n", "lien\n\ntexte")
+    assert echantillon.date_collecte(nouveau) == "2026-10-20T09:00:00"
+    ancien = tmp_path / "a.txt"
+    ancien.write_text("https://x/a\nlien\n\ntexte", encoding="utf-8")
+    assert echantillon.lire_fiche(ancien) == ("https://x/a", "lien\n\ntexte")
+    assert echantillon.date_collecte(ancien)[:2] == "20" and "T" in echantillon.date_collecte(ancien)
+
+
+def test_extraire_ecrit_la_date_de_collecte(tmp_path, monkeypatch):
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "f.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text(echantillon.en_tete_collecte("2026-10-20T09:00:00") + "https://x/page-f\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    reponses = iter([{"est_aap": True, "raison": "appel"}, FICHE_BRUTE, {"champ": "sante", "raison": "soins"}])
+    monkeypatch.setattr(echantillon, "appeler_ollama", lambda m, msgs, sch: next(reponses))
+    sortie = tmp_path / "results" / "extraction_test2.json"
+    echantillon.extraire([], "ollama", "test", None, chemin_sortie=sortie, fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
+    assert fiche["scrape_metadata"]["collecte_le"] == "2026-10-20T09:00:00" and fiche["scrape_metadata"]["produite_le"]

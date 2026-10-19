@@ -172,12 +172,19 @@ def verifier_fiche(item: dict, origine: str) -> None:
 
 def document_a_envoyer(doc: dict, existe: bool) -> dict:
     """Ce que l'import ecrit : tout a la creation ; sur un document existant, jamais les champs humains,
-    ni les champs metier si la fiche est validee (fonction pure)."""
+    ni les champs metier si la fiche est validee (fonction pure).
+
+    Exception (constat du 2026-10-19 : les six premiers verdicts de Monsieur DUCOUT n'atteignaient pas la base) : quand
+    le document porte un verdict humain (validation.par = RELECTEUR), ce verdict est la seule chose qui a le droit de
+    changer validation et status (rejetee -> archived) ; publishedAt et les champs metier, tags compris, restent
+    proteges (l'application lit la relecture dans validation, plus dans les tags, depuis le 2026-10-19)."""
     if not existe:
         return dict(doc)
     proteges = set(CHAMPS_HUMAINS)
     if doc.get("validation", {}).get("statut") == "validee":
         proteges |= set(CHAMPS_METIER)
+    if (doc.get("validation") or {}).get("par") == RELECTEUR:
+        proteges -= {"validation", "status"}
     return {k: v for k, v in doc.items() if k not in proteges}
 
 
@@ -389,6 +396,11 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
             # Date de lecture de la page par le moteur (mention-relecture-fiches) : produite_le (local, API) ou scraped_at
             "extraitLe": (item.get("scrape_metadata") or {}).get("produite_le")
             or (item.get("scrape_metadata") or {}).get("scraped_at") or "",
+            # Lot 2, instruction 10 (fraicheur-dates-collecte) : date de collecte du texte, et date du dernier import ou
+            # la fiche figurait dans un fichier de resultats (champ technique, reecrit a chaque import)
+            "collecteLe": (item.get("scrape_metadata") or {}).get("collecte_le")
+            or (item.get("scrape_metadata") or {}).get("scraped_at") or "",
+            "derniereVueLe": now.isoformat(),
             "fichiersJoints": [
                 piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
                 for f in item.get("fichiers_joints") or []

@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Lot 2, dates de collecte (changement `fraicheur-dates-collecte`, instruction 10, 2026-10-19) : en-tête daté des textes
+  collectés, `collecte_le` dans les fiches (2 047 fiches datées), `scrapeMetadata.collecteLe` et `derniereVueLe` à
+  l'import (537 documents mis à jour). Correction au passage : un verdict humain atteint désormais un document existant
+  (les six premiers verdicts de Monsieur DUCOUT, du 2026-10-19 à 16 h 15, sont dans la base).
 - Nom affiché « AAP Santé » (2026-10-19, décision de Monsieur DUCOUT, nom provisoire) à la place de « AAP Platform » ;
   raccourci « AAP Sante » sur son bureau (`app/lancer_application.cmd` : serveur local puis navigateur sur la recherche) ;
   règles Firestore du dégel déployées sur `aapi-11bc3` après accord ; connexion Google activée par lui dans la console.

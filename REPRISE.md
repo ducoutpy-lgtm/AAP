@@ -222,7 +222,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   routes rétablies, lint et build verts sur tout le code, règles Firestore rouvertes (23 tests), pages légales, `npm test`
   12 tests. Reste : accord pour déployer les règles (2.2), parcours connectés à jouer par Monsieur DUCOUT avec des comptes
   de test (3.1 à 3.4), ses données d'entreprise dans `app/src/pages/legal/editeur.ts`, puis fonctions serveur quand Blaze
-  est confirmé.
+  est confirmé. Règles déployées à 16 h 30 sur son accord ; application renommée « AAP Santé » ; raccourci « AAP Sante »
+  sur son bureau ; connexion Google activée par lui.
+- Lot 2 commencé (2026-10-19, 17 h, `fraicheur-dates-collecte`, instruction 10) : en-tête daté des textes, `collecte_le`,
+  `collecteLe` et `derniereVueLe` ; 2 047 fiches datées, 537 documents mis à jour ; ses six premiers verdicts atteignent
+  la base (correction de l'import). Suite du lot 2 : rejeu de la collecte, règle « non revue après deux rejeux », rapport
+  de veille.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

@@ -363,6 +363,22 @@ Monsieur DUCOUT a confirmé les 24 classements du modèle local sur le premier t
 4 médico-social, 1 santé) ; `python champ.py --evaluer --fichier results/comparaison_ollama_qwen3-8b_collectivites.json` :
 24 accords sur 24.
 
+### Dates de collecte et de dernière vue (changement `fraicheur-dates-collecte`, lot 2, 2026-10-19)
+
+Pourquoi : repérer un appel disparu ou périmé demande de savoir quand sa page a été lue et quand la fiche a été vue pour
+la dernière fois. Depuis le 2026-10-19, tout texte collecté commence par une ligne `# collecte_le <date ISO>`
+(`echantillon.en_tete_collecte`) ; `lire_fiche` la saute, les fichiers anciens restent lisibles et `date_collecte`
+rend la date du fichier pour eux. Les deux moteurs écrivent `scrape_metadata.collecte_le` à côté de `produite_le` ;
+l'import reporte `collecteLe` et `derniereVueLe` (date du dernier import où la fiche figurait) dans `scrapeMetadata`.
+
+```bash
+python echantillon.py --dater-collecte --dry-run   # fiches existantes sans collecte_le, par fichier
+python echantillon.py --dater-collecte             # pose collecte_le (date du texte, sinon scraped_at), sauvegarde avant
+```
+
+Rattrapage du 2026-10-19 : 2 047 fiches datées (collectes des 12, 13 et 14 octobre). Suite du lot 2 : rejeu périodique
+de la collecte sur les pages validées, règle « non revue après deux rejeux », rapport de veille.
+
 ### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
 
 Pourquoi : relire à la main 308 fiches publiées prend des jours ; pour 0,03 centime par fiche, `claude-haiku-5-5` relit

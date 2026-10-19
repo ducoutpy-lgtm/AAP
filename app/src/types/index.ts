@@ -140,6 +140,10 @@ export interface AAP {
     // Date à laquelle le moteur a lu la page (produite_le du passage local ou API, scraped_at d'un connecteur), ISO ;
     // changement mention-relecture-fiches (2026-10-19), affichée « Informations extraites le ... »
     extraitLe?: string;
+    // Lot 2 (fraicheur-dates-collecte, 2026-10-19) : date de collecte du texte de la page, et date du dernier import où
+    // la fiche figurait encore dans un fichier de résultats (réécrite à chaque import)
+    collecteLe?: string;
+    derniereVueLe?: string;
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;

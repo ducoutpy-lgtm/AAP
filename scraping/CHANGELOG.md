@@ -4,6 +4,11 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-19)
+- Dates de collecte (changement `fraicheur-dates-collecte`, lot 2, instruction 10) : ligne d'en-tête `# collecte_le` sur
+  les textes collectés, `lire_fiche` compatible, `date_collecte`, `scrape_metadata.collecte_le` écrit par les deux
+  moteurs, `echantillon.py --dater-collecte` (2 047 fiches datées, sauvegarde `collecte_2026-10-19_1649`).
+
 ### Modifié (2026-10-19)
 - `echantillon.py` (changement `filtre-champ-sante`, tâche 5.1) : consigne version 4, la question du champ
   (`poser_question_champ`, `question_champ_sans_echec`, `metadonnees_champ`) est posée par les deux moteurs après

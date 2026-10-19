@@ -158,7 +158,7 @@ async def collecter(sources: list[dict]) -> None:
                     if len(texte) < 200:
                         print(f"  {s['id']} : {lien['href']} -> texte trop court, ignoré")
                         continue
-                    chemin.write_text(f"{lien['href']}\n{lien['texte']}\n\n{texte}", encoding="utf-8")
+                    chemin.write_text(echantillon.en_tete_collecte() + f"{lien['href']}\n{lien['texte']}\n\n{texte}", encoding="utf-8")
                     lues += 1
                     await asyncio.sleep(2.0)  # rythme humain
                 await contexte.close()
