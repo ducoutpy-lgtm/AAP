@@ -166,7 +166,7 @@ export default function ApplicationFormPage() {
 
     try {
       // Upload documents
-      const uploadedDocuments: any[] = [];
+      const uploadedDocuments: { name: string; url: string; type: string; uploadedAt: Date }[] = [];
       for (const file of documents) {
         const docRef = ref(
           storage,
@@ -211,9 +211,9 @@ export default function ApplicationFormPage() {
 
       alert('Candidature soumise avec succès !');
       navigate('/mes-candidatures');
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error submitting application:', err);
-      setError(err.message || 'Erreur lors de la soumission');
+      setError(err instanceof Error ? err.message : 'Erreur lors de la soumission');
     } finally {
       setSubmitting(false);
     }

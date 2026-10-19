@@ -152,8 +152,8 @@ export default function CreateAapPage() {
 
       alert('AAP sauvegardé en brouillon');
       navigate(`/aap/${aapId}`);
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la sauvegarde');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde');
     } finally {
       setLoading(false);
     }
@@ -193,8 +193,8 @@ export default function CreateAapPage() {
 
       alert('AAP publié avec succès !');
       navigate(`/mes-aap`);
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la publication');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de la publication');
     } finally {
       setLoading(false);
     }

@@ -181,7 +181,7 @@ export default function MyAapPage() {
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     <span>
-                      Deadline: {new Date(aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate()).toLocaleDateString('fr-FR')}
+                      Deadline: {aap.deadline ? new Date(aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate()).toLocaleDateString('fr-FR') : 'Non précisée'}
                     </span>
                   </div>
                 </div>

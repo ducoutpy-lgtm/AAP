@@ -100,9 +100,9 @@ export default function EvaluateApplicationPage() {
 
       alert('Statut mis à jour avec succès');
       navigate(`/aap/${aapId}/candidatures`);
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error updating status:', err);
-      setError(err.message || 'Erreur lors de la mise à jour');
+      setError(err instanceof Error ? err.message : 'Erreur lors de la mise à jour');
     } finally {
       setSaving(false);
     }
@@ -122,9 +122,9 @@ export default function EvaluateApplicationPage() {
       });
 
       alert('Évaluation sauvegardée');
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error saving:', err);
-      setError(err.message || 'Erreur lors de la sauvegarde');
+      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde');
     } finally {
       setSaving(false);
     }

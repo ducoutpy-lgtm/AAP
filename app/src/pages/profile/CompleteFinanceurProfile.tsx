@@ -144,8 +144,8 @@ export default function CompleteFinanceurProfile() {
 
       // Rediriger vers la sélection d'abonnement
       navigate('/abonnement/choisir');
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la sauvegarde du profil');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde du profil');
     } finally {
       setLoading(false);
     }

@@ -69,9 +69,9 @@ export default function SelectPlanPage() {
       if (stripeError) {
         throw stripeError;
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Erreur:', err);
-      setError(err.message || 'Une erreur est survenue');
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
       setLoading(null);
     }
   };

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { AAP } from '../../types';
+import { AAP, PorteurProfile } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -47,7 +47,7 @@ export default function RecommendationsPage() {
         return;
       }
 
-      const profile = profileDoc.data();
+      const profile = profileDoc.data() as PorteurProfile;
 
       // Load all published AAPs
       const aapsQuery = query(
@@ -85,7 +85,7 @@ export default function RecommendationsPage() {
 
   const calculateMatchScore = (
     aap: AAP & { id: string },
-    profile: any
+    profile: PorteurProfile
   ): { score: number; reasons: string[] } => {
     let score = 0;
     const reasons: string[] = [];
@@ -114,16 +114,15 @@ export default function RecommendationsPage() {
     // Budget compatibility (20%)
     if (aap.budgetMin && aap.budgetMax) {
       // Assume average project budget based on team size
-      const estimatedBudget = (profile.effectif || 5) * 10000;
+      const estimatedBudget = (profile.teamSize || 5) * 10000;
       if (estimatedBudget >= aap.budgetMin && estimatedBudget <= aap.budgetMax) {
         score += 20;
         reasons.push('Budget compatible');
       }
     }
 
-    // Deadline urgency (10%)
-    const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
-    const daysUntilDeadline = Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    // Deadline urgency (10%) ; un appel sans date de clôture (deadline nulle depuis le lot 0) ne marque pas ces points
+    const daysUntilDeadline = aap.deadline ? getDaysUntilDeadline(aap.deadline) : Number.POSITIVE_INFINITY;
 
     if (daysUntilDeadline > 30 && daysUntilDeadline <= 90) {
       score += 10;
@@ -136,7 +135,8 @@ export default function RecommendationsPage() {
     return { score: Math.round(score), reasons };
   };
 
-  const getDaysUntilDeadline = (deadline: Date | Timestamp): number => {
+  const getDaysUntilDeadline = (deadline: Date | Timestamp | null | undefined): number => {
+    if (!deadline) return Number.POSITIVE_INFINITY; // sans date de clôture : jamais urgent
     const deadlineDate = deadline instanceof Date ? deadline : deadline.toDate();
     const diff = deadlineDate.getTime() - Date.now();
     return Math.ceil(diff / (1000 * 60 * 60 * 24));

@@ -525,7 +525,7 @@ export default function SavedSearchesPage() {
                   </label>
                   <select
                     value={formData.frequency}
-                    onChange={(e) => setFormData({ ...formData, frequency: e.target.value as any })}
+                    onChange={(e) => setFormData({ ...formData, frequency: e.target.value as 'realtime' | 'daily' | 'weekly' })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
                     <option value="realtime">Temps réel</option>

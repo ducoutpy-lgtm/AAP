@@ -253,7 +253,7 @@ export default function MyApplicationsPage() {
             <p className="text-gray-600 mb-4">
               {statusFilter === 'all'
                 ? 'Vous n\'avez pas encore soumis de candidature.'
-                : `Vous n'avez pas de candidature avec le statut "${getStatusLabel(statusFilter as any)}".`}
+                : `Vous n'avez pas de candidature avec le statut "${getStatusLabel(statusFilter as Application['status'])}".`}
             </p>
             <Button onClick={() => navigate('/aap/search')}>
               Rechercher des AAP

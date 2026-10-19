@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import type { AAP, Application } from '../../types';
+import { enDate } from '../../utils/dates';
 import { useAuth } from '../../contexts/AuthContext';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -42,7 +44,7 @@ export default function StatisticsPage() {
         where('financeurId', '==', currentUser.uid)
       );
       const aapsSnapshot = await getDocs(aapsQuery);
-      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
 
       // Load applications
       const applicationsQuery = query(
@@ -50,24 +52,24 @@ export default function StatisticsPage() {
         where('financeurId', '==', currentUser.uid)
       );
       const applicationsSnapshot = await getDocs(applicationsQuery);
-      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Application & { id: string })[];
 
       // Calculate stats
       const totalAAP = aaps.length;
-      const publishedAAP = aaps.filter((a: any) => a.status === 'published').length;
-      const draftAAP = aaps.filter((a: any) => a.status === 'draft').length;
-      const closedAAP = aaps.filter((a: any) => a.status === 'closed').length;
+      const publishedAAP = aaps.filter((a) => a.status === 'published').length;
+      const draftAAP = aaps.filter((a) => a.status === 'draft').length;
+      const closedAAP = aaps.filter((a) => a.status === 'closed').length;
 
       const totalApplications = applications.length;
-      const acceptedApplications = applications.filter((a: any) => a.status === 'accepted').length;
-      const rejectedApplications = applications.filter((a: any) => a.status === 'rejected').length;
+      const acceptedApplications = applications.filter((a) => a.status === 'accepted').length;
+      const rejectedApplications = applications.filter((a) => a.status === 'rejected').length;
 
-      const totalViews = aaps.reduce((sum: number, aap: any) => sum + (aap.views || 0), 0);
+      const totalViews = aaps.reduce((sum: number, aap) => sum + (aap.views || 0), 0);
       const conversionRate = totalViews > 0 ? (totalApplications / totalViews) * 100 : 0;
 
       // Top sectors
       const sectorCounts: { [key: string]: number } = {};
-      aaps.forEach((aap: any) => {
+      aaps.forEach((aap) => {
         aap.sectorsTargeted?.forEach((sector: string) => {
           sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
         });
@@ -87,9 +89,9 @@ export default function StatisticsPage() {
         const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
         const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-        const count = applications.filter((app: any) => {
-          const submittedAt = app.submittedAt?.toDate();
-          return submittedAt >= monthStart && submittedAt <= monthEnd;
+        const count = applications.filter((app) => {
+          const submittedAt = enDate(app.submittedAt);
+          return !!submittedAt && submittedAt >= monthStart && submittedAt <= monthEnd;
         }).length;
 
         applicationsOverTime.push({ month: monthName, count });

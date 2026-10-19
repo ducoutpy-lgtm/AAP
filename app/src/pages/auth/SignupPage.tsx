@@ -46,8 +46,8 @@ export default function SignupPage() {
       await signup(email, password, userType);
       // Redirection vers la page de complétion du profil
       navigate('/complete-profile');
-    } catch (err: any) {
-      setError(err.message || 'Échec de l\'inscription');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Échec de l\'inscription');
     } finally {
       setLoading(false);
     }
@@ -61,8 +61,8 @@ export default function SignupPage() {
       await loginWithGoogle();
       // La logique de sélection du type de compte sera gérée après
       navigate('/complete-profile');
-    } catch (err: any) {
-      setError(err.message || 'Échec de l\'inscription avec Google');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Échec de l\'inscription avec Google');
     } finally {
       setLoading(false);
     }

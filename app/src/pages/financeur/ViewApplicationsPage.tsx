@@ -315,7 +315,7 @@ export default function ViewApplicationsPage() {
             <p className="text-gray-600">
               {statusFilter === 'all'
                 ? 'Aucune candidature n\'a encore été soumise pour cet AAP.'
-                : `Aucune candidature avec le statut "${getStatusLabel(statusFilter as any)}".`}
+                : `Aucune candidature avec le statut "${getStatusLabel(statusFilter as Application['status'])}".`}
             </p>
           </Card>
         ) : (

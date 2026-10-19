@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import type { AAP, Application, User } from '../../types';
+import { enDate } from '../../utils/dates';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import {
@@ -52,7 +54,7 @@ export default function GlobalStatisticsPage() {
     try {
       // Load users
       const usersSnapshot = await getDocs(collection(db, 'users'));
-      const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (User & { id: string })[];
 
       const totalPorteurs = users.filter(u => u.userType === 'porteur').length;
       const totalFinanceurs = users.filter(u => u.userType === 'financeur').length;
@@ -63,18 +65,18 @@ export default function GlobalStatisticsPage() {
       const now = new Date();
       const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const newUsersThisMonth = users.filter(u => {
-        const createdAt = u.createdAt?.toDate ? u.createdAt.toDate() : new Date(u.createdAt);
-        return createdAt >= firstDayOfMonth;
+        const createdAt = enDate(u.createdAt);
+        return !!createdAt && createdAt >= firstDayOfMonth;
       }).length;
 
       // Load AAPs
       const aapsSnapshot = await getDocs(collection(db, 'aap'));
-      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
       const publishedAaps = aaps.filter(a => a.status === 'published').length;
 
       // Load applications
       const applicationsSnapshot = await getDocs(collection(db, 'applications'));
-      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Application & { id: string })[];
       const acceptedApplications = applications.filter(a => a.status === 'accepted').length;
 
       // Load payments
@@ -122,18 +124,18 @@ export default function GlobalStatisticsPage() {
         const nextMonthDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
 
         const monthUsers = users.filter(u => {
-          const date = u.createdAt?.toDate ? u.createdAt.toDate() : new Date(u.createdAt);
-          return date >= monthDate && date < nextMonthDate;
+          const date = enDate(u.createdAt);
+          return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
         const monthAaps = aaps.filter(a => {
-          const date = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
-          return date >= monthDate && date < nextMonthDate;
+          const date = enDate(a.createdAt);
+          return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
         const monthApplications = applications.filter(a => {
-          const date = a.submittedAt?.toDate ? a.submittedAt.toDate() : new Date(a.submittedAt);
-          return date >= monthDate && date < nextMonthDate;
+          const date = enDate(a.submittedAt);
+          return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
         const monthRevenue = payments

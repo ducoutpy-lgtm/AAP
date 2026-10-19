@@ -53,6 +53,7 @@ export default function CalendarPage() {
         const snapshot = await getDocs(aapsQuery);
         snapshot.docs.forEach(doc => {
           const aap = doc.data() as AAP;
+          if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher (deadline nullable depuis le lot 0)
           const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
           const daysUntil = Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
@@ -82,6 +83,7 @@ export default function CalendarPage() {
         const snapshot = await getDocs(aapsQuery);
         snapshot.docs.forEach(doc => {
           const aap = doc.data() as AAP;
+          if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher
           const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
           const daysUntil = Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
