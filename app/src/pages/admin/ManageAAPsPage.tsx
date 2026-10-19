@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { AAP } from '../../types';
+import { AAP, ValidationStatut } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -30,6 +30,9 @@ export default function ManageAAPsPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published' | 'closed' | 'archived'>('all');
+  // Suivi de la validation (rapport du 2026-10-14, instruction 12) : filtre par validation.statut, la seule source de
+  // fiabilité d'une fiche. 'aucun' : fiche saisie à la main, sans bloc validation.
+  const [validationFilter, setValidationFilter] = useState<'all' | ValidationStatut | 'aucun'>('all');
 
   useEffect(() => {
     loadAaps();
@@ -40,7 +43,7 @@ export default function ManageAAPsPage() {
     // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
     // seulement quand les valeurs listées changent).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, statusFilter, aaps]);
+  }, [searchTerm, statusFilter, validationFilter, aaps]);
 
   const loadAaps = async () => {
     try {
@@ -73,6 +76,11 @@ export default function ManageAAPsPage() {
     // Status filter
     if (statusFilter !== 'all') {
       result = result.filter(aap => aap.status === statusFilter);
+    }
+
+    // Filtre par statut de validation
+    if (validationFilter !== 'all') {
+      result = result.filter(aap => (aap.validation?.statut ?? 'aucun') === validationFilter);
     }
 
     setFilteredAaps(result);
@@ -159,6 +167,15 @@ export default function ManageAAPsPage() {
     return dateObj.toLocaleDateString('fr-FR');
   };
 
+  // Libellés et couleurs du statut de validation (type AapValidation). Le relecteur est Monsieur DUCOUT ou un modèle.
+  const VALIDATION_LIBELLES: Record<ValidationStatut, { libelle: string; variant: 'primary' | 'success' | 'warning' | 'error' | 'gray' }> = {
+    proposee: { libelle: 'Proposée, non relue', variant: 'warning' },
+    a_corriger: { libelle: 'À corriger', variant: 'error' },
+    validee: { libelle: 'Validée', variant: 'success' },
+    rejetee: { libelle: 'Rejetée', variant: 'gray' },
+  };
+  const compterValidation = (statut: ValidationStatut) => aaps.filter(a => a.validation?.statut === statut).length;
+
   // Publication soumise au verdict humain (rapport du 2026-10-14, instruction 9) : une fiche « proposee » ou
   // « a_corriger » ne se publie pas depuis l'administration ; un AAP sans bloc validation (saisi à la main) garde le bouton.
   const publiable = (aap: AAPWithId): boolean =>
@@ -223,6 +240,21 @@ export default function ManageAAPsPage() {
           </Card>
         </div>
 
+        {/* Suivi de la validation (instruction 12) : un compteur par statut, cliquable pour filtrer */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {(Object.keys(VALIDATION_LIBELLES) as ValidationStatut[]).map(statut => (
+            <button
+              key={statut}
+              type="button"
+              onClick={() => setValidationFilter(validationFilter === statut ? 'all' : statut)}
+              className={`text-left rounded-lg border p-4 bg-white ${validationFilter === statut ? 'border-primary-500 ring-2 ring-primary-200' : 'border-gray-200'}`}
+            >
+              <p className="text-sm text-gray-600 mb-1">Validation : {VALIDATION_LIBELLES[statut].libelle}</p>
+              <p className="text-2xl font-bold text-gray-900">{compterValidation(statut)}</p>
+            </button>
+          ))}
+        </div>
+
         {/* Filters */}
         <Card className="p-4 mb-6">
           <div className="flex flex-wrap items-center gap-4">
@@ -254,6 +286,18 @@ export default function ManageAAPsPage() {
                 <option value="closed">Clôturés</option>
                 <option value="archived">Archivés</option>
               </select>
+              <select
+                value={validationFilter}
+                onChange={(e) => setValidationFilter(e.target.value as typeof validationFilter)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+                <option value="all">Toute validation</option>
+                <option value="proposee">Proposées, non relues</option>
+                <option value="a_corriger">À corriger</option>
+                <option value="validee">Validées</option>
+                <option value="rejetee">Rejetées</option>
+                <option value="aucun">Sans bloc validation (saisies à la main)</option>
+              </select>
             </div>
           </div>
         </Card>
@@ -274,7 +318,18 @@ export default function ManageAAPsPage() {
                         {aap.title}
                       </h3>
                       {getStatusBadge(aap.status)}
+                      {aap.validation && (
+                        <Badge variant={VALIDATION_LIBELLES[aap.validation.statut].variant}>
+                          {VALIDATION_LIBELLES[aap.validation.statut].libelle}
+                        </Badge>
+                      )}
                     </div>
+                    {aap.validation && (aap.validation.par || aap.validation.commentaire) && (
+                      <p className="text-sm text-gray-500 mb-2">
+                        Relecture{aap.validation.par ? ` par ${aap.validation.par}` : ''}{aap.validation.date ? ` le ${aap.validation.date}` : ''}
+                        {aap.validation.commentaire ? ` : ${aap.validation.commentaire}` : ''}
+                      </p>
+                    )}
                     {aap.financeurName && (
                       <p className="text-sm text-gray-600 mb-2">
                         Financeur: {aap.financeurName}

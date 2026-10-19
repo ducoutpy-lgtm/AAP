@@ -203,6 +203,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   `extraction_locale.json` (accord donné), import réel (accord), `migrer_champ.py` (accord), `publier_sans_date.py`
   (accord), question du champ dans la chaîne (5.1), rapport `CHAMP.md`, documentation. État détaillé :
   `openspec/changes/filtre-champ-sante/tasks.md`.
+- Administration (changement `acces-administration`, 2026-10-15 et 2026-10-19) : compte admin créé par Monsieur DUCOUT
+  (`scripts/creer_admin.py`, mot de passe par `/reset-password`), espace `/admin` ouvert ; le 2026-10-19, `/admin/aaps`
+  montre les compteurs et le filtre par `validation.statut` (base : proposée 54, à corriger 245, validée 231, rejetée
+  39) et, sur chaque fiche, relecteur, date et commentaire. Reste : vérification 3.2 par Monsieur DUCOUT (la page exige
+  une connexion que la session ne fait pas). Ensuite, lot 1 : question du champ dans la chaîne d'extraction
+  (`filtre-champ-sante` 5.1), dates de collecte et mention « non relue » (instructions 10 et 11).
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

@@ -249,6 +249,13 @@ de passe se choisit ensuite par « Mot de passe oublié ? » sur `/login` : la p
 réinitialisation de Firebase. Le fournisseur Google n'est pas activé dans le projet Firebase : le bouton « Google » de la
 page de connexion ne fonctionne pas.
 
+**Suivi de la validation dans la modération des AAP** (`/admin/aaps`, 2026-10-19, instruction 12 du rapport de critique) :
+quatre compteurs cliquables (proposée non relue, à corriger, validée, rejetée) comptent les fiches par `validation.statut`,
+la seule source de fiabilité d'une fiche ; une liste déroulante filtre sur le même statut (plus « sans bloc validation »
+pour les fiches saisies à la main) ; chaque fiche montre son badge de validation, le relecteur (Monsieur DUCOUT ou le
+modèle), la date et le commentaire. Pourquoi : la liste par `status` (brouillon, publié) ne dit pas si une fiche a été
+relue ni par qui.
+
 **Filtres de la recherche** (changement `filtres-recherche`, 2026-10-14 au soir) : Territoire (identifiants écrits par
 l'import, affichés avec leur libellé, `src/utils/territoires.ts`), Thématique (champ classé par le modèle :
 `scrapeMetadata.champ`, « Santé », « Médico-social », « Non classée » tant que la fiche n'est pas classée) et Financeur,

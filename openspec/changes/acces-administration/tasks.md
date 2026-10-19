@@ -21,11 +21,13 @@ lui-même avec le script.
 
 ## 2. Suivi de la validation (instruction 12)
 
-- [ ] 2.1 `ManageAAPsPage.tsx` : compteurs et filtre par `validation.statut` (proposee, a_corriger, validee,
+- [x] 2.1 `ManageAAPsPage.tsx` : compteurs et filtre par `validation.statut` (proposee, a_corriger, validee,
   rejetee), affichage de `validation.commentaire`. Fait quand : lint et build verts, compteurs égaux à ceux de la
-  base (mesure en lecture seule collée).
+  base (mesure en lecture seule collée). (Fait le 2026-10-19 : lint et build verts ; mesure de la base « total 569,
+  validation : proposee 54, validee 231, a_corriger 245, rejetee 39 » ; la page exige une connexion que la session ne
+  fait pas : égalité des compteurs à constater par Monsieur DUCOUT en 3.2.)
 
 ## 3. Documentation et vérification
 
-- [ ] 3.1 README de l'application, CHANGELOG racine, CLAUDE.md, REPRISE.md, rapport section 8. Fait quand : relus.
+- [x] 3.1 README de l'application, CHANGELOG racine, CLAUDE.md, REPRISE.md, rapport section 8. Fait quand : relus. (Fait le 2026-10-19.)
 - [ ] 3.2 Monsieur DUCOUT rejoue les scénarios de la spec.

@@ -23,6 +23,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   retrouvé, profil `users` avec le rôle admin, essai à blanc, idempotent) et page `/reset-password` « Mot de passe
   oublié » (e-mail de réinitialisation Firebase), dont le lien existait sur la page de connexion mais menait à la 404.
   Constat : aucun compte admin n'existait, fournisseur Google désactivé.
+- Suivi de la validation dans `/admin/aaps` (changement `acces-administration` 2.1, 2026-10-19, instruction 12) :
+  compteurs cliquables et filtre par `validation.statut`, badge, relecteur, date et commentaire sur chaque fiche. Base
+  au 2026-10-19 : proposée 54, à corriger 245, validée 231, rejetée 39 (569 documents).
 
 ### Modifié
 - Fin du passage global d'extraction locale (2026-10-15, 7 h 40 : 2 178 textes, 1 086 fiches, 1 070 pages refusées,

@@ -28,3 +28,19 @@ afficher le même message qu'un compte existe ou non.
 - **WHEN** un visiteur saisit une adresse sur `/reset-password` et valide
 - **THEN** la page affiche « Si un compte existe pour cette adresse, un e-mail vient d'être envoyé » et, pour un
   compte existant, Firebase envoie l'e-mail qui permet de choisir un nouveau mot de passe
+
+### Requirement: Suivi de la validation des fiches
+
+La page de modération des AAP SHALL afficher un compteur par statut de validation (proposée, à corriger, validée,
+rejetée), SHALL permettre de filtrer la liste par ce statut, et SHALL montrer sur chaque fiche son statut de
+validation, le relecteur, la date et le commentaire (rapport du 2026-10-14, instruction 12).
+
+#### Scenario: Compteurs égaux à la base
+
+- **WHEN** l'administrateur ouvre `/admin/aaps`
+- **THEN** les quatre compteurs valent le nombre de documents de la collection `aap` portant chaque `validation.statut`
+
+#### Scenario: Filtre par statut de validation
+
+- **WHEN** l'administrateur choisit « À corriger » (compteur ou liste déroulante)
+- **THEN** seules les fiches dont `validation.statut` vaut `a_corriger` restent affichées, avec leur commentaire

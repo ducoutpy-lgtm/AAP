@@ -620,3 +620,8 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   clôture, 16 enveloppes, 12 montants. Outil de validation : 6 fiches restantes sur 486. Exécution réelle à 12 h 31 sur son accord (« 1. ok ») : 278 fiches
   mises à jour, sauvegarde `controle_2026-10-15_1231.json` ; base : 270 publiées (231 validées par le modèle, 8 à corriger,
   31 proposées closes non contrôlées), 39 archivées, 38 badges « à vérifier » contre 307.
+- Instruction 12 (2026-10-19, changement `acces-administration` 2.1, reprise sur « on reprend, continue ») :
+  `/admin/aaps` affiche quatre compteurs cliquables par `validation.statut`, un filtre par ce statut et, sur chaque
+  fiche, badge, relecteur, date et commentaire de validation. Lint et build verts. Mesure en lecture seule de la base :
+  569 documents, proposée 54, à corriger 245, validée 231, rejetée 39 ; `status` : publiées 270, brouillons 260,
+  archivées 39. La page exige une connexion : les compteurs à l'écran sont à comparer par Monsieur DUCOUT.

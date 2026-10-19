@@ -222,7 +222,9 @@ Cycle (commandes slash dans Claude Code) :
   vaut relecture, `verification.decision_du_modele` et `scripts/appliquer_controle.py` codés et testés, essai à blanc 231
   validées, 39 rejetées, 8 à corriger ; exécution réelle faite à 12 h 31 sur son accord : 278 fiches, sauvegarde `controle_2026-10-15_1231.json` ; base 270 publiées dont 231 validées par le modèle, 38 badges « à vérifier » contre 307), `acces-administration` (2026-10-15 : aucun compte admin n'existait ; `scripts/creer_admin.py` et page
   `/reset-password` faits, lint et build verts ; Monsieur DUCOUT lance le script et choisit son mot de passe par
-  « Mot de passe oublié ? » ; compteurs par statut de validation, instruction 12, à faire ensuite), `lot-0-assainissement`
+  « Mot de passe oublié ? » ; 2026-10-19 : compteurs, filtre et affichage par `validation.statut` dans `/admin/aaps` faits,
+  lint et build verts, base proposée 54, à corriger 245, validée 231, rejetée 39 ; vérification 3.2 de Monsieur DUCOUT en
+  attente, la page exige une connexion que la session ne fait pas), `lot-0-assainissement`
   (2026-10-14 : instructions 1 à 9 et 17 faites et commitées, vérification 8.1 de Monsieur DUCOUT en attente), `comparaison-moteurs-50-pages` (2026-10-14 : outil `scraping/comparaison.py` écrit et
   testé ; premier tirage de collectivités jugé et rapporté, second tirage chez les financeurs de la santé arrêté le
   2026-10-14 au soir sur décision de Monsieur DUCOUT, carte graphique rendue au passage global),
