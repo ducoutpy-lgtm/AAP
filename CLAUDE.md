@@ -222,8 +222,9 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `extraction-api-v4` (2026-10-19 : V4 par l'API, devis 2,26 euros au plus accepté, essai 5 textes 0,01 euro,
-  passage global lancé à 10 h 10), `mention-relecture-fiches` (2026-10-19, instruction 11 : mentions « Relue », « Contrôlée
+  En cours : `extraction-api-v4` (2026-10-19 : V4 par l'API, devis 2,26 euros au plus accepté, passage de 10 h 10 à
+  12 h 40, 856 fiches, 951 refus, 1,33 euro ; contrôle Haiku 218 fiches 0,13 euro ; import 54 créées, 483 mises à jour ;
+  décision du modèle et 4 hors champ retirés ; Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. ; reste la vérification 3.2 de Monsieur DUCOUT), `mention-relecture-fiches` (2026-10-19, instruction 11 : mentions « Relue », « Contrôlée
   par le modèle », « Non relue », date d'extraction, lien officiel, filtre « Relecture », lint et build verts, écran
   vérifié : 231 fiches relues sur 270 ; ré-import pour `extraitLe` à faire avec l'import V4), `verification-assistee-haiku` (2026-10-15 : contrôle des 283 fiches publiables par Haiku, 0,15 euro, 74
   douteuses hors description, outil de validation trié, résumé importé ; midi, décision de Monsieur DUCOUT : le contrôle

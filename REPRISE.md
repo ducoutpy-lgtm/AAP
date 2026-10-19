@@ -213,7 +213,10 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   (`extraction-api-v4`, devis 2,26 euros au plus accepté, passage lancé à 10 h 10, fichier `results/extraction_api.json`) ;
   forfait Blaze accepté (il l'active lui-même) ; connexion Google à activer par lui ; MFA à la fin. Instruction 11 faite
   (`mention-relecture-fiches` : mentions de relecture, date d'extraction, lien officiel, filtre « Relecture »). Reste
-  pour la V4 : fin du passage, contrôle Haiku (devis), décision du modèle, import (pose aussi `extraitLe`).
+  pour la V4 : fin du passage, contrôle Haiku (devis), décision du modèle, import (pose aussi `extraitLe`). Fait à 13 h 20 :
+  passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
+  Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point ouvert : les fiches validées par le modèle le 2026-10-15 gardent leurs valeurs locales, l'import
+  protège les champs métier d'une fiche validée ; une migration pour y reporter les valeurs API est à décider.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

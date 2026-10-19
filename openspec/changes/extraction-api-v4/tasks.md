@@ -28,11 +28,17 @@ cumulé 5 euros, aucun `git push`, aucun archivage sans demande. V3 conservée s
   champ 325 ; 5 fiches à relire pour écart de format ; échec unique : une page de la Ville de Paris refusée par le schéma
   (`ValidationError`). Recouvrement avec la V3 : 807 adresses communes, 49 trouvées par l'API seule, 279 par le local
   seul (pages acceptées par le local et refusées par l'API). Fiches API ouvertes : 353, dont 218 dans le champ.)
-- [ ] 2.2 Contrôle des fiches API par `verification.py` (devis puis accord), décision du modèle appliquée
-  (`appliquer_controle.py`, essai à blanc puis accord), import, compte des fiches publiées collé.
+- [x] 2.2 Contrôle des fiches API par `verification.py` (devis puis accord), décision du modèle appliquée
+  (`appliquer_controle.py`, essai à blanc puis accord), import, compte des fiches publiées collé. (Fait le 2026-10-19 :
+  devis « 218 fiches à vérifier, 0.074 euros estimés », accord « ok continue » ; réel « 218 fiches vérifiées ; coût cumulé
+  1.978 euros », soit 0,13 euro, sauvegarde `scripts/sauvegardes/verification_2026-10-19_1257` ; `VERIFICATION.md` : 501
+  fiches vérifiées, 225 douteuses ; import réel « 54 crees, 483 mis a jour » (la décision du modèle est posée à la
+  création) ; `appliquer_controle.py` : essai à blanc « 14 fiches a mettre a jour » puis réel, sauvegarde
+  `controle_2026-10-19_1315.json` ; `migrer_champ.py` : 4 fiches publiées classées hors champ par l'API repassées en
+  brouillon (Dalloz, poissons migrateurs, Shoah, doctorants SHS ; sauvegarde `champ_publiees_2026-10-19_1317.json`). Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Coût total de la V4 : 1,46 euro, cumul Haiku 1,98 euro sur 5.)
 
 ## 3. Documentation et vérification
 
-- [ ] 3.1 README scraping, README racine, CHANGELOGs, CLAUDE.md (décision V4, état d'avancement), REPRISE.md,
-  `docs/FLUX_DONNEES.md`, `docs/FEUILLE_DE_ROUTE.md`, rapport section 8.
+- [x] 3.1 README scraping, README racine, CHANGELOGs, CLAUDE.md (décision V4, état d'avancement), REPRISE.md,
+  `docs/FLUX_DONNEES.md`, `docs/FEUILLE_DE_ROUTE.md`, rapport section 8. (Fait le 2026-10-19.)
 - [ ] 3.2 Monsieur DUCOUT ouvre `/aap/search` et constate le nombre d'appels publiés, et relit `tasks.md` (coûts réels).

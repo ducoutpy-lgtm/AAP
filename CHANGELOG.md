@@ -6,6 +6,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- V4, extraction par l'API (changement `extraction-api-v4`, 2026-10-19, décision de Monsieur DUCOUT : V3 locale figée
+  sous l'étiquette `v3-local`, V4 avec `claude-haiku-5-5`, devis écrit avant tout appel) : `extraction_locale.py --moteur
+  api` avec devis, plafond, reprise ; passage de 1 808 textes en 2 h 30 pour 1,33 euro (856 fiches, 951 refus), contrôle
+  Haiku des 218 fiches ouvertes dans le champ (0,13 euro), import (54 créées, 483 mises à jour), décision du modèle (14
+  fiches), 4 appels hors champ retirés. Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search.
 - Mention de relecture sur les fiches (changement `mention-relecture-fiches`, 2026-10-19, instruction 11) : « Relue par
   Monsieur DUCOUT », « Contrôlée par le modèle » ou « Non relue : informations extraites automatiquement » dans la liste
   et la fiche, date « Informations extraites le ... » (`scrapeMetadata.extraitLe` écrit par l'import, posé au prochain

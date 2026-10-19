@@ -1,113 +1,120 @@
 # Vérification des fiches assistée par le modèle
 
-Changement OpenSpec `verification-assistee-haiku`. Rapport du 2026-10-15. Consigne version 1.
+Changement OpenSpec `verification-assistee-haiku`. Rapport du 2026-10-19. Consigne version 1.
 Un champ est douteux quand la fiche contredit la page (faux), invente une valeur (fabriqué) ou en oublie une
 (manquant). Ce rapport ne vaut pas relecture humaine : la mention « relue » est réservée aux verdicts de
 Monsieur DUCOUT, qui relit d'abord les fiches douteuses.
 
-Fiches vérifiées : 283 ; sans doute : 129 ; douteuses : 154 ; pages qui ne décrivent pas un appel précis selon le modèle : 39.
+Fiches vérifiées : 501 ; sans doute : 276 ; douteuses : 225 ; pages qui ne décrivent pas un appel précis selon le modèle : 46.
 
 ## Verdicts par champ
 
 | Champ | Juste | Faux | Fabriqué | Manquant | Vide | Incertain |
 |---|---|---|---|---|---|---|
-| titre | 257 | 2 | 1 | 0 | 0 | 23 |
-| financeur | 228 | 3 | 1 | 0 | 0 | 51 |
-| date_ouverture | 159 | 19 | 22 | 0 | 22 | 61 |
-| date_cloture | 138 | 5 | 0 | 18 | 87 | 35 |
-| montant_min | 11 | 3 | 0 | 1 | 247 | 21 |
-| montant_max | 31 | 7 | 1 | 0 | 223 | 21 |
-| enveloppe_globale | 3 | 2 | 0 | 14 | 244 | 20 |
-| territoire | 195 | 4 | 0 | 0 | 6 | 78 |
-| description | 136 | 131 | 0 | 0 | 0 | 16 |
+| titre | 464 | 4 | 2 | 0 | 0 | 31 |
+| financeur | 393 | 4 | 3 | 0 | 0 | 101 |
+| date_ouverture | 285 | 21 | 22 | 4 | 85 | 84 |
+| date_cloture | 256 | 8 | 0 | 21 | 159 | 57 |
+| montant_min | 16 | 3 | 0 | 3 | 447 | 32 |
+| montant_max | 48 | 7 | 1 | 2 | 410 | 33 |
+| enveloppe_globale | 23 | 2 | 0 | 14 | 432 | 30 |
+| territoire | 365 | 4 | 0 | 0 | 13 | 119 |
+| description | 280 | 198 | 0 | 0 | 0 | 23 |
 
 ## Part de fiches douteuses par source
 
 | Source | Vérifiées | Douteuses | Part |
 |---|---|---|---|
 | fondation_de_france | 22 | 13 | 59 % |
-| ars-pays-de-la-loire | 11 | 8 | 72 % |
-| ars-grand-est | 12 | 7 | 58 % |
-| ars-ile-de-france | 8 | 6 | 75 % |
-| ars-centre-val-de-loire | 8 | 5 | 62 % |
-| canceropole-grand-ouest-appels-a-projets | 8 | 5 | 62 % |
-| inserm | 7 | 5 | 71 % |
-| ars-hauts-de-france | 9 | 4 | 44 % |
-| ars-guyane | 7 | 4 | 57 % |
-| ars-la-reunion | 7 | 4 | 57 % |
-| conseil-departemental-pyrenees-atlantiques | 6 | 4 | 66 % |
-| societe-francaise-de-medecine-d-urgence-sfmu | 4 | 4 | 100 % |
+| ars-grand-est | 26 | 10 | 38 % |
+| ars-centre-val-de-loire | 18 | 10 | 55 % |
+| ars-pays-de-la-loire | 17 | 10 | 58 % |
+| ars-nouvelle-aquitaine | 17 | 7 | 41 % |
+| inserm | 16 | 7 | 43 % |
+| ars-ile-de-france | 14 | 7 | 50 % |
+| ars-mayotte | 14 | 7 | 50 % |
+| conseil-departemental-pyrenees-atlantiques | 10 | 6 | 60 % |
+| ars-normandie | 18 | 5 | 27 % |
+| canceropole-grand-ouest-appels-a-projets | 17 | 5 | 29 % |
+| ars-hauts-de-france | 16 | 5 | 31 % |
+| ars-guyane | 14 | 5 | 35 % |
+| ars-auvergne-rhone-alpes | 13 | 5 | 38 % |
+| cnsa | 7 | 5 | 71 % |
+| fondation-mederic-alzheimer | 6 | 5 | 83 % |
+| ars-bourgogne-franche-comte | 20 | 4 | 20 % |
+| ars-la-reunion | 12 | 4 | 33 % |
+| mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont | 5 | 4 | 80 % |
+| fondation-de-france | 5 | 4 | 80 % |
+| societe-francaise-de-medecine-d-urgence-sfmu | 5 | 4 | 80 % |
+| region-ile-de-france-aides-et-appels-a-projets | 5 | 4 | 80 % |
+| conseil-departemental-essonne | 5 | 4 | 80 % |
 | girci-grand-ouest | 4 | 4 | 100 % |
-| ars-normandie | 11 | 3 | 27 % |
+| ars-provence-alpes-cote-d-azur | 15 | 3 | 20 % |
+| ars-bretagne | 12 | 3 | 25 % |
 | conseil-regional-la-reunion | 9 | 3 | 33 % |
-| ars-nouvelle-aquitaine | 8 | 3 | 37 % |
-| ars-mayotte | 6 | 3 | 50 % |
-| cnsa | 4 | 3 | 75 % |
-| ars-corse | 3 | 3 | 100 % |
-| region-ile-de-france-aides-et-appels-a-projets | 3 | 3 | 100 % |
-| conseil-departemental-hautes-pyrenees | 3 | 3 | 100 % |
-| conseil-regional-grand-est | 3 | 3 | 100 % |
-| ars-bourgogne-franche-comte | 11 | 2 | 18 % |
-| ars-auvergne-rhone-alpes | 7 | 2 | 28 % |
-| ars-occitanie | 3 | 2 | 66 % |
-| ars-guadeloupe | 3 | 2 | 66 % |
+| ars-occitanie | 7 | 3 | 42 % |
+| fondation-des-hopitaux | 6 | 3 | 50 % |
+| conseil-departemental-hautes-pyrenees | 6 | 3 | 50 % |
+| conseil-departemental-ain | 6 | 3 | 50 % |
+| ars-corse | 5 | 3 | 60 % |
+| conseil-regional-grand-est | 5 | 3 | 60 % |
+| ville-de-paris-appels-a-projets | 4 | 3 | 75 % |
+| fondation-arc | 3 | 3 | 100 % |
+| portail-national-des-ars | 8 | 2 | 25 % |
+| ars-guadeloupe | 6 | 2 | 33 % |
+| ars-martinique | 6 | 2 | 33 % |
+| institut-national-du-cancer-inca | 6 | 2 | 33 % |
+| fhf-hauts-de-france-appels-a-projets | 6 | 2 | 33 % |
+| finistere-appels-a-projets | 6 | 2 | 33 % |
+| conseil-departemental-val-d-oise | 6 | 2 | 33 % |
+| conseil-departemental-haute-savoie | 3 | 2 | 66 % |
 | caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-languedoc-roussillon | 3 | 2 | 66 % |
-| fondation-des-hopitaux | 3 | 2 | 66 % |
-| fondation-mederic-alzheimer | 3 | 2 | 66 % |
-| finistere-appels-a-projets | 3 | 2 | 66 % |
-| conseil-departemental-essonne | 3 | 2 | 66 % |
-| fondation-de-france | 2 | 2 | 100 % |
-| fondation-arc | 2 | 2 | 100 % |
+| conseil-departemental-herault | 2 | 2 | 100 % |
+| conseil-regional-occitanie | 2 | 2 | 100 % |
 | ministere-de-l-enseignement-superieur-et-de-la-recherche | 2 | 2 | 100 % |
-| ville-de-paris-appels-a-projets | 2 | 2 | 100 % |
-| ars-provence-alpes-cote-d-azur | 8 | 1 | 12 % |
-| ars-bretagne | 5 | 1 | 20 % |
-| portail-national-des-ars | 4 | 1 | 25 % |
-| ars-martinique | 3 | 1 | 33 % |
-| institut-national-du-cancer-inca | 3 | 1 | 33 % |
-| conseil-departemental-val-d-oise | 3 | 1 | 33 % |
-| mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont | 2 | 1 | 50 % |
-| institut-de-france-fondations | 2 | 1 | 50 % |
-| agence-du-numerique-en-sante-ans | 2 | 1 | 50 % |
+| agence-du-numerique-en-sante-ans | 4 | 1 | 25 % |
+| institut-de-france-fondations | 3 | 1 | 33 % |
+| loiret-appels-a-projets | 3 | 1 | 33 % |
+| rhone-appels-a-candidatures-prevention | 3 | 1 | 33 % |
+| conseil-departemental-la-reunion | 3 | 1 | 33 % |
+| prefecture-morbihan | 2 | 1 | 50 % |
+| girci-mediterranee | 2 | 1 | 50 % |
+| essonne-commission-des-financeurs | 2 | 1 | 50 % |
+| conseil-departemental-correze | 2 | 1 | 50 % |
+| mairie-de-brest | 2 | 1 | 50 % |
 | agence-de-l-eau-loire-bretagne | 2 | 1 | 50 % |
-| rhone-appels-a-candidatures-prevention | 2 | 1 | 50 % |
-| conseil-departemental-la-reunion | 2 | 1 | 50 % |
-| conseil-departemental-ain | 2 | 1 | 50 % |
 | ars_idf | 1 | 1 | 100 % |
 | ars_idf_local | 1 | 1 | 100 % |
+| dgos-programmes-de-recherche-hospitaliere-phrc-phrip-preps-prme | 1 | 1 | 100 % |
+| conseil-departemental-seine-et-marne | 1 | 1 | 100 % |
 | caisse-d-assurance-retraite-et-de-la-sante-au-travail-carsat-nord-picardie | 1 | 1 | 100 % |
 | mutualite-sociale-agricole-msa-beauce-coeur-de-loire-accueil-de-chartres | 1 | 1 | 100 % |
 | fondation-de-l-avenir | 1 | 1 | 100 % |
 | prefecture-rhone | 1 | 1 | 100 % |
 | interreg-sudoe | 1 | 1 | 100 % |
-| essonne-commission-des-financeurs | 1 | 1 | 100 % |
 | metropole-de-lyon-commission-des-financeurs | 1 | 1 | 100 % |
-| conseil-departemental-herault | 1 | 1 | 100 % |
 | conseil-departemental-var | 1 | 1 | 100 % |
 | conseil-departemental-ille-et-vilaine | 1 | 1 | 100 % |
-| conseil-departemental-haute-savoie | 1 | 1 | 100 % |
 | conseil-departemental-savoie | 1 | 1 | 100 % |
-| conseil-departemental-correze | 1 | 1 | 100 % |
-| conseil-departemental-gers | 3 | 0 | 0 % |
-| fhf-hauts-de-france-appels-a-projets | 2 | 0 | 0 % |
+| conseil-departemental-gers | 6 | 0 | 0 % |
+| fondation-de-l-ap-hp | 2 | 0 | 0 % |
+| uriopss-hauts-de-france | 2 | 0 | 0 % |
+| admical | 2 | 0 | 0 % |
+| conseil-departemental-pyrenees-orientales | 2 | 0 | 0 % |
 | appelaprojets-org | 2 | 0 | 0 % |
+| conseil-departemental-val-de-marne | 1 | 0 | 0 % |
 | agence-de-l-eau-seine-normandie | 1 | 0 | 0 % |
-| prefecture-morbihan | 1 | 0 | 0 % |
 | direction-regionale-de-l-alimentation-de-l-agriculture-et-de-la-foret-draaf-bourgogne-franche-comte-siege-de-dijon | 1 | 0 | 0 % |
-| fondation-de-l-ap-hp | 1 | 0 | 0 % |
-| girci-mediterranee | 1 | 0 | 0 % |
-| uriopss-hauts-de-france | 1 | 0 | 0 % |
 | promotion-sante-occitanie-appels-a-projets | 1 | 0 | 0 % |
-| admical | 1 | 0 | 0 % |
-| loiret-appels-a-projets | 1 | 0 | 0 % |
-| conseil-departemental-pyrenees-orientales | 1 | 0 | 0 % |
-| mairie-de-brest | 1 | 0 | 0 % |
 
 ## Fiches douteuses, à relire en premier
 
 | Source | Titre | Champs douteux (verdict, valeur lue sur la page) | Adresse |
 |---|---|---|---|
 | fondation-arc | 55th Fondation ARC Léopold Griffuel Awards | date_ouverture (fabrique) ; date_cloture (manquant, page : 2026-09-21) ; montant_min (manquant, page : 200000) ; description (faux) | https://www.fondation-arc.org/appels-a-projets/55th-fondation-arc-leopold-griffuel-awards/ |
+| ars-pays-de-la-loire | Mesure de solidarité territoriale : engagement volontaire de médecins  | montant_min (manquant, page : 200) ; montant_max (manquant, page : 200) ; description (faux) | https://www.pays-de-la-loire.ars.sante.fr/mesure-de-solidarite-territoriale-engagement-volontaire-de-medecins-generalistes-exercant-dans-des |
+| region-ile-de-france-aides-et-appels-a-projets | Programme Numérique responsable "Mieux comprendre pour mieux utiliser" | montant_min (manquant, page : 70000) ; montant_max (manquant, page : 70000) ; description (faux) | https://www.iledefrance.fr/aides-et-appels-a-projets/programme-numerique-responsable-mieux-comprendre-pour-mieux-utiliser-avec-lassociation-e-enfance |
+| conseil-departemental-seine-et-marne | <UNKNOWN> | titre (fabrique) ; financeur (fabrique) ; description (faux) | https://www.seine-et-marne.fr/fr/appels-projet-subventions/appel-projet-para-sport |
 | ars-corse | Renforcement de l’offre en psychiatrie périnatale et psychiatrie de l’ | montant_max (faux, page : 350000) ; enveloppe_globale (manquant, page : 350000) ; description (faux) | https://www.corse.ars.sante.fr/renforcement-de-loffre-en-psychiatrie-perinatale-et-psychiatrie-de-lenfant-et-de-ladolescent-2026 |
 | ars-corse | ESMS numérique 2026 - Enfance en situation de handicap et protection d | montant_min (faux, page : 21000) ; montant_max (faux, page : 36000) ; description (faux) | https://www.corse.ars.sante.fr/esms-numerique-2026-enfance-en-situation-de-handicap-et-protection-de-lenfance-0 |
 | ars-corse | Sécurisation des établissements de santé en corse | montant_max (faux) ; enveloppe_globale (manquant, page : 25000000) ; description (faux) | https://www.corse.ars.sante.fr/securisation-des-etablissements-de-sante-en-corse-2 |
@@ -126,6 +133,18 @@ Fiches vérifiées : 283 ; sans doute : 129 ; douteuses : 154 ; pages qui ne dé
 | fondation_de_france | Recherche fondamentale et translationnelle sur le cancer : étude des r | date_ouverture (fabrique) ; date_cloture (manquant) ; description (faux) | https://www.fondationdefrance.org/fr/appels-a-projets/cancer-etude-de-la-resistance-aux-traitements |
 | fondation_de_france | Vieillir acteur et citoyen de son territoire | date_ouverture (fabrique) ; date_cloture (manquant) ; description (faux) | https://www.fondationdefrance.org/fr/appels-a-projets/vieillir-acteur-et-citoyen-de-son-territoire |
 | ars_idf_local | Contrat d'Allocation d'Études - Campagne 2026 | date_ouverture (fabrique) ; date_cloture (faux, page : 2026-10-16) | https://www.iledefrance.ars.sante.fr/contrat-dallocation-detudes-campagne-2026 |
+| ars-auvergne-rhone-alpes | Création de 22 places en Service d'Accompagnement Médico-Social pour A | date_ouverture (faux, page : 2026-09-22) ; description (faux) | https://www.auvergne-rhone-alpes.ars.sante.fr/creation-de-22-places-en-service-daccompagnement-medico-social-pour-adultes-handicapes-samsah-pour |
+| ars-auvergne-rhone-alpes | Création de 41 places d'établissement d'accueil médicalisé (EAM) pour  | date_ouverture (faux, page : 2026-07-09) ; description (faux) | https://www.auvergne-rhone-alpes.ars.sante.fr/creation-de-41-places-detablissement-daccueil-medicalise-eam-pour-adultes-presentant-des-troubles |
+| ars-centre-val-de-loire | Dispositif de contrat d'allocation d'études (CAE) - campagne d'appel à | date_cloture (faux, page : 2026-10-30) ; description (faux) | https://www.centre-val-de-loire.ars.sante.fr/dispositif-de-contrat-dallocation-detudes-cae-campagne-dappel-candidatures-2026 |
+| ars-centre-val-de-loire | Dispositifs d'astreinte infirmier diplômé d'État (IDE) de nuit | date_ouverture (manquant, page : 2026-06-30) ; description (faux) | https://www.centre-val-de-loire.ars.sante.fr/dispositifs-dastreinte-infirmier-diplome-detat-ide-de-nuit |
+| ars-hauts-de-france | Représentants des usagers en Commissions des usagers (CDU) des établis | date_ouverture (manquant, page : 2026-10-07) ; description (faux) | https://www.hauts-de-france.ars.sante.fr/representants-des-usagers-en-commissions-des-usagers-cdu-des-etablissements-de-sante-2025-2028 |
+| ars-nouvelle-aquitaine | Appel à manifestation d'intérêt (AMI) 2026 - Programme « ESMS Numériqu | date_cloture (manquant) ; description (faux) | https://www.nouvelle-aquitaine.ars.sante.fr/appel-manifestation-dinteret-ami-2026-programme-esms-numerique-en-nouvelle-aquitaine-derniere |
+| ars-guyane | AAP "psychiatrie périnatale et pédopsychiatrie 2026" - Appel à projets | titre (faux, page : Appel à projets régional 2026 Renforcement de l'offre de psychiatrie périnatale et de psychiatrie de l'enfant et de l'adolescent en Guyane) ; description (faux) | https://www.guyane.ars.sante.fr/aap-psychiatrie-perinatale-et-pedopsychiatrie-2026 |
+| ars-martinique | France 2030 – Offre innovante en santé délocalisée et télémédecine | date_cloture (faux, page : 2026-09-17) ; description (faux) | https://www.martinique.ars.sante.fr/france-2030-offre-innovante-en-sante-delocalisee-et-telemedecine |
+| fondation-mederic-alzheimer | Appel à projets 2026 : Améliorer l'accès aux soins bucco-dentaires des | date_ouverture (manquant, page : 2026-07-15) ; date_cloture (manquant, page : 2026-09-30) | https://www.fondation-mederic-alzheimer.org/project/appel-a-projets-2026-soins-bucco-dentaires-alzheimer/ |
+| fhf-hauts-de-france-appels-a-projets | AAC – Conseils de surveillance EPS – Représentants des usagers et pers | financeur (fabrique) ; description (faux) | https://www.fhf-hdf.fr/2024/09/13/aac-conseils-de-surveillance-eps-representants-des-usagers-et-personnalites-qualifiees/ |
+| fhf-hauts-de-france-appels-a-projets | AAC ANAP – Accompagnement des HAD (mi-janvier 2024) | titre (faux, page : AAC ANAP – Accompagnement des HAD (mi-janvier 2024)) ; description (faux) | https://www.fhf-hdf.fr/2023/12/01/aac-anap-accompagnement-des-had-fevrier-2024/ |
+| conseil-departemental-pyrenees-atlantiques | Appel à projets Dispositifs Répit | financeur (faux, page : incertain) ; description (faux) | https://le64.fr/appel-projets-dispositifs-repit |
 | ars-ile-de-france | Dispositifs pour favoriser les admissions directes en hospitalisation  | enveloppe_globale (manquant, page : 910000) ; description (faux) | https://www.iledefrance.ars.sante.fr/dispositifs-pour-favoriser-les-admissions-directes-en-hospitalisation-domicile-had-en-lien-avec-le |
 | ars-ile-de-france | Contrat d’Allocation d’Études - Campagne 2026 | date_ouverture (faux, page : 2025-04-02) ; description (faux, page : L'ARS IDF lance son 7ème appel à candidatures du Contrat d'Allocation d'Études (CAE) ; les établissements sanitaires et ESMS PDS peuvent verser une allocation forfaitaire aux étudiants en dernière année, en contrepartie d'un engagement de 18 mois ; à titre expérimental, 36 mois pour les établissements sanitaires dès l'avant-dernière année. L'ARS prend en charge 50% du coût total.) | https://www.iledefrance.ars.sante.fr/contrat-dallocation-detudes-campagne-2026 |
 | ars-centre-val-de-loire | Dispositifs d’astreinte infirmier diplômé d'état (IDE) de nuit | territoire (faux, page : Centre-Val de Loire (6 départements)) ; description (faux) | https://www.centre-val-de-loire.ars.sante.fr/dispositifs-dastreinte-infirmier-diplome-detat-ide-de-nuit |
@@ -169,6 +188,62 @@ Fiches vérifiées : 283 ; sans doute : 129 ; douteuses : 154 ; pages qui ne dé
 | fondation_de_france | Prix de l'œil | date_ouverture (fabrique) ; description (faux) | https://www.fondationdefrance.org/fr/appels-a-projets/prix-de-l-oeil |
 | fondation_de_france | Programme handicap – Soutien aux pratiques inclusives | date_ouverture (fabrique) ; description (faux) | https://www.fondationdefrance.org/fr/appels-a-projets/personnes-handicapees-soutien-aux-pratiques-inclusives |
 | ars_idf | Contrat d'Allocation d'Études - Campagne 2026 | description (faux) | https://www.iledefrance.ars.sante.fr/contrat-dallocation-detudes-campagne-2026 |
+| ars-ile-de-france | Appel à projets PDSA – Effection mobile ou postée en zone blanche de P | description (faux) | https://www.iledefrance.ars.sante.fr/appel-projets-pdsa-effection-mobile-ou-postee-en-zone-blanche-de-pdsa-en-ile-de-france-fenetre-1 |
+| ars-auvergne-rhone-alpes | Création de mi-temps de psychologue en SAD mixte – 2e appel 2026 | description (faux) | https://www.auvergne-rhone-alpes.ars.sante.fr/creation-de-mi-temps-de-psychologue-en-sad-mixte-2e-appel-2026 |
+| ars-bourgogne-franche-comte | CRSA Bourgogne Franche-Comté : renouvellement de la mandature 2026-203 | description (faux) | https://www.bourgogne-franche-comte.ars.sante.fr/crsa-bourgogne-franche-comte-lars-lance-le-renouvellement-de-la-mandature-2026-2031 |
+| ars-bourgogne-franche-comte | AAC - Médecins coordonnateurs pour les injonctions de soins | description (faux) | https://www.bourgogne-franche-comte.ars.sante.fr/aac-medecins-coordonnateurs-pour-les-injonctions-de-soins-0 |
+| ars-bretagne | Appel à projet - Expérimentation pilote de Mon espace santé dans les E | description (faux) | https://www.bretagne.ars.sante.fr/appel-projet-experimentation-pilote-de-mon-espace-sante-dans-les-etablissements-et-services-medico |
+| ars-bretagne | Appel à candidatures 2026-ARS-CD29-01 PHV | description (faux) | https://www.bretagne.ars.sante.fr/appel-candidatures-2026-ars-cd29-01-phv |
+| ars-centre-val-de-loire | Programme ESMS Numérique 2026 | description (faux) | https://www.centre-val-de-loire.ars.sante.fr/programme-esms-numerique-2026-1 |
+| ars-centre-val-de-loire | Création d'un dispositif de répit pour les enfants confiés à l'ASE en  | description (faux) | https://www.centre-val-de-loire.ars.sante.fr/creation-dun-dispositif-de-repit-pour-les-enfants-confies-lase-en-situation-de-handicap-en-indre-et |
+| ars-centre-val-de-loire | Création de deux équipes mobiles dédiée aux personnes en situation de  | description (faux) | https://www.centre-val-de-loire.ars.sante.fr/creation-de-deux-equipes-mobiles-dediee-aux-personnes-en-situation-de-handicap-vieillissantes-en |
+| ars-grand-est | Renforcement de l'offre en psychiatrie périnatale, de l'enfant et de l | description (faux) | https://www.grand-est.ars.sante.fr/renforcement-de-loffre-en-psychiatrie-perinatale-de-lenfant-et-de-ladolescent |
+| ars-grand-est | Plateforme d'accompagnement et de répit 2026 – département de la Mosel | description (faux) | https://www.grand-est.ars.sante.fr/plateforme-daccompagnement-et-de-repit-2026-departement-de-la-moselle |
+| ars-grand-est | Accompagnement du volet immobilier des MSP en région Grand Est via le  | description (faux) | https://www.grand-est.ars.sante.fr/accompagnement-du-volet-immobilier-des-msp-en-region-grand-est-le-fmis |
+| ars-normandie | Déploiement des équipes mobiles de crise (EMC) en psychiatrie | description (faux) | https://www.normandie.ars.sante.fr/deploiement-des-equipes-mobiles-de-crise-emc-en-psychiatrie |
+| ars-normandie | Renforcement régional de l'offre en psychiatrie de l'enfant et de l'ad | description (faux) | https://www.normandie.ars.sante.fr/renforcement-regional-de-loffre-en-psychiatrie-de-lenfant-et-de-ladolescent-pour-lannee-2026 |
+| ars-nouvelle-aquitaine | Appel à projets 2027 - Culture et Santé | description (faux) | https://www.nouvelle-aquitaine.ars.sante.fr/appel-projets-2027-culture-et-sante |
+| ars-nouvelle-aquitaine | Appel à Candidatures 2026 - Référentiel NF environnement hébergement e | description (faux) | https://www.nouvelle-aquitaine.ars.sante.fr/appel-candidatures-2026-referentiel-nf-environnement-hebergement-et-restauration-des-etablissements |
+| ars-nouvelle-aquitaine | Appel à candidatures 2025 - « Engagement environnemental » Bloc opérat | description (faux) | https://www.nouvelle-aquitaine.ars.sante.fr/appel-candidatures-2025-engagement-environnemental-bloc-operatoire-durable |
+| ars-occitanie | MNPEA 2026 – Renforcement de l'offre de psychiatrie périnatale et de p | description (faux) | https://www.occitanie.ars.sante.fr/mnpea-2026-renforcement-de-loffre-de-psychiatrie-perinatale-et-de-psychiatrie-de-lenfant-et-de |
+| ars-pays-de-la-loire | Labellisation « hôpital de proximité » | description (faux) | https://www.pays-de-la-loire.ars.sante.fr/labellisation-hopital-de-proximite |
+| ars-provence-alpes-cote-d-azur | Désignation des structures organisatrices des parcours du Service de r | description (faux) | https://www.paca.ars.sante.fr/designation-des-structures-organisatrices-des-parcours-du-service-de-reperage-de-diagnostic-et |
+| ars-provence-alpes-cote-d-azur | Recrutement de professionnels relais dans le cadre du dispositif des i | description (faux) | https://www.paca.ars.sante.fr/recrutement-de-professionnels-relais-dans-le-cadre-du-dispositif-des-injonctions-therapeutiques |
+| ars-mayotte | Mise en œuvre d'une campagne de communication pour l'attractivité en s | description (faux) | https://www.mayotte.ars.sante.fr/mise-en-oeuvre-dune-campagne-de-communication-pour-lattractivite-en-sante-mayotte |
+| ars-mayotte | Appel à projet relatif à la création de 2 centres médico psycho-pédago | description (faux) | https://www.mayotte.ars.sante.fr/appel-projet-relatif-la-creation-de-2-centres-medico-psycho-pedagogiques-cmpp-sur-le-territoire-de |
+| ars-mayotte | Création d'un Pôle d'appui à la scolarité (PAS) - Mamoudzou et Petite- | description (faux) | https://www.mayotte.ars.sante.fr/creation-dun-pole-dappui-la-scolarite-pas-mamoudzou-et-petite-terre |
+| ars-mayotte | Appel à candidature relatif à la création d'une plateforme de coordina | description (faux) | https://www.mayotte.ars.sante.fr/appel-candidature-relatif-la-creation-dune-plateforme-de-coordination-et-dorientation-pco-dans-le |
+| portail-national-des-ars | CRSA de Mayotte : représentants des associations agréées d'usagers du  | date_ouverture (manquant, page : 2026-10-05) | https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-agreees-dusagers-du-systeme-de-sante |
+| cnsa | Constituer et former un réseau de professionnels afin d'animer un prog | description (faux) | https://www.cnsa.fr/appels-projets/constituer-et-former-un-reseau-de-professionnels-afin-danimer-un-programme-sante-cognitive-lien-social |
+| cnsa | Expérimenter pour accompagner l'évolution de l'offre médico-sociale et | description (faux) | https://www.cnsa.fr/appels-projets/experimenter-pour-accompagner-levolution-de-loffre-medico-sociale-et-ladaptation-2026 |
+| mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont | L'appel à projets en faveur des aidants familiaux | description (faux) | https://sudaquitaine.msa.fr/lfp/appel-%C3%A0-projets-aidants-familiaux |
+| mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont | Coup de pouce prévention : un appel à projets | description (faux) | https://sudaquitaine.msa.fr/lfp/coup-de-pouce-pr%C3%A9vention |
+| mutualite-sociale-agricole-msa-sud-aquitaine-accueil-de-saint-pierre-du-mont | L'appel à projets en faveur des aidants familiaux | description (faux) | https://sudaquitaine.msa.fr/lfp/web/msa-sud-aquitaine/appel-%C3%A0-projets-aidants-familiaux |
+| fondation-de-france | Prix de la recherche médicale de la Fondation de France/Jean Valade 20 | description (faux) | https://www.fondationdefrance.org/fr/appels-a-projets/prix-de-la-recherche-medicale-de-la-fondation-de-france-jean-valade |
+| fondation-de-france | Recherche clinique et fondamentale sur les maladies cardiovasculaires | date_cloture (manquant) | https://www.fondationdefrance.org/fr/appels-a-projets/recherche-sur-les-maladies-cardiovasculaires |
+| fondation-des-hopitaux | AAP Bien etre des soignants - fortes chaleurs | description (faux) | https://appel-a-projet.fondationhopitaux.fr/campagne-info?view=programme&cid=74 |
+| fondation-mederic-alzheimer | Appel à candidatures : Communication scientifique 2026 | date_cloture (faux, page : 2026-12-31) | https://www.fondation-mederic-alzheimer.org/project/appel-a-candidatures-communication-scientifique-2026/ |
+| fondation-mederic-alzheimer | Appel à projets 2026 : INM & maladies d'Alzheimer et apparentées | description (faux) | https://www.fondation-mederic-alzheimer.org/project/appel-a-projets-2026-inm-maladies-dalzheimer-et-apparentees/ |
+| fondation-arc | 4e Prix de thèse Oberling-Haguenau Fondation ARC | description (faux) | https://www.fondation-arc.org/appels-a-projets/4e-prix-de-these-oberling-haguenau-fondation-arc/ |
+| institut-national-du-cancer-inca | Appel à projets PLBIO 2027 - Projets libres de Recherche « Biologie et | description (faux) | https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets/plbio2027 |
+| inserm | Technologies de rupture en cancérologie (TREK) - 2ème édition (TREK 20 | description (faux) | https://pro.inserm.fr/rubriques/appels-a-projets/strategie-decennale-cancer-2021-2030/technologies-de-rupture-en-cancerologie-trek |
+| inserm | Soutien pour la formation à la recherche fondamentale et translationne | description (faux) | https://pro.inserm.fr/rubriques/appels-a-projets/strategie-decennale-cancer-2021-2030/formation-a-la-recherche-en-cancerologie-frft-doc |
+| dgos-programmes-de-recherche-hospitaliere-phrc-phrip-preps-prme | Appel à projets de recherche Données de santé et ApplicaTions - DAtAE | description (faux) | https://sante.gouv.fr/systeme-de-sante/innovation-et-recherche/l-innovation-et-la-recherche-clinique/appels-a-projets/systeme-de-sante/innovation-et-recherche/l-innovation-et-la-recherche-clinique/appels-a-projets/article/appel-a-projets-de-recherche-donnees-de-sante-et-applications-datae |
+| prefecture-morbihan | Appels à projets commission des financeurs (CFPPA) - Appel à reconduct | description (faux) | https://www.morbihan.fr/le-conseil-departemental/appels-a-projets/appels-a-projets-commission-des-financeurs-cfppa |
+| girci-mediterranee | PHRC-I 2026 : Programme Hospitalier de Recherche Clinique interrégiona | description (faux) | https://gircimediterranee.fr/appel-a-projet/programme-hospitalier-de-recherche-clinique-interregional-2026 |
+| loiret-appels-a-projets | Appel à candidatures 2026 pour les Services Autonomie à Domicile (SAD) | description (faux) | https://www.loiret.fr/appel-candidatures-2024-sad |
+| ville-de-paris-appels-a-projets | Appel à projets : « Quartier Santé de QJ » | description (faux, page : Appel à projets du Quartier santé de QJ (Quartiers Jeunes, Paris) pour la prévention en santé mentale, réduction des risques, santé sexuelle, accès aux droits et aux soins, activité physique et santé nutritionnelle des jeunes de 16 à 30 ans, avec dépôt sur Paris Asso. Le quartier santé n'a pas vocation à devenir un lieu de soins de long terme.) | https://www.paris.fr/pages/appel-a-projets-quartier-sante-28842 |
+| conseil-departemental-herault | Attribution d'une dotation complémentaire aux services autonomie à dom | description (faux) | https://herault.fr/aideProjet/106/321-attribution-d-une-dotation-complementaires-aux-services-autonomie-a-domicile-pour-le-financement-d-actions-ameliorant-la-qualite-de-service-rendu-a-l-usager.htm |
+| conseil-departemental-haute-savoie | Appel à projet pour l'ouverture d'un dispositif d'accueil et d'accompa | description (faux) | https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/appels-a-projets/calendrier-previsionnel-2026-des-appels-a-projets-sociaux/ |
+| conseil-departemental-pyrenees-atlantiques | Appel à manifestation d'intérêt Manger bio & local 64 | description (faux) | https://www.le64.fr/appel-manifestation-dinteret-manger-bio-local-64 |
+| conseil-departemental-val-d-oise | Création d'un EHPAD ou d'une structure mixte EHPAD et RA | description (faux) | https://www.valdoise.fr/annuaire/2557/294-libelle.htm |
+| conseil-departemental-ain | Appel à projets 2027 pour la mise en place des actions de prévention p | description (faux) | https://www.ain.fr/appel-a-projets-plan-seniors-01/ |
+| conseil-departemental-ain | [Appel à projets] Création d'un établissement d'accueil médicalisé pou | description (faux) | https://www.ain.fr/appel-a-projets-service-accueil-autisme/ |
+| conseil-departemental-essonne | Appel à projets local "actions de prévention et de lutte contre les dr | description (faux) | https://www.essonne.gouv.fr/Media/Fichiers/PUBLICATIONS/Autres-publications/Appels-a-projet/Appel-a-projets-local-Actions-de-prevention-et-de-lutte-contre-les-drogues-et-les-conduites-addictives |
+| conseil-departemental-essonne | Appel à projet MILDECA 2025 - communes | description (faux) | https://www.essonne.gouv.fr/Media/Fichiers/PUBLICATIONS/Autres-publications/Appels-a-projet/Appel-a-projet-MILDECA-2025-communes |
+| conseil-regional-occitanie | FEDER-FSE+ 2021-2027 Moderniser et créer des centres de formations par | description (faux) | https://www.laregion.fr/FEDER-FSE-2021-2027-Moderniser-et-creer-des-centres-de-formations-paramedicales-et |
+| conseil-regional-occitanie | Aide au mérite pour les étudiants en formations sanitaires et sociales | description (faux) | https://www.laregion.fr/Aide-au-merite |
+| mairie-de-brest | Appel à projets Handicap « Ville inclusive, ville pour tous » de la Vi | description (faux) | https://brest.fr/appel-projet-handicap-ville-inclusive-ville-pour-tous |
 | ars-ile-de-france | Devenir volontaire au sein des Commissions Départementales des Soins P | description (faux) | https://www.iledefrance.ars.sante.fr/devenir-volontaire-au-sein-des-commissions-departementales-des-soins-psychiatriques-de-la-region |
 | ars-ile-de-france | Renforcement de l’offre en psychiatrie périnatale et psychiatrie de l’ | enveloppe_globale (manquant, page : 1800000) | https://www.iledefrance.ars.sante.fr/renforcement-de-loffre-en-psychiatrie-perinatale-et-psychiatrie-de-lenfant-et-de-ladolescent-1 |
 | ars-ile-de-france | Recrutement de médecins coordonnateurs pour les injonctions de soins | description (faux) | https://www.iledefrance.ars.sante.fr/recrutement-de-medecins-coordonnateurs-pour-les-injonctions-de-soins |

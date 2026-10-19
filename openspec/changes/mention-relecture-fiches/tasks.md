@@ -18,8 +18,11 @@ aucun `git push`, aucun archivage sans demande, ré-import réel après essai à
 
 ## 2. Données
 
-- [ ] 2.1 Ré-import à blanc puis réel (pose `extraitLe`), fait avec l'import des fiches V4 (`extraction-api-v4` 2.2) pour
-  n'importer qu'une fois. Fait quand : sorties collées, date visible sur une fiche.
+- [x] 2.1 Ré-import à blanc puis réel (pose `extraitLe`), fait avec l'import des fiches V4 (`extraction-api-v4` 2.2) pour
+  n'importer qu'une fois. Fait quand : sorties collées, date visible sur une fiche. (Fait le 2026-10-19 : import réel
+  « 54 crees, 483 mis a jour » ; `/aap/search` relu par la session : « Informations extraites le 19/10/2026 » sur les 20
+  fiches de la première page ; 219 fiches publiées sur 293 portaient `extraitLe` avant la migration du champ, les autres
+  sont closes ou hors du jeu importé.)
 
 ## 3. Documentation et vérification
 

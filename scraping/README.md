@@ -343,6 +343,13 @@ Le champ est écrit dans `scrape_metadata` de chaque fiche (`champ`, `champ_rais
 jamais publiée sans verdict ; le verdict « hors champ » de la validation quotidienne (touche 7) la rejette. Ne pas
 classer `results/extraction_locale.json` pendant qu'un passage d'extraction tourne : il réécrit ce fichier à chaque fiche.
 
+V4 par l'API (changement `extraction-api-v4`, décision de Monsieur DUCOUT du 2026-10-19 : « garde la V3, crée la V4 avec
+modèle API payant ») : `python extraction_locale.py --extraire --moteur api --dry-run` écrit le devis (textes restants,
+caractères, modèle, tarif, coût estimé, cumul, plafond) sans aucun appel ; après accord, `--extraire --moteur api
+[--plafond 5]` produit `results/extraction_api.json` par la même chaîne, avec reprise et arrêt avant dépassement du plafond.
+La V3 (`extraction_locale.json`, étiquette Git `v3-local`) reste intacte ; pour une même adresse, l'import garde la fiche
+API. Passage du 2026-10-19 : 1 808 textes, 856 fiches, 951 refus, 1 échec, 2 h 30, 1,33 euro réel pour 2,26 estimés au plus.
+
 Depuis le 2026-10-19 (consigne version 4, tâche 5.1), la question du champ est posée dans la chaîne d'extraction
 elle-même, par les deux moteurs (`echantillon.extraire` pour le modèle local, `extraire_api` pour l'API), juste après
 l'extraction d'une page acceptée : une fiche nouvelle porte son champ dès sa production, sans classement rétroactif.

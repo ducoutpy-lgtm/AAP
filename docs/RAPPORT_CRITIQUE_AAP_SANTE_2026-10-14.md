@@ -640,3 +640,10 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   ré-import), lien « Annonce officielle » en évidence, filtre « Relecture ». Lint et build verts ; écran vérifié par la
   session : 20 mentions « Contrôlée par le modèle » et 20 liens officiels sur la première page, filtre « relues
   seulement » : 231 fiches, égal au compte des fiches validées de la base.
+- V4 terminée (2026-10-19, 12 h 40 à 13 h 20) : passage « 951 pages refusées, 856 réussites, 1 échec », 1,33 euro réel ;
+  champ santé 293, médico-social 212, incertain 26, hors champ 325 ; 807 adresses communes avec la V3, 49 trouvées par
+  l'API seule, 279 par le local seul. Contrôle Haiku des 218 fiches ouvertes dans le champ : 0,13 euro (devis 0,074),
+  accord « ok continue ». Import réel « 54 crees, 483 mis a jour », décision du modèle sur 14 fiches, 4 appels hors champ
+  publiés repassés en brouillon. Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Coût total de la journée : 1,46 euro, cumul Haiku 1,98 euro sur 5.
+  Point ouvert : l'import protège les champs métier d'une fiche validée, donc les fiches validées par le modèle le
+  2026-10-15 gardent leurs valeurs locales même quand l'API a lu mieux ; migration à décider.
