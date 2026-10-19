@@ -394,3 +394,17 @@ def test_import_pose_la_date_d_extraction():
     assert imp.to_app_aap(fiche(scrape_metadata={"moteur": "api", "modele": "h", "produite_le": "2026-10-19T10:12:00"}), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == "2026-10-19T10:12:00"
     assert imp.to_app_aap(fiche(scrape_metadata={"scraped_at": "2026-10-09T08:00:00"}), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == "2026-10-09T08:00:00"
     assert imp.to_app_aap(fiche(), "x", MAINTENANT)["scrapeMetadata"]["extraitLe"] == ""
+
+
+def test_reporter_valeurs_api_ne_retient_que_les_ecarts():
+    # extraction-api-v4 2.3 : les champs metier d'une fiche validee par le modele prennent les valeurs API qui different.
+    import reporter_valeurs_api as rva  # noqa: E402
+    item = fiche(date_cloture="2026-11-30", montant_max=36000, scrape_metadata={"moteur": "api", "modele": "h", "champ": "sante",
+                 "produite_le": "2026-10-19T10:00:00", "verification": {"modele": "h", "le": "2026-10-19T11:00:00", "douteux": [],
+                                                                        "est_un_appel": True, "champs": {}}})
+    nouveau = rva.document_api(item, "extraction_api", MAINTENANT, AUJOURDHUI)
+    assert nouveau["validation"]["statut"] == "validee" and nouveau["budgetMax"] == 36000
+    existant = {**nouveau, "budgetMax": 21000, "deadline": nouveau["deadline"], "validation": dict(nouveau["validation"])}
+    maj = rva.ecarts(existant, nouveau)
+    assert maj == {"budgetMax": 36000}
+    assert rva.ecarts(nouveau, nouveau) == {}

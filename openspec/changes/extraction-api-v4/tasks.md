@@ -36,6 +36,9 @@ cumulé 5 euros, aucun `git push`, aucun archivage sans demande. V3 conservée s
   création) ; `appliquer_controle.py` : essai à blanc « 14 fiches a mettre a jour » puis réel, sauvegarde
   `controle_2026-10-19_1315.json` ; `migrer_champ.py` : 4 fiches publiées classées hors champ par l'API repassées en
   brouillon (Dalloz, poissons migrateurs, Shoah, doctorants SHS ; sauvegarde `champ_publiees_2026-10-19_1317.json`). Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Coût total de la V4 : 1,46 euro, cumul Haiku 1,98 euro sur 5.)
+- [ ] 2.3 `scripts/reporter_valeurs_api.py` (accord du 2026-10-19 « 1 ok ») : les champs métier des fiches validées par le
+  modèle à partir de la V3 prennent les valeurs de la fiche API ; verdict humain et brouillons hors champ intouchés ;
+  essai à blanc, sauvegarde, exécution après accord. Fait quand : pytest scripts vert ; essai à blanc collé ; réel collé.
 
 ## 3. Documentation et vérification
 

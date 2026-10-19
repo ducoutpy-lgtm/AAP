@@ -47,3 +47,20 @@ intact ; pour une même adresse présente dans les deux fichiers, l'import SHALL
 
 - **WHEN** l'import lit une fiche locale et une fiche API pour la même adresse
 - **THEN** un seul document est écrit, avec `scrapeMetadata.moteur = "api"`
+
+### Requirement: Les fiches validées par le modèle prennent les valeurs de l'API
+
+Pour une adresse lue par les deux moteurs, la migration `scripts/reporter_valeurs_api.py` SHALL remplacer, sur une fiche
+validée au nom du modèle, les champs métier qui diffèrent par ceux de la fiche API (avec les corrections de son contrôle),
+SHALL laisser intactes les fiches portant un verdict humain et les brouillons hors champ, et SHALL n'écrire qu'après un
+essai à blanc, une sauvegarde et l'accord de Monsieur DUCOUT.
+
+#### Scenario: Montant lu différemment
+
+- **WHEN** la fiche locale validée par le modèle porte un montant maximal de 21 000 et la fiche API 36 000
+- **THEN** l'essai à blanc liste `budgetMax` pour cette fiche et l'exécution écrit 36 000, sans toucher aux autres champs
+
+#### Scenario: Verdict humain
+
+- **WHEN** la fiche porte `validation.par = Monsieur DUCOUT`
+- **THEN** elle est comptée « verdict humain, conservée » et rien n'est écrit
