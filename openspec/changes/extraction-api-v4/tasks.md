@@ -6,11 +6,18 @@ cumulé 5 euros, aucun `git push`, aucun archivage sans demande. V3 conservée s
 
 ## 1. Outil
 
-- [ ] 1.1 `echantillon.extraire_api` : paramètres `fiches` et `metadonnees` ; `extraction_locale.py` : `--moteur`,
+- [x] 1.1 `echantillon.extraire_api` : paramètres `fiches` et `metadonnees` ; `extraction_locale.py` : `--moteur`,
   `--plafond`, `--dry-run`, sortie `results/extraction_api.json`, devis. Fait quand : pytest scraping vert ; essai à
-  blanc collé (devis complet) ; journal des coûts inchangé.
-- [ ] 1.2 Essai réel limité (`--limite 5`) après accord, coût réel collé, cinq fiches relues par la session (champ,
-  version 4, moteur api).
+  blanc collé (devis complet) ; journal des coûts inchangé. (Fait le 2026-10-19 : pytest scraping 97 verts ; « Devis :
+  1808 textes restants, 6,090,494 caractères ; modèle claude-haiku-5-5, tarif 0.1 USD entrée et 0.5 USD sortie par
+  million de jetons ; coût estimé 2.26 euros au plus (trois appels par texte) ; déjà dépensé pour ce modèle 0.519 euros ;
+  plafond 5.00 euros » ; journal à 2 065 lignes avant et après.)
+- [x] 1.2 Essai réel limité (`--limite 5`) après accord, coût réel collé, cinq fiches relues par la session (champ,
+  version 4, moteur api). (Fait le 2026-10-19, accord « accord 1 et 2 » : 5 textes ARS Île-de-France, « 0 pages refusées,
+  5 réussites, 0 échecs ; coût cumulé 0.529 euros », soit 0,01 euro, 8 à 12 s par page contre 47 à 60 s en local. Les cinq
+  fiches portent moteur api, version 4, a_verifier, un champ avec raison ; mêmes champs et mêmes dates de clôture que les
+  fiches locales ; sur « admissions directes », l'API place les 910 000 euros dans l'enveloppe globale, là où le local
+  les avait mis en montant minimum et maximum, ce que le contrôle Haiku avait signalé.)
 
 ## 2. Passage global
 
