@@ -4,6 +4,7 @@
 import type { AAP, PorteurProfile } from '../types';
 import { getDaysUntilDeadline } from './deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES } from './territoires';
+import { libelleDestinataire, libelleTypeAppel } from './qualification';
 
 export interface FiltresRecherche {
   q: string;
@@ -15,10 +16,14 @@ export interface FiltresRecherche {
   statut: string;
   budgetMin: string;
   budgetMax: string;
+  // Qualification (jour 2 du plan MVP) : à qui s'adresse l'appel, type d'appel
+  destinataire: string;
+  typeAppel: string;
 }
 
 export const FILTRES_VIDES: FiltresRecherche = {
   q: '', thematique: '', territory: '', financeur: '', source: '', relecture: '', statut: '', budgetMin: '', budgetMax: '',
+  destinataire: '', typeAppel: '',
 };
 
 export type StatutAppel = 'ouvert' | 'bientot-clos' | 'clos' | 'sans-date';
@@ -78,6 +83,8 @@ export function etiquettesActives(f: FiltresRecherche): Etiquette[] {
   if (f.source) e.push({ cle: 'source', libelle: `Source : ${f.source}` });
   if (f.relecture === 'relues') e.push({ cle: 'relecture', libelle: 'Fiches relues ou contrôlées' });
   if (f.statut) e.push({ cle: 'statut', libelle: LIBELLES_STATUT[f.statut as StatutAppel] ?? f.statut });
+  if (f.destinataire) e.push({ cle: 'destinataire', libelle: libelleDestinataire(f.destinataire) });
+  if (f.typeAppel) e.push({ cle: 'typeAppel', libelle: libelleTypeAppel(f.typeAppel) });
   if (f.budgetMin) e.push({ cle: 'budgetMin', libelle: `Budget min. ${euros(Number(f.budgetMin))}` });
   if (f.budgetMax) e.push({ cle: 'budgetMax', libelle: `Budget max. ${euros(Number(f.budgetMax))}` });
   return e;

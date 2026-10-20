@@ -14,6 +14,7 @@ import {
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import { correspondDestinataire, correspondTypeAppel, LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
   correspondTerritoire, etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams,
   filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, statutAppel, totalMontants, type FiltresRecherche,
@@ -146,6 +147,14 @@ export default function SearchAapPage() {
     // Filtre par statut calculé d'après la date de clôture (recherche-guidee) : ouvert, bientôt clôturé, clôturé, sans date
     if (filters.statut) {
       result = result.filter(aap => statutAppel(aap) === filters.statut);
+    }
+
+    // Qualification (jour 2 du plan MVP) : à qui s'adresse l'appel (« tous » répond à tout), type d'appel
+    if (filters.destinataire) {
+      result = result.filter(aap => correspondDestinataire(aap, filters.destinataire));
+    }
+    if (filters.typeAppel) {
+      result = result.filter(aap => correspondTypeAppel(aap, filters.typeAppel));
     }
 
     // Filtre par financeur (nom canonique)
@@ -332,6 +341,39 @@ export default function SearchAapPage() {
                     <option key={financeur} value={financeur}>
                       {financeur}
                     </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* À qui s'adresse l'appel et type d'appel (qualification-appels, jour 2) */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  À qui s'adresse l'appel
+                </label>
+                <select
+                  value={filters.destinataire}
+                  onChange={(e) => setFilters({ ...filters, destinataire: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Toutes les structures</option>
+                  {Object.entries(LIBELLES_DESTINATAIRES).filter(([id]) => id !== 'tous').map(([id, libelle]) => (
+                    <option key={id} value={id}>{libelle}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Type d'appel
+                </label>
+                <select
+                  value={filters.typeAppel}
+                  onChange={(e) => setFilters({ ...filters, typeAppel: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Tous les types</option>
+                  {Object.entries(LIBELLES_TYPES_APPEL).map(([id, libelle]) => (
+                    <option key={id} value={id}>{libelle}</option>
                   ))}
                 </select>
               </div>

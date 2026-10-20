@@ -4,6 +4,10 @@ import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'fireb
 import { db } from '../../config/firebase';
 import { AAP, ValidationStatut } from '../../types';
 import { RELECTEUR_HUMAIN } from '../../utils/relecture';
+import { Modal } from '../../components/ui/Modal';
+import { Input } from '../../components/ui/Input';
+import { Select } from '../../components/ui/Select';
+import { LIBELLES_DESTINATAIRES, LIBELLES_OBJETS, LIBELLES_TYPES_APPEL, qualificationManuelle } from '../../utils/qualification';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -21,6 +25,7 @@ import {
   Pencil,
   ShieldCheck,
   ShieldX,
+  Tags,
 } from 'lucide-react';
 
 interface AAPWithId extends AAP {
@@ -46,6 +51,37 @@ export default function ManageAAPsPage() {
   );
   // Traitement en masse (2026-10-20) : filtre par financeur, sélection par cases, valider ou rejeter la sélection
   const [financeurFilter, setFinanceurFilter] = useState<string>(params.get('financeur') ?? 'all');
+  // Fenêtre « Qualifier » (jour 2 du plan MVP) : correction à la main des destinataires, du type, des objets, de la date
+  const [aQualifier, setAQualifier] = useState<AAPWithId | null>(null);
+  const [qDestinataires, setQDestinataires] = useState<string[]>([]);
+  const [qType, setQType] = useState('');
+  const [qObjets, setQObjets] = useState<string[]>([]);
+  const [qDate, setQDate] = useState('');
+  const [qEnregistrement, setQEnregistrement] = useState(false);
+  const ouvrirQualification = (aap: AAPWithId) => {
+    setAQualifier(aap);
+    setQDestinataires(aap.qualification?.destinataires ?? []);
+    setQType(aap.qualification?.typeAppel ?? '');
+    setQObjets(aap.qualification?.objets ?? []);
+    setQDate(aap.qualification?.dateOuverture ?? '');
+  };
+  const basculerDans = (liste: string[], valeur: string) => liste.includes(valeur) ? liste.filter(v => v !== valeur) : [...liste, valeur];
+  const enregistrerQualification = async () => {
+    if (!aQualifier) return;
+    setQEnregistrement(true);
+    try {
+      await updateDoc(doc(db, 'aap', aQualifier.id), {
+        qualification: qualificationManuelle({ destinataires: qDestinataires, typeAppel: qType, objets: qObjets, dateOuverture: qDate || null }, RELECTEUR_HUMAIN),
+      });
+      setAQualifier(null);
+      await loadAaps();
+    } catch (err) {
+      console.error('Erreur de qualification :', err);
+      alert('Erreur lors de l\'enregistrement de la qualification');
+    } finally {
+      setQEnregistrement(false);
+    }
+  };
   const [selection, setSelection] = useState<Set<string>>(new Set());
   const [traitement, setTraitement] = useState(false);
   const financeursPresents = Array.from(new Set(aaps.map(a => a.financeurName || 'Non précisé'))).sort((a, b) => a.localeCompare(b, 'fr'));
@@ -459,6 +495,12 @@ export default function ManageAAPsPage() {
                         Financeur: {aap.financeurName}
                       </p>
                     )}
+                    {aap.qualification && (
+                      <p className="text-sm text-gray-600 mb-2">
+                        Qualification ({aap.qualification.par}) : {LIBELLES_TYPES_APPEL[aap.qualification.typeAppel] ?? aap.qualification.typeAppel}
+                        {' · '}{aap.qualification.destinataires.map(d => LIBELLES_DESTINATAIRES[d] ?? d).join(', ') || 'destinataires non précisés'}
+                      </p>
+                    )}
                     <p className="text-gray-600 line-clamp-2">
                       {aap.description}
                     </p>
@@ -534,6 +576,11 @@ export default function ManageAAPsPage() {
                     Modifier
                   </Button>
 
+                  <Button variant="secondary" size="sm" onClick={() => ouvrirQualification(aap)}>
+                    <Tags className="h-4 w-4 mr-2" />
+                    Qualifier
+                  </Button>
+
                   {aap.status === 'draft' && publiable(aap) && (
                     <Button
                       variant="primary"
@@ -580,6 +627,48 @@ export default function ManageAAPsPage() {
             ))}
           </div>
         )}
+      <Modal
+        isOpen={aQualifier !== null}
+        onClose={() => setAQualifier(null)}
+        title={aQualifier ? `Qualifier : ${aQualifier.title}` : ''}
+        size="lg"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setAQualifier(null)} disabled={qEnregistrement}>Annuler</Button>
+            <Button onClick={enregistrerQualification} loading={qEnregistrement}>Enregistrer</Button>
+          </>
+        }
+      >
+        <div className="space-y-5">
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">À qui s'adresse l'appel</p>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {Object.entries(LIBELLES_DESTINATAIRES).map(([id, libelle]) => (
+                <label key={id} className="flex items-center space-x-2">
+                  <input type="checkbox" checked={qDestinataires.includes(id)} onChange={() => setQDestinataires(basculerDans(qDestinataires, id))} className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                  <span className="text-sm text-gray-700">{libelle}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Select label="Type d'appel" value={qType} onChange={(e) => setQType(e.target.value)} options={Object.entries(LIBELLES_TYPES_APPEL).map(([value, label]) => ({ value, label }))} />
+            <Input label="Date d'ouverture" type="date" value={qDate} onChange={(e) => setQDate(e.target.value)} />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Ce que l'appel finance</p>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {Object.entries(LIBELLES_OBJETS).map(([id, libelle]) => (
+                <label key={id} className="flex items-center space-x-2">
+                  <input type="checkbox" checked={qObjets.includes(id)} onChange={() => setQObjets(basculerDans(qObjets, id))} className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                  <span className="text-sm text-gray-700">{libelle}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <p className="text-xs text-gray-500">Enregistré au nom de {RELECTEUR_HUMAIN} ; l'import ne l'écrasera plus.</p>
+        </div>
+      </Modal>
       </div>
     </div>
   );

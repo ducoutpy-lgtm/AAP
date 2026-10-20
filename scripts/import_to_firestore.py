@@ -70,7 +70,9 @@ CHAMPS_HUMAINS = ("status", "publishedAt", "validation")
 # Champs metier proteges en plus quand la fiche a ete jugee juste : une fiche validee ne bouge que par un
 # nouveau verdict humain, pas par une nouvelle proposition de l'IA.
 CHAMPS_METIER = ("title", "description", "deadline", "publicationDate", "budgetMin", "budgetMax", "budgetTotal",
-                 "eligibilityCriteria", "requiredDocuments", "structureTypeEligible", "territoriesEligible", "tags")
+                 "eligibilityCriteria", "requiredDocuments", "structureTypeEligible", "territoriesEligible", "tags",
+                 # Jour 2 du plan MVP (qualification-appels, 2026-10-20) : bloc de qualification et date d'ouverture
+                 "qualification", "startDate")
 # Champs techniques ecrits par l'import, ni humains ni metier. Les trois listes forment la liste blanche des champs
 # envoyes a Firestore (rapport du 2026-10-14, instruction 5) : un champ ajoute au document sans etre classe ici
 # arrete l'import, a blanc comme en reel, avant toute ecriture (voir verifier_champs).
@@ -162,6 +164,33 @@ def publication_selon_controle(doc: dict) -> dict:
     return doc
 
 
+def appliquer_qualification(doc: dict, item: dict, today: date) -> dict:
+    """Qualification du modele (scraping/qualifier_fiches.py, jour 2 du plan MVP) portee sur le document (fonction
+    pure) : bloc qualification (destinataires, type d'appel, objets, date d'ouverture, auteur, date), startDate depuis
+    la date d'ouverture, pieces attendues reprises si la fiche n'en avait pas ; une fiche classee hors champ par la
+    qualification, sans verdict humain, passe en brouillon a corriger (meme regle que le champ)."""
+    q = (item.get("scrape_metadata") or {}).get("qualification")
+    if not q:
+        return doc
+    d = dict(doc)
+    d["qualification"] = {"destinataires": list(q.get("destinataires") or []), "typeAppel": q.get("type_appel") or "autre",
+                          "objets": list(q.get("objets") or []), "dateOuverture": q.get("date_ouverture") or None,
+                          "par": q.get("modele") or "modele", "le": (q.get("le") or "")[:10]}
+    if q.get("date_ouverture"):
+        ouverture = parse_date(q["date_ouverture"])
+        if ouverture:
+            d["startDate"] = ouverture
+    if q.get("pieces_attendues") and not d.get("requiredDocuments"):
+        d["requiredDocuments"] = list(q["pieces_attendues"])
+    if q.get("champ") == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR:
+        d["tags"] = [t for t in d.get("tags", []) if t != "hors-champ"] + ["hors-champ"]
+        d["status"] = "draft"
+        d["validation"] = {"statut": "a_corriger", "commentaire": "hors champ (qualification)", "date": today.isoformat(),
+                           "par": "import (qualification)"}
+        d["tags"] = etiqueter(d["tags"], "a_corriger")
+    return d
+
+
 def etiqueter(tags: list[str], statut: str) -> list[str]:
     """L'etiquette a-verifier suit le statut de validation, et rien d'autre (fonction pure)."""
     sans = [t for t in tags if t != "a-verifier"]
@@ -183,7 +212,7 @@ def verifier_fiche(item: dict, origine: str) -> None:
         raise ChampInconnu(f"champ inconnu « {inconnus[0]} » dans une fiche de {origine} : hors du schema AapNormalized")
 
 
-def document_a_envoyer(doc: dict, existe: bool) -> dict:
+def document_a_envoyer(doc: dict, existe: bool, existant: dict | None = None) -> dict:
     """Ce que l'import ecrit : tout a la creation ; sur un document existant, jamais les champs humains,
     ni les champs metier si la fiche est validee (fonction pure).
 
@@ -196,8 +225,13 @@ def document_a_envoyer(doc: dict, existe: bool) -> dict:
     proteges = set(CHAMPS_HUMAINS)
     if doc.get("validation", {}).get("statut") == "validee":
         proteges |= set(CHAMPS_METIER)
+        # La qualification (jour 2 du plan MVP) complete une fiche validee sans la contredire : elle passe toujours,
+        # sauf quand une qualification a ete ecrite a la main dans l'application (par = Monsieur DUCOUT)
+        proteges -= {"qualification", "startDate"}
     if (doc.get("validation") or {}).get("par") == RELECTEUR:
         proteges -= {"validation", "status"}
+    if ((existant or {}).get("qualification") or {}).get("par") == RELECTEUR:
+        proteges |= {"qualification", "startDate"}
     return {k: v for k, v in doc.items() if k not in proteges}
 
 
@@ -333,9 +367,10 @@ def ecrire_documents(col, nouveau_batch, mapped: list[tuple[str, dict]], now: da
         else:
             retirer_champs_internes(doc)
         ref = col.document(sig)  # sig = identifiant stable derive de l'adresse
-        if ref.get().exists:
+        snap = ref.get()
+        if snap.exists:
             compteurs["mis_a_jour"] += 1
-            batch.set(ref, document_a_envoyer(doc, True), merge=True)
+            batch.set(ref, document_a_envoyer(doc, True, snap.to_dict()), merge=True)
         else:
             compteurs["crees"] += 1
             batch.set(ref, {**doc, "createdAt": now, **({"publishedAt": now} if doc["status"] == "published" else {})})
@@ -511,6 +546,7 @@ def main() -> int:
             doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
             doc = champ_en_attente(doc, today)
             doc = appliquer_decision_du_modele(doc, decision)
+            doc = appliquer_qualification(doc, item, today)
             doc = publication_selon_controle(doc)
             hors_champ += "hors-champ" in doc["tags"]
             verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")

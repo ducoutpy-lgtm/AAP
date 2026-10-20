@@ -466,3 +466,38 @@ def test_une_fiche_non_validee_entre_en_brouillon():
     humain = {**base, "validation": {"statut": "a_corriger", "par": imp.RELECTEUR, "commentaire": "", "date": ""}}
     assert imp.publication_selon_controle(humain)["status"] == "published"
     assert proposee["status"] == "published"  # fonction pure : l'entree n'est pas modifiee
+
+
+# ---------------------------------------------------------------- qualification-appels (jour 2 du plan MVP, 2026-10-20)
+
+def test_la_qualification_est_portee_sur_le_document():
+    item = {"scrape_metadata": {"qualification": {"destinataires": ["public", "prive-non-lucratif"], "type_appel": "ami",
+                                                  "objets": ["immobilier"], "date_ouverture": "2026-11-02",
+                                                  "pieces_attendues": ["Dossier", "Budget"], "champ": "sante",
+                                                  "modele": "claude-haiku-5-5", "le": "2026-10-20T21:00:00"}}}
+    doc = {"status": "published", "tags": [], "requiredDocuments": []}
+    d = imp.appliquer_qualification(doc, item, AUJOURDHUI)
+    assert d["qualification"] == {"destinataires": ["public", "prive-non-lucratif"], "typeAppel": "ami", "objets": ["immobilier"],
+                                  "dateOuverture": "2026-11-02", "par": "claude-haiku-5-5", "le": "2026-10-20"}
+    assert d["startDate"].date().isoformat() == "2026-11-02"
+    assert d["requiredDocuments"] == ["Dossier", "Budget"]
+    assert d["status"] == "published"
+    assert doc.get("qualification") is None  # fonction pure
+
+
+def test_hors_champ_par_la_qualification_passe_en_brouillon_sauf_verdict_humain():
+    item = {"scrape_metadata": {"qualification": {"destinataires": ["tous"], "type_appel": "mecenat", "objets": [],
+                                                  "date_ouverture": None, "pieces_attendues": [], "champ": "hors-champ",
+                                                  "modele": "m", "le": "2026-10-20"}}}
+    d = imp.appliquer_qualification({"status": "published", "tags": []}, item, AUJOURDHUI)
+    assert d["status"] == "draft" and d["validation"]["statut"] == "a_corriger" and "hors-champ" in d["tags"]
+    humain = {"status": "published", "tags": [], "validation": {"statut": "validee", "par": imp.RELECTEUR, "commentaire": "", "date": ""}}
+    assert imp.appliquer_qualification(humain, item, AUJOURDHUI)["status"] == "published"
+
+
+def test_une_qualification_humaine_en_base_n_est_pas_ecrasee():
+    doc = {"title": "t", "qualification": {"destinataires": ["public"], "par": "claude-haiku-5-5"}, "status": "published",
+           "validation": {"statut": "validee", "par": "claude-haiku-5-5", "commentaire": "", "date": ""}}
+    existant = {"qualification": {"destinataires": ["prive-lucratif"], "par": imp.RELECTEUR}}
+    assert "qualification" not in imp.document_a_envoyer(doc, True, existant)
+    assert "qualification" in imp.document_a_envoyer(doc, True, {"qualification": {"par": "claude-haiku-5-5"}})

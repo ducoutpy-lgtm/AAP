@@ -4,6 +4,7 @@
 import type { AAP, ApplicationStatus } from '../types';
 import { getDaysUntilDeadline } from './deadline';
 import { euros } from './recherche';
+import { destinatairesDe } from './qualification';
 
 // « De 10 000 € à 50 000 € », « Jusqu'à 50 000 € », « Enveloppe 2 000 000 € », sinon « Montant non précisé »
 export function libelleMontant(aap: Pick<AAP, 'budgetMin' | 'budgetMax' | 'budgetTotal'>): string {
@@ -42,9 +43,11 @@ export function famillesDepuisCriteres(texte: string | null | undefined): string
   return FAMILLES.filter(([motif]) => motif.test(texte)).map(([, libelle]) => libelle);
 }
 
-// Types d'établissement éligibles : ceux lus par l'extraction (structureTypeEligible), sinon les familles reconnues
-// dans les critères ; vide si rien
-export function aQuiSAdresse(aap: Pick<AAP, 'structureTypeEligible' | 'eligibilityCriteria'>): string[] {
+// À qui s'adresse l'appel : la qualification (modèle ou administrateur) d'abord, sinon les types lus par l'extraction
+// (structureTypeEligible), sinon les familles reconnues dans les critères ; vide si rien
+export function aQuiSAdresse(aap: Pick<AAP, 'structureTypeEligible' | 'eligibilityCriteria' | 'qualification'>): string[] {
+  const qualifies = destinatairesDe(aap);
+  if (qualifies.length > 0) return qualifies;
   const lus = Array.from(new Set((aap.structureTypeEligible ?? []).map(t => t.trim()).filter(Boolean)));
   return lus.length > 0 ? lus : famillesDepuisCriteres(aap.eligibilityCriteria);
 }

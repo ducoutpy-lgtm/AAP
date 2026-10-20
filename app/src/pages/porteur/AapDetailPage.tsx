@@ -13,6 +13,8 @@ import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { aQuiSAdresse, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
+import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
+import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
 import {
   Calendar,
@@ -250,6 +252,26 @@ export default function AapDetailPage() {
               </div>
             ) : (
               <p className="text-gray-500 italic mb-4">Types de structures non précisés sur l'annonce : voir les critères ci-dessous</p>
+            )}
+            {aap.qualification && (
+              <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm mb-4">
+                <div>
+                  <dt className="text-gray-500">Type d'appel</dt>
+                  <dd className="text-gray-900 font-medium">{libelleTypeAppel(aap.qualification.typeAppel)}</dd>
+                </div>
+                {aap.qualification.dateOuverture && (
+                  <div>
+                    <dt className="text-gray-500">Ouverture des candidatures</dt>
+                    <dd className="text-gray-900 font-medium">{formatDateFr(aap.qualification.dateOuverture)}</dd>
+                  </div>
+                )}
+                {aap.qualification.objets.length > 0 && (
+                  <div className="sm:col-span-2">
+                    <dt className="text-gray-500">Ce que l'appel finance</dt>
+                    <dd className="text-gray-900">{aap.qualification.objets.map(libelleObjet).join(', ')}</dd>
+                  </div>
+                )}
+              </dl>
             )}
             <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-primary-600" />

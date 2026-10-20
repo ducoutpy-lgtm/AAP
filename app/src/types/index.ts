@@ -166,6 +166,19 @@ export interface AAP {
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;
+  // Qualification à choix fermés (jour 2 du plan MVP, changement qualification-appels, 2026-10-20) : écrite par
+  // l'import d'après le modèle, ou à la main depuis l'administration (par = Monsieur DUCOUT, jamais écrasée)
+  qualification?: AapQualification;
+}
+
+export interface AapQualification {
+  // Identifiants de utils/qualification.ts : public, prive-non-lucratif, prive-lucratif, collectivites, recherche, tous
+  destinataires: string[];
+  typeAppel: string;
+  objets: string[];
+  dateOuverture: string | null;
+  par: string;
+  le: string;
 }
 
 export type ApplicationStatus =

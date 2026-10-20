@@ -20,6 +20,11 @@ describe('aQuiSAdresse', () => {
     expect(aQuiSAdresse({})).toEqual([]);
   });
 
+  it('la qualification prime sur les types lus et les critères', () => {
+    expect(aQuiSAdresse({ structureTypeEligible: ['EHPAD'], qualification: { destinataires: ['public', 'tous'], typeAppel: 'ami', objets: [], dateOuverture: null, par: 'm', le: '' } }))
+      .toEqual(['Établissements publics', 'Toute structure']);
+  });
+
   it('sans types structurés, lit les familles dans les critères', () => {
     expect(aQuiSAdresse({ eligibilityCriteria: '- Structures éligibles : associations loi 1901' })).toEqual(['Associations']);
     expect(famillesDepuisCriteres('Établissements publics de santé et ESPIC, EHPAD'))
