@@ -18,6 +18,10 @@ REGISTRE = [
     {"id": "ville-de-paris-pv", "nom": "Ville de Paris – politique de la ville", "categorie": "collectivite", "connecteur": ""},
     {"id": "essonne-cf", "nom": "Essonne – Commission des financeurs", "categorie": "collectivite", "connecteur": ""},
     {"id": "prefecture-essonne", "nom": "Préfecture - Essonne", "categorie": "ministere", "connecteur": ""},
+    {"id": "fondation-de-france", "nom": "Fondation de France", "categorie": "fondation", "connecteur": ""},
+    {"id": "conseil-departemental-gers", "nom": "Conseil départemental Gers", "categorie": "collectivite", "connecteur": ""},
+    {"id": "ars-guadeloupe", "nom": "ARS Guadeloupe", "categorie": "ars", "connecteur": ""},
+    {"id": "inserm", "nom": "Inserm", "categorie": "agence-nationale", "connecteur": ""},
 ]
 TABLE = f.construire(REGISTRE)
 
@@ -58,7 +62,7 @@ def test_ars_cofinanceur_et_ars_sans_region_par_l_emetteur():
 
 
 def test_noms_inconnus_et_ambigus_restent_tels_quels():
-    assert f.canonique("Département du Rhône", None, TABLE) is None
+    assert f.canonique("Département du Rhône", None, TABLE) is None  # pas de conseil départemental du Rhône dans la table
     assert f.canonique("Essonne", None, TABLE) is None  # deux émetteurs, deux noms différents
     assert f.canonique("Ville de Paris", None, TABLE) == "Ville de Paris"  # deux émetteurs, un seul nom
     assert f.canonique("", None, TABLE) is None
@@ -83,3 +87,21 @@ def test_emetteur_de_et_non_rattaches():
               ("extraction_locale", {"financeur": "Département du Rhône", "scrape_metadata": {"source": "x"}}),
               ("extraction_locale", {"financeur": "Département du Rhône", "scrape_metadata": {"source": "x"}})]
     assert f.non_rattaches(fiches, emetteurs, TABLE) == [("Département du Rhône", 2, "x")]
+
+
+def test_cofinanceur_precision_parenthese_et_departement_ramenes_au_financeur_principal():
+    """Retours de Monsieur DUCOUT du 2026-10-20 : trois écritures de la Fondation de France, deux de la Ville de Paris,
+    deux de l'ARS Guadeloupe, « Département du Gers » à côté de « Conseil départemental Gers »."""
+    assert f.canonique("Fondation de France / Fondation Jean Valade", None, TABLE) == "Fondation de France"
+    assert f.canonique("Fondation de France (avec le soutien de la Fondation JM Bruneau)", None, TABLE) == "Fondation de France"
+    assert f.canonique("Ville de Paris – Direction de la Santé Publique", None, TABLE) == "Ville de Paris"
+    assert f.canonique("CNSA (Caisse nationale de solidarité pour l'autonomie) et Assurance retraite (CNAV)", None, TABLE) == "CNSA"
+    assert f.canonique("Agence de Santé Guadeloupe, Saint-Martin et Saint-Barthélemy (ARS Guadeloupe)", None, TABLE) == "ARS Guadeloupe"
+    assert f.canonique("Conseil départemental Gers (probable, non confirmé sur la page)", None, TABLE) == "Conseil départemental Gers"
+    assert f.canonique("Département du Gers", None, TABLE) == "Conseil départemental Gers"
+    assert f.canonique("Département du Gers (Conseil départemental Gers)", None, TABLE) == "Conseil départemental Gers"
+    assert f.canonique("INSERM (membre du GIP Arronax)", None, TABLE) == "Inserm"
+    assert f.canonique("Inserm, en partenariat avec le CNRS", None, TABLE) == "Inserm"
+    # Un cofinanceur inconnu en tête reste tel quel : rien n'est inventé
+    assert f.canonique("État et Banque des Territoires", None, TABLE) is None
+    assert f.canonique("Fondation Inconnue / Fondation de France", None, TABLE) is None

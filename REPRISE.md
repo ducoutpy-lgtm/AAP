@@ -217,6 +217,15 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Retours de Monsieur DUCOUT après son parcours de l'application (2026-10-20, après-midi) : trois changements codés,
+  `navigation-et-pages-publiques` (gabarit, menus par rôle, retour, pied de page, accueil à trois cartes, cinq pages
+  publiques), `administration-controle` (carte « Fiches à contrôler », valider / rejeter / modifier depuis
+  `/admin/aaps`, recherche publique limitée aux fiches contrôlées, import en brouillon sans validation, script de
+  dépublication en essai à blanc : 34 fiches) et rattachement des financeurs étendu (86 -> 69 noms). En attente de son
+  accord : dépublication réelle des 34 fiches, ré-import pour les financeurs, déploiement de la règle `messagesContact`,
+  boîte d'envoi pour l'e-mail hebdomadaire de la veille. Décisions prises : candidat = établissement qui répond,
+  porteur de projet = financeur ; une fiche non contrôlée n'est jamais visible des candidats. Agences de l'eau : deux
+  fiches validées par le modèle à rejeter depuis l'administration (`scraped-9b62f48e295fb0ac`, `scraped-db009b2d484f0bdc`).
 - Transposition helloDarwin, points 1 à 3 (2026-10-20, après-midi, changements `parcours-integration`,
   `liste-demarrage`, `recherche-guidee`) : nouveau parcours d'intégration sur `/complete-profile` (accueil, trois
   écrans, offres à trois colonnes avec les montants de `config/stripe.ts` à valider), carte « Démarrer (n/4) » sur les

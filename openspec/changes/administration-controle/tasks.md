@@ -9,6 +9,10 @@ demande, aucun déploiement, migration = essai à blanc + sauvegarde + accord.
   (`publication_selon_controle`, test pytest) ; `scripts/depublier_non_controlees.py` avec essai à blanc. Fait quand :
   `npm test` et `pytest scripts/tests` verts, essai à blanc collé. (Fait le 2026-10-20 : `npm test` « 45 passed », pytest « 31 passed » ; essai à blanc : « Publiees : 303 ; a depublier : 34 ({'proposee': 26, 'a_corriger': 8}) », exemples ARS Corse, ARS Île-de-France, Fondation de France, ARS Guyane, rien d'écrit.)
 
+- [x] 1.2 Rattachement des financeurs étendu (`scraping/financeurs.py` : parenthèses, cofinanceur, « Département du
+  X » ; test ajouté). Fait le 2026-10-20 : tests scraping verts ; essai à blanc de l'import « financeurs distincts : 69
+  (229 fiches au nom canonique) » contre 86 (199) avant. Ré-import réel après accord de Monsieur DUCOUT.
+
 ## 2. Application
 
 - [x] 2.1 `SearchAapPage` (fiches contrôlées seulement, filtres Source et Relecture retirés), `AdminDashboard`
@@ -19,6 +23,6 @@ demande, aucun déploiement, migration = essai à blanc + sauvegarde + accord.
 ## 3. Migration, documentation et vérification
 
 - [ ] 3.1 Accord de Monsieur DUCOUT, puis `depublier_non_controlees.py` réel (sauvegarde), résultat collé ici.
-- [ ] 3.2 `docs/resume_application_web_2026-10.md`, `scripts/README` ou `README.md` racine (section import),
+- [x] 3.2 `docs/resume_application_web_2026-10.md`, `scripts/README` ou `README.md` racine (section import),
   `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`.
 - [ ] 3.3 Monsieur DUCOUT contrôle une fiche depuis `/admin/aaps` et la retrouve dans la recherche ; retours ici.

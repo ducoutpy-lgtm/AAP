@@ -6,6 +6,16 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Application, retours de Monsieur DUCOUT du 2026-10-20 (après-midi) : gabarit commun à toutes les pages (en-tête
+  public avec logo vers l'accueil et bouton Retour, barre latérale repliable par rôle façon helloDarwin, barre haute,
+  pied de page avec liens réels, remontée en haut à chaque page ; changement `navigation-et-pages-publiques`), accueil
+  avec choix du profil en trois cartes, pages Fonctionnalités, Tarifs, FAQ, À propos, Contact (collection
+  `messagesContact`, règle écrite, non déployée) ; administration : compteurs candidats / financeurs / abonnements /
+  appels publiés, carte « Fiches à contrôler », boutons « Valider et publier », « Rejeter », « Modifier » (changement
+  `administration-controle`) ; recherche publique limitée aux fiches contrôlées, filtres Source et Relecture retirés ;
+  import : une fiche sans validation entre en brouillon ; `scripts/depublier_non_controlees.py` (essai à blanc : 34
+  fiches) ; rattachement des financeurs étendu (cofinanceur, parenthèse, « Département du X » : 86 -> 69 noms distincts
+  à l'essai à blanc de l'import). 45 tests Vitest, 31 tests d'import, tests scraping verts.
 - Application, transposition du parcours helloDarwin (2026-10-20, points 1 à 3 validés par Monsieur DUCOUT) :
   parcours d'intégration à trois écrans après l'inscription (accueil avec CGU et choix du rôle pour un compte
   Google, structure, détails du secteur santé, offres à trois colonnes ; changement `parcours-integration`), liste de

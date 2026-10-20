@@ -19,5 +19,5 @@ projet.
 
 ## 3. Documentation et vérification
 
-- [ ] 3.1 `docs/resume_application_web_2026-10.md`, `app/README.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`.
+- [x] 3.1 `docs/resume_application_web_2026-10.md`, `app/README.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`.
 - [ ] 3.2 Monsieur DUCOUT reparcourt l'application (sans compte, puis avec ses comptes de test) ; retours listés ici.

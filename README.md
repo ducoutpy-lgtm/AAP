@@ -58,6 +58,15 @@ python -m venv .venv                       # environnement Python à la racine (
 .venv\Scripts\python scripts/import_to_firestore.py               # écrit dans la collection Firestore "aap"
 ```
 
+Depuis le 2026-10-20 (décision de Monsieur DUCOUT, changement `administration-controle`) : une fiche nouvelle que le
+contrôle du modèle n'a pas validée entre en brouillon, et seules les fiches validées sont visibles dans la recherche
+publique ; elles se contrôlent depuis `/admin/aaps` (« Valider et publier », « Rejeter », « Modifier »). Les fiches
+publiées avant cette décision sans contrôle se repassent en brouillon par
+`scripts/depublier_non_controlees.py` (`--dry-run` d'abord, sauvegarde dans `scripts/sauvegardes/`).
+
+```bash
+```
+
 Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
 sont importés ; une fiche sans date de clôture est publiée avec `deadline` nulle (plus aucune échéance fictive depuis
 le lot 0 du 2026-10-14), l'étiquette `sans-date-cloture` et le badge « À vérifier » : l'application affiche « Date de

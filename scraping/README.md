@@ -161,6 +161,16 @@ python financeurs.py --construire      # sources/financeurs.json depuis le regis
 python financeurs.py --non-rattaches   # noms de financeurs lus dans les fichiers de l'import qui restent sans nom canonique
 ```
 
+Depuis le 2026-10-20 (retours de Monsieur DUCOUT : « Fondation de France / Fondation Jean Valade », « Ville de Paris –
+Direction de la Santé Publique », « Département du Gers » comptaient pour des financeurs distincts), `canonique` essaie
+dans l'ordre : le nom tel quel, le nom sans ses parenthèses, le contenu d'une parenthèse, la tête avant un séparateur
+de cofinanceur ou de précision (« / », « – », « et », « avec », « en partenariat »), puis « Département du X » lu
+comme « Conseil départemental X ». Un nom dont la tête est inconnue reste tel quel. Mesure à l'essai à blanc de
+l'import : 86 noms distincts avant, 69 après, pour 237 fiches publiables.
+
+```bash
+```
+
 - `sources/financeurs.json` : une entrée par émetteur du registre (`nom` sans le suffixe qui décrit la page, sigle seul
   quand il est développé entre parenthèses, `categorie`, `alias`). Un nom lu par l'IA est rattaché quand ses mots, sans
   accents ni mots vides et dans n'importe quel ordre, sont ceux d'un alias ; un nom qui commence par « ARS » ou

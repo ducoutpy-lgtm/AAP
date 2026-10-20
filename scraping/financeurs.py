@@ -118,20 +118,60 @@ def _index(table: dict) -> tuple[dict[str, set[str]], dict[str, str]]:
     return _INDEX[id(table)]
 
 
-def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:
-    """Nom canonique d'un financeur extrait, ou None si rien ne le rattache (fonction pure sur la table donnée)."""
-    table = charger() if table is None else table
+# Séparateurs qui annoncent un cofinanceur, un partenaire ou une précision : la partie de tête est le financeur
+# principal (retours de Monsieur DUCOUT du 2026-10-20 : « Fondation de France / Fondation Jean Valade »,
+# « Ville de Paris – Direction de la Santé Publique », « CNSA (...) et Assurance retraite » comptaient pour trois noms).
+SEPARATEURS_TETE = re.compile(r"\s+(?:[–—/]|et|avec|, en partenariat|, avec)\s+|,\s+en partenariat\s+|,\s+avec\s+")
+PARENTHESE = re.compile(r"\s*\(([^()]*)\)")
+DEPARTEMENT = re.compile(r"^(?:d[ée]partement|conseil d[ée]partemental)\s+(?:du |de la |de l'|de |des |d')?(.+)$", re.I)
+
+
+def _exact(nom: str, emetteur_id: str | None, table: dict) -> str | None:
+    """Rattachement par alias ou par la règle des ARS (la règle d'origine, inchangée)."""
     par_cle, ars_par_region = _index(table)
-    noms = {table[i]["nom"] for i in par_cle.get(cle(nom_extrait), ())}
+    noms = {table[i]["nom"] for i in par_cle.get(cle(nom), ())}
     if len(noms) == 1:
         return noms.pop()
-    mots = normaliser(nom_extrait).split()
+    mots = normaliser(nom).split()
     if mots and mots[0] == "ars":
-        regions = territoires.regions_dans(nom_extrait)
+        regions = territoires.regions_dans(nom)
         if len(regions) == 1 and regions.copy().pop() in ars_par_region:
             return table[ars_par_region[regions.pop()]]["nom"]
         if emetteur_id in ars_par_region.values():
             return table[emetteur_id]["nom"]
+    return None
+
+
+def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:
+    """Nom canonique d'un financeur extrait, ou None si rien ne le rattache (fonction pure sur la table donnée).
+
+    Dans l'ordre : le nom tel quel ; sans ses parenthèses (« (probable, non confirmé) », « (avec le soutien de...) ») ;
+    le contenu d'une parenthèse (« Agence de Santé Guadeloupe (ARS Guadeloupe) ») ; la tête avant un séparateur de
+    cofinanceur ou de précision ; « Département du Gers » lu comme « Conseil départemental Gers »."""
+    table = charger() if table is None else table
+    nom = (nom_extrait or "").strip()
+    if not nom:
+        return None
+    trouve = _exact(nom, emetteur_id, table)
+    if trouve:
+        return trouve
+    sans_parentheses = PARENTHESE.sub("", nom).strip()
+    if sans_parentheses and sans_parentheses != nom:
+        trouve = canonique(sans_parentheses, emetteur_id, table)
+        if trouve:
+            return trouve
+    for interieur in PARENTHESE.findall(nom):
+        trouve = _exact(interieur.strip(), emetteur_id, table)
+        if trouve:
+            return trouve
+    tete = SEPARATEURS_TETE.split(sans_parentheses or nom, maxsplit=1)[0].strip(" ,")
+    if tete and tete != nom and tete != sans_parentheses:
+        trouve = canonique(tete, emetteur_id, table)
+        if trouve:
+            return trouve
+    m = DEPARTEMENT.match(sans_parentheses or nom)
+    if m:
+        return _exact(f"Conseil départemental {m.group(1)}", emetteur_id, table)
     return None
 
 
