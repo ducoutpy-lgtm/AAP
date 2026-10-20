@@ -26,3 +26,6 @@ demande, aucun déploiement, migration = essai à blanc + sauvegarde + accord.
 - [x] 3.2 `docs/resume_application_web_2026-10.md`, `scripts/README` ou `README.md` racine (section import),
   `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`.
 - [ ] 3.3 Monsieur DUCOUT contrôle une fiche depuis `/admin/aaps` et la retrouve dans la recherche ; retours ici.
+  Retour du 2026-10-20 soir (tri des fiches en cours) : la liste des financeurs proposait tous les financeurs au lieu
+  de ceux des fiches filtrées -> corrigé : la liste suit la recherche, le statut et la validation, avec le nombre de
+  fiches par financeur ; un financeur choisi qui sort du filtre remet « Tous ».

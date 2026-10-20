@@ -84,7 +84,19 @@ export default function ManageAAPsPage() {
   };
   const [selection, setSelection] = useState<Set<string>>(new Set());
   const [traitement, setTraitement] = useState(false);
-  const financeursPresents = Array.from(new Set(aaps.map(a => a.financeurName || 'Non précisé'))).sort((a, b) => a.localeCompare(b, 'fr'));
+  // Financeurs proposés : seulement ceux des fiches qui passent déjà les autres filtres (recherche, statut, validation),
+  // avec leur nombre (retour de Monsieur DUCOUT du 2026-10-20 : « uniquement les financeurs des fiches que j'ai à trier »)
+  const financeursPresents = (() => {
+    const compte = new Map<string, number>();
+    for (const aap of aaps) {
+      if (searchTerm && !(aap.title.toLowerCase().includes(searchTerm.toLowerCase()) || aap.financeurName?.toLowerCase().includes(searchTerm.toLowerCase()))) continue;
+      if (statusFilter !== 'all' && aap.status !== statusFilter) continue;
+      if (validationFilter !== 'all' && (aap.validation?.statut ?? 'aucun') !== validationFilter) continue;
+      const nom = aap.financeurName || 'Non précisé';
+      compte.set(nom, (compte.get(nom) ?? 0) + 1);
+    }
+    return Array.from(compte.entries()).sort((x, y) => x[0].localeCompare(y[0], 'fr'));
+  })();
 
   useEffect(() => {
     loadAaps();
@@ -96,6 +108,12 @@ export default function ManageAAPsPage() {
     // seulement quand les valeurs listées changent).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, statusFilter, validationFilter, financeurFilter, aaps]);
+
+  useEffect(() => {
+    if (financeurFilter !== 'all' && !financeursPresents.some(([f]) => f === financeurFilter)) setFinanceurFilter('all');
+    // financeursPresents est recalculé à chaque rendu : la dépendance utile est le trio de filtres
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, statusFilter, validationFilter, aaps]);
 
   const loadAaps = async () => {
     try {
@@ -427,8 +445,8 @@ export default function ManageAAPsPage() {
                 onChange={(e) => setFinanceurFilter(e.target.value)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent max-w-xs"
               >
-                <option value="all">Tous les financeurs</option>
-                {financeursPresents.map(f => <option key={f} value={f}>{f}</option>)}
+                <option value="all">Tous les financeurs ({financeursPresents.reduce((n, [, c]) => n + c, 0)})</option>
+                {financeursPresents.map(([f, c]) => <option key={f} value={f}>{f} ({c})</option>)}
               </select>
             </div>
           </div>

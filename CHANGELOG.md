@@ -27,6 +27,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   document utilisateur orphelin supprimé après sauvegarde (`scripts/sauvegardes/users_orphelin_rBf4lsNS_2026-10-20.json`).
 
 ### Corrigé
+- Administration (2026-10-20 soir, retour de Monsieur DUCOUT pendant le tri) : la liste des financeurs ne propose
+  que ceux des fiches déjà filtrées, avec leur nombre.
 - Application (2026-10-20 soir, premier parcours du jour 1 par Monsieur DUCOUT) : mentions « contrôlée par le modèle »
   réservées à l'administrateur, le candidat voit « Mise à jour le » ; « À qui s'adresse cet appel » lit les familles de
   structures dans les critères quand la fiche n'a pas de types structurés ; formulaire de candidature réduit à trois
