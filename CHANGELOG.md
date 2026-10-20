@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté
+- Jour 1 du plan MVP (2026-10-20, changement `parcours-candidat-jour-1`) : fiche d'appel en trois cases (montant,
+  dates, territoire en clair) avec « À qui s'adresse cet appel » ; tableau de bord candidat réel (appels de sa région
+  ou nationaux, échéances sous 30 jours, candidatures, recherches) ; page de détail d'une candidature
+  (`/candidature/:id`) ; « Mes candidatures » en cinq colonnes par étape. 51 tests Vitest.
+
 ### Corrigé
 - Application (2026-10-20, second parcours de Monsieur DUCOUT) : « Mes candidatures » restait vide après l'envoi (la
   requête triée par `submittedAt` exigeait un index composite absent) : tri en mémoire, erreur affichée, bandeau de

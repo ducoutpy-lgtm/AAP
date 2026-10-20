@@ -1,122 +1,52 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+// Mes candidatures en colonnes par étape (réécrit le 2026-10-20, changement parcours-candidat-jour-1, transposition du
+// tableau en colonnes de helloDarwin). Pas de tri côté Firestore : « where + orderBy » exigeait un index composite
+// absent et laissait la liste vide (constat du jour).
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
+import { Calendar, Search } from 'lucide-react';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { FileText, Calendar, TrendingUp, Eye } from 'lucide-react';
+import type { ApplicationStatus } from '../../types';
+import { COLONNES_CANDIDATURES, repartirCandidatures } from '../../utils/candidat';
 
-interface Application {
+interface Candidature {
   id: string;
   aapId: string;
-  aapTitle: string;
-  createdAt?: Timestamp;
+  aapTitle?: string;
   projectTitle: string;
-  status: 'submitted' | 'under_review' | 'shortlisted' | 'accepted' | 'rejected';
-  submittedAt: Timestamp;
-  prequalificationScore?: number;
-  financeurFeedback?: string;
+  status: ApplicationStatus;
+  submittedAt?: Timestamp;
+  createdAt?: Timestamp;
+  budget?: { total?: number };
 }
 
 export default function MyApplicationsPage() {
-  const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const [applications, setApplications] = useState<Application[]>([]);
-  const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
+  const [candidatures, setCandidatures] = useState<Candidature[]>([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [erreur, setErreur] = useState('');
-  // Confirmation passée par le formulaire de candidature après l'envoi (retour de Monsieur DUCOUT du 2026-10-20 :
-  // « soumise, mais à qui, quoi, quand ? »)
+  // Confirmation passée par le formulaire après l'envoi (« soumise, mais à qui, quoi, quand ? »)
   const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string } } | null)?.envoyee;
 
   useEffect(() => {
-    if (currentUser) {
-      loadApplications();
-    }
+    if (!currentUser) return;
+    getDocs(query(collection(db, 'applications'), where('porteurId', '==', currentUser.uid)))
+      .then(snap => {
+        const dateDe = (c: Candidature) => (c.submittedAt ?? c.createdAt)?.toMillis() ?? 0;
+        setCandidatures((snap.docs.map(d => ({ id: d.id, ...d.data() })) as Candidature[]).sort((a, b) => dateDe(b) - dateDe(a)));
+      })
+      .catch(err => {
+        console.error('Error loading applications:', err);
+        setErreur(err instanceof Error ? err.message : "Les candidatures n'ont pas pu être chargées");
+      })
+      .finally(() => setLoading(false));
   }, [currentUser]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [statusFilter, applications]);
-
-  const loadApplications = async () => {
-    if (!currentUser) return;
-
-    try {
-      // Pas de tri côté Firestore : « where + orderBy » exige un index composite qui n'existe pas pour submittedAt
-      // (constat du 2026-10-20 : la liste restait vide après une candidature) ; le tri se fait ici.
-      const applicationsQuery = query(
-        collection(db, 'applications'),
-        where('porteurId', '==', currentUser.uid)
-      );
-
-      const snapshot = await getDocs(applicationsQuery);
-      const dateDe = (a: Application) => (a.submittedAt ?? a.createdAt)?.toMillis?.() ?? 0;
-      const applicationsData = (snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Application[]).sort((a, b) => dateDe(b) - dateDe(a));
-
-      setApplications(applicationsData);
-      setFilteredApplications(applicationsData);
-    } catch (err) {
-      console.error('Error loading applications:', err);
-      setErreur(err instanceof Error ? err.message : 'Les candidatures n\'ont pas pu être chargées');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const applyFilters = () => {
-    if (statusFilter === 'all') {
-      setFilteredApplications(applications);
-    } else {
-      setFilteredApplications(
-        applications.filter(app => app.status === statusFilter)
-      );
-    }
-  };
-
-  const getStatusLabel = (status: Application['status']): string => {
-    const labels = {
-      submitted: 'Soumise',
-      under_review: 'En cours d\'examen',
-      shortlisted: 'Pré-sélectionnée',
-      accepted: 'Acceptée',
-      rejected: 'Rejetée',
-    };
-    return labels[status];
-  };
-
-  const getStatusVariant = (
-    status: Application['status']
-  ): 'success' | 'warning' | 'error' | 'gray' => {
-    const variants = {
-      submitted: 'gray' as const,
-      under_review: 'warning' as const,
-      shortlisted: 'warning' as const,
-      accepted: 'success' as const,
-      rejected: 'error' as const,
-    };
-    return variants[status];
-  };
-
-  const getScoreColor = (score: number): string => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-yellow-600';
-    return 'text-red-600';
-  };
-
-  const formatDate = (timestamp: Timestamp): string => {
-    return timestamp.toDate().toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  const colonnes = repartirCandidatures(candidatures);
+  const dateFr = (c: Candidature) => (c.submittedAt ?? c.createdAt)?.toDate().toLocaleDateString('fr-FR') ?? '';
 
   if (loading) {
     return (
@@ -131,15 +61,13 @@ export default function MyApplicationsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Mes Candidatures
-          </h1>
-          <p className="text-gray-600">
-            Suivez l'état de vos candidatures aux appels à projets
-          </p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">Mes candidatures</h1>
+            <p className="text-gray-600">{candidatures.length} dossier{candidatures.length > 1 ? 's' : ''}, suivis par étape</p>
+          </div>
+          <Link to="/aap/search"><Button variant="secondary"><Search className="h-4 w-4 mr-2" />Trouver un appel</Button></Link>
         </div>
 
         {envoyee && (
@@ -147,206 +75,41 @@ export default function MyApplicationsPage() {
             <p className="font-medium">Candidature envoyée</p>
             <p className="text-sm mt-1">
               Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
-              {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; son statut passera à « En cours
-              d'examen » puis « Acceptée » ou « Refusée » ici, et vous serez prévenu par une alerte.
+              {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; il passera dans la colonne « En cours
+              d'examen », puis « Acceptée », « Refusée » ou « Complément demandé », et vous serez prévenu par une alerte.
             </p>
           </div>
         )}
-        {erreur && (
-          <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>
-        )}
+        {erreur && <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>}
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {applications.length}
-                </p>
-              </div>
-              <FileText className="h-8 w-8 text-primary-600" />
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
+          {COLONNES_CANDIDATURES.map(col => (
+            <div key={col.cle} className="bg-gray-100 rounded-lg p-3 min-h-[200px]">
+              <h2 className="text-sm font-semibold text-gray-700 mb-3">
+                {col.libelle} <span className="text-gray-400">({colonnes[col.cle].length})</span>
+              </h2>
+              {colonnes[col.cle].length === 0 ? (
+                <p className="text-xs text-gray-400 text-center py-6">Aucune</p>
+              ) : (
+                <ul className="space-y-3">
+                  {colonnes[col.cle].map(c => (
+                    <li key={c.id}>
+                      <Link to={`/candidature/${c.id}`} className="block">
+                        <Card className="!p-3 hover:shadow-md">
+                          <p className="font-medium text-gray-900 text-sm line-clamp-2">{c.projectTitle}</p>
+                          <p className="text-xs text-gray-600 mt-1 line-clamp-2">{c.aapTitle}</p>
+                          <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />{dateFr(c)}
+                          </p>
+                        </Card>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">En cours</p>
-                <p className="text-2xl font-bold text-yellow-600">
-                  {
-                    applications.filter(
-                      app =>
-                        app.status === 'submitted' || app.status === 'under_review'
-                    ).length
-                  }
-                </p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-yellow-600" />
-            </div>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Acceptées</p>
-                <p className="text-2xl font-bold text-green-600">
-                  {applications.filter(app => app.status === 'accepted').length}
-                </p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-green-600" />
-            </div>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Score moyen</p>
-                <p className="text-2xl font-bold text-primary-600">
-                  {applications.length > 0
-                    ? Math.round(
-                        applications
-                          .filter(app => app.prequalificationScore)
-                          .reduce((sum, app) => sum + (app.prequalificationScore || 0), 0) /
-                          applications.filter(app => app.prequalificationScore).length
-                      ) || '-'
-                    : '-'}
-                </p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-primary-600" />
-            </div>
-          </Card>
+          ))}
         </div>
-
-        {/* Filters */}
-        <Card className="p-4 mb-6">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-sm font-medium text-gray-700">Statut:</span>
-            <Button
-              variant={statusFilter === "all" ? "primary" : "secondary"}
-              size="sm"
-              onClick={() => setStatusFilter('all')}
-            >
-              Tous ({applications.length})
-            </Button>
-            <Button
-              variant={statusFilter === 'submitted' ? 'primary' : 'secondary'}
-              size="sm"
-              onClick={() => setStatusFilter('submitted')}
-            >
-              Soumises (
-              {applications.filter(app => app.status === 'submitted').length})
-            </Button>
-            <Button
-              variant={statusFilter === 'under_review' ? 'primary' : 'secondary'}
-              size="sm"
-              onClick={() => setStatusFilter('under_review')}
-            >
-              En examen (
-              {applications.filter(app => app.status === 'under_review').length})
-            </Button>
-            <Button
-              variant={statusFilter === 'accepted' ? 'primary' : 'secondary'}
-              size="sm"
-              onClick={() => setStatusFilter('accepted')}
-            >
-              Acceptées (
-              {applications.filter(app => app.status === 'accepted').length})
-            </Button>
-            <Button
-              variant={statusFilter === 'rejected' ? 'primary' : 'secondary'}
-              size="sm"
-              onClick={() => setStatusFilter('rejected')}
-            >
-              Rejetées (
-              {applications.filter(app => app.status === 'rejected').length})
-            </Button>
-          </div>
-        </Card>
-
-        {/* Applications list */}
-        {filteredApplications.length === 0 ? (
-          <Card className="p-12 text-center">
-            <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Aucune candidature
-            </h3>
-            <p className="text-gray-600 mb-4">
-              {statusFilter === 'all'
-                ? 'Vous n\'avez pas encore soumis de candidature.'
-                : `Vous n'avez pas de candidature avec le statut "${getStatusLabel(statusFilter as Application['status'])}".`}
-            </p>
-            <Button onClick={() => navigate('/aap/search')}>
-              Rechercher des AAP
-            </Button>
-          </Card>
-        ) : (
-          <div className="space-y-4">
-            {filteredApplications.map(application => (
-              <Card
-                key={application.id}
-                className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() => navigate(`/aap/${application.aapId}`)}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {application.projectTitle}
-                      </h3>
-                      <Badge variant={getStatusVariant(application.status)}>
-                        {getStatusLabel(application.status)}
-                      </Badge>
-                    </div>
-                    <p className="text-gray-600">AAP: {application.aapTitle}</p>
-                  </div>
-                  <Button variant="ghost" size="sm">
-                    <Eye className="h-5 w-5" />
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="h-4 w-4" />
-                    <span>Soumise le {formatDate(application.submittedAt)}</span>
-                  </div>
-
-                  {application.prequalificationScore !== undefined && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <TrendingUp className="h-4 w-4" />
-                      <span className="text-gray-600">Score:</span>
-                      <span
-                        className={`font-semibold ${getScoreColor(
-                          application.prequalificationScore
-                        )}`}
-                      >
-                        {application.prequalificationScore}/100
-                      </span>
-                    </div>
-                  )}
-
-                  {application.status === 'rejected' &&
-                    application.financeurFeedback && (
-                      <div className="col-span-3 bg-red-50 border border-red-200 rounded-lg p-3">
-                        <p className="text-sm text-red-800">
-                          <strong>Feedback:</strong> {application.financeurFeedback}
-                        </p>
-                      </div>
-                    )}
-
-                  {application.status === 'accepted' && (
-                    <div className="col-span-3 bg-green-50 border border-green-200 rounded-lg p-3">
-                      <p className="text-sm text-green-800 font-medium">
-                        🎉 Félicitations! Votre candidature a été acceptée.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

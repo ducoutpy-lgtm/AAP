@@ -217,6 +217,9 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Jour 1 du plan MVP fait le 2026-10-20 au soir (`parcours-candidat-jour-1`) : fiche en trois cases, tableau de bord candidat réel,
+  détail de candidature, colonnes ; 51 tests, lint, build ; attend le parcours de Monsieur DUCOUT (tâche 1.4). Jour 2 suivant :
+  qualification (à qui s'adresse l'appel, type, objet, date d'ouverture, pièces) avec devis écrit avant tout appel.
 - PLAN MVP (2026-10-20, fin d'après-midi) : à la demande de Monsieur DUCOUT (« rien n'avance côté application »), le plan
   de sept jours vers un prototype présentable à des testeurs est dans `docs/PLAN_MVP_2026-10-20.md` ; il remplace l'ordre
   de travail précédent (points helloDarwin, qualification) et commence par le parcours candidat sans impasse. Le lire

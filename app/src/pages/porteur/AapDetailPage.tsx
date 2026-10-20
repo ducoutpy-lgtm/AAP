@@ -11,7 +11,9 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
-import { memoriserFicheConsultee } from '../../utils/recherche';
+import { memoriserFicheConsultee, LIBELLES_STATUT, statutAppel } from '../../utils/recherche';
+import { aQuiSAdresse, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
+import { libelleTerritoire } from '../../utils/territoires';
 import {
   Calendar,
   Building,
@@ -179,41 +181,32 @@ export default function AapDetailPage() {
             </div>
           </div>
 
-          {/* Key metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-y">
-            <div className="text-center">
-              <div className={`flex items-center justify-center gap-2 mb-2 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
-                <Calendar className="h-5 w-5" />
-                <span className="text-2xl font-bold">{closed ? 'Clôturé' : daysLeft ?? 'Non précisée'}</span>
-              </div>
-              <p className="text-sm text-gray-600">
-                {closed ? 'Candidatures fermées' : daysLeft === null ? 'Date de clôture' : 'Jours restants'}
+          {/* En-tête à trois cases (parcours-candidat-jour-1, 2026-10-20) : montant, dates, territoire, en clair */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6 border-y">
+            <div className="rounded-lg bg-gray-50 p-4">
+              <p className="text-sm text-gray-600 flex items-center gap-2"><Euro className="h-4 w-4" />Montant</p>
+              <p className="text-xl font-bold text-gray-900 mt-1">{libelleMontant(aap)}</p>
+              {aap.budgetTotal && (aap.budgetMin || aap.budgetMax) && (
+                <p className="text-sm text-gray-600 mt-1">Enveloppe totale : {aap.budgetTotal.toLocaleString('fr-FR')} €</p>
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-50 p-4">
+              <p className="text-sm text-gray-600 flex items-center gap-2"><Calendar className="h-4 w-4" />Dates</p>
+              <p className={`text-xl font-bold mt-1 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
+                {aap.deadline ? `Clôture le ${formatDate(aap.deadline)}` : 'Date de clôture non précisée'}
+              </p>
+              <p className="text-sm text-gray-600 mt-1">
+                {closed ? 'Candidatures fermées' : daysLeft === null ? LIBELLES_STATUT[statutAppel(aap)] : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
+                {aap.startDate && ` · ouvert depuis le ${formatDate(aap.startDate)}`}
               </p>
             </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 text-gray-900 mb-2">
-                <Euro className="h-5 w-5" />
-                <span className="text-2xl font-bold">
-                  {aap.budgetMax ? (aap.budgetMax / 1000).toFixed(0) + 'k' : 'N/A'}
-                </span>
-              </div>
-              <p className="text-sm text-gray-600">Budget max</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 text-gray-900 mb-2">
-                <Users className="h-5 w-5" />
-                <span className="text-2xl font-bold">{aap.applicationsCount || 0}</span>
-              </div>
-              <p className="text-sm text-gray-600">Candidatures</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 text-gray-900 mb-2">
-                <MapPin className="h-5 w-5" />
-                <span className="text-2xl font-bold">
-                  {aap.territoriesEligible?.length || 0}
-                </span>
-              </div>
-              <p className="text-sm text-gray-600">Territoires</p>
+            <div className="rounded-lg bg-gray-50 p-4">
+              <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin className="h-4 w-4" />Territoire</p>
+              <p className="text-xl font-bold text-gray-900 mt-1">
+                {aap.territoriesEligible && aap.territoriesEligible.length > 0
+                  ? aap.territoriesEligible.map(libelleTerritoire).join(', ')
+                  : 'Territoire non précisé'}
+              </p>
             </div>
           </div>
 
@@ -245,12 +238,24 @@ export default function AapDetailPage() {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {/* Eligibility */}
+          {/* À qui s'adresse cet appel (parcours-candidat-jour-1) : types d'établissement lus par l'extraction, critères ;
+              le champ public / privé dédié arrive au jour 2 du plan MVP */}
           <Card className="p-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-primary-600" />
-              Critères d'éligibilité
+              <Users className="h-5 w-5 text-primary-600" />
+              À qui s'adresse cet appel
             </h3>
+            {aQuiSAdresse(aap).length > 0 ? (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {aQuiSAdresse(aap).map(t => <Badge key={t} variant="primary">{t}</Badge>)}
+              </div>
+            ) : (
+              <p className="text-gray-500 italic mb-4">Types de structures non précisés sur la fiche : voir les critères et l'annonce officielle</p>
+            )}
+            <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-primary-600" />
+              Critères d'éligibilité
+            </h4>
             {aap.eligibilityCriteria ? (
               <div className="prose prose-sm max-w-none text-gray-600">
                 <p className="whitespace-pre-wrap">{aap.eligibilityCriteria}</p>
@@ -291,13 +296,13 @@ export default function AapDetailPage() {
           {/* Sectors */}
           <Card className="p-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Secteurs ciblés
+              Thématiques
             </h3>
             <div className="flex flex-wrap gap-2">
               {aap.sectorsTargeted && aap.sectorsTargeted.length > 0 ? (
                 aap.sectorsTargeted.map(sector => (
                   <Badge key={sector} variant="primary">
-                    {sector}
+                    {LIBELLES_THEMATIQUES_FICHE[sector] ?? sector}
                   </Badge>
                 ))
               ) : (
@@ -315,7 +320,7 @@ export default function AapDetailPage() {
               {aap.territoriesEligible && aap.territoriesEligible.length > 0 ? (
                 aap.territoriesEligible.map(territory => (
                   <Badge key={territory} variant="gray">
-                    {territory}
+                    {libelleTerritoire(territory)}
                   </Badge>
                 ))
               ) : (

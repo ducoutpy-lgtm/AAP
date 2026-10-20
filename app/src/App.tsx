@@ -24,6 +24,7 @@ import SearchAapPage from './pages/porteur/SearchAapPage';
 import AapDetailPage from './pages/porteur/AapDetailPage';
 import ApplicationFormPage from './pages/porteur/ApplicationFormPage';
 import MyApplicationsPage from './pages/porteur/MyApplicationsPage';
+import ApplicationDetailPage from './pages/porteur/ApplicationDetailPage';
 import SavedSearchesPage from './pages/porteur/SavedSearchesPage';
 import RecommendationsPage from './pages/porteur/RecommendationsPage';
 
@@ -125,6 +126,7 @@ function App() {
           <Route path="/dashboard/porteur" element={<RoutePourRole roles={['porteur']}><PorteurDashboard /></RoutePourRole>} />
           <Route path="/aap/:aapId/candidater" element={<RoutePourRole roles={['porteur']}><ApplicationFormPage /></RoutePourRole>} />
           <Route path="/mes-candidatures" element={<RoutePourRole roles={['porteur']}><MyApplicationsPage /></RoutePourRole>} />
+          <Route path="/candidature/:applicationId" element={<RoutePourRole roles={['porteur']}><ApplicationDetailPage /></RoutePourRole>} />
           <Route path="/recherches-sauvegardees" element={<RoutePourRole roles={['porteur']}><SavedSearchesPage /></RoutePourRole>} />
           <Route path="/recommandations" element={<RoutePourRole roles={['porteur']}><RecommendationsPage /></RoutePourRole>} />
 
