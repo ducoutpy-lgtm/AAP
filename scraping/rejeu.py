@@ -13,8 +13,9 @@ Usage (depuis scraping/, environnement ../.venv) :
   python rejeu.py --rapport                             # VEILLE.md
   python rejeu.py --relire --collecter --marquer --rapport   # la veille complète (veille.cmd)
 
-Garde-fous : une page en erreur ou sans lien d'appel lisible ne touche pas aux compteurs de ses liens ; une page à la
-fois, deux secondes de pause (règle réseau du projet).
+Garde-fous : une page en erreur ou sans lien d'appel lisible ne touche pas aux compteurs de ses liens ; une page déjà
+relue le jour même est sautée (sinon une relance compterait une absence de trop) ; une page à la fois, deux secondes de
+pause (règle réseau du projet).
 """
 from __future__ import annotations
 
@@ -73,6 +74,12 @@ def comparer_liens(anciens: list[dict], relus: list[dict] | None, jour: str) -> 
             disparus.append(href)
     fusion = [par_href[l["href"]] for l in relus] + [par_href[h] for h in disparus]
     return fusion, {"nouveaux": nouveaux, "disparus": disparus, "vus": len(relus), "ignore": False}
+
+
+def deja_relue(donnees: dict, jour: str) -> bool:
+    """Vrai si la page a déjà été relue ce jour : une seconde relecture le même jour compterait une absence de trop
+    aux liens disparus (garde-fou pour la veille planifiée et les relances à la main)."""
+    return donnees.get("dernier_rejeu") == jour
 
 
 def marquer_fiches(fiches: list[dict], liens_par_source: dict[str, dict[str, dict]]) -> int:
@@ -164,6 +171,11 @@ async def relire(sources: list[dict]) -> list[dict]:
                 else:
                     donnees = json.loads(chemin.read_text(encoding="utf-8"))
                     bilan["url"] = donnees.get("url")
+                    if deja_relue(donnees, jour):
+                        bilan["erreur"] = "déjà relue aujourd'hui, compteurs inchangés"
+                        bilans.append(bilan)
+                        print(f"{s['id'][:40]:40} {bilan['erreur']}")
+                        continue
                     relus, erreur = await relire_source(browser, donnees["url"])
                     fusion, b = comparer_liens(donnees.get("liens", []), relus, jour)
                     bilan.update(b, erreur=erreur)

@@ -217,6 +217,10 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Pages Mon profil et Modifier l'appel (2026-10-20, `profil-et-edition-aap`) : `/profil` montre le compte et le formulaire
+  de profil pré-rempli (« Enregistrer ») ; `/aap/:id/edit` ouvre le formulaire de création pré-rempli pour le financeur
+  auteur (« Sauvegarder » garde le statut, « Publier » publie un brouillon). Restent vides : paiements et paramètres
+  admin. Monsieur DUCOUT rejoue les scénarios de la spec avec ses deux comptes de test (tâche 4.2).
 - Dégel de l'application complète (2026-10-19, après-midi, `degel-application-complete`, décisions de Monsieur DUCOUT :
   tout lancer, pages légales rédigées, tests faits, MFA à la fin, Blaze activé par lui, Google à activer par lui) :
   routes rétablies, lint et build verts sur tout le code, règles Firestore rouvertes (23 tests), pages légales, `npm test`
@@ -229,9 +233,11 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   la base (correction de l'import).
 - Rejeu et veille (2026-10-20, `rejeu-collecte-veille`) : `scraping/rejeu.py` (relire, collecter, marquer, rapport),
   `veille.cmd`, `scripts/perimer_fiches.py`, import `derniereVueLe` d'après le rejeu et `absences`. Premier rejeu réel sur
-  les vingt premières sources (ARS, portail des ARS, CNSA) fait ; `VEILLE.md`. À chaque semaine : `veille.cmd`, devis,
-  accord, extraction, contrôle, import ; `perimer_fiches.py` quand une fiche atteint deux absences. Planification
-  automatique à décider par Monsieur DUCOUT.
+  les vingt premières sources (ARS, portail des ARS, CNSA) fait ; `VEILLE.md`. Chaque lundi à 8 h, la tâche planifiée Windows
+  « AAP Sante - veille hebdomadaire » lance `veille.cmd auto` (journal `scraping/logs/veille.log`, décision du 2026-10-20) ;
+  ensuite : lire `VEILLE.md`, devis, accord, extraction, contrôle, import ; `perimer_fiches.py` quand une fiche atteint deux
+  absences. Le 2026-10-20 : 19 textes nouveaux extraits (17 fiches créées, 15 publiées), veille lancée sur les 222 pages
+  restantes.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

@@ -9,6 +9,8 @@ import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Textarea } from '../../components/ui/Textarea';
 import { Target, Upload } from 'lucide-react';
+import type { FinanceurProfile } from '../../types';
+import { formulaireFinanceurDepuisProfil, FORMULAIRE_FINANCEUR_VIDE } from './profilFormulaire';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -47,28 +49,20 @@ const SECTEURS = [
   { value: 'recherche', label: 'Recherche & Innovation' },
 ];
 
-export default function CompleteFinanceurProfile() {
+// profilExistant (changement profil-et-edition-aap, 2026-10-20) : depuis la page Mon profil, le formulaire part du
+// profil enregistré, garde le logo existant et reste sur place après l'enregistrement.
+export default function CompleteFinanceurProfile({ profilExistant }: { profilExistant?: FinanceurProfile } = {}) {
   const { currentUser, refreshUserProfile } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [logoPreview, setLogoPreview] = useState<string>('');
+  const [logoPreview, setLogoPreview] = useState<string>(profilExistant?.logo ?? '');
 
-  const [formData, setFormData] = useState({
-    organisationName: '',
-    organisationType: '',
-    sectorsSupported: [] as string[],
-    city: '',
-    postalCode: '',
-    region: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    position: '',
-    website: '',
-    description: '',
-  });
+  const [formData, setFormData] = useState(
+    profilExistant ? formulaireFinanceurDepuisProfil(profilExistant) : FORMULAIRE_FINANCEUR_VIDE
+  );
 
   const handleSectorChange = (sector: string) => {
     setFormData(prev => ({
@@ -99,7 +93,8 @@ export default function CompleteFinanceurProfile() {
     try {
       if (!currentUser) throw new Error('Non authentifié');
 
-      let logoUrl = null;
+      // Sans nouveau fichier, le logo déjà enregistré est conservé
+      let logoUrl: string | null = profilExistant?.logo ?? null;
 
       // Upload du logo si présent
       if (logoFile) {
@@ -142,6 +137,12 @@ export default function CompleteFinanceurProfile() {
 
       await refreshUserProfile();
 
+      if (profilExistant) {
+        setMessage('Profil enregistré');
+        window.scrollTo(0, 0);
+        return;
+      }
+
       // Rediriger vers la sélection d'abonnement
       navigate('/abonnement/choisir');
     } catch (err) {
@@ -158,10 +159,12 @@ export default function CompleteFinanceurProfile() {
         <div className="text-center mb-8">
           <Target className="h-12 w-12 text-secondary-600 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Complétez votre profil financeur
+            {profilExistant ? 'Mon profil financeur' : 'Complétez votre profil financeur'}
           </h1>
           <p className="text-gray-600">
-            Ces informations seront visibles par les porteurs de projets
+            {profilExistant
+              ? 'Corrigez vos informations ; elles sont visibles par les porteurs de projets'
+              : 'Ces informations seront visibles par les porteurs de projets'}
           </p>
         </div>
 
@@ -170,6 +173,11 @@ export default function CompleteFinanceurProfile() {
           {error && (
             <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
               {error}
+            </div>
+          )}
+          {message && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+              {message}
             </div>
           )}
 
@@ -345,7 +353,7 @@ export default function CompleteFinanceurProfile() {
             {/* Submit */}
             <div className="flex justify-end gap-4 pt-4">
               <Button type="submit" loading={loading} disabled={formData.sectorsSupported.length === 0}>
-                Continuer
+                {profilExistant ? 'Enregistrer' : 'Continuer'}
               </Button>
             </div>
           </form>

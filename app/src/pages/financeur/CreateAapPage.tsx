@@ -9,6 +9,8 @@ import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';
 import { Stepper } from '../../components/ui/Stepper';
 import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
+import type { AAP } from '../../types';
+import { donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -48,29 +50,16 @@ const REGIONS = [
   { value: "provence-alpes-cote-d-azur", label: "Provence-Alpes-Côte d'Azur" },
 ];
 
-export default function CreateAapPage() {
+// aapExistant (changement profil-et-edition-aap, 2026-10-20) : en modification, le formulaire part de l'appel
+// existant et l'enregistrement le met à jour au lieu d'en créer un second.
+export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {}) {
   const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    sectorsTargeted: [] as string[],
-    territoriesEligible: [] as string[],
-    budgetMin: '',
-    budgetMax: '',
-    budgetTotal: '',
-    deadline: '',
-    eligibilityCriteria: '',
-    evaluationCriteria: '',
-    contactEmail: '',
-    contactPhone: '',
-    externalUrl: '',
-    tags: '',
-  });
+  const [formData, setFormData] = useState(aapExistant ? formulaireDepuisAap(aapExistant) : FORMULAIRE_VIDE);
 
   const handleSectorChange = (sector: string) => {
     setFormData(prev => ({
@@ -119,36 +108,29 @@ export default function CreateAapPage() {
     window.scrollTo(0, 0);
   };
 
+  const nomDuFinanceur = async (): Promise<string> => {
+    if (!currentUser || !userProfile) throw new Error('Non authentifié');
+    const financeurProfileDoc = await getDoc(doc(db, 'financeurProfiles', currentUser.uid));
+    return financeurProfileDoc.data()?.organisationName || userProfile.email || 'Financeur';
+  };
+
   const handleSaveDraft = async () => {
     setError('');
     setLoading(true);
 
     try {
       if (!currentUser || !userProfile) throw new Error('Non authentifié');
+      const aapData = donneesDepuisFormulaire(formData);
 
-      // Récupérer le nom du financeur
-      const financeurProfileDoc = await getDoc(doc(db, 'financeurProfiles', currentUser.uid));
-      const financeurProfile = financeurProfileDoc.data();
-      const financeurName = financeurProfile?.organisationName || userProfile.email || 'Financeur';
+      if (aapExistant?.id) {
+        // Modification : l'appel garde son statut (brouillon ou publié)
+        await aapService.updateAap(aapExistant.id, aapData);
+        alert('Appel mis à jour');
+        navigate(`/aap/${aapExistant.id}`);
+        return;
+      }
 
-      const aapData = {
-        title: formData.title,
-        description: formData.description,
-        sectorsTargeted: formData.sectorsTargeted,
-        territoriesEligible: formData.territoriesEligible,
-        budgetMin: formData.budgetMin ? parseFloat(formData.budgetMin) : undefined,
-        budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : undefined,
-        budgetTotal: formData.budgetTotal ? parseFloat(formData.budgetTotal) : undefined,
-        deadline: new Date(formData.deadline),
-        eligibilityCriteria: formData.eligibilityCriteria || undefined,
-        evaluationCriteria: formData.evaluationCriteria || undefined,
-        contactEmail: formData.contactEmail || undefined,
-        contactPhone: formData.contactPhone || undefined,
-        externalUrl: formData.externalUrl || undefined,
-        tags: formData.tags ? formData.tags.split(',').map(t => t.trim()) : undefined,
-      };
-
-      const aapId = await aapService.createAap(currentUser.uid, financeurName, aapData);
+      const aapId = await aapService.createAap(currentUser.uid, await nomDuFinanceur(), aapData);
 
       alert('AAP sauvegardé en brouillon');
       navigate(`/aap/${aapId}`);
@@ -165,30 +147,19 @@ export default function CreateAapPage() {
 
     try {
       if (!currentUser || !userProfile) throw new Error('Non authentifié');
+      const aapData = donneesDepuisFormulaire(formData);
 
-      // Récupérer le nom du financeur
-      const financeurProfileDoc = await getDoc(doc(db, 'financeurProfiles', currentUser.uid));
-      const financeurProfile = financeurProfileDoc.data();
-      const financeurName = financeurProfile?.organisationName || userProfile.email || 'Financeur';
+      if (aapExistant?.id) {
+        // Modification : mise à jour, puis publication seulement d'un brouillon (un appel déjà publié garde sa date
+        // de publication)
+        await aapService.updateAap(aapExistant.id, aapData);
+        if (aapExistant.status === 'draft') await aapService.publishAap(aapExistant.id);
+        alert(aapExistant.status === 'draft' ? 'AAP publié avec succès !' : 'Appel mis à jour');
+        navigate(`/aap/${aapExistant.id}`);
+        return;
+      }
 
-      const aapData = {
-        title: formData.title,
-        description: formData.description,
-        sectorsTargeted: formData.sectorsTargeted,
-        territoriesEligible: formData.territoriesEligible,
-        budgetMin: formData.budgetMin ? parseFloat(formData.budgetMin) : undefined,
-        budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : undefined,
-        budgetTotal: formData.budgetTotal ? parseFloat(formData.budgetTotal) : undefined,
-        deadline: new Date(formData.deadline),
-        eligibilityCriteria: formData.eligibilityCriteria || undefined,
-        evaluationCriteria: formData.evaluationCriteria || undefined,
-        contactEmail: formData.contactEmail || undefined,
-        contactPhone: formData.contactPhone || undefined,
-        externalUrl: formData.externalUrl || undefined,
-        tags: formData.tags ? formData.tags.split(',').map(t => t.trim()) : undefined,
-      };
-
-      const aapId = await aapService.createAap(currentUser.uid, financeurName, aapData);
+      const aapId = await aapService.createAap(currentUser.uid, await nomDuFinanceur(), aapData);
       await aapService.publishAap(aapId);
 
       alert('AAP publié avec succès !');
@@ -454,7 +425,9 @@ export default function CreateAapPage() {
             <ArrowLeft className="h-4 w-4" />
             Retour à mes AAP
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">Créer un nouvel appel à projets</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {aapExistant ? "Modifier l'appel à projets" : 'Créer un nouvel appel à projets'}
+          </h1>
         </div>
 
         {/* Stepper */}
@@ -494,7 +467,7 @@ export default function CreateAapPage() {
                 </Button>
               ) : (
                 <Button onClick={handlePublish} loading={loading}>
-                  Publier l'AAP
+                  {aapExistant && aapExistant.status !== 'draft' ? 'Enregistrer les modifications' : "Publier l'AAP"}
                 </Button>
               )}
             </div>

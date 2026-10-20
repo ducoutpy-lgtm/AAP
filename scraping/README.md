@@ -398,7 +398,14 @@ python ../scripts/perimer_fiches.py --dry-run         # fiches publiées absente
 `veille.cmd` enchaîne relecture, collecte, marquage, rapport et devis, sans aucun appel payant ; l'extraction des
 textes nouveaux se lance à la main après accord. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
 `absences` ; la péremption passe la fiche « à corriger » (mention « Non relue » dans l'application), jamais une fiche
-validée par Monsieur DUCOUT. Planification automatique : à décider.
+validée par Monsieur DUCOUT.
+
+Lancement automatique (décision de Monsieur DUCOUT du 2026-10-20, « une fois par semaine automatique ») : tâche
+planifiée Windows « AAP Sante - veille hebdomadaire », le lundi à 8 h, qui exécute `veille.cmd auto` (sans pause,
+sortie ajoutée à `logs/veille.log`, rattrapage si le PC était éteint à l'heure dite). Garde-fou : une page déjà relue
+le jour même est sautée, sinon une relance compterait une absence de trop aux liens disparus. Pour voir ou retirer la
+tâche : Planificateur de tâches Windows, ou `schtasks /Query /TN "AAP Sante - veille hebdomadaire"`. Après chaque
+passage, lire `VEILLE.md`, puis demander l'extraction des textes nouveaux (devis affiché en fin de journal).
 
 ### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
 

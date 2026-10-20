@@ -4,8 +4,15 @@ rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiche
 rem devis d'extraction des textes nouveaux SANS lancer aucun appel payant. L'extraction se lance ensuite a la main,
 rem apres accord : ..\.venv\Scripts\python extraction_locale.py --extraire --moteur api
 rem Zero euro tant que cette fenetre tourne. Fermer la fenetre arrete la veille (reprise possible, rien n'est perdu).
+rem Lancement planifie (tache Windows « AAP Sante - veille hebdomadaire », lundi 8 h) : veille.cmd auto
+rem   -> pas de pause finale, sortie ajoutee au journal logs\veille.log. Une page deja relue le jour meme est sautee.
 chcp 65001 >nul
 cd /d "%~dp0"
+if "%~1"=="auto" (
+  echo ==== Veille automatique du %date% %time% ====>> "logs\veille.log"
+  call "%~f0" sanspause >> "logs\veille.log" 2>&1
+  exit /b
+)
 echo Veille AAP Sante : relecture des pages validees (une page a la fois, deux secondes de pause). Zero euro.
 echo.
 "..\.venv\Scripts\python.exe" rejeu.py --relire --collecter --marquer --rapport
@@ -15,4 +22,4 @@ echo Devis d'extraction des textes nouveaux (aucun appel n'est lance ici) :
 echo.
 echo Rapport : VEILLE.md. Pour extraire les textes nouveaux apres accord :
 echo   ..\.venv\Scripts\python extraction_locale.py --extraire --moteur api
-pause
+if "%~1"=="" pause

@@ -248,7 +248,8 @@ console Firebase le même jour.
 
 **Dégel de l'application complète** (changement `degel-application-complete`, 2026-10-19, décision de Monsieur DUCOUT) :
 les modules gelés par le lot 0 sont de retour, avec leurs gardes d'origine (connexion, abonnement actif ou essai, rôle) :
-inscription `/signup` (essai de 14 jours), `/complete-profile`, abonnement (écrans seulement, Stripe non branché),
+inscription `/signup` (essai de 14 jours), `/complete-profile`, `/profil` (compte et profil modifiables, 2026-10-20),
+`/aap/:id/edit` (modification d'un appel par son auteur, 2026-10-20), abonnement (écrans seulement, Stripe non branché),
 porteur (`/dashboard/porteur`, `/aap/:id/candidater`, `/mes-candidatures`, `/recherches-sauvegardees`,
 `/recommandations`), financeur (`/dashboard/financeur`, `/mes-aap`, `/aap/nouveau`, `/aap/:id/candidatures`,
 `/aap/:id/candidature/:cid/evaluer`, `/statistiques`), communs (`/messages`, `/notifications`, `/calendrier`),

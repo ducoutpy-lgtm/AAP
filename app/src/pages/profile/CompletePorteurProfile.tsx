@@ -8,6 +8,8 @@ import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Textarea } from '../../components/ui/Textarea';
 import { Target } from 'lucide-react';
+import type { PorteurProfile } from '../../types';
+import { formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -46,28 +48,18 @@ const SECTEURS = [
   { value: 'recherche', label: 'Recherche & Innovation' },
 ];
 
-export default function CompletePorteurProfile() {
+// profilExistant (changement profil-et-edition-aap, 2026-10-20) : depuis la page Mon profil, le formulaire part du
+// profil enregistré et reste sur place après l'enregistrement au lieu d'aller au choix d'abonnement.
+export default function CompletePorteurProfile({ profilExistant }: { profilExistant?: PorteurProfile } = {}) {
   const { currentUser, refreshUserProfile } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [formData, setFormData] = useState({
-    structureName: '',
-    siret: '',
-    structureType: '',
-    secteurActivite: '',
-    domainesIntervention: [] as string[],
-    city: '',
-    postalCode: '',
-    region: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    teamSize: '',
-    website: '',
-    description: '',
-  });
+  const [formData, setFormData] = useState(
+    profilExistant ? formulairePorteurDepuisProfil(profilExistant) : FORMULAIRE_PORTEUR_VIDE
+  );
 
   const handleDomaineChange = (domaine: string) => {
     setFormData(prev => ({
@@ -121,6 +113,12 @@ export default function CompletePorteurProfile() {
 
       await refreshUserProfile();
 
+      if (profilExistant) {
+        setMessage('Profil enregistré');
+        window.scrollTo(0, 0);
+        return;
+      }
+
       // Rediriger vers la sélection d'abonnement
       navigate('/abonnement/choisir');
     } catch (err) {
@@ -137,10 +135,12 @@ export default function CompletePorteurProfile() {
         <div className="text-center mb-8">
           <Target className="h-12 w-12 text-primary-600 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Complétez votre profil porteur
+            {profilExistant ? 'Mon profil porteur' : 'Complétez votre profil porteur'}
           </h1>
           <p className="text-gray-600">
-            Ces informations nous permettront de vous recommander les AAP les plus pertinents
+            {profilExistant
+              ? 'Corrigez vos informations ; elles servent aux recommandations'
+              : 'Ces informations nous permettront de vous recommander les AAP les plus pertinents'}
           </p>
         </div>
 
@@ -149,6 +149,11 @@ export default function CompletePorteurProfile() {
           {error && (
             <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
               {error}
+            </div>
+          )}
+          {message && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+              {message}
             </div>
           )}
 
@@ -311,7 +316,7 @@ export default function CompletePorteurProfile() {
             {/* Submit */}
             <div className="flex justify-end gap-4 pt-4">
               <Button type="submit" loading={loading} disabled={formData.domainesIntervention.length === 0}>
-                Continuer
+                {profilExistant ? 'Enregistrer' : 'Continuer'}
               </Button>
             </div>
           </form>

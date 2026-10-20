@@ -100,7 +100,10 @@ src/
 | `/calendrier`, `/messages` | connecté + abonnement |
 | `/notifications` | connecté |
 | `/admin`, `/admin/utilisateurs`, `/admin/aaps`, `/admin/statistiques` | admin |
-| `/aap/:aapId/edit`, `/profil`, `/admin/paiements`, `/admin/parametres`, `/cgu`, `/confidentialite`, `/mentions-legales` | **placeholders** (pages non développées) |
+| `/aap/:aapId/edit` | Modification d'un appel par son auteur (financeur) : formulaire de création pré-rempli, « Sauvegarder » garde le statut, « Publier » publie un brouillon ; autre compte : « Cet appel n'est pas le vôtre » (2026-10-20, `profil-et-edition-aap`) |
+| `/profil` | Mon compte (adresse, rôle, abonnement, fin d'essai) et formulaire de profil pré-rempli, « Enregistrer » ; profil jamais complété renvoyé vers `/complete-profile` (2026-10-20) |
+| `/cgu`, `/confidentialite`, `/mentions-legales` | Pages légales rédigées le 2026-10-19 (données d'entreprise à valider) |
+| `/admin/paiements`, `/admin/parametres` | **placeholders** (paiements : attend Stripe ; paramètres : aucun besoin exprimé) |
 
 Après connexion, `LoginPage` lit `users/{uid}.userType` et redirige vers le bon dashboard.
 
@@ -176,7 +179,7 @@ Dernier build : `npm run build` OK, bundle ≈ 917 kB (221 kB gzip). Aucune erre
 ## 8. Ce qui reste à faire / limites connues
 
 **Fonctionnel**
-- Pages placeholder : édition d'un AAP, page profil, gestion paiements admin, paramètres admin. Pages légales rédigées le 2026-10-19 (`src/pages/legal/`, données d'entreprise à valider par Monsieur DUCOUT dans `editeur.ts`).
+- Pages placeholder : gestion paiements admin et paramètres admin seulement (édition d'un AAP et page profil faites le 2026-10-20, changement `profil-et-edition-aap`, fonctions de formulaire testées par Vitest). Pages légales rédigées le 2026-10-19 (`src/pages/legal/`, données d'entreprise à valider par Monsieur DUCOUT dans `editeur.ts`).
 - Mot de passe oublié : fait le 2026-10-15 (`/reset-password`).
 - Modules gelés par le lot 0 (2026-10-14) et dégelés le 2026-10-19 (`degel-application-complete`) : parcours connectés à vérifier avec des comptes de test ; règles Firestore rouvertes, déploiement après accord.
 - Préqualification automatique des candidatures (scores `completenessScore`, `conformityScore`) : champs prévus, calcul non implémenté.

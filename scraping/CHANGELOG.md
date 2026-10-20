@@ -5,6 +5,8 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Ajouté (2026-10-20)
+- Veille automatique : tâche planifiée Windows « AAP Sante - veille hebdomadaire » (lundi 8 h, `veille.cmd auto`,
+  journal `logs/veille.log`) ; garde-fou `rejeu.deja_relue` (une page relue une fois par jour au plus).
 - `rejeu.py` et `veille.cmd` (changement `rejeu-collecte-veille`, lot 2) : relecture des pages validées, compteurs
   `apparu_le`, `vu_le`, `absences` sur les liens, journal `rejeux.json` par source, collecte des textes nouveaux, marquage
   des fiches (`vue_rubrique_le`, `absences`), rapport `VEILLE.md`. Zéro euro ; extraction des textes nouveaux par la

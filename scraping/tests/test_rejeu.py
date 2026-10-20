@@ -57,3 +57,9 @@ def test_rapport_markdown_sections():
     assert "Sources relues : 1 ; en erreur ou sans lien lisible (compteurs inchangés) : 1" in texte
     assert "- Source S : https://x/c" in texte and "- Source S : https://x/b" in texte and "HTTP 403" in texte
     assert "Appel B (s, 2 absences, vue le 2026-10-13)" in texte
+
+
+def test_deja_relue_le_jour_meme():
+    assert rejeu.deja_relue({"url": "u", "dernier_rejeu": "2026-10-20"}, "2026-10-20") is True
+    assert rejeu.deja_relue({"url": "u", "dernier_rejeu": "2026-10-13"}, "2026-10-20") is False
+    assert rejeu.deja_relue({"url": "u"}, "2026-10-20") is False

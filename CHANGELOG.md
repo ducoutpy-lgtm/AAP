@@ -6,6 +6,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Application : page « Mon profil » (`/profil`, compte et formulaire de profil pré-rempli) et modification d'un appel
+  par son auteur (`/aap/:id/edit`), changement `profil-et-edition-aap` (2026-10-20) ; conversions appel / profil ->
+  formulaire testées par Vitest (18 tests).
+- Lot 2, veille hebdomadaire automatique (2026-10-20) : tâche planifiée Windows le lundi à 8 h (`veille.cmd auto`,
+  journal `scraping/logs/veille.log`), garde-fou « une page relue une fois par jour au plus ».
 - Lot 2, rejeu de la collecte et veille (changement `rejeu-collecte-veille`, 2026-10-20) : `scraping/rejeu.py`
   (relecture des pages validées, liens nouveaux et disparus, marquage des fiches, `VEILLE.md`), `scraping/veille.cmd`,
   `scripts/perimer_fiches.py` (fiche absente de sa page depuis deux rejeux -> « à corriger », jamais un verdict humain),

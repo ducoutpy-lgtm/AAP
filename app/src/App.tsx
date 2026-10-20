@@ -30,6 +30,8 @@ import RecommendationsPage from './pages/porteur/RecommendationsPage';
 // Financeur
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
 import CreateAapPage from './pages/financeur/CreateAapPage';
+import EditAapPage from './pages/financeur/EditAapPage';
+import ProfilPage from './pages/profile/ProfilPage';
 import MyAapPage from './pages/financeur/MyAapPage';
 import ViewApplicationsPage from './pages/financeur/ViewApplicationsPage';
 import EvaluateApplicationPage from './pages/financeur/EvaluateApplicationPage';
@@ -114,13 +116,13 @@ function App() {
           <Route path="/dashboard/financeur" element={<RoutePourRole roles={['financeur']}><FinanceurDashboard /></RoutePourRole>} />
           <Route path="/mes-aap" element={<RoutePourRole roles={['financeur']}><MyAapPage /></RoutePourRole>} />
           <Route path="/aap/nouveau" element={<RoutePourRole roles={['financeur']}><CreateAapPage /></RoutePourRole>} />
-          <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur']}><PlaceholderPage title="Modifier l'AAP" /></RoutePourRole>} />
+          <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur']}><EditAapPage /></RoutePourRole>} />
           <Route path="/aap/:aapId/candidatures" element={<RoutePourRole roles={['financeur']}><ViewApplicationsPage /></RoutePourRole>} />
           <Route path="/aap/:aapId/candidature/:applicationId/evaluer" element={<RoutePourRole roles={['financeur']}><EvaluateApplicationPage /></RoutePourRole>} />
           <Route path="/statistiques" element={<RoutePourRole roles={['financeur']}><StatisticsPage /></RoutePourRole>} />
 
           {/* Communs aux comptes connectés */}
-          <Route path="/profil" element={<ProtectedRoute><PlaceholderPage title="Mon Profil" /></ProtectedRoute>} />
+          <Route path="/profil" element={<ProtectedRoute><ProfilPage /></ProtectedRoute>} />
           <Route path="/calendrier" element={<ProtectedRoute><SubscriptionGuard><CalendarPage /></SubscriptionGuard></ProtectedRoute>} />
           <Route path="/messages" element={<ProtectedRoute><SubscriptionGuard><MessagesPage /></SubscriptionGuard></ProtectedRoute>} />
           <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />

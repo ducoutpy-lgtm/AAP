@@ -30,9 +30,17 @@ archivage sans demande ; migrations après essai à blanc et sauvegarde.
 
 ## 3. Extraction des textes nouveaux
 
-- [ ] 3.1 Devis `extraction_locale.py --extraire --moteur api --dry-run` collé (2026-10-20 : « 19 textes restants, 60,040
+- [x] 3.1 Devis `extraction_locale.py --extraire --moteur api --dry-run` collé (2026-10-20 : « 19 textes restants, 60,040
   caractères ; coût estimé 0.02 euros au plus ; déjà dépensé 1.978 euros ; plafond 5.00 euros ») ; après accord, extraction, contrôle
-  (devis), import, décision du modèle ; compte des appels publiés collé.
+  (devis), import, décision du modèle ; compte des appels publiés collé. (Fait le 2026-10-20, 10 h 40, accord « 1 oui » :
+  extraction « 875 réussites (19 nouvelles), 1 échecs ; coût cumulé 2.005 euros » (échec : une fiche Ville de Paris
+  invalide au schéma) ; contrôle, devis « 15 fiches à vérifier, 0.005 euros estimés », réel « 15 fiches vérifiées ;
+  coût cumulé 2.014 euros » ; import « 17 crees, 529 mis a jour » ; base : 640 documents, 303 publiées (269 validées,
+  26 proposées, 8 à corriger), 292 brouillons, 45 archivées ; les 17 créées : 15 publiées validées, 2 brouillons à corriger.)
+- [ ] 3.2 Garde-fou « une page relue une fois par jour au plus » (`rejeu.deja_relue`, test) et mode `veille.cmd auto`
+  (sans pause, journal `logs/veille.log`) ; tâche planifiée Windows « AAP Sante - veille hebdomadaire » (lundi 8 h,
+  décision de Monsieur DUCOUT « une fois par semaine automatique ») ; veille lancée sur les 222 pages confirmées
+  restantes (zéro euro), devis des textes nouveaux collé, extraction après accord.
 
 ## 4. Lancement et documentation
 
