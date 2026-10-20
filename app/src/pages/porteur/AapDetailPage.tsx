@@ -11,7 +11,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
-import { memoriserFicheConsultee, LIBELLES_STATUT, statutAppel } from '../../utils/recherche';
+import { memoriserFicheConsultee } from '../../utils/recherche';
 import { aQuiSAdresse, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
 import { libelleTerritoire } from '../../utils/territoires';
 import {
@@ -195,7 +195,7 @@ export default function AapDetailPage() {
                 {aap.deadline ? `Clôture le ${formatDate(aap.deadline)}` : 'Date de clôture non précisée'}
               </p>
               <p className="text-sm text-gray-600 mt-1">
-                {closed ? 'Candidatures fermées' : daysLeft === null ? LIBELLES_STATUT[statutAppel(aap)] : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
+                {closed ? 'Candidatures fermées' : daysLeft === null ? "Vérifiez la date sur l'annonce officielle" : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
                 {aap.startDate && ` · ouvert depuis le ${formatDate(aap.startDate)}`}
               </p>
             </div>
@@ -364,7 +364,7 @@ export default function AapDetailPage() {
                     className="flex items-center gap-2 text-primary-600 hover:underline"
                   >
                     <ExternalLink className="h-4 w-4" />
-                    {fichier.filename}
+                    {decodeURIComponent(fichier.filename)}
                   </a>
                 </li>
               ))}

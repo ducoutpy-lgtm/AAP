@@ -172,7 +172,7 @@ export default function ApplicationFormPage() {
                     {aap.scrapeMetadata!.fichiersJoints!.map((f, i) => (
                       <li key={i}>
                         <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-700 hover:underline inline-flex items-center gap-1">
-                          <ExternalLink className="h-4 w-4" />{f.filename}
+                          <ExternalLink className="h-4 w-4" />{decodeURIComponent(f.filename)}
                         </a>
                       </li>
                     ))}

@@ -7,6 +7,7 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-do
 import { ArrowLeft, Bell, ChevronLeft, ChevronRight, LogOut, Target, UserCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { entreeActive, entreesMenu, tableauDeBord } from './menus';
+import { LimiteErreur } from './LimiteErreur';
 
 const CLE_REPLI = 'aap-menu-replie';
 
@@ -235,7 +236,7 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
           </div>
         </header>
         <main className="flex-1">
-          <Outlet />
+          <LimiteErreur><Outlet /></LimiteErreur>
         </main>
         <PiedDePage />
       </div>
@@ -256,7 +257,7 @@ export default function Gabarit() {
         <div className="min-h-screen flex flex-col">
           <EnTetePublic />
           <main className="flex-1">
-            <Outlet />
+            <LimiteErreur><Outlet /></LimiteErreur>
           </main>
           <PiedDePage />
         </div>

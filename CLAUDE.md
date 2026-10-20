@@ -203,6 +203,10 @@ Monsieur DUCOUT préfère une contradiction immédiate à une correction deux jo
 4. Pas d'outil hors OpenSpec, même « en essai » : scénarios WHEN / THEN avant le code, rejoués par la session
    avec preuve visible avant de dire « ça marche », puis par Monsieur DUCOUT.
 5. Une modification à la fois : la faire, la prouver, la faire valider, puis la suivante.
+5 bis. Depuis le 2026-10-20 (« oui émulateurs ») : tout parcours connecté est joué par la session sur les émulateurs
+   Firebase du PC (`app/emulateurs_dev.cmd` ou `npm run emulateurs` + `npm run dev:emulateurs`, port 3001, comptes de
+   test de `scripts/semer_emulateurs.py`) avant d'être livré ; le vrai projet reste réservé aux vérifications de
+   Monsieur DUCOUT.
 6. Chaque compte rendu finit par deux lignes : « Vérifié : ... » et « Non vérifié ou supposé : ... ».
 
 ---

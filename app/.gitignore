@@ -40,3 +40,8 @@ functions/lib/
 
 # Lien de jonction vers scraping/downloads (pieces jointes servies en local, jamais commitees)
 public/documents
+# Donnees exportees des emulateurs Firebase (mode emulateurs, local seulement)
+emulateurs/donnees/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

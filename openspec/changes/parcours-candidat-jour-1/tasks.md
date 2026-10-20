@@ -24,3 +24,9 @@ demande, aucun déploiement.
     le dossier de l'appel rempli) ; pré-remplissage à partir du PDF au jour 5 ;
   - envoi : « storage/unauthorized » sur uploads/applications/<compte>/... -> règle Storage ajoutée pour ce dossier,
     déployée le 2026-10-20 au soir sur son accord (« Deploy complete »).
+  Parcours joué par la session sur les émulateurs (2026-10-20 soir, compte candidat de test) : connexion, tableau de
+  bord (8 appels pour la structure), fiche, candidature en trois étapes avec pièce, « Envoyée (1) », détail avec la
+  pièce, compteur du tableau de bord à 1. Défauts trouvés et corrigés : renvoi fugace vers les offres pendant un
+  rafraîchissement du profil (garde d'abonnement durcie), page des offres blanche pour un rôle sans offre (message +
+  garde-fou d'affichage sur toutes les pages), noms de fichiers encodés, doublon « Date non précisée » sur le tableau
+  de bord, « de Île-de-France ».

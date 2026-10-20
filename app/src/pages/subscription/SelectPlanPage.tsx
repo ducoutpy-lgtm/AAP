@@ -21,7 +21,19 @@ export default function SelectPlanPage() {
     return <div>Chargement...</div>;
   }
 
-  const userType = userProfile.userType as 'porteur' | 'financeur';
+  // Un administrateur n'a pas d'offre : la page le dit au lieu de planter (constat du 2026-10-20 sur les émulateurs)
+  if (userProfile.userType !== 'porteur' && userProfile.userType !== 'financeur') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <Card className="max-w-md text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Aucune offre pour ce compte</h2>
+          <p className="text-gray-600 mb-6">Le compte administrateur n'a pas d'abonnement.</p>
+          <Button onClick={() => navigate('/admin')}>Retour à l'administration</Button>
+        </Card>
+      </div>
+    );
+  }
+  const userType = userProfile.userType;
   const plans = STRIPE_PLANS[userType];
 
   // Si l'utilisateur a déjà un abonnement actif

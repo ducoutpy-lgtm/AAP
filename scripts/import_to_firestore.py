@@ -471,6 +471,7 @@ def main() -> int:
     parser.add_argument("--include-expired", action="store_true", help="importer aussi les AAP dont la cloture est passee")
     parser.add_argument("--key", default=str(DEFAULT_KEY), help="chemin de la cle de compte de service Firebase")
     parser.add_argument("--bucket", help="bucket Storage (defaut : <project_id>.firebasestorage.app)")
+    parser.add_argument("--projet", help="identifiant de projet force (emulateurs : demo-aap avec FIRESTORE_EMULATOR_HOST)")
     parser.add_argument(
         "--vers-storage",
         action="store_true",
@@ -559,7 +560,9 @@ def main() -> int:
     import firebase_admin
     from firebase_admin import credentials, firestore, storage
 
-    firebase_admin.initialize_app(credentials.Certificate(str(key_path)))
+    # --projet (emulateurs-parcours-connectes, 2026-10-20) : avec FIRESTORE_EMULATOR_HOST, les ecritures vont dans
+    # l'emulateur du PC sous cet identifiant (demo-aap), jamais dans le vrai projet
+    firebase_admin.initialize_app(credentials.Certificate(str(key_path)), {"projectId": args.projet} if args.projet else None)
     db = firestore.client()
     col = db.collection("aap")
     bucket = None

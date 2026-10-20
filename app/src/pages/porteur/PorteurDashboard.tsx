@@ -55,7 +55,7 @@ export default function PorteurDashboard() {
         <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg p-6 mb-8 text-white">
           <h2 className="text-3xl font-bold mb-2">Bienvenue, {profil?.structureName || 'bienvenue'}</h2>
           <p className="text-primary-100">
-            {region ? `Les appels de ${libelleTerritoire(region)} et les appels nationaux, à jour de la veille hebdomadaire` : 'Les appels à projets de la santé et du médico-social, à jour de la veille hebdomadaire'}
+            {region ? `Les appels de votre région (${libelleTerritoire(region)}) et les appels nationaux, à jour de la veille hebdomadaire` : 'Les appels à projets de la santé et du médico-social, à jour de la veille hebdomadaire'}
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export default function PorteurDashboard() {
                           </div>
                           <Badge variant={s === 'bientot-clos' ? 'warning' : s === 'ouvert' ? 'success' : 'primary'}>{LIBELLES_STATUT[s]}</Badge>
                         </div>
-                        <p className="text-sm text-gray-500 mt-1">{deadlineLabel(jours)} · {libelleMontant(aap)} · {(aap.territoriesEligible ?? []).map(libelleTerritoire).join(', ') || 'Territoire non précisé'}</p>
+                        <p className="text-sm text-gray-500 mt-1">{jours !== null && `${deadlineLabel(jours)} · `}{libelleMontant(aap)} · {(aap.territoriesEligible ?? []).map(libelleTerritoire).join(', ') || 'Territoire non précisé'}</p>
                       </Link>
                     </li>
                   );

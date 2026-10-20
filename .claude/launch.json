@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev"],
       "cwd": "app",
       "port": 3000
+    },
+    {
+      "name": "app-emulateurs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:emulateurs"],
+      "cwd": "app",
+      "port": 3001
     }
   ]
 }

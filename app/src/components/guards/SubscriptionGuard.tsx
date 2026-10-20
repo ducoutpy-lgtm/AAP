@@ -21,9 +21,10 @@ export function SubscriptionGuard({ children }: SubscriptionGuardProps) {
     return <Navigate to="/login" replace />;
   }
 
+  // Seuls « expiré » et « résilié » ferment l'accès ; un statut absent (profil en cours de rafraîchissement, compte
+  // administrateur) ne renvoie pas vers les offres (constat du 2026-10-20 sur les émulateurs)
   const hasActiveSubscription =
-    userProfile.subscriptionStatus === 'active' ||
-    userProfile.subscriptionStatus === 'trial';
+    userProfile.subscriptionStatus !== 'expired' && userProfile.subscriptionStatus !== 'cancelled';
 
   if (!hasActiveSubscription) {
     return <Navigate to="/abonnement/choisir" replace />;
