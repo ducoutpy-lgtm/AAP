@@ -11,6 +11,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   ou nationaux, échéances sous 30 jours, candidatures, recherches) ; page de détail d'une candidature
   (`/candidature/:id`) ; « Mes candidatures » en cinq colonnes par étape. 51 tests Vitest.
 
+### Modifié
+- Firebase (2026-10-20 soir, accord de Monsieur DUCOUT) : règles Storage déployées (dossier des pièces de candidature
+  `uploads/applications/<compte>/`) ; compte ducout@hotmail.fr passé administrateur (`scripts/creer_admin.py`) ;
+  document utilisateur orphelin supprimé après sauvegarde (`scripts/sauvegardes/users_orphelin_rBf4lsNS_2026-10-20.json`).
+
 ### Corrigé
 - Application (2026-10-20 soir, premier parcours du jour 1 par Monsieur DUCOUT) : mentions « contrôlée par le modèle »
   réservées à l'administrateur, le candidat voit « Mise à jour le » ; « À qui s'adresse cet appel » lit les familles de

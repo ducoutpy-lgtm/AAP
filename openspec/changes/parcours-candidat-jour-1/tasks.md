@@ -23,4 +23,4 @@ demande, aucun déploiement.
     « bidon » : le vrai dossier est le formulaire du financeur -> réduit à trois étapes (projet, montant, pièces avec
     le dossier de l'appel rempli) ; pré-remplissage à partir du PDF au jour 5 ;
   - envoi : « storage/unauthorized » sur uploads/applications/<compte>/... -> règle Storage ajoutée pour ce dossier,
-    déploiement en attente d'accord.
+    déployée le 2026-10-20 au soir sur son accord (« Deploy complete »).
