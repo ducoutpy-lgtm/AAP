@@ -48,6 +48,41 @@ Barre latérale gauche repliable, icône plus libellé, cadenas sur les entrées
 | Paramètres > Gestion de la facturation | Ouvre dans un nouvel onglet le portail client hébergé par Stripe (billing.stripe.com) : factures, moyen de paiement, résiliation gérés par Stripe, pas par leur application | Reprendre tel quel : notre abonnement passe déjà par Stripe ; le portail client Stripe évite d'écrire une page de facturation |
 | Paramètres (capture 10) | Compte : informations personnelles (prénom, nom, téléphone, courriel, langue, « Supprimer mon compte »), préférences des alertes (trois interrupteurs : rapports hebdomadaires et mensuels, infolettre, mise à jour des programmes) ; Organisation : informations sur l'entreprise (logo, nom, site, effectif, revenus, année de fondation, adresse, objectifs de financement, secteurs, forme juridique, numéro de bienfaisance, courriel et téléphone de l'organisation, réseaux sociaux), utilisateurs et rôles ; Facturation : plans, gestion de la facturation | Reprendre : la structure en trois blocs (compte, organisation, facturation) pour notre page Mon profil et les paramètres ; « Supprimer mon compte » est une obligation RGPD que nous n'avons pas encore |
 
+## 2 ter. Les filtres de la recherche, un par un (captures 19 et 20)
+
+Mécanique commune, à reprendre telle quelle : quinze sections dépliables dans une colonne de gauche ; cases à cocher ;
+dans les longues listes, un champ « Rechercher les ... » en tête et un lien « Voir plus (N) » ; les filtres actifs
+sont affichés en étiquettes colorées au-dessus, chacune retirable d'une croix ; « Effacer tous les filtres » ;
+« Initialiser à vos détails d'organisation » remet les filtres du profil ; le compteur « N subventions totalisant M $ »
+se recalcule à chaque coche ; les filtres sont inscrits dans l'adresse de la page, donc une recherche se partage par
+son lien ; les filtres venant du profil (forme juridique, revenu, taille, secteur, groupe, structure, envergure,
+province, ville) sont pré-cochés dès l'arrivée.
+
+| Filtre | Options observées | Pour AAP Santé |
+|---|---|---|
+| Forme juridique | coopérative financière, coopérative non financière, entreprise à but lucratif, entreprise d'économie sociale, entreprise individuelle, OBNL, institution publique ou parapublique | Adapter en « Statut de l'établissement » : public, privé non lucratif (ESPIC, association, fondation), privé lucratif, GCS, collectivité, exercice coordonné (CPTS, MSP) ; aujourd'hui nos fiches n'ont pas ce champ, l'extraction devra le poser (« qui peut candidater ») |
+| Bailleurs de fonds | 3 549 entrées, liste avec recherche : gouvernements, ministères, agences, fondations | Reprendre : notre filtre Financeur existe déjà (151 valeurs), il lui manque le champ de recherche et le « Voir plus » |
+| Type de financement | subvention et financement, crédits d'impôt, prêts et investissements, subventions salariales et stagiaires, chercheurs et établissements, partenariat et collaboration, autre soutien, conseils d'experts | Adapter : appel à projets, appel à candidatures, appel à manifestation d'intérêt, subvention directe, prix et concours, mécénat ; c'est le « type » de nos fiches, à fiabiliser dans l'extraction |
+| Statut | bientôt ouvert, ouvert, bientôt fermé, fermé | Reprendre : nous n'avons que ouvert / clôturé ; « bientôt fermé » (moins de 30 jours) et « bientôt ouvert » (date d'ouverture connue) sont calculables à partir des dates |
+| Objectifs | groupés par thème : capacité organisationnelle (gouvernance, pérennité financière, renforcer la capacité), développement de programmes (bonifier un programme, en développer un nouveau), impact et mobilisation, innovation, modernisation et infrastructure (numériser, rénover), recherche et environnement, ressources humaines et bénévolat (former l'équipe, encadrer des bénévoles) | Adapter en « Objet du projet » groupé : création ou extension de places, rénovation et immobilier, équipement, numérique et systèmes d'information, prévention et promotion de la santé, formation et attractivité des métiers, recherche et innovation, coordination des parcours, qualité de vie au travail |
+| Dépenses admissibles | 84 entrées avec recherche : achat de terrain ou bâtiment, achat d'équipement, architecture et plans, assurance, honoraires... | Adapter : dépenses de fonctionnement, investissement, ingénierie, formation, recrutement ; champ nouveau pour l'extraction, utile mais second temps |
+| Revenu annuel | 500K ou moins, 500K-1M, 1M-2M, 2M-5M, 5M-10M, 11M-25M, 25M-50M, 50M-100M, 100M+ | Adapter en « Budget annuel de l'établissement » par tranches ; sert à cibler l'appel plutôt qu'à le filtrer |
+| Taille d'entreprise | 1, 2-10, 11-25, 26-50, 51-100, 101-300, 300+ employés | Adapter : taille en ETP et en lits ou places ; champ du profil, pas des fiches |
+| Structure de revenu | 100 % dons/subventions, rémunération à l'acte, revenus mixtes (moins de 50 % gagnés), revenus mixtes (50 % et plus) | Écarter : propre au monde associatif québécois ; notre équivalent est le mode de financement (dotation, tarification, subventions) sans intérêt pour le filtre |
+| Secteur d'opération | 22 entrées pour les OBNL (protection des animaux, associations d'entreprises, enfants et jeunes, plaidoyer, culture, diversité, développement communautaire, urgence, emploi, environnement...) ; pour les entreprises, la liste devient « secteurs d'industrie » par code (41 commerce de gros, 414...) | Reprendre l'idée d'une liste différente selon le profil : pour nous, « Type d'établissement » (MCO, SSR, psychiatrie, HAD, EHPAD, SSIAD, résidence autonomie, IME, ESAT, FAM, MAS, centre de santé, MSP, CPTS, association de prévention...) d'après la nomenclature FINESS |
+| Groupe ciblé par l'organisation | milieu universitaire, artistes, entrepreneurs, enfants et jeunes, leaders communautaires, grand public, peuples autochtones, LGBTQ+, faible revenu, minorités... (17) | Adapter en « Publics » : personnes âgées, handicap, enfance et famille, santé mentale, addictions, précarité, aidants, personnes détenues, tout public |
+| Envergure | international, local, municipal, national, provincial, régional | Reprendre en « Portée » : national, régional, départemental, local ; déductible de notre champ territoire |
+| Année de fondation | année | Écarter du filtre ; garder dans le profil si un appel l'exige (structures de moins de N ans) |
+| Province | Québec, Ontario, Alberta... (13) | Déjà fait : notre filtre Territoire (régions) ; ajouter le département |
+| Ville | 630 villes avec recherche | Adapter : département plutôt que ville ; la ville n'a de sens que pour les appels de collectivités |
+
+Ce que nous avons déjà : territoire, thématique (santé / médico-social), financeur, source, relecture, mot-clé. Ce
+qui manque et se calcule sans nouvelle extraction : statut à quatre valeurs, montant maximal, portée, compteur avec
+montants, étiquettes actives, remise au profil, lien de recherche partageable. Ce qui demande d'enrichir l'extraction
+(nouveaux champs posés à Haiku, coût à chiffrer) : statut de l'établissement éligible, type d'appel fiabilisé, objet du
+projet, publics, dépenses admissibles. Proposition : faire d'abord le premier groupe (point 3 de la liste), puis
+ajouter les champs manquants à la consigne d'extraction dans un changement séparé, avec devis.
+
 ## 2 bis. La liste de démarrage jouée jusqu'au bout (captures 11 à 14)
 
 La fenêtre « Démarrer sur helloDarwin (0/4) » reste affichée en haut à droite de toutes les pages tant que les
