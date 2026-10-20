@@ -41,6 +41,7 @@ archivage sans demande ; migrations après essai à blanc et sauvegarde.
   (sans pause, journal `logs/veille.log`) ; tâche planifiée Windows « AAP Sante - veille hebdomadaire » (lundi 8 h,
   décision de Monsieur DUCOUT « une fois par semaine automatique ») ; veille lancée sur les 222 pages confirmées
   restantes (zéro euro), devis des textes nouveaux collé, extraction après accord.
+  Avancement au 2026-10-20, 12 h 15 : passage complet sur les 207 pages terminé (journal `scraping/logs/veille_2026-10-20_complet.log`, code 0) : 198 sources relues, 9 en erreur, 2 673 liens vus, 184 nouveaux, 295 disparus, 129 textes nouveaux lus ; 1 566 fiches marquées « vue aujourd'hui » (sauvegarde `scripts/sauvegardes/rejeu_2026-10-20_1213`), 0 fiche à péremption (seconde absence requise). Devis d'extraction à blanc : 129 textes, 428 152 caractères, 0,16 euro au plus, cumul Haiku 2,014 euros sur 5. Extraction en attente de l'accord de Monsieur DUCOUT.
 
 ## 4. Lancement et documentation
 
