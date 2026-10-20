@@ -342,6 +342,20 @@ def verifier_fiche(text: str, fiche: dict, url: str, consigne: str, source: str 
     return _appeler(model or MODEL, consigne, VERIFICATION_TOOL, user_content, 2048, source, url, "verification")
 
 
+def qualifier_fiche(text: str, url: str, consigne: str, tool: dict, source: str = "", model: str | None = None) -> dict:
+    """Qualification d une fiche a choix fermes : destinataires, type d appel, objets, date d ouverture, pieces, champ
+    (qualifier_fiches.py, jour 2 du plan MVP, 2026-10-20)."""
+    user_content = (
+        f"URL source : {url}" + chr(10) + chr(10)
+        + "Texte de la page :" + chr(10)
+        + "-----" + chr(10)
+        + f"{text[:MAX_TEXT_CHARS]}" + chr(10)
+        + "-----" + chr(10) + chr(10)
+        + "Reponds en appelant l outil qualification."
+    )
+    return _appeler(model or MODEL, consigne, tool, user_content, 1024, source, url, "qualification")
+
+
 def champ_aap(text: str, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:
     """Question fermee « de quel champ releve cet appel ? » : {champ: str, raison: str} (filtre-champ-sante).
 
