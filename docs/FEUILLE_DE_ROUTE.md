@@ -1,5 +1,8 @@
 # Feuille de route AAP Santé
 
+> Depuis le 2026-10-20 au soir, le plan de travail actif est `PLAN_MVP_2026-10-20.md` (sept jours vers un prototype
+> présentable à des testeurs) ; cette feuille de route reste la vue d'ensemble des huit grandes étapes.
+
 Document de pilotage pour Monsieur DUCOUT (ARCADIA SASU). Mis à jour le 2026-10-13 ; à relire et
 compléter à chaque reprise de session, en même temps que `REPRISE.md`. Les huit grandes étapes sont
 celles énoncées par Monsieur DUCOUT ; l'état est celui constaté dans le dépôt, pas une estimation.
