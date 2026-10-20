@@ -12,6 +12,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   (`/candidature/:id`) ; « Mes candidatures » en cinq colonnes par étape. 51 tests Vitest.
 
 ### Corrigé
+- Application (2026-10-20 soir, premier parcours du jour 1 par Monsieur DUCOUT) : mentions « contrôlée par le modèle »
+  réservées à l'administrateur, le candidat voit « Mise à jour le » ; « À qui s'adresse cet appel » lit les familles de
+  structures dans les critères quand la fiche n'a pas de types structurés ; formulaire de candidature réduit à trois
+  étapes (projet, montant, pièces avec le dossier de l'appel) ; règle Storage ajoutée pour le dossier des pièces de
+  candidature (`uploads/applications/<compte>/`), déploiement après accord. 52 tests.
+### Corrigé
 - Application (2026-10-20, second parcours de Monsieur DUCOUT) : « Mes candidatures » restait vide après l'envoi (la
   requête triée par `submittedAt` exigeait un index composite absent) : tri en mémoire, erreur affichée, bandeau de
   confirmation « Candidature envoyée à <financeur> » ; l'étape Documents bloque l'envoi quand l'appel exige des pièces ;

@@ -448,12 +448,12 @@ export default function SearchAapPage() {
                       </p>
 
                       {/* Mention de relecture, date d'extraction et lien officiel (mention-relecture-fiches, instruction 11) */}
-                      {(mentionRelecture(aap) || aap.externalUrl) && (
+                      {(dateExtraction(aap) || aap.externalUrl) && (
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
-                          {mentionRelecture(aap) && (
+                          {userProfile?.userType === 'admin' && mentionRelecture(aap) && (
                             <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
                           )}
-                          {dateExtraction(aap) && <span>Informations extraites le {dateExtraction(aap)}</span>}
+                          {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
                           {aap.externalUrl && (
                             <a
                               href={aap.externalUrl}

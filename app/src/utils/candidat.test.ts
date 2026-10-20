@@ -1,6 +1,6 @@
 // Tests du parcours candidat (changement parcours-candidat-jour-1, tâche 1.1).
 import { describe, expect, it } from 'vitest';
-import { appelsPourProfil, aQuiSAdresse, colonneDe, echeancesProches, libelleMontant, repartirCandidatures } from './candidat';
+import { appelsPourProfil, aQuiSAdresse, colonneDe, echeancesProches, famillesDepuisCriteres, libelleMontant, repartirCandidatures } from './candidat';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
 
@@ -18,6 +18,13 @@ describe('aQuiSAdresse', () => {
   it('reprend les types éligibles sans doublon ni vide', () => {
     expect(aQuiSAdresse({ structureTypeEligible: ['EHPAD', ' EHPAD', '', 'Associations'] })).toEqual(['EHPAD', 'Associations']);
     expect(aQuiSAdresse({})).toEqual([]);
+  });
+
+  it('sans types structurés, lit les familles dans les critères', () => {
+    expect(aQuiSAdresse({ eligibilityCriteria: '- Structures éligibles : associations loi 1901' })).toEqual(['Associations']);
+    expect(famillesDepuisCriteres('Établissements publics de santé et ESPIC, EHPAD'))
+      .toEqual(['Établissements publics', 'Privé non lucratif', 'Établissements de santé', 'Établissements médico-sociaux']);
+    expect(famillesDepuisCriteres('Dossier à déposer avant le 30 juin')).toEqual([]);
   });
 });
 

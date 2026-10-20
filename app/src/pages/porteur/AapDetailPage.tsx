@@ -147,15 +147,15 @@ export default function AapDetailPage() {
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-gray-900 mb-3">{aap.title}</h1>
               {/* Mention de relecture, date d'extraction et lien officiel en évidence (mention-relecture-fiches, instruction 11) */}
-              {(mentionRelecture(aap) || aap.externalUrl) && (
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
-                  {mentionRelecture(aap) && (
+              {/* Mention de relecture réservée à l'administrateur (retour du 2026-10-20) ; le candidat voit la date de mise à jour */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
+                  {userProfile?.userType === 'admin' && mentionRelecture(aap) && (
                     <>
                       <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
                       {mentionRelecture(aap)!.detail && <span>{mentionRelecture(aap)!.detail.trim()}</span>}
                     </>
                   )}
-                  {dateExtraction(aap) && <span>Informations extraites le {dateExtraction(aap)}</span>}
+                  {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
                   {aap.externalUrl && (
                     <a
                       href={aap.externalUrl}
@@ -167,8 +167,7 @@ export default function AapDetailPage() {
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   )}
-                </div>
-              )}
+              </div>
               <div className="flex items-center gap-2 text-gray-600 mb-2">
                 <Building className="h-5 w-5" />
                 <span className="text-lg">{aap.financeurName}</span>
@@ -250,7 +249,7 @@ export default function AapDetailPage() {
                 {aQuiSAdresse(aap).map(t => <Badge key={t} variant="primary">{t}</Badge>)}
               </div>
             ) : (
-              <p className="text-gray-500 italic mb-4">Types de structures non précisés sur la fiche : voir les critères et l'annonce officielle</p>
+              <p className="text-gray-500 italic mb-4">Types de structures non précisés sur l'annonce : voir les critères ci-dessous</p>
             )}
             <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-primary-600" />

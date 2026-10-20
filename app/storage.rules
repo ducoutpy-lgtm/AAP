@@ -22,6 +22,15 @@ service firebase.storage {
       allow delete: if isAuthenticated();
     }
 
+    // Pièces d'une candidature, déposées par le candidat avant la création du dossier (2026-10-20 : le formulaire
+    // écrivait dans ce dossier sans règle, d'où « storage/unauthorized ») ; lecture par tout compte connecté (le
+    // financeur destinataire), écriture par le propriétaire du dossier
+    match /uploads/applications/{userId}/{filename} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
     // Application documents
     match /uploads/application-documents/{applicationId}/{filename} {
       allow read: if isAuthenticated();

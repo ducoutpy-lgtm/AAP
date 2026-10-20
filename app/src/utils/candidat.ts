@@ -21,9 +21,32 @@ export const LIBELLES_THEMATIQUES_FICHE: Record<string, string> = {
   social: 'Médico-social et social',
 };
 
-// Types d'établissement éligibles lus par l'extraction (structureTypeEligible), nettoyés ; vide si la fiche n'en a pas
-export function aQuiSAdresse(aap: Pick<AAP, 'structureTypeEligible'>): string[] {
-  return Array.from(new Set((aap.structureTypeEligible ?? []).map(t => t.trim()).filter(Boolean)));
+// Familles de structures reconnues dans le texte des critères (retour de Monsieur DUCOUT du 2026-10-20 : la fiche
+// disait « types non précisés » alors que les critères écrivaient « structures éligibles : associations »). Heuristique
+// de mots, en attendant le champ extrait par le modèle (jour 2 du plan MVP).
+const FAMILLES: [RegExp, string][] = [
+  [/\bassociations?\b/i, 'Associations'],
+  [/\bfondations?\b|fonds de dotation/i, 'Fondations'],
+  [/[ée]tablissements? publics?|secteur public|\bpublics?\b/i, 'Établissements publics'],
+  [/priv[ée]s? (?:à but )?non lucratif|\bespic\b|non lucratif/i, 'Privé non lucratif'],
+  [/priv[ée]s? (?:à but )?lucratif|\bentreprises?\b|\bsoci[ée]t[ée]s?\b/i, 'Entreprises, privé lucratif'],
+  [/collectivit[ée]s?|\bcommunes?\b|\bccas\b|conseils? d[ée]partementa/i, 'Collectivités'],
+  [/[ée]tablissements?(?: publics?| priv[ée]s?)? de sant[ée]|h[ôo]pita|hospitali|\bchu\b|cliniques?/i, 'Établissements de santé'],
+  [/m[ée]dico-socia|\besms\b|\behpad\b|\besat\b|\bime\b|\bfam\b|\bmas\b|\bssiad\b/i, 'Établissements médico-sociaux'],
+  [/chercheurs?|laboratoires?|[ée]quipes? de recherche|universit/i, 'Équipes de recherche'],
+  [/\bcpts\b|maisons? de sant[ée]|centres? de sant[ée]|professionnels? de sant[ée] lib[ée]ra/i, 'Exercice coordonné et libéraux'],
+];
+
+export function famillesDepuisCriteres(texte: string | null | undefined): string[] {
+  if (!texte) return [];
+  return FAMILLES.filter(([motif]) => motif.test(texte)).map(([, libelle]) => libelle);
+}
+
+// Types d'établissement éligibles : ceux lus par l'extraction (structureTypeEligible), sinon les familles reconnues
+// dans les critères ; vide si rien
+export function aQuiSAdresse(aap: Pick<AAP, 'structureTypeEligible' | 'eligibilityCriteria'>): string[] {
+  const lus = Array.from(new Set((aap.structureTypeEligible ?? []).map(t => t.trim()).filter(Boolean)));
+  return lus.length > 0 ? lus : famillesDepuisCriteres(aap.eligibilityCriteria);
 }
 
 // Appels pour une structure : sa région ou national, non clôturés, clôture la plus proche d'abord puis sans date
