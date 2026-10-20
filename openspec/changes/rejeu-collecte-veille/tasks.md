@@ -37,11 +37,11 @@ archivage sans demande ; migrations après essai à blanc et sauvegarde.
   invalide au schéma) ; contrôle, devis « 15 fiches à vérifier, 0.005 euros estimés », réel « 15 fiches vérifiées ;
   coût cumulé 2.014 euros » ; import « 17 crees, 529 mis a jour » ; base : 640 documents, 303 publiées (269 validées,
   26 proposées, 8 à corriger), 292 brouillons, 45 archivées ; les 17 créées : 15 publiées validées, 2 brouillons à corriger.)
-- [ ] 3.2 Garde-fou « une page relue une fois par jour au plus » (`rejeu.deja_relue`, test) et mode `veille.cmd auto`
+- [x] 3.2 Garde-fou « une page relue une fois par jour au plus » (`rejeu.deja_relue`, test) et mode `veille.cmd auto`
   (sans pause, journal `logs/veille.log`) ; tâche planifiée Windows « AAP Sante - veille hebdomadaire » (lundi 8 h,
   décision de Monsieur DUCOUT « une fois par semaine automatique ») ; veille lancée sur les 222 pages confirmées
   restantes (zéro euro), devis des textes nouveaux collé, extraction après accord.
-  Avancement au 2026-10-20, 12 h 15 : passage complet sur les 207 pages terminé (journal `scraping/logs/veille_2026-10-20_complet.log`, code 0) : 198 sources relues, 9 en erreur, 2 673 liens vus, 184 nouveaux, 295 disparus, 129 textes nouveaux lus ; 1 566 fiches marquées « vue aujourd'hui » (sauvegarde `scripts/sauvegardes/rejeu_2026-10-20_1213`), 0 fiche à péremption (seconde absence requise). Devis d'extraction à blanc : 129 textes, 428 152 caractères, 0,16 euro au plus, cumul Haiku 2,014 euros sur 5. Extraction en attente de l'accord de Monsieur DUCOUT.
+  Avancement au 2026-10-20, 12 h 15 : passage complet sur les 207 pages terminé (journal `scraping/logs/veille_2026-10-20_complet.log`, code 0) : 198 sources relues, 9 en erreur, 2 673 liens vus, 184 nouveaux, 295 disparus, 129 textes nouveaux lus ; 1 566 fiches marquées « vue aujourd'hui » (sauvegarde `scripts/sauvegardes/rejeu_2026-10-20_1213`), 0 fiche à péremption (seconde absence requise). Devis d'extraction à blanc : 129 textes, 428 152 caractères, 0,16 euro au plus, cumul Haiku 2,014 euros sur 5. Extraction faite le 2026-10-20 à 13 h sur son accord (« Fais-le si tu veux, oui ») : 129 textes, 54 fiches nouvelles, 1 échec, 0,084 euro ; contrôle Haiku de 17 fiches 0,009 euro (sauvegarde `verification_2026-10-20_1312`) ; import « 43 crees, 546 mis a jour », 248 fiches publiables, 78 financeurs distincts ; cumul Haiku 2,107 euros sur 5. Les fiches non validées par le modèle sont entrées en brouillon, à contrôler depuis l'administration.
 
 ## 4. Lancement et documentation
 

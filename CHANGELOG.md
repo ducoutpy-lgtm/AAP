@@ -14,6 +14,7 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   place de la consultation libre, FAQ et CGU mises à jour) ; « Candidat » remplace « Porteur de projet » dans les
   écrans ; Déconnexion aussi sous Paramètres ; publics accueillis facultatifs ; la recherche d'un candidat part de la
   région de son profil ; administration : filtre par financeur, cases à cocher, validation ou rejet en masse.
+- Veille (2026-10-20, 13 h, accord de Monsieur DUCOUT) : 129 textes nouveaux extraits par Haiku (54 fiches, 0,084 euro), 17 contrôlées (0,009 euro), import 43 créées ; cumul Haiku 2,107 euros.
 - Données (2026-10-20, accord de Monsieur DUCOUT) : 34 fiches publiées sans contrôle repassées en brouillon
   (sauvegarde `depublication_2026-10-20_1101.json`) ; ré-import appliquant la fusion des financeurs (546 mises à jour,
   69 noms distincts).
