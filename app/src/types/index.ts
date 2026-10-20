@@ -20,6 +20,8 @@ export interface User {
   // Horodatage de la case « J'accepte les conditions générales » du parcours d'intégration (parcours-integration,
   // 2026-10-20) ; absent pour les comptes créés avant
   cguAccepteLe?: Timestamp | Date;
+  // Liste de démarrage (liste-demarrage, 2026-10-20) : actions faites, écrites par les pages ouvertes
+  demarrage?: Partial<Record<'profil' | 'recherche' | 'fiche' | 'candidature' | 'appel', boolean>>;
 }
 
 export interface NotificationPreferences {
@@ -43,6 +45,10 @@ export interface PorteurProfile {
   tailleTranche?: string | null;
   budgetTranche?: string | null;
   publics?: string[];
+  // Fenêtre « Préciser mon profil » de la liste de démarrage (liste-demarrage, 2026-10-20)
+  objetsProjet?: string[];
+  anneeOuverture?: number | null;
+  rayonAction?: string | null;
   address?: Address;
   contactPerson?: ContactPerson;
   teamSize?: number;

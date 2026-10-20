@@ -23,6 +23,10 @@ export interface FormulairePorteur {
   tailleTranche: string;
   budgetTranche: string;
   publics: string[];
+  // Fenêtre « Préciser mon profil » (liste-demarrage, 2026-10-20)
+  objetsProjet: string[];
+  anneeOuverture: string;
+  rayonAction: string;
 }
 
 export interface FormulaireFinanceur {
@@ -44,6 +48,7 @@ export const FORMULAIRE_PORTEUR_VIDE: FormulairePorteur = {
   structureName: '', siret: '', structureType: '', secteurActivite: '', domainesIntervention: [],
   city: '', postalCode: '', region: '', firstName: '', lastName: '', phone: '', teamSize: '', website: '', description: '',
   typeEtablissement: '', tailleTranche: '', budgetTranche: '', publics: [],
+  objetsProjet: [], anneeOuverture: '', rayonAction: '',
 };
 
 export const FORMULAIRE_FINANCEUR_VIDE: FormulaireFinanceur = {
@@ -75,6 +80,9 @@ export function formulairePorteurDepuisProfil(p: PorteurProfile): FormulairePort
     tailleTranche: texte(p.tailleTranche),
     budgetTranche: texte(p.budgetTranche),
     publics: p.publics ?? [],
+    objetsProjet: p.objetsProjet ?? [],
+    anneeOuverture: texte(p.anneeOuverture),
+    rayonAction: texte(p.rayonAction),
   };
 }
 

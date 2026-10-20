@@ -4,6 +4,7 @@ import { Plus, FileText, Users, TrendingUp, Eye } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
+import { ListeDemarrage } from '../../components/demarrage/ListeDemarrage';
 
 export default function FinanceurDashboard() {
   const { userProfile } = useAuth();
@@ -50,6 +51,9 @@ export default function FinanceurDashboard() {
             Gérez vos appels à projets et candidatures en un seul endroit
           </p>
         </div>
+
+        {/* Liste de démarrage (liste-demarrage, 2026-10-20) : disparaît à 4/4 */}
+        <ListeDemarrage />
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">

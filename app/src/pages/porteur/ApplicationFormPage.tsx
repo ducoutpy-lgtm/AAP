@@ -10,6 +10,7 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Stepper } from '../../components/ui/Stepper';
 import { ArrowLeft, Upload, X } from 'lucide-react';
+import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 
 interface FormData {
   projectTitle: string;
@@ -30,6 +31,7 @@ export default function ApplicationFormPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  useMarquerDemarrage('candidature');
   const [aap, setAap] = useState<AAP | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);

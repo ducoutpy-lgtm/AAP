@@ -11,6 +11,7 @@ import { Target } from 'lucide-react';
 import type { PorteurProfile } from '../../types';
 import { formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
 import { BUDGETS, FORMES_JURIDIQUES, PUBLICS, TAILLES, TYPES_ETABLISSEMENT } from '../onboarding/parcours';
+import { anneeOuvertureValide, OBJETS_PROJET, RAYONS_ACTION } from '../../components/demarrage/demarrage';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -63,6 +64,13 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
     }));
   };
 
+  const handleObjetChange = (valeur: string) => {
+    setFormData(prev => ({
+      ...prev,
+      objetsProjet: prev.objetsProjet.includes(valeur) ? prev.objetsProjet.filter(o => o !== valeur) : [...prev.objetsProjet, valeur],
+    }));
+  };
+
   const handlePublicChange = (valeur: string) => {
     setFormData(prev => ({
       ...prev,
@@ -91,6 +99,10 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
         tailleTranche: formData.tailleTranche || null,
         budgetTranche: formData.budgetTranche || null,
         publics: formData.publics,
+        // Fenêtre « Préciser mon profil » (liste-demarrage, 2026-10-20)
+        objetsProjet: formData.objetsProjet,
+        anneeOuverture: anneeOuvertureValide(formData.anneeOuverture),
+        rayonAction: formData.rayonAction || null,
         address: {
           city: formData.city,
           postalCode: formData.postalCode,
@@ -238,6 +250,40 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
                       </label>
                     ))}
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Objets de vos projets</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {OBJETS_PROJET.map((o) => (
+                      <label key={o.value} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.objetsProjet.includes(o.value)}
+                          onChange={() => handleObjetChange(o.value)}
+                          className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span className="text-sm text-gray-700">{o.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    label="Année d'ouverture"
+                    value={formData.anneeOuverture}
+                    onChange={(e) => setFormData({ ...formData, anneeOuverture: e.target.value })}
+                    maxLength={4}
+                    inputMode="numeric"
+                    helperText="Ex : 1998"
+                  />
+                  <Select
+                    label="Rayon d'action"
+                    value={formData.rayonAction}
+                    onChange={(e) => setFormData({ ...formData, rayonAction: e.target.value })}
+                    options={RAYONS_ACTION}
+                  />
                 </div>
 
                 <Select

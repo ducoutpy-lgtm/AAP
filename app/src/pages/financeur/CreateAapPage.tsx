@@ -11,6 +11,7 @@ import { Stepper } from '../../components/ui/Stepper';
 import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
 import type { AAP } from '../../types';
 import { donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
+import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -54,6 +55,7 @@ const REGIONS = [
 // existant et l'enregistrement le met à jour au lieu d'en créer un second.
 export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {}) {
   const { currentUser, userProfile } = useAuth();
+  useMarquerDemarrage('appel');
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);

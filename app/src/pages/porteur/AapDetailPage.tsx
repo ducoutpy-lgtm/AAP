@@ -10,6 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
+import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import {
   Calendar,
   Building,
@@ -39,6 +40,7 @@ export default function AapDetailPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
   const { currentUser, userProfile } = useAuth();
+  useMarquerDemarrage('fiche');
   const [aap, setAap] = useState<AAP | null>(null);
   // Consultation publique (spec consultation-aap-scrapes) : la fiche se lit sans compte ; les actions
   // qui engagent (candidater, favori) renvoient le visiteur vers la connexion, puis le ramènent ici.

@@ -41,6 +41,12 @@ describe('formulairePorteurDepuisProfil', () => {
     expect(f.tailleTranche).toBe('51-200');
     expect(f.budgetTranche).toBe('');
     expect(f.publics).toEqual(['personnes-agees']);
+    expect(f.objetsProjet).toEqual([]);
+    expect(f.anneeOuverture).toBe('');
+    const precise: PorteurProfile = { ...nouveau, objetsProjet: ['immobilier'], anneeOuverture: 1998, rayonAction: 'regional' };
+    expect(formulairePorteurDepuisProfil(precise).objetsProjet).toEqual(['immobilier']);
+    expect(formulairePorteurDepuisProfil(precise).anneeOuverture).toBe('1998');
+    expect(formulairePorteurDepuisProfil(precise).rayonAction).toBe('regional');
   });
 });
 

@@ -12,9 +12,11 @@ import {
   ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
+import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 
 export default function SearchAapPage() {
   const navigate = useNavigate();
+  useMarquerDemarrage('recherche');
   const [aaps, setAaps] = useState<(AAP & { id: string })[]>([]);
   const [filteredAaps, setFilteredAaps] = useState<(AAP & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
