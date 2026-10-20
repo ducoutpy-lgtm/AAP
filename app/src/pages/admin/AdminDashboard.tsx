@@ -18,6 +18,9 @@ import {
 
 interface DashboardStats {
   totalUsers: number;
+  // administration-controle (2026-10-20) : appels publiés, fiches à contrôler (proposées ou à corriger, hors archivées)
+  aapPublies: number;
+  aControler: number;
   totalPorteurs: number;
   totalFinanceurs: number;
   totalAap: number;
@@ -39,6 +42,8 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [stats, setStats] = useState<DashboardStats>({
     totalUsers: 0,
+    aapPublies: 0,
+    aControler: 0,
     totalPorteurs: 0,
     totalFinanceurs: 0,
     totalAap: 0,
@@ -67,6 +72,10 @@ export default function AdminDashboard() {
 
       // Load AAPs
       const aapSnapshot = await getDocs(collection(db, 'aap'));
+      const aapDocs = aapSnapshot.docs.map(d => d.data());
+      const aapPublies = aapDocs.filter(a => a.status === 'published').length;
+      const aControler = aapDocs.filter(a => a.status !== 'archived'
+        && (a.validation?.statut === 'proposee' || a.validation?.statut === 'a_corriger')).length;
 
       // Load applications
       const applicationsSnapshot = await getDocs(collection(db, 'applications'));
@@ -84,6 +93,8 @@ export default function AdminDashboard() {
 
       setStats({
         totalUsers: usersSnapshot.size,
+        aapPublies,
+        aControler,
         totalPorteurs,
         totalFinanceurs,
         totalAap: aapSnapshot.size,
@@ -229,10 +240,10 @@ export default function AdminDashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Utilisateurs totaux</p>
+                <p className="text-sm text-gray-600 mb-1">Comptes</p>
                 <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  {stats.totalPorteurs} porteurs • {stats.totalFinanceurs} financeurs
+                  {stats.totalPorteurs} candidats (établissements) • {stats.totalFinanceurs} financeurs
                 </p>
               </div>
               <div className="p-3 bg-primary-100 rounded-lg">
@@ -244,10 +255,10 @@ export default function AdminDashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">AAP publiés</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.totalAap}</p>
+                <p className="text-sm text-gray-600 mb-1">Appels publiés</p>
+                <p className="text-3xl font-bold text-gray-900">{stats.aapPublies}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  {stats.totalApplications} candidatures reçues
+                  {stats.totalAap} fiches en tout • {stats.totalApplications} candidatures reçues
                 </p>
               </div>
               <div className="p-3 bg-blue-100 rounded-lg">
@@ -290,6 +301,23 @@ export default function AdminDashboard() {
             </div>
           </Card>
         </div>
+
+        {/* Fiches à contrôler (administration-controle, 2026-10-20) : le travail du jour, en un clic */}
+        <Card className={`p-6 mb-8 border-2 ${stats.aControler > 0 ? 'border-warning-500' : 'border-success-500'}`}>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-sm text-gray-600 mb-1">Fiches à contrôler</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.aControler}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                Proposées par la veille ou à corriger ; elles ne sont pas visibles des candidats tant qu'elles ne sont pas validées
+              </p>
+            </div>
+            <Button onClick={() => navigate('/admin/aaps?validation=proposee')} disabled={stats.aControler === 0}>
+              <FileText className="h-4 w-4 mr-2" />
+              Contrôler les fiches
+            </Button>
+          </div>
+        </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Quick Actions */}

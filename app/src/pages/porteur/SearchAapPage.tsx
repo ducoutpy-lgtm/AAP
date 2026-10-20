@@ -4,7 +4,7 @@ import { collection, query, where, orderBy, getDocs, doc, getDoc } from 'firebas
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP, PorteurProfile } from '../../types';
-import { mentionRelecture, estRelue, dateExtraction } from '../../utils/relecture';
+import { mentionRelecture, dateExtraction, visiblePubliquement } from '../../utils/relecture';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
@@ -74,7 +74,6 @@ export default function SearchAapPage() {
   // écrit par l'import, changement nettoyage-financeurs-territoires) ; les sources (site d'origine de la fiche).
   const territoiresPresents = valeursPresentes(aaps.flatMap(aap => aap.territoriesEligible ?? []), libelleTerritoire);
   const financeursPresents = valeursPresentes(aaps.map(aap => aap.financeurName || 'Non spécifié'));
-  const sourcesPresentes = valeursPresentes(aaps.map(aap => aap.scrapeMetadata?.sourceNom || 'Non précisée'));
 
   useEffect(() => {
     loadAaps();
@@ -96,10 +95,11 @@ export default function SearchAapPage() {
       );
 
       const snapshot = await getDocs(aapsQuery);
-      const aapsData = snapshot.docs.map(doc => ({
+      // Seules les fiches contrôlées (ou saisies à la main) sont visibles des candidats (administration-controle)
+      const aapsData = (snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-      })) as (AAP & { id: string })[];
+      })) as (AAP & { id: string })[]).filter(visiblePubliquement);
 
       setAaps(aapsData);
       setFilteredAaps(aapsData);
@@ -145,15 +145,8 @@ export default function SearchAapPage() {
       result = result.filter(aap => (aap.financeurName || 'Non spécifié') === filters.financeur);
     }
 
-    // Filtre « fiches relues ou contrôlées seulement » (mention-relecture-fiches) : validation.statut = validee
-    if (filters.relecture === 'relues') {
-      result = result.filter(aap => estRelue(aap));
-    }
-
-    // Filtre par source : site d'origine de la fiche (nom de l'émetteur du registre écrit par l'import)
-    if (filters.source) {
-      result = result.filter(aap => (aap.scrapeMetadata?.sourceNom || 'Non précisée') === filters.source);
-    }
+    // Les filtres Source et Relecture ont été retirés de la recherche publique le 2026-10-20 (administration-controle) :
+    // toutes les fiches affichées ici sont contrôlées, et le site d'origine n'intéresse que l'administration.
 
     // Filtres par budget : une fiche sans montant connu n'est pas écartée, elle est classée après les fiches chiffrées
     if (filters.budgetMin) {
@@ -332,40 +325,6 @@ export default function SearchAapPage() {
                       {financeur}
                     </option>
                   ))}
-                </select>
-              </div>
-
-              {/* Source : site d'origine de la fiche */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Source (site d'origine)
-                </label>
-                <select
-                  value={filters.source}
-                  onChange={(e) => setFilters({ ...filters, source: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                >
-                  <option value="">Toutes les sources</option>
-                  {sourcesPresentes.map(source => (
-                    <option key={source} value={source}>
-                      {source}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Relecture (mention-relecture-fiches) : fiches validées par Monsieur DUCOUT ou par le modèle */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Relecture
-                </label>
-                <select
-                  value={filters.relecture}
-                  onChange={(e) => setFilters({ ...filters, relecture: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                >
-                  <option value="">Toutes les fiches</option>
-                  <option value="relues">Fiches relues ou contrôlées seulement</option>
                 </select>
               </div>
 

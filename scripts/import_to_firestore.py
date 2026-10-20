@@ -149,6 +149,19 @@ def appliquer_decision_du_modele(doc: dict, decision: dict | None) -> dict:
     return d
 
 
+def publication_selon_controle(doc: dict) -> dict:
+    """Une fiche nouvelle que personne n'a validee (statut proposee ou a_corriger, relecteur autre que Monsieur
+    DUCOUT) entre en brouillon, jamais en publie (decision de Monsieur DUCOUT du 2026-10-20, changement
+    administration-controle : seules les fiches controlees sont visibles des candidats). Fonction pure ; les documents
+    deja en base gardent leur statut (champs humains jamais reecrits)."""
+    v = doc.get("validation") or {}
+    if doc.get("status") == "published" and v.get("statut") in STATUTS_A_VERIFIER and v.get("par") != RELECTEUR:
+        d = dict(doc)
+        d["status"] = "draft"
+        return d
+    return doc
+
+
 def etiqueter(tags: list[str], statut: str) -> list[str]:
     """L'etiquette a-verifier suit le statut de validation, et rien d'autre (fonction pure)."""
     sans = [t for t in tags if t != "a-verifier"]
@@ -497,6 +510,7 @@ def main() -> int:
             doc = appliquer_verdict(doc, verdicts.get(doc["externalUrl"]))
             doc = champ_en_attente(doc, today)
             doc = appliquer_decision_du_modele(doc, decision)
+            doc = publication_selon_controle(doc)
             hors_champ += "hors-champ" in doc["tags"]
             verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")
             mapped.append((identifiant(doc["externalUrl"]), doc))

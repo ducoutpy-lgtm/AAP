@@ -1,7 +1,7 @@
 // Tests de la mention de relecture (changement mention-relecture-fiches, testé dans degel-application-complete 5.1).
 import { describe, expect, it } from 'vitest';
 import type { AAP } from '../types';
-import { dateExtraction, estRelue, formatDateFr, mentionRelecture, RELECTEUR_HUMAIN } from './relecture';
+import { dateExtraction, estRelue, formatDateFr, mentionRelecture, RELECTEUR_HUMAIN, visiblePubliquement } from './relecture';
 
 const base: AAP = {
   financeurId: 'scraped',
@@ -59,5 +59,15 @@ describe('estRelue et dates', () => {
     expect(formatDateFr('n importe quoi')).toBe('n importe quoi');
     expect(dateExtraction(avec(undefined, '2026-10-19T10:12:00'))).toBe('19/10/2026');
     expect(dateExtraction(base)).toBeNull();
+  });
+});
+
+describe('visiblePubliquement', () => {
+  it('validée ou sans bloc validation : visible ; proposée, à corriger, rejetée : invisible', () => {
+    expect(visiblePubliquement({ validation: undefined })).toBe(true);
+    expect(visiblePubliquement({ validation: { statut: 'validee', commentaire: '', date: '', par: 'modele' } })).toBe(true);
+    expect(visiblePubliquement({ validation: { statut: 'proposee', commentaire: '', date: '', par: '' } })).toBe(false);
+    expect(visiblePubliquement({ validation: { statut: 'a_corriger', commentaire: '', date: '', par: '' } })).toBe(false);
+    expect(visiblePubliquement({ validation: { statut: 'rejetee', commentaire: '', date: '', par: '' } })).toBe(false);
   });
 });

@@ -11,7 +11,7 @@ import CreateAapPage from './CreateAapPage';
 
 export default function EditAapPage() {
   const { aapId } = useParams<{ aapId: string }>();
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [aap, setAap] = useState<AAP | null>(null);
   const [chargement, setChargement] = useState(true);
 
@@ -24,7 +24,9 @@ export default function EditAapPage() {
 
   if (chargement) return <LoadingSpinner fullScreen />;
 
-  if (!aap || !currentUser || aap.financeurId !== currentUser.uid) {
+  // L'administrateur corrige toute fiche, importée comprise (administration-controle, 2026-10-20)
+  const estAdmin = userProfile?.userType === 'admin';
+  if (!aap || !currentUser || (aap.financeurId !== currentUser.uid && !estAdmin)) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

@@ -34,6 +34,13 @@ export function estRelue(aap: AAP): boolean {
   return aap.validation?.statut === 'validee';
 }
 
+// Visibilité publique (administration-controle, décision du 2026-10-20) : un candidat ne voit qu'une fiche contrôlée
+// (validée) ou saisie à la main par un financeur (sans bloc validation). Les fiches proposées ou à corriger restent
+// dans l'espace d'administration jusqu'au verdict.
+export function visiblePubliquement(aap: Pick<AAP, 'validation'>): boolean {
+  return !aap.validation || aap.validation.statut === 'validee';
+}
+
 // Date à laquelle le moteur a lu la page (scrapeMetadata.extraitLe, posé par l'import), ou null si inconnue.
 export function dateExtraction(aap: AAP): string | null {
   const brut = aap.scrapeMetadata?.extraitLe;

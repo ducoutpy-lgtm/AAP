@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP, ValidationStatut } from '../../types';
+import { RELECTEUR_HUMAIN } from '../../utils/relecture';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -17,6 +18,9 @@ import {
   XCircle,
   Calendar,
   Euro,
+  Pencil,
+  ShieldCheck,
+  ShieldX,
 } from 'lucide-react';
 
 interface AAPWithId extends AAP {
@@ -25,14 +29,21 @@ interface AAPWithId extends AAP {
 
 export default function ManageAAPsPage() {
   const navigate = useNavigate();
+  // Filtres initiaux lus dans l'adresse (administration-controle, 2026-10-20) : la carte « Fiches à contrôler » et,
+  // plus tard, l'e-mail de la veille ouvrent la liste déjà filtrée
+  const [params] = useSearchParams();
   const [aaps, setAaps] = useState<AAPWithId[]>([]);
   const [filteredAaps, setFilteredAaps] = useState<AAPWithId[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published' | 'closed' | 'archived'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published' | 'closed' | 'archived'>(
+    (params.get('status') as 'draft' | 'published' | 'closed' | 'archived' | null) ?? 'all'
+  );
   // Suivi de la validation (rapport du 2026-10-14, instruction 12) : filtre par validation.statut, la seule source de
   // fiabilité d'une fiche. 'aucun' : fiche saisie à la main, sans bloc validation.
-  const [validationFilter, setValidationFilter] = useState<'all' | ValidationStatut | 'aucun'>('all');
+  const [validationFilter, setValidationFilter] = useState<'all' | ValidationStatut | 'aucun'>(
+    (params.get('validation') as ValidationStatut | 'aucun' | null) ?? 'all'
+  );
 
   useEffect(() => {
     loadAaps();
@@ -128,6 +139,39 @@ export default function ManageAAPsPage() {
     }
   };
 
+  // Contrôle depuis l'application (administration-controle, 2026-10-20) : le verdict est écrit dans validation au nom
+  // de Monsieur DUCOUT avec la date du jour ; valider publie, rejeter archive. L'import ne réécrit jamais ces champs.
+  const aujourdHui = () => new Date().toISOString().slice(0, 10);
+
+  const handleValiderEtPublier = async (aapId: string) => {
+    try {
+      await updateDoc(doc(db, 'aap', aapId), {
+        validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN },
+        status: 'published',
+        publishedAt: new Date(),
+      });
+      loadAaps();
+    } catch (err) {
+      console.error('Erreur de validation :', err);
+      alert('Erreur lors de la validation');
+    }
+  };
+
+  const handleRejeter = async (aapId: string) => {
+    const commentaire = prompt('Motif du rejet (facultatif) : pas un appel, hors champ, doublon, expiré...');
+    if (commentaire === null) return;
+    try {
+      await updateDoc(doc(db, 'aap', aapId), {
+        validation: { statut: 'rejetee', commentaire: commentaire.trim(), date: aujourdHui(), par: RELECTEUR_HUMAIN },
+        status: 'archived',
+      });
+      loadAaps();
+    } catch (err) {
+      console.error('Erreur de rejet :', err);
+      alert('Erreur lors du rejet');
+    }
+  };
+
   const handleCloseAap = async (aapId: string) => {
     if (!confirm('Êtes-vous sûr de vouloir clôturer cet AAP ?')) return;
 
@@ -207,7 +251,7 @@ export default function ManageAAPsPage() {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Modération des AAP
+            Contrôle des appels à projets
           </h1>
           <p className="text-gray-600">
             {filteredAaps.length} AAP(s) • {aaps.length} au total
@@ -389,6 +433,25 @@ export default function ManageAAPsPage() {
                   >
                     <Eye className="h-4 w-4 mr-2" />
                     Voir
+                  </Button>
+
+                  {aap.validation && aap.validation.statut !== 'validee' && aap.status !== 'archived' && (
+                    <Button variant="primary" size="sm" onClick={() => handleValiderEtPublier(aap.id)}>
+                      <ShieldCheck className="h-4 w-4 mr-2" />
+                      Valider et publier
+                    </Button>
+                  )}
+
+                  {aap.validation && aap.validation.statut !== 'rejetee' && (
+                    <Button variant="secondary" size="sm" onClick={() => handleRejeter(aap.id)}>
+                      <ShieldX className="h-4 w-4 mr-2" />
+                      Rejeter
+                    </Button>
+                  )}
+
+                  <Button variant="secondary" size="sm" onClick={() => navigate(`/aap/${aap.id}/edit`)}>
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Modifier
                   </Button>
 
                   {aap.status === 'draft' && publiable(aap) && (

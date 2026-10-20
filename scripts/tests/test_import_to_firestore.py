@@ -449,3 +449,20 @@ def test_derniere_vue_depuis_le_rejeu_et_peremption():
     assert pf.peremption({**perime, "status": "draft"}, AUJOURDHUI) is None
     deja = {**perime, "validation": maj["validation"]}
     assert pf.peremption(deja, AUJOURDHUI) is None
+
+
+# ---------------------------------------------------------------- administration-controle (2026-10-20)
+
+def test_une_fiche_non_validee_entre_en_brouillon():
+    """Decision du 2026-10-20 : seules les fiches controlees sont publiees ; proposee ou a_corriger -> brouillon,
+    validee (humain ou modele) -> publiee, verdict humain a corriger laisse tel quel."""
+    base = {"status": "published", "tags": []}
+    proposee = {**base, "validation": {"statut": "proposee", "par": "", "commentaire": "", "date": ""}}
+    assert imp.publication_selon_controle(proposee)["status"] == "draft"
+    a_corriger_modele = {**base, "validation": {"statut": "a_corriger", "par": "claude-haiku-5-5", "commentaire": "", "date": ""}}
+    assert imp.publication_selon_controle(a_corriger_modele)["status"] == "draft"
+    validee = {**base, "validation": {"statut": "validee", "par": "claude-haiku-5-5", "commentaire": "", "date": ""}}
+    assert imp.publication_selon_controle(validee)["status"] == "published"
+    humain = {**base, "validation": {"statut": "a_corriger", "par": imp.RELECTEUR, "commentaire": "", "date": ""}}
+    assert imp.publication_selon_controle(humain)["status"] == "published"
+    assert proposee["status"] == "published"  # fonction pure : l'entree n'est pas modifiee
