@@ -44,6 +44,23 @@ Barre latérale gauche repliable, icône plus libellé, cadenas sur les entrées
 | Support | Ressources, FAQ, Nous contacter | Reprendre : FAQ et contact |
 | Paramètres (capture 10) | Compte : informations personnelles (prénom, nom, téléphone, courriel, langue, « Supprimer mon compte »), préférences des alertes (trois interrupteurs : rapports hebdomadaires et mensuels, infolettre, mise à jour des programmes) ; Organisation : informations sur l'entreprise (logo, nom, site, effectif, revenus, année de fondation, adresse, objectifs de financement, secteurs, forme juridique, numéro de bienfaisance, courriel et téléphone de l'organisation, réseaux sociaux), utilisateurs et rôles ; Facturation : plans, gestion de la facturation | Reprendre : la structure en trois blocs (compte, organisation, facturation) pour notre page Mon profil et les paramètres ; « Supprimer mon compte » est une obligation RGPD que nous n'avons pas encore |
 
+## 2 bis. La liste de démarrage jouée jusqu'au bout (captures 11 à 14)
+
+La fenêtre « Démarrer sur helloDarwin (0/4) » reste affichée en haut à droite de toutes les pages tant que les
+quatre actions ne sont pas faites, puis disparaît. Les actions, dans l'ordre, et ce qu'elles ouvrent :
+
+| Action | Ce qui s'ouvre | Pour AAP Santé |
+|---|---|---|
+| Compléter le profil de l'organisation | Fenêtre « Adaptez votre recherche à votre entreprise » (capture 11), trois champs seulement : objectifs de financement (liste groupée : gouvernance, pérennité financière, capacité organisationnelle, présence en ligne, certifications, empreinte environnementale, cybersécurité...), année de fondation, envergure (international, local, municipal, national, provincial, régional) ; bouton « Appliquer les informations » ; les filtres de recherche s'enrichissent aussitôt | Reprendre : compléter le profil en une petite fenêtre de trois champs plutôt qu'une longue page ; nos champs : objectifs du projet, année d'ouverture, rayon d'action (local, départemental, régional, national) |
+| Explorer les subventions | Cochée dès la première visite de la recherche | Reprendre |
+| Consulter une fiche de programme | Cochée dès la première fiche ouverte | Reprendre |
+| Commencer une demande de subvention | « Débuter une application » sur une carte crée une demande et ouvre un espace « Rédaction assistée » (capture 12) : zone de conversation à gauche, « Détails de la demande » (programme, statut, montant) et « Actions de la demande » (création, date) à droite ; l'espace est réservé à l'offre Pro, une fenêtre « Passez à la Plateforme Pro » le recouvre | Adapter : la demande devient notre candidature ; la zone de rédaction assistée est hors périmètre pour l'instant |
+
+Après la quatrième action : la fenêtre de démarrage disparaît, « Mes demandes en cours » (capture 13) montre la
+demande dans la première colonne « Validation et éligibilité du projet (1) » avec statut du programme, « Poursuivre
+l'application » et « Consulter le programme » ; le tableau de bord (capture 14) remplace les tuiles vides par « Mes
+programmes » avec la demande, une barre d'avancement à 0 % et « Voir mes programmes ».
+
 ## 3. Fiche d'un programme (captures 07 et 08)
 
 Trois onglets : Analyse, Détails, Historique (cadenas). Fil d'Ariane en haut. En-tête : logo, pastille « Ouvert »,
@@ -82,6 +99,6 @@ admissible, étapes de dépôt).
 
 Chaque point fera un changement OpenSpec séparé, avec scénarios, tests et vérification par Monsieur DUCOUT.
 
-Vérifié : tout ce qui précède a été lu à l'écran le 2026-10-20 sur le compte de test, captures à l'appui.
+Vérifié : tout ce qui précède a été lu à l'écran le 2026-10-20 sur le compte de test, captures à l'appui ; la liste de démarrage a été jouée jusqu'à 4 sur 4.
 Non vérifié ou supposé : les écrans payants (assistant, intelligence de financement, historique, ressources
 officielles) n'ont pas été ouverts ; les écrans de l'étape 2 pour les autres formes juridiques n'ont pas été vus.
