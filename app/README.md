@@ -38,6 +38,22 @@ Plateforme web centralisée pour la recherche et la gestion des appels à projet
 - Compte Firebase
 - Compte Stripe
 
+## Émulateurs Firebase : jouer les parcours connectés sans toucher au vrai projet (2026-10-20)
+
+Pourquoi : la session Claude Code ne se connecte jamais au vrai projet ; les émulateurs (comptes, base, stockage)
+tournent sur le PC sous le projet factice `demo-aap`, avec les règles du dépôt.
+
+```bash
+app\emulateurs_dev.cmd                      # emulateurs + application sur http://localhost:3001 (JDK 21 requis)
+# ou, en deux fenetres :
+npm run emulateurs                         # comptes 9099, base 8080, stockage 9199, console http://localhost:4000
+npm run dev:emulateurs                     # application en mode emulateurs (.env.emulateurs), port 3001
+..\.venv\Scripts\python ..\scripts\semer_emulateurs.py   # trois comptes de test + 85 appels (relançable)
+```
+
+Comptes de test (mots de passe dans `scripts/semer_emulateurs.py`, valables sur ce PC seulement) : candidat@test.local,
+financeur@test.local, admin@test.local. Les données exportées à l'arrêt vont dans `emulateurs/donnees/` (ignoré par Git).
+
 ## 🔧 Installation
 
 ### 1. Cloner le repository

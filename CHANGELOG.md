@@ -6,6 +6,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Émulateurs Firebase (2026-10-20, « oui émulateurs », changement `emulateurs-parcours-connectes`) : mode
+  `npm run dev:emulateurs` (port 3001, `.env.emulateurs` sans secret, projet `demo-aap`), `app/emulateurs_dev.cmd`,
+  `scripts/semer_emulateurs.py` (trois comptes de test, 85 appels), option `--projet` de l'import ; le parcours
+  candidat complet a été joué par la session (candidature avec pièce déposée). Garde-fou d'affichage sur toutes les
+  pages (plus d'écran blanc), garde d'abonnement durcie, page des offres pour un administrateur.
 - Jour 1 du plan MVP (2026-10-20, changement `parcours-candidat-jour-1`) : fiche d'appel en trois cases (montant,
   dates, territoire en clair) avec « À qui s'adresse cet appel » ; tableau de bord candidat réel (appels de sa région
   ou nationaux, échéances sous 30 jours, candidatures, recherches) ; page de détail d'une candidature

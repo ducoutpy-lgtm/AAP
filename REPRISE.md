@@ -217,6 +217,10 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Émulateurs Firebase en place (2026-10-20 soir, `emulateurs-parcours-connectes`) : `app/emulateurs_dev.cmd` ou
+  `npm run emulateurs` + `npm run dev:emulateurs` (port 3001), comptes de test de `scripts/semer_emulateurs.py` ; règle :
+  tout parcours connecté est joué par la session sur les émulateurs avant livraison. Parcours candidat du jour 1 joué
+  de bout en bout (candidature avec pièce). Reste : Monsieur DUCOUT lance `emulateurs_dev.cmd` une fois (tâche 1.3).
 - Jour 1 du plan MVP fait le 2026-10-20 au soir (`parcours-candidat-jour-1`) : fiche en trois cases, tableau de bord candidat réel,
   détail de candidature, colonnes ; 51 tests, lint, build ; attend le parcours de Monsieur DUCOUT (tâche 1.4). Jour 2 suivant :
   qualification (à qui s'adresse l'appel, type, objet, date d'ouverture, pièces) avec devis écrit avant tout appel.
