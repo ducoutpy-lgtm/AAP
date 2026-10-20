@@ -376,8 +376,29 @@ python echantillon.py --dater-collecte --dry-run   # fiches existantes sans coll
 python echantillon.py --dater-collecte             # pose collecte_le (date du texte, sinon scraped_at), sauvegarde avant
 ```
 
-Rattrapage du 2026-10-19 : 2 047 fiches datées (collectes des 12, 13 et 14 octobre). Suite du lot 2 : rejeu périodique
-de la collecte sur les pages validées, règle « non revue après deux rejeux », rapport de veille.
+Rattrapage du 2026-10-19 : 2 047 fiches datées (collectes des 12, 13 et 14 octobre).
+
+### Rejeu de la collecte et veille (changement `rejeu-collecte-veille`, lot 2, 2026-10-20)
+
+Pourquoi : repérer les appels nouveaux et ceux retirés de leur page sans tout recollecter. `rejeu.py` relit la page
+validée de chaque rubrique confirmée (adresse de `decouverte/<source>/liens.json`, même lecture des liens que la
+découverte), et tient sur chaque lien `apparu_le`, `vu_le` et `absences` (rejeux consécutifs sans le voir) ; le journal
+de chaque source est `decouverte/<source>/rejeux.json`. Une page en erreur ou sans lien lisible est ignorée ce
+rejeu-là : ses compteurs ne bougent pas, aucune fausse disparition. Zéro euro.
+
+```bash
+python rejeu.py --relire [--ids a,b] [--limite N]     # relit les pages, met à jour liens.json et rejeux.json
+python rejeu.py --collecter [--limite N]              # texte des liens nouveaux seulement
+python rejeu.py --marquer                             # vue_rubrique_le et absences sur les fiches des résultats (sauvegarde)
+python rejeu.py --rapport                             # VEILLE.md : sources relues, nouveaux, disparus, fiches à péremption
+python extraction_locale.py --extraire --moteur api --dry-run   # devis des textes nouveaux, puis accord avant --extraire
+python ../scripts/perimer_fiches.py --dry-run         # fiches publiées absentes depuis 2 rejeux -> « à corriger » (accord)
+```
+
+`veille.cmd` enchaîne relecture, collecte, marquage, rapport et devis, sans aucun appel payant ; l'extraction des
+textes nouveaux se lance à la main après accord. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
+`absences` ; la péremption passe la fiche « à corriger » (mention « Non relue » dans l'application), jamais une fiche
+validée par Monsieur DUCOUT. Planification automatique : à décider.
 
 ### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
 

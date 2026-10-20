@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-20)
+- `rejeu.py` et `veille.cmd` (changement `rejeu-collecte-veille`, lot 2) : relecture des pages validées, compteurs
+  `apparu_le`, `vu_le`, `absences` sur les liens, journal `rejeux.json` par source, collecte des textes nouveaux, marquage
+  des fiches (`vue_rubrique_le`, `absences`), rapport `VEILLE.md`. Zéro euro ; extraction des textes nouveaux par la
+  commande V4 après devis.
+
 ### Ajouté (2026-10-19)
 - Dates de collecte (changement `fraicheur-dates-collecte`, lot 2, instruction 10) : ligne d'en-tête `# collecte_le` sur
   les textes collectés, `lire_fiche` compatible, `date_collecte`, `scrape_metadata.collecte_le` écrit par les deux

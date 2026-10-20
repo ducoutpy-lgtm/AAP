@@ -671,3 +671,10 @@ le 2026-10-14 (accord sur les recommandations), consignées ici pour que ce rapp
   DUCOUT (16 h 15, cinq « AAP juste », un « hors champ ») n'atteignaient pas la base, `validation` étant protégée sur
   tout document existant ; désormais un verdict humain réécrit `validation` et `status`, test ajouté, six documents
   conformes après import.
+- Lot 2, rejeu et veille (2026-10-20, changement `rejeu-collecte-veille`, « on reprend, on y va ») : `scraping/rejeu.py`
+  (relecture des pages validées, compteurs `apparu_le`, `vu_le`, `absences` par lien, journal par source, collecte des
+  textes nouveaux, marquage des fiches, `VEILLE.md`), `veille.cmd`, `scripts/perimer_fiches.py`, import `derniereVueLe`
+  d'après le rejeu et `absences`. Premier rejeu réel sur vingt sources (18 ARS, portail des ARS, CNSA) : 200 liens vus,
+  20 nouveaux, 53 disparus (dont des listes qui ne montrent que les derniers appels : risque de fausse disparition noté,
+  péremption soumise à essai à blanc et accord), 19 textes nouveaux collectés, 303 fiches marquées, import « 529 mis a
+  jour ». Devis des textes nouveaux : 0,02 euro, en attente d'accord. Tests : scraping 103, scripts 30, lint et build verts.

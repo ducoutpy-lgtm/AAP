@@ -6,27 +6,38 @@ archivage sans demande ; migrations après essai à blanc et sauvegarde.
 
 ## 1. Outil de rejeu
 
-- [ ] 1.1 `scraping/rejeu.py` : fonctions pures `comparer_liens`, `marquer_fiches`, `rapport_markdown` testées ;
-  `--relire [--ids] [--limite]`, `--collecter`, `--marquer`, `--rapport`. Fait quand : pytest scraping vert.
-- [ ] 1.2 Rejeu réel sur les vingt premières sources confirmées (ARS, portail des ARS, CNSA) : journal collé (sources
-  relues, erreurs, nouveaux, disparus), textes nouveaux collectés, fiches marquées, `VEILLE.md` écrit.
+- [x] 1.1 `scraping/rejeu.py` : fonctions pures `comparer_liens`, `marquer_fiches`, `rapport_markdown` testées ;
+  `--relire [--ids] [--limite]`, `--collecter`, `--marquer`, `--rapport`. Fait quand : pytest scraping vert. (Fait le
+  2026-10-20 : `tests/test_rejeu.py` 4 tests, pytest scraping 103 verts.)
+- [x] 1.2 Rejeu réel sur les vingt premières sources confirmées (ARS, portail des ARS, CNSA) : journal collé (sources
+  relues, erreurs, nouveaux, disparus), textes nouveaux collectés, fiches marquées, `VEILLE.md` écrit. (Fait le 2026-10-20,
+  10 h 05 à 10 h 11 : « 20 sources relues, 0 ignorées, 20 liens nouveaux, 53 disparus » (ARS Bourgogne-Franche-Comté,
+  Grand Est et Normandie 6 disparus chacune : listes qui ne montrent que les derniers appels, voir risque du design) ;
+  collecte « 19 pages lues à ce passage », 4 liens ignorés (textes trop courts : page cookies, deux fichiers média, une
+  page vide) ; marquage « 303 fiches marquées » (extraction_api 154, extraction_locale 146, cnsa 3 ; les fiches des
+  connecteurs ars_idf, ars_corse et fondation_de_france ne sont pas marquées, leur identifiant de source diffère de
+  celui du registre : à rapprocher), sauvegarde `scripts/sauvegardes/rejeu_2026-10-20_1011` ; « Rapport écrit :
+  VEILLE.md (20 sources avec journal, 0 fiches à péremption) ».)
 
 ## 2. Import et péremption
 
-- [ ] 2.1 `import_to_firestore.py` : `derniereVueLe` depuis `vue_rubrique_le`, `absences` ; type `AAP` ; test. Import à
-  blanc puis réel, compte collé.
-- [ ] 2.2 `scripts/perimer_fiches.py` (essai à blanc, sauvegarde, accord) et test de la fonction pure. Exécution réelle
+- [x] 2.1 `import_to_firestore.py` : `derniereVueLe` depuis `vue_rubrique_le`, `absences` ; type `AAP` ; test. Import à
+  blanc puis réel, compte collé. (Fait le 2026-10-20 : pytest scripts 30 verts ; import réel « 0 crees, 529 mis a jour » ;
+  288 fiches publiées, 227 avec `derniereVueLe` au 2026-10-20 (rejeu) et `absences` 0, 61 sans (closes ou connecteurs).)
+- [x] 2.2 `scripts/perimer_fiches.py` (essai à blanc, sauvegarde, accord) et test de la fonction pure. (Script et test
+  faits le 2026-10-20 ; aucune fiche à deux absences avant le second rejeu, donc pas d'exécution.) Exécution réelle
   seulement quand une fiche atteindra deux absences (pas avant le second rejeu).
 
 ## 3. Extraction des textes nouveaux
 
-- [ ] 3.1 Devis `extraction_locale.py --extraire --moteur api --dry-run` collé ; après accord, extraction, contrôle
+- [ ] 3.1 Devis `extraction_locale.py --extraire --moteur api --dry-run` collé (2026-10-20 : « 19 textes restants, 60,040
+  caractères ; coût estimé 0.02 euros au plus ; déjà dépensé 1.978 euros ; plafond 5.00 euros ») ; après accord, extraction, contrôle
   (devis), import, décision du modèle ; compte des appels publiés collé.
 
 ## 4. Lancement et documentation
 
-- [ ] 4.1 `scraping/veille.cmd` (relire, collecter, marquer, rapport, devis affiché) ; décision de planification laissée
+- [x] 4.1 `scraping/veille.cmd` (relire, collecter, marquer, rapport, devis affiché) ; décision de planification laissée
   à Monsieur DUCOUT.
-- [ ] 4.2 README scraping, README racine, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`,
-  `docs/FEUILLE_DE_ROUTE.md` (étape 4), rapport section 8.
+- [x] 4.2 README scraping, README racine, CHANGELOGs, CLAUDE.md, REPRISE.md, `docs/FLUX_DONNEES.md`,
+  `docs/FEUILLE_DE_ROUTE.md` (étape 4), rapport section 8. (Fait le 2026-10-20.)
 - [ ] 4.3 Monsieur DUCOUT lit `VEILLE.md` et rejoue le scénario « vingt émetteurs » de la spec.

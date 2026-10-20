@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Lot 2, rejeu de la collecte et veille (changement `rejeu-collecte-veille`, 2026-10-20) : `scraping/rejeu.py`
+  (relecture des pages validées, liens nouveaux et disparus, marquage des fiches, `VEILLE.md`), `scraping/veille.cmd`,
+  `scripts/perimer_fiches.py` (fiche absente de sa page depuis deux rejeux -> « à corriger », jamais un verdict humain),
+  `derniereVueLe` d'après le rejeu et `absences` à l'import.
 - Lot 2, dates de collecte (changement `fraicheur-dates-collecte`, instruction 10, 2026-10-19) : en-tête daté des textes
   collectés, `collecte_le` dans les fiches (2 047 fiches datées), `scrapeMetadata.collecteLe` et `derniereVueLe` à
   l'import (537 documents mis à jour). Correction au passage : un verdict humain atteint désormais un document existant

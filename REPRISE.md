@@ -226,8 +226,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   sur son bureau ; connexion Google activée par lui.
 - Lot 2 commencé (2026-10-19, 17 h, `fraicheur-dates-collecte`, instruction 10) : en-tête daté des textes, `collecte_le`,
   `collecteLe` et `derniereVueLe` ; 2 047 fiches datées, 537 documents mis à jour ; ses six premiers verdicts atteignent
-  la base (correction de l'import). Suite du lot 2 : rejeu de la collecte, règle « non revue après deux rejeux », rapport
-  de veille.
+  la base (correction de l'import).
+- Rejeu et veille (2026-10-20, `rejeu-collecte-veille`) : `scraping/rejeu.py` (relire, collecter, marquer, rapport),
+  `veille.cmd`, `scripts/perimer_fiches.py`, import `derniereVueLe` d'après le rejeu et `absences`. Premier rejeu réel sur
+  les vingt premières sources (ARS, portail des ARS, CNSA) fait ; `VEILLE.md`. À chaque semaine : `veille.cmd`, devis,
+  accord, extraction, contrôle, import ; `perimer_fiches.py` quand une fiche atteint deux absences. Planification
+  automatique à décider par Monsieur DUCOUT.
 
 ## Phrase à écrire au début de la prochaine session (ouverte dans le dossier AAP)
 

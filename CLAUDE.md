@@ -231,7 +231,9 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `fraicheur-dates-collecte` (lot 2, instruction 10, 2026-10-19 : en-tête `# collecte_le` des textes,
+  En cours : `rejeu-collecte-veille` (lot 2, 2026-10-20 : `scraping/rejeu.py`, `veille.cmd`, `scripts/perimer_fiches.py`,
+  import `derniereVueLe` d'après le rejeu et `absences` ; premier rejeu réel sur vingt sources, voir `tasks.md` ;
+  planification et péremption réelle après le second rejeu), `fraicheur-dates-collecte` (lot 2, instruction 10, 2026-10-19 : en-tête `# collecte_le` des textes,
   `collecte_le` dans les fiches, `collecteLe` et `derniereVueLe` à l'import, 2 047 fiches datées, 537 documents mis à
   jour ; verdict humain désormais écrit sur un document existant ; reste la vérification 3.2 de Monsieur DUCOUT),
   `degel-application-complete` (2026-10-19 : routes, lint, compilation, règles Firestore déployées, pages légales,
