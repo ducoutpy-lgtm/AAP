@@ -431,3 +431,21 @@ def test_un_verdict_humain_atteint_un_document_existant():
     rejet = imp.appliquer_verdict({"title": "T", "status": "published", "publishedAt": 1, "tags": []},
                                   {"verdict": "hors-champ", "commentaire": "", "date": "2026-10-19"})
     assert imp.document_a_envoyer(rejet, existe=True)["status"] == "archived"
+
+
+def test_derniere_vue_depuis_le_rejeu_et_peremption():
+    # rejeu-collecte-veille : derniereVueLe = vue_rubrique_le quand le rejeu l'a posee, absences reporte ;
+    # perimer_fiches : publiee, deux absences, sans verdict humain -> a corriger ; verdict humain intouche.
+    import perimer_fiches as pf  # noqa: E402
+    d = imp.to_app_aap(fiche(scrape_metadata={"moteur": "api", "modele": "h", "vue_rubrique_le": "2026-10-27", "absences": 1}), "x", MAINTENANT)
+    assert d["scrapeMetadata"]["derniereVueLe"] == "2026-10-27" and d["scrapeMetadata"]["absences"] == 1
+    assert imp.to_app_aap(fiche(), "x", MAINTENANT)["scrapeMetadata"]["absences"] == 0
+    perime = {"status": "published", "tags": ["x"], "validation": {"statut": "validee", "par": "claude-haiku-5-5", "commentaire": "", "date": ""},
+              "scrapeMetadata": {"absences": 2}}
+    maj = pf.peremption(perime, AUJOURDHUI)
+    assert maj["validation"]["statut"] == "a_corriger" and "2 rejeux" in maj["validation"]["commentaire"] and "a-verifier" in maj["tags"]
+    assert pf.peremption({**perime, "scrapeMetadata": {"absences": 1}}, AUJOURDHUI) is None
+    assert pf.peremption({**perime, "validation": {"statut": "validee", "par": imp.RELECTEUR}}, AUJOURDHUI) is None
+    assert pf.peremption({**perime, "status": "draft"}, AUJOURDHUI) is None
+    deja = {**perime, "validation": maj["validation"]}
+    assert pf.peremption(deja, AUJOURDHUI) is None

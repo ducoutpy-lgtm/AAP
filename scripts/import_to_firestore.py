@@ -400,7 +400,9 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
             # la fiche figurait dans un fichier de resultats (champ technique, reecrit a chaque import)
             "collecteLe": (item.get("scrape_metadata") or {}).get("collecte_le")
             or (item.get("scrape_metadata") or {}).get("scraped_at") or "",
-            "derniereVueLe": now.isoformat(),
+            # Rejeu (rejeu-collecte-veille) : derniere vue sur la page source quand le rejeu l'a notee, sinon l'import
+            "derniereVueLe": (item.get("scrape_metadata") or {}).get("vue_rubrique_le") or now.isoformat(),
+            "absences": int((item.get("scrape_metadata") or {}).get("absences") or 0),
             "fichiersJoints": [
                 piece_jointe(f, f"scraped-{signature(titre, financeur, item.get('date_cloture'))}")
                 for f in item.get("fichiers_joints") or []

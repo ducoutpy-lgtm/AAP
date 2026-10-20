@@ -144,6 +144,8 @@ export interface AAP {
     // la fiche figurait encore dans un fichier de résultats (réécrite à chaque import)
     collecteLe?: string;
     derniereVueLe?: string;
+    // Rejeu (rejeu-collecte-veille, 2026-10-20) : rejeux consécutifs sans voir l'appel sur sa page source ; 2 = à corriger
+    absences?: number;
   };
   // Bloc écrit par l'import pour les AAP scrapés (absent pour les AAP saisis à la main)
   validation?: AapValidation;
