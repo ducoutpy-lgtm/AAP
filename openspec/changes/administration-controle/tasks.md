@@ -29,3 +29,15 @@ demande, aucun déploiement, migration = essai à blanc + sauvegarde + accord.
   Retour du 2026-10-20 soir (tri des fiches en cours) : la liste des financeurs proposait tous les financeurs au lieu
   de ceux des fiches filtrées -> corrigé : la liste suit la recherche, le statut et la validation, avec le nombre de
   fiches par financeur ; un financeur choisi qui sort du filtre remet « Tous ».
+  Second retour du soir : « pourquoi les financeurs ne sont toujours pas fusionnés ? » (Bpifrance en quatre écritures,
+  DREETS et DRAAF par région, État avec et sans accent, FSE et FSE.gouv, mairie / ville / commune, trois ministères de
+  l'Agriculture, PREFET en majuscules). Cause : la fusion ne traitait que les noms proches d'une entrée du registre ;
+  les fiches hors champ viennent de sites hors santé. Correction dans `scraping/financeurs.py` : familles
+  d'organismes nationaux (Bpifrance, DREETS, DRAAF, FSE+, FEDER, État, ministères, ANCT, ADEME, CAF, Préfecture - X),
+  « Ville de X » pour mairie / commune / ville, « Conseil régional X » pour Région X, « Conseil départemental X »
+  pour Département de X ou Collectivité départementale, « Fondation de France » pour ses délégations, casse propre,
+  nom de l'émetteur quand le nom extrait est générique (« Région », « Département », « Le64 »), les noms du registre
+  passent aussi par ces règles. Tests scraping 112 verts. Ré-import réel : fiches à contrôler 146 -> 112 financeurs
+  distincts (Bpifrance 11, DREETS 10, DRAAF 13, État 6, FSE 5, Ville de Toulon 7) ; fiches publiées 86 financeurs.
+  Les fiches closes présentes en base ne sont pas réécrites par l'import (règle d'exclusion des expirées) : leurs
+  anciens noms restent jusqu'au prochain passage.

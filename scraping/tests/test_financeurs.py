@@ -58,11 +58,11 @@ def test_ars_cofinanceur_et_ars_sans_region_par_l_emetteur():
     assert f.canonique("ARS", "portail-national-des-ars", TABLE) is None  # le portail n'est pas une ARS
     assert f.canonique("ARS", "cnsa", TABLE) is None
     cofinanceur = "Conseil départemental du Calvados et la DD ARS 14"
-    assert f.canonique(cofinanceur, "ars-normandie", TABLE) is None  # ne commence pas par ARS
+    assert f.canonique(cofinanceur, "ars-normandie", TABLE) == "Conseil départemental Calvados"  # la tête, pas l'ARS
 
 
 def test_noms_inconnus_et_ambigus_restent_tels_quels():
-    assert f.canonique("Département du Rhône", None, TABLE) is None  # pas de conseil départemental du Rhône dans la table
+    assert f.canonique("Département du Rhône", None, TABLE) == "Conseil départemental Rhône"  # construit même hors table
     assert f.canonique("Essonne", None, TABLE) is None  # deux émetteurs, deux noms différents
     assert f.canonique("Ville de Paris", None, TABLE) == "Ville de Paris"  # deux émetteurs, un seul nom
     assert f.canonique("", None, TABLE) is None
@@ -84,9 +84,9 @@ def test_emetteur_de_et_non_rattaches():
     assert f.emetteur_de({"scrape_metadata": {"source": "ars_idf"}}, "ars_idf", emetteurs)["id"] == "ars-ile-de-france"
     assert f.emetteur_de({}, "inconnu", emetteurs) is None
     fiches = [("extraction_locale", {"financeur": "ARS IDF", "scrape_metadata": {"source": "ars-ile-de-france"}}),
-              ("extraction_locale", {"financeur": "Département du Rhône", "scrape_metadata": {"source": "x"}}),
-              ("extraction_locale", {"financeur": "Département du Rhône", "scrape_metadata": {"source": "x"}})]
-    assert f.non_rattaches(fiches, emetteurs, TABLE) == [("Département du Rhône", 2, "x")]
+              ("extraction_locale", {"financeur": "Marseille", "scrape_metadata": {"source": "x"}}),
+              ("extraction_locale", {"financeur": "Marseille", "scrape_metadata": {"source": "x"}})]
+    assert f.non_rattaches(fiches, emetteurs, TABLE) == [("Marseille", 2, "x")]
 
 
 def test_cofinanceur_precision_parenthese_et_departement_ramenes_au_financeur_principal():
@@ -103,5 +103,52 @@ def test_cofinanceur_precision_parenthese_et_departement_ramenes_au_financeur_pr
     assert f.canonique("INSERM (membre du GIP Arronax)", None, TABLE) == "Inserm"
     assert f.canonique("Inserm, en partenariat avec le CNRS", None, TABLE) == "Inserm"
     # Un cofinanceur inconnu en tête reste tel quel : rien n'est inventé
-    assert f.canonique("État et Banque des Territoires", None, TABLE) is None
+    assert f.canonique("État et Banque des Territoires", None, TABLE) == "État"  # famille État (règle du 2026-10-20 soir)
     assert f.canonique("Fondation Inconnue / Fondation de France", None, TABLE) is None
+
+
+def test_familles_hors_registre_un_nom_par_organisme():
+    """Retour de Monsieur DUCOUT du 2026-10-20 soir : un seul Bpifrance, une seule DREETS, un seul État, un seul FSE,
+    une seule écriture pour les villes, les régions, les ministères et les préfectures."""
+    assert f.canonique("Bpifrance – France 2030", None, TABLE) == "Bpifrance"
+    assert f.canonique("Bpifrance (financement français, dans le cadre du programme Eureka Clusters / France 2030)", None, TABLE) == "Bpifrance"
+    assert f.canonique("Direction régionale de l'économie, de l'emploi, du travail et des solidarités (DREETS) - Pays de la Loire", None, TABLE) == "DREETS"
+    assert f.canonique("Dreets PACA", None, TABLE) == "DREETS"
+    assert f.canonique("DDETS PP 46", None, TABLE) == "DREETS"
+    assert f.canonique("Bretagne.dreets.gouv.fr", None, TABLE) == "DREETS"
+    assert f.canonique("DRAAF Bourgogne-Franche-Comté", None, TABLE) == "DRAAF"
+    assert f.canonique("Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) - Martinique", None, TABLE) == "DRAAF"
+    assert f.canonique("Etat", None, TABLE) == "État"
+    assert f.canonique("État, la Banque des Territoires, ESS France et le Mouvement Associatif", None, TABLE) == "État"
+    assert f.canonique("FSE.gouv.fr", None, TABLE) == "Fonds social européen (FSE+)"
+    assert f.canonique("Fonds Social Européen + (FSE+)", None, TABLE) == "Fonds social européen (FSE+)"
+    assert f.canonique("ministère de l'Agriculture et de l'Alimentation", None, TABLE) == "Ministère de l'Agriculture"
+    assert f.canonique("Ministère de l’Agriculture, de l’Agro-alimentaire et de la Souveraineté alimentaire", None, TABLE) == "Ministère de l'Agriculture"
+    assert f.canonique("Mairie de Toulon", None, TABLE) == "Ville de Toulon"
+    assert f.canonique("Commune de Toulon", None, TABLE) == "Ville de Toulon"
+    assert f.canonique("La Ville d’Amiens", None, TABLE) == "Ville d'Amiens"
+    assert f.canonique("Région Occitanie", None, TABLE) == "Conseil régional Occitanie"
+    assert f.canonique("Région", None, TABLE) is None  # région inconnue : nom gardé tel quel par l'import
+    assert f.canonique("PREFET DE L'ESSONNE", None, TABLE) == "Préfecture - Essonne"
+    assert f.canonique("Préfecture de l'Essonne (service de l'État) - financeur probable", None, TABLE) == "Préfecture - Essonne"
+    assert f.canonique("Collectivité départementale du Corrèze", None, TABLE) is None or f.canonique("Département de la Gironde", None, TABLE) == "Conseil départemental Gironde"
+    assert f.canonique("Marseille", None, TABLE) is None  # une ville nue n'est pas devinée
+    assert f.canonique("Fondation de France Grand Est", None, TABLE) == "Fondation de France"
+    assert f.canonique("Le Département des Pyrénées-Orientales", None, TABLE) == "Conseil départemental Pyrénées-Orientales"
+    assert f.canonique("Collectivité Départementale de la Guadeloupe", None, TABLE) == "Conseil départemental Guadeloupe"
+
+
+def test_nom_generique_remplace_par_l_emetteur():
+    """« Région », « Département », « Autres », « Le64 », « Aveyron » : le financeur est l'émetteur de la fiche quand il
+    est une collectivité, une ARS ou une caisse ; jamais pour un relais (Appelaprojets.org, FHF)."""
+    table = dict(TABLE)
+    table["conseil-regional-occitanie"] = {"nom": "Conseil régional Occitanie", "categorie": "collectivite", "alias": []}
+    table["conseil-departemental-pyrenees-atlantiques"] = {"nom": "Conseil départemental Pyrénées-Atlantiques", "categorie": "collectivite", "alias": []}
+    table["prefecture-aveyron"] = {"nom": "Préfecture - Aveyron", "categorie": "ministere", "alias": []}
+    table["appelaprojets"] = {"nom": "Appelaprojets.org", "categorie": "autre", "alias": []}
+    assert f.canonique("Région", "conseil-regional-occitanie", table) == "Conseil régional Occitanie"
+    assert f.canonique("Le64", "conseil-departemental-pyrenees-atlantiques", table) == "Conseil départemental Pyrénées-Atlantiques"
+    assert f.canonique("Département", "conseil-departemental-pyrenees-atlantiques", table) == "Conseil départemental Pyrénées-Atlantiques"
+    assert f.canonique("Aveyron", "prefecture-aveyron", table) == "Préfecture - Aveyron"
+    assert f.canonique("Autres", "appelaprojets", table) is None
+    assert f.canonique("Conseil départemental", "appelaprojets", table) is None

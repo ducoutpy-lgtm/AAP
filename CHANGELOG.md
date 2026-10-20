@@ -29,6 +29,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ### Corrigé
 - Administration (2026-10-20 soir, retour de Monsieur DUCOUT pendant le tri) : la liste des financeurs ne propose
   que ceux des fiches déjà filtrées, avec leur nombre.
+- Financeurs (2026-10-20 soir, second retour) : familles d'organismes hors registre fusionnées (Bpifrance, DREETS,
+  DRAAF, FSE+, État, ministères, préfectures, villes, régions, départements, délégations de la Fondation de France),
+  nom de l'émetteur quand le nom extrait est générique ; ré-import : 146 -> 112 financeurs sur les fiches à contrôler.
 - Application (2026-10-20 soir, premier parcours du jour 1 par Monsieur DUCOUT) : mentions « contrôlée par le modèle »
   réservées à l'administrateur, le candidat voit « Mise à jour le » ; « À qui s'adresse cet appel » lit les familles de
   structures dans les critères quand la fiche n'a pas de types structurés ; formulaire de candidature réduit à trois

@@ -121,9 +121,9 @@ def _index(table: dict) -> tuple[dict[str, set[str]], dict[str, str]]:
 # Séparateurs qui annoncent un cofinanceur, un partenaire ou une précision : la partie de tête est le financeur
 # principal (retours de Monsieur DUCOUT du 2026-10-20 : « Fondation de France / Fondation Jean Valade »,
 # « Ville de Paris – Direction de la Santé Publique », « CNSA (...) et Assurance retraite » comptaient pour trois noms).
-SEPARATEURS_TETE = re.compile(r"\s+(?:[–—/]|et|avec|, en partenariat|, avec)\s+|,\s+en partenariat\s+|,\s+avec\s+")
+SEPARATEURS_TETE = re.compile(r"\s+(?:[–—/-]|et|avec|, en partenariat|, avec)\s+|,\s+en partenariat\s+|,\s+avec\s+")
 PARENTHESE = re.compile(r"\s*\(([^()]*)\)")
-DEPARTEMENT = re.compile(r"^(?:d[ée]partement|conseil d[ée]partemental)\s+(?:du |de la |de l'|de |des |d')?(.+)$", re.I)
+DEPARTEMENT = re.compile(r"^(?:le |la )?(?:d[ée]partement|conseil d[ée]partemental|collectivit[ée] d[ée]partementale)\s+(?:du |de la |de l'|de l’|de |des |d'|d’)?(.+)$", re.I)
 
 
 def _exact(nom: str, emetteur_id: str | None, table: dict) -> str | None:
@@ -142,8 +142,36 @@ def _exact(nom: str, emetteur_id: str | None, table: dict) -> str | None:
     return None
 
 
+GENERIQUES = frozenset(("region", "departement", "conseil departemental", "conseil regional", "collectivite", "autres", "autre",
+                        "etat region", "prefecture", "ars", "caf", "le departement", "la region", "conseil general"))
+CATEGORIES_EMETTEUR_FINANCEUR = frozenset(("collectivite", "ars", "caisse-nationale", "ministere", "agence-nationale"))
+
+
+def nom_de_l_emetteur_si_generique(nom: str, emetteur_id: str | None, table: dict) -> str | None:
+    """« Région », « Département », « Autres », « Le64 », un nom de département nu : le financeur est l'émetteur de la
+    fiche quand celui-ci est une collectivité, une ARS, une caisse ou un ministère (fonction pure)."""
+    e = table.get(emetteur_id or "")
+    if not e or e.get("categorie") not in CATEGORIES_EMETTEUR_FINANCEUR or normaliser(e["nom"]).startswith("portail"):
+        return None
+    n = normaliser(nom)
+    if n == "ars" and e.get("categorie") != "ars":  # « ARS » cofinanceur d'une caisse ou d'un conseil : pas l'émetteur
+        return None
+    if n in GENERIQUES or len(n) <= 4 or n in normaliser(e["nom"]).split() or normaliser(e["nom"]).endswith(" " + n):
+        return e["nom"]
+    return None
+
+
 def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:
     """Nom canonique d'un financeur extrait, ou None si rien ne le rattache (fonction pure sur la table donnée).
+    Le nom trouvé au registre passe ensuite par les familles (« Mairie de Brest » -> « Ville de Brest »)."""
+    trouve = _canonique_brut(nom_extrait, emetteur_id, table)
+    if trouve is None:
+        return None
+    return famille_generique(trouve) or trouve
+
+
+def _canonique_brut(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:
+    """Rattachement sans la passe des familles sur le résultat.
 
     Dans l'ordre : le nom tel quel ; sans ses parenthèses (« (probable, non confirmé) », « (avec le soutien de...) ») ;
     le contenu d'une parenthèse (« Agence de Santé Guadeloupe (ARS Guadeloupe) ») ; la tête avant un séparateur de
@@ -157,7 +185,7 @@ def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: di
         return trouve
     sans_parentheses = PARENTHESE.sub("", nom).strip()
     if sans_parentheses and sans_parentheses != nom:
-        trouve = canonique(sans_parentheses, emetteur_id, table)
+        trouve = _canonique_brut(sans_parentheses, emetteur_id, table)
         if trouve:
             return trouve
     for interieur in PARENTHESE.findall(nom):
@@ -166,13 +194,77 @@ def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: di
             return trouve
     tete = SEPARATEURS_TETE.split(sans_parentheses or nom, maxsplit=1)[0].strip(" ,")
     if tete and tete != nom and tete != sans_parentheses:
-        trouve = canonique(tete, emetteur_id, table)
+        trouve = _canonique_brut(tete, emetteur_id, table)
         if trouve:
             return trouve
     m = DEPARTEMENT.match(sans_parentheses or nom)
     if m:
-        return _exact(f"Conseil départemental {m.group(1)}", emetteur_id, table)
-    return None
+        return _exact(f"Conseil départemental {m.group(1)}", emetteur_id, table) or f"Conseil départemental {m.group(1).strip()}"
+    return famille_generique(sans_parentheses or nom) or nom_de_l_emetteur_si_generique(nom, emetteur_id, table)
+
+
+# Familles d'organismes hors registre (retour de Monsieur DUCOUT du 2026-10-20 soir : « BPI France en quatre
+# écritures, DREETS par région, État avec et sans accent, FSE et FSE.gouv, mairie ou ville de X... on va en avoir
+# 150 000 à la fin »). Règle : un nom par organisme national (le territoire est porté par la fiche, pas par le nom),
+# une seule écriture pour les villes, régions et départements, et une casse propre.
+FAMILLES_NATIONALES: list[tuple[re.Pattern, str]] = [
+    (re.compile(r"\bbpi ?france\b"), "Bpifrance"),
+    (re.compile(r"^fondation france\b"), "Fondation de France"),
+    (re.compile(r"\b(dreets|drieets|ddets|deets|direccte)\b|direction regionale economie emploi|direction economie emploi travail"), "DREETS"),
+    (re.compile(r"\b(draaf|daaf|driaaf)\b|direction regionale alimentation agriculture|direction alimentation agriculture foret"), "DRAAF"),
+    (re.compile(r"\bfse\b|fonds social europeen"), "Fonds social européen (FSE+)"),
+    (re.compile(r"\bfeder\b|fonds europeen developpement regional"), "FEDER"),
+    (re.compile(r"ministere agriculture|ministere agro"), "Ministère de l'Agriculture"),
+    (re.compile(r"ministere interieur"), "Ministère de l'Intérieur"),
+    (re.compile(r"ministere europe affaires etrangeres|\bmeae\b"), "Ministère de l'Europe et des Affaires étrangères"),
+    (re.compile(r"ministere sante|ministere travail sante"), "Ministère de la Santé"),
+    (re.compile(r"^(etat|gouvernement)( francais)?$|^etat\b|^gouvernement\b|services etat"), "État"),
+    (re.compile(r"agence nationale cohesion territoires|\banct\b"), "ANCT"),
+    (re.compile(r"\bademe\b"), "ADEME"),
+    (re.compile(r"\bcaf\b|caisse allocations familiales"), "CAF"),
+    (re.compile(r"\b(prefet|prefecture)\b"), "Préfecture"),
+]
+VILLE = re.compile(r"^(?:la |le )?(?:ville|mairie|commune|municipalite) (?:de la |de l'|de l’|d'|d’|du |des |de )(.+)$", re.I)
+REGION = re.compile(r"^(?:la )?(?:region|conseil regional) (?:de la |de l'|de l’|d'|d’|du |des |de )?(.+)$", re.I)
+PREFECTURE = re.compile(r"^(?:prefet|prefecture)(?: de la | de l'| de l’| d'| d’| du | des | de | - | – )(.+)$", re.I)
+
+
+def _casse_propre(texte: str) -> str:
+    """« PREFET DE L'ESSONNE » -> « Prefet de l'Essonne » : première lettre en capitale, mots vides en minuscules."""
+    if not texte.isupper() or (" " not in texte.strip() and len(texte.strip()) <= 6):  # sigle (ARS, CNSA) : inchangé
+        return texte.strip()
+    mots = texte.strip().lower().split()
+    petits = {"de", "du", "des", "la", "le", "les", "et", "en", "sur", "sous", "a", "au", "aux"}
+    return " ".join(m if (i and m in petits) else (m[0].upper() + m[1:]) for i, m in enumerate(mots))
+
+
+def _sans_accents_minuscules(texte: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFKD", texte).encode("ascii", "ignore").decode().lower().replace("’", "'")
+
+
+def famille_generique(nom: str) -> str | None:
+    """Nom unique d'un organisme reconnu par sa famille, ou None (fonction pure)."""
+    brut = _casse_propre(nom.replace("’", "'"))
+    n = normaliser(brut)
+    for motif, libelle in FAMILLES_NATIONALES:
+        if libelle == "Préfecture":
+            m = PREFECTURE.match(_sans_accents_minuscules(brut))
+            if m:
+                reste = brut[len(brut) - len(m.group(1)):].strip(" -–")
+                return f"Préfecture - {reste[:1].upper()}{reste[1:]}"
+            continue
+        if motif.search(n):
+            return libelle
+    m = VILLE.match(_sans_accents_minuscules(brut))
+    if m:
+        reste = brut[len(brut) - len(m.group(1)):].strip()
+        return f"Ville d'{reste}" if _sans_accents_minuscules(reste)[:1] in "aeiouyh" else f"Ville de {reste}"
+    m = REGION.match(_sans_accents_minuscules(brut))
+    if m and m.group(1).strip():
+        reste = brut[len(brut) - len(m.group(1)):].strip()
+        return f"Conseil régional {reste}"
+    return brut if brut != nom.replace("’", "'").strip() else None  # une casse corrigée compte, pas une apostrophe
 
 
 def index_emetteurs(sources: list[dict]) -> dict[str, dict]:

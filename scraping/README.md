@@ -184,6 +184,14 @@ de cofinanceur ou de précision (« / », « – », « et », « avec », « en
 comme « Conseil départemental X ». Un nom dont la tête est inconnue reste tel quel. Mesure à l'essai à blanc de
 l'import : 86 noms distincts avant, 69 après, pour 237 fiches publiables.
 
+Le 2026-10-20 au soir (second retour de Monsieur DUCOUT, tri des fiches hors champ), les familles d'organismes hors
+registre sont fusionnées par règles : Bpifrance, DREETS (DRIEETS, DDETS, DEETS), DRAAF (DAAF), Fonds social européen
+(FSE+), FEDER, État, ministères, ANCT, ADEME, CAF, « Préfecture - X », « Ville de X » (mairie, commune, ville),
+« Conseil régional X », « Conseil départemental X », « Fondation de France » pour ses délégations ; un nom générique
+(« Région », « Département », « Le64 ») prend le nom de l'émetteur de la fiche quand c'est une collectivité, une ARS,
+une caisse ou un ministère ; les noms du registre passent aussi par ces règles (« Mairie de Brest » -> « Ville de
+Brest »).
+
 ```bash
 ```
 
