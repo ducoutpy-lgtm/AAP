@@ -150,6 +150,21 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+### Courriels hebdomadaires (jour 3 du plan MVP, changement `alertes-courriel`, 2026-10-20)
+
+Après la relecture des pages, `veille.cmd` appelle `alertes.py --admin --candidats` : bilan à l'administrateur (chiffres
+de `VEILLE.md`, fiches nouvelles de la semaine, fiches à contrôler, lien direct vers la liste), et à chaque candidat au
+profil complet qui accepte les courriels les appels publiés depuis sept jours de sa région ou nationaux, ouverts à sa
+famille de structure, dix au plus. Boîte d'envoi : Zoho Mail d'ARCADIA, variables `SMTP_*` et `COURRIEL_*` de
+`scraping/.env` (voir `.env.example`), mot de passe d'application jamais affiché. Sans ces variables, ou avec
+`--dry-run`, les courriels sont écrits dans `logs/courriels/` pour relecture.
+
+```bash
+python courriel.py --test                      # courriel de contrôle à COURRIEL_ADMIN
+python alertes.py --admin --candidats --dry-run # courriels écrits dans logs/courriels/, rien d'envoyé
+python alertes.py --admin --candidats --url https://adresse-de-l-application   # envoi réel
+```
+
 ### Qualification des fiches (jour 2 du plan MVP, changement `qualification-appels`, 2026-10-20)
 
 Pourquoi : un candidat doit savoir à qui s'adresse un appel (établissement public, privé non lucratif, privé

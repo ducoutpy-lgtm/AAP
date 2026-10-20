@@ -6,6 +6,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Jour 3 du plan MVP (2026-10-20 soir, changement `alertes-courriel`) : `scraping/courriel.py` (envoi SMTP par la boîte
+  Zoho d'ARCADIA, écriture à blanc dans `logs/courriels/`), `scraping/alertes.py` (bilan hebdomadaire de
+  l'administrateur, appels de la semaine pour chaque candidat selon sa région et sa famille de structure), appel
+  ajouté à `veille.cmd` ; 119 tests scraping ; boîte d'envoi à renseigner par Monsieur DUCOUT.
 - Jour 2 du plan MVP (2026-10-20 soir, changement `qualification-appels`) : qualification des appels par le modèle
   (`scraping/qualifier_fiches.py`, choix fermés : destinataires, type d'appel, objets, date d'ouverture, pièces, champ),
   import (bloc `qualification`, `startDate`, pièces attendues, brouillon si hors champ, qualification manuelle protégée),
