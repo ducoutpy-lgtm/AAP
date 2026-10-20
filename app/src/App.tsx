@@ -53,6 +53,14 @@ import MentionsLegalesPage from './pages/legal/MentionsLegalesPage';
 import CguPage from './pages/legal/CguPage';
 import ConfidentialitePage from './pages/legal/ConfidentialitePage';
 
+// Gabarit commun et pages publiques (changement navigation-et-pages-publiques, 2026-10-20)
+import Gabarit from './components/layout/Gabarit';
+import FonctionnalitesPage from './pages/public/FonctionnalitesPage';
+import TarifsPage from './pages/public/TarifsPage';
+import FaqPage from './pages/public/FaqPage';
+import AProposPage from './pages/public/AProposPage';
+import ContactPage from './pages/public/ContactPage';
+
 // Dégel du 2026-10-19 (changement OpenSpec degel-application-complete, décision de Monsieur DUCOUT) : les routes
 // retirées par le lot 0 du 2026-10-14 reviennent avec leurs gardes d'origine (connexion, abonnement, rôle). Les
 // fonctions serveur (paiement, alertes, notifications automatiques) restent non déployées tant que le forfait Blaze
@@ -86,8 +94,15 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          {/* Toutes les pages sous le gabarit commun : en-tête ou barre latérale, retour, pied de page, remontée en haut */}
+          <Route element={<Gabarit />}>
           {/* Routes publiques */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/fonctionnalites" element={<FonctionnalitesPage />} />
+          <Route path="/tarifs" element={<TarifsPage />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/a-propos" element={<AProposPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           {/* Mot de passe oublié (changement acces-administration) : e-mail et saisie du nouveau mot de passe gérés par Firebase */}
@@ -142,6 +157,7 @@ function App() {
 
           {/* 404 */}
           <Route path="*" element={<PlaceholderPage title="Page non trouvée" />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

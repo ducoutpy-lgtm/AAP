@@ -4,14 +4,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
-import { Check, Target } from 'lucide-react';
+import { Target } from 'lucide-react';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Stepper } from '../../components/ui/Stepper';
-import { STRIPE_PLANS, TRIAL_DAYS } from '../../config/stripe';
+import { TRIAL_DAYS } from '../../config/stripe';
+import { GrilleOffres } from '../../components/offres/GrilleOffres';
 import { libelleTerritoire } from '../../utils/territoires';
 import type { UserType } from '../../types';
 import {
@@ -47,7 +48,6 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
 
   const region = regionDepuisCodePostal(f.codePostal);
   const roleChoisi = role as UserType;
-  const plans = STRIPE_PLANS[role === 'financeur' ? 'financeur' : 'porteur'];
 
   // Enregistre le profil (et le document utilisateur s'il manque), puis ouvre la destination
   const terminer = async (destination: string) => {
@@ -265,36 +265,12 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
               <p className="text-sm text-gray-500 mb-6">
                 {TRIAL_DAYS} jours d'essai gratuit, aucune carte bancaire requise. Montants à valider.
               </p>
-              <div className="grid md:grid-cols-3 gap-4">
-                <Offre
-                  titre="Essai gratuit"
-                  prix="0 €"
-                  periode={`${TRIAL_DAYS} jours`}
-                  avantages={['Recherche des appels', 'Fiches détaillées', 'Alertes par e-mail']}
-                  bouton="Continuer avec l'essai gratuit"
-                  onChoisir={() => terminer(tableauDeBord)}
-                  chargement={enregistrement}
-                />
-                <Offre
-                  titre="Mensuel"
-                  prix={`${plans.monthly.amount.toLocaleString('fr-FR')} €`}
-                  periode="par mois"
-                  avantages={['Tout l\'essai gratuit', 'Candidatures en ligne', 'Suivi des dossiers', 'Messagerie']}
-                  bouton="Choisir"
-                  onChoisir={() => terminer('/abonnement/choisir')}
-                  chargement={enregistrement}
-                />
-                <Offre
-                  titre="Annuel"
-                  prix={`${plans.annual.amount.toLocaleString('fr-FR')} €`}
-                  periode="par an"
-                  etiquette="2 mois offerts"
-                  avantages={['Tout le mensuel', 'Facturation annuelle', 'Support prioritaire']}
-                  bouton="Choisir"
-                  onChoisir={() => terminer('/abonnement/choisir')}
-                  chargement={enregistrement}
-                />
-              </div>
+              <GrilleOffres
+                role={role === 'financeur' ? 'financeur' : 'porteur'}
+                surEssai={() => terminer(tableauDeBord)}
+                surPayant={() => terminer('/abonnement/choisir')}
+                chargement={enregistrement}
+              />
             </div>
           )}
 
@@ -314,29 +290,3 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
   );
 }
 
-function Offre({ titre, prix, periode, etiquette, avantages, bouton, onChoisir, chargement }: {
-  titre: string; prix: string; periode: string; etiquette?: string; avantages: string[]; bouton: string;
-  onChoisir: () => void; chargement: boolean;
-}) {
-  return (
-    <div className={`relative rounded-lg border-2 p-5 flex flex-col ${etiquette ? 'border-primary-600' : 'border-gray-200'}`}>
-      {etiquette && (
-        <span className="absolute -top-3 right-4 bg-primary-600 text-white px-3 py-0.5 rounded-full text-xs font-semibold">
-          {etiquette}
-        </span>
-      )}
-      <h3 className="text-lg font-bold text-gray-900">{titre}</h3>
-      <p className="mt-2"><span className="text-3xl font-bold text-gray-900">{prix}</span> <span className="text-gray-500 text-sm">{periode}</span></p>
-      <ul className="mt-4 space-y-2 flex-1">
-        {avantages.map(a => (
-          <li key={a} className="flex items-start text-sm text-gray-700">
-            <Check className="h-4 w-4 text-success-500 mr-2 mt-0.5 flex-shrink-0" />{a}
-          </li>
-        ))}
-      </ul>
-      <Button className="mt-5" fullWidth variant={etiquette ? 'primary' : 'secondary'} onClick={onChoisir} loading={chargement}>
-        {bouton}
-      </Button>
-    </div>
-  );
-}

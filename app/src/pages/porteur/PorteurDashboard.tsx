@@ -17,30 +17,6 @@ export default function PorteurDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">
-              Tableau de bord Porteur
-            </h1>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 hover:bg-gray-100 rounded-full">
-                <Bell className="h-6 w-6 text-gray-600" />
-                <span className="absolute top-0 right-0 h-4 w-4 bg-error-500 rounded-full text-xs text-white flex items-center justify-center">
-                  3
-                </span>
-              </button>
-              <Link to="/profil">
-                <div className="h-10 w-10 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
-                  {userProfile?.email?.[0].toUpperCase()}
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 py-8">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg p-6 mb-8 text-white">

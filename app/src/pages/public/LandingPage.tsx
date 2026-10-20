@@ -1,30 +1,17 @@
 import { Link } from 'react-router-dom';
-import { Search, Target, TrendingUp, Shield, Zap, Users } from 'lucide-react';
+import { Search, Target, TrendingUp, Shield, Zap, Users, Building2, Landmark, Eye } from 'lucide-react';
+
+// Accueil (navigation-et-pages-publiques, 2026-10-20) : l'en-tête et le pied de page viennent du gabarit commun ; le
+// choix du profil se fait dès le premier écran (retour de Monsieur DUCOUT).
+const PROFILS = [
+  { icone: Building2, titre: 'Je cherche des financements', texte: 'Établissement sanitaire ou médico-social, association, collectivité : trouvez les appels qui vous concernent et candidatez.', lien: '/signup?type=porteur', bouton: 'Créer mon compte candidat' },
+  { icone: Landmark, titre: 'Je finance des projets', texte: 'ARS, caisse, fondation, collectivité, entreprise : publiez vos appels et recevez les candidatures.', lien: '/signup?type=financeur', bouton: 'Créer mon compte financeur' },
+  { icone: Eye, titre: 'Je consulte sans compte', texte: 'La recherche et les fiches sont libres. Un compte sert à sauvegarder, être alerté et candidater.', lien: '/aap/search', bouton: 'Voir les appels à projets' },
+];
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header / Navigation */}
-      <header className="border-b border-gray-200">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Target className="h-8 w-8 text-primary-600" />
-              <span className="text-2xl font-bold text-gray-900">AAP Santé</span>
-            </div>
-            <div className="flex items-center gap-4">
-              {/* Consultation publique des AAP, sans compte (spec consultation-aap-scrapes) */}
-              <Link to="/aap/search" className="text-gray-700 hover:text-primary-600">
-                Voir les appels à projets
-              </Link>
-              <Link to="/login" className="text-gray-700 hover:text-primary-600">
-                Connexion
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 to-secondary-50">
         <div className="container mx-auto px-4">
@@ -32,12 +19,28 @@ export default function LandingPage() {
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
               Trouvez les meilleurs appels à projets en France
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Centralisez votre recherche d'appels à projets et simplifiez vos candidatures avec notre plateforme intelligente
+            <p className="text-xl text-gray-600 mb-10">
+              Les appels à projets de la santé et du médico-social, relus et qualifiés, en un seul endroit
             </p>
-            {/* Inscription fermée (lot 0 du rapport du 2026-10-14) : les boutons vers /signup sont retirés ;
-                la consultation des appels se fait par le lien « Voir les appels à projets » de l'en-tête. */}
           </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {PROFILS.map(p => {
+              const Icone = p.icone;
+              return (
+                <div key={p.titre} className="bg-white rounded-lg shadow-md p-6 flex flex-col text-left">
+                  <Icone className="h-10 w-10 text-primary-600 mb-3" />
+                  <h2 className="text-xl font-semibold text-gray-900 mb-2">{p.titre}</h2>
+                  <p className="text-gray-600 text-sm flex-1">{p.texte}</p>
+                  <Link to={p.lien} className="mt-5 inline-block text-center bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium">
+                    {p.bouton}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Administrateur de la plateforme : <Link to="/login" className="text-primary-600 hover:underline">connexion</Link>
+          </p>
         </div>
       </section>
 
@@ -230,58 +233,14 @@ export default function LandingPage() {
             Prêt à commencer ?
           </h2>
           <p className="text-xl text-primary-100 mb-8">
-            Rejoignez des centaines d'organisations qui utilisent déjà AAP Santé
+            Quatorze jours d'essai gratuit, sans carte bancaire
           </p>
+          <Link to="/signup" className="inline-block bg-white text-primary-700 hover:bg-primary-50 px-6 py-3 rounded-lg font-medium">
+            Créer mon compte
+          </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Target className="h-6 w-6 text-primary-400" />
-                <span className="text-lg font-bold text-white">AAP Santé</span>
-              </div>
-              <p className="text-sm">
-                La plateforme de référence pour les appels à projets en France
-              </p>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Produit</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Fonctionnalités</a></li>
-                <li><a href="#" className="hover:text-white">Tarifs</a></li>
-                <li><a href="#" className="hover:text-white">FAQ</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Entreprise</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">À propos</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Légal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link to="/cgu" className="hover:text-white">CGU</Link></li>
-                <li><Link to="/confidentialite" className="hover:text-white">Confidentialité</Link></li>
-                <li><Link to="/mentions-legales" className="hover:text-white">Mentions légales</Link></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; 2025 AAP Santé. Tous droits réservés.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

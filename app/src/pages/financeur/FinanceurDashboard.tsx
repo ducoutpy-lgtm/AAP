@@ -17,30 +17,6 @@ export default function FinanceurDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">
-              Tableau de bord Financeur
-            </h1>
-            <div className="flex items-center gap-4">
-              <Link to="/aap/nouveau">
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Publier un AAP
-                </Button>
-              </Link>
-              <Link to="/profil">
-                <div className="h-10 w-10 bg-secondary-600 rounded-full flex items-center justify-center text-white font-semibold">
-                  {userProfile?.email?.[0].toUpperCase()}
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 py-8">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-secondary-600 to-primary-600 rounded-lg p-6 mb-8 text-white">
@@ -50,6 +26,12 @@ export default function FinanceurDashboard() {
           <p className="text-secondary-100">
             Gérez vos appels à projets et candidatures en un seul endroit
           </p>
+          <Link to="/aap/nouveau" className="inline-block mt-4">
+            <Button variant="secondary">
+              <Plus className="mr-2 h-4 w-4" />
+              Publier un AAP
+            </Button>
+          </Link>
         </div>
 
         {/* Liste de démarrage (liste-demarrage, 2026-10-20) : disparaît à 4/4 */}

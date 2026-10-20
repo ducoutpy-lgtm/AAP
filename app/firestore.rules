@@ -48,6 +48,15 @@ service cloud.firestore {
     }
 
     // Profils
+    // Messages du formulaire de contact (navigation-et-pages-publiques, 2026-10-20) : tout visiteur peut en créer un,
+    // seul l'administrateur les lit. Règle écrite par la session, déploiement après accord de Monsieur DUCOUT.
+    match /messagesContact/{messageId} {
+      allow create: if request.resource.data.keys().hasOnly(['sujet', 'email', 'message', 'userId', 'createdAt'])
+        && request.resource.data.message is string && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000;
+      allow read, update, delete: if isAdmin();
+    }
+
     match /porteurProfiles/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId);
