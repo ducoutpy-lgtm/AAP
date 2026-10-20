@@ -150,6 +150,22 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+### Qualification des fiches (jour 2 du plan MVP, changement `qualification-appels`, 2026-10-20)
+
+Pourquoi : un candidat doit savoir à qui s'adresse un appel (établissement public, privé non lucratif, privé
+lucratif, collectivités, recherche, tous), son type (appel à projets, à candidatures, AMI, subvention, prix, mécénat),
+ce qu'il finance, quand il ouvre et quelles pièces il attend. Le modèle relit chaque fiche publiable à côté du texte
+de sa page et répond à choix fermés ; il redit aussi le champ (santé, médico-social, hors champ) pour rattraper les
+appels hors santé validés à tort. Réponses dans `scrape_metadata.qualification`, reprises par l'import (bloc
+`qualification`, `startDate`, pièces attendues, brouillon si hors champ). Un même appel présent dans le passage local
+et le passage API n'est qualifié qu'une fois.
+
+```bash
+python qualifier_fiches.py --qualifier --dry-run   # fiches à qualifier et coût estimé, rien d'appelé
+python qualifier_fiches.py --qualifier             # après accord écrit ; plafond cumulé 5 euros, sauvegarde avant écriture
+python qualifier_fiches.py --bilan                 # comptes par destinataire, type, hors champ
+```
+
 ### Financeurs canoniques et territoires (changement `nettoyage-financeurs-territoires`, 2026-10-14)
 
 Pourquoi : le nom du financeur était recopié tel quel depuis chaque page (203 noms pour 420 fiches publiées, l'ARS

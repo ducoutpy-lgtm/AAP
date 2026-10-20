@@ -6,6 +6,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Jour 2 du plan MVP (2026-10-20 soir, changement `qualification-appels`) : qualification des appels par le modèle
+  (`scraping/qualifier_fiches.py`, choix fermés : destinataires, type d'appel, objets, date d'ouverture, pièces, champ),
+  import (bloc `qualification`, `startDate`, pièces attendues, brouillon si hors champ, qualification manuelle protégée),
+  filtres « À qui s'adresse l'appel » et « Type d'appel », fiche enrichie, fenêtre « Qualifier » en administration.
+  Devis 303 fiches 0,087 euro accepté et lancé.
 - Émulateurs Firebase (2026-10-20, « oui émulateurs », changement `emulateurs-parcours-connectes`) : mode
   `npm run dev:emulateurs` (port 3001, `.env.emulateurs` sans secret, projet `demo-aap`), `app/emulateurs_dev.cmd`,
   `scripts/semer_emulateurs.py` (trois comptes de test, 85 appels), option `--projet` de l'import ; le parcours
