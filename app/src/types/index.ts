@@ -17,6 +17,9 @@ export interface User {
   trialEndsAt?: Timestamp | Date | null;
   currentPeriodEnd?: Timestamp | Date;
   notificationPreferences?: NotificationPreferences;
+  // Horodatage de la case « J'accepte les conditions générales » du parcours d'intégration (parcours-integration,
+  // 2026-10-20) ; absent pour les comptes créés avant
+  cguAccepteLe?: Timestamp | Date;
 }
 
 export interface NotificationPreferences {
@@ -29,9 +32,17 @@ export interface PorteurProfile {
   userId: string;
   structureName: string;
   siret?: string;
-  structureType: 'entreprise' | 'association' | 'collectivite' | 'laboratoire' | 'autre';
+  // Forme juridique : identifiants de FORMES_JURIDIQUES (pages/onboarding/parcours.ts) depuis le 2026-10-20 ; les
+  // anciennes valeurs (entreprise, association, collectivite, laboratoire, autre) y figurent toujours
+  structureType: string;
   secteurActivite: string;
   domainesIntervention: string[];
+  // Champs du parcours d'intégration (parcours-integration, 2026-10-20), absents des profils antérieurs : type
+  // d'établissement (TYPES_ETABLISSEMENT), tranches de taille (TAILLES) et de budget (BUDGETS), publics (PUBLICS)
+  typeEtablissement?: string;
+  tailleTranche?: string | null;
+  budgetTranche?: string | null;
+  publics?: string[];
   address?: Address;
   contactPerson?: ContactPerson;
   teamSize?: number;

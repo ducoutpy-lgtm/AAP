@@ -18,6 +18,11 @@ export interface FormulairePorteur {
   teamSize: string;
   website: string;
   description: string;
+  // Champs du parcours d'intégration (parcours-integration, 2026-10-20)
+  typeEtablissement: string;
+  tailleTranche: string;
+  budgetTranche: string;
+  publics: string[];
 }
 
 export interface FormulaireFinanceur {
@@ -38,6 +43,7 @@ export interface FormulaireFinanceur {
 export const FORMULAIRE_PORTEUR_VIDE: FormulairePorteur = {
   structureName: '', siret: '', structureType: '', secteurActivite: '', domainesIntervention: [],
   city: '', postalCode: '', region: '', firstName: '', lastName: '', phone: '', teamSize: '', website: '', description: '',
+  typeEtablissement: '', tailleTranche: '', budgetTranche: '', publics: [],
 };
 
 export const FORMULAIRE_FINANCEUR_VIDE: FormulaireFinanceur = {
@@ -65,6 +71,10 @@ export function formulairePorteurDepuisProfil(p: PorteurProfile): FormulairePort
     teamSize: texte(p.teamSize),
     website: texte(p.website),
     description: texte(p.description),
+    typeEtablissement: p.typeEtablissement ?? '',
+    tailleTranche: texte(p.tailleTranche),
+    budgetTranche: texte(p.budgetTranche),
+    publics: p.publics ?? [],
   };
 }
 

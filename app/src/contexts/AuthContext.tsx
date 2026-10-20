@@ -24,6 +24,9 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   refreshUserProfile: () => Promise<void>;
+  // Crée le document users et le profil vide d'un compte déjà connecté (compte Google sans document, changement
+  // parcours-integration, 2026-10-20) ; même contenu que l'inscription par e-mail
+  creerDocumentUtilisateur: (userType: UserType) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -48,14 +51,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [userProfile, setUserProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const signup = async (email: string, password: string, userType: UserType) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    // Envoi email de vérification
-    await sendEmailVerification(user);
-
-    // Création du document utilisateur dans Firestore
+  // Document users (essai de 14 jours) et profil vide, pour un compte Firebase donné
+  const creerDocumentsDuCompte = async (user: FirebaseUser, userType: UserType) => {
     const trialEndsAt = new Date();
     trialEndsAt.setDate(trialEndsAt.getDate() + 14); // 14 jours de trial
 
@@ -80,6 +77,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
       userId: user.uid,
       updatedAt: Timestamp.now(),
     });
+  };
+
+  const signup = async (email: string, password: string, userType: UserType) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Envoi email de vérification
+    await sendEmailVerification(user);
+
+    await creerDocumentsDuCompte(user, userType);
+  };
+
+  const creerDocumentUtilisateur = async (userType: UserType) => {
+    if (!currentUser) throw new Error('Non authentifié');
+    await creerDocumentsDuCompte(currentUser, userType);
   };
 
   const login = async (email: string, password: string) => {
@@ -156,6 +168,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     resetPassword,
     refreshUserProfile,
+    creerDocumentUtilisateur,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

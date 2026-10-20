@@ -10,6 +10,7 @@ import { Textarea } from '../../components/ui/Textarea';
 import { Target } from 'lucide-react';
 import type { PorteurProfile } from '../../types';
 import { formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
+import { BUDGETS, FORMES_JURIDIQUES, PUBLICS, TAILLES, TYPES_ETABLISSEMENT } from '../onboarding/parcours';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -25,14 +26,6 @@ const REGIONS = [
   { value: 'occitanie', label: 'Occitanie' },
   { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
   { value: "provence-alpes-cote-d-azur", label: "Provence-Alpes-Côte d'Azur" },
-];
-
-const STRUCTURE_TYPES = [
-  { value: 'entreprise', label: 'Entreprise' },
-  { value: 'association', label: 'Association' },
-  { value: 'collectivite', label: 'Collectivité territoriale' },
-  { value: 'laboratoire', label: 'Laboratoire de recherche' },
-  { value: 'autre', label: 'Autre' },
 ];
 
 const SECTEURS = [
@@ -70,6 +63,13 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
     }));
   };
 
+  const handlePublicChange = (valeur: string) => {
+    setFormData(prev => ({
+      ...prev,
+      publics: prev.publics.includes(valeur) ? prev.publics.filter(p => p !== valeur) : [...prev.publics, valeur],
+    }));
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
@@ -86,6 +86,11 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
         structureType: formData.structureType,
         secteurActivite: formData.secteurActivite,
         domainesIntervention: formData.domainesIntervention,
+        // Champs du parcours d'intégration (parcours-integration, 2026-10-20)
+        typeEtablissement: formData.typeEtablissement || null,
+        tailleTranche: formData.tailleTranche || null,
+        budgetTranche: formData.budgetTranche || null,
+        publics: formData.publics,
         address: {
           city: formData.city,
           postalCode: formData.postalCode,
@@ -183,21 +188,68 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
                   label="Type de structure"
                   value={formData.structureType}
                   onChange={(e) => setFormData({ ...formData, structureType: e.target.value })}
-                  options={STRUCTURE_TYPES}
+                  options={FORMES_JURIDIQUES}
                   required
                 />
+
+                <div className="w-full">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Type d'établissement</label>
+                  <select
+                    value={formData.typeEtablissement}
+                    onChange={(e) => setFormData({ ...formData, typeEtablissement: e.target.value })}
+                    className="input-field"
+                  >
+                    <option value="">Sélectionnez une option</option>
+                    {TYPES_ETABLISSEMENT.map(g => (
+                      <optgroup key={g.groupe} label={g.groupe}>
+                        {g.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                      </optgroup>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Select
+                    label="Taille (équivalents temps plein)"
+                    value={formData.tailleTranche}
+                    onChange={(e) => setFormData({ ...formData, tailleTranche: e.target.value })}
+                    options={TAILLES}
+                  />
+                  <Select
+                    label="Budget annuel"
+                    value={formData.budgetTranche}
+                    onChange={(e) => setFormData({ ...formData, budgetTranche: e.target.value })}
+                    options={BUDGETS}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Publics accueillis</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {PUBLICS.map((p) => (
+                      <label key={p.value} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.publics.includes(p.value)}
+                          onChange={() => handlePublicChange(p.value)}
+                          className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span className="text-sm text-gray-700">{p.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
 
                 <Select
                   label="Secteur d'activité principal"
                   value={formData.secteurActivite}
                   onChange={(e) => setFormData({ ...formData, secteurActivite: e.target.value })}
                   options={SECTEURS}
-                  required
                 />
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Domaines d'intervention <span className="text-error-500">*</span>
+                    Domaines d'intervention
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     {SECTEURS.map((secteur) => (
@@ -212,11 +264,6 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
                       </label>
                     ))}
                   </div>
-                  {formData.domainesIntervention.length === 0 && (
-                    <p className="mt-1 text-sm text-error-500">
-                      Sélectionnez au moins un domaine
-                    </p>
-                  )}
                 </div>
 
                 <Input
@@ -315,7 +362,7 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
 
             {/* Submit */}
             <div className="flex justify-end gap-4 pt-4">
-              <Button type="submit" loading={loading} disabled={formData.domainesIntervention.length === 0}>
+              <Button type="submit" loading={loading}>
                 {profilExistant ? 'Enregistrer' : 'Continuer'}
               </Button>
             </div>

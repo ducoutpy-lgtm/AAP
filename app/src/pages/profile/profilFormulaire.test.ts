@@ -25,6 +25,23 @@ describe('formulairePorteurDepuisProfil', () => {
     expect(f.region).toBe('ile-de-france');
     expect(f.domainesIntervention).toEqual(['sante', 'social']);
   });
+
+  it('un profil antérieur au parcours a les nouveaux champs vides ; un profil du parcours les reprend', () => {
+    const ancien: PorteurProfile = {
+      userId: 'u1', structureName: 'X', structureType: 'association', secteurActivite: 'sante',
+      domainesIntervention: [], updatedAt: new Date('2026-10-01'),
+    };
+    expect(formulairePorteurDepuisProfil(ancien).typeEtablissement).toBe('');
+    expect(formulairePorteurDepuisProfil(ancien).publics).toEqual([]);
+    const nouveau: PorteurProfile = {
+      ...ancien, typeEtablissement: 'ehpad', tailleTranche: '51-200', budgetTranche: null, publics: ['personnes-agees'],
+    };
+    const f = formulairePorteurDepuisProfil(nouveau);
+    expect(f.typeEtablissement).toBe('ehpad');
+    expect(f.tailleTranche).toBe('51-200');
+    expect(f.budgetTranche).toBe('');
+    expect(f.publics).toEqual(['personnes-agees']);
+  });
 });
 
 describe('formulaireFinanceurDepuisProfil', () => {
