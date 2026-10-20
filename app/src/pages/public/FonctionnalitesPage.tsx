@@ -39,9 +39,9 @@ export default function FonctionnalitesPage() {
         </div>
 
         <div className="bg-primary-50 rounded-lg p-6 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-primary-900">Voyez les appels disponibles sans créer de compte.</p>
-          <Link to="/aap/search" className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-medium">
-            Voir les appels à projets
+          <p className="text-primary-900">Créez votre compte et voyez dès aujourd'hui les appels qui concernent votre structure.</p>
+          <Link to="/signup" className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-medium">
+            Créer mon compte
           </Link>
         </div>
       </div>

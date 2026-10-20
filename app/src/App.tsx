@@ -117,8 +117,9 @@ function App() {
           <Route path="/abonnement/annule" element={<ProtectedRoute><SubscriptionCancelled /></ProtectedRoute>} />
 
           {/* Consultation publique : les AAP publiés sont lisibles sans compte (changement consultation-aap-sans-compte) */}
-          <Route path="/aap/search" element={<SearchAapPage />} />
-          <Route path="/aap/:aapId" element={<AapDetailPage />} />
+          {/* Depuis le 2026-10-20 (décision de Monsieur DUCOUT) la recherche et les fiches demandent un compte connecté */}
+          <Route path="/aap/search" element={<ProtectedRoute><SearchAapPage /></ProtectedRoute>} />
+          <Route path="/aap/:aapId" element={<ProtectedRoute><AapDetailPage /></ProtectedRoute>} />
 
           {/* Porteur */}
           <Route path="/dashboard/porteur" element={<RoutePourRole roles={['porteur']}><PorteurDashboard /></RoutePourRole>} />

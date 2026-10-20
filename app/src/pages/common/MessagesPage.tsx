@@ -129,7 +129,7 @@ export default function MessagesPage() {
       await addDoc(collection(db, 'messages'), {
         conversationId: selectedConversation.id,
         senderId: currentUser.uid,
-        senderName: userProfile.userType === 'porteur' ? 'Porteur de projet' : 'Financeur',
+        senderName: userProfile.userType === 'porteur' ? 'Candidat' : 'Financeur',
         receiverId,
         content: newMessage,
         createdAt: Timestamp.now(),

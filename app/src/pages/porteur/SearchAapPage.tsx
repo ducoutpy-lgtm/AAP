@@ -53,8 +53,16 @@ export default function SearchAapPage() {
   useEffect(() => {
     if (!currentUser || userProfile?.userType !== 'porteur') return;
     getDoc(doc(db, 'porteurProfiles', currentUser.uid))
-      .then(snap => setRegionProfil(filtresDepuisProfil(snap.data() as PorteurProfile | undefined).territory ?? ''))
+      .then(snap => {
+        const region = filtresDepuisProfil(snap.data() as PorteurProfile | undefined).territory ?? '';
+        setRegionProfil(region);
+        // Arrivée sans filtre : la recherche part du profil (retour de Monsieur DUCOUT du 2026-10-20 : « je devrais
+        // n'avoir que ceux qui me concernent ») ; les étiquettes restent retirables d'une croix
+        if (region && searchParams.toString() === '') setSearchParams(paramsDepuisFiltres({ ...FILTRES_VIDES, territory: region }), { replace: true });
+      })
       .catch(err => console.error('Profil porteur non lu :', err));
+    // Au montage et au changement de compte seulement : rejouer à chaque frappe écraserait les filtres choisis
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userProfile]);
 
   const initialiserAuProfil = () => setFilters({ ...filters, territory: regionProfil });

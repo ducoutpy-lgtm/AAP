@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
@@ -12,6 +12,7 @@ interface Application {
   id: string;
   aapId: string;
   aapTitle: string;
+  createdAt?: Timestamp;
   projectTitle: string;
   status: 'submitted' | 'under_review' | 'shortlisted' | 'accepted' | 'rejected';
   submittedAt: Timestamp;
@@ -26,6 +27,10 @@ export default function MyApplicationsPage() {
   const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [erreur, setErreur] = useState('');
+  // Confirmation passée par le formulaire de candidature après l'envoi (retour de Monsieur DUCOUT du 2026-10-20 :
+  // « soumise, mais à qui, quoi, quand ? »)
+  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string } } | null)?.envoyee;
 
   useEffect(() => {
     if (currentUser) {
@@ -41,22 +46,25 @@ export default function MyApplicationsPage() {
     if (!currentUser) return;
 
     try {
+      // Pas de tri côté Firestore : « where + orderBy » exige un index composite qui n'existe pas pour submittedAt
+      // (constat du 2026-10-20 : la liste restait vide après une candidature) ; le tri se fait ici.
       const applicationsQuery = query(
         collection(db, 'applications'),
-        where('porteurId', '==', currentUser.uid),
-        orderBy('submittedAt', 'desc')
+        where('porteurId', '==', currentUser.uid)
       );
 
       const snapshot = await getDocs(applicationsQuery);
-      const applicationsData = snapshot.docs.map(doc => ({
+      const dateDe = (a: Application) => (a.submittedAt ?? a.createdAt)?.toMillis?.() ?? 0;
+      const applicationsData = (snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-      })) as Application[];
+      })) as Application[]).sort((a, b) => dateDe(b) - dateDe(a));
 
       setApplications(applicationsData);
       setFilteredApplications(applicationsData);
     } catch (err) {
       console.error('Error loading applications:', err);
+      setErreur(err instanceof Error ? err.message : 'Les candidatures n\'ont pas pu être chargées');
     } finally {
       setLoading(false);
     }
@@ -133,6 +141,20 @@ export default function MyApplicationsPage() {
             Suivez l'état de vos candidatures aux appels à projets
           </p>
         </div>
+
+        {envoyee && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+            <p className="font-medium">Candidature envoyée</p>
+            <p className="text-sm mt-1">
+              Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
+              {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; son statut passera à « En cours
+              d'examen » puis « Acceptée » ou « Refusée » ici, et vous serez prévenu par une alerte.
+            </p>
+          </div>
+        )}
+        {erreur && (
+          <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>
+        )}
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -265,7 +287,7 @@ export default function MyApplicationsPage() {
               <Card
                 key={application.id}
                 className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() => navigate(`/candidature/${application.id}`)}
+                onClick={() => navigate(`/aap/${application.aapId}`)}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">

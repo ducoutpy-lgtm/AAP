@@ -6,7 +6,7 @@ import { Search, Target, TrendingUp, Shield, Zap, Users, Building2, Landmark, Ey
 const PROFILS = [
   { icone: Building2, titre: 'Je cherche des financements', texte: 'Établissement sanitaire ou médico-social, association, collectivité : trouvez les appels qui vous concernent et candidatez.', lien: '/signup?type=porteur', bouton: 'Créer mon compte candidat' },
   { icone: Landmark, titre: 'Je finance des projets', texte: 'ARS, caisse, fondation, collectivité, entreprise : publiez vos appels et recevez les candidatures.', lien: '/signup?type=financeur', bouton: 'Créer mon compte financeur' },
-  { icone: Eye, titre: 'Je consulte sans compte', texte: 'La recherche et les fiches sont libres. Un compte sert à sauvegarder, être alerté et candidater.', lien: '/aap/search', bouton: 'Voir les appels à projets' },
+  { icone: Eye, titre: "J'administre la plateforme", texte: 'Contrôle des fiches issues de la veille, comptes, statistiques : accès réservé.', lien: '/login', bouton: 'Connexion administrateur' },
 ];
 
 export default function LandingPage() {
@@ -39,7 +39,7 @@ export default function LandingPage() {
             })}
           </div>
           <p className="text-center text-sm text-gray-500 mt-6">
-            Administrateur de la plateforme : <Link to="/login" className="text-primary-600 hover:underline">connexion</Link>
+            Déjà un compte ? <Link to="/login" className="text-primary-600 hover:underline">Se connecter</Link>
           </p>
         </div>
       </section>
@@ -154,7 +154,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Porteur Pricing */}
             <div className="bg-white rounded-lg shadow-md p-8">
-              <h3 className="text-2xl font-bold mb-2">Porteur de projet</h3>
+              <h3 className="text-2xl font-bold mb-2">Candidat (établissement, association)</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold">29,99€</span>
                 <span className="text-gray-600">/mois</span>

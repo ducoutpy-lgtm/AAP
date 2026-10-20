@@ -185,7 +185,8 @@ export function etapeComplete(etape: 1 | 2, f: FormulaireParcours, role: UserTyp
   if (etape === 1) {
     return f.nom.trim() !== '' && f.forme !== '' && f.ville.trim() !== '' && /^\d{5}$/.test(f.codePostal.trim());
   }
-  if (role === 'porteur') return f.typeEtablissement !== '' && f.publics.length > 0;
+  // Publics facultatifs (retour de Monsieur DUCOUT du 2026-10-20 : une structure peut n'accueillir aucun public spécifique)
+  if (role === 'porteur') return f.typeEtablissement !== '';
   return f.secteurs.length > 0 && f.prenom.trim() !== '' && f.nomContact.trim() !== '';
 }
 

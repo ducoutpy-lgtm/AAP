@@ -17,8 +17,8 @@ export default function CguPage() {
 
       <Section titre="2. Accès au service">
         <p>
-          La consultation des appels publiés est libre et ne demande aucun compte. Les autres fonctions (candidature,
-          recherches sauvegardées, messagerie, publication d'un appel) demandent un compte, réservé aux professionnels
+          La consultation des appels, comme les autres fonctions (candidature, recherches sauvegardées, messagerie,
+          publication d'un appel), demande un compte, réservé aux professionnels
           agissant pour une structure : établissement ou service de santé ou médico-social, association, collectivité,
           fondation, administration, entreprise.
         </p>

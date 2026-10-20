@@ -22,7 +22,7 @@ demande, aucun déploiement, migration = essai à blanc + sauvegarde + accord.
 
 ## 3. Migration, documentation et vérification
 
-- [ ] 3.1 Accord de Monsieur DUCOUT, puis `depublier_non_controlees.py` réel (sauvegarde), résultat collé ici.
+- [x] 3.1 Accord de Monsieur DUCOUT (« Oui, fais-le », 2026-10-20), puis `depublier_non_controlees.py` réel : « 34 fiches repassees en brouillon », sauvegarde `scripts/sauvegardes/depublication_2026-10-20_1101.json` ; ré-import des financeurs sur son accord : « 0 crees, 546 mis a jour », 69 financeurs distincts. Traitement en masse ajouté ensuite à sa demande (filtre par financeur, cases à cocher, « Valider et publier la sélection », « Rejeter la sélection »).
 - [x] 3.2 `docs/resume_application_web_2026-10.md`, `scripts/README` ou `README.md` racine (section import),
   `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`.
 - [ ] 3.3 Monsieur DUCOUT contrôle une fiche depuis `/admin/aaps` et la retrouve dans la recherche ; retours ici.

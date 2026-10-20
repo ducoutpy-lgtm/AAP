@@ -155,7 +155,7 @@ export default function ManageUsersPage() {
 
   const getUserTypeLabel = (type: User['userType']) => {
     const labels: Record<User['userType'], string> = {
-      porteur: 'Porteur de projet',
+      porteur: 'Candidat (établissement)',
       financeur: 'Financeur',
       admin: 'Administrateur',
     };

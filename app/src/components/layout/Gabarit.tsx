@@ -39,8 +39,8 @@ function BoutonRetour({ versDefaut }: { versDefaut: string }) {
   );
 }
 
+// Pas de lien « Voir les appels » : la recherche demande un compte (décision de Monsieur DUCOUT du 2026-10-20)
 const LIENS_PUBLICS = [
-  { libelle: 'Voir les appels', adresse: '/aap/search' },
   { libelle: 'Fonctionnalités', adresse: '/fonctionnalites' },
   { libelle: 'Tarifs', adresse: '/tarifs' },
   { libelle: 'FAQ', adresse: '/faq' },
@@ -108,7 +108,6 @@ export function PiedDePage() {
           <div>
             <h4 className="text-white font-semibold mb-3">Produit</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/aap/search" className="hover:text-white">Voir les appels</Link></li>
               <li><Link to="/fonctionnalites" className="hover:text-white">Fonctionnalités</Link></li>
               <li><Link to="/tarifs" className="hover:text-white">Tarifs</Link></li>
               <li><Link to="/faq" className="hover:text-white">FAQ</Link></li>
@@ -192,6 +191,17 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
                   </Link>
                 );
               })}
+              {s.titre === 'Paramètres' && (
+                <button
+                  type="button"
+                  onClick={() => logout().then(() => navigate('/'))}
+                  title="Déconnexion"
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                >
+                  <LogOut className="h-5 w-5 flex-shrink-0" />
+                  {!replie && 'Déconnexion'}
+                </button>
+              )}
             </div>
           ))}
         </nav>

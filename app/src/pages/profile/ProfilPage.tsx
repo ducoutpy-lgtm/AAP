@@ -12,7 +12,7 @@ import { enDate } from '../../utils/dates';
 import CompletePorteurProfile from './CompletePorteurProfile';
 import CompleteFinanceurProfile from './CompleteFinanceurProfile';
 
-const ROLES: Record<UserType, string> = { porteur: 'Porteur de projet', financeur: 'Financeur', admin: 'Administrateur' };
+const ROLES: Record<UserType, string> = { porteur: 'Candidat (établissement)', financeur: 'Financeur', admin: 'Administrateur' };
 const ABONNEMENTS: Record<SubscriptionStatus, { libelle: string; variant: 'success' | 'warning' | 'error' | 'gray' }> = {
   active: { libelle: 'Abonnement actif', variant: 'success' },
   trial: { libelle: "Période d'essai", variant: 'warning' },

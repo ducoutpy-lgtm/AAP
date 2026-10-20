@@ -37,9 +37,9 @@ describe('etapeComplete', () => {
     expect(etapeComplete(1, structure, 'porteur')).toBe(true);
   });
 
-  it('écran 2 porteur : type d établissement et au moins un public', () => {
+  it('écran 2 porteur : type d établissement obligatoire, publics facultatifs', () => {
     expect(etapeComplete(2, structure, 'porteur')).toBe(false);
-    expect(etapeComplete(2, { ...structure, typeEtablissement: 'ehpad' }, 'porteur')).toBe(false);
+    expect(etapeComplete(2, { ...structure, typeEtablissement: 'ehpad' }, 'porteur')).toBe(true);
     expect(etapeComplete(2, { ...structure, typeEtablissement: 'ehpad', publics: ['personnes-agees'] }, 'porteur')).toBe(true);
   });
 

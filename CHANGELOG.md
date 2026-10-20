@@ -5,6 +5,19 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé
+- Application (2026-10-20, second parcours de Monsieur DUCOUT) : « Mes candidatures » restait vide après l'envoi (la
+  requête triée par `submittedAt` exigeait un index composite absent) : tri en mémoire, erreur affichée, bandeau de
+  confirmation « Candidature envoyée à <financeur> » ; l'étape Documents bloque l'envoi quand l'appel exige des pièces ;
+  le raccourci du bureau ouvre l'accueil ; la recherche et les fiches demandent un compte (décision du jour, remplace la
+  consultation sans compte du 2026-10-13 : liens « Voir les appels » retirés, carte « J'administre la plateforme » à la
+  place de la consultation libre, FAQ et CGU mises à jour) ; « Candidat » remplace « Porteur de projet » dans les
+  écrans ; Déconnexion aussi sous Paramètres ; publics accueillis facultatifs ; la recherche d'un candidat part de la
+  région de son profil ; administration : filtre par financeur, cases à cocher, validation ou rejet en masse.
+- Données (2026-10-20, accord de Monsieur DUCOUT) : 34 fiches publiées sans contrôle repassées en brouillon
+  (sauvegarde `depublication_2026-10-20_1101.json`) ; ré-import appliquant la fusion des financeurs (546 mises à jour,
+  69 noms distincts).
+
 ### Ajouté
 - Application, retours de Monsieur DUCOUT du 2026-10-20 (après-midi) : gabarit commun à toutes les pages (en-tête
   public avec logo vers l'accueil et bouton Retour, barre latérale repliable par rôle façon helloDarwin, barre haute,

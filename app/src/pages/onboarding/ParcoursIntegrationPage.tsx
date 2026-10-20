@@ -110,8 +110,8 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                     Je suis <span className="text-error-500">*</span>
                   </p>
                   <div className="grid grid-cols-2 gap-3">
-                    {([['porteur', 'Porteur de projet', 'établissement, association, collectivité'],
-                      ['financeur', 'Financeur', 'ARS, fondation, collectivité, entreprise']] as const).map(([v, titre, sous]) => (
+                    {([['porteur', 'Candidat', 'établissement, association, collectivité qui répond aux appels'],
+                      ['financeur', 'Financeur', 'ARS, fondation, collectivité, entreprise qui publie des appels']] as const).map(([v, titre, sous]) => (
                       <button
                         key={v}
                         type="button"
@@ -211,7 +211,7 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
               </div>
               <div>
                 <p className="block text-sm font-medium text-gray-700 mb-2">
-                  Publics accueillis <span className="text-error-500">*</span>
+                  Publics accueillis (facultatif)
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   {PUBLICS.map(p => (

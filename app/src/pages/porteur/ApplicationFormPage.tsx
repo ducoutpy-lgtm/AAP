@@ -131,6 +131,13 @@ export default function ApplicationFormPage() {
           return false;
         }
         break;
+      case 5:
+        // Retour de Monsieur DUCOUT du 2026-10-20 : la candidature partait sans aucune pièce alors que l'appel en exigeait
+        if ((aap?.requiredDocuments?.length ?? 0) > 0 && documents.length === 0) {
+          setError('Cet appel exige des documents : joignez au moins un fichier avant d\'envoyer');
+          return false;
+        }
+        break;
     }
 
     return true;
@@ -162,6 +169,7 @@ export default function ApplicationFormPage() {
 
   const handleSubmit = async () => {
     if (!currentUser || !aap || !aapId) return;
+    if (!validateStep()) return;
 
     setSubmitting(true);
     setError('');
@@ -211,8 +219,7 @@ export default function ApplicationFormPage() {
         updatedAt: Timestamp.now(),
       });
 
-      alert('Candidature soumise avec succès !');
-      navigate('/mes-candidatures');
+      navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur' } } });
     } catch (err) {
       console.error('Error submitting application:', err);
       setError(err instanceof Error ? err.message : 'Erreur lors de la soumission');

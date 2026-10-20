@@ -44,6 +44,11 @@ export default function ManageAAPsPage() {
   const [validationFilter, setValidationFilter] = useState<'all' | ValidationStatut | 'aucun'>(
     (params.get('validation') as ValidationStatut | 'aucun' | null) ?? 'all'
   );
+  // Traitement en masse (2026-10-20) : filtre par financeur, sélection par cases, valider ou rejeter la sélection
+  const [financeurFilter, setFinanceurFilter] = useState<string>(params.get('financeur') ?? 'all');
+  const [selection, setSelection] = useState<Set<string>>(new Set());
+  const [traitement, setTraitement] = useState(false);
+  const financeursPresents = Array.from(new Set(aaps.map(a => a.financeurName || 'Non précisé'))).sort((a, b) => a.localeCompare(b, 'fr'));
 
   useEffect(() => {
     loadAaps();
@@ -54,7 +59,7 @@ export default function ManageAAPsPage() {
     // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
     // seulement quand les valeurs listées changent).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, statusFilter, validationFilter, aaps]);
+  }, [searchTerm, statusFilter, validationFilter, financeurFilter, aaps]);
 
   const loadAaps = async () => {
     try {
@@ -94,7 +99,46 @@ export default function ManageAAPsPage() {
       result = result.filter(aap => (aap.validation?.statut ?? 'aucun') === validationFilter);
     }
 
+    // Filtre par financeur (nom canonique)
+    if (financeurFilter !== 'all') {
+      result = result.filter(aap => (aap.financeurName || 'Non précisé') === financeurFilter);
+    }
+
     setFilteredAaps(result);
+    // La sélection ne garde que des fiches encore affichées
+    setSelection(prev => new Set([...prev].filter(id => result.some(a => a.id === id))));
+  };
+
+  const basculerSelection = (id: string) =>
+    setSelection(prev => {
+      const s = new Set(prev);
+      if (s.has(id)) s.delete(id); else s.add(id);
+      return s;
+    });
+  const toutSelectionner = () => setSelection(new Set(filteredAaps.map(a => a.id)));
+  const toutDeselectionner = () => setSelection(new Set());
+
+  // Valider ou rejeter toutes les fiches cochées (une écriture par fiche, même verdict que les boutons unitaires)
+  const traiterSelection = async (verdict: 'validee' | 'rejetee') => {
+    if (selection.size === 0) return;
+    const libelle = verdict === 'validee' ? 'valider et publier' : 'rejeter';
+    if (!confirm(`Confirmer : ${libelle} ${selection.size} fiche${selection.size > 1 ? 's' : ''} ?`)) return;
+    const commentaire = verdict === 'rejetee' ? (prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') ?? '') : '';
+    setTraitement(true);
+    try {
+      for (const id of selection) {
+        await updateDoc(doc(db, 'aap', id), verdict === 'validee'
+          ? { validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'published', publishedAt: new Date() }
+          : { validation: { statut: 'rejetee', commentaire: commentaire.trim(), date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'archived' });
+      }
+      setSelection(new Set());
+      await loadAaps();
+    } catch (err) {
+      console.error('Erreur de traitement en masse :', err);
+      alert('Erreur pendant le traitement : certaines fiches ont pu être traitées, rechargez la page');
+    } finally {
+      setTraitement(false);
+    }
   };
 
   const handleArchiveAap = async (aapId: string) => {
@@ -342,7 +386,36 @@ export default function ManageAAPsPage() {
                 <option value="rejetee">Rejetées</option>
                 <option value="aucun">Sans bloc validation (saisies à la main)</option>
               </select>
+              <select
+                value={financeurFilter}
+                onChange={(e) => setFinanceurFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent max-w-xs"
+              >
+                <option value="all">Tous les financeurs</option>
+                {financeursPresents.map(f => <option key={f} value={f}>{f}</option>)}
+              </select>
             </div>
+          </div>
+        </Card>
+
+        {/* Traitement en masse */}
+        <Card className="p-4 mb-6">
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span className="font-medium text-gray-900">{selection.size} fiche{selection.size > 1 ? 's' : ''} sélectionnée{selection.size > 1 ? 's' : ''}</span>
+            <Button variant="secondary" size="sm" onClick={toutSelectionner} disabled={filteredAaps.length === 0}>
+              Tout sélectionner ({filteredAaps.length} affichées)
+            </Button>
+            <Button variant="secondary" size="sm" onClick={toutDeselectionner} disabled={selection.size === 0}>
+              Tout désélectionner
+            </Button>
+            <Button variant="primary" size="sm" onClick={() => traiterSelection('validee')} disabled={selection.size === 0} loading={traitement}>
+              <ShieldCheck className="h-4 w-4 mr-2" />
+              Valider et publier la sélection
+            </Button>
+            <Button variant="danger" size="sm" onClick={() => traiterSelection('rejetee')} disabled={selection.size === 0} loading={traitement}>
+              <ShieldX className="h-4 w-4 mr-2" />
+              Rejeter la sélection
+            </Button>
           </div>
         </Card>
 
@@ -354,8 +427,15 @@ export default function ManageAAPsPage() {
         ) : (
           <div className="space-y-4">
             {filteredAaps.map(aap => (
-              <Card key={aap.id} className="p-6">
+              <Card key={aap.id} className={`p-6 ${selection.has(aap.id) ? 'ring-2 ring-primary-300' : ''}`}>
                 <div className="flex items-start justify-between mb-4">
+                  <input
+                    type="checkbox"
+                    checked={selection.has(aap.id)}
+                    onChange={() => basculerSelection(aap.id)}
+                    aria-label={`Sélectionner ${aap.title}`}
+                    className="mt-1.5 mr-4 h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  />
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-xl font-semibold text-gray-900">

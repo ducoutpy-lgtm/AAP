@@ -106,8 +106,8 @@ export default function SignupPage() {
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="font-semibold">Porteur</div>
-                <div className="text-xs text-gray-500 mt-1">de projet</div>
+                <div className="font-semibold">Candidat</div>
+                <div className="text-xs text-gray-500 mt-1">établissement, association</div>
               </button>
 
               <button
@@ -120,7 +120,7 @@ export default function SignupPage() {
                 }`}
               >
                 <div className="font-semibold">Financeur</div>
-                <div className="text-xs text-gray-500 mt-1">/ Organisme</div>
+                <div className="text-xs text-gray-500 mt-1">ARS, fondation, collectivité</div>
               </button>
             </div>
           </div>

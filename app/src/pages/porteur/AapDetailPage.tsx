@@ -229,7 +229,7 @@ export default function AapDetailPage() {
               </Button>
               {!currentUser && (
                 <p className="mt-2 text-center text-sm text-gray-500">
-                  La consultation est libre ; candidater demande un compte porteur.
+                  Candidater demande un compte candidat.
                 </p>
               )}
             </div>
