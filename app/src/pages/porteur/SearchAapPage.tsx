@@ -1,35 +1,73 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { collection, query, where, orderBy, getDocs } from 'firebase/firestore';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { collection, query, where, orderBy, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { AAP } from '../../types';
+import { useAuth } from '../../contexts/AuthContext';
+import { AAP, PorteurProfile } from '../../types';
 import { mentionRelecture, estRelue, dateExtraction } from '../../utils/relecture';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import {
-  ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText } from 'lucide-react';
+  ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText, X, Link2, UserCheck } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import {
+  correspondTerritoire, etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams,
+  filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, statutAppel, totalMontants, type FiltresRecherche,
+  type StatutAppel,
+} from '../../utils/recherche';
+
+// Pastille de statut d'une carte (recherche-guidee) : couleur selon l'urgence
+const VARIANT_STATUT: Record<StatutAppel, 'success' | 'warning' | 'gray' | 'primary'> = {
+  ouvert: 'success', 'bientot-clos': 'warning', clos: 'gray', 'sans-date': 'primary',
+};
 
 export default function SearchAapPage() {
   const navigate = useNavigate();
   useMarquerDemarrage('recherche');
+  const { currentUser, userProfile } = useAuth();
   const [aaps, setAaps] = useState<(AAP & { id: string })[]>([]);
   const [filteredAaps, setFilteredAaps] = useState<(AAP & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({
-    thematique: '',
-    territory: '',
-    financeur: '',
-    source: '',
-    relecture: '',
-    budgetMin: '',
-    budgetMax: '',
-  });
+  // Filtres dans l'adresse de la page (recherche-guidee, 2026-10-20) : une recherche se partage par son lien et
+  // survit au rechargement ; l'état React est dérivé des paramètres, chaque changement réécrit l'adresse sans empiler
+  // d'historique.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filters: FiltresRecherche = filtresDepuisParams(searchParams);
+  const searchTerm = filters.q;
+  const setFilters = (f: FiltresRecherche) => setSearchParams(paramsDepuisFiltres(f), { replace: true });
+  const setSearchTerm = (q: string) => setFilters({ ...filters, q });
+  const retirerFiltre = (cle: keyof FiltresRecherche) => setFilters({ ...filters, [cle]: '' });
+  // Onglet « Consultées » : dernières fiches ouvertes sur ce navigateur
+  const [onglet, setOnglet] = useState<'trouver' | 'consultees'>('trouver');
+  const [consultees] = useState<string[]>(() => fichesConsultees());
+  // Région du profil pour « Initialiser à mon profil » (porteur connecté seulement)
+  const [regionProfil, setRegionProfil] = useState('');
+  const [lienCopie, setLienCopie] = useState('');
+  const etiquettes = etiquettesActives(filters);
+  const montants = totalMontants(filteredAaps);
+
+  useEffect(() => {
+    if (!currentUser || userProfile?.userType !== 'porteur') return;
+    getDoc(doc(db, 'porteurProfiles', currentUser.uid))
+      .then(snap => setRegionProfil(filtresDepuisProfil(snap.data() as PorteurProfile | undefined).territory ?? ''))
+      .catch(err => console.error('Profil porteur non lu :', err));
+  }, [currentUser, userProfile]);
+
+  const initialiserAuProfil = () => setFilters({ ...filters, territory: regionProfil });
+
+  const copierLeLien = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLienCopie('Lien copié');
+    } catch {
+      setLienCopie('Copie impossible : copiez l\'adresse de la page');
+    }
+    setTimeout(() => setLienCopie(''), 3000);
+  };
 
   // Options des filtres construites à partir des fiches chargées (changement filtres-recherche, 2026-10-14) : les
   // identifiants de territoire écrits par l'import, affichés avec leur libellé ; les financeurs présents (nom canonique
@@ -47,7 +85,7 @@ export default function SearchAapPage() {
     // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
     // seulement quand les valeurs listées changent).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, filters, aaps]);
+  }, [searchParams, aaps]);
 
   const loadAaps = async () => {
     try {
@@ -91,11 +129,15 @@ export default function SearchAapPage() {
       result = result.filter(aap => thematique(aap) === filters.thematique);
     }
 
-    // Filtre par territoire : comparaison sur l'identifiant enregistré (ile-de-france, france...)
+    // Filtre par territoire : identifiant enregistré (ile-de-france, france...) ; un appel national reste visible dans
+    // chaque région (recherche-guidee, 2026-10-20)
     if (filters.territory) {
-      result = result.filter(aap =>
-        aap.territoriesEligible?.includes(filters.territory)
-      );
+      result = result.filter(aap => correspondTerritoire(aap, filters.territory));
+    }
+
+    // Filtre par statut calculé d'après la date de clôture (recherche-guidee) : ouvert, bientôt clôturé, clôturé, sans date
+    if (filters.statut) {
+      result = result.filter(aap => statutAppel(aap) === filters.statut);
     }
 
     // Filtre par financeur (nom canonique)
@@ -131,18 +173,11 @@ export default function SearchAapPage() {
     setFilteredAaps(datesDAbord(result));
   };
 
-  const resetFilters = () => {
-    setSearchTerm('');
-    setFilters({
-      thematique: '',
-      territory: '',
-      financeur: '',
-      source: '',
-      relecture: '',
-      budgetMin: '',
-      budgetMax: '',
-    });
-  };
+  const resetFilters = () => setFilters(FILTRES_VIDES);
+
+  const aapsAffiches = onglet === 'consultees'
+    ? consultees.map(id => aaps.find(a => a.id === id)).filter((a): a is AAP & { id: string } => Boolean(a))
+    : filteredAaps;
 
   if (loading) {
     return (
@@ -158,15 +193,67 @@ export default function SearchAapPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
+        {/* Header : compteur avec montants annoncés (recherche-guidee, 2026-10-20) */}
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Rechercher des Appels à Projets
           </h1>
           <p className="text-gray-600">
-            {filteredAaps.length} AAP disponible{filteredAaps.length > 1 ? 's' : ''}
+            <span className="font-semibold text-gray-900">{filteredAaps.length} appel{filteredAaps.length > 1 ? 's' : ''} à projets</span>
+            {montants.chiffrees > 0 && (
+              <>
+                {' '}totalisant <span className="font-semibold text-gray-900">{euros(montants.total)}</span> annoncés
+                {' '}({montants.chiffrees} fiche{montants.chiffrees > 1 ? 's' : ''} chiffrée{montants.chiffrees > 1 ? 's' : ''})
+              </>
+            )}
           </p>
+          <div className="flex flex-wrap items-center gap-2 mt-3">
+            <div className="inline-flex rounded-lg border border-gray-300 overflow-hidden text-sm">
+              <button
+                type="button"
+                onClick={() => setOnglet('trouver')}
+                className={`px-3 py-1.5 ${onglet === 'trouver' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+              >
+                Trouver
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnglet('consultees')}
+                className={`px-3 py-1.5 border-l border-gray-300 ${onglet === 'consultees' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+              >
+                Consultées ({consultees.length})
+              </button>
+            </div>
+            {regionProfil && (
+              <Button variant="secondary" size="sm" onClick={initialiserAuProfil}>
+                <UserCheck className="h-4 w-4 mr-1" />
+                Initialiser à mon profil
+              </Button>
+            )}
+            <Button variant="secondary" size="sm" onClick={copierLeLien}>
+              <Link2 className="h-4 w-4 mr-1" />
+              Copier le lien
+            </Button>
+            {lienCopie && <span className="text-sm text-gray-600">{lienCopie}</span>}
+          </div>
         </div>
+
+        {/* Étiquettes des filtres actifs, retirables d'une croix (recherche-guidee) */}
+        {etiquettes.length > 0 && onglet === 'trouver' && (
+          <div className="flex flex-wrap items-center gap-2 mb-6">
+            {etiquettes.map(e => (
+              <span key={e.cle} className="inline-flex items-center gap-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-1 text-sm">
+                {e.libelle}
+                <button type="button" onClick={() => retirerFiltre(e.cle)} aria-label={`Retirer ${e.libelle}`} className="hover:text-primary-900">
+                  <X className="h-4 w-4" />
+                </button>
+              </span>
+            ))}
+            <button type="button" onClick={resetFilters} className="text-sm text-gray-600 hover:text-gray-900 underline">
+              Effacer tout
+            </button>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filtres */}
@@ -282,6 +369,25 @@ export default function SearchAapPage() {
                 </select>
               </div>
 
+              {/* Statut à quatre valeurs (recherche-guidee) */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Statut
+                </label>
+                <select
+                  value={filters.statut}
+                  onChange={(e) => setFilters({ ...filters, statut: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                >
+                  <option value="">Tous les statuts</option>
+                  {(Object.keys(LIBELLES_STATUT) as StatutAppel[]).map(s => (
+                    <option key={s} value={s}>
+                      {s === 'bientot-clos' ? 'Bientôt clôturé (30 jours ou moins)' : LIBELLES_STATUT[s]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Budget */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -315,22 +421,26 @@ export default function SearchAapPage() {
 
           {/* Liste des AAP */}
           <div className="lg:col-span-3">
-            {filteredAaps.length === 0 ? (
+            {aapsAffiches.length === 0 ? (
               <Card className="p-12 text-center">
                 <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Aucun AAP trouvé
+                  {onglet === 'consultees' ? 'Aucune fiche consultée sur ce navigateur' : 'Aucun AAP trouvé'}
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Essayez de modifier vos critères de recherche
+                  {onglet === 'consultees'
+                    ? 'Les fiches que vous ouvrez apparaîtront ici, la plus récente en premier'
+                    : 'Essayez de modifier vos critères de recherche'}
                 </p>
-                <Button variant="secondary" onClick={resetFilters}>
-                  Réinitialiser les filtres
-                </Button>
+                {onglet === 'trouver' && (
+                  <Button variant="secondary" onClick={resetFilters}>
+                    Réinitialiser les filtres
+                  </Button>
+                )}
               </Card>
             ) : (
               <div className="space-y-4">
-                {filteredAaps.map(aap => {
+                {aapsAffiches.map(aap => {
                   const daysLeft = getDaysUntilDeadline(aap.deadline);
                   const closed = isClosed(daysLeft);
                   const isUrgent = daysLeft !== null && !closed && daysLeft <= 7;
@@ -343,6 +453,9 @@ export default function SearchAapPage() {
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
+                          <div className="mb-2">
+                            <Badge variant={VARIANT_STATUT[statutAppel(aap)]}>{LIBELLES_STATUT[statutAppel(aap)]}</Badge>
+                          </div>
                           <h3 className="text-xl font-semibold text-gray-900 mb-2">
                             {aap.title}
                           </h3>

@@ -17,6 +17,6 @@ archivage sans demande, aucun déploiement, la session ne crée aucun compte sur
 
 ## 3. Documentation et vérification
 
-- [ ] 3.1 `docs/resume_application_web_2026-10.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
+- [x] 3.1 `docs/resume_application_web_2026-10.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
   `docs/parcours_hellodarwin_2026-10.md` (point 2 : fait).
 - [ ] 3.2 Monsieur DUCOUT joue les scénarios avec ses comptes de test ; erreurs listées ici.

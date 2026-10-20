@@ -138,6 +138,17 @@ admissible, étapes de dépôt).
 
 Chaque point fera un changement OpenSpec séparé, avec scénarios, tests et vérification par Monsieur DUCOUT.
 
+État au 2026-10-20 après-midi (ordre validé par Monsieur DUCOUT, plus un septième point accepté : enrichir
+l'extraction pour le second groupe de filtres, avec devis) :
+
+| Point | Changement OpenSpec | État |
+|---|---|---|
+| 1 | `parcours-integration` | Codé, 8 tests, lint et build verts ; vérification de Monsieur DUCOUT (4.2) en attente ; montants des offres à valider dans le gabarit |
+| 2 | `liste-demarrage` | Codé, 5 tests ; vérification (3.2) en attente |
+| 3 | `recherche-guidee` | Codé, 7 tests, écran vérifié sans compte ; vérification (3.2) en attente |
+| 4 à 6 | à ouvrir | Fiche, candidatures en colonnes, paramètres en trois blocs |
+| 7 | à ouvrir, devis | Champs à poser à Haiku : statut de l'établissement éligible, type d'appel, objet, publics, dépenses |
+
 Vérifié : tout ce qui précède a été lu à l'écran le 2026-10-20 sur le compte de test, captures à l'appui ; la liste de démarrage a été jouée jusqu'à 4 sur 4.
 Non vérifié ou supposé : les écrans payants (assistant, intelligence de financement, historique, ressources
 officielles) n'ont pas été ouverts ; les écrans de l'étape 2 pour les autres formes juridiques n'ont pas été vus.

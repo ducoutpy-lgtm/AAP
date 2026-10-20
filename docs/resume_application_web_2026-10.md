@@ -92,7 +92,7 @@ src/
 | Route | Accès |
 |---|---|
 | `/`, `/login`, `/signup` | public |
-| `/complete-profile` | connecté |
+| `/complete-profile` | connecté ; depuis le 2026-10-20 (`parcours-integration`) : accueil (CGU, rôle si compte Google) puis trois écrans « Votre structure », « Vos détails », « Votre offre » ; les formulaires longs restent sur `/profil` |
 | `/abonnement/choisir`, `/abonnement/succes`, `/abonnement/annule` | connecté |
 | `/dashboard/porteur`, `/aap/search`, `/aap/:aapId/candidater`, `/mes-candidatures`, `/recherches-sauvegardees`, `/recommandations` | porteur + abonnement |
 | `/aap/:aapId` | connecté + abonnement |
@@ -101,7 +101,9 @@ src/
 | `/notifications` | connecté |
 | `/admin`, `/admin/utilisateurs`, `/admin/aaps`, `/admin/statistiques` | admin |
 | `/aap/:aapId/edit` | Modification d'un appel par son auteur (financeur) : formulaire de création pré-rempli, « Sauvegarder » garde le statut, « Publier » publie un brouillon ; autre compte : « Cet appel n'est pas le vôtre » (2026-10-20, `profil-et-edition-aap`) |
-| `/profil` | Mon compte (adresse, rôle, abonnement, fin d'essai) et formulaire de profil pré-rempli, « Enregistrer » ; profil jamais complété renvoyé vers `/complete-profile` (2026-10-20) |
+| `/profil` | Mon compte (adresse, rôle, abonnement, fin d'essai) et formulaire de profil pré-rempli, « Enregistrer » ; profil jamais complété renvoyé vers `/complete-profile` (2026-10-20) ; champs du secteur ajoutés le 2026-10-20 (forme juridique, type d'établissement, taille, budget, publics, objets de projet, année d'ouverture, rayon d'action) |
+| `/dashboard/porteur`, `/dashboard/financeur` | Carte « Démarrer (n/4) » (`liste-demarrage`, 2026-10-20) : quatre actions cochées par les pages ouvertes (`users.demarrage`), fenêtre « Préciser mon profil » ; disparaît à 4/4 |
+| `/aap/search` | Recherche guidée (`recherche-guidee`, 2026-10-20) : filtres dans l'adresse (`?q=&thematique=&territory=&financeur=&source=&relecture=&statut=&budgetMin=&budgetMax=`), compteur « N appels totalisant M € annoncés (K fiches chiffrées) », étiquettes retirables, statut ouvert / bientôt clôturé (30 jours) / clôturé / sans date, « Copier le lien », « Initialiser à mon profil » (région du porteur connecté), onglet « Consultées » (mémoire du navigateur, 20 fiches), appels nationaux inclus dans un territoire régional |
 | `/cgu`, `/confidentialite`, `/mentions-legales` | Pages légales rédigées le 2026-10-19 (données d'entreprise à valider) |
 | `/admin/paiements`, `/admin/parametres` | **placeholders** (paiements : attend Stripe ; paramètres : aucun besoin exprimé) |
 

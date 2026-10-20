@@ -217,6 +217,15 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Transposition helloDarwin, points 1 à 3 (2026-10-20, après-midi, changements `parcours-integration`,
+  `liste-demarrage`, `recherche-guidee`) : nouveau parcours d'intégration sur `/complete-profile` (accueil, trois
+  écrans, offres à trois colonnes avec les montants de `config/stripe.ts` à valider), carte « Démarrer (n/4) » sur les
+  deux tableaux de bord, recherche avec compteur de montants, étiquettes, statut, lien partageable, « Initialiser à mon
+  profil », onglet « Consultées ». Preuve de la session : 39 tests, lint, build, écran `/aap/search?territory=normandie&statut=bientot-clos`
+  (« 19 appels à projets totalisant 6 860 433 € annoncés (6 fiches chiffrées) », deux étiquettes, croix qui retire
+  « Normandie » et réécrit l'adresse). Reste : vérification par Monsieur DUCOUT avec un compte de test neuf (tâches
+  4.2, 3.2, 3.2), puis points 4 à 6 (fiche, candidatures en colonnes, paramètres) et le second groupe de filtres
+  (enrichir l'extraction, devis).
 - Pages Mon profil et Modifier l'appel (2026-10-20, `profil-et-edition-aap`) : `/profil` montre le compte et le formulaire
   de profil pré-rempli (« Enregistrer ») ; `/aap/:id/edit` ouvre le formulaire de création pré-rempli pour le financeur
   auteur (« Sauvegarder » garde le statut, « Publier » publie un brouillon). Restent vides : paiements et paramètres

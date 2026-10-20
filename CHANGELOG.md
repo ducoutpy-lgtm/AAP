@@ -6,6 +6,15 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Application, transposition du parcours helloDarwin (2026-10-20, points 1 à 3 validés par Monsieur DUCOUT) :
+  parcours d'intégration à trois écrans après l'inscription (accueil avec CGU et choix du rôle pour un compte
+  Google, structure, détails du secteur santé, offres à trois colonnes ; changement `parcours-integration`), liste de
+  démarrage « Démarrer (n/4) » sur les tableaux de bord avec fenêtre « Préciser mon profil » (changement
+  `liste-demarrage`), recherche guidée : compteur avec montants annoncés, étiquettes des filtres actifs, statut à
+  quatre valeurs, filtres dans l'adresse de la page et « Copier le lien », « Initialiser à mon profil », onglet
+  « Consultées », appels nationaux inclus dans un territoire (changement `recherche-guidee`). Profil porteur enrichi
+  (forme juridique du secteur, type d'établissement FINESS, taille, budget, publics, objets de projet, année
+  d'ouverture, rayon d'action). 39 tests Vitest, lint et build verts ; vérification par Monsieur DUCOUT en attente.
 - Application : page « Mon profil » (`/profil`, compte et formulaire de profil pré-rempli) et modification d'un appel
   par son auteur (`/aap/:id/edit`), changement `profil-et-edition-aap` (2026-10-20) ; conversions appel / profil ->
   formulaire testées par Vitest (18 tests).

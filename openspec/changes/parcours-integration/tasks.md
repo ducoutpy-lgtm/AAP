@@ -25,7 +25,7 @@ vrai projet.
 
 ## 4. Documentation et vérification
 
-- [ ] 4.1 `docs/resume_application_web_2026-10.md`, `app/README.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
+- [x] 4.1 `docs/resume_application_web_2026-10.md`, `app/README.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
   `docs/parcours_hellodarwin_2026-10.md` (point 1 : fait).
 - [ ] 4.2 Monsieur DUCOUT joue le parcours avec un compte de test neuf (e-mail) et, s'il le souhaite, un compte
   Google ; valide ou corrige les montants des offres ; erreurs rencontrées listées ici.

@@ -11,6 +11,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import { memoriserFicheConsultee } from '../../utils/recherche';
 import {
   Calendar,
   Building,
@@ -62,6 +63,7 @@ export default function AapDetailPage() {
 
   useEffect(() => {
     if (aapId) {
+      memoriserFicheConsultee(aapId);
       loadAap();
     }
     // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu

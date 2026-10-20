@@ -151,7 +151,7 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 | Appli web : Cloud Functions | A FAIRE | écrites dans `app/functions/`, non déployées |
 | Appli web : Stripe | A FAIRE | Price IDs à remplacer, functions à déployer |
 | Appli web : tests | EN COURS | 2026-10-14 (lot 0) : tests des règles Firestore sur l'émulateur (`npm run test:rules`, JDK 21 requis, 13 verts) ; 2026-10-19 (dégel) : 23 tests de règles, `npm test` 12 tests (mention de relecture, territoires, pages légales) ; aucun test de bout en bout |
-| Appli web : pages placeholder | EN COURS | 2026-10-19 : pages légales rédigées (données d'entreprise à valider), mot de passe oublié fait le 2026-10-15 ; 2026-10-20 (`profil-et-edition-aap`) : édition d'un appel par son auteur et page Mon profil faites (lint, build, `npm test` 18 verts, vérification de Monsieur DUCOUT en attente) ; restent paiements (Stripe) et paramètres admin |
+| Appli web : pages placeholder | EN COURS | 2026-10-19 : pages légales rédigées (données d'entreprise à valider), mot de passe oublié fait le 2026-10-15 ; 2026-10-20 (`profil-et-edition-aap`) : édition d'un appel par son auteur et page Mon profil faites (lint, build, `npm test` 18 verts, vérification de Monsieur DUCOUT en attente) ; restent paiements (Stripe) et paramètres admin ; 2026-10-20 après-midi : parcours d'intégration, liste de démarrage et recherche guidée (points 1 à 3 helloDarwin, 39 tests verts, vérification en attente) |
 | Appli web : dégel des modules | FAIT (code), VÉRIFICATION EN COURS | 2026-10-19 (`degel-application-complete`) : routes, lint, compilation, règles Firestore testées, pages légales, tests ; parcours connectés à jouer par Monsieur DUCOUT avec des comptes de test ; règles à déployer après accord |
 | Scraping : 5 sources | OK | voir ci-dessus |
 | Scraping : registre des sources | EN COURS (annuaires) | 2026-10-09 : 847 sources ; 2026-10-13 (`registre-par-annuaires`) : familles adossées à des annuaires de référence avec taux de couverture (`REGISTRE_SOURCES.md`), vague 1 fondations du RNF terminée : 365 / 664 (54 %), 1 198 sources ; recherche des sites par Tavily (191) puis par la recherche web de la session (445 fondations : 165 sites inscrits, 271 sans site dont 62 hors champ non cherchées, 9 déjà au registre), 22 adresses à resonder ; agrégateur Fimeco Walter Allinial, 10 financeurs de la veille URIOPSS PACA-Corse et famille PLIE (annuaire fse.gouv.fr) ajoutés à sa demande |
@@ -231,7 +231,10 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `profil-et-edition-aap` (2026-10-20 : `/profil` et `/aap/:id/edit` fonctionnels, formulaires existants en mode
+  En cours : `parcours-integration`, `liste-demarrage`, `recherche-guidee` (2026-10-20 après-midi, points 1 à 3 du relevé
+  helloDarwin `docs/parcours_hellodarwin_2026-10.md` : parcours à trois écrans, carte « Démarrer (n/4) », recherche avec
+  compteur de montants, étiquettes, statut, lien partageable, « Initialiser à mon profil » ; 39 tests, lint et build
+  verts ; vérification de Monsieur DUCOUT en attente ; points 4 à 6 et second groupe de filtres à faire), `profil-et-edition-aap` (2026-10-20 : `/profil` et `/aap/:id/edit` fonctionnels, formulaires existants en mode
   édition, fonctions pures testées ; vérification 4.2 de Monsieur DUCOUT avec ses comptes de test), `rejeu-collecte-veille` (lot 2, 2026-10-20 : `scraping/rejeu.py`, `veille.cmd`, `scripts/perimer_fiches.py`,
   import `derniereVueLe` d'après le rejeu et `absences` ; premier passage réel sur vingt sources le 2026-10-20, 19 textes
   nouveaux extraits par Haiku sur accord (0,04 euro, 17 fiches créées dont 15 publiées validées ; cumul Haiku 2,014 euros) ;
