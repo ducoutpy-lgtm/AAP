@@ -102,6 +102,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const provider = new GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
+    // Toujours proposer le choix du compte Google (retour de Monsieur DUCOUT du 2026-10-20 : le navigateur reprenait
+    // d'office le dernier compte utilisé, impossible de passer d'un compte de test à l'autre)
+    provider.setCustomParameters({ prompt: 'select_account' });
 
     await signInWithPopup(auth, provider);
     // La gestion du profil se fera dans le composant après la redirection
