@@ -215,3 +215,13 @@ describe('journal des actions (suivi-testeurs, 2026-10-21)', () => {
     await assertFails(setDoc(doc(visiteur(), 'journal/j9'), ligne('porteur1')));
   });
 });
+
+describe('chiffres publics (financeur-vendable, 2026-10-21)', () => {
+  it('tout le monde lit statistiquesPubliques/accueil, personne ne l’écrit, même l’administrateur', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'statistiquesPubliques/accueil'), { etablissementsInscrits: 3, appelsSuivis: 10 }));
+    await assertSucceeds(getDoc(doc(visiteur(), 'statistiquesPubliques/accueil')));
+    await assertSucceeds(getDoc(doc(porteur(), 'statistiquesPubliques/accueil')));
+    await assertFails(updateDoc(doc(admin(), 'statistiquesPubliques/accueil'), { appelsSuivis: 999 }));
+    await assertFails(setDoc(doc(porteur(), 'statistiquesPubliques/autre'), { appelsSuivis: 1 }));
+  });
+});

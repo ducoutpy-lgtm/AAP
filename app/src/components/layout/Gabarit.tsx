@@ -43,6 +43,7 @@ function BoutonRetour({ versDefaut }: { versDefaut: string }) {
 // Pas de lien « Voir les appels » : la recherche demande un compte (décision de Monsieur DUCOUT du 2026-10-20)
 const LIENS_PUBLICS = [
   { libelle: 'Fonctionnalités', adresse: '/fonctionnalites' },
+  { libelle: 'Financeurs', adresse: '/financeurs' },
   { libelle: 'Tarifs', adresse: '/tarifs' },
   { libelle: 'FAQ', adresse: '/faq' },
   { libelle: 'Contact', adresse: '/contact' },
@@ -110,6 +111,7 @@ export function PiedDePage() {
             <h4 className="text-white font-semibold mb-3">Produit</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/fonctionnalites" className="hover:text-white">Fonctionnalités</Link></li>
+              <li><Link to="/financeurs" className="hover:text-white">Financeurs</Link></li>
               <li><Link to="/tarifs" className="hover:text-white">Tarifs</Link></li>
               <li><Link to="/faq" className="hover:text-white">FAQ</Link></li>
             </ul>

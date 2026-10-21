@@ -6,6 +6,14 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Jour 6 du plan MVP (2026-10-21, changement `financeur-vendable`) : page publique `/financeurs` (bénéfices tenus,
+  chiffres réels du document `statistiquesPubliques/accueil` écrit par `scripts/publier_chiffres.py` à la fin de la
+  veille, tarif lu dans `config/stripe.ts`), tableau de bord financeur réel (appels, candidatures par statut, vues,
+  dernières candidatures, prochaine échéance), page `/candidatures-recues` en colonnes, entrée de menu, liens cassés
+  corrigés, nombre de candidatures compté dans « Mes appels », statut « présélectionnée » ajouté au type, accueil sans
+  promesses non tenues et sans montants recopiés ; `scripts/semer_emulateurs.py` sème trois appels et quatre
+  candidatures pour le financeur de test ; `docs/DEMO_FINANCEUR.md`. Lint, build, 68 tests Vitest, 26 tests de règles.
+  Règle Firestore `statistiquesPubliques` (lecture publique) à déployer sur accord.
 - Suivi des appels externes (2026-10-21, changement `suivi-couts-externes`, demande de Monsieur DUCOUT) :
   `scripts/publier_couts.py` recopie le journal `scraping/logs/extraction_costs.jsonl` dans la collection `coutsIa`
   (une ligne par appel au modèle, sans doublon, appelé par `veille.cmd`), page `/admin/couts-ia` « Appels externes »

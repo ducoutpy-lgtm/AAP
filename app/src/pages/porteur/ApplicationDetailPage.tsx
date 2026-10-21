@@ -15,7 +15,7 @@ import { LIBELLES_STATUT_CANDIDATURE } from '../../utils/candidat';
 import { euros } from '../../utils/recherche';
 
 const VARIANT: Record<ApplicationStatus, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
-  draft: 'gray', submitted: 'primary', under_review: 'warning', pending_info: 'warning', accepted: 'success', rejected: 'error',
+  draft: 'gray', submitted: 'primary', under_review: 'warning', pending_info: 'warning', shortlisted: 'warning', accepted: 'success', rejected: 'error',
 };
 
 // Le formulaire enregistre certains champs sous une forme plus simple que le type (texte au lieu de liste) : on lit

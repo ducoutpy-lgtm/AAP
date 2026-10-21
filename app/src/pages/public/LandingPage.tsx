@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Search, Target, TrendingUp, Shield, Zap, Users, Building2, Landmark, Eye } from 'lucide-react';
+import { STRIPE_PLANS } from '../../config/stripe'; // seule source des montants (financeur-vendable, 2026-10-21)
 
 // Accueil (navigation-et-pages-publiques, 2026-10-20) : l'en-tête et le pied de page viennent du gabarit commun ; le
 // choix du profil se fait dès le premier écran (retour de Monsieur DUCOUT).
@@ -90,9 +91,9 @@ export default function LandingPage() {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <Target className="h-12 w-12 text-primary-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Préqualification</h3>
+              <h3 className="text-xl font-semibold mb-2">Candidature et suivi</h3>
               <p className="text-gray-600">
-                Évaluez vos chances avec notre outil de scoring automatique
+                Candidatez depuis la fiche, pré-remplissez le dossier à partir de votre PDF, suivez chaque réponse
               </p>
             </div>
           </div>
@@ -122,20 +123,23 @@ export default function LandingPage() {
 
             <div className="bg-gray-50 p-6 rounded-lg">
               <TrendingUp className="h-12 w-12 text-secondary-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Préqualification automatique</h3>
+              <h3 className="text-xl font-semibold mb-2">Candidatures en colonnes</h3>
               <p className="text-gray-600">
-                Filtrez automatiquement les candidatures avec notre système de scoring
+                Chaque dossier reçu avance d'une colonne à l'autre : reçu, en examen, présélectionné, accepté, refusé
               </p>
             </div>
 
             <div className="bg-gray-50 p-6 rounded-lg">
               <Users className="h-12 w-12 text-secondary-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Statistiques détaillées</h3>
+              <h3 className="text-xl font-semibold mb-2">Chiffres réels</h3>
               <p className="text-gray-600">
-                Suivez les performances de vos AAP avec des analytics complets
+                Vues de vos appels, candidatures reçues, taux d'acceptation : comptés dans l'application, pas estimés
               </p>
             </div>
           </div>
+          <p className="text-center mt-8">
+            <Link to="/financeurs" className="text-secondary-600 font-medium hover:underline">Tout savoir pour les financeurs</Link>
+          </p>
         </div>
       </section>
 
@@ -156,7 +160,7 @@ export default function LandingPage() {
             <div className="bg-white rounded-lg shadow-md p-8">
               <h3 className="text-2xl font-bold mb-2">Candidat (établissement, association)</h3>
               <div className="mb-6">
-                <span className="text-4xl font-bold">29,99€</span>
+                <span className="text-4xl font-bold">{STRIPE_PLANS.porteur.monthly.amount.toLocaleString('fr-FR')}€</span>
                 <span className="text-gray-600">/mois</span>
               </div>
               <ul className="space-y-3 mb-8">
@@ -174,7 +178,7 @@ export default function LandingPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-success-500 mr-2">✓</span>
-                  <span>Outil de préqualification</span>
+                  <span>Dossier pré-rempli depuis votre PDF</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-success-500 mr-2">✓</span>
@@ -182,7 +186,7 @@ export default function LandingPage() {
                 </li>
               </ul>
               <p className="text-sm text-gray-500 text-center mt-4">
-                ou 299,99€/an (2 mois offerts)
+                ou {STRIPE_PLANS.porteur.annual.amount.toLocaleString('fr-FR')}€/an (2 mois offerts)
               </p>
             </div>
 
@@ -193,7 +197,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-2xl font-bold mb-2">Financeur</h3>
               <div className="mb-6">
-                <span className="text-4xl font-bold">99,99€</span>
+                <span className="text-4xl font-bold">{STRIPE_PLANS.financeur.monthly.amount.toLocaleString('fr-FR')}€</span>
                 <span className="text-gray-600">/mois</span>
               </div>
               <ul className="space-y-3 mb-8">
@@ -207,11 +211,11 @@ export default function LandingPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-success-500 mr-2">✓</span>
-                  <span>Préqualification automatique</span>
+                  <span>Candidatures en colonnes, évaluation</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-success-500 mr-2">✓</span>
-                  <span>Statistiques avancées</span>
+                  <span>Statistiques réelles</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-success-500 mr-2">✓</span>
@@ -219,7 +223,10 @@ export default function LandingPage() {
                 </li>
               </ul>
               <p className="text-sm text-gray-500 text-center mt-4">
-                ou 999,99€/an (2 mois offerts)
+                ou {STRIPE_PLANS.financeur.annual.amount.toLocaleString('fr-FR')}€/an (2 mois offerts)
+              </p>
+              <p className="text-xs text-gray-400 text-center mt-2">
+                Tarifs provisoires, paiement en ligne non ouvert pendant la période de test
               </p>
             </div>
           </div>

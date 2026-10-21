@@ -86,6 +86,7 @@ export const LIBELLES_STATUT_CANDIDATURE: Record<ApplicationStatus, string> = {
   submitted: 'Envoyée',
   under_review: "En cours d'examen",
   pending_info: 'Complément demandé',
+  shortlisted: 'Présélectionnée',
   accepted: 'Acceptée',
   rejected: 'Refusée',
 };

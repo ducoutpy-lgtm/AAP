@@ -3,7 +3,7 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
-  Activity, Bell, BarChart3, Bookmark, Calendar, Coins, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageSquare,
+  Activity, Bell, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageSquare,
   PlusCircle, Search, Sparkles, UserCircle, Users,
 } from 'lucide-react';
 import type { UserType } from '../../types';
@@ -66,6 +66,7 @@ export function entreesMenu(role: UserType): SectionMenu[] {
           { libelle: 'Tableau de bord', adresse: '/dashboard/financeur', icone: LayoutDashboard },
           { libelle: 'Mes appels', adresse: '/mes-aap', icone: FileText },
           { libelle: 'Nouvel appel', adresse: '/aap/nouveau', icone: PlusCircle },
+          { libelle: 'Candidatures reçues', adresse: '/candidatures-recues', icone: Columns },
           { libelle: 'Statistiques', adresse: '/statistiques', icone: BarChart3 },
           { libelle: 'Trouver des appels', adresse: '/aap/search', icone: Search },
           ...COMMUNES,

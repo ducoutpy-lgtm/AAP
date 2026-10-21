@@ -30,6 +30,7 @@ import RecommendationsPage from './pages/porteur/RecommendationsPage';
 
 // Financeur
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
+import CandidaturesRecuesPage from './pages/financeur/CandidaturesRecuesPage';
 import CreateAapPage from './pages/financeur/CreateAapPage';
 import EditAapPage from './pages/financeur/EditAapPage';
 import ProfilPage from './pages/profile/ProfilPage';
@@ -60,6 +61,7 @@ import ConfidentialitePage from './pages/legal/ConfidentialitePage';
 import Gabarit from './components/layout/Gabarit';
 import FonctionnalitesPage from './pages/public/FonctionnalitesPage';
 import TarifsPage from './pages/public/TarifsPage';
+import FinanceursPage from './pages/public/FinanceursPage';
 import FaqPage from './pages/public/FaqPage';
 import AProposPage from './pages/public/AProposPage';
 import ContactPage from './pages/public/ContactPage';
@@ -103,6 +105,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/fonctionnalites" element={<FonctionnalitesPage />} />
           <Route path="/tarifs" element={<TarifsPage />} />
+          <Route path="/financeurs" element={<FinanceursPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/a-propos" element={<AProposPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -134,6 +137,7 @@ function App() {
 
           {/* Financeur */}
           <Route path="/dashboard/financeur" element={<RoutePourRole roles={['financeur']}><FinanceurDashboard /></RoutePourRole>} />
+          <Route path="/candidatures-recues" element={<RoutePourRole roles={['financeur']}><CandidaturesRecuesPage /></RoutePourRole>} />
           <Route path="/mes-aap" element={<RoutePourRole roles={['financeur']}><MyAapPage /></RoutePourRole>} />
           <Route path="/aap/nouveau" element={<RoutePourRole roles={['financeur']}><CreateAapPage /></RoutePourRole>} />
           <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur']}><EditAapPage /></RoutePourRole>} />

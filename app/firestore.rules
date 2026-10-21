@@ -159,5 +159,12 @@ service cloud.firestore {
       allow read: if isAdmin();
       allow write: if false;
     }
+
+    // Chiffres publics de la page Financeurs (financeur-vendable, 2026-10-21) : un seul document, lisible sans compte,
+    // écrit par scripts/publier_chiffres.py avec le SDK admin (hors de ces règles)
+    match /statistiquesPubliques/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

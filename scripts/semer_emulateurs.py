@@ -43,6 +43,50 @@ COMPTES = [
 ]
 
 
+# Appels du financeur de test et candidatures du candidat de test (changement financeur-vendable, jour 6, 2026-10-21) :
+# de quoi jouer la demonstration de dix minutes (tableau de bord, colonnes, evaluation). Identifiants fixes : rejouable.
+APPELS_TEST = [
+    {"id": "test-fin-1", "title": "Prévention des chutes en EHPAD (test)", "status": "published", "jours": 40, "views": 31,
+     "description": "Appel de test de la Fondation Test : projets de prévention des chutes et d'activité physique adaptée en EHPAD.",
+     "territories": ["ile-de-france"], "sectors": ["sante"], "budgetMin": 5000, "budgetMax": 30000},
+    {"id": "test-fin-2", "title": "Santé mentale des jeunes : repérage précoce (test)", "status": "published", "jours": 75, "views": 12,
+     "description": "Appel de test : dispositifs de repérage précoce des troubles psychiques chez les 12-25 ans.",
+     "territories": ["ile-de-france", "hauts-de-france"], "sectors": ["sante"], "budgetMin": 10000, "budgetMax": 50000},
+    {"id": "test-fin-3", "title": "Habitat inclusif : étude de faisabilité (test)", "status": "draft", "jours": 120, "views": 0,
+     "description": "Brouillon de test : études de faisabilité d'habitats inclusifs pour personnes handicapées vieillissantes.",
+     "territories": ["ile-de-france"], "sectors": ["social"], "budgetMin": 3000, "budgetMax": 15000},
+]
+CANDIDATURES_TEST = [
+    {"id": "test-cand-1", "aap": "test-fin-1", "status": "submitted", "jours": -2, "projectTitle": "Ateliers équilibre et marche aux Lilas", "total": 18000},
+    {"id": "test-cand-2", "aap": "test-fin-1", "status": "under_review", "jours": -9, "projectTitle": "Parcours moteur et kinésithérapie de groupe", "total": 24500},
+    {"id": "test-cand-3", "aap": "test-fin-2", "status": "accepted", "jours": -20, "projectTitle": "Permanence psychologue au lycée d'Évry", "total": 32000},
+    {"id": "test-cand-4", "aap": "test-fin-2", "status": "rejected", "jours": -25, "projectTitle": "Application mobile de bien-être (hors cible)", "total": 48000},
+]
+
+
+def semer_financeur(db, financeur_uid: str, porteur_uid: str, maintenant: datetime) -> None:
+    for a in APPELS_TEST:
+        db.collection("aap").document(a["id"]).set({
+            "title": a["title"], "description": a["description"], "financeurId": financeur_uid, "financeurName": "Fondation Test",
+            "status": a["status"], "deadline": maintenant + timedelta(days=a["jours"]), "views": a["views"], "applicationsCount": 0,
+            "territories": a["territories"], "sectorsTargeted": a["sectors"], "budgetMin": a["budgetMin"], "budgetMax": a["budgetMax"],
+            "eligibilityCriteria": ["Établissement ou association du secteur sanitaire ou médico-social"], "source": "manual",
+            "createdAt": maintenant - timedelta(days=30), "updatedAt": maintenant,
+            **({"publishedAt": maintenant - timedelta(days=30)} if a["status"] == "published" else {}),
+        })
+    titres = {a["id"]: a["title"] for a in APPELS_TEST}
+    for c in CANDIDATURES_TEST:
+        quand = maintenant + timedelta(days=c["jours"])
+        db.collection("applications").document(c["id"]).set({
+            "aapId": c["aap"], "aapTitle": titres[c["aap"]], "porteurId": porteur_uid, "porteurName": "EHPAD Les Lilas (test)",
+            "financeurId": financeur_uid, "projectTitle": c["projectTitle"],
+            "projectDescription": "Candidature de test semée pour la démonstration.", "objectives": "", "methodology": "",
+            "timeline": "", "expectedImpact": "", "budget": {"total": c["total"], "breakdown": []}, "documents": [],
+            "status": c["status"], "submittedAt": quand, "createdAt": quand, "updatedAt": quand,
+        })
+    print(f"financeur de test : {len(APPELS_TEST)} appels, {len(CANDIDATURES_TEST)} candidatures semés")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Comptes et appels de test dans les emulateurs Firebase.")
     parser.add_argument("--sources", default="ars_idf,cnsa,fondation_de_france", help="fichiers de resultats a importer")
@@ -57,6 +101,7 @@ def main() -> int:
     assert os.environ["FIRESTORE_EMULATOR_HOST"].startswith("localhost"), "emulateur attendu"
 
     maintenant = datetime.now(timezone.utc)
+    uids: dict[str, str] = {}
     for c in COMPTES:
         try:
             user = auth.get_user_by_email(c["email"])
@@ -75,6 +120,9 @@ def main() -> int:
             collection = "porteurProfiles" if c["userType"] == "porteur" else "financeurProfiles"
             db.collection(collection).document(user.uid).set({"userId": user.uid, **c["profil"], "updatedAt": maintenant})
         print(f"compte {c['userType']:9s} {c['email']} -> {user.uid}")
+        uids[c["userType"]] = user.uid
+
+    semer_financeur(db, uids["financeur"], uids["porteur"], maintenant)
 
     env = dict(os.environ)
     for source in [s.strip() for s in args.sources.split(",") if s.strip()]:

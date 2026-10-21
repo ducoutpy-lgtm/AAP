@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 import { aapService } from '../../services/aapService';
-import { AAP } from '../../types';
+import { AAP, Application } from '../../types';
+import { candidaturesParAppel } from '../../utils/financeur';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -25,7 +28,11 @@ export default function MyAapPage() {
     try {
       setLoading(true);
       const data = await aapService.getFinanceurAaps(currentUser.uid);
-      setAaps(data);
+      // Nombre de candidatures compté depuis les candidatures reçues : un candidat ne peut pas modifier l'appel
+      // (règles Firestore), le compteur du document reste donc à zéro (financeur-vendable, 2026-10-21)
+      const recues = await getDocs(query(collection(db, 'applications'), where('financeurId', '==', currentUser.uid)));
+      const parAppel = candidaturesParAppel(recues.docs.map(d => ({ id: d.id, ...d.data() }) as Application));
+      setAaps(data.map(a => ({ ...a, applicationsCount: parAppel[a.id!] ?? 0 })));
     } catch (error) {
       console.error('Error loading AAPs:', error);
     } finally {
@@ -205,7 +212,7 @@ export default function MyAapPage() {
                   )}
 
                   {aap.status === 'published' && (
-                    <Link to={`/mes-aap/${aap.id}/candidatures`}>
+                    <Link to={`/aap/${aap.id}/candidatures`}>
                       <Button size="sm">
                         <Users className="mr-2 h-4 w-4" />
                         Candidatures

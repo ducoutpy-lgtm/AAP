@@ -185,6 +185,7 @@ export type ApplicationStatus =
   | 'draft'
   | 'submitted'
   | 'under_review'
+  | 'shortlisted' // présélectionnée (déjà utilisé par l'évaluation ; ajouté au type le 2026-10-21, financeur-vendable)
   | 'accepted'
   | 'rejected'
   | 'pending_info';
