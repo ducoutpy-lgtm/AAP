@@ -12,6 +12,11 @@ Lightning comme celui de l'ANAP), avec la même forme de résultat (`texte`, `hr
 - **WHEN** la session ouvre une page d'essai contenant un lien ordinaire et un lien dans un shadow DOM
 - **THEN** `extraire_liens` renvoie les deux liens avec leur adresse absolue
 
+#### Scenario: Page avec balise base
+
+- **WHEN** une page déclare `<base href="/">` et un lien relatif « fr/appel-a-projets-general-2026.html »
+- **THEN** `extraire_liens` renvoie `https://<site>/fr/appel-a-projets-general-2026.html`, comme le ferait le navigateur
+
 #### Scenario: ANAP, page des actualités
 
 - **WHEN** Monsieur DUCOUT lance `python scraping/decouverte.py --ids anap --forcer --garder-depart`

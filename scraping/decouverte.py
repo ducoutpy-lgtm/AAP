@@ -159,9 +159,10 @@ def sauver_resultats(resultats: dict) -> None:
 async def extraire_liens(page, selecteur: str = "a[href]") -> list[dict]:
     # Le moteur de selection de Playwright (page.locator) traverse les shadow DOM ouverts, contrairement a
     # document.querySelectorAll : les sites Salesforce (ANAP) y placent leurs liens (changement decouverte-shadow-dom).
-    # a.href est un objet (SVGAnimatedString) pour les liens dans un SVG : on passe par getAttribute + URL absolue.
+    # a.href est un objet (SVGAnimatedString) pour les liens dans un SVG : on passe par getAttribute + URL absolue,
+    # resolue depuis document.baseURI (qui suit la balise <base>, comme le navigateur ; FIRAH, 2026-10-21).
     return await page.locator(selecteur).evaluate_all(
-        "els => els.map(a => { let h = ''; try { h = new URL(a.getAttribute('href') || '', location.href).href } catch (e) {} "
+        "els => els.map(a => { let h = ''; try { h = new URL(a.getAttribute('href') || '', document.baseURI).href } catch (e) {} "
         "return {texte: (a.innerText || a.getAttribute('title') || '').slice(0, 300), href: h} })"
     )
 

@@ -5,6 +5,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Corrigé (2026-10-21, après-midi)
+- `decouverte.extraire_liens` résout les adresses relatives depuis `document.baseURI` (balise `<base>` suivie comme
+  par le navigateur) : les liens de la FIRAH sortaient en `/fr/fr/...` (404). Test local ajouté (changement
+  `decouverte-shadow-dom`, tâche 1.5).
+- Extraction FIRAH et IReSP sur accord (devis 0,04 euro, réel 0,034) : IReSP 20 fiches, toutes closes (2022 à avril 2026) ;
+  FIRAH 4 fiches 2026, closes (23 mars et 5 octobre). Rien d'importable aujourd'hui ; la veille suivra les prochaines
+  éditions. Cumul Haiku : 2,279 euros.
 - Registre : FIRAH (l'adresse validée le 2026-10-13 pointait vers la Fondation OCIRP ; page « Déposer un projet » posée, 4 appels,
   6 liens) et IReSP (page « Appels à projets », 22 appels, 27 liens) ; constats notés pour douze autres sources de la liste
   prioritaire (pages 404, sites qui refusent le robot, listes chargées par script). Textes collectés : FIRAH 6, IReSP 26 ;

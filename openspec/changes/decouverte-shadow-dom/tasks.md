@@ -10,4 +10,10 @@ Accord de Monsieur DUCOUT du 2026-10-21 (« 2 ok »). Zéro euro. Règles : aucu
 - [x] 1.3 Redécouverte `decouverte.py --ids anap --forcer --garder-depart`, puis `--rapport` : nombre de liens lus et
   statut collés ; `registre.py --tableau`. (Fait le 2026-10-21 : « aucune-rubrique ANAP » (un seul lien d'appel, il en faut deux) ; mesure par `decouverte.lire_page` : « liens lus : 27 (hors navigation : 11) ; liens d'appel : 1 » avec le lien Achats innovants, contre 14 liens lus avant ; `DECOUVERTE.md` régénéré ; registre inchangé, tableau non refait.)
 - [x] 1.4 Documentation : `scraping/README.md` (section découverte : shadow DOM), `scraping/CHANGELOG.md`, `CLAUDE.md`. (Fait le 2026-10-21.)
+- [x] 1.5 Adresses relatives et balise `<base>` (ajout du 2026-10-21 après-midi, même fonction) : la FIRAH écrit
+  `<base href="/">` et des liens relatifs « fr/appel-...html » ; résolus depuis l'adresse de la page, ils donnaient
+  `/fr/fr/...` (404) et six textes de page d'accueil, tous refusés par le modèle. Test
+  `test_extraire_liens_respecte_la_balise_base` rouge (« /fr/fr/appel-a-projets-general-2026.html ») puis
+  `document.baseURI` à la place de `location.href` : 16 tests verts ; redécouverte FIRAH : 6 liens justes, 6 textes
+  collectés, 4 fiches extraites (0,007 euro).
 - [ ] 2.1 Vérification par Monsieur DUCOUT : il relance la commande de 1.3 et lit le nombre de liens affiché.

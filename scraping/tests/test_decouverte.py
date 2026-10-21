@@ -108,3 +108,25 @@ def test_score_lien_anglais_et_adresses():
     assert decouverte.score_lien("Lire la suite", "https://anr.fr/fr/detail/call/aapg-2027/") >= 3
     assert decouverte.score_lien("Appel à communication congrès", "https://x.fr/appel-a-communication") == 0
     assert decouverte.score_lien("Nos actualités", "https://x.fr/actualites") == 0
+
+
+def test_extraire_liens_respecte_la_balise_base():
+    """FIRAH (2026-10-21) : <base href="/"> et liens relatifs « fr/appel-...html » ; resolus depuis l'adresse de la page,
+    ils donnaient /fr/fr/... (404). Le navigateur, lui, suit la balise base : l'outil doit faire pareil."""
+    import asyncio
+
+    html = """<html><head><base href="/"></head><body><a href="fr/appel-a-projets-general-2026.html">Appel à projets général 2026</a></body></html>"""
+
+    async def lire():
+        from playwright.async_api import async_playwright
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            page = await browser.new_page()
+            await page.route("https://exemple.test/**", lambda route: route.fulfill(status=200, content_type="text/html; charset=utf-8", body=html))
+            await page.goto("https://exemple.test/fr/deposer-un-projet.html")
+            try:
+                return await decouverte.extraire_liens(page)
+            finally:
+                await browser.close()
+
+    assert [l["href"] for l in asyncio.run(lire())] == ["https://exemple.test/fr/appel-a-projets-general-2026.html"]
