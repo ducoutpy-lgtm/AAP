@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-10-21, après-midi)
+- Registre : FIRAH (l'adresse validée le 2026-10-13 pointait vers la Fondation OCIRP ; page « Déposer un projet » posée, 4 appels,
+  6 liens) et IReSP (page « Appels à projets », 22 appels, 27 liens) ; constats notés pour douze autres sources de la liste
+  prioritaire (pages 404, sites qui refusent le robot, listes chargées par script). Textes collectés : FIRAH 6, IReSP 26 ;
+  extraction en attente de devis (0,04 euro).
+
 ### Ajouté (2026-10-21)
 - `SOURCES_PRIORITAIRES.md` : trente émetteurs nationaux lus au navigateur, bilan du nombre qui alimentent la veille ;
   anomalies relevées (FIRAH pointant vers l'OCIRP, Bpifrance et ameli en 403, Anses et IReSP sans lien d'appel lu).

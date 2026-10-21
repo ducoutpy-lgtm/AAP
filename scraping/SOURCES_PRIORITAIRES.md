@@ -14,7 +14,7 @@ connecteur générique (feuille de route). Le classement n'est pas une mesure de
 | 4 | [ANRS Maladies infectieuses émergentes](https://anrs.fr/financements/tous-les-appels-a-projets/) | agence-nationale | rubrique-confirmee | 9 | oui | rien, suivie |
 | 5 | [Inserm](https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets) | agence-nationale | rubrique-confirmee | 1 | non | un seul lien reconnu sur l'agenda : vérifier la page à l'écran, l'agenda est peut-être paginé |
 | 6 | [ANSES – programme PNR-EST](https://www.anses.fr/fr) | agence-nationale | rubrique-confirmee | 0 | non | adresse = page d'accueil, aucun appel lu : poser la page du PNR EST à l'écran |
-| 7 | [IReSP](https://iresp.net/financements/programmes-et-appels/) | agence-nationale | rubrique-confirmee | 0 | non | aucun lien d'appel reconnu sur la page des programmes : vérifier à l'écran la page des appels ouverts |
+| 7 | [IReSP](https://iresp.net/appels-a-projets/) | agence-nationale | rubrique-confirmee | 22 | oui | adresse corrigée le 2026-10-21 (page « Appels à projets », 22 appels lus), 26 textes collectés |
 | 8 | [CNSA (Caisse nationale de solidarité pour l'autonomie)](https://www.cnsa.fr/appels-projets) | caisse-nationale | rubrique-confirmee | 36 | oui | rien, suivie |
 | 9 | [Bpifrance – France 2030](https://www.bpifrance.fr/nos-appels-a-projets-concours) | agence-nationale | rubrique-confirmee | HTTP 403 | non | HTTP 403 : le site refuse le robot ; parcourir depuis la box, un site à la fois, ou relais par appelaprojets.org |
 | 10 | [HaDEA – EU4Health](https://hadea.ec.europa.eu/calls-proposals_en) | europe | rubrique-confirmee | 20 | oui | rien, suivie |
@@ -29,7 +29,7 @@ connecteur générique (feuille de route). Le classement n'est pas une mesure de
 | 19 | [Fondation de l'AP-HP](https://www.fondationaphp.fr/nos-appels-a-projets/) | etablissement | rubrique-confirmee | 4 | oui | rien, suivie |
 | 20 | [France Alzheimer](https://www.francealzheimer.org/chercheurs/appels-projets/) | fondation | rubrique-confirmee | 0 | non | page des appels lue, aucun lien reconnu (titres sans mot-clé ?) : vérifier à l'écran |
 | 21 | [Agefiph](https://innovation.agefiph.fr) | agence-nationale | a-verifier | 0 | non | site innovation lu, aucun appel reconnu : vérifier à l'écran |
-| 22 | [FIRAH](https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/) | fondation | rubrique-confirmee | 0 | non | ANOMALIE : l'adresse validée le 2026-10-13 pointe vers la Fondation OCIRP, pas vers la FIRAH (erreur de report d'un verdict d'écran) : à corriger |
+| 22 | [FIRAH](https://www.firah.org/fr/deposer-un-projet.html) | fondation | rubrique-confirmee | 4 | oui | adresse corrigée le 2026-10-21 (pointait vers l'OCIRP depuis le 13 octobre), quatre appels 2026, textes collectés |
 | 23 | [Santé publique France](https://www.santepubliquefrance.fr/les-actualites) | agence-nationale | a-verifier | 2 | non | fil d'actualités, deux appels lus : pas de rubrique dédiée connue |
 | 24 | [ANAP](https://www.anap.fr/s/toutes-les-actualites) | agence-nationale | a-verifier | 1 | non | un seul appel dans les actualités ; relaie surtout des appels DGOS |
 | 25 | [Banque des Territoires](https://www.banquedesterritoires.fr/dispositifs-nationaux) | agence-nationale | a-verifier | 0 | non | aucune rubrique d'appels ; AMI annoncés au fil de l'eau |
@@ -39,10 +39,16 @@ connecteur générique (feuille de route). Le classement n'est pas une mesure de
 | 29 | [Portail appelsprojetsrecherche.fr (ANR, Inserm, ANRS, Anses, INCa, ADEME)](https://www.appelsprojetsrecherche.fr/) | agence-nationale | a-verifier | 6 | non | six appels sur la page d'accueil (tous ANR) : il faut l'adresse d'une recherche filtrée santé |
 | 30 | [Aides-territoires](https://aides-territoires.beta.gouv.fr/aides/) | autre | a-verifier | HTTP 503 | non | HTTP 503 le 2026-10-21 : réessayer |
 
-**Bilan : 13 sources sur 30 alimentent la veille aujourd'hui.** Les autres sont inscrites mais rien n'en sort : page d'accueil au lieu de la rubrique,
+**Bilan : 15 sources sur 30 alimentent la veille au soir du 2026-10-21** (13 au matin ; FIRAH et IReSP corrigées). Les autres sont inscrites mais rien n'en sort : page d'accueil au lieu de la rubrique,
 site qui refuse le robot (Bpifrance, ameli), site en panne ou lent (Horizon Europe, Aides-territoires), ou titres sans mot-clé.
 
 Déjà suivies par ailleurs et dans le champ : Fondation des Hôpitaux (`appel-a-projet.fondationhopitaux.fr`), GIRCI Île-de-France, Est, Grand Ouest,
 cancéropôles Est et Grand Ouest, Fondation AÉSIO, Fondation Crédit Agricole Solidarité et Développement, Carsat Nord-Est, FHF Hauts-de-France (relais ANAP et DGOS).
+
+Recherche des pages exactes (2026-10-21 après-midi, fichier `scripts/sauvegardes/recherche_pages_2026-10-21.json`) : FIRAH et IReSP
+trouvées ; Inserm, Anses, AG2R, France Alzheimer, Agefiph à vérifier à l'écran (constats dans les notes du registre) ; Bpifrance et
+ameli refusent le robot ; Horizon Europe et Aides-territoires injoignables ce jour ; Santé publique France, Banque des Territoires,
+Agirc-Arrco et CNAM n'ont pas de rubrique d'appels (émetteurs secondaires ou relais) ; appelsprojetsrecherche.fr charge sa liste par
+script, adresse d'une recherche filtrée à demander.
 
 Questions pour Monsieur DUCOUT : ordre à corriger ? émetteurs à ajouter (Unicancer, Fondation Bettencourt Schueller, fondations d'entreprise pharmaceutiques) ?

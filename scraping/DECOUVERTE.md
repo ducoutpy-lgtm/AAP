@@ -2,7 +2,7 @@
 
 Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 
-**849 sources traitées sur 1200 : 262 rubrique trouvée, 385 aucune rubrique, 12 bloqué, 190 erreur ; 3488 liens d'AAP collectés.**
+**849 sources traitées sur 1200 : 262 rubrique trouvée, 385 aucune rubrique, 12 bloqué, 190 erreur ; 3516 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -11,9 +11,9 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | caisse-nationale | 266 | 23 | 160 | 0 | 83 | 143 |
 | collectivite | 230 | 108 | 109 | 10 | 3 | 1633 |
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
-| fondation | 42 | 20 | 17 | 0 | 5 | 178 |
+| fondation | 42 | 20 | 17 | 0 | 5 | 182 |
 | autre | 40 | 9 | 27 | 0 | 4 | 217 |
-| agence-nationale | 36 | 17 | 18 | 1 | 0 | 340 |
+| agence-nationale | 36 | 17 | 18 | 1 | 0 | 364 |
 | etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
@@ -49,6 +49,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Interreg Rhin Supérieur | europe | [page](https://www.interreg-rhin-sup.eu/appel-a-projets-mobilites-transfrontalieres/) | 30 |
 | Conseil départemental Côtes-d'Armor | collectivite | [page](https://cotesdarmor.fr/le-departement/publications-reglementaires/appels-manifestation-d-interet) | 29 |
 | Cancéropôle Est – appels à projets | etablissement | [page](https://www.canceropole-est.org/la-recherche-au-sein-du-canceropole-est/soutien-a-la-recherche/resultats-des-appels-a-projets-du-canceropole-est/) | 29 |
+| IReSP | agence-nationale | [page](https://iresp.net/financements/programmes-et-appels/appels-a-projets-programme-autonomie/) | 27 |
 | Conseil régional La Réunion | collectivite | [page](https://regionreunion.com/aides-services/appels-a-projets/) | 27 |
 | CNSA (Caisse nationale de solidarité pour l'autonomie) | caisse-nationale | [page](https://www.cnsa.fr/appels-projets) | 26 |
 | Conseil départemental Charente-Maritime | collectivite | [page](https://la.charente-maritime.fr/informations-officielles/appels-projets) | 26 |
@@ -187,6 +188,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | GIRCI Grand Ouest | etablissement | [page](https://www.chu-hugo.fr/transitions/appels-a-projets/) | 7 |
 | Fondation des Hôpitaux | fondation | [page](https://appel-a-projet.fondationhopitaux.fr/) | 6 |
 | Fondation pour la Recherche Médicale (FRM) | fondation | [page](https://www.frm.org/fr/programmes) | 6 |
+| FIRAH | fondation | [page](https://www.firah.org/fr/deposer-un-projet.html) | 6 |
 | Fonds national pour la science ouverte | agence-nationale | [page](https://www.ouvrirlascience.fr/category/fnso/appels-a-projets-fnso/) | 6 |
 | GIRCI Île-de-France | etablissement | [page](https://girci-idf.fr/projets/appel-a-projets-recherche-en-soins-apreso-2026/) | 6 |
 | Conseil départemental Morbihan | collectivite | [page](https://www.morbihan.fr/le-conseil-departemental/appels-a-projets) | 6 |
@@ -233,7 +235,6 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Direction régionale de l'économie, de l'emploi, du travail et des soli | ministere | [page](https://normandie.dreets.gouv.fr/Appels-a-projets) | 4 |
 | ARS Corse | ars | [page](https://www.corse.ars.sante.fr/liste-appels-projet-candidature) | 3 |
 | ARS Martinique | ars | [page](https://www.martinique.ars.sante.fr/liste-appels-projet-candidature) | 3 |
-| IReSP | agence-nationale | [page](https://iresp.net/financements/programmes-et-appels/) | 3 |
 | Interreg Sudoe | europe | [page](https://interreg-sudoe.eu/fr/futurs-appels-a-projets/) | 3 |
 | Deux-Sèvres – appels à projets | collectivite | [page](https://www.deux-sevres.fr/services-en-ligne/tous-les-appels-projets) | 3 |
 | Métropole de Lyon – Commission des financeurs | collectivite | [page](https://commissiondesfinanceurs.grandlyon.com/) | 3 |
@@ -258,7 +259,6 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | GIRCI SOHO (Sud-Ouest Outre-Mer Hospitalier) | etablissement | [page](https://www.girci-soho.fr/) | 3 |
 | Avise | autre | [page](https://www.avise.org/actualites) | 3 |
 | Fondation APICIL | fondation | [page](https://www.fondation-apicil.org/appel-a-projets/) | 2 |
-| FIRAH | fondation | [page](https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/) | 2 |
 | Hauts-de-Seine – appels à projets | collectivite | [page](https://www.hauts-de-seine.fr/mon-departement/les-hauts-de-seine/le-conseil-departemental/les-appels-a-projet) | 2 |
 | Fondation Groupe Pasteur Mutualité | fondation | [page](https://www.gpm.fr/appel-a-candidature/) | 2 |
 | Fondation Force | fondation | [page](https://fondation-force.fr/appel-a-projets-2026-2/) | 2 |

@@ -449,7 +449,7 @@
     "perimetre": "sante",
     "statut": "identifiee",
     "connecteur": "",
-    "notes": "Refuse les requêtes simples (403) : à contrôler avec un navigateur. Fonds d'action sanitaire et sociale (AAP 2026), fonds de lutte contre les addictions, AAP prévention relayés par les CPAM.",
+    "notes": "Refuse les requêtes simples (403) : à contrôler avec un navigateur. Fonds d'action sanitaire et sociale (AAP 2026), fonds de lutte contre les addictions, AAP prévention relayés par les CPAM. Constat du 2026-10-21 après-midi : pages lues (38 et 129 liens) sans appel ; le FNPEIS passe par les ARS et les CPAM : pas de rubrique nationale.",
     "derniere_verification": "2026-10-09",
     "code_http": 403,
     "qualification": {
@@ -517,7 +517,7 @@
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP autonomie / prévention. Adresse à confirmer.",
+    "notes": "AAP autonomie / prévention. Adresse à confirmer. Constat du 2026-10-21 après-midi : pas de rubrique (404), 152 liens sans appel ; les appels passent par les groupes de protection sociale.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -588,7 +588,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP missions nationales de surveillance ; pas de rubrique dédiée.",
+    "notes": "AAP missions nationales de surveillance ; pas de rubrique dédiée. Constat du 2026-10-21 : pas de rubrique (404) ; appels à candidatures au fil des actualités seulement.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -605,7 +605,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP de recherche en santé publique (avec CNSA, CNAM, Inserm). ; rubrique relue le 2026-10-12 : https://iresp.net/financements/programmes-et-appels/",
+    "notes": "AAP de recherche en santé publique (avec CNSA, CNAM, Inserm). ; rubrique relue le 2026-10-12 : https://iresp.net/financements/programmes-et-appels/ Adresse corrigée le 2026-10-21 (ancienne : https://iresp.net/financements/programmes-et-appels/, un seul lien d'appel lu) : page « Appels à projets », 22 appels lus (autonomie, grand âge, handicap, TND, santé publique).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -618,7 +618,10 @@
         "date": "2026-10-13",
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
-    }
+    },
+    "url_validee": "https://iresp.net/appels-a-projets/",
+    "validee_par": "session Claude Code (page trouvée au navigateur), accord de Monsieur DUCOUT",
+    "validee_le": "2026-10-21"
   },
   {
     "id": "anr",
@@ -654,7 +657,7 @@
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Site Innovation et recherche : AAP innovation, recherche, Handinnov.",
+    "notes": "Site Innovation et recherche : AAP innovation, recherche, Handinnov. Constat du 2026-10-21 : pas de rubrique (404) ; l'AMI du 1er octobre 2026 paraît dans les actualités (agefiph.fr/actualites-handicap) ; à poser à l'écran si cette page convient.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -711,7 +714,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Dispositifs nationaux (AMI, AAP) ; pas de page AAP dédiée identifiée. Constat du 2026-10-21 : pages « dispositifs nationaux » et « programme Santé et Grand Âge » lues au navigateur, aucun lien d'appel ; les AMI sont annoncés dans le fil d'actualités, pas de rubrique.",
+    "notes": "Dispositifs nationaux (AMI, AAP) ; pas de page AAP dédiée identifiée. Constat du 2026-10-21 : pages « dispositifs nationaux » et « programme Santé et Grand Âge » lues au navigateur, aucun lien d'appel ; les AMI sont annoncés dans le fil d'actualités, pas de rubrique. Constat du 2026-10-21 après-midi : aucune page d'appels (404) ; la Banque finance par prêts (Prêt Territoires Santé), pas par appels à projets : émetteur secondaire.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -762,7 +765,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Douleur et santé psychique ; appel permanent douleur.",
+    "notes": "Douleur et santé psychique ; appel permanent douleur. Constat du 2026-10-21 : la page des appels n'affiche qu'un appel (douleurs et santé psychique) et deux prix de recherche en page d'accueil ; petite fondation, un appel à la fois.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -779,7 +782,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Plateforme de dépôt des projets de la Fondation ; un AAP par an (santé, précarité, éducation).",
+    "notes": "Plateforme de dépôt des projets de la Fondation ; un AAP par an (santé, précarité, éducation). Constat du 2026-10-21 : plateforme projets (14 liens, aucun appel lu), /appels-a-projets en 404, fondation.ag2rlamondiale.fr ne répond plus ; adresse à poser à l'écran.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -870,7 +873,7 @@
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Recherche appliquée sur le handicap. Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://www.firah.org/fr/deposer-un-projet.html Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.firah.org/appels-a-projets.html).",
+    "notes": "Recherche appliquée sur le handicap. Adresse à confirmer. ; rubrique relue le 2026-10-12 : https://www.firah.org/fr/deposer-un-projet.html Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.firah.org/appels-a-projets.html). Correction du 2026-10-21 : l'adresse validée le 2026-10-13 pointait par erreur vers la Fondation OCIRP (https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/) ; page « Déposer un projet » de la FIRAH posée, quatre appels 2026 lus (général, handicap et emploi, troubles de l'audition, troubles psychiques).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -884,9 +887,9 @@
         "relecteur": "Monsieur DUCOUT, validation à l'écran"
       }
     },
-    "url_validee": "https://www.fondation-ocirp.fr/appels-a-projets/aap/lieux-alternatifs-du-prendre-soin-des-ecosystemes-territoriaux-en-faveur-de-l-autonomie/",
-    "validee_par": "Monsieur DUCOUT, validation à l'écran",
-    "validee_le": "2026-10-13"
+    "url_validee": "https://www.firah.org/fr/deposer-un-projet.html",
+    "validee_par": "Monsieur DUCOUT (« corrige la FIRAH »), page lue par la session",
+    "validee_le": "2026-10-21"
   },
   {
     "id": "fondation-caisse-d-epargne-hauts-de-france",
@@ -1491,7 +1494,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Agrégateur public des aides aux collectivités et acteurs locaux ; filtrer santé.",
+    "notes": "Agrégateur public des aides aux collectivités et acteurs locaux ; filtrer santé. Constat du 2026-10-21 : HTTP 503 sur tout le site (en panne ce jour) ; réessayer.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -1639,7 +1642,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Espace Inserm Pro ; rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://pro.inserm.fr/appels-a-projets Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://pro.inserm.fr).",
+    "notes": "Espace Inserm Pro ; rubrique AAP à préciser. ; rubrique relue le 2026-10-12 : https://pro.inserm.fr/appels-a-projets Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://pro.inserm.fr). Constat du 2026-10-21 : agenda lu au navigateur, 411 liens mais un seul reconnu comme appel ; pro.inserm.fr/appels-a-projets en donne 2. Les titres de l'agenda n'ont pas de mot-clé : à vérifier à l'écran.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -1665,7 +1668,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "PNR-EST annoncé dans les actualités ; rubrique AAP à préciser.",
+    "notes": "PNR-EST annoncé dans les actualités ; rubrique AAP à préciser. Constat du 2026-10-21 : trois adresses supposées du PNR EST en 404, page d'accueil sans lien d'appel ; la page exacte reste à trouver à l'écran.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -2296,7 +2299,7 @@
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Adresse à confirmer.",
+    "notes": "Adresse à confirmer. Constat du 2026-10-21 : page « appels à projets » lue (185 liens) sans aucun lien reconnu ; à vérifier à l'écran (appels peut-être en PDF ou en texte).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -21549,7 +21552,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Portail commun des appels de recherche. Ajouté le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity). La page d'accueil liste les appels avec des liens « Lire la suite » vers /appel/<id> : la découverte par mots-clés ne les reconnaît pas (texte sans mot-clé), à traiter. 2026-10-21 après-midi : jetons d'adresse ajoutés, rubrique trouvée mais la page d'accueil ne montre que six appels (tous ANR) : il faudra l'adresse d'une recherche filtrée santé, à demander à Monsieur DUCOUT.",
+    "notes": "Portail commun des appels de recherche. Ajouté le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity). La page d'accueil liste les appels avec des liens « Lire la suite » vers /appel/<id> : la découverte par mots-clés ne les reconnaît pas (texte sans mot-clé), à traiter. 2026-10-21 après-midi : jetons d'adresse ajoutés, rubrique trouvée mais la page d'accueil ne montre que six appels (tous ANR) : il faudra l'adresse d'une recherche filtrée santé, à demander à Monsieur DUCOUT. Constat du 2026-10-21 après-midi : la recherche « santé » (?call_for_proposal_search_terms=santé) renvoie les mêmes six appels que l'accueil : la liste est chargée par script, hors de portée de l'outil ; adresse à demander à Monsieur DUCOUT.",
     "derniere_verification": "2026-10-21",
     "code_http": 200,
     "qualification": {
