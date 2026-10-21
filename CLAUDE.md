@@ -236,7 +236,9 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `suivi-couts-externes`
+  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `decouverte-shadow-dom`
+  (2026-10-21, question de Monsieur DUCOUT sur l'ANR et l'ANAP : adresses corrigées au registre (`url_validee`), lecture des liens dans les
+  shadow DOM Salesforce, 13 fiches ANR extraites dont le PEPR PROPSY ; reste sa vérification 2.1 et l'import de la fiche PROPSY), `suivi-couts-externes`
   (2026-10-21, demande de Monsieur DUCOUT : page `/admin/couts-ia` « Appels externes » et `scripts/publier_couts.py`, joués sur les
   émulateurs ; restent la règle `coutsIa` à déployer, la recopie réelle des 6 433 lignes et sa vérification 6.4), `candidature-depuis-pdf`
   (2026-10-21, jour 5 : lecture du dossier de test réussie sur les émulateurs pour 0,0009 euro ; restent le secret et le déploiement de la

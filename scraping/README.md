@@ -280,6 +280,10 @@ les adresses de centres de données (réseau public, VPN) et qui coupe l'adresse
 dizaine de pages en quelques secondes. Les parcourir depuis la box personnelle, un site à la fois
 (`--parallele 1`), avec une pause entre deux sites. Ameli (CPAM) accepte la box personnelle mais ses
 pages dépassent souvent le délai de 180 s ; les 19 pages lues ne contiennent pas d'appel à projets.
+Depuis le 2026-10-21 (changement `decouverte-shadow-dom`), les liens sont lus par le sélecteur de Playwright, qui
+traverse les « shadow DOM » des sites Salesforce Lightning (ANAP : 27 liens lus au lieu de 14). Une page qui n'offre
+qu'un seul lien d'appel reste « aucune rubrique » (il en faut deux) ; les pages qui chargent leurs liens au clic sur
+« Afficher plus » ne sont pas déroulées.
 
 ## Qualification des sources
 

@@ -68,3 +68,33 @@ def test_rapport_decompte():
     texte = decouverte.rapport(resultats, [{"id": "a", "nom": "A", "categorie": "ars"}, {"id": "b", "nom": "B", "categorie": "ars"}, {"id": "c", "nom": "C", "categorie": "ars"}])
     assert "2 sources traitées sur 3 : 1 rubrique trouvée, 1 bloqué ; 4 liens d'AAP collectés" in texte
     assert "| ars | 2 | 1 | 0 | 1 | 0 | 4 |" in texte
+
+
+def test_extraire_liens_lit_le_shadow_dom():
+    """Changement decouverte-shadow-dom (2026-10-21) : les sites Salesforce (ANAP) placent leurs liens dans un shadow
+    DOM ; la lecture doit les voir comme les liens ordinaires. Page locale, sans réseau."""
+    import asyncio
+
+    html = """<html><body><a href="/ordinaire">Appel à projets ordinaire</a><div id="hote"></div>
+    <script>const r = document.getElementById('hote').attachShadow({mode: 'open'});
+    r.innerHTML = '<a href="/s/article/appel-a-projets-achats-innovants">Appel à projets : Achats innovants</a>';</script>
+    </body></html>"""
+
+    async def lire():
+        from playwright.async_api import async_playwright
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            page = await browser.new_page()
+            # La page est servie sous une vraie adresse (pas set_content) pour que les liens relatifs se resolvent
+            await page.route("https://exemple.test/**", lambda route: route.fulfill(status=200, content_type="text/html; charset=utf-8", body=html))
+            await page.goto("https://exemple.test/accueil")
+            try:
+                return await decouverte.extraire_liens(page)
+            finally:
+                await browser.close()
+
+    liens = asyncio.run(lire())
+    hrefs = [l["href"] for l in liens]
+    assert "https://exemple.test/ordinaire" in hrefs
+    assert "https://exemple.test/s/article/appel-a-projets-achats-innovants" in hrefs
+    assert any(l["texte"].startswith("Appel à projets : Achats innovants") for l in liens)

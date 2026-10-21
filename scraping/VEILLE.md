@@ -1,11 +1,11 @@
 # Veille des appels : rejeu des pages validées
 
-Changement OpenSpec `rejeu-collecte-veille`. Rapport du 2026-10-20. Zéro euro : relecture des pages seulement.
+Changement OpenSpec `rejeu-collecte-veille`. Rapport du 2026-10-21. Zéro euro : relecture des pages seulement.
 
 ## Dernier rejeu par source
 
 - Sources relues : 198 ; en erreur ou sans lien lisible (compteurs inchangés) : 9
-- Liens vus : 2673 ; nouveaux : 184 ; disparus : 295
+- Liens vus : 2680 ; nouveaux : 183 ; disparus : 294
 
 | Source | Date | Liens vus | Nouveaux | Disparus | Erreur |
 |---|---|---|---|---|---|
@@ -14,7 +14,7 @@ Changement OpenSpec `rejeu-collecte-veille`. Rapport du 2026-10-20. Zéro euro :
 | Agence de l'eau Seine-Normandie | 2026-10-20T10:59 | 66 | 0 | 1 |  |
 | Agence du numérique en santé (ANS) | 2026-10-20T10:57 | 9 | 0 | 0 |  |
 | ANACT | 2026-10-20T10:59 | 2 | 0 | 0 |  |
-| ANR | 2026-10-20T10:57 | 10 | 1 | 1 |  |
+| ANR | 2026-10-21T12:11 | 17 | 0 | 0 |  |
 | ANSES – programme PNR-EST | 2026-10-20T10:58 | 8 | 1 | 0 |  |
 | ANSM | 2026-10-20T10:58 | 49 | 0 | 0 |  |
 | Appelaprojets.org | 2026-10-20T11:06 | 10 | 9 | 9 |  |
@@ -219,7 +219,6 @@ Changement OpenSpec `rejeu-collecte-veille`. Rapport du 2026-10-20. Zéro euro :
 
 ## Liens nouveaux au dernier rejeu
 
-- ANR : https://anr.fr/fr/detail/call/aapg-appel-a-projets-generique-2027/
 - ANSES – programme PNR-EST : https://www.anses.fr/system/files/AMI_DIGIDIAG-vf.pdf
 - Appelaprojets.org : https://www.appelaprojets.org/appelprojet/display/4312
 - Appelaprojets.org : https://www.appelaprojets.org/appelprojet/display/4298
@@ -407,7 +406,6 @@ Changement OpenSpec `rejeu-collecte-veille`. Rapport du 2026-10-20. Zéro euro :
 ## Liens disparus au dernier rejeu
 
 - Agence de l'eau Seine-Normandie : https://www.eau-seine-normandie.fr/formulaires_aides
-- ANR : https://anr.fr/fr/detail/call/montage-de-reseaux-scientifiques-europeens-ou-internationaux-mrsei-edition-2026/
 - Appelaprojets.org : https://www.appelaprojets.org/appelprojet/display/4307
 - Appelaprojets.org : https://www.appelaprojets.org/appelprojet/display/4300
 - Appelaprojets.org : https://www.appelaprojets.org/appelprojet/display/4324

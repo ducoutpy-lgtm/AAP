@@ -4,6 +4,14 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-10-21)
+- `decouverte.extraire_liens` lit les liens par le sélecteur de Playwright, qui traverse les shadow DOM ouverts
+  (changement `decouverte-shadow-dom`, accord de Monsieur DUCOUT) : page des actualités de l'ANAP, 27 liens lus au lieu
+  de 14 ; test local sans réseau. L'ANAP reste « aucune rubrique » : un seul lien d'appel sur la page.
+- ANR : seize textes de la nouvelle page extraits par Haiku le 2026-10-21 sur accord (devis 0,03 euro, réel 0,0325) :
+  13 fiches, une seule dans le champ (PEPR PROPSY « Psychiatrie de précision », clôture 2026-11-10), contrôlée et
+  qualifiée (0,002 euro) ; les douze autres sont des appels de recherche hors santé (climat, eau, matériaux, éducation).
+
 ### Corrigé (2026-10-21)
 - Adresses ANR et ANAP du registre (question de Monsieur DUCOUT : aucune fiche de ces deux agences dans l'application).
   ANR : la découverte du 2026-10-09 avait retenu l'archive « Rechercher un ancien appel à projets » (dix appels clos,
