@@ -7,8 +7,10 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { doc, getDoc, addDoc, collection, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { ArrowLeft, Upload, X, FileText, ExternalLink } from 'lucide-react';
-import { db, storage } from '../../config/firebase';
+import { ArrowLeft, Upload, X, FileText, ExternalLink, Sparkles } from 'lucide-react';
+import { httpsCallable } from 'firebase/functions';
+import { db, storage, functions } from '../../config/firebase';
+import { fusionner, LIBELLES_CONFIANCE, preRemplissageDepuis, verifierFichierPdf, type ChampsLus, type PreRemplissage } from '../../utils/prefill';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
 import { Button } from '../../components/ui/Button';
@@ -39,6 +41,42 @@ export default function ApplicationFormPage() {
   const [resume, setResume] = useState('');
   const [montant, setMontant] = useState('');
   const [documents, setDocuments] = useState<File[]>([]);
+  // Pré-remplissage depuis le dossier PDF (candidature-depuis-pdf, jour 5) : lecture par la fonction serveur
+  const [lecture, setLecture] = useState(false);
+  const [lu, setLu] = useState<PreRemplissage | null>(null);
+
+  const preremplir = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fichier = e.target.files?.[0];
+    e.target.value = '';
+    if (!fichier || !aapId) return;
+    const refus = verifierFichierPdf(fichier);
+    if (refus) { setError(refus); return; }
+    setError('');
+    setLecture(true);
+    try {
+      const pdfBase64 = await new Promise<string>((resoudre, rejeter) => {
+        const lecteur = new FileReader();
+        lecteur.onload = () => resoudre(String(lecteur.result).split(',')[1] ?? '');
+        lecteur.onerror = () => rejeter(new Error('Fichier illisible'));
+        lecteur.readAsDataURL(fichier);
+      });
+      const appel = httpsCallable<{ aapId: string; nomFichier: string; pdfBase64: string }, { champs: ChampsLus; coutEuros: number }>(functions, 'preremplirCandidature');
+      const { data } = await appel({ aapId, nomFichier: fichier.name, pdfBase64 });
+      const resultat = preRemplissageDepuis(data.champs);
+      const fusion = fusionner({ titre, resume, montant }, resultat);
+      setTitre(fusion.titre);
+      setResume(fusion.resume);
+      setMontant(fusion.montant);
+      setLu(resultat);
+      // Le dossier déposé est déjà une pièce de la candidature
+      setDocuments(prev => (prev.some(d => d.name === fichier.name && d.size === fichier.size) ? prev : [...prev, fichier]));
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '';
+      setError(message ? `Lecture du dossier impossible : ${message}` : 'Lecture du dossier impossible');
+    } finally {
+      setLecture(false);
+    }
+  };
 
   useEffect(() => {
     if (!aapId) return;
@@ -145,6 +183,27 @@ export default function ApplicationFormPage() {
 
           {etape === 0 && (
             <div className="space-y-6">
+              <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-primary-900 mb-2 flex items-center gap-2">
+                  <Sparkles className="h-4 w-4" />
+                  Gagnez du temps : déposez votre dossier, les champs se remplissent
+                </p>
+                <p className="text-xs text-primary-800 mb-3">
+                  Votre dossier de candidature au format PDF (20 Mo au plus) est lu par l'application ; vous relisez et corrigez
+                  ensuite. Il sera joint à l'étape Pièces.
+                </p>
+                <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium cursor-pointer ${lecture ? 'bg-gray-200 text-gray-500' : 'bg-primary-600 hover:bg-primary-700 text-white'}`}>
+                  <Upload className="h-4 w-4" />
+                  {lecture ? 'Lecture du dossier en cours...' : 'Déposer mon dossier PDF pour pré-remplir'}
+                  <input type="file" accept=".pdf,application/pdf" className="hidden" onChange={preremplir} disabled={lecture} />
+                </label>
+                {lu && (
+                  <div className="mt-3 text-sm text-primary-900">
+                    <p><span className="font-medium">{LIBELLES_CONFIANCE[lu.confiance]}.</span>{lu.manquants.length > 0 && ` Non trouvé dans le dossier : ${lu.manquants.join(', ')}.`}</p>
+                    {lu.remarque && <p className="mt-1">À compléter : {lu.remarque}</p>}
+                  </div>
+                )}
+              </div>
               <Input label="Titre du projet" value={titre} onChange={(e) => setTitre(e.target.value)} placeholder="Ex : Création d'une unité de soins palliatifs de 8 lits" required />
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Résumé du projet <span className="text-error-500">*</span></label>

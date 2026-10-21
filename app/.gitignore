@@ -45,3 +45,7 @@ emulateurs/donnees/
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+# Secrets des emulateurs de fonctions (cle Anthropic pour les tests locaux)
+functions/.secret.local
+functions/lib/
+functions/node_modules/

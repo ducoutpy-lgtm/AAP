@@ -15,3 +15,6 @@ export { stripeWebhook } from './payments/stripeWebhook';
 
 // Scheduled functions
 export { sendDailyAlerts } from './scheduled/sendDailyAlerts';
+
+// Lecture du dossier PDF d'un candidat par le modèle (candidature-depuis-pdf, 2026-10-21)
+export { preremplirCandidature } from './ia/preremplirCandidature';

@@ -66,6 +66,13 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Coûts des appels au modèle depuis les fonctions serveur (candidature-depuis-pdf, 2026-10-21) : le serveur écrit
+    // avec le SDK admin (hors de ces règles), l'administrateur lit, personne d'autre
+    match /coutsIa/{ligneId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
     match /porteurProfiles/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId);

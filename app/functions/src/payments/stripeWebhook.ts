@@ -18,7 +18,8 @@ export const stripeWebhook = functions
       event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
     } catch (err: any) {
       console.error('Webhook signature verification failed:', err.message);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
     }
 
     // Gestion des événements Stripe
