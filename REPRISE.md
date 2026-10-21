@@ -226,6 +226,7 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
 - Jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée par Monsieur DUCOUT (mot de passe d'application dans
   `scraping/.env`), courriel de test puis bilan administrateur et courriels candidats envoyés ; la veille du lundi les enverra seule.
 - Jour 4 du plan MVP (2026-10-21 matin, `suivi-testeurs`) : journal des actions (connexion, recherche, fiche, recherche
+- 2026-10-21 après-midi : connecteur `scraping/portail_recherche.py` (portail appelsprojetsrecherche.fr, export CSV, 125 fiches, appelé par `veille.cmd`) ; contrôle et qualification des 28 fiches ouvertes en attente d'accord (0,015 euro), puis import.
   sauvegardée, candidature, appel) et page `/admin/testeurs`, joués sur les émulateurs ; règle Firestore `journal` écrite
   et testée, à déployer après accord de Monsieur DUCOUT (tâche 4.3), puis sa vérification (4.5).
 - Jour 3 du plan MVP (2026-10-20 soir, `alertes-courriel`) : courriels hebdomadaires (bilan administrateur, appels de la

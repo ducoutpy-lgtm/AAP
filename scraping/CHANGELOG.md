@@ -4,6 +4,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-21, après-midi)
+- `portail_recherche.py` (changement `connecteur-appelsprojetsrecherche`) : fiches du portail appelsprojetsrecherche.fr
+  construites depuis son export CSV, sans navigateur ni modèle ; 125 fiches, 52 ouvertes ; champ classé par Haiku
+  (0,022 euro) : santé 57, hors champ 65, incertain 3 ; appelé par `veille.cmd` ; trois tests.
+- Doublon Prix qualité 2026 ARS Hauts-de-France : relais FHF rejeté par verdict humain (`verdicts_fiches.json`,
+  décision de Monsieur DUCOUT), fiche ARS conservée.
+
 ### Corrigé (2026-10-21, après-midi)
 - ANAP : fil des actualités confirmé comme page de publication (un seul appel, fichier de liens posé à la main sur accord),
   appel « Achats innovants » extrait (0,002 euro) : clos le 2026-09-30, non publié. Cumul Haiku : 2,281 euros.

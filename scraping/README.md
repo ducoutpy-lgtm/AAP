@@ -258,6 +258,21 @@ applique la même vérification (adresse choisie dans les résultats, sonde code
 `moteur: session` et une note) ; les organismes qui existent déjà au registre reçoivent leur `id_registre` au lieu
 d'une nouvelle entrée.
 
+## Portail appelsprojetsrecherche.fr (connecteur sans modèle)
+
+Portail commun des agences de recherche (ANR, Inserm, ANRS, Anses, INCa, ADEME et vingt autres partenaires), 125 appels
+dont une vingtaine en santé. Sa page charge la liste par script : la découverte n'y voit rien. Le bouton « Exporter la
+recherche » donne un CSV complet (partenaire, titre, description, dates, lien) que `portail_recherche.py` transforme
+en fiches `AapNormalized` sans navigateur ni modèle (changement `connecteur-appelsprojetsrecherche`, 2026-10-21).
+
+```bash
+python portail_recherche.py                      # results/appelsprojetsrecherche.json (zéro euro)
+python champ.py --classer --moteur api --fichier results/appelsprojetsrecherche.json --dry-run   # devis du champ
+```
+
+Appelé chaque semaine par `veille.cmd`. Limite : le portail relaie des appels déjà collectés chez les partenaires
+(PEPR PROPSY de l'ANR, Emergences de l'ANRS) sous une autre adresse ; `scripts/doublons.py` les signale.
+
 ## Découverte des rubriques appels à projets
 
 Avant d'écrire un connecteur, savoir où chaque source publie. `decouverte.py` ouvre la page de chaque

@@ -20,6 +20,9 @@ echo Veille AAP Sante : relecture des pages validees (une page a la fois, deux s
 echo.
 "..\.venv\Scripts\python.exe" rejeu.py --relire --collecter --marquer --rapport
 echo.
+echo Portail appelsprojetsrecherche.fr (export CSV, sans navigateur ni modele) :
+"..\.venv\Scripts\python.exe" portail_recherche.py
+echo.
 echo Courriels hebdomadaires (bilan administrateur, appels de la semaine aux candidats) :
 "..\.venv\Scripts\python.exe" alertes.py --admin --candidats
 echo.
