@@ -4,6 +4,17 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-10-21)
+- Adresses ANR et ANAP du registre (question de Monsieur DUCOUT : aucune fiche de ces deux agences dans l'application).
+  ANR : la découverte du 2026-10-09 avait retenu l'archive « Rechercher un ancien appel à projets » (dix appels clos,
+  écartés à l'import comme expirés et classés hors champ) ; `url_validee` posée sur https://anr.fr/fr/appels/ (page des
+  appels en cours indiquée par Monsieur DUCOUT le 2026-10-12), redécouverte : rubrique trouvée, 17 liens dont le PEPR
+  PROPSY « Psychiatrie de précision ». ANAP : l'adresse était un article unique ; `url_validee` posée sur les actualités
+  (https://www.anap.fr/s/toutes-les-actualites), redécouverte : aucune rubrique (un seul lien d'appel sur la page, et le
+  site Salesforce rend ses liens dans un shadow DOM que `decouverte.py` ne lit pas : 14 liens vus sur 29). Constat : l'ANAP
+  publie peu d'appels en propre (7 articles sur 1 086 de son plan de site évoquent un appel), elle relaie surtout des
+  appels nationaux de la DGOS déjà vus par la FHF Hauts-de-France.
+
 ### Ajouté (2026-10-20)
 - Veille automatique : tâche planifiée Windows « AAP Sante - veille hebdomadaire » (lundi 8 h, `veille.cmd auto`,
   journal `logs/veille.log`) ; garde-fou `rejeu.deja_relue` (une page relue une fois par jour au plus).

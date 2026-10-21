@@ -1,6 +1,6 @@
 # Registre des sources d'appels à projets
 
-Généré le 2026-10-15 par `python scraping/registre.py --tableau` à partir de
+Généré le 2026-10-21 par `python scraping/registre.py --tableau` à partir de
 `scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).
 
 **1198 sources : 4 opérationnelle, 667 page vérifiée, 527 identifiée.**
@@ -495,10 +495,10 @@ Généré le 2026-10-15 par `python scraping/registre.py --tableau` à partir de
 | ADEME | sante-et-medico-social | identifiée | a-verifier |  | [page](https://agirpourlatransition.ademe.fr/) | 2026-10-09 (403) | Refuse les requêtes simples sur le catalogue (403) ; lien indirect : air, bâtiments, thèses. |
 | ANACT | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.anact.fr/realisations-et-projets?f%5B0%5D=realisation_advance%3A302) | 2026-10-09 (200) | Conditions de travail, usure professionnelle (établissements de santé éligibles). Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.anact.fr/mots-cles/appel-projets). |
 | ANAH | medico-social | page vérifiée | a-verifier |  | [page](https://www.anah.gouv.fr/) | 2026-10-09 (200) | Adaptation du logement au vieillissement ; rubrique AAP à préciser. |
-| ANAP | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.anap.fr/s/article/appel-a-projets-achats-innovants) | 2026-10-09 (200) | AAP Achats innovants (France 2030, avec DGOS et AIS) ; pas de rubrique générale identifiée. |
+| ANAP | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.anap.fr/s/toutes-les-actualites) | 2026-10-09 (200) | AAP Achats innovants (France 2030, avec DGOS et AIS) ; pas de rubrique générale identifiée. Adresse corrigée le 2026-10-21 (ancienne : article unique https://www.anap.fr/s/article/appel-a-projets-achats-innovants) : l'ANAP n'a pas de rubrique d'appels, ils paraissent dans les actualités (site Salesforce, navigateur obligatoire). |
 | ANCT | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://anct.gouv.fr/) | 2026-10-09 (200) | Cohésion des territoires ; rubrique AAP à préciser. |
 | ANDRA | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.andra.fr/nos-expertises/recherche-et-developpement/appels-a-projets) | 2026-10-09 (200) | Cité par Monsieur DUCOUT : déchets radioactifs (dont médicaux). Adresse à confirmer. |
-| ANR | sante | page vérifiée | rubrique-confirmee |  | [page](https://anr.fr/fr/appels-a-projets/) | 2026-10-09 (200) | Programme de recherche en santé publique et appels thématiques. ; rubrique relue le 2026-10-12 : https://anr.fr/fr/appels/ |
+| ANR | sante | page vérifiée | rubrique-confirmee |  | [page](https://anr.fr/fr/appels/) | 2026-10-09 (200) | Programme de recherche en santé publique et appels thématiques. ; rubrique relue le 2026-10-12 : https://anr.fr/fr/appels/ Adresse corrigée le 2026-10-21 (ancienne : https://anr.fr/fr/appels-a-projets/ ; la découverte du 2026-10-09 avait retenu l'archive des anciens appels, tous clos) : page des appels en cours indiquée par Monsieur DUCOUT le 2026-10-12. |
 | ANSES – programme PNR-EST | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.anses.fr/fr) | 2026-10-09 (200) | PNR-EST annoncé dans les actualités ; rubrique AAP à préciser. |
 | ANSM | sante | page vérifiée | rubrique-confirmee |  | [page](https://ansm.sante.fr/vos-demarches/industriel/projet-longue-vie-aux-medicaments-sur-laugmentation-de-la-duree-de-conservation-des-medicaments) | 2026-10-09 (200) | Rubrique AAP à préciser. Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://ansm.sante.fr/). |
 | ASNR (sûreté nucléaire et radioprotection) | sante | page vérifiée | a-verifier |  | [page](https://www.asnr.fr/) | 2026-10-09 (200) | Radioprotection médicale ; rubrique AAP à préciser. |

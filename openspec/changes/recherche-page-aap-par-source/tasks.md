@@ -43,6 +43,15 @@ indiquée, collée dans le compte rendu de session.
   puis pour les sources sans page, lot par lot ; chaque page proposée validée à l'écran par
   Monsieur DUCOUT avant correction. Fait quand : journal des recherches et décompte par lot collés.
 
+- [x] 3.2 ANR et ANAP (2026-10-21, question de Monsieur DUCOUT, accord « oui, corrige les deux adresses et lance la
+  découverte ») : `url_validee` ANR = https://anr.fr/fr/appels/ (adresse donnée par lui le 2026-10-12, jamais inscrite ;
+  la découverte avait gardé l'archive des appels clos), `decouverte.py --ids anr --forcer --garder-depart` : « rubrique-trouvee
+  ANR https://anr.fr/fr/appels/ (17 liens) », PEPR PROPSY Psychiatrie de précision présent dans `decouverte/anr/liens.json`.
+  `url_validee` ANAP = https://www.anap.fr/s/toutes-les-actualites (choix de la session d'après le plan du site),
+  `decouverte.py --ids anap --forcer` : « aucune-rubrique » (un lien d'appel sur la page ; liens Salesforce en shadow DOM
+  non lus par l'outil, 14 sur 29). `DECOUVERTE.md` et `REGISTRE_SOURCES.md` régénérés. Reste : extraction des liens ANR
+  par la veille après devis, et décision sur la lecture du shadow DOM (modification de l'outil, spec à mettre à jour).
+
 ## 4. Vérification
 
 - [ ] 4.1 Vérification par Monsieur DUCOUT : il ouvre `REGISTRE_SOURCES.md` et retrouve Bpifrance en

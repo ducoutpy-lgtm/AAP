@@ -551,14 +551,17 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "AAP Achats innovants (France 2030, avec DGOS et AIS) ; pas de rubrique générale identifiée.",
+    "notes": "AAP Achats innovants (France 2030, avec DGOS et AIS) ; pas de rubrique générale identifiée. Adresse corrigée le 2026-10-21 (ancienne : article unique https://www.anap.fr/s/article/appel-a-projets-achats-innovants) : l'ANAP n'a pas de rubrique d'appels, ils paraissent dans les actualités (site Salesforce, navigateur obligatoire).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "a-verifier",
       "date": "2026-10-15",
       "justification": "pas de page gardée par la découverte"
-    }
+    },
+    "url_validee": "https://www.anap.fr/s/toutes-les-actualites",
+    "validee_par": "session Claude Code (plan du site), accord de Monsieur DUCOUT",
+    "validee_le": "2026-10-21"
   },
   {
     "id": "haute-autorite-de-sante-has",
@@ -625,20 +628,23 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Programme de recherche en santé publique et appels thématiques. ; rubrique relue le 2026-10-12 : https://anr.fr/fr/appels/",
+    "notes": "Programme de recherche en santé publique et appels thématiques. ; rubrique relue le 2026-10-12 : https://anr.fr/fr/appels/ Adresse corrigée le 2026-10-21 (ancienne : https://anr.fr/fr/appels-a-projets/ ; la découverte du 2026-10-09 avait retenu l'archive des anciens appels, tous clos) : page des appels en cours indiquée par Monsieur DUCOUT le 2026-10-12.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-12",
-      "justification": "La page web de l'ANR présente 11 appels à projets spécifiques ouverts à toutes les disciplines, dont certains sont liés à la recherche et l'innovation dans la région méditerranéenne, à l'intelligence artificielle pour les biotechnologies, à la coopération scientifique et technologique entre la France et la Corée du Sud, et à des programmes spécialement dédiés à améliorer le taux de réussite de la France aux appels de l'ERC.",
+      "justification": "Adresse des appels en cours posée le 2026-10-21 (quinze appels dont ERA4Health et THCS) ; La page web de l'ANR présente 11 appels à projets spécifiques ouverts à toutes les disciplines, dont certains sont liés à la recherche et l'innovation dans la région méditerranéenne, à l'intelligence artificielle pour les biotechnologies, à la coopération scientifique et technologique entre la France et la Corée du Sud, et à des programmes spécialement dédiés à améliorer le taux de réussite de la France aux appels de l'ERC.",
       "verdict_modele": "hors-sante",
       "relecture": {
         "motif": "page des appels en cours indiquée par Monsieur DUCOUT (anr.fr/fr/appels) : PEPR Psychiatrie de précision, appel générique 2027",
         "date": "2026-10-12",
         "relecteur": "session Claude Code (pages relues), validé par Monsieur DUCOUT"
       }
-    }
+    },
+    "url_validee": "https://anr.fr/fr/appels/",
+    "validee_par": "Monsieur DUCOUT, validation à l'écran",
+    "validee_le": "2026-10-21"
   },
   {
     "id": "agefiph",

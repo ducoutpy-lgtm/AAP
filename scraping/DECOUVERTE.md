@@ -1,8 +1,8 @@
 # Découverte des rubriques appels à projets
 
-Généré le 2026-10-13 par `python scraping/decouverte.py --rapport`.
+Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 
-**847 sources traitées sur 1198 : 259 rubrique trouvée, 387 aucune rubrique, 12 bloqué, 189 erreur ; 3446 liens d'AAP collectés.**
+**847 sources traitées sur 1198 : 259 rubrique trouvée, 387 aucune rubrique, 12 bloqué, 189 erreur ; 3453 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -13,7 +13,7 @@ Généré le 2026-10-13 par `python scraping/decouverte.py --rapport`.
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
 | fondation | 42 | 20 | 17 | 0 | 5 | 178 |
 | autre | 40 | 9 | 27 | 0 | 4 | 217 |
-| agence-nationale | 34 | 15 | 18 | 1 | 0 | 318 |
+| agence-nationale | 34 | 15 | 18 | 1 | 0 | 325 |
 | etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
@@ -78,6 +78,7 @@ Généré le 2026-10-13 par `python scraping/decouverte.py --rapport`.
 | Conseil départemental Loiret | collectivite | [page](https://www.loiret.fr/mon-departement/les-appels-projets-du-departement) | 18 |
 | Mutualité sociale agricole (MSA) Picardie - accueil de Laon | caisse-nationale | [page](https://picardie.msa.fr/lfp/appel-a-projets-jeunes) | 18 |
 | Direction de l'économie, de l'emploi, du travail et des solidarités (D | ministere | [page](https://guadeloupe.deets.gouv.fr/) | 18 |
+| ANR | agence-nationale | [page](https://anr.fr/fr/appels/) | 17 |
 | Ville de Paris – appels à projets | collectivite | [page](https://www.paris.fr/appels-a-projets) | 17 |
 | Institut national du cancer (INCa) | agence-nationale | [page](https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets) | 17 |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt | ministere | [page](https://draaf.bourgogne-franche-comte.agriculture.gouv.fr/aides-et-appels-a-projets-en-cours-r22.html) | 17 |
@@ -127,7 +128,6 @@ Généré le 2026-10-13 par `python scraping/decouverte.py --rapport`.
 | ARS Hauts-de-France | ars | [page](https://www.hauts-de-france.ars.sante.fr/liste-appels-projet-candidature) | 10 |
 | ARS Auvergne-Rhône-Alpes | ars | [page](https://www.auvergne-rhone-alpes.ars.sante.fr/liste-appels-projet-candidature) | 10 |
 | Direction générale du Trésor – FASEP santé | ministere | [page](https://www.tresor.economie.gouv.fr/Articles/2026/06/25/appel-a-projets-fasep-2026-solutions-innovantes-pour-le-developpement-et-la-modernisation-des-systemes-de-sante) | 10 |
-| ANR | agence-nationale | [page](https://anr.fr/fr/rechercher-un-ancien-appel-a-projets/) | 10 |
 | Bpifrance – France 2030 | agence-nationale | [page](https://www.bpifrance.fr/nos-appels-a-projets-concours) | 10 |
 | Appelaprojets.org | autre | [page](https://www.appelaprojets.org/appelprojet) | 10 |
 | Conseil départemental Var | collectivite | [page](https://var.fr/home/-/asset_publisher/GFXyOm7YlV2U/content/les-appels-a-projet/maximized?p_r_p_assetEntryId=1624415&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U_redirect=https%3A%2F%2Fvar.fr%2Fhome%3Fp_p_id%3Dcom_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_r_p_assetEntryId%3D1624415%26_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_GFXyOm7YlV2U_cur%3D0%26p_r_p_resetCur%3Dfalse) | 10 |
