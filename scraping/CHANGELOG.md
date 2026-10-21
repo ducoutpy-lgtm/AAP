@@ -5,6 +5,8 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Corrigé (2026-10-21, après-midi)
+- ANAP : fil des actualités confirmé comme page de publication (un seul appel, fichier de liens posé à la main sur accord),
+  appel « Achats innovants » extrait (0,002 euro) : clos le 2026-09-30, non publié. Cumul Haiku : 2,281 euros.
 - `decouverte.extraire_liens` résout les adresses relatives depuis `document.baseURI` (balise `<base>` suivie comme
   par le navigateur) : les liens de la FIRAH sortaient en `/fr/fr/...` (404). Test local ajouté (changement
   `decouverte-shadow-dom`, tâche 1.5).
