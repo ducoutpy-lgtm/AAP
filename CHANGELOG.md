@@ -6,6 +6,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Jour 4 du plan MVP (2026-10-21, changement `suivi-testeurs`) : journal des actions écrit par l'application
+  (connexion, recherche et ses filtres, fiche ouverte, recherche sauvegardée, candidature envoyée, appel publié ;
+  dédoublonnage de cinq secondes, administrateur exclu), page `/admin/testeurs` (résumé par compte, dernières actions,
+  chiffres de la semaine), entrée de menu et bouton du tableau de bord, règle Firestore `journal` (création par le
+  compte lui-même, lecture par l'administrateur) testée ; déploiement de la règle après accord. 61 tests Vitest, 25
+  tests de règles.
 - Jour 3 du plan MVP (2026-10-20 soir, changement `alertes-courriel`) : `scraping/courriel.py` (envoi SMTP par la boîte
   Zoho d'ARCADIA, écriture à blanc dans `logs/courriels/`), `scraping/alertes.py` (bilan hebdomadaire de
   l'administrateur, appels de la semaine pour chaque candidat selon sa région et sa famille de structure), appel

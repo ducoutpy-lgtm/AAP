@@ -31,6 +31,10 @@ export default function ConfidentialitePage() {
           n'y a pas accès. Base légale : exécution du contrat et obligations comptables.</p>
         <p><strong>Données de connexion.</strong> Journaux techniques de Firebase (date de connexion, identifiant
           technique, adresse IP). Finalité : sécurité du service. Base légale : intérêt légitime.</p>
+        <p><strong>Journal d'usage.</strong> Actions faites dans le service (connexion, recherche et ses filtres, fiche
+          consultée, recherche sauvegardée, candidature envoyée, appel publié), avec la date et le compte. Finalité :
+          suivre la phase de test, améliorer le service et assister les utilisateurs. Base légale : intérêt légitime.
+          Ce journal n'est lu que par l'éditeur.</p>
         <p><strong>Fiches d'appels à projets.</strong> Les fiches sont extraites de pages publiques des financeurs. Elles
           peuvent contenir le nom et les coordonnées professionnelles d'un contact désigné par le financeur. Finalité :
           informer les porteurs de projets. Base légale : intérêt légitime (information professionnelle issue d'une
@@ -54,7 +58,7 @@ export default function ConfidentialitePage() {
         <p>Compte et profil : pendant la durée de l'abonnement, puis trois ans après la dernière connexion, sauf
           suppression demandée plus tôt. Candidatures et évaluations : cinq ans après la clôture de l'appel, au titre de
           la preuve. Messages : trois ans après le dernier échange. Données de facturation : dix ans (obligation
-          comptable). Journaux de connexion : un an. Fiches d'appels à projets : tant que l'appel est utile aux
+          comptable). Journaux de connexion et journal d'usage : un an. Fiches d'appels à projets : tant que l'appel est utile aux
           utilisateurs ; les coordonnées d'un contact sont retirées sur demande{' '}
           <AValider>[À VALIDER — Monsieur DUCOUT : durées à confirmer]</AValider>.</p>
       </Section>

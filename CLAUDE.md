@@ -235,7 +235,8 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours : `alertes-courriel` (2026-10-20 soir, jour 3 : courriels hebdomadaires composés et testés à blanc ; boîte
+  En cours : `suivi-testeurs` (2026-10-21, jour 4 : journal des actions et page Testeurs, joués sur les émulateurs ;
+  règle Firestore à déployer après accord), `alertes-courriel` (2026-10-20 soir, jour 3 : courriels hebdomadaires composés et testés à blanc ; boîte
   d'envoi Zoho à renseigner par Monsieur DUCOUT dans `scraping/.env`, puis `courriel.py --test`), `qualification-appels` (2026-10-20 soir, jour 2 du plan MVP : qualification par Haiku à choix fermés,
   filtres et fiche, fenêtre « Qualifier » ; relecture de vingt fiches par Monsieur DUCOUT à venir), `parcours-candidat-jour-1` (2026-10-20 soir, jour 1 du plan MVP `docs/PLAN_MVP_2026-10-20.md` : fiche en trois cases,
   tableau de bord candidat réel, détail de candidature, colonnes ; 51 tests ; vérification de Monsieur DUCOUT en attente),

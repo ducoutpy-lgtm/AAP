@@ -1,6 +1,7 @@
 // Tests du journal des actions (changement suivi-testeurs, tâche 4.1).
 import { describe, expect, it } from 'vitest';
 import { chiffresDepuis, libelleFiltres, resumerParCompte, type CompteSuivi, type LigneJournal } from './journal';
+import { estUnDoublon } from '../services/journalService';
 
 const jour = (n: number, h = 10) => new Date(2026, 9, 21 - n, h, 0, 0); // n jours avant le 21 octobre 2026, à h heures
 
@@ -53,5 +54,15 @@ describe('libelleFiltres', () => {
   it('joint les libellés, ou dit sans filtre', () => {
     expect(libelleFiltres([{ libelle: 'Normandie' }, { libelle: 'Bientôt clôturé' }])).toBe('Normandie · Bientôt clôturé');
     expect(libelleFiltres([])).toBe('sans filtre');
+  });
+});
+
+describe('estUnDoublon', () => {
+  it('la même action dans les cinq secondes est un doublon, pas au-delà ni pour une autre cible', () => {
+    const memoire = new Map<string, number>();
+    expect(estUnDoublon('u|fiche|a|', 1000, memoire)).toBe(false);
+    expect(estUnDoublon('u|fiche|a|', 1200, memoire)).toBe(true);
+    expect(estUnDoublon('u|fiche|b|', 1300, memoire)).toBe(false);
+    expect(estUnDoublon('u|fiche|a|', 7000, memoire)).toBe(false);
   });
 });

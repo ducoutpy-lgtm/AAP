@@ -93,7 +93,7 @@ export default function TesteursPage() {
               {resumes.map(r => (
                 <>
                   <tr key={r.uid} onClick={() => setOuvert(ouvert === r.uid ? null : r.uid)} className={`cursor-pointer hover:bg-gray-50 ${ouvert === r.uid ? 'bg-primary-50' : ''}`}>
-                    <td className="px-4 py-3 text-gray-900">{r.email}</td>
+                    <td className="px-4 py-3 text-gray-900">{r.email || <span className="text-gray-400">(sans adresse)</span>}</td>
                     <td className="px-4 py-3"><Badge variant={r.role === 'financeur' ? 'primary' : 'gray'}>{ROLES[r.role]}</Badge></td>
                     <td className="px-4 py-3 text-gray-700">{r.structure || '-'}</td>
                     <td className="px-4 py-3 text-gray-700">{dateFr(r.inscritLe)}</td>
