@@ -6,6 +6,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Jour 7 du plan MVP (2026-10-21, changement `mise-en-ligne-testeurs`) : formulaire « Donner mon avis » (`/retour`,
+  collection `retours`, règle Firestore création par l'auteur et lecture administrateur, entrée Support du menu qui
+  transmet la page d'où l'on vient), section « Retours des testeurs » en tête de `/admin/testeurs` (et clé manquante
+  de la liste des comptes corrigée), `docs/MISE_EN_LIGNE.md` (Firebase Hosting, vérifications, commandes pour
+  Monsieur DUCOUT, invitation des trois premiers testeurs). Lint, build, 71 tests Vitest, 28 tests de règles ;
+  scénarios joués sur les émulateurs. Reste à Monsieur DUCOUT : champs d'entreprise de `editeur.ts`, déploiement.
 - Jour 6 du plan MVP (2026-10-21, changement `financeur-vendable`) : page publique `/financeurs` (bénéfices tenus,
   chiffres réels du document `statistiquesPubliques/accueil` écrit par `scripts/publier_chiffres.py` à la fin de la
   veille, tarif lu dans `config/stripe.ts`), tableau de bord financeur réel (appels, candidatures par statut, vues,

@@ -31,6 +31,7 @@ import RecommendationsPage from './pages/porteur/RecommendationsPage';
 // Financeur
 import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
 import CandidaturesRecuesPage from './pages/financeur/CandidaturesRecuesPage';
+import RetourPage from './pages/common/RetourPage';
 import CreateAapPage from './pages/financeur/CreateAapPage';
 import EditAapPage from './pages/financeur/EditAapPage';
 import ProfilPage from './pages/profile/ProfilPage';
@@ -150,6 +151,7 @@ function App() {
           <Route path="/calendrier" element={<ProtectedRoute><SubscriptionGuard><CalendarPage /></SubscriptionGuard></ProtectedRoute>} />
           <Route path="/messages" element={<ProtectedRoute><SubscriptionGuard><MessagesPage /></SubscriptionGuard></ProtectedRoute>} />
           <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+          <Route path="/retour" element={<ProtectedRoute><RetourPage /></ProtectedRoute>} />
 
           {/* Administration (sans garde d'abonnement) */}
           <Route path="/admin" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><AdminDashboard /></RoleGuard></ProtectedRoute>} />

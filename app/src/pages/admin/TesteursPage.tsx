@@ -1,8 +1,8 @@
 // Page Testeurs de l'administration (jour 4 du plan MVP, changement suivi-testeurs, 2026-10-21) : qui utilise
 // l'application et ce que chacun y fait, d'après la collection journal.
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
-import { Users } from 'lucide-react';
+import { MessageCircle, Users } from 'lucide-react';
 import { db } from '../../config/firebase';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -10,6 +10,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import type { User, UserType } from '../../types';
 import { enDate } from '../../utils/dates';
 import { chiffresDepuis, dateLigne, LIBELLES_ACTIONS, resumerParCompte, type CompteSuivi, type LigneJournal, type ResumeCompte } from '../../utils/journal';
+import { dateRetour, lesPlusRecents, LIBELLES_TYPES_RETOUR, type Retour } from '../../utils/retours';
 
 const ROLES: Record<UserType, string> = { porteur: 'Candidat', financeur: 'Financeur', admin: 'Administrateur' };
 const dateFr = (d: Date | null) => (d ? d.toLocaleDateString('fr-FR') : '-');
@@ -18,6 +19,7 @@ const dateHeureFr = (d: Date) => d.toLocaleString('fr-FR', { day: '2-digit', mon
 export default function TesteursPage() {
   const [resumes, setResumes] = useState<ResumeCompte[]>([]);
   const [journal, setJournal] = useState<LigneJournal[]>([]);
+  const [retours, setRetours] = useState<Retour[]>([]);
   const [ouvert, setOuvert] = useState<string | null>(null);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState('');
@@ -25,12 +27,14 @@ export default function TesteursPage() {
   useEffect(() => {
     (async () => {
       try {
-        const [utilisateurs, porteurs, financeurs, lignes] = await Promise.all([
+        const [utilisateurs, porteurs, financeurs, lignes, avis] = await Promise.all([
           getDocs(collection(db, 'users')),
           getDocs(collection(db, 'porteurProfiles')),
           getDocs(collection(db, 'financeurProfiles')),
           getDocs(query(collection(db, 'journal'), orderBy('le', 'desc'), limit(5000))),
+          getDocs(query(collection(db, 'retours'), orderBy('le', 'desc'), limit(200))),
         ]);
+        setRetours(lesPlusRecents(avis.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Retour, 'id'>) }))));
         const structures = new Map<string, string>();
         porteurs.docs.forEach(d => structures.set(d.id, d.data().structureName ?? ''));
         financeurs.docs.forEach(d => structures.set(d.id, d.data().organisationName ?? ''));
@@ -63,6 +67,29 @@ export default function TesteursPage() {
         </div>
         {erreur && <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>}
 
+        {/* Retours des testeurs (mise-en-ligne-testeurs, 2026-10-21) : formulaire « Donner mon avis », collection retours */}
+        <Card className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2"><MessageCircle className="h-5 w-5 text-primary-600" />Retours des testeurs <span className="text-gray-400 font-normal">({retours.length})</span></h2>
+          {retours.length === 0 ? (
+            <p className="text-gray-500">Aucun retour pour le moment. Les testeurs envoient le leur par « Donner mon avis » dans leur menu.</p>
+          ) : (
+            <ul className="divide-y divide-gray-100">
+              {retours.map(r => (
+                <li key={r.id} className="py-3">
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 mb-1">
+                    <span>{dateHeureFr(dateRetour(r))}</span>
+                    <span className="text-gray-900">{r.email || r.userId}</span>
+                    <Badge variant={r.role === 'financeur' ? 'primary' : 'gray'}>{ROLES[r.role]}</Badge>
+                    <Badge variant={r.type === 'anomalie' ? 'error' : r.type === 'idee' ? 'success' : 'warning'}>{LIBELLES_TYPES_RETOUR[r.type] ?? r.type}</Badge>
+                    {r.page && <span className="font-mono text-xs bg-gray-100 px-1.5 py-0.5 rounded">{r.page}</span>}
+                  </div>
+                  <p className="text-gray-800 whitespace-pre-line">{r.message}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {([['Comptes actifs (7 jours)', semaine.comptesActifs], ['Connexions', semaine.connexions], ['Recherches', semaine.recherches],
             ['Fiches ouvertes', semaine.fiches], ['Candidatures', semaine.candidatures]] as const).map(([libelle, valeur]) => (
@@ -91,8 +118,8 @@ export default function TesteursPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {resumes.map(r => (
-                <>
-                  <tr key={r.uid} onClick={() => setOuvert(ouvert === r.uid ? null : r.uid)} className={`cursor-pointer hover:bg-gray-50 ${ouvert === r.uid ? 'bg-primary-50' : ''}`}>
+                <Fragment key={r.uid}>
+                  <tr onClick={() => setOuvert(ouvert === r.uid ? null : r.uid)} className={`cursor-pointer hover:bg-gray-50 ${ouvert === r.uid ? 'bg-primary-50' : ''}`}>
                     <td className="px-4 py-3 text-gray-900">{r.email || <span className="text-gray-400">(sans adresse)</span>}</td>
                     <td className="px-4 py-3"><Badge variant={r.role === 'financeur' ? 'primary' : 'gray'}>{ROLES[r.role]}</Badge></td>
                     <td className="px-4 py-3 text-gray-700">{r.structure || '-'}</td>
@@ -105,7 +132,7 @@ export default function TesteursPage() {
                     <td className="px-4 py-3 text-right">{r.appels}</td>
                   </tr>
                   {ouvert === r.uid && (
-                    <tr key={`${r.uid}-detail`}>
+                    <tr>
                       <td colSpan={10} className="px-6 py-4 bg-gray-50">
                         {r.dernieres.length === 0 ? (
                           <p className="text-gray-500">Aucune action journalisée pour ce compte.</p>
@@ -123,7 +150,7 @@ export default function TesteursPage() {
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               ))}
             </tbody>
           </table>

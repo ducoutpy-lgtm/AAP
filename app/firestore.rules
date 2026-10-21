@@ -66,6 +66,16 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Retours des testeurs (mise-en-ligne-testeurs, 2026-10-21) : un compte connecté crée son propre retour avec les
+    // seuls champs attendus ; l'administrateur lit ; personne ne modifie ni ne supprime
+    match /retours/{retourId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasOnly(['userId', 'role', 'email', 'type', 'page', 'message', 'le'])
+        && request.resource.data.message is string && request.resource.data.message.size() >= 10;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     // Coûts des appels au modèle depuis les fonctions serveur (candidature-depuis-pdf, 2026-10-21) : le serveur écrit
     // avec le SDK admin (hors de ces règles), l'administrateur lit, personne d'autre
     match /coutsIa/{ligneId} {

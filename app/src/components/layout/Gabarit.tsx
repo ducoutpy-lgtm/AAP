@@ -184,6 +184,8 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
                   <Link
                     key={e.adresse}
                     to={e.adresse}
+                    // « Donner mon avis » reçoit la page d'où l'on vient (mise-en-ligne-testeurs, 2026-10-21)
+                    state={e.adresse === '/retour' ? { page: pathname } : undefined}
                     title={e.libelle}
                     className={`flex items-center gap-3 px-4 py-2 text-sm ${
                       estActive ? 'bg-primary-50 text-primary-700 font-medium border-r-2 border-primary-600' : 'text-gray-700 hover:bg-gray-50'

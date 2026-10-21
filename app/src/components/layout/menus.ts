@@ -3,7 +3,7 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
-  Activity, Bell, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageSquare,
+  Activity, Bell, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageCircle, MessageSquare,
   PlusCircle, Search, Sparkles, UserCircle, Users,
 } from 'lucide-react';
 import type { UserType } from '../../types';
@@ -22,6 +22,7 @@ export interface SectionMenu {
 const SUPPORT: SectionMenu = {
   titre: 'Support',
   entrees: [
+    { libelle: 'Donner mon avis', adresse: '/retour', icone: MessageCircle },
     { libelle: 'FAQ', adresse: '/faq', icone: HelpCircle },
     { libelle: 'Nous contacter', adresse: '/contact', icone: Mail },
   ],

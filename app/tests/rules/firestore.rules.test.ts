@@ -225,3 +225,24 @@ describe('chiffres publics (financeur-vendable, 2026-10-21)', () => {
     await assertFails(setDoc(doc(porteur(), 'statistiquesPubliques/autre'), { appelsSuivis: 1 }));
   });
 });
+
+describe('retours des testeurs (mise-en-ligne-testeurs, 2026-10-21)', () => {
+  const retour = (userId: string, message = 'La date de clôture manque sur cette fiche') =>
+    ({ userId, role: 'porteur', email: 'p@test.local', type: 'anomalie', page: '/aap/x', message, le: new Date() });
+
+  it('un compte crée son propre retour, pas celui d’un autre, pas trop court, pas avec un champ en plus', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'retours/r1'), retour('porteur1')));
+    await assertFails(setDoc(doc(porteur(), 'retours/r2'), retour('porteur2')));
+    await assertFails(setDoc(doc(porteur(), 'retours/r3'), retour('porteur1', 'court')));
+    await assertFails(setDoc(doc(porteur(), 'retours/r4'), { ...retour('porteur1'), traite: true }));
+    await assertFails(setDoc(doc(visiteur(), 'retours/r5'), retour('porteur1')));
+  });
+
+  it('l’administrateur lit les retours, personne ne les modifie ni ne les lit sans être administrateur', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'retours/r1'), retour('porteur1')));
+    await assertSucceeds(getDoc(doc(admin(), 'retours/r1')));
+    await assertFails(getDoc(doc(porteur(), 'retours/r1')));
+    await assertFails(updateDoc(doc(admin(), 'retours/r1'), { message: 'modifié par erreur' }));
+    await assertFails(deleteDoc(doc(admin(), 'retours/r1')));
+  });
+});
