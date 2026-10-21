@@ -22,4 +22,5 @@ aucun archivage sans demande, aucun déploiement sans accord ; parcours joués s
 - [x] 1.6 Documentation : `docs/resume_application_web_2026-10.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
   `docs/PLAN_MVP_2026-10-20.md` (avancement). (Fait le 2026-10-21.)
 - [ ] 2.1 Monsieur DUCOUT joue la démonstration sur les émulateurs avec financeur@test.local, puis déploie la règle
-  `statistiquesPubliques` et lance `publier_chiffres.py` sur le vrai projet sur son accord.
+  `statistiquesPubliques` et lance `publier_chiffres.py` sur le vrai projet sur son accord. (2026-10-21 : accord « ok pour les trois » ; `publier_chiffres.py` passé sur le vrai
+  projet : « etablissements inscrits 2, appels suivis 332, financeurs 99, sources 72 » ; règle à déployer par lui.)

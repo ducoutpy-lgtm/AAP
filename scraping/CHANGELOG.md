@@ -15,7 +15,8 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 - `verification.decision_du_modele` : les dates d'une fiche issue d'une colonne structurée (`moteur` = `csv`) ne sont plus
   retirées sur un verdict « fabriqué » du modèle, qui ne voit que la description (test ajouté). Contrôle et qualification
   des 28 fiches ouvertes du portail faits sur accord (0,018 euro) ; import : 50 fiches créées, 23 publiées ; trois
-  dates de clôture retirées à tort avant la correction (ZEROEXPO, Emergence 2026-2, une autre), à remettre.
+  dates de clôture retirées à tort avant la correction, remises en base le 2026-10-21 sur accord (ZEROEXPO 24/11/2026,
+  THCS 30/06/2027, surpoids et obésité 19/01/2027 ; sauvegarde `scripts/sauvegardes/dates_portail_2026-10-21.json`).
 - ANAP : fil des actualités confirmé comme page de publication (un seul appel, fichier de liens posé à la main sur accord),
   appel « Achats innovants » extrait (0,002 euro) : clos le 2026-09-30, non publié. Cumul Haiku : 2,281 euros.
 - `decouverte.extraire_liens` résout les adresses relatives depuis `document.baseURI` (balise `<base>` suivie comme
