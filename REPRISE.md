@@ -217,6 +217,8 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée par Monsieur DUCOUT (mot de passe d'application dans
+  `scraping/.env`), courriel de test puis bilan administrateur et courriels candidats envoyés ; la veille du lundi les enverra seule.
 - Jour 4 du plan MVP (2026-10-21 matin, `suivi-testeurs`) : journal des actions (connexion, recherche, fiche, recherche
   sauvegardée, candidature, appel) et page `/admin/testeurs`, joués sur les émulateurs ; règle Firestore `journal` écrite
   et testée, à déployer après accord de Monsieur DUCOUT (tâche 4.3), puis sa vérification (4.5).
