@@ -14,6 +14,8 @@ import {
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import { journaliser } from '../../services/journalService';
+import { libelleFiltres } from '../../utils/journal';
 import { correspondDestinataire, correspondTypeAppel, LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
   correspondTerritoire, etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams,
@@ -49,6 +51,13 @@ export default function SearchAapPage() {
   const [regionProfil, setRegionProfil] = useState('');
   const [lienCopie, setLienCopie] = useState('');
   const etiquettes = etiquettesActives(filters);
+
+  // Journal des actions (suivi-testeurs) : une ligne « recherche » par ouverture de la page, avec les filtres d'arrivée
+  useEffect(() => {
+    if (currentUser && userProfile) journaliser(currentUser.uid, userProfile.userType, 'recherche', '', libelleFiltres(etiquettesActives(filtresDepuisParams(searchParams))));
+    // à l'ouverture et au changement de compte seulement
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser?.uid, userProfile?.uid]);
   const montants = totalMontants(filteredAaps);
 
   useEffect(() => {

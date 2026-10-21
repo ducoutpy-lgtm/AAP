@@ -3,7 +3,7 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
-  Bell, BarChart3, Bookmark, Calendar, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageSquare,
+  Activity, Bell, BarChart3, Bookmark, Calendar, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageSquare,
   PlusCircle, Search, Sparkles, UserCircle, Users,
 } from 'lucide-react';
 import type { UserType } from '../../types';
@@ -50,6 +50,7 @@ export function entreesMenu(role: UserType): SectionMenu[] {
           { libelle: 'Appels à projets', adresse: '/admin/aaps', icone: FileText },
           { libelle: 'Utilisateurs', adresse: '/admin/utilisateurs', icone: Users },
           { libelle: 'Statistiques', adresse: '/admin/statistiques', icone: BarChart3 },
+          { libelle: 'Testeurs', adresse: '/admin/testeurs', icone: Activity },
           { libelle: 'Trouver des appels', adresse: '/aap/search', icone: Search },
         ],
       },

@@ -57,6 +57,15 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // Journal des actions des testeurs (suivi-testeurs, 2026-10-21) : un compte connecté écrit ses propres lignes,
+    // seul l'administrateur lit ; rien ne se modifie ni ne se supprime depuis l'application. Déploiement après accord.
+    match /journal/{ligneId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasOnly(['userId', 'role', 'action', 'cible', 'libelle', 'le']);
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     match /porteurProfiles/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId);

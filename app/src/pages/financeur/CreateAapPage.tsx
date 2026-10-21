@@ -12,6 +12,7 @@ import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
 import type { AAP } from '../../types';
 import { donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import { journaliser } from '../../services/journalService';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -155,7 +156,10 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
         // Modification : mise à jour, puis publication seulement d'un brouillon (un appel déjà publié garde sa date
         // de publication)
         await aapService.updateAap(aapExistant.id, aapData);
-        if (aapExistant.status === 'draft') await aapService.publishAap(aapExistant.id);
+        if (aapExistant.status === 'draft') {
+          await aapService.publishAap(aapExistant.id);
+          await journaliser(currentUser.uid, userProfile.userType, 'appel', aapExistant.id, formData.title);
+        }
         alert(aapExistant.status === 'draft' ? 'AAP publié avec succès !' : 'Appel mis à jour');
         navigate(`/aap/${aapExistant.id}`);
         return;
@@ -163,6 +167,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
 
       const aapId = await aapService.createAap(currentUser.uid, await nomDuFinanceur(), aapData);
       await aapService.publishAap(aapId);
+      await journaliser(currentUser.uid, userProfile.userType, 'appel', aapId, formData.title);
 
       alert('AAP publié avec succès !');
       navigate(`/mes-aap`);

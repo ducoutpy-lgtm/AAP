@@ -340,7 +340,15 @@ export default function AdminDashboard() {
                 onClick={() => navigate('/admin/aaps')}
               >
                 <FileText className="h-4 w-4 mr-3" />
-                Modérer les AAP
+                Contrôler les appels
+              </Button>
+              <Button
+                className="w-full justify-start"
+                variant="secondary"
+                onClick={() => navigate('/admin/testeurs')}
+              >
+                <Users className="h-4 w-4 mr-3" />
+                Suivre les testeurs
               </Button>
               <Button
                 className="w-full justify-start"

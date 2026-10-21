@@ -17,6 +17,7 @@ import { Input } from '../../components/ui/Input';
 import { Stepper } from '../../components/ui/Stepper';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { libelleMontant } from '../../utils/candidat';
+import { journaliser } from '../../services/journalService';
 
 const ETAPES = [
   { label: 'Votre projet', description: 'Titre et résumé' },
@@ -27,7 +28,7 @@ const ETAPES = [
 export default function ApplicationFormPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   useMarquerDemarrage('candidature');
   const [aap, setAap] = useState<AAP | null>(null);
   const [loading, setLoading] = useState(true);
@@ -97,6 +98,7 @@ export default function ApplicationFormPage() {
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
       });
+      if (userProfile) await journaliser(currentUser.uid, userProfile.userType, 'candidature', aapId, aap.title);
       navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur' } } });
     } catch (err) {
       console.error('Error submitting application:', err);

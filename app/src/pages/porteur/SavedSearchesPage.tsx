@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
+import { journaliser } from '../../services/journalService';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -30,7 +31,7 @@ interface SavedSearch {
 
 export default function SavedSearchesPage() {
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -131,6 +132,7 @@ export default function SavedSearchesPage() {
           ...searchData,
           createdAt: Timestamp.now(),
         });
+        if (userProfile) await journaliser(currentUser.uid, userProfile.userType, 'recherche-sauvegardee', '', formData.name);
       }
 
       setShowModal(false);

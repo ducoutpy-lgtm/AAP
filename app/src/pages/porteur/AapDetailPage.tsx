@@ -12,6 +12,7 @@ import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
+import { journaliser } from '../../services/journalService';
 import { aQuiSAdresse, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
@@ -82,6 +83,8 @@ export default function AapDetailPage() {
       const aapDoc = await getDoc(doc(db, 'aap', aapId));
       if (aapDoc.exists()) {
         setAap({ ...aapDoc.data() } as AAP);
+        // Journal des actions (suivi-testeurs) : fiche ouverte par un compte connecté
+        if (currentUser && userProfile) journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, (aapDoc.data() as AAP).title);
       }
     } catch (err) {
       console.error('Error loading AAP:', err);

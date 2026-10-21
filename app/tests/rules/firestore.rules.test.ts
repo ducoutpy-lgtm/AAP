@@ -197,3 +197,21 @@ describe('paiements et statistiques : fonctions serveur seulement', () => {
     await assertFails(setDoc(doc(admin(), 'analytics/a1'), { totalUsers: 1 }));
   });
 });
+
+describe('journal des actions (suivi-testeurs, 2026-10-21)', () => {
+  const ligne = (userId: string) => ({ userId, role: 'porteur', action: 'fiche', cible: 'publie', libelle: 'Publié', le: new Date() });
+
+  it('un candidat crée sa propre ligne, pas celle d’un autre, et ne lit pas le journal', async () => {
+    await assertSucceeds(setDoc(doc(porteur(), 'journal/j1'), ligne('porteur1')));
+    await assertFails(setDoc(doc(porteur(), 'journal/j2'), ligne('porteur2')));
+    await assertFails(setDoc(doc(porteur(), 'journal/j3'), { ...ligne('porteur1'), motDePasse: 'x' }));
+    await assertFails(getDoc(doc(porteur(), 'journal/j1')));
+  });
+
+  it('l’administrateur lit le journal, personne ne le modifie', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'journal/j1'), ligne('porteur1')));
+    await assertSucceeds(getDoc(doc(admin(), 'journal/j1')));
+    await assertFails(updateDoc(doc(admin(), 'journal/j1'), { libelle: 'autre' }));
+    await assertFails(setDoc(doc(visiteur(), 'journal/j9'), ligne('porteur1')));
+  });
+});

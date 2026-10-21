@@ -13,6 +13,15 @@ import {
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
 import { User, UserType } from '../types';
+import { journaliser } from '../services/journalService';
+
+// Journal des actions (suivi-testeurs, 2026-10-21) : une ligne « connexion » après une connexion réussie, avec le rôle
+// lu dans users ; un compte sans document (première connexion Google) n'est pas journalisé ici
+async function journaliserConnexion(user: FirebaseUser) {
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  const role = snap.exists() ? (snap.data().userType as UserType | undefined) : undefined;
+  if (role) await journaliser(user.uid, role, 'connexion');
+}
 
 interface AuthContextType {
   currentUser: FirebaseUser | null;
@@ -95,7 +104,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    await journaliserConnexion(credential.user);
   };
 
   const loginWithGoogle = async () => {
@@ -106,7 +116,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // d'office le dernier compte utilisé, impossible de passer d'un compte de test à l'autre)
     provider.setCustomParameters({ prompt: 'select_account' });
 
-    await signInWithPopup(auth, provider);
+    const credential = await signInWithPopup(auth, provider);
+    await journaliserConnexion(credential.user);
     // La gestion du profil se fera dans le composant après la redirection
   };
 
