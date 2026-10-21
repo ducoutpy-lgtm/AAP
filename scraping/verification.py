@@ -112,8 +112,11 @@ def decision_du_modele(fiche: dict) -> dict | None:
         return {"statut": "rejetee", "corrections": {}, "a_relire": [],
                 "commentaire": "la page ne décrit pas un appel précis (contrôle du modèle)"}
     corrections, a_relire = {}, []
+    # Dates lues dans une colonne structuree (connecteur CSV du portail appelsprojetsrecherche.fr, 2026-10-21) : le
+    # modele ne voit que la description et les croit « fabriquees » ; elles viennent de l'editeur, on les garde.
+    dates_structurees = (fiche.get("scrape_metadata") or {}).get("moteur") == "csv"
     for nom in ver.get("douteux") or []:
-        if nom in CHAMPS_NON_BLOQUANTS:
+        if nom in CHAMPS_NON_BLOQUANTS or (dates_structurees and nom in CHAMPS_DATES):
             continue
         champ = (ver.get("champs") or {}).get(nom) or {}
         verdict, correction = champ.get("verdict"), (champ.get("correction") or "").strip()

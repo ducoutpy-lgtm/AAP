@@ -109,3 +109,14 @@ def test_restantes_a_relire_ecarte_hors_champ_et_fiches_tranchees():
               controlee(["titre"], titre=("faux", "x")), {"titre": "jamais contrôlée", "scrape_metadata": {"champ": "sante"}}]
     restantes = v.restantes_a_relire(fiches)
     assert [f["titre"] for f in restantes] == ["t", "jamais contrôlée"] and restantes[0]["scrape_metadata"]["verification"]["douteux"] == ["titre"]
+
+
+def test_decision_du_modele_garde_les_dates_d_un_csv():
+    """Connecteur appelsprojetsrecherche.fr (2026-10-21) : les dates viennent d'une colonne du CSV, pas du texte lu par
+    le modèle ; un verdict « fabriqué » sur une date ne doit pas la retirer."""
+    fiche = controlee(["date_cloture", "date_ouverture"], date_cloture=("fabrique", None), date_ouverture=("fabrique", None))
+    fiche["scrape_metadata"]["moteur"] = "csv"
+    d = v.decision_du_modele(fiche)
+    assert d["statut"] == "validee" and d["corrections"] == {}
+    fiche["scrape_metadata"]["moteur"] = "api"
+    assert v.decision_du_modele(fiche)["corrections"] == {"date_cloture": None, "date_ouverture": None}
