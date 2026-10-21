@@ -9,7 +9,8 @@ Demande de Monsieur DUCOUT du 2026-10-21. Zéro euro. Règles : aucun `git push`
   0 a ecrire » (idempotence prouvée). Vrai projet : essai à blanc « 0 deja en base, 6433 a ecrire », recopie réelle
   faite le 2026-10-21 sur accord (« ok ») : « 6433 appels ecrits dans coutsIa », contrôle « 6433 deja en base, 0 a ecrire ».
   Règle `coutsIa` : déploiement refusé à la session par le garde-fou de l'outil (déploiement en production), commande
-  remise à Monsieur DUCOUT.
+  remise à Monsieur DUCOUT, qui l'a lancée depuis `app` le 2026-10-21 : « released rules firestore.rules », « Deploy
+  complete! » (lu dans son terminal).
 - [x] 6.2 `utils/couts.ts` et test ; page `/admin/couts-ia` ; route, menu, bouton du tableau de bord ; lint, build ;
   page jouée sur les émulateurs (après recopie du journal dans l'émulateur).
   Fait le 2026-10-21 : lint exit 0, build vert, Vitest 91 verts (3 nouveaux). Page lue avec admin@test.local :

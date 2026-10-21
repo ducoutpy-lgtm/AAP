@@ -89,8 +89,9 @@ Son module `src/services/export.ts` pourra être porté dans `app/` quand l'expo
   Toute l'application est lintée et compilée (`npm run lint`, `npm run build`) ; `npm test` (Vitest, Testing Library,
   jsdom : utilitaires et pages légales) ; `npm run test:rules` (émulateur Firestore, JDK 21 en tête du PATH, 23 tests).
   Règles Firestore des modules rouvertes en écriture (déploiement après accord). `deadline` nullable et bloc
-  `validation` dans le type `AAP`. Fonctions serveur toujours non déployées (Blaze accepté le 2026-10-19, activé par
-  Monsieur DUCOUT lui-même).
+  `validation` dans le type `AAP`. Fonctions serveur toujours non déployées (Blaze accepté le 2026-10-19 ; le 2026-10-21,
+  `firebase functions:secrets:set` répond « Billing account ... is not open » : la facturation n'est pas ouverte, à activer
+  dans la console avant tout déploiement de fonction).
 - Rôles : `porteur`, `financeur`, `admin` (champ `users/{uid}.userType`). Comptes administrateurs : ducoutpy@gmail.com et ducout@hotmail.fr (2026-10-20) ; comptes de test : magnus.link1973@gmail.com (candidat, Google), alexavs.martin@gmail.com (financeur, Google), test@test.com (candidat). Compte administrateur : `scripts/creer_admin.py
   --email <adresse>` (2026-10-15, sans mot de passe ; mot de passe choisi via `/reset-password`). Fournisseur Google
   activé par Monsieur DUCOUT dans la console Firebase le 2026-10-19 : le bouton « Google » de `/login` et `/signup`
