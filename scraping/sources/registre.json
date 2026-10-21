@@ -1059,13 +1059,18 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Agence exécutive santé et numérique de la Commission européenne. Constat du 2026-10-21 : page lue au navigateur, 25 liens d'appels (/calls-proposals/...) en anglais ; l'outil ne reconnaît que des mots-clés français, aucun retenu. À traiter avec des mots-clés anglais.",
+    "notes": "Agence exécutive santé et numérique de la Commission européenne. Constat du 2026-10-21 : page lue au navigateur, 25 liens d'appels (/calls-proposals/...) en anglais ; l'outil ne reconnaît que des mots-clés français, aucun retenu. À traiter avec des mots-clés anglais. 2026-10-21 après-midi : mots-clés anglais ajoutés, rubrique trouvée (20 liens).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "a-verifier",
-      "date": "2026-10-15",
-      "justification": "pas de page gardée par la découverte"
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-21",
+      "justification": "Après l'ajout des mots-clés anglais : 20 liens d'appels lus (Horizon Europe Santé : antiviraux, maladies chroniques, exposome, handicap ; mais aussi industrie et numérique, que le classement du champ écartera).",
+      "relecture": {
+        "motif": "découverte du 2026-10-21 après le changement decouverte-mots-cles : rubrique trouvée, 20 liens",
+        "date": "2026-10-21",
+        "relecteur": "session Claude Code, accord de Monsieur DUCOUT (« 1-2-3 ok »)"
+      }
     }
   },
   {
@@ -21544,7 +21549,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Portail commun des appels de recherche. Ajouté le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity). La page d'accueil liste les appels avec des liens « Lire la suite » vers /appel/<id> : la découverte par mots-clés ne les reconnaît pas (texte sans mot-clé), à traiter.",
+    "notes": "Portail commun des appels de recherche. Ajouté le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity). La page d'accueil liste les appels avec des liens « Lire la suite » vers /appel/<id> : la découverte par mots-clés ne les reconnaît pas (texte sans mot-clé), à traiter. 2026-10-21 après-midi : jetons d'adresse ajoutés, rubrique trouvée mais la page d'accueil ne montre que six appels (tous ANR) : il faudra l'adresse d'une recherche filtrée santé, à demander à Monsieur DUCOUT.",
     "derniere_verification": "2026-10-21",
     "code_http": 200,
     "qualification": {

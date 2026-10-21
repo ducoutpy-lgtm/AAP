@@ -98,3 +98,13 @@ def test_extraire_liens_lit_le_shadow_dom():
     assert "https://exemple.test/ordinaire" in hrefs
     assert "https://exemple.test/s/article/appel-a-projets-achats-innovants" in hrefs
     assert any(l["texte"].startswith("Appel à projets : Achats innovants") for l in liens)
+
+
+def test_score_lien_anglais_et_adresses():
+    """Changement decouverte-mots-cles (2026-10-21) : libellés anglais, codes européens, adresses /appel/ et /call/."""
+    assert decouverte.score_lien("Call for proposals: EU4Health 2026", "https://hadea.ec.europa.eu/calls-proposals/eu4h-2026") >= 3
+    assert decouverte.score_lien("HORIZON-HLTH-2027-01-CARE-02", "https://www.horizon-europe.gouv.fr/personalised-approaches") >= 3
+    assert decouverte.score_lien("Lire la suite", "https://www.appelsprojetsrecherche.fr/appel/1-anr-2002") >= 3
+    assert decouverte.score_lien("Lire la suite", "https://anr.fr/fr/detail/call/aapg-2027/") >= 3
+    assert decouverte.score_lien("Appel à communication congrès", "https://x.fr/appel-a-communication") == 0
+    assert decouverte.score_lien("Nos actualités", "https://x.fr/actualites") == 0

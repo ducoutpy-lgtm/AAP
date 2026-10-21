@@ -2,7 +2,7 @@
 
 Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 
-**849 sources traitées sur 1200 : 260 rubrique trouvée, 388 aucune rubrique, 12 bloqué, 189 erreur ; 3462 liens d'AAP collectés.**
+**849 sources traitées sur 1200 : 262 rubrique trouvée, 385 aucune rubrique, 12 bloqué, 190 erreur ; 3488 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -13,11 +13,11 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
 | fondation | 42 | 20 | 17 | 0 | 5 | 178 |
 | autre | 40 | 9 | 27 | 0 | 4 | 217 |
-| agence-nationale | 36 | 16 | 19 | 1 | 0 | 334 |
+| agence-nationale | 36 | 17 | 18 | 1 | 0 | 340 |
 | etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
-| europe | 13 | 5 | 7 | 0 | 1 | 74 |
+| europe | 13 | 6 | 5 | 0 | 2 | 94 |
 | centrale-achat | 4 | 0 | 4 | 0 | 0 | 0 |
 
 ## Rubriques trouvées
@@ -60,6 +60,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Société Française de Dermatologie | societe-savante | [page](https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd) | 22 |
 | ARS Normandie | ars | [page](https://www.normandie.ars.sante.fr/liste-appels-projet-candidature) | 21 |
 | Fondation de France | fondation | [page](https://www.fondationdefrance.org/fr/appels-a-projets) | 20 |
+| HaDEA – EU4Health | europe | [page](https://hadea.ec.europa.eu/calls-proposals_en) | 20 |
 | Fondation de France – appels à projets des fondations abritées | fondation | [page](https://www.fondationdefrance.org/fr/appels-a-projets-fa) | 20 |
 | Fondation de France – annuaire des fondations abritées | fondation | [page](https://www.fondationdefrance.org/fr/appels-a-projets) | 20 |
 | Fondation Crédit Mutuel Alliance Fédérale | fondation | [page](https://www.fondationdefrance.org/fr/appels-a-projets-fa) | 20 |
@@ -204,6 +205,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt | ministere | [page](https://draaf.paca.agriculture.gouv.fr/guichets-appel-a-manifestation-d-interet-et-appel-a-projets-2026-r872.html) | 6 |
 | Direction régionale de l'économie, de l'emploi, du travail et des soli | ministere | [page](https://centre-val-de-loire.dreets.gouv.fr/Marches-publics-et-appels-a-projets) | 6 |
 | Direction régionale de l'économie, de l'emploi, du travail et des soli | ministere | [page](https://hauts-de-france.dreets.gouv.fr/Appels-a-projets-DREETS) | 6 |
+| Portail appelsprojetsrecherche.fr (ANR, Inserm, ANRS, Anses, INCa, ADE | agence-nationale | [page](https://www.appelsprojetsrecherche.fr/) | 6 |
 | Fondation Crédit Agricole Solidarité et Développement | fondation | [page](https://www.fondation-ca-solidaritedeveloppement.org/appel-a-projets/aide-sociale-a-lenfance-accompagner-les-jeunes-dans-leur-vie-dadulte/) | 5 |
 | Fondation Le Souffle | fondation | [page](https://www.lesouffle.org/appels-projets-recherche) | 5 |
 | Conseil départemental Territoire de Belfort | collectivite | [page](https://www.territoiredebelfort.fr/appels-projets) | 5 |
@@ -388,6 +390,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | GIRCI Auvergne-Rhône-Alpes | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.girci-auvergnerhonealpes.fr/ |
 | GIRCI Nord-Ouest | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.girci-nordouest.fr/ |
 | Haut-commissariat de la République - Polynésie française | erreur | Error: Page.goto: net::ERR_EMPTY_RESPONSE at https://www.polynesie-francaise.gouv.fr/ |
+| Horizon Europe – Cluster Santé (PCN France) | erreur | Error: Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://www.horizon-europe.gouv.fr/appe |
 | Hospimedia – appels à projets | erreur | HTTP 404 |
 | Hôpital Robert-Debré (AP-HP) – veille des appels à projets | bloqué | HTTP 403 |
 | IHU Everest (dermatologie) | erreur | Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.ihu-everest.fr/ |

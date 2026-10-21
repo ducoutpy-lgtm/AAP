@@ -43,8 +43,13 @@ MOTS = [
     ("manifestation d'interet", 3), ("manifestation d interet", 3), ("manifestation-d-interet", 3), ("manifestations d'interet", 3),
     ("appel d'offre", 1), ("appel a communication", -3), ("appel a contribution", 1),
     ("subvention", 1), ("financement", 1), ("aides", 1), ("bourse", 1), ("prix ", 1),
+    # Changement decouverte-mots-cles (2026-10-21) : libelles anglais (HaDEA, portails europeens) et codes de programmes
+    ("call for proposal", 3), ("calls for proposal", 3), ("call-for-proposal", 3), ("calls-proposal", 3),
+    ("funding opportunit", 1), ("grant", 1), ("horizon-hlth", 3), ("eu4h", 3),
 ]
-TOKENS = {"aap": 3, "ami": 2, "aac": 2}
+# Jetons cherches comme mot entier dans le texte, ou comme segment d'adresse (/appel/, -call-) : un lien « Lire la
+# suite » vers /appel/<id> (appelsprojetsrecherche.fr) ou /detail/call/ (ANR) compte ainsi comme un appel.
+TOKENS = {"aap": 3, "ami": 2, "aac": 2, "appel": 3, "appels": 3, "call": 3, "calls": 3}
 EXCLUS = ("mailto:", "javascript:", "tel:", "#")
 EXTENSIONS_FICHIERS = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip")
 

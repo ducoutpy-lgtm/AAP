@@ -284,6 +284,9 @@ Depuis le 2026-10-21 (changement `decouverte-shadow-dom`), les liens sont lus pa
 traverse les « shadow DOM » des sites Salesforce Lightning (ANAP : 27 liens lus au lieu de 14). Une page qui n'offre
 qu'un seul lien d'appel reste « aucune rubrique » (il en faut deux) ; les pages qui chargent leurs liens au clic sur
 « Afficher plus » ne sont pas déroulées.
+Mots-clés (changement `decouverte-mots-cles`, 2026-10-21, décision de Monsieur DUCOUT) : la notation reconnaît aussi les
+libellés anglais (« call for proposals »), les codes HORIZON-HLTH et EU4H, et les adresses dont un segment est `appel`,
+`appels`, `call` ou `calls` (lien « Lire la suite » vers /appel/<id>). HaDEA : 20 liens lus au lieu de 0.
 
 ## Qualification des sources
 

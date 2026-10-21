@@ -5,6 +5,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 ## [Non publié]
 
 ### Ajouté (2026-10-21)
+- `SOURCES_PRIORITAIRES.md` : trente émetteurs nationaux lus au navigateur, bilan du nombre qui alimentent la veille ;
+  anomalies relevées (FIRAH pointant vers l'OCIRP, Bpifrance et ameli en 403, Anses et IReSP sans lien d'appel lu).
+- Découverte : mots-clés anglais, codes HORIZON-HLTH et EU4H, jetons d'adresse `appel`, `appels`, `call`, `calls`
+  (changement `decouverte-mots-cles`) ; HaDEA rubrique trouvée (20 liens, confirmée), appelsprojetsrecherche.fr 6 liens.
+- ANRS : neuf textes extraits par Haiku (0,014 euro, devis 0,01 accepté), trois appels ouverts contrôlés, qualifiés
+  (0,002 euro) et importés publiés.
 - Registre : `anrs-mie` (ANRS Maladies infectieuses émergentes, page des appels, découverte : 9 liens, rubrique confirmée,
   textes collectés, extraction en attente de devis) et `appelsprojetsrecherche-fr` (portail commun ANR, Inserm, ANRS, Anses,
   INCa ; découverte : aucune rubrique, liens « Lire la suite » sans mot-clé), d'après la liste de vingt sites de
