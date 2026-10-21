@@ -235,7 +235,11 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `suivi-testeurs` (2026-10-21, jour 4 : journal des actions et page Testeurs, joués sur les émulateurs ;
+  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `suivi-couts-externes`
+  (2026-10-21, demande de Monsieur DUCOUT : page `/admin/couts-ia` « Appels externes » et `scripts/publier_couts.py`, joués sur les
+  émulateurs ; restent la règle `coutsIa` à déployer, la recopie réelle des 6 433 lignes et sa vérification 6.4), `candidature-depuis-pdf`
+  (2026-10-21, jour 5 : lecture du dossier de test réussie sur les émulateurs pour 0,0009 euro ; restent le secret et le déploiement de la
+  fonction 5.3, puis un vrai dossier 5.5), `suivi-testeurs` (2026-10-21, jour 4 : journal des actions et page Testeurs, joués sur les émulateurs ;
   règle Firestore à déployer après accord), `alertes-courriel` (2026-10-20 soir, jour 3 : courriels hebdomadaires composés et testés à blanc ; boîte
   d'envoi Zoho à renseigner par Monsieur DUCOUT dans `scraping/.env`, puis `courriel.py --test`), `qualification-appels` (2026-10-20 soir, jour 2 du plan MVP : qualification par Haiku à choix fermés,
   filtres et fiche, fenêtre « Qualifier » ; relecture de vingt fiches par Monsieur DUCOUT à venir), `parcours-candidat-jour-1` (2026-10-20 soir, jour 1 du plan MVP `docs/PLAN_MVP_2026-10-20.md` : fiche en trois cases,

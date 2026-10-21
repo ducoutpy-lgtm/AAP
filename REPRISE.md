@@ -217,6 +217,12 @@ Vue d'ensemble des huit grandes étapes et de leur état : `docs/FEUILLE_DE_ROUT
   passage 856 fiches pour 1,33 euro, contrôle 0,13 euro, import 54 créées et 483 mises à jour, 4 hors champ retirés.
   Base au 2026-10-19, 13 h 20 : 623 documents, 289 publiées (257 validées par le modèle, 28 proposées, 8 à corriger ; moteur api 207, connecteurs 37, local 48), 44 archivées, 290 brouillons ; « 289 AAP disponibles » sur /aap/search. Point réglé à 15 h 29 : `scripts/reporter_valeurs_api.py` a reporté les valeurs API sur 183 fiches validées par le modèle
   (sauvegarde `valeurs_api_2026-10-19_1529.json`), les fiches API closes non contrôlées et les verdicts humains intouchés.
+- Suivi des appels externes (2026-10-21, `suivi-couts-externes`, demande de Monsieur DUCOUT) : page `/admin/couts-ia` et
+  `scripts/publier_couts.py` (journal des coûts recopié dans `coutsIa`, appelé par la veille), joués sur les émulateurs.
+  Reste : déployer la règle `coutsIa`, recopier les 6 433 lignes sur le vrai projet (accord), vérification 6.4.
+- Jour 5 du plan MVP (2026-10-21, `candidature-depuis-pdf`) : fonction serveur `preremplirCandidature` (Haiku, plafond
+  5 euros par mois) jouée sur les émulateurs : dossier de test lu, titre, résumé et montant remplis, 0,0009 euro. Reste :
+  secret `ANTHROPIC_API_KEY` posé par Monsieur DUCOUT, déploiement de la fonction (5.3), vrai dossier (5.5).
 - Jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée par Monsieur DUCOUT (mot de passe d'application dans
   `scraping/.env`), courriel de test puis bilan administrateur et courriels candidats envoyés ; la veille du lundi les enverra seule.
 - Jour 4 du plan MVP (2026-10-21 matin, `suivi-testeurs`) : journal des actions (connexion, recherche, fiche, recherche

@@ -6,6 +6,14 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- Suivi des appels externes (2026-10-21, changement `suivi-couts-externes`, demande de Monsieur DUCOUT) :
+  `scripts/publier_couts.py` recopie le journal `scraping/logs/extraction_costs.jsonl` dans la collection `coutsIa`
+  (une ligne par appel au modèle, sans doublon, appelé par `veille.cmd`), page `/admin/couts-ia` « Appels externes »
+  (cumul total et du mois face au plafond de 5 euros, coût par étape, par modèle, par semaine, coût par appel
+  qualifié, derniers appels filtrables), entrée de menu et bouton du tableau de bord ; `utils/couts.ts` testé.
+  Jour 5 joué sur les émulateurs : lecture du dossier de test réussie pour 0,0009 euro ; la fonction serveur écrit
+  désormais ses lignes de coût dans la même forme (API modulaire `firebase-admin/firestore`, qui corrige l'erreur
+  INTERNAL de l'émulateur).
 - `scraping/configurer_courriel.cmd` (2026-10-21) : assistant de configuration de la boîte d'envoi Zoho. Règles
   Firestore `journal` et `messagesContact` déployées le 2026-10-21 sur accord.
 - Jour 4 du plan MVP (2026-10-21, changement `suivi-testeurs`) : journal des actions écrit par l'application

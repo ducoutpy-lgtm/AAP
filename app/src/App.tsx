@@ -49,6 +49,7 @@ import ManageUsersPage from './pages/admin/ManageUsersPage';
 import ManageAAPsPage from './pages/admin/ManageAAPsPage';
 import GlobalStatisticsPage from './pages/admin/GlobalStatisticsPage';
 import TesteursPage from './pages/admin/TesteursPage';
+import CoutsExternesPage from './pages/admin/CoutsExternesPage';
 
 // Pages légales
 import MentionsLegalesPage from './pages/legal/MentionsLegalesPage';
@@ -152,6 +153,7 @@ function App() {
           <Route path="/admin/aaps" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><ManageAAPsPage /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/statistiques" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><GlobalStatisticsPage /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/testeurs" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><TesteursPage /></RoleGuard></ProtectedRoute>} />
+          <Route path="/admin/couts-ia" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><CoutsExternesPage /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/paiements" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><PlaceholderPage title="Gestion des Paiements" /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/parametres" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><PlaceholderPage title="Paramètres Plateforme" /></RoleGuard></ProtectedRoute>} />
 

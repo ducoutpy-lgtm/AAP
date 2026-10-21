@@ -4,6 +4,8 @@
 // Modèle : claude-haiku-5-5 (décision de Monsieur DUCOUT du 2026-10-19 : Haiku, plafond cumulé 5 euros).
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+// API modulaire : sous TypeScript 5, admin.firestore.Timestamp et FieldValue ressortent indéfinis dans l'émulateur
+import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import Anthropic from '@anthropic-ai/sdk';
 
 const MODELE = 'claude-haiku-5-5';
@@ -65,7 +67,7 @@ export const preremplirCandidature = functions
     const debutMois = new Date();
     debutMois.setDate(1);
     debutMois.setHours(0, 0, 0, 0);
-    const couts = await db.collection('coutsIa').where('le', '>=', admin.firestore.Timestamp.fromDate(debutMois)).get();
+    const couts = await db.collection('coutsIa').where('le', '>=', Timestamp.fromDate(debutMois)).get();
     const depense = couts.docs.reduce((somme, d) => somme + (d.data().coutEuros || 0), 0);
     if (depense >= PLAFOND_EUROS_PAR_MOIS) {
       throw new functions.https.HttpsError('resource-exhausted', 'Plafond mensuel de lecture atteint : prévenez l\'administrateur');
@@ -114,9 +116,11 @@ export const preremplirCandidature = functions
 
     const cout = coutEuros(reponse.usage.input_tokens, reponse.usage.output_tokens);
     await db.collection('coutsIa').add({
+      // Même forme que les lignes recopiées de la chaîne de collecte (page Appels externes, changement suivi-couts-externes)
+      source: 'application', fournisseur: 'anthropic', etape: 'preremplirCandidature', origine: 'application', cible: aapId,
       userId: contexte.auth.uid, fonction: 'preremplirCandidature', aapId, modele: MODELE,
       tokensEntree: reponse.usage.input_tokens, tokensSortie: reponse.usage.output_tokens, coutEuros: cout,
-      le: admin.firestore.FieldValue.serverTimestamp(),
+      le: FieldValue.serverTimestamp(),
     });
 
     if (reponse.stop_reason === 'refusal') {

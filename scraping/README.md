@@ -150,6 +150,12 @@ Le fichier de vérité est le JSON ; `REGISTRE_SOURCES.md` est régénéré et n
 Un connecteur ne passe `operationnelle` qu'après la grille d'acceptance ci-dessous.
 Spécification : `openspec/specs/registre-sources/`.
 
+### Suivi des coûts dans l'administration (changement `suivi-couts-externes`, 2026-10-21)
+
+`veille.cmd` appelle ensuite `..\scripts\publier_couts.py` : chaque ligne de `logs/extraction_costs.jsonl` devient un
+document de la collection Firestore `coutsIa` (identifiant dérivé du texte de la ligne : relançable sans doublon),
+lu par la page « Appels externes » de l'administration (`/admin/couts-ia`). `--dry-run` compte sans écrire.
+
 ### Courriels hebdomadaires (jour 3 du plan MVP, changement `alertes-courriel`, 2026-10-20)
 
 Après la relecture des pages, `veille.cmd` appelle `alertes.py --admin --candidats` : bilan à l'administrateur (chiffres

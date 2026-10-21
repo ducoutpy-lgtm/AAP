@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   Settings,
   BarChart3,
+  Coins,
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -349,6 +350,14 @@ export default function AdminDashboard() {
               >
                 <Users className="h-4 w-4 mr-3" />
                 Suivre les testeurs
+              </Button>
+              <Button
+                className="w-full justify-start"
+                variant="secondary"
+                onClick={() => navigate('/admin/couts-ia')}
+              >
+                <Coins className="h-4 w-4 mr-3" />
+                Appels externes (coûts)
               </Button>
               <Button
                 className="w-full justify-start"

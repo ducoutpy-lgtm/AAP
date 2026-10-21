@@ -23,6 +23,9 @@ echo.
 echo Courriels hebdomadaires (bilan administrateur, appels de la semaine aux candidats) :
 "..\.venv\Scripts\python.exe" alertes.py --admin --candidats
 echo.
+echo Recopie du journal des couts externes vers l'administration (collection coutsIa) :
+"..\.venv\Scripts\python.exe" ..\scripts\publier_couts.py
+echo.
 echo Devis d'extraction des textes nouveaux (aucun appel n'est lance ici) :
 "..\.venv\Scripts\python.exe" extraction_locale.py --extraire --moteur api --dry-run
 echo.
