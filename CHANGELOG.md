@@ -6,6 +6,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Ajouté
+- `scraping/configurer_courriel.cmd` (2026-10-21) : assistant de configuration de la boîte d'envoi Zoho. Règles
+  Firestore `journal` et `messagesContact` déployées le 2026-10-21 sur accord.
 - Jour 4 du plan MVP (2026-10-21, changement `suivi-testeurs`) : journal des actions écrit par l'application
   (connexion, recherche et ses filtres, fiche ouverte, recherche sauvegardée, candidature envoyée, appel publié ;
   dédoublonnage de cinq secondes, administrateur exclu), page `/admin/testeurs` (résumé par compte, dernières actions,

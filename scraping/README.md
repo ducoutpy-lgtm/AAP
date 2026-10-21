@@ -160,6 +160,7 @@ famille de structure, dix au plus. Boîte d'envoi : Zoho Mail d'ARCADIA, variabl
 `--dry-run`, les courriels sont écrits dans `logs/courriels/` pour relecture.
 
 ```bash
+configurer_courriel.cmd                        # assistant : questions, écriture de .env, courriel de test (2026-10-21)
 python courriel.py --test                      # courriel de contrôle à COURRIEL_ADMIN
 python alertes.py --admin --candidats --dry-run # courriels écrits dans logs/courriels/, rien d'envoyé
 python alertes.py --admin --candidats --url https://adresse-de-l-application   # envoi réel
