@@ -2,7 +2,7 @@
 
 Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 
-**847 sources traitées sur 1198 : 259 rubrique trouvée, 387 aucune rubrique, 12 bloqué, 189 erreur ; 3453 liens d'AAP collectés.**
+**849 sources traitées sur 1200 : 260 rubrique trouvée, 388 aucune rubrique, 12 bloqué, 189 erreur ; 3462 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -13,7 +13,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
 | fondation | 42 | 20 | 17 | 0 | 5 | 178 |
 | autre | 40 | 9 | 27 | 0 | 4 | 217 |
-| agence-nationale | 34 | 15 | 18 | 1 | 0 | 325 |
+| agence-nationale | 36 | 16 | 19 | 1 | 0 | 334 |
 | etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
@@ -151,6 +151,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Rhône | ministere | [page](https://www.rhone.fr/jcms/tl1_2008817/fr/appels-a-projets) | 9 |
 | Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) -  | ministere | [page](https://daaf.martinique.agriculture.gouv.fr/appels-a-projets-consultations-r23.html) | 9 |
 | Interreg ALCOTRA (France-Italie) | europe | [page](https://www.interreg-alcotra.eu/fr/appels-projets) | 9 |
+| ANRS Maladies infectieuses émergentes | agence-nationale | [page](https://anrs.fr/financements/tous-les-appels-a-projets/) | 9 |
 | ARS La Réunion | ars | [page](https://www.lareunion.ars.sante.fr/liste-appels-projet-candidature) | 8 |
 | Conseil départemental Mayotte | collectivite | [page](https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026) | 8 |
 | Collectivité territoriale de Martinique | collectivite | [page](https://www.collectivitedemartinique.mq/appels-a-projet/) | 8 |

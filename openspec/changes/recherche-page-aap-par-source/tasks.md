@@ -51,6 +51,12 @@ indiquée, collée dans le compte rendu de session.
   `decouverte.py --ids anap --forcer` : « aucune-rubrique » (un lien d'appel sur la page ; liens Salesforce en shadow DOM
   non lus par l'outil, 14 sur 29). `DECOUVERTE.md` et `REGISTRE_SOURCES.md` régénérés. Reste : extraction des liens ANR
   par la veille après devis, et décision sur la lecture du shadow DOM (modification de l'outil, spec à mettre à jour).
+- [x] 3.3 Liste des vingt sites de Monsieur DUCOUT (2026-10-21, « oui pour tout ») : 18 au registre, 2 ajoutés (`anrs-mie`
+  rubrique trouvée 9 liens et confirmée ; `appelsprojetsrecherche-fr` aucune rubrique, liens sans mot-clé), 7 sources
+  inscrites sans rubrique lisible testées au navigateur, constats dans leurs notes ; AP-HM : `url_validee` sur la page
+  des appels maladies rares (un seul appel). `DECOUVERTE.md`, `REGISTRE_SOURCES.md` régénérés. Limite constatée : les
+  mots-clés de la découverte sont français seulement (HaDEA, Horizon Europe) et ignorent les liens « Lire la suite »
+  (appelsprojetsrecherche.fr) : décision de Monsieur DUCOUT attendue.
 
 ## 4. Vérification
 

@@ -364,7 +364,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Pas de rubrique AAP identifiée : les AAP nationaux sont relayés par le portail des ARS et info.gouv.fr. Page à préciser.",
+    "notes": "Pas de rubrique AAP identifiée : les AAP nationaux sont relayés par le portail des ARS et info.gouv.fr. Page à préciser. Constat du 2026-10-21 : les pages « appels à projets » de sante.gouv.fr redirigent vers la page des programmes DGOS (source dgos-programmes-de-recherche-hospitaliere-phrc-phrip-preps-prme, déjà confirmée) ; doublon, rien à ajouter.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -381,7 +381,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "identifiee",
     "connecteur": "",
-    "notes": "Refuse les requêtes simples (403) : à contrôler avec un navigateur. Annonces d'AAP nationaux (santé mentale, accès aux soins, France 2030). Pas de rubrique dédiée : page à préciser.",
+    "notes": "Refuse les requêtes simples (403) : à contrôler avec un navigateur. Annonces d'AAP nationaux (santé mentale, accès aux soins, France 2030). Pas de rubrique dédiée : page à préciser. Constat du 2026-10-21 : refuse aussi le navigateur piloté (HTTP 403 sur /france-2030) ; à parcourir depuis la box, un site à la fois, ou à abandonner.",
     "derniere_verification": "2026-10-09",
     "code_http": 403,
     "qualification": {
@@ -711,7 +711,7 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Dispositifs nationaux (AMI, AAP) ; pas de page AAP dédiée identifiée.",
+    "notes": "Dispositifs nationaux (AMI, AAP) ; pas de page AAP dédiée identifiée. Constat du 2026-10-21 : pages « dispositifs nationaux » et « programme Santé et Grand Âge » lues au navigateur, aucun lien d'appel ; les AMI sont annoncés dans le fil d'actualités, pas de rubrique.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -1059,7 +1059,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Agence exécutive santé et numérique de la Commission européenne.",
+    "notes": "Agence exécutive santé et numérique de la Commission européenne. Constat du 2026-10-21 : page lue au navigateur, 25 liens d'appels (/calls-proposals/...) en anglais ; l'outil ne reconnaît que des mots-clés français, aucun retenu. À traiter avec des mots-clés anglais.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -1076,7 +1076,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Point de contact national : appels du cluster 1 Santé.",
+    "notes": "Point de contact national : appels du cluster 1 Santé. Constat du 2026-10-21 : la page liste les sujets HORIZON-HLTH (codes sans mot-clé) ; l'outil n'en retient aucun ; délai de connexion dépassé au second essai.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -1093,7 +1093,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Référentiel officiel de tous les appels européens ; application dynamique, scraping difficile.",
+    "notes": "Référentiel officiel de tous les appels européens ; application dynamique, scraping difficile. Constat du 2026-10-21 : application dynamique, 82 liens lus au navigateur, aucun lien d'appel lisible ; il faudrait son interface de données (API), hors outil actuel.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -2965,14 +2965,17 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Rubrique recherche / AAP à préciser.",
+    "notes": "Rubrique recherche / AAP à préciser. Adresse corrigée le 2026-10-21 (ancienne : https://fr.ap-hm.fr/) : page « Appels à projets » de la plateforme maladies rares ; un seul appel affiché (PDF), donc toujours « aucune rubrique » pour l'outil.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
       "verdict": "a-verifier",
       "date": "2026-10-15",
       "justification": "pas de page gardée par la découverte"
-    }
+    },
+    "url_validee": "https://fr.ap-hm.fr/site/maladiesrares/appels-a-projets",
+    "validee_par": "session Claude Code (page trouvée au navigateur), accord de Monsieur DUCOUT",
+    "validee_le": "2026-10-21"
   },
   {
     "id": "fondation-elsan",
@@ -11429,7 +11432,7 @@
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Porte d'entrée thématique santé (EU4Health, Horizon Europe, autres programmes).",
+    "notes": "Porte d'entrée thématique santé (EU4Health, Horizon Europe, autres programmes). Constat du 2026-10-21 : porte d'entrée thématique, pas de liste d'appels lisible ; voir hadea-eu4health.",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
@@ -21509,6 +21512,45 @@
       "verdict": "a-verifier",
       "date": "2026-10-15",
       "justification": "pas de page gardée par la découverte"
+    }
+  },
+  {
+    "id": "anrs-mie",
+    "nom": "ANRS Maladies infectieuses émergentes",
+    "categorie": "agence-nationale",
+    "url_aap": "https://anrs.fr/financements/tous-les-appels-a-projets/",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Agence autonome de l'Inserm : VIH, hépatites, IST, tuberculose, infections émergentes. Ajoutée le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity) ; page des appels lue au navigateur : neuf appels listés, pages 2 à 5.",
+    "derniere_verification": "2026-10-21",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-21",
+      "justification": "Page des appels lue au navigateur le 2026-10-21 : neuf appels (VIH, hépatites, IST, tuberculose, PEPR MIE, Emergences PRFI), tous dans le champ santé.",
+      "relecture": {
+        "motif": "source ajoutée d'après la liste de Monsieur DUCOUT, découverte : rubrique trouvée, 9 liens",
+        "date": "2026-10-21",
+        "relecteur": "session Claude Code, accord de Monsieur DUCOUT (« oui pour tout »)"
+      }
+    }
+  },
+  {
+    "id": "appelsprojetsrecherche-fr",
+    "nom": "Portail appelsprojetsrecherche.fr (ANR, Inserm, ANRS, Anses, INCa, ADEME)",
+    "categorie": "agence-nationale",
+    "url_aap": "https://www.appelsprojetsrecherche.fr/",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Portail commun des appels de recherche. Ajouté le 2026-10-21 d'après la liste de Monsieur DUCOUT (recherche Perplexity). La page d'accueil liste les appels avec des liens « Lire la suite » vers /appel/<id> : la découverte par mots-clés ne les reconnaît pas (texte sans mot-clé), à traiter.",
+    "derniere_verification": "2026-10-21",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-21",
+      "justification": "Découverte : aucune rubrique. Les appels sont bien listés en page d'accueil mais les liens s'intitulent « Lire la suite » (/appel/<id>), sans mot-clé reconnu par l'outil."
     }
   }
 ]

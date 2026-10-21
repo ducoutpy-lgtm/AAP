@@ -4,6 +4,15 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-21)
+- Registre : `anrs-mie` (ANRS Maladies infectieuses émergentes, page des appels, découverte : 9 liens, rubrique confirmée,
+  textes collectés, extraction en attente de devis) et `appelsprojetsrecherche-fr` (portail commun ANR, Inserm, ANRS, Anses,
+  INCa ; découverte : aucune rubrique, liens « Lire la suite » sans mot-clé), d'après la liste de vingt sites de
+  Monsieur DUCOUT (recherche Perplexity) : 18 étaient déjà au registre, 11 alimentent la veille. Constats notés sur les
+  sept sources inscrites sans rubrique lisible (sante.gouv.fr racine = doublon de la page DGOS ; portail européen
+  dynamique ; HaDEA et Horizon Europe en anglais ou en codes, mots-clés français seulement ; info.gouv.fr refuse le
+  navigateur (403) ; Banque des Territoires sans rubrique ; AP-HM : page des appels maladies rares posée en adresse validée).
+
 ### Modifié (2026-10-21)
 - `decouverte.extraire_liens` lit les liens par le sélecteur de Playwright, qui traverse les shadow DOM ouverts
   (changement `decouverte-shadow-dom`, accord de Monsieur DUCOUT) : page des actualités de l'ANAP, 27 liens lus au lieu
