@@ -9,23 +9,23 @@ export default function MentionsLegalesPage() {
       <Section titre="Éditeur du service">
         <p>
           Le service {EDITEUR.nomService} est édité par {EDITEUR.raisonSociale}, {EDITEUR.formeJuridique.toLowerCase()},
-          au capital de <AValider>{EDITEUR.capital}</AValider>, immatriculée au registre du commerce et des sociétés
-          sous le numéro <AValider>{EDITEUR.siren}</AValider>, dont le siège social est situé{' '}
-          <AValider>{EDITEUR.siege}</AValider>.
+          au capital de {EDITEUR.capital}, immatriculée au registre du commerce et des sociétés
+          sous le numéro {EDITEUR.siren} (SIRET du siège {EDITEUR.siret}), dont le siège social est situé{' '}
+          {EDITEUR.siege}.
         </p>
         <p>Directeur de la publication : {EDITEUR.directeurPublication}.</p>
-        <p>Contact : <AValider>{EDITEUR.contact}</AValider>.</p>
+        <p>Contact : {EDITEUR.contact}.</p>
       </Section>
 
       <Section titre="Hébergement">
         <p>
-          Le site est hébergé par Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : hébergeur définitif au moment de la mise en ligne]</AValider>.
+          Le site est hébergé par Google Cloud EMEA Limited (service Firebase Hosting), 70 Sir John Rogerson's Quay,
+          Dublin 2, Irlande.
         </p>
         <p>
           Les données des comptes et des appels à projets sont stockées par Google Cloud EMEA Limited (services Firebase :
           authentification, base de données Firestore), 70 Sir John Rogerson's Quay, Dublin 2, Irlande. Région de
-          stockage : <AValider>[À VALIDER — Monsieur DUCOUT : région Firebase du projet, europe-west de préférence]</AValider>.
+          stockage : eur3, multirégion Europe (Belgique et Pays-Bas).
         </p>
       </Section>
 

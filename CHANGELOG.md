@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié
+- Pages légales (2026-10-22) : éditeur complété par Monsieur DUCOUT (siège 7 rue Montespan 91000 Évry-Courcouronnes,
+  SIREN 102 024 460, SIRET du siège, capital 1 000 euros, contact@arcadiaco.fr), contrôlé dans l'annuaire public des
+  entreprises ; hébergeur Firebase Hosting (Google Cloud EMEA Limited) et région Firestore eur3 (Belgique et Pays-Bas)
+  à la place de Netlify et des mentions à valider. Restent à valider : grille tarifaire et résiliation, clause relue par
+  un conseil, durées de conservation, outil de mesure d'audience.
+
 ### Ajouté
 - Jour 7 du plan MVP (2026-10-21, changement `mise-en-ligne-testeurs`) : formulaire « Donner mon avis » (`/retour`,
   collection `retours`, règle Firestore création par l'auteur et lecture administrateur, entrée Support du menu qui

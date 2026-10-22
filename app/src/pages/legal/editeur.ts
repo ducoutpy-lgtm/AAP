@@ -1,13 +1,16 @@
-// Donnees de l'editeur affichees par les pages legales ; les champs inconnus du depot sont a valider par Monsieur DUCOUT.
+// Donnees de l'editeur affichees par les pages legales. Siege, SIREN et capital saisis par Monsieur DUCOUT le
+// 2026-10-22 et controles dans l'annuaire public des entreprises (recherche-entreprises.api.gouv.fr : ARCADIA, SIREN
+// 102 024 460, siege 7 rue Montespan 91000 Evry-Courcouronnes, SIRET du siege 102 024 460 00010).
 export const EDITEUR = {
   raisonSociale: 'ARCADIA SASU',
   formeJuridique: 'Société par actions simplifiée unipersonnelle',
-  siege: 'Évry-Courcouronnes (91), France [À VALIDER — Monsieur DUCOUT : adresse complète]',
-  siren: '[À VALIDER — Monsieur DUCOUT : numéro SIREN]',
-  capital: '[À VALIDER — Monsieur DUCOUT : capital social]',
+  siege: '7 rue Montespan, 91000 Évry-Courcouronnes, France',
+  siren: '102 024 460',
+  siret: '102 024 460 00010',
+  capital: '1 000 €',
   directeurPublication: 'Monsieur Pierre-Yves DUCOUT, président',
-  contact: '[À VALIDER — Monsieur DUCOUT : adresse e-mail de contact]',
+  contact: 'contact@arcadiaco.fr',
   dpo: 'Monsieur Pierre-Yves DUCOUT',
   nomService: 'AAP Santé',
-  dateMiseAJour: '19 octobre 2026',
+  dateMiseAJour: '22 octobre 2026',
 };

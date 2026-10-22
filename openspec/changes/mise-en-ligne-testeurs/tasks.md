@@ -17,4 +17,8 @@ les émulateurs.
 - [x] 1.4 `docs/MISE_EN_LIGNE.md` (vérifications, commandes, contrôles, invitation) ; liste des champs d'entreprise à
   remplir dans `editeur.ts` ; documentation (résumé de l'application, CHANGELOG, CLAUDE.md, REPRISE.md, plan). (Fait le 2026-10-21.)
 - [ ] 2.1 Monsieur DUCOUT remplit `editeur.ts`, déploie (règles puis hébergement) depuis `app`, envoie l'invitation à
-  trois testeurs ; le premier retour arrive dans `/admin/testeurs`.
+  trois testeurs ; le premier retour arrive dans `/admin/testeurs`. (2026-10-22 : `editeur.ts` rempli par Monsieur DUCOUT ; la session a
+  remplacé le SIRET saisi dans le champ SIREN par le SIREN 102 024 460 (contrôle dans l'annuaire public des entreprises :
+  ARCADIA, 7 rue Montespan 91000 Évry-Courcouronnes), ajouté le SIRET, retiré le surlignage ; pages légales alignées sur
+  Firebase Hosting et la région Firestore eur3 (lue par `firebase firestore:databases:get`). Restent le déploiement et
+  les invitations.)

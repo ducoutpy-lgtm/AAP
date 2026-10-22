@@ -16,7 +16,8 @@ describe('pages légales', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Mentions légales' })).toBeInTheDocument();
     expect(screen.getAllByText(/ARCADIA SASU/).length).toBeGreaterThan(0);
     expect(screen.getByText(/Directeur de la publication/)).toHaveTextContent(EDITEUR.directeurPublication);
-    expect(screen.getByText(/Netlify, Inc\./)).toBeInTheDocument();
+    expect(screen.getByText(/Firebase Hosting/)).toBeInTheDocument();
+    expect(screen.getByText(/102 024 460/)).toBeInTheDocument();
     expect(screen.queryByText(/en cours de développement/)).toBeNull();
   });
 

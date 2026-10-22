@@ -9,9 +9,9 @@ export default function ConfidentialitePage() {
     <LegalLayout titre="Politique de confidentialité">
       <Section titre="Responsable du traitement">
         <p>
-          {EDITEUR.raisonSociale}, <AValider>{EDITEUR.siege}</AValider>, représentée par son président, est responsable des
+          {EDITEUR.raisonSociale}, {EDITEUR.siege}, représentée par son président, est responsable des
           traitements décrits ci-dessous. Délégué à la protection des données : {EDITEUR.dpo}, joignable à{' '}
-          <AValider>{EDITEUR.contact}</AValider>.
+          {EDITEUR.contact}.
         </p>
       </Section>
 
@@ -45,11 +45,10 @@ export default function ConfidentialitePage() {
         <p>
           Les données sont accessibles au personnel habilité de l'éditeur, aux financeurs pour les candidatures qui leur
           sont adressées, et aux porteurs pour les appels publiés. Sous-traitants : Google Cloud EMEA Limited (Firebase :
-          authentification, base de données, stockage des fichiers, fonctions serveur), l'hébergeur du site (Netlify,
-          Inc.), et, lorsque le paiement sera ouvert, Stripe Payments Europe Ltd. Des transferts hors de l'Union européenne
-          peuvent avoir lieu vers les États-Unis (Netlify, Google, Stripe) ; ils sont encadrés par les clauses
+          authentification, base de données, stockage des fichiers, fonctions serveur, hébergement du site), et, lorsque le paiement sera ouvert, Stripe Payments Europe Ltd. Des transferts hors de l'Union européenne
+          peuvent avoir lieu vers les États-Unis (Google, Stripe) ; ils sont encadrés par les clauses
           contractuelles types de la Commission européenne et, le cas échéant, le cadre de protection des données
-          UE-États-Unis <AValider>[À VALIDER — Monsieur DUCOUT : région de stockage Firebase et hébergeur définitif]</AValider>.
+          UE-États-Unis. Les données sont stockées dans l'Union européenne (région Firebase eur3, Belgique et Pays-Bas).
           Aucune donnée n'est vendue ni cédée à des tiers à des fins commerciales.
         </p>
       </Section>
@@ -67,7 +66,7 @@ export default function ConfidentialitePage() {
         <p>
           Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité
           de vos données, ainsi que du droit de définir des directives sur leur sort après votre décès. Pour l'exercer,
-          écrivez au délégué à la protection des données à <AValider>{EDITEUR.contact}</AValider> ; une réponse vous est
+          écrivez au délégué à la protection des données à {EDITEUR.contact} ; une réponse vous est
           apportée dans un délai d'un mois. Vous pouvez introduire une réclamation auprès de la Commission nationale de
           l'informatique et des libertés (CNIL, 3 place de Fontenoy, 75007 Paris, www.cnil.fr).
         </p>
