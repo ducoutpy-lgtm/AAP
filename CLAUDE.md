@@ -77,7 +77,8 @@ Son module `src/services/export.ts` pourra être porté dans `app/` quand l'expo
 ## Volet application web (`app/`)
 
 - Projet Firebase : `aapi-11bc3` `[À VALIDER — Monsieur DUCOUT : projet toujours actif ?]`
-- Déploiement de test : Netlify `https://teal-twilight-a7fcf3.netlify.app/` `[À VALIDER — encore en ligne ?]`
+- Application en ligne depuis le 2026-10-22 : https://aapi-11bc3.web.app (Firebase Hosting, déployée par Monsieur DUCOUT,
+  procédure `docs/MISE_EN_LIGNE.md`). Ancien déploiement Netlify d'avril (`https://teal-twilight-a7fcf3.netlify.app/`) : repli.
 - Commandes : `cd app && npm install && npm run dev` (port 3000), `npm run build`, `npm run lint`
 - Variables : `app/.env` (copier `app/.env.example`), jamais commité.
 - Périmètre : du 2026-10-14 (lot 0) au 2026-10-19, consultation publique et administration seules, modules gelés ;

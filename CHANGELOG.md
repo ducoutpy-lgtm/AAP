@@ -6,6 +6,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ## [Non publié]
 
 ### Modifié
+- Mise en ligne (2026-10-22, par Monsieur DUCOUT) : application publiée sur https://aapi-11bc3.web.app (Firebase
+  Hosting), règles Firestore (dont `statistiquesPubliques`, `retours`) et Storage déployées ; 121 pièces jointes publiques
+  des appels servies avec le site.
 - Pages légales (2026-10-22) : éditeur complété par Monsieur DUCOUT (siège 7 rue Montespan 91000 Évry-Courcouronnes,
   SIREN 102 024 460, SIRET du siège, capital 1 000 euros, contact@arcadiaco.fr), contrôlé dans l'annuaire public des
   entreprises ; hébergeur Firebase Hosting (Google Cloud EMEA Limited) et région Firestore eur3 (Belgique et Pays-Bas)

@@ -20,5 +20,7 @@ les émulateurs.
   trois testeurs ; le premier retour arrive dans `/admin/testeurs`. (2026-10-22 : `editeur.ts` rempli par Monsieur DUCOUT ; la session a
   remplacé le SIRET saisi dans le champ SIREN par le SIREN 102 024 460 (contrôle dans l'annuaire public des entreprises :
   ARCADIA, 7 rue Montespan 91000 Évry-Courcouronnes), ajouté le SIRET, retiré le surlignage ; pages légales alignées sur
-  Firebase Hosting et la région Firestore eur3 (lue par `firebase firestore:databases:get`). Restent le déploiement et
-  les invitations.)
+  Firebase Hosting et la région Firestore eur3 (lue par `firebase firestore:databases:get`). Déploiement fait par Monsieur DUCOUT
+  le 2026-10-22 (« Deploy complete! », règles Firestore et Storage publiées, « Hosting URL: https://aapi-11bc3.web.app ») ;
+  la session a lu l'accueil et /financeurs en ligne (HTTP 200, chiffres du 21/10 affichés). Restent les invitations et
+  le premier retour.)
