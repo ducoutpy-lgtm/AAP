@@ -1,5 +1,41 @@
 # Reprise du projet AAP Santé (écrit le 2026-10-12, à lire au début de chaque session)
 
+## Où on en est au 2026-10-23 (à lire en premier)
+
+Session du 2026-10-21 au 2026-10-23 close sur la demande de Monsieur DUCOUT (« repartir de là dans une nouvelle
+conversation »). Journal des décisions de ces trois jours : `.audit/journal_2026-10-21_23.md` (local, hors Git).
+
+**État** :
+- Application en ligne depuis le 2026-10-22 : https://aapi-11bc3.web.app (Firebase Hosting, déployée par Monsieur DUCOUT).
+  Les sept jours du plan MVP sont codés (`docs/PLAN_MVP_2026-10-20.md`) ; le jour 6 n'a qu'une démonstration partielle
+  (six étapes sur neuf : publication d'un appel en cinq étapes et présélection jamais jouées).
+- Base réelle au 2026-10-22 : 748 fiches, 362 publiées et validées, 386 archivées, 0 à trier (339 verdicts posés par
+  Monsieur DUCOUT dans l'administration ; copie dans `scripts/sauvegardes/verdicts_admin_2026-10-22.json`).
+- Sources : ANR, ANAP, ANRS, FIRAH, IReSP, HaDEA corrigées ou ajoutées ; portail appelsprojetsrecherche.fr lu par son
+  export CSV (`scraping/portail_recherche.py`) ; 15 émetteurs sur 30 prioritaires alimentent la veille
+  (`scraping/SOURCES_PRIORITAIRES.md`). Cumul Haiku : environ 2,32 euros sur 5.
+- Outillage : skill `/show-me-your-work` (journal des décisions, audit, relecture par un autre modèle) dans
+  `.claude/skills/` ; version claude.ai `show-me-your-work-web` importée par Monsieur DUCOUT.
+
+**Actions en attente de Monsieur DUCOUT** :
+1. Redéployer depuis `app` (retrait des pièces jointes en ligne, pages légales corrigées, taille maximale des
+   retours) : `npm run build && firebase deploy --only hosting,firestore:rules --project aapi-11bc3`. Au 2026-10-23,
+   une ancienne pièce jointe était encore servie en ligne : le déploiement n'avait pas eu lieu. Après, la session
+   vérifie la tâche 2.1 de `openspec/changes/pieces-jointes-hors-ligne/tasks.md`.
+2. Inviter trois testeurs (modèle dans `docs/MISE_EN_LIGNE.md`, section 4).
+3. Jouer la démonstration financeur complète (`docs/DEMO_FINANCEUR.md`), dont la publication d'un appel.
+4. Ouvrir la facturation Blaze pour déployer la fonction du jour 5 (lecture de PDF).
+5. Trancher les mentions encore « à valider » des pages légales (tarifs et résiliation, durées de conservation,
+   emplacement des comptes et des fichiers, mesure d'audience).
+
+**Prochains chantiers** (`docs/FEUILLE_DE_ROUTE.md`, section « Chantiers programmés ») : pièces jointes des appels ;
+pages à un seul appel (l'ANAP est sautée par la veille tant qu'elle n'en publie qu'un) ; recopie des verdicts de
+l'administration dans le fichier versionné des verdicts (proposée, pas encore décidée).
+
+**Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
+(CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise
+à Monsieur DUCOUT.
+
 ## Objectif de Monsieur DUCOUT
 
 Prouver, en local et sans dépense, qu'il est possible de récupérer tous les appels à projets (AAP)
