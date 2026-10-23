@@ -31,7 +31,7 @@ connecteur générique (feuille de route). Le classement n'est pas une mesure de
 | 21 | [Agefiph](https://innovation.agefiph.fr) | agence-nationale | a-verifier | 0 | non | site innovation lu, aucun appel reconnu : vérifier à l'écran |
 | 22 | [FIRAH](https://www.firah.org/fr/deposer-un-projet.html) | fondation | rubrique-confirmee | 4 | oui | adresse corrigée le 2026-10-21 (pointait vers l'OCIRP depuis le 13 octobre), quatre appels 2026, textes collectés |
 | 23 | [Santé publique France](https://www.santepubliquefrance.fr/les-actualites) | agence-nationale | a-verifier | 2 | non | fil d'actualités, deux appels lus : pas de rubrique dédiée connue |
-| 24 | [ANAP](https://www.anap.fr/s/toutes-les-actualites) | agence-nationale | a-verifier | 1 | non | un seul appel dans les actualités ; relaie surtout des appels DGOS |
+| 24 | [ANAP](https://www.anap.fr/s/toutes-les-actualites) | agence-nationale | rubrique-confirmee (2026-10-23, décision de Monsieur DUCOUT) | 1 | non | un seul appel dans les actualités ; relaie surtout des appels DGOS |
 | 25 | [Banque des Territoires](https://www.banquedesterritoires.fr/dispositifs-nationaux) | agence-nationale | a-verifier | 0 | non | aucune rubrique d'appels ; AMI annoncés au fil de l'eau |
 | 26 | [Agirc-Arrco – action sociale](https://www.agirc-arrco.fr/action-sociale/) | caisse-nationale | a-verifier | 0 | non | page action sociale, aucun appel lu : les appels passent par les caisses (Malakoff Humanis, AG2R, Klesia) |
 | 27 | [Assurance Maladie (CNAM, ameli)](https://www.assurance-maladie.ameli.fr/qui-sommes-nous/notre-fonctionnement/financement) | caisse-nationale | a-verifier | HTTP 403 | non | HTTP 403 : ameli refuse le robot (constat déjà fait le 2026-10-12) |

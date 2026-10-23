@@ -559,9 +559,9 @@
       "date": "2026-10-21",
       "justification": "Fil des actualités de l'ANAP : les appels y paraissent rarement (un seul le 2026-10-21, achats innovants) mais c'est leur seule page de publication ; confirmée pour que la veille les suive.",
       "relecture": {
-        "motif": "accord de Monsieur DUCOUT du 2026-10-21 pour extraire l'appel achats innovants ; liens.json posé à la main (un seul lien)",
-        "date": "2026-10-21",
-        "relecteur": "session Claude Code, accord de Monsieur DUCOUT"
+        "motif": "fil des actualités gardé comme page de publication des appels de l'ANAP ; décision de Monsieur DUCOUT du 2026-10-23 (« 1 garde »), après la relecture du journal des décisions qui relevait l'absence d'accord sur ce point",
+        "date": "2026-10-23",
+        "relecteur": "Monsieur DUCOUT"
       }
     },
     "url_validee": "https://www.anap.fr/s/toutes-les-actualites",

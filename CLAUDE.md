@@ -182,7 +182,10 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
   Décision du 2026-10-19 (Monsieur DUCOUT) : « garde la V3, crée la V4 avec modèle API payant ». V3 = extraction locale
   (étiquette Git `v3-local`, `results/extraction_locale.json` conservé) ; V4 = même chaîne avec `claude-haiku-5-5`
   (changement `extraction-api-v4`, `results/extraction_api.json`). Règle absolue : le coût supposé est écrit et accepté
-  avant tout appel à l'API, plafond cumulé 5 euros. But : voir vite les appels qualifiés et publiés sans relecture
+  avant tout appel à l'API, plafond cumulé 5 euros. Depuis le 2026-10-23 (décision de Monsieur DUCOUT après la relecture du
+  journal des décisions : trois dépenses avaient dépassé leur devis) : chaque commande payante est lancée avec
+  `--plafond` = coût déjà cumulé du modèle + devis accepté, pour qu'elle s'arrête d'elle-même au devis ; jamais de
+  passage réel sans avoir montré le devis et reçu l'accord. But : voir vite les appels qualifiés et publiés sans relecture
   manuelle, puis construire l'application complète.
 - Modifier un cahier des charges dans `docs/` sans en informer explicitement.
 - Committer une clé (Anthropic, Firebase, Stripe). Tout est dans des `.env` ignorés par Git.

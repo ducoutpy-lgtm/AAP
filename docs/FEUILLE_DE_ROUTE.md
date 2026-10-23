@@ -41,6 +41,15 @@ Légende : vert = fait, orange = en cours, gris = à faire.
 | 7. Comptes clients | Dégelé le 2026-10-19, vérification en cours | Inscription rouverte avec essai de 14 jours, connexion par e-mail, mot de passe oublié, rôles porteur / financeur / admin, règles Firestore testées | Parcours à jouer par Monsieur DUCOUT avec des comptes de test ; bouton Google à activer dans la console Firebase ; Stripe non branché ; fonctions serveur non déployées (Blaze en cours) |
 | 8. Espace financeurs | Dégelé le 2026-10-19, vérification en cours | Pages d'avril rétablies : publication d'AAP, candidatures, évaluation, statistiques ; messagerie, notifications, calendrier | Non testé avec des comptes ; fonctions serveur non déployées |
 
+## Chantiers programmés
+
+Inscrits à la demande de Monsieur DUCOUT, à ouvrir chacun dans un changement OpenSpec.
+
+| Chantier | Inscrit le | Pourquoi | Ce qu'il faudra trancher |
+|---|---|---|---|
+| Pièces jointes des appels | 2026-10-23 | La mise en ligne du 2026-10-22 a publié 121 copies de documents de financeurs sans vérifier le droit de les rediffuser ; retirées du site en ligne le 2026-10-23 (changement `pieces-jointes-hors-ligne`), la fiche renvoie au document d'origine | Rediffuser ou seulement lier ; stockage Firebase Storage (forfait Blaze) ; lecture des PDF pour compléter les fiches (533 liens vers des fichiers) ; liens d'origine morts |
+| Pages à un seul appel | 2026-10-23 | La veille ne retient une page que si elle y voit au moins deux appels : l'ANAP (rubrique confirmée le 2026-10-23) sera sautée tant qu'elle n'en publie qu'un | Abaisser le seuil pour les rubriques confirmées à la main, ou suivre ces sources autrement |
+
 ## Chemin critique
 
 La ligne du haut commande tout : tant que l'extraction (étape 3) n'est pas tranchée, la veille (4) et la

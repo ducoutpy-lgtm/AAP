@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié (2026-10-23, décisions de Monsieur DUCOUT après la relecture du journal des décisions)
+- Pièces jointes retirées du site en ligne : `documents/**` exclu de l'hébergement (`app/firebase.json`, changement
+  `pieces-jointes-hors-ligne`) ; la fiche renvoyait déjà au document d'origine ; effet au prochain déploiement.
+- ANAP gardée en rubrique confirmée (décision tracée au registre).
+- Commandes payantes lancées avec `--plafond` = cumul + devis accepté (CLAUDE.md, `scraping/README.md`).
+- Feuille de route : section « Chantiers programmés » (pièces jointes, pages à un seul appel).
+
 ### Ajouté (2026-10-23)
 - Skill `show-me-your-work` (`.claude/skills/show-me-your-work/`, demande de Monsieur DUCOUT) : journal des décisions
   (une ligne par décision : quoi, pourquoi, preuve, résultat), audité contre l'historique de la session puis relu par un

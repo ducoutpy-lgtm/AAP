@@ -258,6 +258,19 @@ applique la même vérification (adresse choisie dans les résultats, sonde code
 `moteur: session` et une note) ; les organismes qui existent déjà au registre reçoivent leur `id_registre` au lieu
 d'une nouvelle entrée.
 
+## Devis et plafond des commandes payantes (règle du 2026-10-23)
+
+Les commandes qui appellent le modèle (`extraction_locale.py --moteur api`, `champ.py --moteur api`,
+`verification.py --verifier`, `qualifier_fiches.py --qualifier`) ont un `--plafond` : la dépense CUMULÉE du modèle au-delà
+de laquelle elles s'arrêtent, avant l'appel qui le dépasserait. Pour qu'une commande ne dépasse jamais son devis :
+
+1. lancer d'abord l'essai à blanc (`--dry-run`) : il affiche le devis et le cumul déjà dépensé ;
+2. montrer le devis à Monsieur DUCOUT et attendre son accord ;
+3. lancer le passage réel avec `--plafond <cumul + devis>` (par exemple cumul 2,321 et devis 0,015 : `--plafond 2.336`).
+
+Le devis est une estimation arrondie : une commande arrêtée au plafond laisse quelques textes à traiter, relancés après
+un nouveau devis.
+
 ## Portail appelsprojetsrecherche.fr (connecteur sans modèle)
 
 Portail commun des agences de recherche (ANR, Inserm, ANRS, Anses, INCa, ADEME et vingt autres partenaires), 125 appels
