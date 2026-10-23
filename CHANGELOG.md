@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-10-23)
+- Skill `show-me-your-work` (`.claude/skills/show-me-your-work/`, demande de Monsieur DUCOUT) : journal des décisions
+  (une ligne par décision : quoi, pourquoi, preuve, résultat), audité contre l'historique de la session puis relu par un
+  autre modèle Claude. Copié depuis github.com/lifeofladi/pstack en version figée (commit 6f50d7f, licence MIT), lu avant
+  copie (aucune commande réseau), traduit et adapté à Claude Code ; journaux locaux dans `.audit/`, ignoré par Git.
+  Commande : `/show-me-your-work`.
+
 ### Modifié
 - Mise en ligne (2026-10-22, par Monsieur DUCOUT) : application publiée sur https://aapi-11bc3.web.app (Firebase
   Hosting), règles Firestore (dont `statistiquesPubliques`, `retours`) et Storage déployées ; 121 pièces jointes publiques
