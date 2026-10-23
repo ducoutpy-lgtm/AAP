@@ -17,9 +17,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   Hosting), règles Firestore (dont `statistiquesPubliques`, `retours`) et Storage déployées ; 121 pièces jointes publiques
   des appels servies avec le site.
 - Pages légales (2026-10-22) : éditeur complété par Monsieur DUCOUT (siège 7 rue Montespan 91000 Évry-Courcouronnes,
-  SIREN 102 024 460, SIRET du siège, capital 1 000 euros, contact@arcadiaco.fr), contrôlé dans l'annuaire public des
-  entreprises ; hébergeur Firebase Hosting (Google Cloud EMEA Limited) et région Firestore eur3 (Belgique et Pays-Bas)
-  à la place de Netlify et des mentions à valider. Restent à valider : grille tarifaire et résiliation, clause relue par
+  SIREN 102 024 460, SIRET du siège, capital 1 000 euros, contact@arcadiaco.fr) ; siège, SIREN et SIRET contrôlés dans
+  l'annuaire public des entreprises, capital non contrôlé (absent de l'annuaire) ; hébergeur Firebase Hosting (Google Cloud EMEA Limited) et région Firestore eur3 (Belgique et Pays-Bas)
+  à la place de Netlify et des mentions à valider (le 2026-10-23 : la région eur3 ne vaut que pour la base de données,
+  emplacement des comptes et des fichiers remis « à valider »). Restent à valider : grille tarifaire et résiliation, clause relue par
   un conseil, durées de conservation, outil de mesure d'audience.
 
 ### Ajouté

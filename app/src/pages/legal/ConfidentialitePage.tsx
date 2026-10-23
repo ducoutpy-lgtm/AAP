@@ -48,7 +48,8 @@ export default function ConfidentialitePage() {
           authentification, base de données, stockage des fichiers, fonctions serveur, hébergement du site), et, lorsque le paiement sera ouvert, Stripe Payments Europe Ltd. Des transferts hors de l'Union européenne
           peuvent avoir lieu vers les États-Unis (Google, Stripe) ; ils sont encadrés par les clauses
           contractuelles types de la Commission européenne et, le cas échéant, le cadre de protection des données
-          UE-États-Unis. Les données sont stockées dans l'Union européenne (région Firebase eur3, Belgique et Pays-Bas).
+          UE-États-Unis. La base de données est stockée dans l'Union européenne (région Firebase eur3, Belgique et Pays-Bas) ;
+          emplacement des comptes et des fichiers <AValider>[À VALIDER — Monsieur DUCOUT : non vérifié]</AValider>.
           Aucune donnée n'est vendue ni cédée à des tiers à des fins commerciales.
         </p>
       </Section>

@@ -234,6 +234,7 @@ describe('retours des testeurs (mise-en-ligne-testeurs, 2026-10-21)', () => {
     await assertSucceeds(setDoc(doc(porteur(), 'retours/r1'), retour('porteur1')));
     await assertFails(setDoc(doc(porteur(), 'retours/r2'), retour('porteur2')));
     await assertFails(setDoc(doc(porteur(), 'retours/r3'), retour('porteur1', 'court')));
+    await assertFails(setDoc(doc(porteur(), 'retours/r6'), retour('porteur1', 'x'.repeat(4001))));
     await assertFails(setDoc(doc(porteur(), 'retours/r4'), { ...retour('porteur1'), traite: true }));
     await assertFails(setDoc(doc(visiteur(), 'retours/r5'), retour('porteur1')));
   });

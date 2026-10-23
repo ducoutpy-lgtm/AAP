@@ -71,7 +71,8 @@ service cloud.firestore {
     match /retours/{retourId} {
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
         && request.resource.data.keys().hasOnly(['userId', 'role', 'email', 'type', 'page', 'message', 'le'])
-        && request.resource.data.message is string && request.resource.data.message.size() >= 10;
+        && request.resource.data.message is string && request.resource.data.message.size() >= 10
+        && request.resource.data.message.size() <= 4000;
       allow read: if isAdmin();
       allow update, delete: if false;
     }

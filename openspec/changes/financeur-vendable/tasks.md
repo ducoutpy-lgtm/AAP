@@ -16,9 +16,11 @@ aucun archivage sans demande, aucun déploiement sans accord ; parcours joués s
   `publier_chiffres.py --projet demo-aap` : « etablissements inscrits 4, appels suivis 4, financeurs 2, sources 1 ».)
 - [x] 1.4 `scripts/semer_emulateurs.py` : trois appels du financeur de test, quatre candidatures aux statuts variés.
   Fait quand : semis rejoué sur l'émulateur, compteurs collés. (Fait le 2026-10-21 : « financeur de test : 3 appels, 4 candidatures semés ».)
-- [x] 1.5 `docs/DEMO_FINANCEUR.md` et démonstration jouée par la session sur les émulateurs (captures ou lectures de
-  page collées dans ce fichier). Fait quand : chaque étape du scénario est OK. (Fait le 2026-10-21 : sept étapes sur neuf lues par la session, voir
-  `docs/DEMO_FINANCEUR.md` ; la présélection et la publication d'un appel sont laissées à Monsieur DUCOUT.)
+- [ ] 1.5 `docs/DEMO_FINANCEUR.md` et démonstration jouée par la session sur les émulateurs (captures ou lectures de
+  page collées dans ce fichier). Fait quand : chaque étape du scénario est OK. (2026-10-21 : six étapes sur neuf jouées par la session, voir
+  `docs/DEMO_FINANCEUR.md` ; présélection et publication d'un appel en cinq étapes non jouées, inscription financeur
+  seulement vérifiée par la présence du lien. Case décochée le 2026-10-23 après la relecture du journal des décisions :
+  le critère « chaque étape OK » n'est pas atteint ; l'annonce « sept étapes » était inexacte.)
 - [x] 1.6 Documentation : `docs/resume_application_web_2026-10.md`, `CHANGELOG.md`, `CLAUDE.md`, `REPRISE.md`,
   `docs/PLAN_MVP_2026-10-20.md` (avancement). (Fait le 2026-10-21.)
 - [ ] 2.1 Monsieur DUCOUT joue la démonstration sur les émulateurs avec financeur@test.local, puis déploie la règle

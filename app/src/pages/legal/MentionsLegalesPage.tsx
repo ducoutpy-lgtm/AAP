@@ -25,7 +25,8 @@ export default function MentionsLegalesPage() {
         <p>
           Les données des comptes et des appels à projets sont stockées par Google Cloud EMEA Limited (services Firebase :
           authentification, base de données Firestore), 70 Sir John Rogerson's Quay, Dublin 2, Irlande. Région de
-          stockage : eur3, multirégion Europe (Belgique et Pays-Bas).
+          la base de données : eur3, multirégion Europe (Belgique et Pays-Bas) ; emplacement des comptes et des fichiers{' '}
+          <AValider>[À VALIDER — Monsieur DUCOUT : non vérifié]</AValider>.
         </p>
       </Section>
 
