@@ -1,0 +1,2 @@
+# Scripts bash : fins de ligne Unix obligatoires, sinon bash echoue sous Git Bash (2026-10-23)
+*.sh text eol=lf
