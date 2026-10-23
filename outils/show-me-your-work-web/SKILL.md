@@ -1,6 +1,6 @@
 ---
-name: show-me-your-work-claude-ai
-description: Journal des décisions pour un travail long sur claude.ai (une ligne par décision, avec sa preuve), audité contre la conversation, puis remis avec une demande de relecture par un autre modèle.
+name: show-me-your-work-web
+description: Journal des décisions pour un travail long dans l'application web (une ligne par décision, avec sa preuve), audité contre la conversation, puis remis avec une demande de relecture par un autre modèle.
 ---
 
 # Montre ton travail (version claude.ai)
@@ -96,7 +96,8 @@ Toute réponse d'un travail qui a produit un journal se termine par :
 
 ## Origine
 
-Adapté pour claude.ai le 2026-10-23, à la demande de Monsieur DUCOUT, de la version Claude Code du dépôt AAP Santé
+Adapté pour claude.ai le 2026-10-23, à la demande de Monsieur DUCOUT (nom sans le mot réservé « claude », refusé à
+l'import), de la version Claude Code du dépôt AAP Santé
 (`.claude/skills/show-me-your-work/`), elle-même tirée du skill `show-me-your-work` de
 https://github.com/lifeofladi/pstack (commit `6f50d7fd1d64e92095009acb056307266a2ec8f7`, licence MIT, copyright 2026
 Lauren Tan, fichier `LICENSE`). `scripts/log.sh` et `references/decision-log-template.tsv` sont repris sans

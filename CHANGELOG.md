@@ -13,8 +13,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 - Feuille de route : section « Chantiers programmés » (pièces jointes, pages à un seul appel).
 
 ### Ajouté (2026-10-23)
-- Version claude.ai du skill `show-me-your-work` (`outils/show-me-your-work-claude-ai/` et son ZIP à importer dans
-  claude.ai, demande de Monsieur DUCOUT) : journal des décisions audité contre la conversation, relecture par un autre
+- Version claude.ai du skill `show-me-your-work`, nommée `show-me-your-work-web` (claude.ai refuse le mot « claude » dans
+  un nom de skill) : `outils/show-me-your-work-web/` et son ZIP à importer (demande de Monsieur DUCOUT) : journal des décisions audité contre la conversation, relecture par un autre
   modèle préparée sous forme de bloc à coller dans une nouvelle conversation ; script et modèle repris sans modification.
 - Skill `show-me-your-work` (`.claude/skills/show-me-your-work/`, demande de Monsieur DUCOUT) : journal des décisions
   (une ligne par décision : quoi, pourquoi, preuve, résultat), audité contre l'historique de la session puis relu par un
