@@ -1,6 +1,6 @@
 ---
 name: show-me-your-work-web
-description: Journal des décisions pour un travail long dans l'application web (une ligne par décision, avec sa preuve), audité contre la conversation, puis remis avec une demande de relecture par un autre modèle.
+description: Journal des décisions d'un travail long (une ligne par décision, avec sa preuve), audité contre la conversation, puis remis avec une demande de relecture par un autre modèle.
 ---
 
 # Montre ton travail (version claude.ai)
