@@ -10,8 +10,8 @@ Pour un travail que Monsieur DUCOUT relit après coup, un journal des décisions
 décidé, pourquoi, et sur quelle preuve, sans refaire le travail ni lire tout l'historique de la session. Un seul
 journal par travail, toujours au même format, pour qu'une session suivante le retrouve.
 
-Ce journal complète la règle « Preuve avant affirmation » du projet (CLAUDE.md) : il ne remplace pas les deux lignes
-« Vérifié » et « Non vérifié ou supposé » de chaque compte rendu.
+Ce journal complète la règle « Preuve avant affirmation » du projet quand il en a une (CLAUDE.md d'AAP Santé) : il ne
+remplace pas les deux lignes « Vérifié » et « Non vérifié ou supposé » de chaque compte rendu.
 
 ## Le format
 
@@ -61,7 +61,7 @@ Laisser de côté le trivial et l'évident.
 ## Où il vit
 
 Par défaut, le journal est un document de travail, pas un fichier versionné : `.audit/<date>_<sujet>.tsv` à la racine
-du dépôt (dossier ignoré par Git). La plupart des travaux n'ont pas besoin d'une trace versionnée ; le journal local
+du dépôt. Si `.audit/` n'est pas encore dans le `.gitignore` du projet, l'y ajouter au premier usage. La plupart des travaux n'ont pas besoin d'une trace versionnée ; le journal local
 garde quand même le travail honnête et peut être jeté ensuite.
 
 Le versionner seulement si le travail est assez lourd pour que la confiance doive être montrée plutôt que supposée :
@@ -77,7 +77,8 @@ migration de la base, ré-import global, passage d'extraction payant, mise en li
 ## Auditer le journal contre l'historique de la session
 
 À la fin du travail, avant de rendre la main, vérifier que le journal dit vrai. Chez Claude Code, l'historique de la
-session est un fichier `.jsonl` dans `~/.claude/projects/<dossier du projet>/` (pour AAP Santé :
+session est un fichier `.jsonl` dans `~/.claude/projects/<dossier du projet>/`, où le nom du dossier est le chemin du
+projet dont chaque caractère spécial devient un tiret (pour AAP Santé :
 `~/.claude/projects/C--Users-pierr-Documents-Projets-Claude-Code-AAP/`) ; la session en cours est le fichier modifié le
 plus récemment. Ne jamais ouvrir les dossiers des autres projets : ils contiennent des conversations sans rapport.
 
