@@ -309,9 +309,19 @@ dizaine de pages en quelques secondes. Les parcourir depuis la box personnelle, 
 (`--parallele 1`), avec une pause entre deux sites. Ameli (CPAM) accepte la box personnelle mais ses
 pages dépassent souvent le délai de 180 s ; les 19 pages lues ne contiennent pas d'appel à projets.
 Depuis le 2026-10-21 (changement `decouverte-shadow-dom`), les liens sont lus par le sélecteur de Playwright, qui
-traverse les « shadow DOM » des sites Salesforce Lightning (ANAP : 27 liens lus au lieu de 14). Une page qui n'offre
-qu'un seul lien d'appel reste « aucune rubrique » (il en faut deux) ; les pages qui chargent leurs liens au clic sur
-« Afficher plus » ne sont pas déroulées.
+traverse les « shadow DOM » des sites Salesforce Lightning (ANAP : 27 liens lus au lieu de 14). Les pages qui chargent
+leurs liens au clic sur « Afficher plus » ne sont pas déroulées.
+Pages à un seul appel (changement `pages-a-un-seul-appel`, 2026-10-27, après quatre publications LinkedIn transmises par
+Monsieur DUCOUT) : une page ordinaire n'est retenue qu'avec deux liens d'appel (protection contre une page d'accueil où
+un seul lien contient « appel » par hasard) ; une page validée à la main (`url_validee` du registre) l'est dès un lien.
+Une source peut aussi porter `page_appel: true` (avec `url_validee`) : sa page est elle-même l'appel et devient son
+propre lien (cas de l'appel Tubbe de Gérond'if, relié ni au menu ni à l'accueil du site). Ces deux réglages sont écrits
+dans `decouverte/<source>/liens.json` (`seuil`, `page_appel`) et relus par la veille (`rejeu.py --relire`). Une page
+validée qui n'affiche aucun appel le jour de la découverte reste « aucune rubrique », mais garde un `liens.json` à liste
+vide (un fichier existant est conservé) : la veille la relit chaque semaine et verra le premier appel publié (cas des
+actualités de Turenne, où paraît l'appel de la Fondation Béatrice Denys). Un appel sans page propre est suivi par les
+sites qui ont relayé ses éditions précédentes (Béatrice Denys : Turenne, cancéropôles CLARA et PACA, Eurasanté,
+Biotech Santé Bretagne).
 Mots-clés (changement `decouverte-mots-cles`, 2026-10-21, décision de Monsieur DUCOUT) : la notation reconnaît aussi les
 libellés anglais (« call for proposals »), les codes HORIZON-HLTH et EU4H, et les adresses dont un segment est `appel`,
 `appels`, `call` ou `calls` (lien « Lire la suite » vers /appel/<id>). HaDEA : 20 liens lus au lieu de 0.
@@ -609,6 +619,8 @@ d'origine, les outils lisent `registre.adresse_aap`), rubrique confirmée, sourc
 redécouverte ne retrouve plus les sources dont la page a changé (« sans source »), ce n'est pas une erreur.
 `--garder-depart` évite que la découverte remplace la page désignée par une autre page du site qui aurait plus de liens ;
 si la page donnée n'a aucun lien d'appel repéré, la source est « aucune rubrique » et sa page sera lue à l'extraction.
+Depuis le 2026-10-27, une page donnée (`url_validee`) est retenue dès un lien d'appel, et une page marquée
+`page_appel: true` est retenue comme son propre lien (changement `pages-a-un-seul-appel`).
 
 Monsieur DUCOUT juge lui-même, dans son navigateur, ce que les robots ont trouvé. `validation.py` est
 un petit serveur local (bibliothèque standard) ; chaque verdict est écrit immédiatement dans un

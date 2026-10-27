@@ -4,6 +4,33 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-10-27)
+- Changement `pages-a-un-seul-appel`, après quatre publications LinkedIn transmises par Monsieur DUCOUT (novap de la
+  FEHAP, Tubbe de Gérond'if, prix de la Fondation Béatrice Denys, et un don d'Amazon qui n'est pas un appel) : aucun des
+  trois appels n'était connu. `decouverte.choisir_rubrique` prend un seuil ; une page validée à la main (`url_validee`)
+  est retenue dès un lien d'appel au lieu de deux ; champ facultatif `page_appel` au registre (la page est elle-même
+  l'appel), contrôlé par `registre.py --verifier-format` ; la veille relit ces réglages dans `liens.json`. Trois tests
+  ajoutés, 132 verts.
+- Registre (1 202 sources) : FEHAP pointée sur son site novap (`https://novap.fehap.fr/`) ; Gérond'if ajouté (page de
+  l'appel Tubbe, `page_appel`) ; Fondation Béatrice Denys ajoutée en « identifiée » (appel diffusé en PDF seulement,
+  aucune page à suivre). Redécouverte : FEHAP, Gérond'if et ANAP « rubrique-trouvee » (l'ANAP était sautée faute de
+  deux liens) ; deux textes collectés (novap, Tubbe).
+- Sur accord (enveloppe de 3 centimes) : extraction, contrôle (0 douteux) et qualification des deux textes par Haiku,
+  0,008 euro en tout (le contrôle a coûté 0,002 pour un devis de 0,001) ; cumul Haiku 2,329 euros. Import des deux
+  seules fiches en brouillon (la règle habituelle les aurait publiées) : novap (clôture 31 octobre) et Tubbe (6 novembre),
+  à publier ou rejeter par Monsieur DUCOUT dans `/admin/aaps`.
+- Fondation Béatrice Denys (demande de Monsieur DUCOUT : « peu importe que ce soit sur le site web en lui-même ou un
+  autre site web qui relaie ») : au 2026-10-27, aucune page web ne publie l'édition 2026-2027. Cinq relais qui ont diffusé
+  les éditions précédentes inscrits en rubrique confirmée (registre : 1 207 sources) : Turenne Groupe (actualités),
+  Cancéropôle CLARA (61 liens), Cancéropôle PACA (12), Eurasanté (24), Biotech Santé Bretagne (10). Une page validée sans
+  appel ce jour-là (Turenne) garde un `liens.json` vide pour que la veille la relise (`decouverte.fichier_de_liens`,
+  test ajouté, 133 verts).
+- Sur accord (devis 0,13 euro) : extraction des 107 textes des relais, 79 fiches nouvelles, 28 pages refusées, 0,082
+  euro réel. Contrôle arrêté au plafond après 16 fiches sur 27 (devis 0,009 euro sous-estimé) ; cumul Haiku 2,420 euros.
+  Second accord (0,02 euro) : fin du contrôle (11 fiches) et qualification (27), cumul Haiku 2,433 euros ; coût total
+  des relais 0,104 euro. Import des seules fiches des relais, en brouillon : 34 créées (25 que la règle aurait
+  publiées), 44 appels clos écartés, édition 2025-2026 de la Fondation Béatrice Denys exclue (close, sans date lue).
+
 ### Ajouté (2026-10-21, après-midi)
 - `portail_recherche.py` (changement `connecteur-appelsprojetsrecherche`) : fiches du portail appelsprojetsrecherche.fr
   construites depuis son export CSV, sans navigateur ni modèle ; 125 fiches, 52 ouvertes ; champ classé par Haiku

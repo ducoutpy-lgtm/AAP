@@ -129,20 +129,52 @@ def liens_contenu(liens: list[dict], base: str, url_page: str) -> list[dict]:
     return sortie
 
 
-def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str) -> tuple[str | None, list[dict]]:
+def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str, minimum: int = 2) -> tuple[str | None, list[dict]]:
     """Parmi (url, liens, liens du contenu principal) des pages visitees, retient la page la plus riche
-    en liens d'AAP (au moins 2). Une page dont l'adresse est une rubrique AAP compte ses liens de contenu."""
+    en liens d'AAP (au moins `minimum`). Une page dont l'adresse est une rubrique AAP compte ses liens de contenu."""
     meilleur: tuple[str | None, list[dict]] = (None, [])
     for url, liens, contenu in pages:
         trouves = liens_aap(liens, base, url)
         if score_lien("", url) >= 3:
             # Page de liste : ses liens de contenu sont les fiches d'AAP, meme sans le mot « appel »
             dans_contenu = liens_contenu(contenu, base, url)
-            if len(dans_contenu) >= 2:
+            if len(dans_contenu) >= minimum:
                 trouves = dans_contenu
-        if len(trouves) >= 2 and len(trouves) > len(meilleur[1]):
+        if len(trouves) >= minimum and len(trouves) > len(meilleur[1]):
             meilleur = (url, trouves)
     return meilleur
+
+
+# Changement pages-a-un-seul-appel (2026-10-27) : le seuil de deux liens protege des pages d'accueil ou un seul lien
+# contient « appel » par hasard ; une page validee a la main (url_validee) n'a pas ce risque et est retenue des un lien.
+# page_appel : la page validee est elle-meme l'appel (Tubbe de Gerond'if, reliee a aucune autre page du site).
+def reglages(source: dict) -> dict:
+    """Seuil de liens d'appel et page d'appel d'une source du registre (ecrits dans liens.json pour la veille)."""
+    return {"seuil": 1 if source.get("url_validee") else 2, "page_appel": bool(source.get("page_appel"))}
+
+
+def lien_page_appel(url: str, titre: str) -> dict:
+    return {"texte": (titre or "").strip()[:200], "href": url, "score": 3}
+
+
+def retenir(pages: list[tuple[str, list[dict], list[dict]]], base: str, seuil: int = 2, page_appel: bool = False,
+            titre: str = "") -> tuple[str | None, list[dict]]:
+    """Page retenue et liens d'appel selon les reglages de la source : une page d'appel est son propre premier lien."""
+    if page_appel:
+        url = pages[0][0]
+        return url, [lien_page_appel(url, titre)] + liens_aap(pages[0][1], base, url)
+    return choisir_rubrique(pages, base, seuil)
+
+
+def fichier_de_liens(url_rubrique: str | None, trouves: list[dict], url_page: str, reglage: dict,
+                     existant: dict | None = None) -> dict | None:
+    """Contenu de liens.json. Une page validee (seuil 1) sans lien d'appel ce jour-la est gardee avec une liste vide pour
+    que la veille la relise (actualites de Turenne, ou l'appel Beatrice Denys paraitra) ; un fichier existant est garde."""
+    if url_rubrique:
+        return {"url": url_rubrique, "liens": trouves, **reglage}
+    if reglage["seuil"] == 1:
+        return {**existant, **reglage} if existant else {"url": url_page, "liens": [], **reglage}
+    return None
 
 
 def charger_resultats() -> dict:
@@ -215,6 +247,7 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, ga
             await accept_cookies(page)
             base = page.url.split("#")[0]
             pages = [await lire_page(page)]
+            titre = await page.title()
             # garder_depart : adresse donnée par Monsieur DUCOUT à l'écran (spec decouverte-rubriques-aap,
             # « Redécouverte d'une source corrigée ») ; on ne cherche pas une autre page, on relit celle-là.
             for url in ([] if garder_depart else candidats(pages[0][1], base)):
@@ -224,17 +257,22 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, ga
                     continue
                 resultat["candidats_visites"].append(url)
                 pages.append(await lire_page(page))
-            url_rubrique, trouves = choisir_rubrique(pages, base)
+            reglage = reglages(source)
+            url_rubrique, trouves = retenir(pages, base, reglage["seuil"], reglage["page_appel"], titre)
+            dossier = DOSSIER / source["id"]
+            chemin = dossier / "liens.json"
+            existant = json.loads(chemin.read_text(encoding="utf-8")) if chemin.exists() else None
+            contenu = fichier_de_liens(url_rubrique, trouves, pages[0][0], reglage, existant)
+            if contenu is not None:
+                dossier.mkdir(parents=True, exist_ok=True)
+                chemin.write_text(json.dumps(contenu, ensure_ascii=False, indent=1), encoding="utf-8")
             if url_rubrique is None:
                 resultat["statut"] = "aucune-rubrique"
                 return resultat
             resultat.update({"statut": "rubrique-trouvee", "url_rubrique": url_rubrique, "nb_liens_aap": len(trouves)})
-            dossier = DOSSIER / source["id"]
-            dossier.mkdir(parents=True, exist_ok=True)
             if page.url.split("#")[0] != url_rubrique:
                 await ouvrir(page, url_rubrique)
             dossier.joinpath("rubrique.html").write_text(await page.content(), encoding="utf-8")
-            dossier.joinpath("liens.json").write_text(json.dumps({"url": url_rubrique, "liens": trouves}, ensure_ascii=False, indent=1), encoding="utf-8")
             return resultat
         except Exception as err:
             resultat["erreur"] = type(err).__name__ + ": " + str(err).splitlines()[0][:160]

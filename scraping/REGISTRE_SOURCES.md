@@ -1,9 +1,9 @@
 # Registre des sources d'appels à projets
 
-Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
+Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 `scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).
 
-**1200 sources : 4 opérationnelle, 669 page vérifiée, 527 identifiée.**
+**1207 sources : 4 opérationnelle, 675 page vérifiée, 528 identifiée.**
 
 ## Couverture par famille (annuaires de référence)
 
@@ -530,7 +530,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Santé publique France | sante | page vérifiée | a-verifier |  | [page](https://www.santepubliquefrance.fr/les-actualites) | 2026-10-09 (200) | AAP missions nationales de surveillance ; pas de rubrique dédiée. Constat du 2026-10-21 : pas de rubrique (404) ; appels à candidatures au fil des actualités seulement. |
 | Établissement français du sang (EFS) | sante | page vérifiée | a-verifier |  | [page](https://www.efs.sante.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser (recherche transfusionnelle). |
 
-## Fondations et fonds privés (382)
+## Fondations et fonds privés (383)
 
 | Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |
 |---|---|---|---|---|---|---|---|
@@ -882,6 +882,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Fondation de l'Avenir | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.fondationdelavenir.org/chercheurs/appels-a-candidatures/) | 2026-10-09 (200) | Recherche médicale appliquée, accès aux soins, isolement des personnes âgées. |
 | Fondation des Hôpitaux | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://appel-a-projet.fondationhopitaux.fr/) | 2026-10-09 (200) | Plateforme dédiée : EHPAD, gériatrie, enfants hospitalisés. |
 | Fondation nehs | sante | identifiée | a-verifier |  | [page](https://www.fondation-nehs.com/deposer-un-projet/) | 2026-10-09 (None) | Site injoignable le 2026-10-09 (délai dépassé) : à recontrôler. Prendre soin de l'humain dans la santé ; AAP ponctuels. |
+| Fondation pour l'Innovation Thérapeutique Béatrice Denys (abritée par la FRM) | sante | identifiée | a-verifier |  | [page](https://www.frm.org/fr/fondation/fondations-abritees/fondation-pour-innovation-therapeutique-beatrice-denys) | 2026-10-27 (200) | Prix annuel de 80 à 100 k€ pour un projet de laboratoire public menant à une création d'entreprise. Appel 2026-2027 diffusé en PDF seulement (relais LinkedIn de Turenne Santé, 2026-10-22), lettres d'intention jusqu'au 22 novembre 2026. Aucune page web à suivre au 2026-10-27 ; éditions précédentes relayées par des cancéropôles et pôles de compétitivité absents du registre. Suivie par ses relais (2026-10-27) : turenne-groupe-actualites, canceropole-clara, canceropole-paca, eurasante, biotech-sante-bretagne. |
 | Fondation pour la Recherche Médicale (FRM) | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.frm.org/fr/programmes) | 2026-10-09 (200) | Programmes et appels à projets pour les chercheurs. |
 | Fonds de dotation A2micile | medico-social | page vérifiée | a-verifier |  | [page](https://www.fonds-dotation-a2micile.com/actualites/) | 2026-10-13 (200) | Appel à projets Noël contre l'isolement des aînés (aide à domicile). Repéré dans la veille des AAP de l'URIOPSS PACA-Corse du 2026-10-01 (transmise par Monsieur DUCOUT le 2026-10-13). |
 | Fonds de dotation IMPACT by Electro Dépôt | medico-social | page vérifiée | a-verifier |  | [page](https://engagements.electrodepot.fr/fonds-dotation-impact-by-electro-depot/) | 2026-10-13 (200) | AAP IMPACT 2026 (solidarité, inclusion). Repéré dans la veille des AAP de l'URIOPSS PACA-Corse du 2026-10-01 (transmise par Monsieur DUCOUT le 2026-10-13). |
@@ -1193,7 +1194,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Société Française de Rhumatologie | sante | page vérifiée | a-verifier |  | [page](https://sfr.larhumatologie.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | Société Française de Santé Publique (SFSP) | sante | page vérifiée | a-verifier |  | [page](https://www.sfsp.fr/) | 2026-10-09 (200) | Relais d'AAP ; rubrique à préciser. |
 
-## Hôpitaux, groupes et fondations hospitalières (31)
+## Hôpitaux, groupes et fondations hospitalières (33)
 
 | Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |
 |---|---|---|---|---|---|---|---|
@@ -1201,6 +1202,8 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | AP-HP – recherche (postes d'accueil, AAP internes) | sante | page vérifiée | a-verifier |  | [page](https://recherche.aphp.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | Cancéropôle Est – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-est.org/appels-a-projet/) | 2026-10-09 (200) | Relais des AAP cancer (INCa, Ligue, ARC) ; 7 cancéropôles en France. ; rubrique relue le 2026-10-12 : https://www.canceropole-est.org/appels-a-projet/ |
 | Cancéropôle Grand Ouest – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-grandouest.com/appel-projets/) | 2026-10-09 (200) | Relais des AAP cancer. |
+| Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-clara.com/projects/) | 2026-10-27 (200) | Relais d'appels de recherche en cancérologie ; a publié l'appel 2025-2026 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
+| Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://canceropole-paca.com/appel-a-projet/) | 2026-10-27 (200) | Relais d'appels de recherche ; a publié l'appel « Fondation Béatrice Denys / FRM : Innovation Thérapeutique ». Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
 | FHF – Fédération hospitalière de France | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fhf.fr/) | 2026-10-09 (200) | Relais national d'AAP ; rubrique à préciser (FHF HdF déjà listée). |
 | Fondation Elsan | sante | page vérifiée | a-verifier |  | [page](https://www.elsan.care/fr/groupe) | 2026-10-09 (200) | Rubrique fondation à préciser. |
 | Fondation Ramsay Santé | sante | page vérifiée | a-verifier |  | [page](https://fondation-ramsaysante.com/) | 2026-10-09 (200) | Site de la fondation ; rubrique AAP à préciser. |
@@ -1238,7 +1241,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | UGAP | sante | page vérifiée | a-verifier |  | [page](https://www.ugap.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | UniHA | sante | page vérifiée | a-verifier |  | [page](https://www.uniha.org/actualites) | 2026-10-09 (200) | AAP achats publics innovants (avec ANAP, CAIH), trophées InitIAtive. |
 
-## Autres émetteurs (47)
+## Autres émetteurs (51)
 
 | Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |
 |---|---|---|---|---|---|---|---|
@@ -1251,6 +1254,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Appelaprojets.org | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.appelaprojets.org/) | 2026-10-09 (200) | Plateforme agrégatrice généraliste. |
 | Ascodocpsy – appels à projets psychiatrie | sante | page vérifiée | a-verifier |  | [page](https://www.ascodocpsy.org/les-essentiels-en-psychiatrie/appels-a-projets/) | 2026-10-09 (200) | Veille AAP en psychiatrie et santé mentale. |
 | Avise | medico-social | page vérifiée | hors-sante |  | [page](https://www.avise.org/actualites) | 2026-10-09 (200) | Économie sociale ; relais d'AAP (innovation sociale, handicap). Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.avise.org/). |
+| Biotech Santé Bretagne – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.biotech-sante-bretagne.fr/appels-a-projets/) | 2026-10-27 (200) | Pôle santé breton ; a relayé un appel de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
 | CNAPE (protection de l'enfance) | medico-social | page vérifiée | a-verifier |  | [page](https://www.cnape.fr/) | 2026-10-09 (200) | Relais d'AAP protection de l'enfance. |
 | Carenews – appels à projets | sante-et-medico-social | identifiée | a-verifier |  | [page](https://www.carenews.com/appels-a-projets) | 2026-10-09 (404) | Média du mécénat : relais d'AAP de fondations. Adresse à confirmer. |
 | Croix-Rouge française | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.croix-rouge.fr/) | 2026-10-09 (200) | Opérateur et relais ; rubrique à préciser. |
@@ -1258,9 +1262,10 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Directions.fr – appels à projet | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.directions.fr/appels-a-projet/) | 2026-10-09 (200) | Agrégateur des AAP de création et transformation d'ESMS (partie réservée aux abonnés). |
 | Démarche numérique (plateforme de dépôt) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://demarche.numerique.gouv.fr/) | 2026-10-09 (200) | Plateforme de dépôt utilisée par des départements (commissions des financeurs). |
 | Démarches simplifiées (plateforme de dépôt) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.demarches-simplifiees.fr/) | 2026-10-09 (200) | Plateforme hébergeant de nombreux AAP de collectivités et de l'État sans page financeur visible. |
+| Eurasanté – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.eurasante.com/news/appels-a-projets/) | 2026-10-27 (200) | Agence de développement de la filière santé des Hauts-de-France ; a relayé l'appel 2019-2020 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
 | FHF Hauts-de-France – appels à projets | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.fhf-hdf.fr/appels-a-projets/) | 2026-10-09 (200) | Fédération hospitalière : relais des AAP ouverts aux établissements publics de la région. |
 | FNAQPA | medico-social | page vérifiée | a-verifier |  | [page](https://www.fnaqpa.fr/) | 2026-10-09 (200) | Qualité de vie des personnes âgées ; relais d'AAP. |
-| Fehap | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fehap.fr/) | 2026-10-09 (200) | Fédération du privé solidaire ; rubrique AAP à préciser. |
+| Fehap | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://novap.fehap.fr/) | 2026-10-09 (200) | Fédération du privé solidaire ; rubrique AAP à préciser. Appels publiés sur le site de son fonds de dotation novap (novap.fehap.fr), un appel par an (appel à innovations 2026, date limite 31 octobre 2026). |
 | Fehap – appels à projets | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fehap.fr/) | 2026-10-09 (200) | Fédération du privé solidaire ; rubrique AAP à préciser (déjà en « autre »). |
 | Fimeco Walter Allinial – appels à projets Digital et Numérique | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fimeco-walter-allinial.com/aap-filiere/digital-et-numerique/) | 2026-10-13 (200) | Agrégateur tenu par un cabinet d'expertise comptable : AAP, AMI et aides 2026-2027 classés par date limite, étiquette « Santé – Maladie et Handicap » sur de nombreux appels (ESMS numérique, e-santé). Ajouté à la demande de Monsieur DUCOUT le 2026-10-13. |
 | Fimeco Walter Allinial – appels à projets Santé, Maladie et Handicap | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fimeco-walter-allinial.com/aap-filiere/sante-maladie-et-handicap/) | 2026-10-13 (200) | Même agrégateur, filière santé et handicap (page trouvée par la session à partir de la page Digital et Numérique, code 200 le 2026-10-13). |
@@ -1269,6 +1274,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Fédération Addiction | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.federationaddiction.fr/actualites/projets/) | 2026-10-09 (200) | Relais d'AAP addictions (fonds de lutte contre les addictions). Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.federationaddiction.fr/). |
 | Fédération Promotion Santé | sante | identifiée | a-verifier |  | [page](https://www.promotion-sante.org/) | 2026-10-09 (None) | Réseau national des IREPS ; relais d'AAP. |
 | Fédération des acteurs de la solidarité | medico-social | page vérifiée | a-verifier |  | [page](https://www.federationsolidarite.org/) | 2026-10-09 (200) | Relais d'AAP précarité, santé des exclus. |
+| Gérond'if, gérontopôle d'Île-de-France | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.gerondif.org/appel-%C3%A0-projet-tubbe) | 2026-10-27 (200) | Appel Tubbe (EHPAD d'Île-de-France, soutien de la Fondation Roi Baudouin), date limite 6 novembre 2026. Page reliée ni au menu ni à l'accueil (43 liens lus le 2026-10-27) : suivie comme page d'appel. Famille des gérontopôles (Union des gérontopôles de France) absente du registre. |
 | Hospimedia – appels à projets | sante-et-medico-social | identifiée | a-verifier |  | [page](https://www.hospimedia.fr/actualite/appels-a-projets) | 2026-10-09 (404) | Presse spécialisée : rubrique AAP (abonnement). |
 | Le Compte Asso (subventions de l'État) | sante-et-medico-social | page vérifiée | hors-sante |  | [page](https://lecompteasso.associations.gouv.fr/) | 2026-10-09 (200) | Dépôt des demandes de subvention (FDVA, politique de la ville). |
 | Nexem – veille des appels à projets | medico-social | page vérifiée | a-verifier |  | [page](https://nexem.fr/nos-publications-et-actualites) | 2026-10-09 (200) | Veille mensuelle des AAP du secteur social et médico-social. |
@@ -1278,6 +1284,7 @@ Généré le 2026-10-23 par `python scraping/registre.py --tableau` à partir de
 | Santé Mentale France | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://santementalefrance.fr/) | 2026-10-09 (200) | Relais d'AAP psychiatrie et santé mentale. |
 | Silver Valley | medico-social | page vérifiée | a-verifier |  | [page](https://silvervalley.fr/ideadom/) | 2026-10-13 (200) | Réseau de la silver économie ; appel IDEADOM (domicile des personnes âgées). Repéré dans la veille des AAP de l'URIOPSS PACA-Corse du 2026-10-01 (transmise par Monsieur DUCOUT le 2026-10-13). |
 | Synerpa | medico-social | page vérifiée | a-verifier |  | [page](https://synerpa.fr/) | 2026-10-09 (200) | EHPAD privés ; relais d'AAP. |
+| Turenne Groupe – actualités (gestion de la Fondation Béatrice Denys) | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.turennecapital.com/actualite/) | 2026-10-27 (200) | La Fondation Béatrice Denys est gérée chez Turenne (adresse des candidatures) ; appels 2019-2020 et 2022-2023 publiés sur ce site. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
 | UDAF de l'Essonne (Union départementale des associations familiales) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.udaf91.fr/les-associations-de-udaf/boite-a-outils/appels-a-projets/) | 2026-10-13 (200) | Relais d'AAP pour ses associations membres (aidants, santé mentale, handicap, 1000 premiers jours, fondations, Région IdF). Ajoutée le 2026-10-13 à la demande de Monsieur DUCOUT, page lue : 20 appels relayés avec dates butoirs. Famille UDAF (UNAF + ~100 UDAF) à étudier. |
 | UNA (aide à domicile) | medico-social | page vérifiée | a-verifier |  | [page](https://www.una.fr/) | 2026-10-09 (200) | Relais d'AAP aide à domicile. |
 | Unafam | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.unafam.org/) | 2026-10-09 (200) | Familles et santé mentale ; relais d'AAP. |

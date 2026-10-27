@@ -27,6 +27,13 @@ def test_identifiant_en_double():
     assert any("double" in e for e in registre.erreurs_format([source(), source()]))
 
 
+def test_page_appel_controlee():
+    """Changement pages-a-un-seul-appel : page_appel est un booléen, vrai seulement avec url_validee."""
+    assert registre.erreurs_format([source(url_validee="https://exemple.fr/appel", page_appel=True)]) == []
+    erreurs = registre.erreurs_format([source(page_appel=True), source(id="y", url_validee="https://exemple.fr/a", page_appel="oui")])
+    assert sum("page_appel" in e for e in erreurs) == 2
+
+
 def test_verification_pages_change_le_statut():
     sources = [source(), source(id="b", nom="B", url_aap="https://exemple.fr/403", statut="operationnelle")]
     codes = {"https://exemple.fr/aap": 200, "https://exemple.fr/403": 403}

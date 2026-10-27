@@ -44,6 +44,35 @@ def test_choisir_rubrique_exige_deux_liens():
     assert decouverte.choisir_rubrique([(BASE, liens, liens)], BASE) == (None, [])
 
 
+def test_page_validee_retenue_des_un_lien():
+    """Changement pages-a-un-seul-appel : une page validée à la main (url_validee) n'exige qu'un lien d'appel."""
+    liens = [{"texte": "Ouverture de l'appel à innovations 2026", "href": BASE + "appel-candidatures-2026/"}]
+    assert decouverte.reglages({"url_validee": BASE}) == {"seuil": 1, "page_appel": False}
+    assert decouverte.reglages({}) == {"seuil": 2, "page_appel": False}
+    url, trouves = decouverte.retenir([(BASE, liens, liens)], BASE, seuil=1)
+    assert url == BASE and [l["href"] for l in trouves] == [BASE + "appel-candidatures-2026/"]
+    assert decouverte.retenir([(BASE, liens, liens)], BASE) == (None, [])
+
+
+def test_page_qui_est_elle_meme_l_appel():
+    """page_appel : la page devient son propre lien, titre de la page pour texte, même sans aucun lien d'appel."""
+    url = BASE + "appel-%C3%A0-projet-tubbe"
+    liens = [{"texte": "Je candidate", "href": "https://fr.surveymonkey.com/r/7LMR8RW"}]
+    choisie, trouves = decouverte.retenir([(url, liens, liens)], BASE, seuil=1, page_appel=True, titre="  Appel à projet Tubbe ")
+    assert choisie == url and trouves == [{"texte": "Appel à projet Tubbe", "href": url, "score": 3}]
+
+
+def test_page_validee_sans_appel_gardee_pour_la_veille():
+    """Une page validée sans lien d'appel ce jour-là (Turenne) garde un liens.json vide ; un fichier existant est gardé."""
+    reglage = {"seuil": 1, "page_appel": False}
+    assert decouverte.fichier_de_liens(None, [], BASE, reglage) == {"url": BASE, "liens": [], "seuil": 1, "page_appel": False}
+    assert decouverte.fichier_de_liens(None, [], BASE, {"seuil": 2, "page_appel": False}) is None
+    existant = {"url": BASE + "aap", "liens": [{"href": BASE + "a"}]}
+    assert decouverte.fichier_de_liens(None, [], BASE, reglage, existant) == {**existant, **reglage}
+    trouves = [{"href": BASE + "b"}]
+    assert decouverte.fichier_de_liens(BASE + "aap", trouves, BASE, reglage, existant) == {"url": BASE + "aap", "liens": trouves, **reglage}
+
+
 def test_page_de_liste_compte_les_liens_du_contenu():
     """Sur /liste-appels-projet-candidature, les titres d'AAP ne contiennent pas le mot « appel »."""
     url = BASE + "liste-appels-projet-candidature"

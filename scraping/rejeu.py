@@ -135,8 +135,9 @@ def rapport_markdown(journaux: dict[str, list[dict]], perimables: list[dict], au
 
 # ---------------------------------------------------------------- navigateur
 
-async def relire_source(browser, url: str) -> tuple[list[dict] | None, str | None]:
-    """Relit une page validée ; retourne (liens d'appels, None) ou (None, erreur)."""
+async def relire_source(browser, url: str, seuil: int = 2, page_appel: bool = False) -> tuple[list[dict] | None, str | None]:
+    """Relit une page validée ; retourne (liens d'appels, None) ou (None, erreur). seuil et page_appel viennent de
+    liens.json, écrits par la découverte (changement pages-a-un-seul-appel)."""
     contexte = await make_browser_context(browser)
     await contexte.route("**/*", lambda route: route.abort() if route.request.resource_type in ("image", "media", "font") else route.continue_())
     page = await contexte.new_page()
@@ -146,8 +147,8 @@ async def relire_source(browser, url: str) -> tuple[list[dict] | None, str | Non
             return None, erreur or f"HTTP {code}"
         await accept_cookies(page)
         base = page.url.split("#")[0]
-        _, trouves = decouverte.choisir_rubrique([await decouverte.lire_page(page)], base)
-        return (trouves or None), (None if trouves else "aucun lien d'appel lisible (moins de deux)")
+        _, trouves = decouverte.retenir([await decouverte.lire_page(page)], base, seuil, page_appel, await page.title())
+        return (trouves or None), (None if trouves else "aucun lien d'appel lisible" + (" (moins de deux)" if seuil == 2 else ""))
     except Exception as err:  # noqa: BLE001 - toute erreur de navigation : la source est ignorée ce rejeu
         return None, type(err).__name__ + ": " + str(err).splitlines()[0][:120]
     finally:
@@ -176,7 +177,7 @@ async def relire(sources: list[dict]) -> list[dict]:
                         bilans.append(bilan)
                         print(f"{s['id'][:40]:40} {bilan['erreur']}")
                         continue
-                    relus, erreur = await relire_source(browser, donnees["url"])
+                    relus, erreur = await relire_source(browser, donnees["url"], donnees.get("seuil", 2), donnees.get("page_appel", False))
                     fusion, b = comparer_liens(donnees.get("liens", []), relus, jour)
                     bilan.update(b, erreur=erreur)
                     if not b["ignore"]:

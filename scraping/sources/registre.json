@@ -1533,14 +1533,22 @@
     "perimetre": "sante-et-medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
-    "notes": "Fédération du privé solidaire ; rubrique AAP à préciser.",
+    "notes": "Fédération du privé solidaire ; rubrique AAP à préciser. Appels publiés sur le site de son fonds de dotation novap (novap.fehap.fr), un appel par an (appel à innovations 2026, date limite 31 octobre 2026).",
     "derniere_verification": "2026-10-09",
     "code_http": 200,
     "qualification": {
-      "verdict": "a-verifier",
-      "date": "2026-10-15",
-      "justification": "pas de page gardée par la découverte"
-    }
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Site novap : appel à innovations 2026 du fonds de dotation de la FEHAP.",
+      "relecture": {
+        "motif": "publication LinkedIn transmise par Monsieur DUCOUT le 2026-10-27, page lue par la session",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code, à confirmer à l'écran par Monsieur DUCOUT (tâche 5.1)"
+      }
+    },
+    "url_validee": "https://novap.fehap.fr/",
+    "validee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
+    "validee_le": "2026-10-27"
   },
   {
     "id": "uniopss",
@@ -21564,6 +21572,174 @@
       "verdict": "a-verifier",
       "date": "2026-10-21",
       "justification": "Découverte : aucune rubrique. Les appels sont bien listés en page d'accueil mais les liens s'intitulent « Lire la suite » (/appel/<id>), sans mot-clé reconnu par l'outil."
+    }
+  },
+  {
+    "id": "gerondif",
+    "nom": "Gérond'if, gérontopôle d'Île-de-France",
+    "categorie": "autre",
+    "url_aap": "https://www.gerondif.org/",
+    "url_validee": "https://www.gerondif.org/appel-%C3%A0-projet-tubbe",
+    "page_appel": true,
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Appel Tubbe (EHPAD d'Île-de-France, soutien de la Fondation Roi Baudouin), date limite 6 novembre 2026. Page reliée ni au menu ni à l'accueil (43 liens lus le 2026-10-27) : suivie comme page d'appel. Famille des gérontopôles (Union des gérontopôles de France) absente du registre.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de l'appel à projets Tubbe 2026.",
+      "relecture": {
+        "motif": "publication LinkedIn transmise par Monsieur DUCOUT le 2026-10-27, page lue par la session",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code, à confirmer à l'écran par Monsieur DUCOUT (tâche 5.1)"
+      }
+    },
+    "validee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
+    "validee_le": "2026-10-27"
+  },
+  {
+    "id": "fondation-beatrice-denys",
+    "nom": "Fondation pour l'Innovation Thérapeutique Béatrice Denys (abritée par la FRM)",
+    "categorie": "fondation",
+    "url_aap": "https://www.frm.org/fr/fondation/fondations-abritees/fondation-pour-innovation-therapeutique-beatrice-denys",
+    "perimetre": "sante",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Prix annuel de 80 à 100 k€ pour un projet de laboratoire public menant à une création d'entreprise. Appel 2026-2027 diffusé en PDF seulement (relais LinkedIn de Turenne Santé, 2026-10-22), lettres d'intention jusqu'au 22 novembre 2026. Aucune page web à suivre au 2026-10-27 ; éditions précédentes relayées par des cancéropôles et pôles de compétitivité absents du registre. Suivie par ses relais (2026-10-27) : turenne-groupe-actualites, canceropole-clara, canceropole-paca, eurasante, biotech-sante-bretagne.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-27",
+      "justification": "Page de présentation sans appel ; l'appel est diffusé en PDF."
+    }
+  },
+  {
+    "id": "turenne-groupe-actualites",
+    "nom": "Turenne Groupe – actualités (gestion de la Fondation Béatrice Denys)",
+    "categorie": "autre",
+    "url_aap": "https://www.turennecapital.com/actualite/",
+    "url_validee": "https://www.turennecapital.com/actualite/",
+    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "validee_le": "2026-10-27",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "La Fondation Béatrice Denys est gérée chez Turenne (adresse des candidatures) ; appels 2019-2020 et 2022-2023 publiés sur ce site. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de liste d'appels à projets d'un relais santé.",
+      "relecture": {
+        "motif": "relais de la Fondation Béatrice Denys, demande de Monsieur DUCOUT du 2026-10-27",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
+      }
+    }
+  },
+  {
+    "id": "canceropole-clara",
+    "nom": "Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets",
+    "categorie": "etablissement",
+    "url_aap": "https://www.canceropole-clara.com/projects/",
+    "url_validee": "https://www.canceropole-clara.com/projects/",
+    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "validee_le": "2026-10-27",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Relais d'appels de recherche en cancérologie ; a publié l'appel 2025-2026 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de liste d'appels à projets d'un relais santé.",
+      "relecture": {
+        "motif": "relais de la Fondation Béatrice Denys, demande de Monsieur DUCOUT du 2026-10-27",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
+      }
+    }
+  },
+  {
+    "id": "canceropole-paca",
+    "nom": "Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets",
+    "categorie": "etablissement",
+    "url_aap": "https://canceropole-paca.com/appel-a-projet/",
+    "url_validee": "https://canceropole-paca.com/appel-a-projet/",
+    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "validee_le": "2026-10-27",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Relais d'appels de recherche ; a publié l'appel « Fondation Béatrice Denys / FRM : Innovation Thérapeutique ». Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de liste d'appels à projets d'un relais santé.",
+      "relecture": {
+        "motif": "relais de la Fondation Béatrice Denys, demande de Monsieur DUCOUT du 2026-10-27",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
+      }
+    }
+  },
+  {
+    "id": "eurasante",
+    "nom": "Eurasanté – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://www.eurasante.com/news/appels-a-projets/",
+    "url_validee": "https://www.eurasante.com/news/appels-a-projets/",
+    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "validee_le": "2026-10-27",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Agence de développement de la filière santé des Hauts-de-France ; a relayé l'appel 2019-2020 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de liste d'appels à projets d'un relais santé.",
+      "relecture": {
+        "motif": "relais de la Fondation Béatrice Denys, demande de Monsieur DUCOUT du 2026-10-27",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
+      }
+    }
+  },
+  {
+    "id": "biotech-sante-bretagne",
+    "nom": "Biotech Santé Bretagne – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://www.biotech-sante-bretagne.fr/appels-a-projets/",
+    "url_validee": "https://www.biotech-sante-bretagne.fr/appels-a-projets/",
+    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "validee_le": "2026-10-27",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle santé breton ; a relayé un appel de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys.",
+    "derniere_verification": "2026-10-27",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-27",
+      "justification": "Page de liste d'appels à projets d'un relais santé.",
+      "relecture": {
+        "motif": "relais de la Fondation Béatrice Denys, demande de Monsieur DUCOUT du 2026-10-27",
+        "date": "2026-10-27",
+        "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
+      }
     }
   }
 ]

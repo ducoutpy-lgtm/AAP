@@ -48,7 +48,7 @@ Inscrits à la demande de Monsieur DUCOUT, à ouvrir chacun dans un changement O
 | Chantier | Inscrit le | Pourquoi | Ce qu'il faudra trancher |
 |---|---|---|---|
 | Pièces jointes des appels | 2026-10-23 | La mise en ligne du 2026-10-22 a publié 121 copies de documents de financeurs sans vérifier le droit de les rediffuser ; retirées du site en ligne le 2026-10-23 (changement `pieces-jointes-hors-ligne`), la fiche renvoie au document d'origine | Rediffuser ou seulement lier ; stockage Firebase Storage (forfait Blaze) ; lecture des PDF pour compléter les fiches (533 liens vers des fichiers) ; liens d'origine morts |
-| Pages à un seul appel | 2026-10-23 | La veille ne retient une page que si elle y voit au moins deux appels : l'ANAP (rubrique confirmée le 2026-10-23) sera sautée tant qu'elle n'en publie qu'un | Abaisser le seuil pour les rubriques confirmées à la main, ou suivre ces sources autrement |
+| Pages à un seul appel | 2026-10-23 | La veille ne retient une page que si elle y voit au moins deux appels : l'ANAP (rubrique confirmée le 2026-10-23) sera sautée tant qu'elle n'en publie qu'un | Ouvert le 2026-10-27 (changement `pages-a-un-seul-appel`, après quatre publications LinkedIn transmises par Monsieur DUCOUT) : seuil d'un lien pour les pages validées à la main et champ `page_appel` ; ANAP, FEHAP (novap) et Gérond'if (Tubbe) retenues ; fiches novap et Tubbe extraites sur accord (0,008 euro) et importées en brouillon ; Fondation Béatrice Denys suivie par cinq relais (aucune page ne publie encore l'édition 2026-2027) ; reste la vérification de Monsieur DUCOUT dans `/admin/aaps` |
 
 ## Chemin critique
 

@@ -29,8 +29,19 @@ conversation »). Journal des décisions de ces trois jours : `.audit/journal_20
    emplacement des comptes et des fichiers, mesure d'audience).
 
 **Prochains chantiers** (`docs/FEUILLE_DE_ROUTE.md`, section « Chantiers programmés ») : pièces jointes des appels ;
-pages à un seul appel (l'ANAP est sautée par la veille tant qu'elle n'en publie qu'un) ; recopie des verdicts de
-l'administration dans le fichier versionné des verdicts (proposée, pas encore décidée).
+recopie des verdicts de l'administration dans le fichier versionné des verdicts (proposée, pas encore décidée).
+
+**Ajout du 2026-10-27** : quatre publications LinkedIn transmises par Monsieur DUCOUT ; aucun des trois appels de santé
+n'était connu (novap de la FEHAP, Tubbe de Gérond'if, prix de la Fondation Béatrice Denys). Changement
+`pages-a-un-seul-appel` ouvert et codé : une page validée à la main est retenue dès un lien d'appel, champ `page_appel`
+au registre ; FEHAP, Gérond'if et ANAP retenues. Sur son accord : extraction, contrôle et qualification par Haiku
+(0,008 euro, cumul 2,329 euros), import des deux fiches en brouillon. Restent : publier ou rejeter novap (clôture 31
+octobre) et Tubbe (6 novembre) dans `/admin/aaps` ; familles absentes du registre (gérontopôles, cancéropôles et pôles
+de compétitivité santé, fondations abritées) à décider. Fondation Béatrice Denys : aucune page web ne publie encore
+l'édition 2026-2027 ; cinq relais inscrits et suivis par la veille (Turenne, cancéropôles CLARA et PACA, Eurasanté,
+Biotech Santé Bretagne), 107 textes collectés ; sur ses deux accords, 79 fiches extraites, contrôlées et qualifiées
+(0,104 euro, cumul Haiku 2,433 euros) ; 34 fiches ouvertes ou sans date importées en brouillon, à publier ou rejeter
+dans `/admin/aaps` (doublons visibles : MATWIN, SILAB, Grands Défis).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise

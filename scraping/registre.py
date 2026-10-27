@@ -97,6 +97,11 @@ def erreurs_format(sources: list[dict]) -> list[str]:
             erreurs.append(f"{ref} : url_aap n'est pas une adresse http(s)")
         if s.get("url_validee") and not str(s["url_validee"]).startswith("http"):
             erreurs.append(f"{ref} : url_validee n'est pas une adresse http(s)")
+        # page_appel (changement pages-a-un-seul-appel) : la page validee est elle-meme un appel
+        if "page_appel" in s and not isinstance(s["page_appel"], bool):
+            erreurs.append(f"{ref} : page_appel doit valoir true ou false")
+        elif s.get("page_appel") and not s.get("url_validee"):
+            erreurs.append(f"{ref} : page_appel sans url_validee")
         if s.get("id") in ids:
             erreurs.append(f"{ref} : identifiant en double")
         ids.add(s.get("id"))

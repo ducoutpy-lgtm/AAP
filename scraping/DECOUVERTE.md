@@ -1,8 +1,8 @@
 # Découverte des rubriques appels à projets
 
-Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
+Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 
-**849 sources traitées sur 1200 : 262 rubrique trouvée, 385 aucune rubrique, 12 bloqué, 190 erreur ; 3516 liens d'AAP collectés.**
+**855 sources traitées sur 1207 : 269 rubrique trouvée, 384 aucune rubrique, 12 bloqué, 190 erreur ; 3626 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -11,10 +11,10 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | caisse-nationale | 266 | 23 | 160 | 0 | 83 | 143 |
 | collectivite | 230 | 108 | 109 | 10 | 3 | 1633 |
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
+| autre | 44 | 13 | 27 | 0 | 4 | 253 |
 | fondation | 42 | 20 | 17 | 0 | 5 | 182 |
-| autre | 40 | 9 | 27 | 0 | 4 | 217 |
-| agence-nationale | 36 | 17 | 18 | 1 | 0 | 364 |
-| etablissement | 31 | 10 | 13 | 1 | 7 | 90 |
+| agence-nationale | 36 | 18 | 17 | 1 | 0 | 365 |
+| etablissement | 33 | 12 | 13 | 1 | 7 | 163 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
 | europe | 13 | 6 | 5 | 0 | 2 | 94 |
@@ -31,6 +31,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | FHF Hauts-de-France – appels à projets | autre | [page](https://www.fhf-hdf.fr/appels-a-projets/) | 90 |
 | Agence de l'eau Seine-Normandie | agence-nationale | [page](https://www.eau-seine-normandie.fr/appels_a_projets) | 67 |
 | Conseil régional Occitanie | collectivite | [page](https://www.laregion.fr/Les-aides-et-appels-a-projets) | 61 |
+| Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets | etablissement | [page](https://www.canceropole-clara.com/projects/) | 61 |
 | Drôme – Commission des financeurs | collectivite | [page](https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/) | 57 |
 | Conseil départemental Drôme | collectivite | [page](https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/) | 57 |
 | Conseil départemental Haute-Garonne | collectivite | [page](https://www.haute-garonne.fr/appels-projetscandidatures-en-cours) | 51 |
@@ -56,6 +57,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Conseil départemental Pyrénées-Orientales | collectivite | [page](https://www.ledepartement66.fr/dossier/les-appels-a-projets/) | 24 |
 | Conseil départemental Haute-Savoie | collectivite | [page](https://hautesavoie.fr/le-departement/enquetes-publiques-appels-a-projets/appels-a-projets/) | 24 |
 | Conseil départemental Pyrénées-Atlantiques | collectivite | [page](https://www.le64.fr/vous-souhaitez/les-appels-projets-en-cours) | 24 |
+| Eurasanté – appels à projets | autre | [page](https://www.eurasante.com/news/appels-a-projets/) | 24 |
 | Conseil départemental Maine-et-Loire | collectivite | [page](https://www.maine-et-loire.fr/aides-et-services/professionnels/appels-a-projets) | 23 |
 | Direction régionale de l'économie, de l'emploi, du travail et des soli | ministere | [page](https://nouvelle-aquitaine.dreets.gouv.fr/Marches-publics-et-appels-a-projets) | 23 |
 | Société Française de Dermatologie | societe-savante | [page](https://www.sfdermato.org/page-18-appels-a-projets-et-bourses-sfd) | 22 |
@@ -114,6 +116,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Côte-d'Or | ministere | [page](https://www.cote-dor.gouv.fr/Actions-de-l-Etat/Appels-a-projets) | 12 |
 | Préfecture - Aveyron | ministere | [page](https://www.aveyron.gouv.fr/Publications/Appels-a-projet) | 12 |
 | Maison départementale des personnes handicapées (MDPH) - Hautes-Pyréné | collectivite | [page](https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/) | 12 |
+| Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets | etablissement | [page](https://canceropole-paca.com/appel-a-projet/) | 12 |
 | ARS Île-de-France | ars | [page](https://www.iledefrance.ars.sante.fr/liste-appels-projet-candidature) | 11 |
 | Fondation Médéric Alzheimer | fondation | [page](https://www.fondation-mederic-alzheimer.org/appels-a-projets/) | 11 |
 | Ministère de l'Enseignement supérieur et de la Recherche | ministere | [page](https://www.enseignementsup-recherche.gouv.fr/fr/appel-projets-appel-candidatures) | 11 |
@@ -137,6 +140,7 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | Mairie de Brest | collectivite | [page](https://brest.fr/participer-agir/repondre-un-appel-projets) | 10 |
 | Direction départementale de l'emploi, du travail et des solidarités (D | ministere | [page](https://paca.dreets.gouv.fr/appels-projets) | 10 |
 | Cancéropôle Grand Ouest – appels à projets | etablissement | [page](https://www.canceropole-grandouest.com/appel-projets/) | 10 |
+| Biotech Santé Bretagne – appels à projets | autre | [page](https://www.biotech-sante-bretagne.fr/appels-a-projets/) | 10 |
 | Agence du numérique en santé (ANS) | agence-nationale | [page](https://esante.gouv.fr/lagence/appels-a-projets) | 9 |
 | Fondation de l'Avenir | fondation | [page](https://www.fondationdelavenir.org/chercheurs/appels-a-candidatures/) | 9 |
 | Finistère – appels à projets | collectivite | [page](https://www.finistere.fr/le-conseil-departemental/appel-a-projets/) | 9 |
@@ -286,6 +290,9 @@ Généré le 2026-10-21 par `python scraping/decouverte.py --rapport`.
 | France Life Imaging / réseaux thématiques de recherche | etablissement | [page](https://francelifeimaging.fr/) | 2 |
 | Uriopss PACA-Corse | autre | [page](https://www.uriopss-pacac.fr/actualites/recensement-des-appels-projets-0) | 2 |
 | Uriopss Hauts-de-France | autre | [page](https://www.uriopss-hdf.fr/actualites) | 2 |
+| ANAP | agence-nationale | [page](https://www.anap.fr/s/toutes-les-actualites) | 1 |
+| Fehap | autre | [page](https://novap.fehap.fr/) | 1 |
+| Gérond'if, gérontopôle d'Île-de-France | autre | [page](https://www.gerondif.org/appel-%C3%A0-projet-tubbe) | 1 |
 
 ## Sites bloqués ou en erreur
 
