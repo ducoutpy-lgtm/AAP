@@ -30,6 +30,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   Second accord (0,02 euro) : fin du contrôle (11 fiches) et qualification (27), cumul Haiku 2,433 euros ; coût total
   des relais 0,104 euro. Import des seules fiches des relais, en brouillon : 34 créées (25 que la règle aurait
   publiées), 44 appels clos écartés, édition 2025-2026 de la Fondation Béatrice Denys exclue (close, sans date lue).
+- Fiche Fondation Béatrice Denys 2026-2027 (28e prix) saisie à la main d'après le PDF officiel du 22 octobre 2026 transmis
+  par Monsieur DUCOUT (aucune page web ne le publie) : brouillon, « Proposée, non relue », clôture des lettres
+  d'intention le 22 novembre 2026, 80 000 à 100 000 euros.
+- Les 27 brouillons du jour portaient la validation « Validée » du modèle et sortaient de la file « à valider » de
+  Monsieur DUCOUT : passés en « Proposée, non relue » sur son accord (sauvegarde
+  `scripts/sauvegardes/proposees_2026-10-27_1607.json`, verdict du modèle gardé dans le commentaire). File : 28 fiches.
 
 ### Ajouté (2026-10-21, après-midi)
 - `portail_recherche.py` (changement `connecteur-appelsprojetsrecherche`) : fiches du portail appelsprojetsrecherche.fr

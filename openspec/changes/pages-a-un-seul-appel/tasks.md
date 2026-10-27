@@ -57,6 +57,14 @@ pourquoi »). Zéro euro jusqu'à la tâche 3.1. Règles : aucun `git push`, auc
   (0,082 réel). Contrôle : devis 27 fiches 0,009 euro, `--plafond 2.420` : arrêt au plafond après 16 fiches (cumul
   2,420), le devis sous-estime ; reste 11 fiches (nouveau devis 0,003) et la qualification (27 fiches, devis 0,008),
   en attente d'accord. La fiche « AAP Fondation Béatrice Denys 2025-2026 » (CLARA) est l'édition close, sans date lue.)
+- [x] 3.5 Fiche Fondation Béatrice Denys 2026-2027 saisie à la main (demande de Monsieur DUCOUT, PDF officiel du 22 octobre
+  2026 transmis par lui ; la page refer-rythmo qu'il citait est l'édition 2025-2026, close le 21 novembre 2025). Fiche
+  construite par les fonctions de l'import, lien vers la page de la fondation sur le site de la FRM, brouillon,
+  validation « proposee » : `scraped-1e89be200d1014a7`, « 1 cree(s) », relue en base (draft, proposee, clôture
+  2026-11-22). Constat : les 34 + 2 fiches importées plus tôt portent « validee » (modèle) en brouillon, hors de sa file
+  « à valider » ; sur son accord (« passe les 27 brouillons du jour validés par le modèle (dont novap et Tubbe) en
+  Proposée, non relue, avec une sauvegarde avant »), sauvegarde `scripts/sauvegardes/proposees_2026-10-27_1607.json`
+  puis passage : « Relus en base : draft, proposee (27 fiches) » ; base : 28 fiches « proposee », toutes en brouillon.
 - [x] 4.1 Documentation (faite le 2026-10-27) : `scraping/README.md`, `scraping/CHANGELOG.md`, `docs/FEUILLE_DE_ROUTE.md` (chantier « Pages à
   un seul appel »), `CLAUDE.md`, `REPRISE.md`.
 - [ ] 5.1 Vérification par Monsieur DUCOUT : il relance la commande de 2.2 et lit « rubrique-trouvee » pour la FEHAP

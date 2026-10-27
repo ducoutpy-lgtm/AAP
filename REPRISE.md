@@ -41,7 +41,10 @@ de compétitivité santé, fondations abritées) à décider. Fondation Béatric
 l'édition 2026-2027 ; cinq relais inscrits et suivis par la veille (Turenne, cancéropôles CLARA et PACA, Eurasanté,
 Biotech Santé Bretagne), 107 textes collectés ; sur ses deux accords, 79 fiches extraites, contrôlées et qualifiées
 (0,104 euro, cumul Haiku 2,433 euros) ; 34 fiches ouvertes ou sans date importées en brouillon, à publier ou rejeter
-dans `/admin/aaps` (doublons visibles : MATWIN, SILAB, Grands Défis).
+dans `/admin/aaps` (doublons visibles : MATWIN, SILAB, Grands Défis). Fiche Béatrice Denys 2026-2027 saisie à la main
+d'après le PDF officiel qu'il a transmis. Les 27 autres brouillons du jour (dont novap et Tubbe), d'abord marqués
+« Validée » par le modèle et donc hors de sa file, sont passés en « Proposée, non relue » sur son accord : 28 fiches
+dans sa file au 2026-10-27 à 16 h 07.
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise
