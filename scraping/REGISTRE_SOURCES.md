@@ -1,9 +1,9 @@
 # Registre des sources d'appels à projets
 
-Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
+Généré le 2026-10-28 par `python scraping/registre.py --tableau` à partir de
 `scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).
 
-**1207 sources : 4 opérationnelle, 675 page vérifiée, 528 identifiée.**
+**1230 sources : 4 opérationnelle, 693 page vérifiée, 533 identifiée.**
 
 ## Couverture par famille (annuaires de référence)
 
@@ -27,13 +27,16 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | Europe (EU4Health, Horizon Europe, FSE+, FEDER, Interreg, Erasmus+) | couverture non mesurée (total estimé 12) | portail Funding and Tenders |
 | Sociétés savantes et conseils nationaux professionnels | couverture non mesurée (total estimé 47) | Fédération des spécialités médicales |
 | Fédérations et associations nationales qui financent | couverture non mesurée (total estimé 40) | liste fixe |
-| Recherche (cancéropôles, GIRCI, instituts Carnot santé, IHU, EIT Health) | couverture non mesurée (total estimé 37) | listes fixes |
+| Recherche (GIRCI, instituts Carnot santé, IHU, EIT Health) | couverture non mesurée (total estimé 30) | listes fixes |
 | URPS et ordres professionnels | couverture non mesurée (total estimé 170) | fédérations nationales des URPS |
 | Fonds de formation (OPCO Santé, Uniformation, ANFH) | couverture non mesurée (total estimé 3) | liste fixe |
 | Banques coopératives à mécénat régional | couverture non mesurée (total estimé 86) | listes des groupes ; fondations dans le RNF |
 | Collectivités à statut particulier et outre-mer | couverture non mesurée (total estimé 6) | DILA |
 | Préfectures de région (SGAR) : politique de la ville, cohésion sociale | couverture non mesurée (total estimé 13) | prefectures-regions.gouv.fr (une page par région), 2026-10-13 |
 | PLIE (plans locaux pour l'insertion et l'emploi) et organismes intermédiaires FSE+ | couverture non mesurée (total estimé 17) | liste des appels à projets du programme national FSE+ (fse.gouv.fr, filtre priorité 1 et zone) ; l'annuaire du réseau Alliance Villes Emploi est réservé aux adhérents ; la DGEFP comptait en 2022 17 PLIE ou regroupements de PLIE parmi 115 organismes intermédiaires, 2026-10-13 |
+| Cancéropôles | 7 / 7 (100 %) | Brochure des cancéropôles de l'Institut national du cancer (sept cancéropôles labellisés), 2026-10-28 |
+| Pôles de compétitivité santé | 6 / 6 (100 %) | Réseau « Pôles Santé », annuaire des pôles de compétitivité (entreprises.gouv.fr), 2026-10-28 |
+| Gérontopôles | 14 / 14 (100 %) | Union des gérontopôles de France (12 gérontopôles listés, plus La Réunion et la Martinique), 2026-10-28 |
 
 ## ARS régionales (19)
 
@@ -1194,7 +1197,7 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | Société Française de Rhumatologie | sante | page vérifiée | a-verifier |  | [page](https://sfr.larhumatologie.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | Société Française de Santé Publique (SFSP) | sante | page vérifiée | a-verifier |  | [page](https://www.sfsp.fr/) | 2026-10-09 (200) | Relais d'AAP ; rubrique à préciser. |
 
-## Hôpitaux, groupes et fondations hospitalières (33)
+## Hôpitaux, groupes et fondations hospitalières (36)
 
 | Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |
 |---|---|---|---|---|---|---|---|
@@ -1202,8 +1205,11 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | AP-HP – recherche (postes d'accueil, AAP internes) | sante | page vérifiée | a-verifier |  | [page](https://recherche.aphp.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | Cancéropôle Est – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-est.org/appels-a-projet/) | 2026-10-09 (200) | Relais des AAP cancer (INCa, Ligue, ARC) ; 7 cancéropôles en France. ; rubrique relue le 2026-10-12 : https://www.canceropole-est.org/appels-a-projet/ |
 | Cancéropôle Grand Ouest – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-grandouest.com/appel-projets/) | 2026-10-09 (200) | Relais des AAP cancer. |
+| Cancéropôle Grand Sud-Ouest – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://kgso.fr/consulter-les-appels-a-projets) | 2026-10-28 (200) | Un des sept cancéropôles labellisés par l'INCa (ancien site canceropole-gso.org, redirigé vers kgso.fr). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-clara.com/projects/) | 2026-10-27 (200) | Relais d'appels de recherche en cancérologie ; a publié l'appel 2025-2026 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
+| Cancéropôle Nord-Ouest – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://canceropole-nordouest.org/appels-projets-cno/) | 2026-10-28 (200) | Un des sept cancéropôles labellisés par l'INCa. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://canceropole-paca.com/appel-a-projet/) | 2026-10-27 (200) | Relais d'appels de recherche ; a publié l'appel « Fondation Béatrice Denys / FRM : Innovation Thérapeutique ». Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
+| Cancéropôle Île-de-France – appels à projets en cours | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/) | 2026-10-28 (200) | Un des sept cancéropôles labellisés par l'INCa. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | FHF – Fédération hospitalière de France | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.fhf.fr/) | 2026-10-09 (200) | Relais national d'AAP ; rubrique à préciser (FHF HdF déjà listée). |
 | Fondation Elsan | sante | page vérifiée | a-verifier |  | [page](https://www.elsan.care/fr/groupe) | 2026-10-09 (200) | Rubrique fondation à préciser. |
 | Fondation Ramsay Santé | sante | page vérifiée | a-verifier |  | [page](https://fondation-ramsaysante.com/) | 2026-10-09 (200) | Site de la fondation ; rubrique AAP à préciser. |
@@ -1241,7 +1247,7 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | UGAP | sante | page vérifiée | a-verifier |  | [page](https://www.ugap.fr/) | 2026-10-09 (200) | Rubrique AAP à préciser. |
 | UniHA | sante | page vérifiée | a-verifier |  | [page](https://www.uniha.org/actualites) | 2026-10-09 (200) | AAP achats publics innovants (avec ANAP, CAIH), trophées InitIAtive. |
 
-## Autres émetteurs (51)
+## Autres émetteurs (71)
 
 | Source | Périmètre | Statut | Qualification | Connecteur | Page des AAP | Dernier contrôle | Notes |
 |---|---|---|---|---|---|---|---|
@@ -1253,16 +1259,21 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | Aides-territoires | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://aides-territoires.beta.gouv.fr/aides/) | 2026-10-09 (200) | Agrégateur public des aides aux collectivités et acteurs locaux ; filtrer santé. Constat du 2026-10-21 : HTTP 503 sur tout le site (en panne ce jour) ; réessayer. |
 | Appelaprojets.org | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.appelaprojets.org/) | 2026-10-09 (200) | Plateforme agrégatrice généraliste. |
 | Ascodocpsy – appels à projets psychiatrie | sante | page vérifiée | a-verifier |  | [page](https://www.ascodocpsy.org/les-essentiels-en-psychiatrie/appels-a-projets/) | 2026-10-09 (200) | Veille AAP en psychiatrie et santé mentale. |
+| Atlanpole Biotherapies – appels à projets nationaux | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Appels européens laissés au futur connecteur Funding & Tenders. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, Bretagne, Centre-Val de Loire) | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/) | 2026-10-28 (200) | Seconde page du pôle Atlanpole Biotherapies. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Avise | medico-social | page vérifiée | hors-sante |  | [page](https://www.avise.org/actualites) | 2026-10-09 (200) | Économie sociale ; relais d'AAP (innovation sociale, handicap). Adresse corrigée par Monsieur DUCOUT le 2026-10-13 (ancienne : https://www.avise.org/). |
+| BioValley France | sante | identifiée | a-verifier |  | [page](https://www.biovalley-france.com/) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Appels réservés aux membres et diffusés par lettre d'information (page /opportunites/appels-a-projets/ vide au 2026-10-28) : rien à suivre. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Biotech Santé Bretagne – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.biotech-sante-bretagne.fr/appels-a-projets/) | 2026-10-27 (200) | Pôle santé breton ; a relayé un appel de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
 | CNAPE (protection de l'enfance) | medico-social | page vérifiée | a-verifier |  | [page](https://www.cnape.fr/) | 2026-10-09 (200) | Relais d'AAP protection de l'enfance. |
 | Carenews – appels à projets | sante-et-medico-social | identifiée | a-verifier |  | [page](https://www.carenews.com/appels-a-projets) | 2026-10-09 (404) | Média du mécénat : relais d'AAP de fondations. Adresse à confirmer. |
+| Clubster NSL (Nutrition Santé Longévité) – appels à projets en cours | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Croix-Rouge française | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.croix-rouge.fr/) | 2026-10-09 (200) | Opérateur et relais ; rubrique à préciser. |
 | Dauphin (politique de la ville) | sante-et-medico-social | identifiée | a-verifier |  | [page](https://usager-dauphin.cget.gouv.fr/) | 2026-10-09 (None) | Plateforme de dépôt des AAP contrats de ville (volet santé). |
 | Directions.fr – appels à projet | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.directions.fr/appels-a-projet/) | 2026-10-09 (200) | Agrégateur des AAP de création et transformation d'ESMS (partie réservée aux abonnés). |
 | Démarche numérique (plateforme de dépôt) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://demarche.numerique.gouv.fr/) | 2026-10-09 (200) | Plateforme de dépôt utilisée par des départements (commissions des financeurs). |
 | Démarches simplifiées (plateforme de dépôt) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://www.demarches-simplifiees.fr/) | 2026-10-09 (200) | Plateforme hébergeant de nombreux AAP de collectivités et de l'État sans page financeur visible. |
 | Eurasanté – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.eurasante.com/news/appels-a-projets/) | 2026-10-27 (200) | Agence de développement de la filière santé des Hauts-de-France ; a relayé l'appel 2019-2020 de la Fondation Béatrice Denys. Inscrit le 2026-10-27 pour suivre l'appel 2026-2027 de la Fondation Béatrice Denys. |
+| Eurobiomed – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | FHF Hauts-de-France – appels à projets | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.fhf-hdf.fr/appels-a-projets/) | 2026-10-09 (200) | Fédération hospitalière : relais des AAP ouverts aux établissements publics de la région. |
 | FNAQPA | medico-social | page vérifiée | a-verifier |  | [page](https://www.fnaqpa.fr/) | 2026-10-09 (200) | Qualité de vie des personnes âgées ; relais d'AAP. |
 | Fehap | sante-et-medico-social | page vérifiée | rubrique-confirmee |  | [page](https://novap.fehap.fr/) | 2026-10-09 (200) | Fédération du privé solidaire ; rubrique AAP à préciser. Appels publiés sur le site de son fonds de dotation novap (novap.fehap.fr), un appel par an (appel à innovations 2026, date limite 31 octobre 2026). |
@@ -1275,11 +1286,26 @@ Généré le 2026-10-27 par `python scraping/registre.py --tableau` à partir de
 | Fédération Promotion Santé | sante | identifiée | a-verifier |  | [page](https://www.promotion-sante.org/) | 2026-10-09 (None) | Réseau national des IREPS ; relais d'AAP. |
 | Fédération des acteurs de la solidarité | medico-social | page vérifiée | a-verifier |  | [page](https://www.federationsolidarite.org/) | 2026-10-09 (200) | Relais d'AAP précarité, santé des exclus. |
 | Gérond'if, gérontopôle d'Île-de-France | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.gerondif.org/appel-%C3%A0-projet-tubbe) | 2026-10-27 (200) | Appel Tubbe (EHPAD d'Île-de-France, soutien de la Fondation Roi Baudouin), date limite 6 novembre 2026. Page reliée ni au menu ni à l'accueil (43 liens lus le 2026-10-27) : suivie comme page d'appel. Famille des gérontopôles (Union des gérontopôles de France) absente du registre. |
+| Gérontopôle Autonomie Longévité des Pays de la Loire – appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.gerontopole-paysdelaloire.fr/appels-projets) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; liste chargée par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Auvergne-Rhône-Alpes – actualités | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.gerontopole-aura.fr/actualites/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; pas de rubrique d'appels, actualités suivies. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Centre-Val de Loire | medico-social | identifiée | a-verifier |  | [page](https://gerontopole-cvdl.com/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; site d'une seule page sans actualités ni appels (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Grand Est – actualités | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://gerontopolegrandest.fr/actualites) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France (adhésion annoncée le 2026-10-19) ; pas de rubrique d'appels. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Hauts-de-France | medico-social | identifiée | a-verifier |  | [page](https://www.gerontopole-hdf.fr/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; seulement un annuaire de financeurs sans appel daté et une lettre d'information (2026-10-28) : rien à suivre. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Nouvelle-Aquitaine – appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://gerontopole-na.fr/les-ressources/appels-a-projets/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; liste peut-être pas à jour. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Seine Estuaire Normandie – appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.gerontopole-normandie.fr/appel-%C3%A0-projet) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; aides permanentes d'autres financeurs. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle Sud – appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://gerontopolesud.fr/recherche/appels-projet) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; publie ses propres AMI. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle de La Réunion | medico-social | identifiée | a-verifier |  | [page](https://uniondesgerontopoles.fr/les-gerontopoles/) | 2026-10-28 (200) | Inauguré le 2026-09-02, membre de l'Union des gérontopôles de France ; aucun site trouvé (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle de la Martinique | medico-social | identifiée | a-verifier |  | [page](https://uniondesgerontopoles.fr/les-gerontopoles/) | 2026-10-28 (200) | Adhésion à l'Union des gérontopôles de France annoncée le 2026-10-19 ; aucun site trouvé (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Gérontopôle di Corsica – appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://gerontopole.corsica/appels-a-projets/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Hospimedia – appels à projets | sante-et-medico-social | identifiée | a-verifier |  | [page](https://www.hospimedia.fr/actualite/appels-a-projets) | 2026-10-09 (404) | Presse spécialisée : rubrique AAP (abonnement). |
+| Kozh Ensemble, gérontopôle de Bretagne – veille sur les appels à projets | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://kozhensemble.fr/appels-a-projets/) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; relaie aussi les appels d'autres financeurs. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Le Compte Asso (subventions de l'État) | sante-et-medico-social | page vérifiée | hors-sante |  | [page](https://lecompteasso.associations.gouv.fr/) | 2026-10-09 (200) | Dépôt des demandes de subvention (FDVA, politique de la ville). |
+| Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Liste chargée par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
+| Medicen Paris Region – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://medicen.org/vous-financer/appels-a-projets/) | 2026-10-28 (200) | Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Nexem – veille des appels à projets | medico-social | page vérifiée | a-verifier |  | [page](https://nexem.fr/nos-publications-et-actualites) | 2026-10-09 (200) | Veille mensuelle des AAP du secteur social et médico-social. |
 | Promotion Santé Occitanie – appels à projets | sante | page vérifiée | rubrique-confirmee |  | [page](https://promotion-sante-occitanie.org/) | 2026-10-09 (200) | Instance régionale de promotion de la santé : relais d'AAP (18 IREPS/Promotion Santé en France). |
 | Pépinière d'avenirs (plateforme d'appels à projets) | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://pepinieredavenirs.wiin.io/fr/) | 2026-10-13 (200) | Plateforme Wiin d'appels à projets, dont « Agir tôt pour la santé mentale des enfants protégés ». Repéré dans la veille des AAP de l'URIOPSS PACA-Corse du 2026-10-01 (transmise par Monsieur DUCOUT le 2026-10-13). |
+| Pôle de Gérontologie et d'Innovation Bourgogne-Franche-Comté – actualités | medico-social | page vérifiée | rubrique-confirmee |  | [page](https://www.pole-gerontologie.fr/News) | 2026-10-28 (200) | Membre de l'Union des gérontopôles de France ; actualités chargées par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux). |
 | Réseau français Villes-Santé OMS | sante | page vérifiée | a-verifier |  | [page](https://villes-sante.com/) | 2026-10-09 (200) | Relais d'AAP santé des villes. |
 | Santé Mentale France | sante-et-medico-social | page vérifiée | a-verifier |  | [page](https://santementalefrance.fr/) | 2026-10-09 (200) | Relais d'AAP psychiatrie et santé mentale. |
 | Silver Valley | medico-social | page vérifiée | a-verifier |  | [page](https://silvervalley.fr/ideadom/) | 2026-10-13 (200) | Réseau de la silver économie ; appel IDEADOM (domicile des personnes âgées). Repéré dans la veille des AAP de l'URIOPSS PACA-Corse du 2026-10-01 (transmise par Monsieur DUCOUT le 2026-10-13). |

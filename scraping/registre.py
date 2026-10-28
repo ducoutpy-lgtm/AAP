@@ -102,6 +102,9 @@ def erreurs_format(sources: list[dict]) -> list[str]:
             erreurs.append(f"{ref} : page_appel doit valoir true ou false")
         elif s.get("page_appel") and not s.get("url_validee"):
             erreurs.append(f"{ref} : page_appel sans url_validee")
+        # relais (changement familles-relais-regionaux) : liens d'appel vers les sites des financeurs gardes
+        if "relais" in s and not isinstance(s["relais"], bool):
+            erreurs.append(f"{ref} : relais doit valoir true ou false")
         if s.get("id") in ids:
             erreurs.append(f"{ref} : identifiant en double")
         ids.add(s.get("id"))

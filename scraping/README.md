@@ -322,6 +322,12 @@ vide (un fichier existant est conservé) : la veille la relit chaque semaine et 
 actualités de Turenne, où paraît l'appel de la Fondation Béatrice Denys). Un appel sans page propre est suivi par les
 sites qui ont relayé ses éditions précédentes (Béatrice Denys : Turenne, cancéropôles CLARA et PACA, Eurasanté,
 Biotech Santé Bretagne).
+Relais (changement `familles-relais-regionaux`, 2026-10-28) : une source marquée `relais: true` au registre garde aussi
+les liens d'appel qui mènent vers d'autres sites (page du financeur), au lieu des seuls liens de son site ; réglage
+écrit dans `liens.json` (`hors_site`) et relu par la veille. Pourquoi un champ explicite : sur une page de liste
+ordinaire (ARS), les liens vers d'autres sites (partenaires, ministère) ajouteraient des textes à extraire sans gain.
+Familles concernées : cancéropôles, pôles de compétitivité santé, gérontopôles, et les relais de la Fondation Béatrice
+Denys (couverture dans `REGISTRE_SOURCES.md`).
 Mots-clés (changement `decouverte-mots-cles`, 2026-10-21, décision de Monsieur DUCOUT) : la notation reconnaît aussi les
 libellés anglais (« call for proposals »), les codes HORIZON-HLTH et EU4H, et les adresses dont un segment est `appel`,
 `appels`, `call` ou `calls` (lien « Lire la suite » vers /appel/<id>). HaDEA : 20 liens lus au lieu de 0.

@@ -47,8 +47,8 @@ def test_choisir_rubrique_exige_deux_liens():
 def test_page_validee_retenue_des_un_lien():
     """Changement pages-a-un-seul-appel : une page validée à la main (url_validee) n'exige qu'un lien d'appel."""
     liens = [{"texte": "Ouverture de l'appel à innovations 2026", "href": BASE + "appel-candidatures-2026/"}]
-    assert decouverte.reglages({"url_validee": BASE}) == {"seuil": 1, "page_appel": False}
-    assert decouverte.reglages({}) == {"seuil": 2, "page_appel": False}
+    assert decouverte.reglages({"url_validee": BASE}) == {"seuil": 1, "page_appel": False, "hors_site": False}
+    assert decouverte.reglages({}) == {"seuil": 2, "page_appel": False, "hors_site": False}
     url, trouves = decouverte.retenir([(BASE, liens, liens)], BASE, seuil=1)
     assert url == BASE and [l["href"] for l in trouves] == [BASE + "appel-candidatures-2026/"]
     assert decouverte.retenir([(BASE, liens, liens)], BASE) == (None, [])
@@ -60,6 +60,23 @@ def test_page_qui_est_elle_meme_l_appel():
     liens = [{"texte": "Je candidate", "href": "https://fr.surveymonkey.com/r/7LMR8RW"}]
     choisie, trouves = decouverte.retenir([(url, liens, liens)], BASE, seuil=1, page_appel=True, titre="  Appel à projet Tubbe ")
     assert choisie == url and trouves == [{"texte": "Appel à projet Tubbe", "href": url, "score": 3}]
+
+
+def test_relais_garde_les_liens_vers_les_financeurs():
+    """Changement familles-relais-regionaux : un relais (relais: true) garde les liens d'appel vers d'autres sites,
+    sur une page ordinaire comme sur une page dont l'adresse est une rubrique d'appels ; une source ordinaire non."""
+    externe = {"texte": "https://fondationdomicile.fr/les-trophees/appel-a-projets-2026/",
+               "href": "https://fondationdomicile.fr/les-trophees/appel-a-projets-2026/"}
+    interne = {"texte": "Appel à projets transition alimentaire en EHPAD", "href": BASE + "ami-alimentation"}
+    liens = [externe, interne]
+    assert decouverte.reglages({"url_validee": BASE, "relais": True})["hors_site"] is True
+    _, ordinaire = decouverte.retenir([(BASE + "actualites", liens, liens)], BASE, seuil=1)
+    assert [l["href"] for l in ordinaire] == [interne["href"]]
+    _, relais = decouverte.retenir([(BASE + "actualites", liens, liens)], BASE, seuil=1, hors_site=True)
+    assert [l["href"] for l in relais] == [externe["href"], interne["href"]]
+    liste = BASE + "appels-a-projets/"
+    _, relais_liste = decouverte.retenir([(liste, liens, liens)], BASE, seuil=1, hors_site=True)
+    assert externe["href"] in [l["href"] for l in relais_liste]
 
 
 def test_page_validee_sans_appel_gardee_pour_la_veille():

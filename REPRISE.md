@@ -46,6 +46,13 @@ d'après le PDF officiel qu'il a transmis. Les 27 autres brouillons du jour (don
 « Validée » par le modèle et donc hors de sa file, sont passés en « Proposée, non relue » sur son accord : 28 fiches
 dans sa file au 2026-10-27 à 16 h 07.
 
+**Ajout du 2026-10-28** : 107 commits poussés sur GitHub (accord). Changement `familles-relais-regionaux` (« continue
+surtout ») : cancéropôles 7 / 7, pôles de compétitivité santé 6 / 6, gérontopôles 14 / 14 au registre (1 230
+sources) ; champ `relais` (liens vers les sites des financeurs gardés), 135 tests verts ; 170 textes collectés ; sur
+son accord (0,28 euro), 102 fiches extraites, contrôle et qualification de 53, 0,224 euro réel (cumul Haiku 2,657) ;
+71 fiches importées (64 en « Proposée, non relue », 7 archivées par le modèle). File « à valider » : 92 fiches (novap
+ferme le samedi 31 octobre). Restent sa relecture et le commit du changement.
+
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise
 à Monsieur DUCOUT.

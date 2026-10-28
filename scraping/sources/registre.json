@@ -21665,7 +21665,8 @@
         "date": "2026-10-27",
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
-    }
+    },
+    "relais": true
   },
   {
     "id": "canceropole-paca",
@@ -21690,7 +21691,8 @@
         "date": "2026-10-27",
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
-    }
+    },
+    "relais": true
   },
   {
     "id": "eurasante",
@@ -21715,7 +21717,8 @@
         "date": "2026-10-27",
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
-    }
+    },
+    "relais": true
   },
   {
     "id": "biotech-sante-bretagne",
@@ -21740,6 +21743,560 @@
         "date": "2026-10-27",
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
+    },
+    "relais": true
+  },
+  {
+    "id": "canceropole-ile-de-france",
+    "nom": "Cancéropôle Île-de-France – appels à projets en cours",
+    "categorie": "etablissement",
+    "url_aap": "https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/",
+    "url_validee": "https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Un des sept cancéropôles labellisés par l'INCa. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "canceropole-grand-sud-ouest",
+    "nom": "Cancéropôle Grand Sud-Ouest – appels à projets",
+    "categorie": "etablissement",
+    "url_aap": "https://kgso.fr/consulter-les-appels-a-projets",
+    "url_validee": "https://kgso.fr/consulter-les-appels-a-projets",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Un des sept cancéropôles labellisés par l'INCa (ancien site canceropole-gso.org, redirigé vers kgso.fr). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "canceropole-nord-ouest",
+    "nom": "Cancéropôle Nord-Ouest – appels à projets",
+    "categorie": "etablissement",
+    "url_aap": "https://canceropole-nordouest.org/appels-projets-cno/",
+    "url_validee": "https://canceropole-nordouest.org/appels-projets-cno/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Un des sept cancéropôles labellisés par l'INCa. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "atlanpole-biotherapies",
+    "nom": "Atlanpole Biotherapies – appels à projets nationaux",
+    "categorie": "autre",
+    "url_aap": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/",
+    "url_validee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Appels européens laissés au futur connecteur Funding & Tenders. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "atlanpole-biotherapies-regionaux",
+    "nom": "Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, Bretagne, Centre-Val de Loire)",
+    "categorie": "autre",
+    "url_aap": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/",
+    "url_validee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Seconde page du pôle Atlanpole Biotherapies. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "clubster-nsl",
+    "nom": "Clubster NSL (Nutrition Santé Longévité) – appels à projets en cours",
+    "categorie": "autre",
+    "url_aap": "https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/",
+    "url_validee": "https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "eurobiomed",
+    "nom": "Eurobiomed – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/",
+    "url_validee": "https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "biovalley-france",
+    "nom": "BioValley France",
+    "categorie": "autre",
+    "url_aap": "https://www.biovalley-france.com/",
+    "perimetre": "sante",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Appels réservés aux membres et diffusés par lettre d'information (page /opportunites/appels-a-projets/ vide au 2026-10-28) : rien à suivre. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-28",
+      "justification": "Pôle de compétitivité santé (réseau Pôles Santé). Appels réservés aux membres et diffusés par lettre d'information (page /opportunites/appels-a-projets/ vide au 2026-10-28) : rien à suivre."
+    }
+  },
+  {
+    "id": "lyonbiopole",
+    "nom": "Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets",
+    "url_validee": "https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Liste chargée par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "medicen-paris-region",
+    "nom": "Medicen Paris Region – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://medicen.org/vous-financer/appels-a-projets/",
+    "url_validee": "https://medicen.org/vous-financer/appels-a-projets/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "sante",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Pôle de compétitivité santé (réseau Pôles Santé). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-aura",
+    "nom": "Gérontopôle Auvergne-Rhône-Alpes – actualités",
+    "categorie": "autre",
+    "url_aap": "https://www.gerontopole-aura.fr/actualites/",
+    "url_validee": "https://www.gerontopole-aura.fr/actualites/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; pas de rubrique d'appels, actualités suivies. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "pole-gerontologie-innovation-bfc",
+    "nom": "Pôle de Gérontologie et d'Innovation Bourgogne-Franche-Comté – actualités",
+    "categorie": "autre",
+    "url_aap": "https://www.pole-gerontologie.fr/News",
+    "url_validee": "https://www.pole-gerontologie.fr/News",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; actualités chargées par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "kozh-ensemble-gerontopole-bretagne",
+    "nom": "Kozh Ensemble, gérontopôle de Bretagne – veille sur les appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://kozhensemble.fr/appels-a-projets/",
+    "url_validee": "https://kozhensemble.fr/appels-a-projets/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; relaie aussi les appels d'autres financeurs. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-centre-val-de-loire",
+    "nom": "Gérontopôle Centre-Val de Loire",
+    "categorie": "autre",
+    "url_aap": "https://gerontopole-cvdl.com/",
+    "perimetre": "medico-social",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; site d'une seule page sans actualités ni appels (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-28",
+      "justification": "Membre de l'Union des gérontopôles de France ; site d'une seule page sans actualités ni appels (2026-10-28)."
+    }
+  },
+  {
+    "id": "gerontopole-corsica",
+    "nom": "Gérontopôle di Corsica – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://gerontopole.corsica/appels-a-projets/",
+    "url_validee": "https://gerontopole.corsica/appels-a-projets/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-hauts-de-france",
+    "nom": "Gérontopôle Hauts-de-France",
+    "categorie": "autre",
+    "url_aap": "https://www.gerontopole-hdf.fr/",
+    "perimetre": "medico-social",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; seulement un annuaire de financeurs sans appel daté et une lettre d'information (2026-10-28) : rien à suivre. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-28",
+      "justification": "Membre de l'Union des gérontopôles de France ; seulement un annuaire de financeurs sans appel daté et une lettre d'information (2026-10-28) : rien à suivre."
+    }
+  },
+  {
+    "id": "gerontopole-normandie",
+    "nom": "Gérontopôle Seine Estuaire Normandie – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://www.gerontopole-normandie.fr/appel-%C3%A0-projet",
+    "url_validee": "https://www.gerontopole-normandie.fr/appel-%C3%A0-projet",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; aides permanentes d'autres financeurs. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-nouvelle-aquitaine",
+    "nom": "Gérontopôle Nouvelle-Aquitaine – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://gerontopole-na.fr/les-ressources/appels-a-projets/",
+    "url_validee": "https://gerontopole-na.fr/les-ressources/appels-a-projets/",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; liste peut-être pas à jour. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-grand-est",
+    "nom": "Gérontopôle Grand Est – actualités",
+    "categorie": "autre",
+    "url_aap": "https://gerontopolegrandest.fr/actualites",
+    "url_validee": "https://gerontopolegrandest.fr/actualites",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France (adhésion annoncée le 2026-10-19) ; pas de rubrique d'appels. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-pays-de-la-loire",
+    "nom": "Gérontopôle Autonomie Longévité des Pays de la Loire – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://www.gerontopole-paysdelaloire.fr/appels-projets",
+    "url_validee": "https://www.gerontopole-paysdelaloire.fr/appels-projets",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; liste chargée par script. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-sud",
+    "nom": "Gérontopôle Sud – appels à projets",
+    "categorie": "autre",
+    "url_aap": "https://gerontopolesud.fr/recherche/appels-projet",
+    "url_validee": "https://gerontopolesud.fr/recherche/appels-projet",
+    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "validee_le": "2026-10-28",
+    "perimetre": "medico-social",
+    "statut": "page-verifiee",
+    "connecteur": "",
+    "notes": "Membre de l'Union des gérontopôles de France ; publie ses propres AMI. Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "rubrique-confirmee",
+      "date": "2026-10-28",
+      "justification": "Page d'appels ou d'actualités d'un relais régional de la santé.",
+      "relecture": {
+        "motif": "famille relais régionaux, demande de Monsieur DUCOUT du 2026-10-28",
+        "date": "2026-10-28",
+        "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
+      }
+    },
+    "relais": true
+  },
+  {
+    "id": "gerontopole-la-reunion",
+    "nom": "Gérontopôle de La Réunion",
+    "categorie": "autre",
+    "url_aap": "https://uniondesgerontopoles.fr/les-gerontopoles/",
+    "perimetre": "medico-social",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Inauguré le 2026-09-02, membre de l'Union des gérontopôles de France ; aucun site trouvé (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-28",
+      "justification": "Inauguré le 2026-09-02, membre de l'Union des gérontopôles de France ; aucun site trouvé (2026-10-28)."
+    }
+  },
+  {
+    "id": "gerontopole-martinique",
+    "nom": "Gérontopôle de la Martinique",
+    "categorie": "autre",
+    "url_aap": "https://uniondesgerontopoles.fr/les-gerontopoles/",
+    "perimetre": "medico-social",
+    "statut": "identifiee",
+    "connecteur": "",
+    "notes": "Adhésion à l'Union des gérontopôles de France annoncée le 2026-10-19 ; aucun site trouvé (2026-10-28). Inscrit le 2026-10-28 (changement familles-relais-regionaux).",
+    "derniere_verification": "2026-10-28",
+    "code_http": 200,
+    "qualification": {
+      "verdict": "a-verifier",
+      "date": "2026-10-28",
+      "justification": "Adhésion à l'Union des gérontopôles de France annoncée le 2026-10-19 ; aucun site trouvé (2026-10-28)."
     }
   }
 ]

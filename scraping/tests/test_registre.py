@@ -34,6 +34,12 @@ def test_page_appel_controlee():
     assert sum("page_appel" in e for e in erreurs) == 2
 
 
+def test_relais_controle():
+    """Changement familles-relais-regionaux : relais est un booléen."""
+    assert registre.erreurs_format([source(relais=True)]) == []
+    assert any("relais" in e for e in registre.erreurs_format([source(relais="oui")]))
+
+
 def test_verification_pages_change_le_statut():
     sources = [source(), source(id="b", nom="B", url_aap="https://exemple.fr/403", statut="operationnelle")]
     codes = {"https://exemple.fr/aap": 200, "https://exemple.fr/403": 403}

@@ -240,7 +240,11 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `pages-a-un-seul-appel`
+  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `familles-relais-regionaux`
+  (2026-10-28, « continue surtout » : cancéropôles 7 / 7, pôles de compétitivité santé 6 / 6, gérontopôles 14 / 14 au registre, 1 230 sources ;
+  champ `relais` (liens d'appel vers les sites des financeurs gardés par la découverte et la veille), 135 tests verts ; 170 textes collectés ;
+  sur accord, 102 fiches extraites, 53 contrôlées et qualifiées (0,224 euro, cumul Haiku 2,657 euros), 71 importées dont 64 en « Proposée,
+  non relue » ; file « à valider » : 92 fiches ; reste sa vérification 5.1), `pages-a-un-seul-appel`
   (2026-10-27, quatre publications LinkedIn transmises par Monsieur DUCOUT, trois appels inconnus : page validée retenue dès un lien
   d'appel, champ `page_appel` au registre, FEHAP (novap), Gérond'if (Tubbe) et ANAP retenues, 132 tests verts ; sur accord, deux fiches
   extraites, contrôlées et qualifiées par Haiku (0,008 euro, cumul 2,329 euros) et importées en brouillon ; Fondation Béatrice Denys

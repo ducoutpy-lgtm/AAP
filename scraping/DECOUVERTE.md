@@ -1,8 +1,8 @@
 # Découverte des rubriques appels à projets
 
-Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
+Généré le 2026-10-28 par `python scraping/decouverte.py --rapport`.
 
-**855 sources traitées sur 1207 : 269 rubrique trouvée, 384 aucune rubrique, 12 bloqué, 190 erreur ; 3626 liens d'AAP collectés.**
+**873 sources traitées sur 1230 : 284 rubrique trouvée, 387 aucune rubrique, 12 bloqué, 190 erreur ; 3821 liens d'AAP collectés.**
 
 ## Par famille
 
@@ -11,10 +11,10 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | caisse-nationale | 266 | 23 | 160 | 0 | 83 | 143 |
 | collectivite | 230 | 108 | 109 | 10 | 3 | 1633 |
 | ministere | 150 | 45 | 19 | 0 | 86 | 433 |
-| autre | 44 | 13 | 27 | 0 | 4 | 253 |
+| autre | 59 | 25 | 30 | 0 | 4 | 414 |
 | fondation | 42 | 20 | 17 | 0 | 5 | 182 |
 | agence-nationale | 36 | 18 | 17 | 1 | 0 | 365 |
-| etablissement | 33 | 12 | 13 | 1 | 7 | 163 |
+| etablissement | 36 | 15 | 13 | 1 | 7 | 197 |
 | ars | 19 | 19 | 0 | 0 | 0 | 207 |
 | societe-savante | 18 | 5 | 13 | 0 | 0 | 153 |
 | europe | 13 | 6 | 5 | 0 | 2 | 94 |
@@ -34,6 +34,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets | etablissement | [page](https://www.canceropole-clara.com/projects/) | 61 |
 | Drôme – Commission des financeurs | collectivite | [page](https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/) | 57 |
 | Conseil départemental Drôme | collectivite | [page](https://www.ladrome.fr/categorie_annonce/annonce_appel_a_projet/) | 57 |
+| Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets | autre | [page](https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets) | 54 |
 | Conseil départemental Haute-Garonne | collectivite | [page](https://www.haute-garonne.fr/appels-projetscandidatures-en-cours) | 51 |
 | Inserm | agence-nationale | [page](https://pro.inserm.fr/rubriques/appels-a-projets/agenda-des-appels-a-projets) | 49 |
 | Métropole Aix-Marseille-Provence – contrat de ville | collectivite | [page](https://ampmetropole.fr/metropole/concertations-et-appels-a-projets/appels-a-projets-et-a-manifestation-dinteret/) | 49 |
@@ -71,9 +72,11 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Mairie de Marseille | collectivite | [page](https://www.marseille.fr/economie/commerce/appels-manifestation-d-interet-de-la-ville-de-marseille) | 20 |
 | GIRCI Méditerranée | etablissement | [page](https://gircimediterranee.fr/appel-a-projet) | 20 |
 | Interreg POCTEFA (France-Espagne-Andorre) | europe | [page](https://www.poctefa.eu/fr/appels-a-projets/) | 20 |
+| Kozh Ensemble, gérontopôle de Bretagne – veille sur les appels à proje | autre | [page](https://kozhensemble.fr/appels-a-projets/) | 20 |
 | Conseil départemental Charente | collectivite | [page](https://www.lacharente.fr/actualite/appel-a-projets) | 19 |
 | Conseil départemental Alpes-de-Haute-Provence | collectivite | [page](https://www.mondepartement04.fr/insertion/appel-a-projets-pdi) | 19 |
 | Direction régionale de l'économie, de l'emploi, du travail et des soli | ministere | [page](https://pays-de-la-loire.dreets.gouv.fr/Appel-a-projets) | 19 |
+| Biotech Santé Bretagne – appels à projets | autre | [page](https://www.biotech-sante-bretagne.fr/appels-a-projets/) | 19 |
 | Fondation ARC | fondation | [page](https://www.fondation-arc.org/appels-a-projets/) | 18 |
 | Loiret – appels à projets | collectivite | [page](https://www.loiret.fr/mon-departement/les-appels-projets-du-departement) | 18 |
 | Agence de l'eau Rhin-Meuse | agence-nationale | [page](https://www.eau-rhin-meuse.fr/actualites/appel-projets) | 18 |
@@ -87,6 +90,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Institut national du cancer (INCa) | agence-nationale | [page](https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets) | 17 |
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt | ministere | [page](https://draaf.bourgogne-franche-comte.agriculture.gouv.fr/aides-et-appels-a-projets-en-cours-r22.html) | 17 |
 | ARS Nouvelle-Aquitaine | ars | [page](https://www.nouvelle-aquitaine.ars.sante.fr/liste-appels-projet-candidature) | 16 |
+| Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, | autre | [page](https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/) | 16 |
 | ARS Bourgogne-Franche-Comté | ars | [page](https://www.bourgogne-franche-comte.ars.sante.fr/liste-appels-projet-candidature) | 15 |
 | ARS Grand Est | ars | [page](https://www.grand-est.ars.sante.fr/liste-appels-projet-candidature) | 15 |
 | Portail national des ARS | ars | [page](https://www.ars.sante.fr/liste-appels-projet-candidature-nationale) | 15 |
@@ -102,6 +106,8 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Mairie de Saint-Denis-de-La-Réunion | collectivite | [page](https://www.saintdenis.re/appel-a-manifestation-d-interet-kiosque-communal) | 13 |
 | Préfecture - Seine-Maritime | ministere | [page](https://www.seine-maritime.gouv.fr/Publications/Appels-a-projets) | 13 |
 | Admical | autre | [page](https://admical.org/categories-articles/les-appels-projets) | 13 |
+| Cancéropôle Grand Sud-Ouest – appels à projets | etablissement | [page](https://kgso.fr/appels-a-projet/consulter-les-appels-a-projets) | 13 |
+| Clubster NSL (Nutrition Santé Longévité) – appels à projets en cours | autre | [page](https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/) | 13 |
 | ARS Centre-Val de Loire | ars | [page](https://www.centre-val-de-loire.ars.sante.fr/liste-appels-projet-candidature) | 12 |
 | ARS Mayotte | ars | [page](https://www.mayotte.ars.sante.fr/appels-projets-candidature-manifestation-dinteret) | 12 |
 | FSE+ France | europe | [page](https://fse.gouv.fr/les-appels-a-projets) | 12 |
@@ -117,6 +123,9 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Préfecture - Aveyron | ministere | [page](https://www.aveyron.gouv.fr/Publications/Appels-a-projet) | 12 |
 | Maison départementale des personnes handicapées (MDPH) - Hautes-Pyréné | collectivite | [page](https://www.hautespyrenees.fr/aides-et-subventions/appels-a-projets/) | 12 |
 | Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets | etablissement | [page](https://canceropole-paca.com/appel-a-projet/) | 12 |
+| Cancéropôle Nord-Ouest – appels à projets | etablissement | [page](https://canceropole-nordouest.org/appels-projets-cno/) | 12 |
+| Eurobiomed – appels à projets | autre | [page](https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/) | 12 |
+| Gérontopôle di Corsica – appels à projets | autre | [page](https://gerontopole.corsica/appels-a-projets/) | 12 |
 | ARS Île-de-France | ars | [page](https://www.iledefrance.ars.sante.fr/liste-appels-projet-candidature) | 11 |
 | Fondation Médéric Alzheimer | fondation | [page](https://www.fondation-mederic-alzheimer.org/appels-a-projets/) | 11 |
 | Ministère de l'Enseignement supérieur et de la Recherche | ministere | [page](https://www.enseignementsup-recherche.gouv.fr/fr/appel-projets-appel-candidatures) | 11 |
@@ -140,7 +149,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Mairie de Brest | collectivite | [page](https://brest.fr/participer-agir/repondre-un-appel-projets) | 10 |
 | Direction départementale de l'emploi, du travail et des solidarités (D | ministere | [page](https://paca.dreets.gouv.fr/appels-projets) | 10 |
 | Cancéropôle Grand Ouest – appels à projets | etablissement | [page](https://www.canceropole-grandouest.com/appel-projets/) | 10 |
-| Biotech Santé Bretagne – appels à projets | autre | [page](https://www.biotech-sante-bretagne.fr/appels-a-projets/) | 10 |
+| Gérontopôle Sud – appels à projets | autre | [page](https://gerontopolesud.fr/recherche/appels-projet) | 10 |
 | Agence du numérique en santé (ANS) | agence-nationale | [page](https://esante.gouv.fr/lagence/appels-a-projets) | 9 |
 | Fondation de l'Avenir | fondation | [page](https://www.fondationdelavenir.org/chercheurs/appels-a-candidatures/) | 9 |
 | Finistère – appels à projets | collectivite | [page](https://www.finistere.fr/le-conseil-departemental/appel-a-projets/) | 9 |
@@ -158,6 +167,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Direction de l'alimentation, de l'agriculture et de la forêt (Daaf) -  | ministere | [page](https://daaf.martinique.agriculture.gouv.fr/appels-a-projets-consultations-r23.html) | 9 |
 | Interreg ALCOTRA (France-Italie) | europe | [page](https://www.interreg-alcotra.eu/fr/appels-projets) | 9 |
 | ANRS Maladies infectieuses émergentes | agence-nationale | [page](https://anrs.fr/financements/tous-les-appels-a-projets/) | 9 |
+| Cancéropôle Île-de-France – appels à projets en cours | etablissement | [page](https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/) | 9 |
 | ARS La Réunion | ars | [page](https://www.lareunion.ars.sante.fr/liste-appels-projet-candidature) | 8 |
 | Conseil départemental Mayotte | collectivite | [page](https://www.mayotte.gouv.fr/Publications/Appels-a-projets/2026) | 8 |
 | Collectivité territoriale de Martinique | collectivite | [page](https://www.collectivitedemartinique.mq/appels-a-projet/) | 8 |
@@ -190,6 +200,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Direction régionale de l'alimentation, de l'agriculture et de la forêt | ministere | [page](https://draaf.normandie.agriculture.gouv.fr/avis-d-appel-a-candidatures-de-la-safer-a236.html) | 7 |
 | GIRCI Est | etablissement | [page](https://girci-est.fr/appels-a-projets/) | 7 |
 | GIRCI Grand Ouest | etablissement | [page](https://www.chu-hugo.fr/transitions/appels-a-projets/) | 7 |
+| Atlanpole Biotherapies – appels à projets nationaux | autre | [page](https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/) | 7 |
 | Fondation des Hôpitaux | fondation | [page](https://appel-a-projet.fondationhopitaux.fr/) | 6 |
 | Fondation pour la Recherche Médicale (FRM) | fondation | [page](https://www.frm.org/fr/programmes) | 6 |
 | FIRAH | fondation | [page](https://www.firah.org/fr/deposer-un-projet.html) | 6 |
@@ -262,6 +273,7 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | Direction de l'économie, de l'emploi, du travail et des solidarités (D | ministere | [page](https://reunion.deets.gouv.fr/APPEL-A-CANDIDATURE-renouvellement-des-membres-des-conseils-de-familles-des) | 3 |
 | GIRCI SOHO (Sud-Ouest Outre-Mer Hospitalier) | etablissement | [page](https://www.girci-soho.fr/) | 3 |
 | Avise | autre | [page](https://www.avise.org/actualites) | 3 |
+| Gérontopôle Autonomie Longévité des Pays de la Loire – appels à projet | autre | [page](https://www.gerontopole-paysdelaloire.fr/appels-projets) | 3 |
 | Fondation APICIL | fondation | [page](https://www.fondation-apicil.org/appel-a-projets/) | 2 |
 | Hauts-de-Seine – appels à projets | collectivite | [page](https://www.hauts-de-seine.fr/mon-departement/les-hauts-de-seine/le-conseil-departemental/les-appels-a-projet) | 2 |
 | Fondation Groupe Pasteur Mutualité | fondation | [page](https://www.gpm.fr/appel-a-candidature/) | 2 |
@@ -290,9 +302,12 @@ Généré le 2026-10-27 par `python scraping/decouverte.py --rapport`.
 | France Life Imaging / réseaux thématiques de recherche | etablissement | [page](https://francelifeimaging.fr/) | 2 |
 | Uriopss PACA-Corse | autre | [page](https://www.uriopss-pacac.fr/actualites/recensement-des-appels-projets-0) | 2 |
 | Uriopss Hauts-de-France | autre | [page](https://www.uriopss-hdf.fr/actualites) | 2 |
+| Medicen Paris Region – appels à projets | autre | [page](https://medicen.org/vous-financer/appels-a-projets/) | 2 |
+| Gérontopôle Nouvelle-Aquitaine – appels à projets | autre | [page](https://gerontopole-na.fr/les-ressources/appels-a-projets/) | 2 |
 | ANAP | agence-nationale | [page](https://www.anap.fr/s/toutes-les-actualites) | 1 |
 | Fehap | autre | [page](https://novap.fehap.fr/) | 1 |
 | Gérond'if, gérontopôle d'Île-de-France | autre | [page](https://www.gerondif.org/appel-%C3%A0-projet-tubbe) | 1 |
+| Gérontopôle Seine Estuaire Normandie – appels à projets | autre | [page](https://www.gerontopole-normandie.fr/appel-%C3%A0-projet) | 1 |
 
 ## Sites bloqués ou en erreur
 

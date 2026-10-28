@@ -165,12 +165,12 @@
    "vague": 3
   },
   {
-   "famille": "Recherche (cancéropôles, GIRCI, instituts Carnot santé, IHU, EIT Health)",
+   "famille": "Recherche (GIRCI, instituts Carnot santé, IHU, EIT Health)",
    "categorie_registre": "agence-nationale",
    "annuaire": "listes fixes",
    "adresse": null,
    "date": null,
-   "total": 37,
+   "total": 30,
    "vague": 3
   },
   {
@@ -228,6 +228,33 @@
    "total": 17,
    "vague": 3,
    "note": "Demande de Monsieur DUCOUT du 2026-10-13 (« regarde le PLIE aussi »). Les appels des PLIE passent par le FSE+ : la source fse-france (page jugée bonne à l'écran) les recense ; la découverte devra en extraire les appels dont l'émetteur est un PLIE plutôt que chercher 150 sites de PLIE un par un. Total = organismes intermédiaires PLIE (2022), non vérifié pour 2026."
+  },
+  {
+   "famille": "Cancéropôles",
+   "categorie_registre": "etablissement",
+   "annuaire": "Brochure des cancéropôles de l'Institut national du cancer (sept cancéropôles labellisés)",
+   "adresse": "https://cancer.fr/content/download/8101/file/BrochureCanceropoles-@.pdf?version=7",
+   "date": "2026-10-28",
+   "total": 7,
+   "extrait": "sources/annuaires/canceropoles.csv"
+  },
+  {
+   "famille": "Pôles de compétitivité santé",
+   "categorie_registre": "autre",
+   "annuaire": "Réseau « Pôles Santé », annuaire des pôles de compétitivité (entreprises.gouv.fr)",
+   "adresse": "https://www.entreprises.gouv.fr/espace-entreprises/etre-accompagne/annuaire-poles-competitivite/eurobiomed",
+   "date": "2026-10-28",
+   "total": 6,
+   "extrait": "sources/annuaires/poles_sante.csv"
+  },
+  {
+   "famille": "Gérontopôles",
+   "categorie_registre": "autre",
+   "annuaire": "Union des gérontopôles de France (12 gérontopôles listés, plus La Réunion et la Martinique)",
+   "adresse": "https://uniondesgerontopoles.fr/les-gerontopoles/",
+   "date": "2026-10-28",
+   "total": 14,
+   "extrait": "sources/annuaires/gerontopoles.csv"
   }
  ]
 }

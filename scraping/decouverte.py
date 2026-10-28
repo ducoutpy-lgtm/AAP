@@ -79,10 +79,11 @@ def meme_site(url: str, base: str) -> bool:
     return a == b or a.endswith("." + b) or b.endswith("." + a)
 
 
-def liens_aap(liens: list[dict], base: str, url_page: str = "") -> list[dict]:
+def liens_aap(liens: list[dict], base: str, url_page: str = "", hors_site: bool = False) -> list[dict]:
     """Liens d'une page qui ressemblent a des AAP (score >= 3), dedoublonnes par adresse.
     Les ancres vers la page elle-meme (#menu...) sont ignorees : sur une page dont l'adresse contient
-    « appels-projet », elles obtiendraient toutes la note maximale."""
+    « appels-projet », elles obtiendraient toutes la note maximale. hors_site (source relais) : les liens vers
+    d'autres sites sont gardes aussi (changement familles-relais-regionaux)."""
     vus: set[str] = set()
     sortie = []
     for l in liens:
@@ -92,7 +93,7 @@ def liens_aap(liens: list[dict], base: str, url_page: str = "") -> list[dict]:
         if normaliser(l.get("texte", "")).startswith("aller a"):
             continue
         s = score_lien(l.get("texte", ""), href)
-        if s >= 3 and href not in vus and meme_site(href, base):
+        if s >= 3 and href not in vus and (hors_site or meme_site(href, base)):
             vus.add(href)
             sortie.append({"texte": (l.get("texte") or "").strip()[:200], "href": href, "score": s})
     return sortie
@@ -111,15 +112,15 @@ def candidats(liens: list[dict], base: str, maximum: int = 3) -> list[str]:
     return [h for h, _ in sorted(notes.items(), key=lambda x: -x[1])[:maximum]]
 
 
-def liens_contenu(liens: list[dict], base: str, url_page: str) -> list[dict]:
+def liens_contenu(liens: list[dict], base: str, url_page: str, hors_site: bool = False) -> list[dict]:
     """Sur une page dont l'adresse est elle-meme une rubrique AAP (ex. /liste-appels-projet-candidature),
     les fiches d'AAP ont souvent des titres sans le mot « appel » : on garde alors tous les liens du
-    contenu principal (hors menus), du meme site, qui ne sont pas la page elle-meme."""
+    contenu principal (hors menus), du meme site (ou de tout site pour un relais), qui ne sont pas la page elle-meme."""
     vus: set[str] = set()
     sortie = []
     for l in liens:
         href = (l.get("href") or "").split("#")[0]
-        if not href.startswith("http") or not meme_site(href, base) or href.rstrip("/") == url_page.rstrip("/"):
+        if not href.startswith("http") or not (hors_site or meme_site(href, base)) or href.rstrip("/") == url_page.rstrip("/"):
             continue
         texte = (l.get("texte") or "").strip()
         if len(texte) < 12 or href in vus:  # un titre d'AAP fait plus de 12 caracteres
@@ -129,15 +130,16 @@ def liens_contenu(liens: list[dict], base: str, url_page: str) -> list[dict]:
     return sortie
 
 
-def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str, minimum: int = 2) -> tuple[str | None, list[dict]]:
+def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str, minimum: int = 2,
+                     hors_site: bool = False) -> tuple[str | None, list[dict]]:
     """Parmi (url, liens, liens du contenu principal) des pages visitees, retient la page la plus riche
     en liens d'AAP (au moins `minimum`). Une page dont l'adresse est une rubrique AAP compte ses liens de contenu."""
     meilleur: tuple[str | None, list[dict]] = (None, [])
     for url, liens, contenu in pages:
-        trouves = liens_aap(liens, base, url)
+        trouves = liens_aap(liens, base, url, hors_site)
         if score_lien("", url) >= 3:
             # Page de liste : ses liens de contenu sont les fiches d'AAP, meme sans le mot « appel »
-            dans_contenu = liens_contenu(contenu, base, url)
+            dans_contenu = liens_contenu(contenu, base, url, hors_site)
             if len(dans_contenu) >= minimum:
                 trouves = dans_contenu
         if len(trouves) >= minimum and len(trouves) > len(meilleur[1]):
@@ -149,8 +151,10 @@ def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str,
 # contient « appel » par hasard ; une page validee a la main (url_validee) n'a pas ce risque et est retenue des un lien.
 # page_appel : la page validee est elle-meme l'appel (Tubbe de Gerond'if, reliee a aucune autre page du site).
 def reglages(source: dict) -> dict:
-    """Seuil de liens d'appel et page d'appel d'une source du registre (ecrits dans liens.json pour la veille)."""
-    return {"seuil": 1 if source.get("url_validee") else 2, "page_appel": bool(source.get("page_appel"))}
+    """Seuil de liens d'appel, page d'appel et relais (liens vers les sites des financeurs) d'une source du registre,
+    ecrits dans liens.json pour la veille."""
+    return {"seuil": 1 if source.get("url_validee") else 2, "page_appel": bool(source.get("page_appel")),
+            "hors_site": bool(source.get("relais"))}
 
 
 def lien_page_appel(url: str, titre: str) -> dict:
@@ -158,12 +162,12 @@ def lien_page_appel(url: str, titre: str) -> dict:
 
 
 def retenir(pages: list[tuple[str, list[dict], list[dict]]], base: str, seuil: int = 2, page_appel: bool = False,
-            titre: str = "") -> tuple[str | None, list[dict]]:
+            titre: str = "", hors_site: bool = False) -> tuple[str | None, list[dict]]:
     """Page retenue et liens d'appel selon les reglages de la source : une page d'appel est son propre premier lien."""
     if page_appel:
         url = pages[0][0]
-        return url, [lien_page_appel(url, titre)] + liens_aap(pages[0][1], base, url)
-    return choisir_rubrique(pages, base, seuil)
+        return url, [lien_page_appel(url, titre)] + liens_aap(pages[0][1], base, url, hors_site)
+    return choisir_rubrique(pages, base, seuil, hors_site)
 
 
 def fichier_de_liens(url_rubrique: str | None, trouves: list[dict], url_page: str, reglage: dict,
@@ -258,7 +262,7 @@ async def traiter_source(browser, source: dict, semaphore: asyncio.Semaphore, ga
                 resultat["candidats_visites"].append(url)
                 pages.append(await lire_page(page))
             reglage = reglages(source)
-            url_rubrique, trouves = retenir(pages, base, reglage["seuil"], reglage["page_appel"], titre)
+            url_rubrique, trouves = retenir(pages, base, reglage["seuil"], reglage["page_appel"], titre, reglage["hors_site"])
             dossier = DOSSIER / source["id"]
             chemin = dossier / "liens.json"
             existant = json.loads(chemin.read_text(encoding="utf-8")) if chemin.exists() else None

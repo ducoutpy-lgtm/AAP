@@ -4,6 +4,20 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-28)
+- Changement `familles-relais-regionaux` (décision de Monsieur DUCOUT : « continue surtout ») : trois familles de relais
+  régionaux de la santé au registre, avec leur liste de référence et leur couverture mesurée (`sources/annuaires/
+  canceropoles.csv`, `poles_sante.csv`, `gerontopoles.csv`) : cancéropôles 7 / 7, pôles de compétitivité santé 6 / 6,
+  gérontopôles 14 / 14 (liste de l'Union des gérontopôles de France). 23 sources ajoutées (registre : 1 230), dont 18
+  pages suivies par la veille.
+- Champ `relais` au registre : la découverte et la veille gardent aussi les liens d'appel vers les sites des
+  financeurs (`decouverte.liens_aap`, `liens_contenu`, `reglages`, `retenir` ; `rejeu.relire_source` ;
+  contrôle dans `registre.erreurs_format`). Deux tests ajoutés, 135 verts. Kozh Ensemble passe de 1 à 20 liens,
+  Atlanpole régionaux de 1 à 16.
+- Sur accord (0,28 euro) : 170 textes collectés sur les 22 relais, 102 fiches extraites, 53 contrôlées et qualifiées ;
+  0,224 euro réel, cumul Haiku 2,657 euros. Import des fiches nouvelles : 71 créées (64 en brouillon « Proposée, non
+  relue », 7 archivées par le modèle), 71 appels clos écartés. Base : 856 fiches, 92 dans la file « à valider ».
+
 ### Corrigé (2026-10-27)
 - Changement `pages-a-un-seul-appel`, après quatre publications LinkedIn transmises par Monsieur DUCOUT (novap de la
   FEHAP, Tubbe de Gérond'if, prix de la Fondation Béatrice Denys, et un don d'Amazon qui n'est pas un appel) : aucun des
