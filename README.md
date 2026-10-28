@@ -83,7 +83,10 @@ par l'IA conservé dans `scrapeMetadata.financeurExtrait`, noms restés sans rat
 `territoriesEligible` est déduit du texte du territoire (régions, départements et grandes villes de
 `scraping/sources/departements.json`, lus par `scraping/territoires.py`) puis du nom de l'émetteur, `france` seulement
 pour un appel national, `non-precise` sinon (affiché « Territoire non précisé »). Fiches publiées en double (même titre,
-même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine).
+même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine). Avec `--file`
+(changement `doublons-file-a-valider`, 2026-10-28) : publiées et file « à valider », appariement aussi par code de
+programme européen et par date de clôture et mots distinctifs du titre (un relais garde le titre mais pas le nom du
+financeur), fiche à garder proposée, rapport `docs/DOUBLONS.md` ; rien n'est écrit en base.
 Contrôle des fiches par le modèle (changement `verification-assistee-haiku`, 2026-10-15) : `scraping/verification.py`
 relit chaque fiche publiable à côté de sa page et liste les champs douteux ; l'import en reporte le résumé dans
 `scrapeMetadata.verification`. Depuis le 2026-10-15 à midi (décision de Monsieur DUCOUT), ce contrôle vaut relecture :

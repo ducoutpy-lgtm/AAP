@@ -12,6 +12,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   et contrôle repris d'une lecture à l'autre. 24 appels ouverts, qualifiés (0,006 euro) et importés en « Proposée, non
   relue ». Appelé par `veille.cmd`. Sept tests ajoutés.
 
+- `scripts/doublons.py --file` (changement `doublons-file-a-valider`, lot A2 du pilote) : doublons parmi les fiches
+  publiées et la file « à valider », appariés aussi par code de programme européen et par date de clôture et mots
+  distinctifs ; fiche à garder proposée (relue, publiée, financeur réel, source officielle, datée) ; rapport
+  `docs/DOUBLONS.md`, rien en base. Premier rapport : 47 groupes, 62 fiches à rejeter (29 dans la file, 33 publiées).
+  Cinq tests ajoutés.
+
 ### Corrigé (2026-10-28, après-midi)
 - `verification.decision_du_modele` : dates et montants d'une fiche du portail européen (`moteur` = `api-portail`) ne
   sont plus retirés sur un verdict « fabriqué » du modèle, qui ne les voit pas dans la description (test ajouté).

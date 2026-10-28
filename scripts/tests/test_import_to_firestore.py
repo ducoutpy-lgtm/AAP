@@ -320,6 +320,60 @@ def test_groupes_de_doublons_meme_titre_normalise_et_meme_financeur():
     assert [[i for i, _ in g] for g in groupes] == [["a", "b"]]
 
 
+def _fiche(titre, financeur, source, cloture=None, url="https://x.fr/a", par=""):
+    return {"title": titre, "financeurName": financeur, "externalUrl": url, "scrapeMetadata": {"source": source},
+            "deadline": datetime(*cloture, tzinfo=timezone.utc) if cloture else None,
+            "validation": {"statut": "proposee", "par": par}}
+
+
+RELAIS = {"lyonbiopole", "medicen-paris-region"}
+
+
+def test_doublons_file_appel_repris_par_plusieurs_relais():
+    """Changement doublons-file-a-valider : même date de clôture et mêmes mots distinctifs, financeurs différents."""
+    import doublons
+
+    fiches = [("bpi", _fiche("Appel à projets « Première Usine »", "Bpifrance", "bpifrance", (2027, 4, 6))),
+              ("lyon", _fiche("France 2030 Première Usine", "Lyonbiopôle", "lyonbiopole", (2027, 4, 6))),
+              ("medicen", _fiche("Appel A Projets France 2030 : « Première Usine »", "Medicen", "medicen-paris-region", (2026, 12, 15)))]
+    groupes = doublons.groupes_file(fiches)
+    assert [sorted(i for i, _ in g) for g in groupes] == [["bpi", "lyon"]]
+    assert doublons.a_garder(groupes[0], RELAIS)[0] == "bpi"
+    # Fiche du financeur lue en suivant le lien d'un relais (source = le relais) : gardée pour son vrai financeur
+    via_relais = [("bpi", _fiche("Appel à projets « Première Usine »", "Bpifrance", "medicen-paris-region", (2027, 4, 6))),
+                  ("lyon", _fiche("France 2030 Première Usine", "Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets", "lyonbiopole", (2027, 4, 6)))]
+    assert doublons.a_garder(via_relais, RELAIS) == ("bpi", "financeur réel (lu en suivant un relais)")
+
+
+def test_doublons_file_appel_europeen_relaye():
+    import doublons
+
+    url = "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-DISEASE-08"
+    fiches = [("relais", _fiche("HORIZON-HLTH-2027-01-DISEASE-08: Development of innovative antimicrobials", "Lyonbiopôle",
+                                "lyonbiopole", (2027, 2, 17))),
+              ("portail", _fiche("Development of innovative antimicrobials against pathogens", "Commission européenne",
+                                 "portail-funding-tenders-commission-europeenne", (2027, 2, 17), url=url))]
+    assert doublons.code_programme(fiches[1][1]) == "HORIZON-HLTH-2027-01-DISEASE-08"
+    groupes = doublons.groupes_file(fiches)
+    assert len(groupes) == 1 and doublons.a_garder(groupes[0], RELAIS)[0] == "portail"
+
+
+def test_doublons_file_titres_proches_dates_differentes():
+    import doublons
+
+    fiches = [("a", _fiche("Appel à Projets 2027 « Soutien à l'émergence »", "Cancéropôle Nord-Ouest", "canceropole-nord-ouest", (2026, 10, 30))),
+              ("b", _fiche("Appel à projets 2027 Soutien à l'émergence", "Cancéropôle Est", "canceropole-est", (2027, 1, 15)))]
+    assert doublons.groupes_file(fiches) == []
+
+
+def test_doublons_file_garde_la_fiche_relue():
+    import doublons
+
+    g = [("relue", _fiche("Challenge prévention", "Lyonbiopôle", "lyonbiopole", (2028, 12, 31), par=imp.RELECTEUR)),
+         ("officielle", _fiche("Challenge prévention", "Bpifrance", "bpifrance", (2028, 12, 31)))]
+    assert doublons.a_garder(g, RELAIS)[0] == "relue"
+
+
 def test_profil_admin_impose_le_role_et_garde_le_reste():
     import creer_admin
 

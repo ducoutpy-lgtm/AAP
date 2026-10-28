@@ -57,8 +57,9 @@ ferme le samedi 31 octobre). Changement commité et poussé (39a442f).
 valider », commit et push en fin de changement) ; le garde-fou refuse que la session l'écrive dans `CLAUDE.md` : à
 recopier par Monsieur DUCOUT (`docs/A_VALIDER.md`, question 1). Critères et journal : `docs/PILOTE_MVP.md`. Lot A1 fait :
 connecteur `connecteur-funding-tenders` (`scraping/funding_tenders.py`), 24 appels européens de santé ouverts, qualifiés
-(0,006 euro, cumul Haiku 2,669) et importés : file « à valider » 116 fiches. Suite du plan : A2 doublons parmi les
-brouillons, A3 financeur remplacé par le relais, puis lot B (familles Recherche, fondations abritées, conférences des
+(0,006 euro, cumul Haiku 2,669) et importés : file « à valider » 116 fiches. Lot A2 fait : `scripts/doublons.py --file`
+(changement `doublons-file-a-valider`), rapport `docs/DOUBLONS.md` : 47 groupes, 62 fiches à rejeter (29 dans la file).
+Suite du plan : A3 financeur remplacé par le relais, puis lot B (familles Recherche, fondations abritées, conférences des
 financeurs) et lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
