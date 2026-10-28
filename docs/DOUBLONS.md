@@ -112,7 +112,7 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-44eb16745ca76cbd | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-DISEASE-05 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel de la Commission européenne, programme HORIZON EUROPE - CLUSTER SANTE) | 2027-02-17 | draft / proposee | scraped-f9372c622b81ab43 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-05 |
+| rejeter | Commission européenne | 2027-02-17 | draft / proposee | scraped-f9372c622b81ab43 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-05 |
 
 ## Emergences PRFI 2026
 
@@ -163,42 +163,42 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (financeur réel (lu en suivant un relais)) | Bpifrance | 2027-04-06 | draft / proposee | scraped-35f94e58da6fea62 | https://www.bpifrance.fr/nos-appels-a-projets-concours/france-2030-appel-a-projets-premiere-usine |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (France 2030 – Bpifrance pour la sélection) | 2027-04-06 | draft / proposee | scraped-75fa4b958c7bc985 | https://lyonbiopole.com/appel-a-projet/france-2030-premiere-usine |
+| rejeter | Bpifrance | 2027-04-06 | draft / proposee | scraped-75fa4b958c7bc985 | https://lyonbiopole.com/appel-a-projet/france-2030-premiere-usine |
 
 ## HORIZON-HLTH-2027-01-DISEASE-06: Development of monoclonal antibodies to prevent and treat infection
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-c0ba36d58fb79d2a | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-DISEASE-06 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel relayé de la Commission européenne, programme HORIZON EUROPE - CLUSTER SANTE) | 2027-02-17 | draft / proposee | scraped-3ba29c650f51c1c9 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-06 |
+| rejeter | Commission européenne | 2027-02-17 | draft / proposee | scraped-3ba29c650f51c1c9 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-06 |
 
 ## HORIZON-HLTH-2027-01-DISEASE-08: Development of innovative antimicrobials against pathogens resistan
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-7b8fa9abc4580a08 | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-DISEASE-08 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel émis par la Commission européenne, programme HORIZON EUROPE - CLUSTER SANTE) | 2027-02-17 | draft / proposee | scraped-2d013d8117335a24 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-08 |
+| rejeter | Commission européenne | 2027-02-17 | draft / proposee | scraped-2d013d8117335a24 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-08 |
 
 ## HORIZON-HLTH-2027-01-ENVHLTH-02: Integrating climate-related exposures into the human exposome and c
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-8d8cd6424f8c81e5 | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-ENVHLTH-02 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (programme HORIZON EUROPE - CLUSTER SANTE) | 2027-02-17 | draft / proposee | scraped-67d4f239e668b478 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-envhlth-02 |
+| rejeter | Horizon Europe – Cluster Santé (PCN France) | 2027-02-17 | draft / proposee | scraped-67d4f239e668b478 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-envhlth-02 |
 
 ## HORIZON-HLTH-2027-01-ENVHLTH-MISSCLIMA-03: Tools and technologies to support health adaptation to cl
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-776741b1b6bedbd3 | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-01-ENVHLTH-MISSCLIMA-03 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel de la Commission européenne, programme HORIZON EUROPE - Cluster Environnement) | 2027-04-13 | draft / proposee | scraped-6c504b2a4cdcff02 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-envhlth-missclima-03 |
+| rejeter | Commission européenne | 2027-04-13 | draft / proposee | scraped-6c504b2a4cdcff02 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-envhlth-missclima-03 |
 
 ## HORIZON-HLTH-2027-02-DISEASE-01-two-stage Innovative healthcare interventions for non-communicable d
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-02-17 | draft / proposee | scraped-c11c86069d2210ea | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-02-DISEASE-01-two-stage |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel issu du programme HORIZON EUROPE - Cluster Santé) | 2027-02-17 | draft / proposee | scraped-3ce7a56ee46831d3 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-02-disease-01 |
+| rejeter | Horizon Europe – Cluster Santé (PCN France) | 2027-02-17 | draft / proposee | scraped-3ce7a56ee46831d3 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-02-disease-01 |
 
 ## HORIZON-HLTH-2027-03-TOOL-02: Advancing bio-printing of living cells for regenerative medicine
 
@@ -212,7 +212,7 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
 |---|---|---|---|---|---|
 | garder (source officielle (connecteur ou site du financeur)) | Commission européenne – Horizon Europe, pôle Santé | 2027-09-16 | draft / proposee | scraped-949969d681686067 | https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-HLTH-2027-03-TOOL-04 |
-| rejeter | Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (relais de l'appel Horizon Europe - Cluster Santé, Commission européenne) | 2027-09-16 | draft / proposee | scraped-1aecd21a96c004f8 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-03-tool-04 |
+| rejeter | Horizon Europe – Cluster Santé (PCN France) | 2027-09-16 | draft / proposee | scraped-1aecd21a96c004f8 | https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-03-tool-04 |
 
 ## HORIZON-MISS-2027-02-CANCER-01: Leveraging functional genomics to reveal novel targets for cancer tr
 
@@ -227,7 +227,7 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 |---|---|---|---|---|---|
 | garder (déjà publiée) | Institut national du cancer (INCa) | 2026-12-15 | published / validee | scraped-19b2ffaa6c560455 | https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets/hrhg-cmp26 |
 | rejeter | Institut national du cancer (INCa) | 2026-12-15 | draft / proposee | scraped-3c1d825c24805aca | https://canceropole-nordouest.org/appels-projets-cno/high-risk-high-gain-cancers-de-mauvais-pronostic-etape-1-amorcage/ |
-| rejeter | Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets (appel émis par l'INCa, Institut national du cancer) | 2026-12-15 | draft / proposee | scraped-bff8bf8f848726ca | https://www.canceropole-clara.com/projects/aap-inca-high-risk-high-gain/ |
+| rejeter | Institut national du cancer (INCa) | 2026-12-15 | draft / proposee | scraped-bff8bf8f848726ca | https://www.canceropole-clara.com/projects/aap-inca-high-risk-high-gain/ |
 
 ## IDÉA'DOM
 

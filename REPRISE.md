@@ -59,8 +59,9 @@ recopier par Monsieur DUCOUT (`docs/A_VALIDER.md`, question 1). Critères et jou
 connecteur `connecteur-funding-tenders` (`scraping/funding_tenders.py`), 24 appels européens de santé ouverts, qualifiés
 (0,006 euro, cumul Haiku 2,669) et importés : file « à valider » 116 fiches. Lot A2 fait : `scripts/doublons.py --file`
 (changement `doublons-file-a-valider`), rapport `docs/DOUBLONS.md` : 47 groupes, 62 fiches à rejeter (29 dans la file).
-Suite du plan : A3 financeur remplacé par le relais, puis lot B (familles Recherche, fondations abritées, conférences des
-financeurs) et lot C (veille de bout en bout).
+Lot A3 fait : `financeur-reel-des-relais`, 10 fiches de la file corrigées (vrai financeur lu entre parenthèses),
+36 restent au nom du relais. Suite du plan : lot B (familles Recherche, fondations abritées, conférences des
+financeurs), puis lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise

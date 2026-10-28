@@ -170,6 +170,45 @@ def canonique(nom_extrait: str | None, emetteur_id: str | None = None, table: di
     return famille_generique(trouve) or trouve
 
 
+# Changement financeur-reel-des-relais (2026-10-28) : mots vides et mots d'appel ignorés pour reconnaître un financeur
+MOTS_IGNORES_RELAIS = frozenset("de la le les du des l d et en pour par a au aux un une appel appels projet projets "
+                                "programme emis relaye relayee".split())
+
+
+def financeur_reel_du_relais(nom_extrait: str | None, relais_id: str, table: dict | None = None) -> str | None:
+    """Vrai financeur d'un appel publié par un relais, lu entre parenthèses (« Lyonbiopôle … (appel émis par la
+    Commission européenne …) » -> « Commission européenne »), ou None si le nom n'est pas celui du relais ou si les
+    parenthèses ne citent aucun financeur connu. Un financeur est reconnu quand tous les mots d'un de ses noms (hors mots
+    ignorés) sont dans la parenthèse ; le premier cité gagne (« émis par la Commission européenne, programme Horizon
+    Europe » -> Commission européenne), puis le plus long (fonction pure sur la table donnée)."""
+    table = charger() if table is None else table
+    nom = (nom_extrait or "").strip()
+    tete = [m for m in normaliser(PARENTHESE.sub("", nom)).split() if len(m) > 3]
+    if not tete or tete[0] not in relais_id.replace("-", ""):
+        return None
+    meilleur: tuple[int, int, str] | None = None
+    for interieur in PARENTHESE.findall(nom):
+        jetons = normaliser(interieur).split()
+        mots = set(jetons)
+        for ident, entree in table.items():
+            if ident == relais_id:
+                continue
+            for variante in [entree["nom"]] + list(entree.get("alias") or []):
+                utiles = [m for m in normaliser(PARENTHESE.sub(" ", variante)).split() if m not in MOTS_IGNORES_RELAIS] \
+                    or [m for m in normaliser(variante).split() if m not in MOTS_IGNORES_RELAIS]
+                if not utiles or not set(utiles) <= mots:
+                    continue
+                # Un nom d'un seul mot de collectivité, d'ARS ou de ministère (« Rhône ») est un lieu, pas un financeur cité
+                if len(utiles) == 1 and entree.get("categorie") in ("collectivite", "ars", "ministere"):
+                    continue
+                rang = (min(jetons.index(m) for m in utiles), -len(utiles), entree["nom"])
+                if meilleur is None or rang < meilleur:
+                    meilleur = rang
+        if meilleur:
+            break
+    return meilleur[2] if meilleur else None
+
+
 def _canonique_brut(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:
     """Rattachement sans la passe des familles sur le résultat.
 

@@ -396,6 +396,12 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
     # du financeur (None quand rien ne rattache le nom lu : il est alors garde tel quel).
     emetteur = financeurs.emetteur_de(item, source_name, EMETTEURS)
     nom_canonique = financeurs.canonique(financeur, emetteur["id"] if emetteur else None, FINANCEURS)
+    # Relais (changement financeur-reel-des-relais) : « Lyonbiopôle … (appel émis par la Commission européenne) » affiche
+    # le financeur cité entre parenthèses, quand le référentiel le connaît ; un appel propre au relais garde son nom.
+    if emetteur and emetteur.get("relais"):
+        reel = financeurs.financeur_reel_du_relais(financeur, emetteur["id"], FINANCEURS)
+        if reel:
+            nom_canonique = financeurs.canonique(reel, None, FINANCEURS) or reel
 
     tags = [source_name]
     if item.get("territoire"):

@@ -374,6 +374,18 @@ def test_doublons_file_garde_la_fiche_relue():
     assert doublons.a_garder(g, RELAIS)[0] == "relue"
 
 
+def test_financeur_reel_d_un_relais_a_l_import():
+    """Changement financeur-reel-des-relais : une fiche de Lyonbiopôle (relais) affiche le financeur cité entre parenthèses."""
+    extrait = ("Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel émis par la Commission européenne, programme "
+               "HORIZON EUROPE - CLUSTER SANTE)")
+    item = {"titre": "HORIZON-HLTH-2027-01-DISEASE-08: Development of innovative antimicrobials", "financeur": extrait,
+            "description": "Appel européen.", "url_source": "https://lyonbiopole.com/appel/x", "date_cloture": "2027-02-17",
+            "scrape_metadata": {"source": "lyonbiopole", "moteur": "api"}}
+    doc = imp.to_app_aap(item, "extraction_api", MAINTENANT)
+    assert doc["financeurName"] == "Commission européenne"
+    assert doc["scrapeMetadata"]["financeurExtrait"] == extrait
+
+
 def test_profil_admin_impose_le_role_et_garde_le_reste():
     import creer_admin
 

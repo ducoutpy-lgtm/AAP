@@ -19,6 +19,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   Cinq tests ajoutés.
 
 ### Corrigé (2026-10-28, après-midi)
+- Financeur d'un appel publié par un relais (changement `financeur-reel-des-relais`, lot A3 du pilote) : quand le nom
+  extrait commence par le relais et cite entre parenthèses un financeur connu du référentiel, l'import affiche ce
+  financeur (`financeurs.financeur_reel_du_relais`, premier cité, noms de lieu d'un mot écartés).
+  `scripts/corriger_financeur_relais.py` l'applique à la file « à valider » (brouillons « proposee » seulement,
+  sauvegarde, essai à blanc) : 10 fiches corrigées (Commission européenne, Bpifrance, INCa, Ligue contre le cancer),
+  36 restent au nom du relais (appels propres au relais ou sans financeur cité). Quatre tests ajoutés.
 - `verification.decision_du_modele` : dates et montants d'une fiche du portail européen (`moteur` = `api-portail`) ne
   sont plus retirés sur un verdict « fabriqué » du modèle, qui ne les voit pas dans la description (test ajouté).
 

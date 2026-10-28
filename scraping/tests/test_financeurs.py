@@ -152,3 +152,40 @@ def test_nom_generique_remplace_par_l_emetteur():
     assert f.canonique("Aveyron", "prefecture-aveyron", table) == "Préfecture - Aveyron"
     assert f.canonique("Autres", "appelaprojets", table) is None
     assert f.canonique("Conseil départemental", "appelaprojets", table) is None
+
+
+# Changement financeur-reel-des-relais (2026-10-28) : le vrai financeur lu entre parenthèses quand la fiche vient d'un relais
+TABLE_RELAIS = {
+    "commission-europeenne-financement-sante": {"nom": "Commission européenne", "categorie": "europe",
+                                                "alias": ["Commission européenne", "Commission européenne – financement santé"]},
+    "institut-national-du-cancer-inca": {"nom": "Institut national du cancer (INCa)", "categorie": "agence-nationale",
+                                         "alias": ["INCa", "Institut national du cancer", "Institut national du cancer (INCa)"]},
+    "ligue-contre-le-cancer": {"nom": "Ligue contre le cancer", "categorie": "fondation", "alias": ["Ligue contre le cancer"]},
+    "region-bretagne": {"nom": "Région Bretagne", "categorie": "collectivite", "alias": ["Région Bretagne", "Conseil régional de Bretagne"]},
+}
+
+
+def test_financeur_reel_lu_entre_parentheses():
+    nom = ("Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets (appel émis par la Commission européenne, programme "
+           "HORIZON EUROPE - CLUSTER SANTE)")
+    assert f.financeur_reel_du_relais(nom, "lyonbiopole", TABLE_RELAIS) == "Commission européenne"
+    inca = "Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets (appel émis par l'INCa, Institut national du cancer)"
+    assert f.financeur_reel_du_relais(inca, "canceropole-clara", TABLE_RELAIS) == "Institut national du cancer (INCa)"
+    ligue = "Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) - appels à projets (appel relayé pour la Ligue nationale contre le cancer)"
+    assert f.financeur_reel_du_relais(ligue, "canceropole-clara", TABLE_RELAIS) == "Ligue contre le cancer"
+
+
+def test_financeur_du_relais_garde():
+    assert f.financeur_reel_du_relais("Cancéropôle Nord-Ouest – appels à projets", "canceropole-nord-ouest", TABLE_RELAIS) is None
+    territoires_seuls = "Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, Bretagne, Centre-Val de Loire)"
+    assert f.financeur_reel_du_relais(territoires_seuls, "atlanpole-biotherapies-regionaux", TABLE_RELAIS) is None
+    # Le nom ne commence pas par le relais : ce n'est pas un nom de relais, rien n'est changé
+    assert f.financeur_reel_du_relais("Bpifrance (Commission européenne)", "lyonbiopole", TABLE_RELAIS) is None
+
+
+def test_nom_de_lieu_d_un_seul_mot_ecarte():
+    """« financé par la Région Auvergne-Rhône-Alpes » ne doit pas donner le département du Rhône (alias « Rhône »)."""
+    table = dict(TABLE_RELAIS, **{"conseil-departemental-rhone": {"nom": "Conseil départemental Rhône", "categorie": "collectivite",
+                                                                   "alias": ["Conseil départemental Rhône", "Rhône"]}})
+    nom = "Lyonbiopôle Auvergne-Rhône-Alpes (appel à projets du Plan AURA 2022-2028, financé par la Région Auvergne-Rhône-Alpes)"
+    assert f.financeur_reel_du_relais(nom, "lyonbiopole", table) is None

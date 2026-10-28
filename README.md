@@ -86,7 +86,10 @@ pour un appel national, `non-precise` sinon (affiché « Territoire non précis�
 même financeur) : `.venv\Scripts\python scripts/doublons.py` (lecture seule, décision humaine). Avec `--file`
 (changement `doublons-file-a-valider`, 2026-10-28) : publiées et file « à valider », appariement aussi par code de
 programme européen et par date de clôture et mots distinctifs du titre (un relais garde le titre mais pas le nom du
-financeur), fiche à garder proposée, rapport `docs/DOUBLONS.md` ; rien n'est écrit en base.
+financeur), fiche à garder proposée, rapport `docs/DOUBLONS.md` ; rien n'est écrit en base. Financeur d'un appel publié
+par un relais (changement `financeur-reel-des-relais`, 2026-10-28) : l'import affiche le financeur cité entre
+parenthèses par le modèle (« Lyonbiopôle … (appel émis par la Commission européenne) » -> « Commission européenne ») ;
+`.venv\Scripts\python scripts/corriger_financeur_relais.py [--reel]` l'applique aux brouillons « proposee » déjà en base.
 Contrôle des fiches par le modèle (changement `verification-assistee-haiku`, 2026-10-15) : `scraping/verification.py`
 relit chaque fiche publiable à côté de sa page et liste les champs douteux ; l'import en reporte le résumé dans
 `scrapeMetadata.verification`. Depuis le 2026-10-15 à midi (décision de Monsieur DUCOUT), ce contrôle vaut relecture :
