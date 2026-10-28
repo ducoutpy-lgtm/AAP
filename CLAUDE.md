@@ -244,7 +244,11 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-28, lot B1 du pilote, « ok » : liste de référence `scraping/sources/annuaires/conferences_financeurs.csv`, couverture 75 / 102,
   registre 1 269 sources ; 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku 2,822), 13 importées en « Proposée,
   non relue », 6 hors champ « à corriger » ; 23 départements publieraient l'appel seulement en PDF (estimation par mots-clés) ;
-  47 sources marquées `url_validee` par la session, décision demandée ; reste sa vérification 5.1), `connecteur-funding-tenders`
+  47 sources marquées `url_validee` par la session, corrigées sur son accord par le changement `page-ciblee-par-la-session` ;
+  reste sa vérification 5.1), `page-ciblee-par-la-session` (2026-10-28 soir, « Marqueur propre » : champ `page_ciblee` du registre pour
+  une page trouvée par une session, lu comme une page validée, promu en `url_validee` par sa « bonne page » à l'écran ; 47 sources
+  migrées, 0 écart de lecture, Aude et Dordogne relues ; Landes, Oise, Seine-Saint-Denis « à vérifier » ; 150 tests verts ; reste sa
+  vérification 5.1 et sa réponse pour 25 autres sources), `connecteur-funding-tenders`
   (2026-10-28, lot A1 du pilote `docs/PILOTE_MVP.md` : `scraping/funding_tenders.py` lit l'interface publique du portail européen, programmes
   de santé seulement, lecture triée, statuts périmés écartés, qualification reprise d'une lecture à l'autre ; 24 appels ouverts qualifiés
   (0,006 euro, cumul Haiku 2,669) et importés en « Proposée, non relue » ; 144 tests verts ; reste sa vérification 4.1), `familles-relais-regionaux`

@@ -120,6 +120,26 @@ def test_appliquer_verdicts_pages_correspondance_et_adresse():
     assert validation.ecarts_redecouverte(bilan["corrigees"], {"inserm": {"url_rubrique": "https://pro.inserm.fr/agenda2"}}) == []
 
 
+def test_appliquer_verdicts_pages_confirme_ou_corrige_une_page_ciblee():
+    """Changement page-ciblee-par-la-session : « bonne page » fait de la page vue une adresse validée, même si la source
+    est déjà confirmée ; une adresse donnée pour une mauvaise page remplace la page ciblée."""
+    ciblee = {"page_ciblee": "https://dordogne.fr/cfppa", "ciblee_par": "session Claude Code (lot B1)", "ciblee_le": "2026-10-28"}
+    registre = [{"id": "dordogne", "nom": "CFPPA 24", "url_aap": "https://dordogne.fr/", "notes": "",
+                 "qualification": {"verdict": "rubrique-confirmee"}, **ciblee},
+                {"id": "var", "nom": "CFPPA 83", "url_aap": "https://var.fr/", "notes": "",
+                 "qualification": {"verdict": "rubrique-confirmee"}, **ciblee, "page_ciblee": "https://var.fr/cfppa"}]
+    resultats = {"dordogne": {"url_rubrique": "https://dordogne.fr/cfppa"}, "var": {"url_rubrique": "https://var.fr/cfppa"}}
+    verdicts = {"https://dordogne.fr/cfppa": {"verdict": "bonne-page", "commentaire": "", "date": "2026-10-29 09:00"},
+                "https://var.fr/cfppa": {"verdict": "mauvaise-page", "commentaire": "https://var.fr/appels", "date": "2026-10-29"}}
+    _, bilan = validation.appliquer_verdicts_pages(verdicts, resultats, registre, {}, "2026-10-29")
+    dordogne, var = registre
+    assert dordogne["url_validee"] == "https://dordogne.fr/cfppa" and dordogne["validee_par"] == validation.RELECTEUR_ECRAN
+    assert dordogne["validee_le"] == "2026-10-29" and not {"page_ciblee", "ciblee_par", "ciblee_le"} & set(dordogne)
+    assert bilan["ciblees_confirmees"] == ["dordogne"] and bilan["deja_confirmees"] == 1
+    assert var["url_validee"] == "https://var.fr/appels" and "page_ciblee" not in var
+    assert "ancienne : https://var.fr/cfppa" in var["notes"]
+
+
 def test_migrer_verdicts_sauvegarde_copie_sans_ecraser_et_renomme(tmp_path, monkeypatch):
     """Lot 0, instruction 7 : essai a blanc sans ecriture, puis sauvegarde, fusion sans ecraser, renommage des anciens."""
     import json

@@ -4,6 +4,15 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-10-28, soir)
+- Page ciblée par une session (changement `page-ciblee-par-la-session`, correction acceptée par Monsieur DUCOUT :
+  « Oui, corrige », puis « Marqueur propre ») : nouveau champ du registre `page_ciblee` (avec `ciblee_par`,
+  `ciblee_le`), lu comme une page validée (un lien d'appel suffit, `page_appel` permis) ; `url_validee` reste réservé
+  à ses validations à l'écran. Une « bonne page » à l'écran fait de la page ciblée une `url_validee` à son nom. Les 47
+  sources du lot B1 migrées (`url_validee` -> `page_ciblee`), aucun réglage de lecture changé (0 écart sur 44 fichiers
+  de liens) ; Landes, Oise et Seine-Saint-Denis remises « à vérifier » (pages non lues). Découverte rejouée : Aude
+  (1 lien) et Dordogne (7 liens, page d'appel) toujours lues. 150 tests verts.
+
 ### Ajouté (2026-10-28, fin d'après-midi)
 - Famille des conférences des financeurs de la prévention de la perte d'autonomie (changement
   `famille-conferences-des-financeurs`, lot B1 du pilote) : liste de référence `sources/annuaires/conferences_financeurs.csv`

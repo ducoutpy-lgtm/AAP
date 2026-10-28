@@ -54,6 +54,12 @@ def test_page_validee_retenue_des_un_lien():
     assert decouverte.retenir([(BASE, liens, liens)], BASE) == (None, [])
 
 
+def test_page_ciblee_lue_comme_page_validee():
+    """Changement page-ciblee-par-la-session : une page ciblée par une session garde le seuil d'un lien et la page d'appel."""
+    assert decouverte.reglages({"page_ciblee": BASE}) == {"seuil": 1, "page_appel": False, "hors_site": False}
+    assert decouverte.reglages({"page_ciblee": BASE, "page_appel": True})["page_appel"] is True
+
+
 def test_page_qui_est_elle_meme_l_appel():
     """page_appel : la page devient son propre lien, titre de la page pour texte, même sans aucun lien d'appel."""
     url = BASE + "appel-%C3%A0-projet-tubbe"

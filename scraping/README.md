@@ -335,7 +335,10 @@ leurs liens au clic sur « Afficher plus » ne sont pas déroulées.
 Pages à un seul appel (changement `pages-a-un-seul-appel`, 2026-10-27, après quatre publications LinkedIn transmises par
 Monsieur DUCOUT) : une page ordinaire n'est retenue qu'avec deux liens d'appel (protection contre une page d'accueil où
 un seul lien contient « appel » par hasard) ; une page validée à la main (`url_validee` du registre) l'est dès un lien.
-Une source peut aussi porter `page_appel: true` (avec `url_validee`) : sa page est elle-même l'appel et devient son
+Depuis le 2026-10-28 (changement `page-ciblee-par-la-session`), une page trouvée par une session va dans `page_ciblee`
+(avec `ciblee_par`, `ciblee_le`), jamais dans `url_validee`, réservé aux validations à l'écran de Monsieur DUCOUT ; elle
+est lue comme une page validée (adresse de travail : `url_validee`, sinon `page_ciblee`, sinon `url_aap`).
+Une source peut aussi porter `page_appel: true` (avec `url_validee` ou `page_ciblee`) : sa page est elle-même l'appel et devient son
 propre lien (cas de l'appel Tubbe de Gérond'if, relié ni au menu ni à l'accueil du site). Ces deux réglages sont écrits
 dans `decouverte/<source>/liens.json` (`seuil`, `page_appel`) et relus par la veille (`rejeu.py --relire`). Une page
 validée qui n'affiche aucun appel le jour de la découverte reste « aucune rubrique », mais garde un `liens.json` à liste
@@ -657,7 +660,9 @@ redécouverte ne retrouve plus les sources dont la page a changé (« sans sourc
 `--garder-depart` évite que la découverte remplace la page désignée par une autre page du site qui aurait plus de liens ;
 si la page donnée n'a aucun lien d'appel repéré, la source est « aucune rubrique » et sa page sera lue à l'extraction.
 Depuis le 2026-10-27, une page donnée (`url_validee`) est retenue dès un lien d'appel, et une page marquée
-`page_appel: true` est retenue comme son propre lien (changement `pages-a-un-seul-appel`).
+`page_appel: true` est retenue comme son propre lien (changement `pages-a-un-seul-appel`). Depuis le 2026-10-28, une
+« bonne page » sur une source à page ciblée par une session fait de la page vue une `url_validee` à son nom et retire la
+page ciblée ; une adresse donnée pour une mauvaise page la remplace aussi (changement `page-ciblee-par-la-session`).
 
 Monsieur DUCOUT juge lui-même, dans son navigateur, ce que les robots ont trouvé. `validation.py` est
 un petit serveur local (bibliothèque standard) ; chaque verdict est écrit immédiatement dans un

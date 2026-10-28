@@ -34,6 +34,16 @@ def test_page_appel_controlee():
     assert sum("page_appel" in e for e in erreurs) == 2
 
 
+def test_page_ciblee_par_une_session():
+    """Changement page-ciblee-par-la-session : url_validee > page_ciblee > url_aap ; page_appel permis avec une page
+    ciblée ; page_ciblee doit être une adresse http."""
+    assert registre.adresse_aap(source()) == "https://exemple.fr/aap"
+    assert registre.adresse_aap(source(page_ciblee="https://exemple.fr/cfppa")) == "https://exemple.fr/cfppa"
+    assert registre.adresse_aap(source(page_ciblee="https://exemple.fr/cfppa", url_validee="https://exemple.fr/v")) == "https://exemple.fr/v"
+    assert registre.erreurs_format([source(page_ciblee="https://exemple.fr/cfppa", page_appel=True)]) == []
+    assert any("page_ciblee" in e for e in registre.erreurs_format([source(page_ciblee="exemple.fr/cfppa")]))
+
+
 def test_relais_controle():
     """Changement familles-relais-regionaux : relais est un booléen."""
     assert registre.erreurs_format([source(relais=True)]) == []

@@ -67,7 +67,10 @@ sources, 222 pages lues par la veille, 78 fiches extraites, 16 contrôlées et q
 couverts, l'appel ne serait publié qu'en fichier (PDF), estimation par mots-clés : changement de lecture des PDF à
 proposer. Relecture du lot par un second modèle (journal `.audit/2026-10-28_lot-b1-conferences-financeurs.tsv`) :
 extraction coupée en deux commandes au lieu de demander l'accord au-delà de 0,20 euro ; 47 sources marquées
-`url_validee` par la session (champ réservé à Monsieur DUCOUT) : décision demandée (`docs/A_VALIDER.md`, question 10). Suite du plan : lots B2
+`url_validee` par la session (champ réservé à Monsieur DUCOUT), corrigées le soir même sur son accord (changement
+`page-ciblee-par-la-session` : champ `page_ciblee`, lu comme une page validée, 0 écart de lecture ; Landes, Oise et
+Seine-Saint-Denis « à vérifier ») ; 25 autres sources dans le même cas soumises (question 12). Poussées vers GitHub
+suspendues tant que les constructions Netlify du site `jazzy-tarsier-6499a9` ne sont pas arrêtées (question 11). Suite du plan : lots B2
 et B3 (fondations abritées, Recherche), puis lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté

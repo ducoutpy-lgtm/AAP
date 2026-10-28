@@ -1207,19 +1207,24 @@
     "derniere_verification": "2026-10-28",
     "code_http": 200,
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "a-verifier",
       "date": "2026-10-28",
       "justification": "Page de la conférence des financeurs : Commission des Financeurs de la Prévention de la Perte d'Autonomie",
       "verdict_modele": "a-verifier",
       "relecture": {
-        "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+        "motif": "page non relue par la session ; la découverte n'a gardé aucun lien ; confirmée par erreur au lot B1",
         "date": "2026-10-28",
-        "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        "relecteur": "session Claude Code (changement page-ciblee-par-la-session, accord de Monsieur DUCOUT du 2026-10-28)",
+        "relecture_precedente": {
+          "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+          "date": "2026-10-28",
+          "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        }
       }
     },
-    "url_validee": "https://ressources.seinesaintdenis.fr/Commission-des-Financeurs-de-la-Prevention-de-la-Perte-d-Autonomie-de-la-Seine",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://ressources.seinesaintdenis.fr/Commission-des-Financeurs-de-la-Prevention-de-la-Perte-d-Autonomie-de-la-Seine",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "hauts-de-seine-appels-a-projets",
@@ -3399,9 +3404,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://nievre.fr/kiosque/aap/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://nievre.fr/kiosque/aap/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-departemental-gard",
@@ -3505,9 +3510,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.departement18.fr/-Appels-a-projets-candidatures-",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.departement18.fr/-Appels-a-projets-candidatures-",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-departemental-finistere",
@@ -3825,9 +3830,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402.html",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.vaucluse.fr/votre-departement/la-commande-les-enquetes-publiques-et-les-appels-a-projets-1402.html",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-departemental-guadeloupe",
@@ -4427,9 +4432,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.haute-saone.fr/index.php/appels-a-projets/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.haute-saone.fr/index.php/appels-a-projets/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-territorial-de-saint-pierre-et-miquelon",
@@ -4824,9 +4829,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.cd08.fr/appels-a-projets",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.cd08.fr/appels-a-projets",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-departemental-hautes-pyrenees",
@@ -5196,9 +5201,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.lavienne86.fr/le-departement/administration/espace-reglementaire/les-appels-a-projets",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.lavienne86.fr/le-departement/administration/espace-reglementaire/les-appels-a-projets",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-departemental-val-de-marne",
@@ -5630,9 +5635,9 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "url_validee": "https://www.isula.corsica/tags/appels/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28"
+    "page_ciblee": "https://www.isula.corsica/tags/appels/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "conseil-regional-centre-val-de-loire",
@@ -22376,9 +22381,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (02). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Pas de rubrique permanente CFPPA trouvee sur aisne.com. Depot sur Demarches Simplifiees : https://demarche.numerique.gouv.fr/commencer/appel-a-projets-cfppa02-2027. Le portail https://autonomiehandicap.aisne.com/ affiche aussi l'actualite (https://autonomiehandicap.aisne.com/actualites/appel-projets-cfppa-aisne-2027). Les editions precedentes etaient des PDF sous aisne.com/sites/default/files.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.aisne.com/actualites/appel-projets-cfppa-aisne-2027-0",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "page_appel": true,
     "qualification": {
       "verdict": "rubrique-confirmee",
@@ -22389,7 +22391,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.aisne.com/actualites/appel-projets-cfppa-aisne-2027-0",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "hautes-alpes-commission-des-financeurs",
@@ -22402,9 +22407,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (05). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). La page parente liste les appels aux initiatives par annee (2027 vu) ; publiee en avril 2026 pour l'edition 2027, donc l'edition 2028 est attendue vers avril-mai 2027. PDF de l'appel : https://www.hautes-alpes.fr/app/uploads/1/2026/04/Appel-aux-initiatives-2027.pdf. Contact : contact.cfppa@hautes-alpes.fr.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.hautes-alpes.fr/nos-actions/autonomie/la-commission-des-financeurs/prevention-de-la-perte-dautonomie/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22414,7 +22416,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.hautes-alpes.fr/nos-actions/autonomie/la-commission-des-financeurs/prevention-de-la-perte-dautonomie/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "ardeche-commission-des-financeurs",
@@ -22427,9 +22432,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (07). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Publie le 08/07/2026, clos le 18/10/2026 a minuit. Pas de rubrique permanente CFPPA trouvee sur ardeche.fr (pages Autonomie et actualites sans lien). Depot sur Demarches Simplifiees : https://demarche.numerique.gouv.fr/commencer/appel-a-projets-cfppa-ardeche-2027. Les editions anciennes etaient des PDF sous ardeche.fr/cms_viewFile.php.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.ardeche.fr/actualites/appel-a-projets-2027-commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie-cfppa/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "page_appel": true,
     "qualification": {
       "verdict": "rubrique-confirmee",
@@ -22440,7 +22442,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.ardeche.fr/actualites/appel-a-projets-2027-commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie-cfppa/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "aude-appels-a-projets",
@@ -22453,9 +22458,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (11). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Portail Moi Senior du Departement de l'Aude, rubrique 'Appels a projets' qui liste les editions annuelles (2025, 2026, 2027 du meme nom #moisenior). Cloture 9 novembre 2026 a 12 h (page de l'appel). Candidature via http://www.aude.fr/appel-projets-moisenior-2027. Contact : conferencedesfinanceurs@aude.fr.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://moisenior.aude.fr/projects",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22465,7 +22467,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://moisenior.aude.fr/projects",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "calvados-commission-des-financeurs",
@@ -22478,9 +22483,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (14). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page permanente CFPPA ouverte : elle presente la commission, la liste des projets retenus 2026 et le rapport 2025, mais n'affiche aucun appel en cours ni lien direct vers la demarche (programme coordonne en attente d'un nouveau programme). La demarche 2026 (Demarches Simplifiees) est close ; la page d'actualite de l'appel et la rubrique https://www.calvados.fr/appels-a-projets ne contiennent pas l'appel CFPPA. Contact : cfppa14@calvados.fr.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.calvados.fr/CFPPA-calvados",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22490,7 +22492,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.calvados.fr/CFPPA-calvados",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "correze-appels-a-projets",
@@ -22503,9 +22508,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (19). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Rubrique 'Appels a projets - Autonomie' : la page de l'appel 2027 (actions collectives de prevention, 60 ans et plus) est la meme adresse ; fichiers joints nommes 'cfppa de la correze'. Page permanente de la commission : https://www.correze.fr/nos-missions/seniors-handicap-aidants/commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie (vue en recherche, non ouverte).",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.correze.fr/le-departement/les-appels-projets/les-appels-projets-autonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22515,7 +22517,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.correze.fr/le-departement/les-appels-projets/les-appels-projets-autonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "cote-d-or-commission-des-financeurs",
@@ -22528,9 +22533,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (21). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page « Bien vieillir en Côte-d'Or » permanente, l'appel annuel y est une section. Date de clôture 2026 absente (le texte affiche encore « jusqu'au 30 mars 2025 », non mis à jour). Deux fiches de demande différentes (2026/01 et 2026/02).",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.cotedor.fr/votre-service/personnes-agees/la-conference-des-financeurs-de-cote-dor",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22540,7 +22542,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.cotedor.fr/votre-service/personnes-agees/la-conference-des-financeurs-de-cote-dor",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "cotes-d-armor-appels-a-projets",
@@ -22553,9 +22558,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (22). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Appel « L'autonomie en action » (Département, Commission des financeurs 22, Pour bien vieillir Bretagne, ARS), listé dans la rubrique avec son ZIP de dossier ; les éditions précédentes sont des PDF sous /sites/default/files/. Relais : https://www.pourbienvieillirbretagne.fr/appel-a-projets/. Cycle annuel : fin novembre à mi-janvier.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://cotesdarmor.fr/le-departement/publications-reglementaires/appels-a-projets",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22565,7 +22567,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://cotesdarmor.fr/le-departement/publications-reglementaires/appels-a-projets",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "dordogne-commission-des-financeurs",
@@ -22578,9 +22583,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (24). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Intertitre « Comment concourir aux appels à projet ? » ; les appels 2025 restent affichés comme clos. Aucune date de clôture sur la page (cahier des charges Axe 5 EHPAD : 10/02/2026 d'après un résultat de recherche). Programme coordonné 2023-2025 prorogé en 2026 : édition 2027 non encore publiée. L'ancienne adresse /la-conference-des-financeurs répond 404. Aucun lien lu par la découverte du 2026-10-28 : la page porte elle-même l'appel, suivie comme page d'appel.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.dordogne.fr/a-votre-service/seniors/la-commission-des-financeurs",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22591,7 +22593,10 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "page_appel": true
+    "page_appel": true,
+    "page_ciblee": "https://www.dordogne.fr/a-votre-service/seniors/la-commission-des-financeurs",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "doubs-commission-des-financeurs",
@@ -22604,9 +22609,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (25). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). La page dit que des appels à projets sont lancés chaque année mais ne donne aucun lien vers l'appel en cours ; dépôt via https://mademat.doubs.fr/ (lien présent sur la page). La rubrique générale des appels du département ne liste pas l'appel CFPPA. Appel EHPAD distinct publié par l'ARS Bourgogne-Franche-Comté (clôture 2026-03-27). Édition 2026 : du 2026-01-05 au 2026-03-06.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.doubs.fr/a-votre-service/personnes-agees/commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22616,7 +22618,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.doubs.fr/a-votre-service/personnes-agees/commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "eure-et-loir-commission-des-financeurs",
@@ -22629,9 +22634,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (28). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Section « Appels à projets » de la page seniors, avec lien vers la démarche en ligne (la page garde aussi l'édition 2024). Le 2026-10-31 est la 2e phase de dépôt ; la 1re phase fermait le 2026-03-06. L'URL de la démarche change chaque année (…-28-2026, …-28-2024), la page stable ne change pas. Le site eurelien.fr fait échouer WebFetch (certificat), lu par curl.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://eurelien.fr/mon-quotidien/seniors/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22641,7 +22643,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://eurelien.fr/mon-quotidien/seniors/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "pour-bien-vieillir-bretagne",
@@ -22654,9 +22659,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (29). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Relais de l'association Pour bien vieillir Bretagne (liste les appels des 4 départements bretons). La page finistere.fr de l'appel 2026 répond 404 (retirée après clôture) ; la rubrique https://www.finistere.fr/le-conseil-departemental/appel-a-projets/ ne liste que les appels ouverts (CFPPA absent aujourd'hui) : à surveiller en second. Dépôt sur e-démarches du Département. Édition 2027 non publiée.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.pourbienvieillirbretagne.fr/appel-a-projets/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22667,7 +22669,10 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.pourbienvieillirbretagne.fr/appel-a-projets/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gironde-commission-des-financeurs",
@@ -22680,9 +22685,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (33). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Section « La commission des financeurs de la prévention de la perte d'autonomie » (ancre #com-financeurs) ; l'alias https://www.gironde.fr/conferencedesfinanceurs y redirige. Appel à initiatives 2027 annoncé du 2026-11-23 au 2027-01-21 (pas encore ouvert). Les pages d'appel https://www.gironde.fr/appel-a-projet/… répondent 403 aux robots (non lues). Dossiers aussi relayés par l'ARS Nouvelle-Aquitaine.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.gironde.fr/les-solidarites/politique-pour-l-autonomie-des-personnes-agees-et-handicapees",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22692,7 +22694,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.gironde.fr/les-solidarites/politique-pour-l-autonomie-des-personnes-agees-et-handicapees",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "herault-appels-a-projets",
@@ -22705,9 +22710,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (34). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Rubrique des appels de la Maison de l'Autonomie : entrée permanente « CFPPA - Dépôt de projets » (clôture affichée 31/12/2035, projets au fil de l'eau). Le dépôt réel passe par la plateforme Hérault citoyen (jeparticipe.herault.fr) : appels annuels 2026 clos le 2026-02-02, fil de l'eau jusqu'au 2026-09-21. Édition 2027 non encore publiée.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://mda.herault.fr/1405-appel-a-projets-mda.htm",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22717,7 +22719,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://mda.herault.fr/1405-appel-a-projets-mda.htm",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "isere-commission-des-financeurs",
@@ -22730,9 +22735,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (38). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page bloquée aux robots (script anti-bot), non lue : titre et contenu connus par résultats de recherche (appel 2027 clos le 2026-09-30 à 17 h, dépôt sur subventions.isere.fr, décision fin janvier 2027). Page secondaire : https://www.isere.fr/conference-des-financeurs. Les cahiers des charges sont des PDF sous /sites/default/files/AAAA-MM/.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.isere.fr/aides-demarches/commission-des-financeurs-prevention-la-perte-dautonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22742,7 +22744,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.isere.fr/aides-demarches/commission-des-financeurs-prevention-la-perte-dautonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "landes-commission-des-financeurs",
@@ -22755,19 +22760,24 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (40). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). landes.fr bloque les robots (Cloudflare 403) : page non lue, titre et contenu vus dans des résultats de recherche (édition 2026 ouverte du 2025-10-01 au 2025-11-30, dépôt à conference.financeurs@landes.fr). Cycle annuel : ouverture au 1er octobre. L'URL n'a pas d'année, probablement réutilisée. Page de présentation : https://www.landes.fr/conference-des-financeurs. Édition 2027 non vue.",
     "derniere_verification": "2026-10-28",
     "code_http": 403,
-    "url_validee": "https://www.landes.fr/appels-a-projets-cdfppa",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "a-verifier",
       "date": "2026-10-28",
       "justification": "Page de la conférence des financeurs : Appel à projet pour la prévention de la perte d'autonomie",
       "relecture": {
-        "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+        "motif": "page non lue : landes.fr refuse les robots (code 403) ; confirmée par erreur au lot B1",
         "date": "2026-10-28",
-        "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        "relecteur": "session Claude Code (changement page-ciblee-par-la-session, accord de Monsieur DUCOUT du 2026-10-28)",
+        "relecture_precedente": {
+          "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+          "date": "2026-10-28",
+          "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        }
       }
-    }
+    },
+    "page_ciblee": "https://www.landes.fr/appels-a-projets-cdfppa",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "loire-commission-des-financeurs",
@@ -22780,9 +22790,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (42). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). La page permanente renvoie vers la page d'appel (identifiant JCMS lw_1318681 constant d'une édition à l'autre, le texte porte l'année en cours) ; appel 2027 ouvert jusqu'au 2026-12-04 23 h 59 après webinaire du 2026-09-30. La page d'appel ne conserve pas les éditions précédentes.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.loire.fr/jcms/lw_1348218/fr/la-commission-des-financeurs-une-instance-au-service-de-l-autonomie-des-seniors-et-de-leurs-proches-aidants",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22792,7 +22799,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.loire.fr/jcms/lw_1348218/fr/la-commission-des-financeurs-une-instance-au-service-de-l-autonomie-des-seniors-et-de-leurs-proches-aidants",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "loire-atlantique-commission-des-financeurs",
@@ -22805,9 +22815,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (44). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Deux appels par an (prévention à domicile ; proches aidants), ouverts chaque année du 2 février au 15 mars. L'identifiant c_1384923 reste constant, seul le texte de l'adresse change d'une année à l'autre ; page « Les actions soutenues » c_1368267 également permanente. Dépôt sur le site agirseniors.loire-atlantique.fr (hôte non résolu depuis ce poste). Édition 2027 non publiée.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.loire-atlantique.fr/44/seniors-personnes-agees/la-conference-de-la-prevention-de-la-perte-d-autonomie-des-personnes-agees/c_1368243",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22817,7 +22824,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.loire-atlantique.fr/44/seniors-personnes-agees/la-conference-de-la-prevention-de-la-perte-d-autonomie-des-personnes-agees/c_1368243",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "lot-appels-a-projets",
@@ -22830,9 +22840,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (46). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Appel 2027 mis en avant sur la rubrique Santé & solidarité (lien « En savoir plus » vers l'actualité) ; dépôt du 2026-06-15 au 2026-09-06 ; cycle annuel juin à septembre. Rubrique non dédiée aux appels : la mise en avant peut disparaître, à surveiller aussi via l'actualité. Cahiers des charges PDF 2027 axe 4 et axe 5 sous https://lot.fr/sites/lot.fr/files/. Contact : cfppa@lot.fr.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://lot.fr/solidarite",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22842,7 +22849,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://lot.fr/solidarite",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "lot-et-garonne-commission-des-financeurs",
@@ -22855,9 +22865,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (47). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page permanente de la rubrique Personnes âgées qui porte l'appel de l'année (2026 : thème lutte contre l'isolement, dépôt par courriel, cahier des charges PDF). Pas encore d'édition 2027 au 2026-10-28. La page d'accueil du site n'a pas de rubrique appels à projets.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.lotetgaronne.fr/nos-services/solidarite/personnes-agees/prevention-de-la-perte-dautonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22867,7 +22874,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.lotetgaronne.fr/nos-services/solidarite/personnes-agees/prevention-de-la-perte-dautonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "manche-commission-des-financeurs",
@@ -22880,9 +22890,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (50). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). La page renvoie vers la fiche n°127 de demarches-manche.fr, dont le titre est Appel à projets commission des financeurs 2027 - Séniors à domicile et proches aidants (titre vu dans le navigateur, contenu et dates non lisibles). Date de clôture non lue ; calendrier habituel : ouverture vers le 1er décembre, clôture fin janvier (2026 : 1er décembre 2025 au 30 janvier 2026), extrapolation non vérifiée pour 2027. La rubrique manche.fr/les-appels-a-projets/ ne liste pas l'appel CFPPA.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.manche.fr/actions/la-manche-inclusive/maintien-de-lautonomie/commission-des-financeurs/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22892,7 +22899,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.manche.fr/actions/la-manche-inclusive/maintien-de-lautonomie/commission-des-financeurs/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "meurthe-et-moselle-commission-des-financeurs",
@@ -22905,9 +22915,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (54). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page qui regroupe les appels de la CFPPA 54 : proches aidants (lancé le 2026-01-12, clôture 2026-03-01), AMI prévention en EHPAD (clôture 2026-09-01 à 17 h), prestations d'ergothérapeutes (2025). Aucune édition 2027 vue. Cette page figure aussi dans la rubrique https://www.meurthe-et-moselle.fr/appels-projets (19 appels, entrée Commission des financeurs, rubrique mise à jour le 23/10/2026). La Carsat Nord-Est relaie l'appel 2026.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.meurthe-et-moselle.fr/commission-des-financeurs-0",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22917,7 +22924,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.meurthe-et-moselle.fr/commission-des-financeurs-0",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "meuse-commission-des-financeurs",
@@ -22930,9 +22940,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (55). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Deux appels 2026 (actions collectives 60 ans et plus ; aidants) examinés en 3 séances : dépôt avant le 2026-02-13, le 2026-05-07 et le 2026-08-20. L'édition 2025 avait été annoncée le 20 novembre 2024 (actualité meuse.fr, adresse sans vérification d'ouverture) : l'édition 2027 devrait paraître vers novembre 2026, pas encore visible au 2026-10-28. La Carsat Nord-Est relaie l'appel.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.meuse.fr/proche/seniors/information-et-prevention/la-commission-des-financeurs",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22942,7 +22949,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.meuse.fr/proche/seniors/information-et-prevention/la-commission-des-financeurs",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "moselle-commission-des-financeurs",
@@ -22955,9 +22965,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (57). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page permanente (version du 29 mai 2026) de l'appel de la Commission des financeurs, rubrique Personnes âgées (https://www.moselle.fr/jcms/pl_9398/fr/personnes-agees). Pages sœurs : aidants https://www.moselle.fr/jcms/pl_29937/fr/appel-a-projets-accompagner-et-soutenir-les-proches-aidants (2026 : 2026-02-17 au 2026-04-21), isolement https://www.moselle.fr/jcms/pl_29953/fr/appel-a-projets-lutter-contre-l-isolement-des-seniors, Avec ma santé https://www.moselle.fr/jcms/pl_53393/fr/appel-a-projet-2026-avec-ma-sante. Le cahier des charges PDF est en accès restreint.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.moselle.fr/jcms/pl_34120/fr/appel-a-projets-action-de-prevention",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -22967,7 +22974,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.moselle.fr/jcms/pl_34120/fr/appel-a-projets-action-de-prevention",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "oise-commission-des-financeurs",
@@ -22980,19 +22990,24 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (60). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page ouverte dans un navigateur : présente la commission (contact 03 44 06 67 84) mais ne cite aucun appel à projets annuel ni édition. L'ancienne page https://www.oise.fr/actions/sante-social-solidarite/seniors/conference-des-financeurs mentionnait, selon un extrait de recherche, un appel à projets 2022-2024 ouvert en continu (page protégée par un contrôle anti-robot, non ouverte). Aucun appel 2025-2027 trouvé ; oise.fr répond 403 aux lecteurs automatiques. [À VALIDER — Monsieur DUCOUT]",
     "derniere_verification": "2026-10-28",
     "code_http": 403,
-    "url_validee": "https://oise.fr/actions/sante-social-solidarite/seniors/commission-des-financeurs",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
-      "verdict": "rubrique-confirmee",
+      "verdict": "a-verifier",
       "date": "2026-10-28",
       "justification": "Page de la conférence des financeurs : Commission des financeurs",
       "relecture": {
-        "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+        "motif": "page ouverte au navigateur sans aucun appel cité ; oise.fr refuse les robots (code 403) ; confirmée par erreur au lot B1",
         "date": "2026-10-28",
-        "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        "relecteur": "session Claude Code (changement page-ciblee-par-la-session, accord de Monsieur DUCOUT du 2026-10-28)",
+        "relecture_precedente": {
+          "motif": "famille conférences des financeurs (lot B1 du pilote, accord de Monsieur DUCOUT du 2026-10-28)",
+          "date": "2026-10-28",
+          "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
+        }
       }
-    }
+    },
+    "page_ciblee": "https://oise.fr/actions/sante-social-solidarite/seniors/commission-des-financeurs",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "pas-de-calais-commission-des-financeurs",
@@ -23005,9 +23020,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (62). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). La page liste les axes 3 (SAD volet aide), 4 (proches aidants) et 5 (actions collectives), chacun avec sa page (ex. https://www.pasdecalais.fr/appel-candidatures-axe-5-actions-collectives-de-prevention-de-la-perte-dautonomie, 403 aux lecteurs automatiques). Elle figure aussi dans la rubrique https://www.pasdecalais.fr/solidarites-social-sante. La date 2026-11-30 est celle de la démarche axe 5 intitulée 2026 ; la démarche axe 3 1ère demande 2026/2027 s'est close le 2025-12-01.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.pasdecalais.fr/commission-des-financeurs-appels-candidatures",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23017,7 +23029,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.pasdecalais.fr/commission-des-financeurs-appels-candidatures",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "saone-et-loire-commission-des-financeurs",
@@ -23030,9 +23045,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (71). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page permanente du guide des aides, appel 2026 de la CFPPA ouvert du 2025-10-20 au 2025-12-19 (règlement https://www.saoneetloire.fr/app/uploads/2025/10/CFPPA-Reglement-intervention.pdf). Édition précédente : 2024-10-28 au 2024-12-20. L'édition 2027 est donc attendue vers fin octobre 2026, non publiée au 2026-10-28. Les appels 2027 de l'actualité saoneetloire.fr/actualite/appels-a-projets-2027/ concernent les communes, pas la CFPPA.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.saoneetloire.fr/guide-des-aides/perte-dautonomie/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23042,7 +23054,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.saoneetloire.fr/guide-des-aides/perte-dautonomie/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "paris-commission-des-financeurs",
@@ -23055,9 +23070,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (75). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Pas de page permanente trouvée : chaque édition a sa page (2025 : https://www.paris.fr/pages/appel-a-candidatures-de-la-conference-des-financeurs-pour-la-prevention-de-la-perte-d-autonomie-22494, clôture 2025-01-10). Le titre de la page 2026 ne porte pas l'année, elle pourrait être réutilisée. Mise à jour du 21/11/2025 ; l'édition 2027 devrait paraître vers novembre 2026, non publiée au 2026-10-28. La rubrique paris.fr/pages/repondre-a-un-appel-a-projets-5412 (8 appels) ne la liste pas.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.paris.fr/pages/appel-a-projets-actions-de-prevention-de-la-perte-d-autonomie-des-seniors-parisiens-a-paris-33034",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "page_appel": true,
     "qualification": {
       "verdict": "rubrique-confirmee",
@@ -23068,7 +23080,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.paris.fr/pages/appel-a-projets-actions-de-prevention-de-la-perte-d-autonomie-des-seniors-parisiens-a-paris-33034",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "seine-et-marne-commission-des-financeurs",
@@ -23081,9 +23096,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (77). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Fiche permanente (type Participation financière) portant l'Appel à projet 2027 de la CFPPA 77, date limite 20/09/2026 déjà passée. Elle se trouve dans la rubrique https://www.seine-et-marne.fr/fr/appels-projet-subventions (58 entrées paginées, présence de l'entrée non vérifiée dans la liste). Aucune édition antérieure listée sur la fiche.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.seine-et-marne.fr/fr/appels-projet-subventions/conference-des-financeurs-de-la-prevention-de-la-perte-dautonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23093,7 +23105,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.seine-et-marne.fr/fr/appels-projet-subventions/conference-des-financeurs-de-la-prevention-de-la-perte-dautonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "yvelines-appels-a-projets",
@@ -23106,9 +23121,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (78). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Rubrique vue dans des résultats de recherche (mention de l'appel Aide aux aidants de personnes âgées, 2025 : 2025-09-15 au 2025-10-15, et d'un appel 2026 dans le menu) mais son contenu n'est plus lisible : site en refonte, la nouvelle rubrique https://www.yvelines.fr/appels-a-projets-subventions/ n'affiche aucun appel CFPPA au 2026-10-28. Documents hébergés sur 78-92.fr (PDF). Édition 2026 non retrouvée. Contact conference.financeurs@yvelines.fr. [À VALIDER — Monsieur DUCOUT]",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.yvelines.fr/solidarite/politique-departementale/les-appels-a-projets/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "a-verifier",
       "date": "2026-10-28",
@@ -23118,7 +23130,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.yvelines.fr/solidarite/politique-departementale/les-appels-a-projets/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "somme-appels-a-projets",
@@ -23131,9 +23146,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (80). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Appel à initiatives 2027 publié depuis le 2026-10-12 (axes 1, 4, 5, 6) ; dépôt en ligne sur subvention.somme.fr. Date limite non indiquée sur la page (seule date visible : 22 décembre 2026, mais pour les services autonomie à domicile). Même page pour l'édition et la rubrique ; l'édition 2025 était un PDF AAI2025.pdf dans le même dossier.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.somme.fr/departement/votre-departement/linstitution/les-appels-a-projets/appels-a-projets-personnes-agees/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23143,7 +23155,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.somme.fr/departement/votre-departement/linstitution/les-appels-a-projets/appels-a-projets-personnes-agees/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "tarn-commission-des-financeurs",
@@ -23156,9 +23171,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (81). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page permanente de la Maison départementale de l'autonomie (espace professionnels) qui republie chaque année les documents CFPPA ; lue par WebFetch seulement (403 en accès direct), intertitre à recontrôler. La page d'édition sur tarn.fr est une actualité (pas de rubrique parente) et l'adresse a changé d'une année à l'autre. Appels ouverts du 2026-10-15 au 2026-11-27 : initiatives 60 ans et plus, et candidatures aidants.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://mda.tarn.fr/espace-professionnels",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23168,7 +23180,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://mda.tarn.fr/espace-professionnels",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "tarn-et-garonne-commission-des-financeurs",
@@ -23181,9 +23196,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (82). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Page mise à jour le 2026-09-14, renvoie vers la page de l'appel 2026 (publié du 2025-11-14 au 2026-01-09, dépôt par courriel). Pas encore d'édition 2027 ; elle devrait paraître vers mi-novembre 2026 (supposition d'après 2025). La rubrique générale Appels à projets et candidatures ne liste pas l'appel.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.tarnetgaronne.fr/commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23193,7 +23205,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.tarnetgaronne.fr/commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "var-commission-des-financeurs",
@@ -23206,9 +23221,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (83). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Aucun appel à projets annuel daté vu : la page renvoie vers le programme coordonné 2026 (PDF) et vers le portail teleservices.var.fr (rubrique Fonctionnement - Autonomie - Conférences des financeurs) où les demandes de subvention se déposent. Page à surveiller pour le programme 2027 ; des appels ponctuels EHPAD existaient en 2020 et 2023. Aucun lien lu par la découverte du 2026-10-28 : la page porte elle-même l'appel, suivie comme page d'appel.",
     "derniere_verification": "2026-10-28",
     "code_http": 403,
-    "url_validee": "https://var.fr/social/commission-financeurs-perte-autonomie",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23219,7 +23231,10 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "page_appel": true
+    "page_appel": true,
+    "page_ciblee": "https://var.fr/social/commission-financeurs-perte-autonomie",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "vendee-commission-des-financeurs",
@@ -23232,9 +23247,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (85). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Site dédié Vendée Senior (non vendee.fr). La page porte l'appel à candidatures 2027 (ouvert du 2026-06-01 au 2026-09-04), le cahier des charges et le programme coordonné 2023-2027 ; dépôt via démarches simplifiées. Appel 2027 clos, la prochaine édition remplacera probablement le contenu de cette même page. Aucun lien lu par la découverte du 2026-10-28 : la page porte elle-même l'appel, suivie comme page d'appel.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.vendee-senior.fr/soutien-a-domicile/actions-de-prevention",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23245,7 +23257,10 @@
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "page_appel": true
+    "page_appel": true,
+    "page_ciblee": "https://www.vendee-senior.fr/soutien-a-domicile/actions-de-prevention",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "haute-vienne-appels-a-projets",
@@ -23258,9 +23273,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (87). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Sous-rubrique Personnes âgées / Personnes handicapées des appels à projets du Département ; elle lie le cahier des charges PDF (CFPPA-cahier-charges.pdf) sans date ni année. L'appel 2026, pour des actions menées en 2027, est clos depuis le 2026-09-07 (dépôt via démarches simplifiées, page vue en recherche).",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.haute-vienne.fr/votre-conseil-departemental/appels-a-projets-du-departement/appel-a-projets-a-candidatures-et-a-manifestation-dinteret-personnes-agees-/-personnes-handicapees",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23270,7 +23282,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.haute-vienne.fr/votre-conseil-departemental/appels-a-projets-du-departement/appel-a-projets-a-candidatures-et-a-manifestation-dinteret-personnes-agees-/-personnes-handicapees",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "cgss-martinique-action-sociale",
@@ -23283,9 +23298,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (972). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Relais : l'appel conjoint CFPPA (CTM, ARS, CGSS, etc.) est annoncé chaque année par la CGSS Martinique (catégorie Action sociale, éditions 2025 et 2026 listées), avec dépôt sur demarche.numerique.gouv.fr/commencer/cfppa-aap2026 (clos le 2026-03-03, après prolongation au 2026-02-28). Aucune page CFPPA sur le site de la CTM (rubrique appels à projets vérifiée). Date limite initiale non lue.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://cgss-martinique.fr/categorie/action-sociale/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23295,7 +23307,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://cgss-martinique.fr/categorie/action-sociale/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "guyane-appels-a-projets",
@@ -23308,9 +23323,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (973). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Rubrique AAP de la Collectivité territoriale de Guyane, paginée (5 pages) : les éditions CFPPA 2022 à 2026 y figurent, les anciennes glissent vers les pages suivantes. Appel 2026 publié le 2025-12-22, clôture initiale 2026-02-15 prolongée au 2026-02-28 (une seconde fiche du 10 mai porte un titre quasi identique). Menée avec la CGSS Guyane. Pas d'édition 2027 encore.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.ctguyane.fr/category/aap/",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23320,7 +23332,10 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.ctguyane.fr/category/aap/",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "la-reunion-appels-a-projets",
@@ -23333,9 +23348,6 @@
     "notes": "Conférence des financeurs de la prévention de la perte d'autonomie (974). Inscrite le 2026-10-28 (changement famille-conferences-des-financeurs). Rubrique thématique Personnes âgées (fil d'actualités, paginé) qui renvoie vers l'appel ; les appels 2019, 2023 et 2025 (actions 2026) y ont aussi été publiés et glissent vers les pages suivantes. Titre de la fiche : « 2025 », cahier des charges et avis AAP 2026, clôture 2026-01-23, dépôt par courriel. Pas d'édition 2027 encore.",
     "derniere_verification": "2026-10-28",
     "code_http": 200,
-    "url_validee": "https://www.departement974.fr/personnes-agees",
-    "validee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "qualification": {
       "verdict": "rubrique-confirmee",
       "date": "2026-10-28",
@@ -23345,6 +23357,9 @@
         "date": "2026-10-28",
         "relecteur": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT"
       }
-    }
+    },
+    "page_ciblee": "https://www.departement974.fr/personnes-agees",
+    "ciblee_par": "session Claude Code (recherche web, lot B1), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   }
 ]

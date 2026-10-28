@@ -34,12 +34,7 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    ses scénarios et un devis avant tout appel au modèle (oui / non).
 9. (2026-10-28) Vérification 5.1 du changement `famille-conferences-des-financeurs` : ligne « Conférences des
    financeurs » de `scraping/REGISTRE_SOURCES.md` et fiches CFPPA dans `/admin/aaps`.
-10. (2026-10-28) Relecture du lot B1 par un second modèle : la session a posé `url_validee` (« à confirmer à l'écran »)
-   sur 47 sources, alors que ce champ est réservé aux adresses validées par Monsieur DUCOUT (`scraping/registre.py`,
-   ligne 32) ; Landes et Oise (refus HTTP 403) et Seine-Saint-Denis y sont « confirmées » sans avoir été lues.
-   Proposition : retirer `url_validee` des 39 sources nouvelles (leur `url_aap` porte déjà la page), porter la page
-   dans `url_aap` pour les 8 sources existantes (ancienne adresse gardée dans les notes), passer Landes, Oise et
-   Seine-Saint-Denis « à vérifier ». Rien n'est fait sans son accord.
+10. (tranchée le 2026-10-28, voir en bas)
 11. (2026-10-28) Netlify (équipe « aapi », plan gratuit) : crédits épuisés, déploiements en pause. Le site
    `jazzy-tarsier-6499a9` (« Deploys from GitHub », page vide en 404) a publié à 15 h 09, la minute de la dernière
    poussée du dépôt AAP vers GitHub (seul de ses dépôts poussé ce jour-là). Un déploiement de production réussi coûte
@@ -48,9 +43,15 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    Continuous deployment > Build settings > Configure > Stopped builds) ou le supprimer ; même question pour
    `teal-twilight-a7fcf3` (version d'avril, gardée en repli). En attendant, la session ne pousse plus vers GitHub
    (commits locaux seulement).
+12. (2026-10-28) Même défaut que la question 10, hors du lot B1 : 25 autres sources portent une `url_validee` posée par
+   une session « à confirmer à l'écran » (2026-10-27 : FEHAP, Gérond'if, Turenne, cancéropôles CLARA et PACA, Eurasanté,
+   Biotech Santé Bretagne ; 2026-10-28 : trois cancéropôles, Atlanpole (deux sources), Clubster NSL, Eurobiomed,
+   Lyonbiopôle, Medicen et neuf gérontopôles). Proposition : la même migration vers `page_ciblee`, sans perte de lecture
+   (oui / non). Les 4 adresses posées par une session avec son accord explicite (2026-10-21) restent telles quelles.
 
 ## Tranchées
 
 | Date | Question | Réponse |
 |---|---|---|
 | 2026-10-28 | Délégation et petit budget de pilote | Accordés dans la conversation (« oui »), pour cette session |
+| 2026-10-28 | 10. Les 47 `url_validee` posées par la session au lot B1 | « Oui, corrige », puis « Marqueur propre » : champ `page_ciblee` (changement `page-ciblee-par-la-session`), 47 sources migrées sans perte de lecture, Landes, Oise et Seine-Saint-Denis « à vérifier » |

@@ -31,11 +31,15 @@ CHAMPS = ("id", "nom", "categorie", "url_aap", "perimetre", "statut", "connecteu
 # Champs facultatifs de l'adresse validee a l'ecran (changement organisation-donnees-validees) : url_aap reste
 # l'adresse d'origine, url_validee celle donnee par Monsieur DUCOUT ; seul validation.py --appliquer-pages l'ecrit.
 CHAMPS_VALIDATION = ("url_validee", "validee_par", "validee_le")
+# Page trouvee par une session, en attente de la confirmation de Monsieur DUCOUT (changement page-ciblee-par-la-session) :
+# lue comme une page validee, jamais ecrite dans url_validee ; « bonne page » a l'ecran la fait passer dans url_validee.
+CHAMPS_CIBLEE = ("page_ciblee", "ciblee_par", "ciblee_le")
 
 
 def adresse_aap(source: dict) -> str:
-    """Adresse de travail d'une source : celle validee par un humain si elle existe, sinon l'adresse d'origine."""
-    return source.get("url_validee") or source["url_aap"]
+    """Adresse de travail d'une source : celle validee par un humain, sinon la page ciblee par une session, sinon
+    l'adresse d'origine."""
+    return source.get("url_validee") or source.get("page_ciblee") or source["url_aap"]
 CATEGORIES = ("ars", "ministere", "caisse-nationale", "agence-nationale", "fondation", "europe",
               "collectivite", "societe-savante", "etablissement", "centrale-achat", "autre")
 PERIMETRES = ("sante", "medico-social", "sante-et-medico-social")
@@ -97,11 +101,13 @@ def erreurs_format(sources: list[dict]) -> list[str]:
             erreurs.append(f"{ref} : url_aap n'est pas une adresse http(s)")
         if s.get("url_validee") and not str(s["url_validee"]).startswith("http"):
             erreurs.append(f"{ref} : url_validee n'est pas une adresse http(s)")
-        # page_appel (changement pages-a-un-seul-appel) : la page validee est elle-meme un appel
+        if s.get("page_ciblee") and not str(s["page_ciblee"]).startswith("http"):
+            erreurs.append(f"{ref} : page_ciblee n'est pas une adresse http(s)")
+        # page_appel (changement pages-a-un-seul-appel) : la page validee ou ciblee est elle-meme un appel
         if "page_appel" in s and not isinstance(s["page_appel"], bool):
             erreurs.append(f"{ref} : page_appel doit valoir true ou false")
-        elif s.get("page_appel") and not s.get("url_validee"):
-            erreurs.append(f"{ref} : page_appel sans url_validee")
+        elif s.get("page_appel") and not (s.get("url_validee") or s.get("page_ciblee")):
+            erreurs.append(f"{ref} : page_appel sans url_validee ni page_ciblee")
         # relais (changement familles-relais-regionaux) : liens d'appel vers les sites des financeurs gardes
         if "relais" in s and not isinstance(s["relais"], bool):
             erreurs.append(f"{ref} : relais doit valoir true ou false")

@@ -30,7 +30,7 @@ from urllib.parse import parse_qs, urlparse
 import requests
 
 from qualification import texte_sans_balises
-from registre import adresse_aap
+from registre import CHAMPS_CIBLEE, adresse_aap
 import verification
 
 ICI = Path(__file__).resolve().parent
@@ -256,7 +256,7 @@ def appliquer_verdicts_pages(verdicts: dict, resultats: dict, registre: list[dic
     par_id = {s["id"]: s for s in registre}
     relecture = dict(relecture)
     bilan = {"lus": 0, "confirmees": 0, "deja_confirmees": 0, "corrigees": [], "a_retrouver": [], "hors_champ": 0,
-             "sans_source": [], "ignores": 0}
+             "sans_source": [], "ignores": 0, "ciblees_confirmees": []}
 
     def poser(sid: str, verdict: str, motif: str, date: str) -> None:
         entree = {"verdict": verdict, "motif": motif, "date": date, "relecteur": RELECTEUR_ECRAN}
@@ -283,6 +283,12 @@ def appliquer_verdicts_pages(verdicts: dict, resultats: dict, registre: list[dic
             s = par_id[sid]
             en_vigueur = (s.get("qualification") or {}).get("verdict")
             if v == "bonne-page":
+                if s.get("page_ciblee") and not s.get("url_validee"):
+                    # page ciblee par une session (changement page-ciblee-par-la-session) : son verdict la valide
+                    s["url_validee"], s["validee_par"], s["validee_le"] = url, RELECTEUR_ECRAN, date
+                    for champ in CHAMPS_CIBLEE:
+                        s.pop(champ, None)
+                    bilan["ciblees_confirmees"].append(sid)
                 if en_vigueur == "rubrique-confirmee":
                     bilan["deja_confirmees"] += 1
                 else:
@@ -304,6 +310,8 @@ def appliquer_verdicts_pages(verdicts: dict, resultats: dict, registre: list[dic
                 if nouvelle != ancienne:
                     # url_aap (origine) n'est pas touchee : la correction humaine vit dans url_validee.
                     s["url_validee"], s["validee_par"], s["validee_le"] = nouvelle, RELECTEUR_ECRAN, date
+                    for champ in CHAMPS_CIBLEE:  # l'ancienne page ciblee reste dans les notes ci-dessous
+                        s.pop(champ, None)
                     autre = f" ; autre page : {urls[1]}" if len(urls) > 1 else ""
                     s["notes"] = ((s.get("notes") or "").rstrip() + f" Adresse corrigée par Monsieur DUCOUT le {date} (ancienne : {ancienne}{autre}).").strip()
                 poser(sid, "rubrique-confirmee", f"adresse donnée à l'écran : {nouvelle}", date)
@@ -475,7 +483,8 @@ def appliquer_pages_fichiers(dry_run: bool = False) -> int:
     relecture, bilan = appliquer_verdicts_pages(verdicts, resultats, sources, entrees, datetime.now().strftime("%Y-%m-%d"))
     print(f"{bilan['lus']} verdicts lus ({chemin.name}) : {bilan['confirmees']} sources confirmées (plus {bilan['deja_confirmees']} déjà confirmées), "
           f"{len(bilan['corrigees'])} adresses corrigées, {len(bilan['a_retrouver'])} à retrouver, {bilan['hors_champ']} hors champ, "
-          f"{bilan['ignores']} ignorés (passer), {len(bilan['sans_source'])} sans source")
+          f"{bilan['ignores']} ignorés (passer), {len(bilan['sans_source'])} sans source, "
+          f"{len(bilan['ciblees_confirmees'])} pages ciblées par une session devenues adresses validées")
     for url in bilan["sans_source"]:
         print(f"  sans source : {url}")
     if dry_run:

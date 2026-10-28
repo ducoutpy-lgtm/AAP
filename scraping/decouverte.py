@@ -148,12 +148,14 @@ def choisir_rubrique(pages: list[tuple[str, list[dict], list[dict]]], base: str,
 
 
 # Changement pages-a-un-seul-appel (2026-10-27) : le seuil de deux liens protege des pages d'accueil ou un seul lien
-# contient « appel » par hasard ; une page validee a la main (url_validee) n'a pas ce risque et est retenue des un lien.
+# contient « appel » par hasard ; une page validee a la main (url_validee) n'a pas ce risque et est retenue des un lien,
+# comme une page ciblee par une session (page_ciblee, changement page-ciblee-par-la-session).
 # page_appel : la page validee est elle-meme l'appel (Tubbe de Gerond'if, reliee a aucune autre page du site).
 def reglages(source: dict) -> dict:
     """Seuil de liens d'appel, page d'appel et relais (liens vers les sites des financeurs) d'une source du registre,
     ecrits dans liens.json pour la veille."""
-    return {"seuil": 1 if source.get("url_validee") else 2, "page_appel": bool(source.get("page_appel")),
+    ciblee = source.get("url_validee") or source.get("page_ciblee")
+    return {"seuil": 1 if ciblee else 2, "page_appel": bool(source.get("page_appel")),
             "hors_site": bool(source.get("relais"))}
 
 
