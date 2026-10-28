@@ -40,6 +40,14 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    Proposition : retirer `url_validee` des 39 sources nouvelles (leur `url_aap` porte déjà la page), porter la page
    dans `url_aap` pour les 8 sources existantes (ancienne adresse gardée dans les notes), passer Landes, Oise et
    Seine-Saint-Denis « à vérifier ». Rien n'est fait sans son accord.
+11. (2026-10-28) Netlify (équipe « aapi », plan gratuit) : crédits épuisés, déploiements en pause. Le site
+   `jazzy-tarsier-6499a9` (« Deploys from GitHub », page vide en 404) a publié à 15 h 09, la minute de la dernière
+   poussée du dépôt AAP vers GitHub (seul de ses dépôts poussé ce jour-là). Un déploiement de production réussi coûte
+   15 crédits sur 300 par mois (documentation Netlify « How credits work ») ; le dépôt a reçu 19 poussées en octobre,
+   dont 8 le 2026-10-28. Proposition : arrêter les constructions de ce site (Project configuration > Build & deploy >
+   Continuous deployment > Build settings > Configure > Stopped builds) ou le supprimer ; même question pour
+   `teal-twilight-a7fcf3` (version d'avril, gardée en repli). En attendant, la session ne pousse plus vers GitHub
+   (commits locaux seulement).
 
 ## Tranchées
 
