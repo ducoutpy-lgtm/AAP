@@ -243,7 +243,8 @@ Cycle (commandes slash dans Claude Code) :
   En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `famille-conferences-des-financeurs`
   (2026-10-28, lot B1 du pilote, « ok » : liste de référence `scraping/sources/annuaires/conferences_financeurs.csv`, couverture 75 / 102,
   registre 1 269 sources ; 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku 2,822), 13 importées en « Proposée,
-  non relue », 6 hors champ « à corriger » ; 23 départements publient l'appel seulement en PDF ; reste sa vérification 5.1), `connecteur-funding-tenders`
+  non relue », 6 hors champ « à corriger » ; 23 départements publieraient l'appel seulement en PDF (estimation par mots-clés) ;
+  47 sources marquées `url_validee` par la session, décision demandée ; reste sa vérification 5.1), `connecteur-funding-tenders`
   (2026-10-28, lot A1 du pilote `docs/PILOTE_MVP.md` : `scraping/funding_tenders.py` lit l'interface publique du portail européen, programmes
   de santé seulement, lecture triée, statuts périmés écartés, qualification reprise d'une lecture à l'autre ; 24 appels ouverts qualifiés
   (0,006 euro, cumul Haiku 2,669) et importés en « Proposée, non relue » ; 144 tests verts ; reste sa vérification 4.1), `familles-relais-regionaux`

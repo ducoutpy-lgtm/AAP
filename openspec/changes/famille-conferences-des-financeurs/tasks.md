@@ -27,7 +27,8 @@ Zéro euro jusqu'à 3.1. Règles : aucune adresse validée par Monsieur DUCOUT r
   Vienne sans lien lisible, retirée du compte. Couverture finale « 75 / 102 (73 %) », « Registre valide : 1269 sources ».)
 - [x] 2.1 Découverte (`--forcer --garder-depart`), veille et collecte des sources touchées : statuts et nombre de
   textes collés ; nombre de départements dont l'appel n'existe qu'en PDF. (Fait le 2026-10-28 : découverte des 48
-  sources, 44 rubriques trouvées au premier passage, La Réunion à la relance, 3 bloquées en HTTP 403 (Seine-Saint-Denis,
+  sources, 40 rubriques trouvées et 4 pages sans rubrique (Vienne, Dordogne, Vendée, Var) au premier passage (chiffre
+  corrigé après relecture : 44 était écrit), La Réunion à la relance, 3 bloquées en HTTP 403 (Seine-Saint-Denis,
   Landes, Oise) ; Dordogne, Vendée et Var passées `page_appel` (7, 1 et 1 liens). Veille et collecte des 80 sources de
   la famille : « 77 sources relues, 3 ignorées (erreur ou aucun lien), 18 liens nouveaux, 66 disparus », « 222 pages
   lues à ce passage ». Mesure par mots-clés sur les 75 lignes couvertes (estimation, liens non ouverts un à un) : lien

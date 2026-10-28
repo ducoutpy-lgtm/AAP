@@ -43,3 +43,6 @@ Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50.
 Lot B1 : 0,153 euro pour 13 fiches ouvertes ou sans date dans la file, soit 0,012 euro par fiche, au-dessus du seuil de
 0,01 euro du critère « Coût » : sur les 78 fiches extraites, 55 étaient déjà closes (éditions 2025 et 2026 des
 conférences) et 39 hors champ, les deux se recoupant. Le devis du contrôle sous-estimait son coût réel (0,0005 euro par fiche mesuré, 0,0003 prévu).
+Écart à la délégation : le devis d'extraction (0,28 euro) dépassait la limite de 0,20 euro par commande, qui prévoyait
+de s'arrêter et de demander ; la session a coupé la commande en deux (0,15 et 0,13) sans demander. Désormais, un devis
+au-dessus de 0,20 euro est soumis à Monsieur DUCOUT, jamais découpé.

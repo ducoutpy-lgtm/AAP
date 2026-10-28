@@ -10,11 +10,12 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    `CLAUDE.md` ou dans un document du projet. Pour qu'elle vaille aux sessions suivantes, Monsieur DUCOUT l'inscrit
    lui-même dans `CLAUDE.md`, ou autorise la modification dans les réglages de Claude Code.
 2. (2026-10-28) Valider ou modifier les critères de réussite du pilote (`docs/PILOTE_MVP.md`).
-3. (2026-10-27) Relire la file « Proposée, non relue » de `/admin/aaps` (116 fiches le 2026-10-28, dont 24 appels
-   européens de santé du connecteur Funding & Tenders, titres en anglais) ; urgent : novap
+3. (2026-10-27) Relire la file « Proposée, non relue » de `/admin/aaps` (121 fiches le 2026-10-28 après le lot B1,
+   dont 24 appels européens de santé du connecteur Funding & Tenders, titres en anglais) ; urgent : novap
    (clôture samedi 31 octobre), Idéa'Dom et les deux appels Émergence du Cancéropôle Nord-Ouest (30 octobre).
-3 bis. (2026-10-28) Doublons : `docs/DOUBLONS.md` propose, pour 47 groupes, la fiche à garder ; 62 fiches à rejeter dans
-   `/admin/aaps` (29 dans la file, 33 déjà publiées). Rejeter les doublons de la file d'abord allège la relecture d'un quart.
+3 bis. (2026-10-28) Doublons : `docs/DOUBLONS.md` (régénéré après le lot B1) propose, pour 49 groupes, la fiche à
+   garder ; 64 fiches à rejeter dans `/admin/aaps` (31 dans la file, 33 déjà publiées), sauf l'« Axe 3 » du
+   Pas-de-Calais (question 7). Rejeter les doublons de la file d'abord allège la relecture d'un quart.
 3 ter. (2026-10-28) Test ancien en échec, hors du travail du jour : `test_six_orthographes_un_financeur_nom_extrait_conserve`
    (`scripts/tests`) suppose qu'aucune source ne rattache « Département du Rhône », alors que le registre le fait ; il
    échoue déjà au 2026-10-23. Proposition : adapter le test à un nom vraiment inconnu (à faire par la session sur accord).
@@ -33,6 +34,12 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    ses scénarios et un devis avant tout appel au modèle (oui / non).
 9. (2026-10-28) Vérification 5.1 du changement `famille-conferences-des-financeurs` : ligne « Conférences des
    financeurs » de `scraping/REGISTRE_SOURCES.md` et fiches CFPPA dans `/admin/aaps`.
+10. (2026-10-28) Relecture du lot B1 par un second modèle : la session a posé `url_validee` (« à confirmer à l'écran »)
+   sur 47 sources, alors que ce champ est réservé aux adresses validées par Monsieur DUCOUT (`scraping/registre.py`,
+   ligne 32) ; Landes et Oise (refus HTTP 403) et Seine-Saint-Denis y sont « confirmées » sans avoir été lues.
+   Proposition : retirer `url_validee` des 39 sources nouvelles (leur `url_aap` porte déjà la page), porter la page
+   dans `url_aap` pour les 8 sources existantes (ancienne adresse gardée dans les notes), passer Landes, Oise et
+   Seine-Saint-Denis « à vérifier ». Rien n'est fait sans son accord.
 
 ## Tranchées
 

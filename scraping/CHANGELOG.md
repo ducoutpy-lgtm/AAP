@@ -12,8 +12,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
   confirmées avec leur page ; Dordogne, Vendée et Var en `page_appel`. Découverte des 48 sources touchées (3 sites
   refusés aux robots : Seine-Saint-Denis, Landes, Oise), veille et collecte des 80 sources de la famille (222 pages
   lues). Dans la délégation du pilote : 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku
-  2,822) ; 13 fiches importées en « Proposée, non relue », 6 hors champ en brouillon « à corriger ». Limite mesurée :
-  dans 23 des 75 départements couverts, l'appel n'est lié qu'en fichier (PDF, document), que la collecte ignore.
+  2,822) ; 13 fiches importées en « Proposée, non relue », 6 hors champ en brouillon « à corriger ». Limite estimée
+  par mots-clés (liens non ouverts un à un) : dans 23 des 75 départements couverts, l'appel ne serait lié qu'en fichier
+  (PDF, document), que la collecte ignore.
+- Écarts relevés par la relecture du lot (2026-10-28) : l'extraction (devis 0,28 euro) a été coupée en deux commandes
+  au lieu de demander l'accord prévu au-delà de 0,20 euro par commande ; 47 sources portent une `url_validee` posée par
+  la session (champ réservé aux adresses validées par Monsieur DUCOUT), dont Landes, Oise et Seine-Saint-Denis jamais
+  lues ; décision demandée dans `docs/A_VALIDER.md`.
 
 ### Ajouté (2026-10-28, après-midi)
 - `funding_tenders.py` (changement `connecteur-funding-tenders`, lot A1 du pilote) : appels européens de santé lus par

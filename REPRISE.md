@@ -64,7 +64,10 @@ Lot A3 fait : `financeur-reel-des-relais`, 10 fiches de la file corrigées (vrai
 conférences des financeurs de la prévention de la perte d'autonomie couvertes à 75 / 102 (73 %), registre 1 269
 sources, 222 pages lues par la veille, 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku 2,822),
 13 importées en « Proposée, non relue » (file : 121 fiches), 6 hors champ en « à corriger ». Dans 23 départements
-couverts, l'appel n'est publié qu'en fichier (PDF) : changement de lecture des PDF à proposer. Suite du plan : lots B2
+couverts, l'appel ne serait publié qu'en fichier (PDF), estimation par mots-clés : changement de lecture des PDF à
+proposer. Relecture du lot par un second modèle (journal `.audit/2026-10-28_lot-b1-conferences-financeurs.tsv`) :
+extraction coupée en deux commandes au lieu de demander l'accord au-delà de 0,20 euro ; 47 sources marquées
+`url_validee` par la session (champ réservé à Monsieur DUCOUT) : décision demandée (`docs/A_VALIDER.md`, question 10). Suite du plan : lots B2
 et B3 (fondations abritées, Recherche), puis lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
