@@ -33,5 +33,13 @@ La session chiffre le passage à l'échelle à partir des coûts mesurés : tout
 | 2026-10-28 | Avant le pilote : relais régionaux, extraction, contrôle et qualification (accord explicite) | 0,28 | 0,224 | 2,657 |
 | 2026-10-28 | Qualification de 22 fiches européennes (perdue : le connecteur réécrivait son fichier, corrigé) | 0,007 | 0,006 | 2,663 |
 | 2026-10-28 | Qualification de 24 fiches européennes (connecteur Funding & Tenders) | 0,007 | 0,006 | 2,669 |
+| 2026-10-28 | Lot B1, extraction de 128 textes de 79 sources des conférences des financeurs (58 fiches) | 0,15 | 0,083 | 2,752 |
+| 2026-10-28 | Lot B1, extraction de 94 textes de la Collectivité de Corse (20 fiches) | 0,13 | 0,056 | 2,808 |
+| 2026-10-28 | Lot B1, contrôle de 16 fiches (arrêt au plafond après 10, devis corrigé 0,004 pour les 6 restantes) | 0,005 + 0,004 | 0,009 | 2,817 |
+| 2026-10-28 | Lot B1, qualification de 16 fiches | 0,005 | 0,005 | 2,822 |
 
-Semaine du 2026-10-26 (pilote) : 0,012 euro sur 0,50.
+Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50.
+
+Lot B1 : 0,153 euro pour 13 fiches ouvertes ou sans date dans la file, soit 0,012 euro par fiche, au-dessus du seuil de
+0,01 euro du critère « Coût » : sur les 78 fiches extraites, 55 étaient déjà closes (éditions 2025 et 2026 des
+conférences) et 39 hors champ, les deux se recoupant. Le devis du contrôle sous-estimait son coût réel (0,0005 euro par fiche mesuré, 0,0003 prévu).

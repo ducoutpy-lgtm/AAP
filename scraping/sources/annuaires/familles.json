@@ -77,11 +77,13 @@
   {
    "famille": "Conférences des financeurs de la prévention de la perte d'autonomie",
    "categorie_registre": "collectivite",
-   "annuaire": "une par département (départements et ARS)",
+   "annuaire": "une par département, plus la Métropole de Lyon (sa commission des financeurs a son propre site) ; liste des départements de sources/departements.json",
    "adresse": null,
-   "date": null,
-   "total": 101,
-   "vague": 3
+   "date": "2026-10-28",
+   "total": 102,
+   "vague": 3,
+   "extrait": "sources/annuaires/conferences_financeurs.csv",
+   "note": "Lot B1 du pilote (changement famille-conferences-des-financeurs). Une ligne n'a d'id_registre que si la source suit une page où l'appel de la conférence est publié ; sinon la colonne motif dit pourquoi. Alsace (67, 68) : une seule source pour la Collectivité européenne d'Alsace."
   },
   {
    "famille": "Prévoyance, retraite complémentaire, groupes de protection sociale",

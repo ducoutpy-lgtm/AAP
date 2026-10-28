@@ -349,6 +349,16 @@ les liens d'appel qui mènent vers d'autres sites (page du financeur), au lieu d
 ordinaire (ARS), les liens vers d'autres sites (partenaires, ministère) ajouteraient des textes à extraire sans gain.
 Familles concernées : cancéropôles, pôles de compétitivité santé, gérontopôles, et les relais de la Fondation Béatrice
 Denys (couverture dans `REGISTRE_SOURCES.md`).
+Conférences des financeurs de la prévention de la perte d'autonomie (changement `famille-conferences-des-financeurs`,
+2026-10-28, lot B1 du pilote) : liste de référence `sources/annuaires/conferences_financeurs.csv` (101 départements et
+la Métropole de Lyon, colonnes `code;departement;id_registre;page;motif`). Une ligne n'a d'`id_registre` que si la
+source suit une page où l'appel de la conférence est publié ; sinon `motif` dit pourquoi (aucune page trouvée, site
+refusé aux robots, page suivie mais appel non vu ce jour-là). Règle d'inscription, dans l'ordre : la source du
+département liste déjà l'appel, la ligne la désigne ; sinon la rubrique des appels du département est posée sur la
+source du département si elle n'a ni adresse validée ni page déjà relue ; sinon une source dédiée
+`<departement>-commission-des-financeurs` est créée. Une adresse validée par Monsieur DUCOUT n'est jamais remplacée.
+Limite connue : dans 23 des 75 départements couverts (mesure par mots-clés du 2026-10-28), l'appel n'est lié qu'en
+fichier (PDF, document) ; la collecte ignore les fichiers, ces départements ne donnent donc pas de fiche.
 Mots-clés (changement `decouverte-mots-cles`, 2026-10-21, décision de Monsieur DUCOUT) : la notation reconnaît aussi les
 libellés anglais (« call for proposals »), les codes HORIZON-HLTH et EU4H, et les adresses dont un segment est `appel`,
 `appels`, `call` ou `calls` (lien « Lire la suite » vers /appel/<id>). HaDEA : 20 liens lus au lieu de 0.

@@ -60,8 +60,12 @@ connecteur `connecteur-funding-tenders` (`scraping/funding_tenders.py`), 24 appe
 (0,006 euro, cumul Haiku 2,669) et importés : file « à valider » 116 fiches. Lot A2 fait : `scripts/doublons.py --file`
 (changement `doublons-file-a-valider`), rapport `docs/DOUBLONS.md` : 47 groupes, 62 fiches à rejeter (29 dans la file).
 Lot A3 fait : `financeur-reel-des-relais`, 10 fiches de la file corrigées (vrai financeur lu entre parenthèses),
-36 restent au nom du relais. Suite du plan : lot B (familles Recherche, fondations abritées, conférences des
-financeurs), puis lot C (veille de bout en bout).
+36 restent au nom du relais. Lot B1 fait (« ok » de Monsieur DUCOUT) : changement `famille-conferences-des-financeurs`,
+conférences des financeurs de la prévention de la perte d'autonomie couvertes à 75 / 102 (73 %), registre 1 269
+sources, 222 pages lues par la veille, 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku 2,822),
+13 importées en « Proposée, non relue » (file : 121 fiches), 6 hors champ en « à corriger ». Dans 23 départements
+couverts, l'appel n'est publié qu'en fichier (PDF) : changement de lecture des PDF à proposer. Suite du plan : lots B2
+et B3 (fondations abritées, Recherche), puis lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise

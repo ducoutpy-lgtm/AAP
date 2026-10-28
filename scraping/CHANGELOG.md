@@ -4,6 +4,17 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-28, fin d'après-midi)
+- Famille des conférences des financeurs de la prévention de la perte d'autonomie (changement
+  `famille-conferences-des-financeurs`, lot B1 du pilote) : liste de référence `sources/annuaires/conferences_financeurs.csv`
+  (101 départements et la Métropole de Lyon), couverture « 75 / 102 (73 %) » dans `REGISTRE_SOURCES.md` ; 39 sources
+  ajoutées (registre : 1 269), dont le relais Pour bien vieillir Bretagne et la CGSS Martinique, et 8 sources existantes
+  confirmées avec leur page ; Dordogne, Vendée et Var en `page_appel`. Découverte des 48 sources touchées (3 sites
+  refusés aux robots : Seine-Saint-Denis, Landes, Oise), veille et collecte des 80 sources de la famille (222 pages
+  lues). Dans la délégation du pilote : 78 fiches extraites, 16 contrôlées et qualifiées (0,153 euro, cumul Haiku
+  2,822) ; 13 fiches importées en « Proposée, non relue », 6 hors champ en brouillon « à corriger ». Limite mesurée :
+  dans 23 des 75 départements couverts, l'appel n'est lié qu'en fichier (PDF, document), que la collecte ignore.
+
 ### Ajouté (2026-10-28, après-midi)
 - `funding_tenders.py` (changement `connecteur-funding-tenders`, lot A1 du pilote) : appels européens de santé lus par
   l'interface de recherche publique du portail Funding & Tenders (pôle Santé d'Horizon Europe, mission Cancer, IHI,

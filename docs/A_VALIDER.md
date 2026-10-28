@@ -23,6 +23,16 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 5. (2026-10-23) Inviter trois testeurs, jouer la démonstration financeur, ouvrir la facturation Blaze, trancher les
    mentions légales encore « à valider ».
 6. (2026-10-28) Option : courriel récapitulatif de la veille chaque lundi depuis contact@arcadiaco.fr (oui / non).
+7. (2026-10-28) Lot B1 (conférences des financeurs) : 13 fiches ajoutées à la file « Proposée, non relue » (121 au
+   total) ; urgentes : « Bienvenue à la Retraite » de la CGSS Martinique et « CFPPA Aisne 2027 » (clôture 30 octobre ;
+   l'appel de l'Aisne est déjà publié depuis appelaprojets.org, la nouvelle fiche est un doublon). Attention : `docs/DOUBLONS.md`
+   propose de rejeter l'« Axe 3 » du Pas-de-Calais comme doublon de l'« Axe 5 » ; ce sont deux appels distincts, ne pas
+   le rejeter. Correction de l'appariement (numéro d'axe) à faire dans un petit changement, sur accord.
+8. (2026-10-28) Appels publiés seulement en PDF : 23 des 75 départements couverts (mesure par mots-clés). Proposition :
+   un changement qui lit le texte des PDF liés depuis une page suivie (bibliothèque légère `pypdf`, à installer), avec
+   ses scénarios et un devis avant tout appel au modèle (oui / non).
+9. (2026-10-28) Vérification 5.1 du changement `famille-conferences-des-financeurs` : ligne « Conférences des
+   financeurs » de `scraping/REGISTRE_SOURCES.md` et fiches CFPPA dans `/admin/aaps`.
 
 ## Tranchées
 
