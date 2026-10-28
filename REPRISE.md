@@ -51,7 +51,15 @@ surtout ») : cancéropôles 7 / 7, pôles de compétitivité santé 6 / 6, gér
 sources) ; champ `relais` (liens vers les sites des financeurs gardés), 135 tests verts ; 170 textes collectés ; sur
 son accord (0,28 euro), 102 fiches extraites, contrôle et qualification de 53, 0,224 euro réel (cumul Haiku 2,657) ;
 71 fiches importées (64 en « Proposée, non relue », 7 archivées par le modèle). File « à valider » : 92 fiches (novap
-ferme le samedi 31 octobre). Restent sa relecture et le commit du changement.
+ferme le samedi 31 octobre). Changement commité et poussé (39a442f).
+
+**Pilote (2026-10-28)** : délégation accordée dans la conversation (budget 0,50 euro par semaine, imports en « à
+valider », commit et push en fin de changement) ; le garde-fou refuse que la session l'écrive dans `CLAUDE.md` : à
+recopier par Monsieur DUCOUT (`docs/A_VALIDER.md`, question 1). Critères et journal : `docs/PILOTE_MVP.md`. Lot A1 fait :
+connecteur `connecteur-funding-tenders` (`scraping/funding_tenders.py`), 24 appels européens de santé ouverts, qualifiés
+(0,006 euro, cumul Haiku 2,669) et importés : file « à valider » 116 fiches. Suite du plan : A2 doublons parmi les
+brouillons, A3 financeur remplacé par le relais, puis lot B (familles Recherche, fondations abritées, conférences des
+financeurs) et lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté
 (CLAUDE.md) ; un refus de déploiement par le garde-fou ne se contourne jamais par un autre outil, la commande est remise

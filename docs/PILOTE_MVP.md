@@ -31,3 +31,7 @@ La session chiffre le passage à l'échelle à partir des coûts mesurés : tout
 | Date | Commande | Devis | Réel | Cumul après |
 |---|---|---|---|---|
 | 2026-10-28 | Avant le pilote : relais régionaux, extraction, contrôle et qualification (accord explicite) | 0,28 | 0,224 | 2,657 |
+| 2026-10-28 | Qualification de 22 fiches européennes (perdue : le connecteur réécrivait son fichier, corrigé) | 0,007 | 0,006 | 2,663 |
+| 2026-10-28 | Qualification de 24 fiches européennes (connecteur Funding & Tenders) | 0,007 | 0,006 | 2,669 |
+
+Semaine du 2026-10-26 (pilote) : 0,012 euro sur 0,50.

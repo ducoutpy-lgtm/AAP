@@ -4,6 +4,18 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-10-28, après-midi)
+- `funding_tenders.py` (changement `connecteur-funding-tenders`, lot A1 du pilote) : appels européens de santé lus par
+  l'interface de recherche publique du portail Funding & Tenders (pôle Santé d'Horizon Europe, mission Cancer, IHI,
+  EDCTP3, EU4Health), sans navigateur ni modèle : vrai financeur, dates et montants structurés, lien officiel. Lecture
+  triée par identifiant (sans tri, deux lectures différaient de 190 appels), appels au statut périmé écartés, qualification
+  et contrôle repris d'une lecture à l'autre. 24 appels ouverts, qualifiés (0,006 euro) et importés en « Proposée, non
+  relue ». Appelé par `veille.cmd`. Sept tests ajoutés.
+
+### Corrigé (2026-10-28, après-midi)
+- `verification.decision_du_modele` : dates et montants d'une fiche du portail européen (`moteur` = `api-portail`) ne
+  sont plus retirés sur un verdict « fabriqué » du modèle, qui ne les voit pas dans la description (test ajouté).
+
 ### Ajouté (2026-10-28)
 - Changement `familles-relais-regionaux` (décision de Monsieur DUCOUT : « continue surtout ») : trois familles de relais
   régionaux de la santé au registre, avec leur liste de référence et leur couverture mesurée (`sources/annuaires/

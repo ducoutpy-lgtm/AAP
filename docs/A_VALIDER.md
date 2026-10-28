@@ -10,7 +10,8 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    `CLAUDE.md` ou dans un document du projet. Pour qu'elle vaille aux sessions suivantes, Monsieur DUCOUT l'inscrit
    lui-même dans `CLAUDE.md`, ou autorise la modification dans les réglages de Claude Code.
 2. (2026-10-28) Valider ou modifier les critères de réussite du pilote (`docs/PILOTE_MVP.md`).
-3. (2026-10-27) Relire la file « Proposée, non relue » de `/admin/aaps` (92 fiches le 2026-10-28) ; urgent : novap
+3. (2026-10-27) Relire la file « Proposée, non relue » de `/admin/aaps` (116 fiches le 2026-10-28, dont 24 appels
+   européens de santé du connecteur Funding & Tenders, titres en anglais) ; urgent : novap
    (clôture samedi 31 octobre), Idéa'Dom et les deux appels Émergence du Cancéropôle Nord-Ouest (30 octobre).
 4. (2026-10-23) Redéployer l'hébergement et les règles depuis `app` : le site sert encore les pièces jointes
    (`/documents/ars_corse/media_141914.pdf` répond par un PDF le 2026-10-28).

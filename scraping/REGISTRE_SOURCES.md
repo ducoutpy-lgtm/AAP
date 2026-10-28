@@ -3,7 +3,7 @@
 Généré le 2026-10-28 par `python scraping/registre.py --tableau` à partir de
 `scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).
 
-**1230 sources : 4 opérationnelle, 693 page vérifiée, 533 identifiée.**
+**1230 sources : 4 opérationnelle, 1 connecteur testé, 692 page vérifiée, 533 identifiée.**
 
 ## Couverture par famille (annuaires de référence)
 
@@ -937,7 +937,7 @@ Généré le 2026-10-28 par `python scraping/registre.py --tableau` à partir de
 | Interreg Rhin Supérieur | sante-et-medico-social | page vérifiée | hors-sante |  | [page](https://www.interreg-rhin-sup.eu/) | 2026-10-09 (200) | Santé transfrontalière ; rubrique AAP à préciser. |
 | Interreg Sudoe | sante | page vérifiée | hors-sante |  | [page](https://interreg-sudoe.eu/fr/futurs-appels-a-projets/) | 2026-10-09 (200) | Projets stratégiques accès aux soins (Sud-Ouest européen). |
 | L'Europe s'engage en France (FEDER, FSE+, Interreg) | sante-et-medico-social | identifiée | a-verifier |  | [page](https://www.europe-en-france.gouv.fr/fr/appels-a-projets) | 2026-10-09 (404) | Portail national des fonds européens régionaux ; chaque région publie ses AAP FEDER/FSE+. Adresse à confirmer. |
-| Portail Funding & Tenders (Commission européenne) | sante | page vérifiée | a-verifier |  | [page](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals) | 2026-10-09 (200) | Référentiel officiel de tous les appels européens ; application dynamique, scraping difficile. Constat du 2026-10-21 : application dynamique, 82 liens lus au navigateur, aucun lien d'appel lisible ; il faudrait son interface de données (API), hors outil actuel. |
+| Portail Funding & Tenders (Commission européenne) | sante | connecteur testé | a-verifier | funding_tenders | [page](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals) | 2026-10-28 (200) | Référentiel officiel de tous les appels européens ; application dynamique, scraping difficile. Constat du 2026-10-21 : application dynamique, 82 liens lus au navigateur, aucun lien d'appel lisible ; il faudrait son interface de données (API), hors outil actuel. Depuis le 2026-10-28 (changement connecteur-funding-tenders) : lu par son interface de recherche publique (funding_tenders.py), appels de santé seulement ; 48 retenus au premier passage. |
 
 ## Collectivités territoriales (230)
 

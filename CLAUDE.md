@@ -240,7 +240,10 @@ Cycle (commandes slash dans Claude Code) :
   (2026-10-09), `decouverte-rubriques-aap`, `qualification-des-sources`, `relecture-qualification` (2026-10-12), `extraction-echantillon-aap`, `consultation-aap-sans-compte` (2026-10-13),
   `nettoyage-financeurs-territoires` (2026-10-14, validé par Monsieur DUCOUT : quatre exigences ajoutées à la spec
   `import-aap-scrapes`, source réelle, financeur canonique, territoire déduit, rapport des doublons).
-  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `familles-relais-regionaux`
+  En cours (jour 3 clos le 2026-10-21 : boîte d'envoi contact@arcadiaco.fr configurée, premiers courriels envoyés) : `connecteur-funding-tenders`
+  (2026-10-28, lot A1 du pilote `docs/PILOTE_MVP.md` : `scraping/funding_tenders.py` lit l'interface publique du portail européen, programmes
+  de santé seulement, lecture triée, statuts périmés écartés, qualification reprise d'une lecture à l'autre ; 24 appels ouverts qualifiés
+  (0,006 euro, cumul Haiku 2,669) et importés en « Proposée, non relue » ; 144 tests verts ; reste sa vérification 4.1), `familles-relais-regionaux`
   (2026-10-28, « continue surtout » : cancéropôles 7 / 7, pôles de compétitivité santé 6 / 6, gérontopôles 14 / 14 au registre, 1 230 sources ;
   champ `relais` (liens d'appel vers les sites des financeurs gardés par la découverte et la veille), 135 tests verts ; 170 textes collectés ;
   sur accord, 102 fiches extraites, 53 contrôlées et qualifiées (0,224 euro, cumul Haiku 2,657 euros), 71 importées dont 64 en « Proposée,

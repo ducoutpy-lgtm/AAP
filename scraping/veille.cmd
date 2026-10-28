@@ -23,6 +23,9 @@ echo.
 echo Portail appelsprojetsrecherche.fr (export CSV, sans navigateur ni modele) :
 "..\.venv\Scripts\python.exe" portail_recherche.py
 echo.
+echo Portail europeen Funding ^& Tenders (interface publique, appels de sante, sans navigateur ni modele) :
+"..\.venv\Scripts\python.exe" funding_tenders.py
+echo.
 echo Courriels hebdomadaires (bilan administrateur, appels de la semaine aux candidats) :
 "..\.venv\Scripts\python.exe" alertes.py --admin --candidats
 echo.

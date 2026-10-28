@@ -120,3 +120,11 @@ def test_decision_du_modele_garde_les_dates_d_un_csv():
     assert d["statut"] == "validee" and d["corrections"] == {}
     fiche["scrape_metadata"]["moteur"] = "api"
     assert v.decision_du_modele(fiche)["corrections"] == {"date_cloture": None, "date_ouverture": None}
+
+
+def test_decision_du_modele_garde_dates_et_montants_du_portail_europeen():
+    """Connecteur Funding & Tenders (2026-10-28) : dates et montants viennent des données du portail."""
+    fiche = controlee(["date_cloture", "montant_max"], date_cloture=("fabrique", None), montant_max=("fabrique", None))
+    fiche["scrape_metadata"]["moteur"] = "api-portail"
+    d = v.decision_du_modele(fiche)
+    assert d["statut"] == "validee" and d["corrections"] == {}

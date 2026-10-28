@@ -114,9 +114,11 @@ def decision_du_modele(fiche: dict) -> dict | None:
     corrections, a_relire = {}, []
     # Dates lues dans une colonne structuree (connecteur CSV du portail appelsprojetsrecherche.fr, 2026-10-21) : le
     # modele ne voit que la description et les croit « fabriquees » ; elles viennent de l'editeur, on les garde.
-    dates_structurees = (fiche.get("scrape_metadata") or {}).get("moteur") == "csv"
+    # Connecteur Funding & Tenders (2026-10-28) : dates et montants viennent aussi des donnees du portail.
+    moteur = (fiche.get("scrape_metadata") or {}).get("moteur")
+    structures = CHAMPS_DATES if moteur == "csv" else CHAMPS_DATES + CHAMPS_MONTANTS if moteur == "api-portail" else ()
     for nom in ver.get("douteux") or []:
-        if nom in CHAMPS_NON_BLOQUANTS or (dates_structurees and nom in CHAMPS_DATES):
+        if nom in CHAMPS_NON_BLOQUANTS or nom in structures:
             continue
         champ = (ver.get("champs") or {}).get(nom) or {}
         verdict, correction = champ.get("verdict"), (champ.get("correction") or "").strip()

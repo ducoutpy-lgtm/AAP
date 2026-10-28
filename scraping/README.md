@@ -286,6 +286,27 @@ python champ.py --classer --moteur api --fichier results/appelsprojetsrecherche.
 Appelé chaque semaine par `veille.cmd`. Limite : le portail relaie des appels déjà collectés chez les partenaires
 (PEPR PROPSY de l'ANR, Emergences de l'ANRS) sous une autre adresse ; `scripts/doublons.py` les signale.
 
+## Portail européen Funding & Tenders (connecteur sans modèle)
+
+Le portail de la Commission européenne est chargé par script : la découverte n'y lit aucun lien. Son interface de
+recherche publique (`api.tech.ec.europa.eu/search-api`, clé « SEDIA », celle du site) renvoie tous les appels ouverts
+ou à venir avec des données structurées. `funding_tenders.py` (changement `connecteur-funding-tenders`, 2026-10-28)
+les lit page par page et garde les programmes de santé, reconnus au début de l'identifiant : `HORIZON-HLTH` (pôle
+Santé), `HORIZON-MISS-*-CANCER` (mission Cancer), `HORIZON-JU-IHI`, `HORIZON-JU-GH-EDCTP3`, `EU4H`. Financeur, dates
+(première date limite à venir pour un appel en deux étapes), contributions minimale et maximale par projet et lien
+officiel viennent des données du portail.
+
+```bash
+python funding_tenders.py                        # results/funding_tenders.json (zéro euro)
+python qualifier_fiches.py --qualifier --dry-run # devis de la qualification des fiches nouvelles
+```
+
+Précautions apprises au premier passage : lecture triée par identifiant (sans tri, deux lectures différaient de 190
+appels) ; appels que le portail laisse « ouverts » avec des clôtures de 2023-2024 écartés ; qualification et contrôle du
+modèle repris d'une lecture à l'autre (le fichier est réécrit à chaque veille) ; le contrôle du modèle ne retire pas les
+dates et montants structurés (`moteur` = `api-portail`). Appelé chaque semaine par `veille.cmd`. Hors programmes de
+santé (I3, Digital, ESF+) : non retenus.
+
 ## Découverte des rubriques appels à projets
 
 Avant d'écrire un connecteur, savoir où chaque source publie. `decouverte.py` ouvre la page de chaque
