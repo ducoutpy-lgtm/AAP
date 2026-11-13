@@ -71,7 +71,8 @@ extraction coupée en deux commandes au lieu de demander l'accord au-delà de 0,
 `page-ciblee-par-la-session` : champ `page_ciblee`, lu comme une page validée, 0 écart de lecture ; Landes, Oise et
 Seine-Saint-Denis « à vérifier ») ; les 25 autres sources dans le même cas migrées le 2026-11-13 sur son accord (question 12), 72 pages ciblées en tout,
 plus aucune `url_validee` « à confirmer ». Poussées vers GitHub
-suspendues tant que les constructions Netlify du site `jazzy-tarsier-6499a9` ne sont pas arrêtées (question 11). Suite du plan : lots B2
+suspendues du 2026-10-28 au 2026-11-13, le temps que Monsieur DUCOUT arrête les constructions Netlify du site
+`jazzy-tarsier-6499a9` (question 11), puis reprises. Suite du plan : lots B2
 et B3 (fondations abritées, Recherche), puis lot C (veille de bout en bout).
 
 **Règles ajoutées pendant cette session** : chaque commande payante est lancée avec `--plafond` = cumul + devis accepté

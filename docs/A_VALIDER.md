@@ -35,14 +35,8 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 9. (2026-10-28) Vérification 5.1 du changement `famille-conferences-des-financeurs` : ligne « Conférences des
    financeurs » de `scraping/REGISTRE_SOURCES.md` et fiches CFPPA dans `/admin/aaps`.
 10. (tranchée le 2026-10-28, voir en bas)
-11. (2026-10-28) Netlify (équipe « aapi », plan gratuit) : crédits épuisés, déploiements en pause. Le site
-   `jazzy-tarsier-6499a9` (« Deploys from GitHub », page vide en 404) a publié à 15 h 09, la minute de la dernière
-   poussée du dépôt AAP vers GitHub (seul de ses dépôts poussé ce jour-là). Un déploiement de production réussi coûte
-   15 crédits sur 300 par mois (documentation Netlify « How credits work ») ; le dépôt a reçu 19 poussées en octobre,
-   dont 8 le 2026-10-28. Proposition : arrêter les constructions de ce site (Project configuration > Build & deploy >
-   Continuous deployment > Build settings > Configure > Stopped builds) ou le supprimer ; même question pour
-   `teal-twilight-a7fcf3` (version d'avril, gardée en repli). En attendant, la session ne pousse plus vers GitHub
-   (commits locaux seulement).
+11. (tranchée le 2026-11-13 pour `jazzy-tarsier-6499a9`, voir en bas) Reste : `teal-twilight-a7fcf3` (Netlify,
+   version d'avril gardée en repli, reliée à GitHub) à garder, arrêter ou supprimer.
 12. (tranchée le 2026-11-13, voir en bas)
 
 ## Tranchées
@@ -51,4 +45,5 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 |---|---|---|
 | 2026-10-28 | Délégation et petit budget de pilote | Accordés dans la conversation (« oui »), pour cette session |
 | 2026-10-28 | 10. Les 47 `url_validee` posées par la session au lot B1 | « Oui, corrige », puis « Marqueur propre » : champ `page_ciblee` (changement `page-ciblee-par-la-session`), 47 sources migrées sans perte de lecture, Landes, Oise et Seine-Saint-Denis « à vérifier » |
+| 2026-11-13 | 11. Crédits Netlify consommés par les poussées (site `jazzy-tarsier-6499a9`, 15 crédits par déploiement, 300 par mois) | « Oui, pousse » : constructions arrêtées par Monsieur DUCOUT dans Netlify ; poussées vers GitHub reprises |
 | 2026-11-13 | 12. Les 25 autres `url_validee` posées par une session « à confirmer à l'écran » (27 et 28 octobre) | « Oui, migre-les » : 25 sources migrées vers `page_ciblee`, 0 écart de lecture ; plus aucune `url_validee` « à confirmer » au registre ; les 4 adresses posées avec son accord du 2026-10-21 restent telles quelles |
