@@ -61,3 +61,6 @@ scripts/sauvegardes/
 # === Journaux de décisions du skill show-me-your-work (locaux, 2026-10-23) ===
 .audit/
 decisions.tsv
+
+# === Anciens documents de départ : contiennent des clés d'API en clair (2026-11-13) ===
+docs/AAP Santé document intial/

@@ -19,8 +19,7 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 3 ter. (2026-10-28) Test ancien en échec, hors du travail du jour : `test_six_orthographes_un_financeur_nom_extrait_conserve`
    (`scripts/tests`) suppose qu'aucune source ne rattache « Département du Rhône », alors que le registre le fait ; il
    échoue déjà au 2026-10-23. Proposition : adapter le test à un nom vraiment inconnu (à faire par la session sur accord).
-4. (2026-10-23) Redéployer l'hébergement et les règles depuis `app` : le site sert encore les pièces jointes
-   (`/documents/ars_corse/media_141914.pdf` répond par un PDF le 2026-10-28).
+4. (faite le 2026-11-13, voir en bas)
 5. (2026-10-23) Inviter trois testeurs, jouer la démonstration financeur, ouvrir la facturation Blaze, trancher les
    mentions légales encore « à valider ».
 6. (2026-10-28) Option : courriel récapitulatif de la veille chaque lundi depuis contact@arcadiaco.fr (oui / non).
@@ -47,3 +46,4 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 | 2026-10-28 | 10. Les 47 `url_validee` posées par la session au lot B1 | « Oui, corrige », puis « Marqueur propre » : champ `page_ciblee` (changement `page-ciblee-par-la-session`), 47 sources migrées sans perte de lecture, Landes, Oise et Seine-Saint-Denis « à vérifier » |
 | 2026-11-13 | 11. Crédits Netlify consommés par les poussées (site `jazzy-tarsier-6499a9`, 15 crédits par déploiement, 300 par mois) | « Oui, pousse » : constructions arrêtées par Monsieur DUCOUT dans Netlify ; poussées vers GitHub reprises |
 | 2026-11-13 | 12. Les 25 autres `url_validee` posées par une session « à confirmer à l'écran » (27 et 28 octobre) | « Oui, migre-les » : 25 sources migrées vers `page_ciblee`, 0 écart de lecture ; plus aucune `url_validee` « à confirmer » au registre ; les 4 adresses posées avec son accord du 2026-10-21 restent telles quelles |
+| 2026-11-13 | 4. Redéployer l'hébergement et les règles depuis `app` | « Oui, mets en ligne » : déploiement fait le 2026-11-13 à 14 h 49 depuis la séance de pilotage (`firebase deploy --only hosting,firestore:rules`, « Deploy complete! ») ; `/documents/ars_corse/media_141914.pdf` ne renvoie plus de PDF et la page d'accueil sert la compilation du jour ; non vérifié : les pages après connexion et la tâche 2.1 de `pieces-jointes-hors-ligne` |
