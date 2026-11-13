@@ -48,6 +48,13 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   `app`, JDK 21 en tête du PATH), à vérifier en ligne ; puis extraction des PDF des conférences (devis 0,59 euro,
   `veille_payante.py`-style : `--plafond 3.463`), contrôle, qualification, import « à valider ». Sans cet accord avant
   lundi, la veille du 16 novembre s'arrêtera à l'étape payante (« accord demandé »).
+- Fait le 2026-11-13 vers 22 h 40 sur son « Oui pour les deux » : mise en ligne groupée (site `index-DWY0k7Mk.js`,
+  règles Firestore avec le rôle protégé) ; extraction des 211 textes des conférences lancée en tâche de fond, plafond
+  3,463 euros. Arrêt de la séance à 93 % du quota. À la reprise : lire la fin de
+  `scraping/logs/extraction_pdf_cfppa_2026-11-13.log` et la ligne du coût cumulé ; le contrôle, la qualification et
+  l'import en « à valider » se feront par la veille du lundi 16 (`veille_payante.py`, délégation de 0,50 euro), ou à la
+  main avant ; noter la dépense réelle dans `docs/PILOTE_MVP.md`. Restent à jouer sur les émulateurs : boutons
+  « site officiel » et suivi externe.
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;

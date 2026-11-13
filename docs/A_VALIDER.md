@@ -42,6 +42,9 @@ Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de 
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
 le correctif » (une seule mise en ligne, site et règles ensemble). La dépense (17) et la mise en ligne (22) attendent
 son « oui » direct dans la conversation de la séance AAP, selon la règle de la séance.
+« Oui pour les deux » écrit par Monsieur DUCOUT dans la conversation le 2026-11-13 vers 22 h 40 : mise en ligne faite
+(site et règles Firestore, « released rules », version `index-DWY0k7Mk.js` servie) ; extraction des PDF des
+conférences lancée en tâche de fond avec `--plafond 3.463` (journal `scraping/logs/extraction_pdf_cfppa_2026-11-13.log`).
 
 ## Tranchées
 
