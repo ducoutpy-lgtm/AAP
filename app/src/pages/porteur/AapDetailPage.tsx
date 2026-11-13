@@ -13,7 +13,7 @@ import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
-import { aQuiSAdresse, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
+import { aQuiSAdresse, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
@@ -215,7 +215,20 @@ export default function AapDetailPage() {
           </div>
 
           {/* CTA : porteur connecté -> formulaire ; visiteur sans compte -> connexion puis retour ici */}
-          {(userProfile?.userType === 'porteur' || !currentUser) && (
+          {/* Fiche importée : la candidature se fait sur le site officiel (question 21, 2026-11-13) */}
+          {candidatureSurSiteOfficiel(aap) && (
+            <div className="mt-6">
+              <a href={aap.externalUrl} target="_blank" rel="noopener noreferrer"
+                className="block w-full text-center px-6 py-3 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700">
+                Candidater sur le site officiel
+              </a>
+              <p className="mt-2 text-center text-sm text-gray-500">
+                Cet appel est publié par {aap.financeurName || 'le financeur'} : le dossier se dépose sur son site, selon
+                l'annonce officielle. Notez votre démarche dans « Mes candidatures » pour la suivre.
+              </p>
+            </div>
+          )}
+          {!candidatureSurSiteOfficiel(aap) && (userProfile?.userType === 'porteur' || !currentUser) && (
             <div className="mt-6">
               <Button
                 size="lg"

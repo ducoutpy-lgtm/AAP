@@ -10,7 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Sparkles, Target, Calendar, Euro, MapPin, Building, AlertTriangle, CheckCircle } from 'lucide-react';
 import { deadlineLabel, getDaysUntilDeadline } from '../../utils/deadline';
-import { libelleMontant } from '../../utils/candidat';
+import { candidatureSurSiteOfficiel, libelleMontant } from '../../utils/candidat';
 import { libelleTerritoire } from '../../utils/territoires';
 import { manquesDuProfil, recommander, type Recommandation } from '../../utils/recommandations';
 
@@ -147,8 +147,13 @@ export default function RecommendationsPage() {
                   </div>
 
                   <div className="mt-4">
-                    <Button className="w-full" onClick={(e) => { e.stopPropagation(); navigate(`/aap/${aap.id}/candidater`); }}>
-                      Candidater
+                    {/* Fiche importée : candidature sur le site officiel (question 21, 2026-11-13) */}
+                    <Button className="w-full" onClick={(e) => {
+                      e.stopPropagation();
+                      if (candidatureSurSiteOfficiel(aap)) window.open(aap.externalUrl, '_blank', 'noopener');
+                      else navigate(`/aap/${aap.id}/candidater`);
+                    }}>
+                      {candidatureSurSiteOfficiel(aap) ? 'Candidater sur le site officiel' : 'Candidater'}
                     </Button>
                   </div>
                 </Card>

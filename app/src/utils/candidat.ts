@@ -64,6 +64,12 @@ export function appelsPourProfil<T extends Pick<AAP, 'territoriesEligible' | 'de
   return [...concernes].sort((a, b) => rang(a) - rang(b));
 }
 
+// Fiche importée par la veille (financeurId « scraped ») : personne ne reçoit la candidature dans l'application ; on
+// candidate sur le site officiel (question 21, « Lien site officiel », Monsieur DUCOUT, 2026-11-13).
+export function candidatureSurSiteOfficiel(aap: Pick<AAP, 'source' | 'financeurId' | 'externalUrl'>): boolean {
+  return (aap.source === 'scraped' || aap.financeurId === 'scraped') && !!aap.externalUrl;
+}
+
 export function echeancesProches<T extends Pick<AAP, 'deadline'>>(aaps: T[], jours = 30): T[] {
   return aaps.filter(aap => {
     const j = getDaysUntilDeadline(aap.deadline);

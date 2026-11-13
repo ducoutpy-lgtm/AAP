@@ -1,5 +1,15 @@
 // Tests du parcours candidat (changement parcours-candidat-jour-1, tâche 1.1).
 import { describe, expect, it } from 'vitest';
+import { candidatureSurSiteOfficiel } from './candidat';
+
+describe('candidatureSurSiteOfficiel (candidature-site-officiel, question 21)', () => {
+  it("renvoie au site officiel pour une fiche importée qui a une adresse, au formulaire sinon", () => {
+    expect(candidatureSurSiteOfficiel({ source: 'scraped', financeurId: 'scraped', externalUrl: 'https://ars.fr/aap' })).toBe(true);
+    expect(candidatureSurSiteOfficiel({ financeurId: 'scraped', externalUrl: 'https://ars.fr/aap' })).toBe(true);
+    expect(candidatureSurSiteOfficiel({ source: 'manual', financeurId: 'f1', externalUrl: '' })).toBe(false);
+    expect(candidatureSurSiteOfficiel({ source: 'scraped', financeurId: 'scraped', externalUrl: '' })).toBe(false);
+  });
+});
 import { appelsPourProfil, aQuiSAdresse, colonneDe, echeancesProches, famillesDepuisCriteres, libelleMontant, repartirCandidatures } from './candidat';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
