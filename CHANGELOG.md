@@ -5,6 +5,14 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-13, semaine 2 du plan)
+- Recommandations depuis le profil (changement `recommandations-profil`) : `app/src/utils/recommandations.ts` compare
+  chaque appel ouvert et contrôlé à la région, au statut, au type d'établissement, aux projets et au champ du candidat,
+  écarte ce qui contredit le profil, et donne pour chaque appel ses raisons et ses réserves ; page `/recommandations`
+  réécrite (fin du score en pourcentage, du budget inventé et de « Infinity jours »). Joué sur les émulateurs : 14 appels
+  pour un EHPAD associatif d'Île-de-France, contre 42 avant les règles de domaine. Semis des émulateurs corrigé
+  (`territoriesEligible`). Mise en ligne sur accord.
+
 ### Mis en ligne (2026-11-13, soir, « Oui, les trois »)
 - 43 doublons rejetés en base après sauvegarde (`scripts/sauvegardes/doublons_2026-11-13_1744.json`) : 363 appels
   publiés, 109 fiches dans la file « à valider ».

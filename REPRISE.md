@@ -27,7 +27,10 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   (soir) : 43 doublons rejetés après sauvegarde (363 publiées, 109 dans la file), hébergement mis en ligne (version
   `index-UGUi_gyX.js`), tâche de la veille passée sans fenêtre (`veille_cachee.vbs`). À surveiller : la veille du lundi
   16 novembre doit aller jusqu'à « Veille terminee » dans `scraping/logs/veille.log` ; la tâche tourne aussi sur
-  batterie depuis le 2026-11-13 (question 16). Semaine 2 ensuite : recommandations depuis le profil, lecture des PDF sur devis.
+  batterie depuis le 2026-11-13 (question 16).
+- Semaine 2 commencée le 2026-11-13 au soir : recommandations depuis le profil (`recommandations-profil`, joué sur les
+  émulateurs, 14 appels pour l'EHPAD de test, mise en ligne sur accord) ; reste la lecture des appels publiés en PDF
+  (changement à ouvrir, `pypdf`, devis avant tout appel).
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;

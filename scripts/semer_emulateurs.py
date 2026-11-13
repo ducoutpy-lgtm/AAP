@@ -69,8 +69,9 @@ def semer_financeur(db, financeur_uid: str, porteur_uid: str, maintenant: dateti
         db.collection("aap").document(a["id"]).set({
             "title": a["title"], "description": a["description"], "financeurId": financeur_uid, "financeurName": "Fondation Test",
             "status": a["status"], "deadline": maintenant + timedelta(days=a["jours"]), "views": a["views"], "applicationsCount": 0,
-            "territories": a["territories"], "sectorsTargeted": a["sectors"], "budgetMin": a["budgetMin"], "budgetMax": a["budgetMax"],
-            "eligibilityCriteria": ["Établissement ou association du secteur sanitaire ou médico-social"], "source": "manual",
+            # territoriesEligible et critères en texte, comme l'application les lit (changement recommandations-profil)
+            "territoriesEligible": a["territories"], "sectorsTargeted": a["sectors"], "budgetMin": a["budgetMin"], "budgetMax": a["budgetMax"],
+            "eligibilityCriteria": "- Établissement ou association du secteur sanitaire ou médico-social", "source": "manual",
             "createdAt": maintenant - timedelta(days=30), "updatedAt": maintenant,
             **({"publishedAt": maintenant - timedelta(days=30)} if a["status"] == "published" else {}),
         })
