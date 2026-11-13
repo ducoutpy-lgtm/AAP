@@ -13,6 +13,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   de l'accord de Monsieur DUCOUT.
 
 ### Modifié (2026-11-13)
+- Recherche : appels clos masqués par défaut, option « Tous, clôturés compris » (changement `appels-clos-masques`,
+  semaine 1 du plan) ; joué sur les émulateurs (8 appels par défaut, 10 avec les clos, 2 clos). Mise en ligne sur accord.
 - Pages légales selon ses décisions (changement `mentions-legales-decisions`) : plus aucune mention « À VALIDER » ;
   tarifs provisoires sans paiement ouvert pendant le test ; aucun outil de mesure d'audience ; emplacement vérifié écrit
   (base dans l'Union européenne, comptes de connexion et fichiers déposés aux États-Unis). Tests, lint et compilation

@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
-  filtresDepuisProfil, montantAnnonce, paramsDepuisFiltres, statutAppel, totalMontants,
+  filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, statutAppel, totalMontants,
 } from './recherche';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
@@ -14,6 +14,17 @@ describe('statutAppel', () => {
     expect(statutAppel({ deadline: dans(10) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(30) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(45) })).toBe('ouvert');
+  });
+});
+
+describe('statut par défaut (appels-clos-masques)', () => {
+  it('masque les clos sans filtre, les montre avec « tous » ou « clos »', () => {
+    expect(garderSelonStatut({ deadline: dans(-1) }, '')).toBe(false);
+    expect(garderSelonStatut({ deadline: dans(10) }, '')).toBe(true);
+    expect(garderSelonStatut({ deadline: null }, '')).toBe(true);
+    expect(garderSelonStatut({ deadline: dans(-1) }, 'tous')).toBe(true);
+    expect(garderSelonStatut({ deadline: dans(-1) }, 'clos')).toBe(true);
+    expect(garderSelonStatut({ deadline: dans(45) }, 'clos')).toBe(false);
   });
 });
 

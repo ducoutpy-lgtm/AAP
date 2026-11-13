@@ -9,6 +9,13 @@
       "port": 3000
     },
     {
+      "name": "emulateurs-firebase",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "set PATH=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot\\bin;%PATH%&& npm run emulateurs"],
+      "cwd": "app",
+      "port": 8080
+    },
+    {
       "name": "app-emulateurs",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:emulateurs"],

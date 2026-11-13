@@ -47,6 +47,15 @@ export function statutAppel(aap: Pick<AAP, 'deadline'>): StatutAppel {
 }
 
 // Montant annoncé d'une fiche : enveloppe totale si connue, sinon plafond par projet, sinon rien
+// Filtre de statut (changement appels-clos-masques, 2026-11-13) : sans choix, les appels clos sont masqués ;
+// « tous » les montre aussi ; sinon le statut choisi seulement.
+export const STATUT_TOUS = 'tous';
+export function garderSelonStatut(aap: Pick<AAP, 'deadline'>, statut: string): boolean {
+  if (statut === STATUT_TOUS) return true;
+  if (!statut) return statutAppel(aap) !== 'clos';
+  return statutAppel(aap) === statut;
+}
+
 export function montantAnnonce(aap: Pick<AAP, 'budgetTotal' | 'budgetMax'>): number | null {
   if (aap.budgetTotal != null && aap.budgetTotal > 0) return aap.budgetTotal;
   if (aap.budgetMax != null && aap.budgetMax > 0) return aap.budgetMax;
@@ -82,7 +91,7 @@ export function etiquettesActives(f: FiltresRecherche): Etiquette[] {
   if (f.financeur) e.push({ cle: 'financeur', libelle: f.financeur });
   if (f.source) e.push({ cle: 'source', libelle: `Source : ${f.source}` });
   if (f.relecture === 'relues') e.push({ cle: 'relecture', libelle: 'Fiches relues ou contrôlées' });
-  if (f.statut) e.push({ cle: 'statut', libelle: LIBELLES_STATUT[f.statut as StatutAppel] ?? f.statut });
+  if (f.statut) e.push({ cle: 'statut', libelle: f.statut === STATUT_TOUS ? 'Clôturés compris' : LIBELLES_STATUT[f.statut as StatutAppel] ?? f.statut });
   if (f.destinataire) e.push({ cle: 'destinataire', libelle: libelleDestinataire(f.destinataire) });
   if (f.typeAppel) e.push({ cle: 'typeAppel', libelle: libelleTypeAppel(f.typeAppel) });
   if (f.budgetMin) e.push({ cle: 'budgetMin', libelle: `Budget min. ${euros(Number(f.budgetMin))}` });

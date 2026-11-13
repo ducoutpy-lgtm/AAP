@@ -19,7 +19,8 @@ import { libelleFiltres } from '../../utils/journal';
 import { correspondDestinataire, correspondTypeAppel, LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
   correspondTerritoire, etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams,
-  filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, statutAppel, totalMontants, type FiltresRecherche,
+  filtresDepuisProfil, garderSelonStatut, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
+  type FiltresRecherche,
   type StatutAppel,
 } from '../../utils/recherche';
 
@@ -153,10 +154,9 @@ export default function SearchAapPage() {
       result = result.filter(aap => correspondTerritoire(aap, filters.territory));
     }
 
-    // Filtre par statut calculé d'après la date de clôture (recherche-guidee) : ouvert, bientôt clôturé, clôturé, sans date
-    if (filters.statut) {
-      result = result.filter(aap => statutAppel(aap) === filters.statut);
-    }
+    // Filtre par statut calculé d'après la date de clôture (recherche-guidee) : ouvert, bientôt clôturé, clôturé, sans date ;
+    // sans choix, les appels clos sont masqués (appels-clos-masques, 2026-11-13)
+    result = result.filter(aap => garderSelonStatut(aap, filters.statut));
 
     // Qualification (jour 2 du plan MVP) : à qui s'adresse l'appel (« tous » répond à tout), type d'appel
     if (filters.destinataire) {
@@ -397,7 +397,8 @@ export default function SearchAapPage() {
                   onChange={(e) => setFilters({ ...filters, statut: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
-                  <option value="">Tous les statuts</option>
+                  <option value="">Ouverts et sans date</option>
+                  <option value={STATUT_TOUS}>Tous, clôturés compris</option>
                   {(Object.keys(LIBELLES_STATUT) as StatutAppel[]).map(s => (
                     <option key={s} value={s}>
                       {s === 'bientot-clos' ? 'Bientôt clôturé (30 jours ou moins)' : LIBELLES_STATUT[s]}
