@@ -536,8 +536,13 @@ python extraction_locale.py --extraire --moteur api --dry-run   # devis des text
 python ../scripts/perimer_fiches.py --dry-run         # fiches publiées absentes depuis 2 rejeux -> « à corriger » (accord)
 ```
 
-`veille.cmd` enchaîne relecture, collecte, marquage, rapport et devis, sans aucun appel payant ; l'extraction des
-textes nouveaux se lance à la main après accord. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
+`veille.cmd` enchaîne relecture, collecte, marquage, rapport, puis, depuis le 2026-11-13 (changement
+`veille-autonome`), les étapes payantes dans la délégation de Monsieur DUCOUT : `veille_payante.py --reel` écrit le
+devis de l'extraction, du contrôle et de la qualification (devis du contrôle et de la qualification doublé : l'outil
+sous-estime d'environ moitié), ne lance une étape que si son devis tient dans le reste des 0,50 euro de la semaine et
+sous 4,50 euros de cumul, avec `--plafond` = cumul + devis, puis importe les fiches nouvelles en « à valider »
+(`import_to_firestore.py --a-valider` : jamais publiées). Au-delà, l'étape attend son accord (motif écrit au journal).
+Les courriels partent ensuite. `python veille_payante.py` sans option n'écrit que les devis. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
 `absences` ; la péremption passe la fiche « à corriger » (mention « Non relue » dans l'application), jamais une fiche
 validée par Monsieur DUCOUT.
 
@@ -546,7 +551,9 @@ planifiée Windows « AAP Sante - veille hebdomadaire », le lundi à 8 h, qui e
 sortie ajoutée à `logs/veille.log`, rattrapage si le PC était éteint à l'heure dite). Garde-fou : une page déjà relue
 le jour même est sautée, sinon une relance compterait une absence de trop aux liens disparus. Pour voir ou retirer la
 tâche : Planificateur de tâches Windows, ou `schtasks /Query /TN "AAP Sante - veille hebdomadaire"`. Après chaque
-passage, lire `VEILLE.md`, puis demander l'extraction des textes nouveaux (devis affiché en fin de journal).
+passage, lire `VEILLE.md` et le bilan reçu par courriel ; la fin du journal porte « Veille terminee ». Le 9 novembre, la
+veille s'est arrêtée parce que sa fenêtre a été fermée : `veille_cachee.vbs` la lance sans fenêtre (action de la tâche à
+remplacer par `wscript.exe "...\scraping\veille_cachee.vbs"`, sur accord de Monsieur DUCOUT).
 
 ### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
 

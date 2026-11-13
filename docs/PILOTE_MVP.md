@@ -38,7 +38,12 @@ La session chiffre le passage à l'échelle à partir des coûts mesurés : tout
 | 2026-10-28 | Lot B1, contrôle de 16 fiches (arrêt au plafond après 10, devis corrigé 0,004 pour les 6 restantes) | 0,005 + 0,004 | 0,009 | 2,817 |
 | 2026-10-28 | Lot B1, qualification de 16 fiches | 0,005 | 0,005 | 2,822 |
 
-Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50.
+| 2026-11-13 | Veille autonome (preuve avant le lundi 16), extraction de 60 textes nouveaux : 25 fiches, 1 échec | 0,07 | 0,037 | 2,859 |
+| 2026-11-13 | Veille autonome, contrôle de 16 fiches (arrêt au plafond après 9, devis du contrôle doublé, puis 7) | 0,005 + 0,004 | 0,009 | 2,868 |
+| 2026-11-13 | Veille autonome, qualification de 16 fiches | 0,01 | 0,005 | 2,873 |
+
+Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50. Semaine du 2026-11-09 : 0,051 euro sur 0,50 (délégation permanente
+collée par Monsieur DUCOUT dans la conversation du 2026-11-13).
 
 Lot B1 : 0,153 euro pour 13 fiches ouvertes ou sans date dans la file, soit 0,012 euro par fiche, au-dessus du seuil de
 0,01 euro du critère « Coût » : sur les 78 fiches extraites, 55 étaient déjà closes (éditions 2025 et 2026 des

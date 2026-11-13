@@ -4,6 +4,14 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-11-13, soir)
+- Veille autonome (changement `veille-autonome`, semaine 1 du plan, délégation permanente de Monsieur DUCOUT) :
+  `veille_payante.py` enchaîne devis, extraction, contrôle et qualification dans la limite de 0,50 euro par semaine,
+  avec `--plafond`, puis l'import en « à valider » (`import_to_firestore.py --a-valider`) ; `veille.cmd` l'appelle avant
+  les courriels ; `veille_cachee.vbs` lance la veille sans fenêtre (tâche à modifier sur accord). Preuve réelle :
+  25 fiches extraites de 60 textes, 16 contrôlées et qualifiées, 22 créées en brouillon (16 dans la file, 6 hors champ),
+  0,051 euro. 154 tests verts.
+
 ### Modifié (2026-11-13)
 - Page ciblée par une session, suite (changement `page-ciblee-par-la-session`, question 12, accord de Monsieur DUCOUT :
   « Oui, migre-les ») : les 25 autres sources dont `url_validee` avait été posée par une session « à confirmer à

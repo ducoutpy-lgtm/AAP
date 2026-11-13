@@ -385,6 +385,18 @@ def test_doublons_file_axes_distincts():
     assert [sorted(i for i, _ in g) for g in doublons.groupes_file([("axe5", axe5), ("reprise", reprise)])] == [["axe5", "reprise"]]
 
 
+def test_import_a_valider_jamais_validee_par_le_modele():
+    """Changement veille-autonome : avec --a-valider, une fiche nouvelle validée par le modèle entre en file « à valider » ;
+    rejetée, à corriger ou relue par Monsieur DUCOUT, elle reste telle quelle."""
+    modele = {"status": "published", "tags": [], "validation": {"statut": "validee", "par": "claude-haiku-5-5"}}
+    d = imp.en_attente_de_validation(modele)
+    assert d["status"] == "draft" and d["validation"]["statut"] == "proposee" and "a-verifier" in d["tags"]
+    assert modele["status"] == "published"  # fonction pure
+    rejetee = {"status": "archived", "tags": [], "validation": {"statut": "rejetee", "par": "claude-haiku-5-5"}}
+    relue = {"status": "published", "tags": [], "validation": {"statut": "validee", "par": imp.RELECTEUR}}
+    assert imp.en_attente_de_validation(rejetee) == rejetee and imp.en_attente_de_validation(relue) == relue
+
+
 def test_doublons_file_appels_distincts():
     """Changement doublons-appels-distincts (faux doublons du 2026-11-13) : même programme dans deux régions, deux appels
     d'un même site aux titres proches, objets chiffrés différents ; un vrai relais reste rapproché."""

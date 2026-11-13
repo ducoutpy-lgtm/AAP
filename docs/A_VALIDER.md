@@ -17,6 +17,15 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    faire par lui dans Netlify (Project configuration > Build & deploy > Continuous deployment > Build settings >
    Configure > Stopped builds).
 
+13. (2026-11-13) Rejet des doublons en base : `python scripts/rejeter_doublons.py --reel` archive 43 fiches (28 de la
+   file, 15 publiées : le site passe de 378 à 363 appels), après sauvegarde ; aucune n'a été relue par lui ; les 22
+   rapprochements par la règle approximative ont été relus sur les pages. Oui / non.
+14. (2026-11-13) Mise en ligne de l'hébergement : pages légales selon ses décisions et appels clos masqués par défaut
+   (`npm run build && firebase deploy --only hosting --project aapi-11bc3` depuis `app`). Oui / non.
+15. (2026-11-13) Veille sans fenêtre : remplacer l'action de la tâche planifiée « AAP Sante - veille hebdomadaire » par
+   `wscript.exe "...\scraping\veille_cachee.vbs"`, pour qu'elle ne puisse plus être arrêtée en fermant sa fenêtre
+   (cause de l'arrêt du 9 novembre). Oui / non.
+
 ## Tranchées
 
 | Date | Question | Réponse |

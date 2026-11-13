@@ -164,6 +164,20 @@ def publication_selon_controle(doc: dict) -> dict:
     return doc
 
 
+def en_attente_de_validation(doc: dict) -> dict:
+    """Option --a-valider (changement veille-autonome, delegation de Monsieur DUCOUT du 2026-11-13 : « importer les
+    fiches en a valider, jamais en validee ») : une fiche validee par le modele entre en brouillon « proposee » ; rejetee,
+    a corriger ou relue par Monsieur DUCOUT, elle reste telle quelle (fonction pure)."""
+    v = doc.get("validation") or {}
+    if v.get("statut") != "validee" or v.get("par") == RELECTEUR:
+        return doc
+    d = dict(doc)
+    d["status"] = "draft"
+    d["validation"] = {**v, "statut": "proposee"}
+    d["tags"] = etiqueter(d.get("tags", []), "proposee")
+    return d
+
+
 def appliquer_qualification(doc: dict, item: dict, today: date) -> dict:
     """Qualification du modele (scraping/qualifier_fiches.py, jour 2 du plan MVP) portee sur le document (fonction
     pure) : bloc qualification (destinataires, type d'appel, objets, date d'ouverture, auteur, date), startDate depuis
@@ -513,6 +527,8 @@ def main() -> int:
     parser.add_argument("--key", default=str(DEFAULT_KEY), help="chemin de la cle de compte de service Firebase")
     parser.add_argument("--bucket", help="bucket Storage (defaut : <project_id>.firebasestorage.app)")
     parser.add_argument("--projet", help="identifiant de projet force (emulateurs : demo-aap avec FIRESTORE_EMULATOR_HOST)")
+    parser.add_argument("--a-valider", action="store_true",
+                        help="fiches nouvelles validees par le modele en file « a valider » (brouillon proposee), jamais publiees")
     parser.add_argument(
         "--vers-storage",
         action="store_true",
@@ -554,6 +570,8 @@ def main() -> int:
             doc = appliquer_decision_du_modele(doc, decision)
             doc = appliquer_qualification(doc, item, today)
             doc = publication_selon_controle(doc)
+            if args.a_valider:
+                doc = en_attente_de_validation(doc)
             hors_champ += "hors-champ" in doc["tags"]
             verifier_champs(doc, f"{doc['externalUrl']} ({source_name}.json)")
             mapped.append((identifiant(doc["externalUrl"]), doc))
