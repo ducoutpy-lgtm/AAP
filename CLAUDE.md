@@ -248,7 +248,7 @@ Cycle (commandes slash dans Claude Code) :
   reste sa vérification 5.1), `page-ciblee-par-la-session` (2026-10-28 soir, « Marqueur propre » : champ `page_ciblee` du registre pour
   une page trouvée par une session, lu comme une page validée, promu en `url_validee` par sa « bonne page » à l'écran ; 47 sources
   migrées, 0 écart de lecture, Aude et Dordogne relues ; Landes, Oise, Seine-Saint-Denis « à vérifier » ; 150 tests verts ; reste sa
-  vérification 5.1 et sa réponse pour 25 autres sources), `connecteur-funding-tenders`
+  vérification 5.1 ; 2026-11-13, « Oui, migre-les » : 25 autres sources « à confirmer » migrées, 0 écart, 72 pages ciblées en tout), `connecteur-funding-tenders`
   (2026-10-28, lot A1 du pilote `docs/PILOTE_MVP.md` : `scraping/funding_tenders.py` lit l'interface publique du portail européen, programmes
   de santé seulement, lecture triée, statuts périmés écartés, qualification reprise d'une lecture à l'autre ; 24 appels ouverts qualifiés
   (0,006 euro, cumul Haiku 2,669) et importés en « Proposée, non relue » ; 144 tests verts ; reste sa vérification 4.1), `familles-relais-regionaux`

@@ -27,6 +27,14 @@ Correction acceptée par Monsieur DUCOUT le 2026-10-28 (« Oui, corrige », puis
   financeurs (CFPPA) … (7 liens) », « rubrique-trouvee Aude – portail Moi Senior, appels à projets … (1 liens) » ;
   `liens.json` de la Dordogne : seuil 1, page d'appel, la page elle-même en premier lien ; Aude : seuil 1, appel
   #moisenior 2027.)
+- [x] 3.3 Migration des 25 autres sources posées « à confirmer à l'écran » par une session (question 12 de
+  `docs/A_VALIDER.md`, accord de Monsieur DUCOUT du 2026-11-13 : « Oui, migre-les »). Fait quand : essai à blanc, puis
+  migration réelle, « 0 écart » et découverte rejouée collés. (Fait le 2026-11-13 : « 25 sources migrées vers
+  page_ciblee ; réglages avant / après : 0 écart ; réglages / liens.json : 0 écart (25 fichiers comparés) ;
+  url_validee « à confirmer » restantes : 0 ; page_ciblee au total : 72 ; format : 0 erreur » ; « Registre valide :
+  1269 sources » ; diff de `REGISTRE_SOURCES.md` : la date de génération seulement. Découverte rejouée :
+  « rubrique-trouvee Gérond'if … appel-à-projet-tubbe (1 liens) » (page d'appel) et « rubrique-trouvee Fehap …
+  novap.fehap.fr (1 liens) » ; « 150 passed ».)
 - [x] 4.1 Documentation : `scraping/README.md`, `scraping/CHANGELOG.md`, `docs/A_VALIDER.md` (question 10 tranchée,
   25 autres sources soumises en question 12), `REPRISE.md`, `CLAUDE.md`.
 - [ ] 5.1 Vérification par Monsieur DUCOUT : `python scraping/registre.py --verifier-format`, puis lien « page » de la

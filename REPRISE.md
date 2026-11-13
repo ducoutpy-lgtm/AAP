@@ -69,7 +69,8 @@ proposer. Relecture du lot par un second modèle (journal `.audit/2026-10-28_lot
 extraction coupée en deux commandes au lieu de demander l'accord au-delà de 0,20 euro ; 47 sources marquées
 `url_validee` par la session (champ réservé à Monsieur DUCOUT), corrigées le soir même sur son accord (changement
 `page-ciblee-par-la-session` : champ `page_ciblee`, lu comme une page validée, 0 écart de lecture ; Landes, Oise et
-Seine-Saint-Denis « à vérifier ») ; 25 autres sources dans le même cas soumises (question 12). Poussées vers GitHub
+Seine-Saint-Denis « à vérifier ») ; les 25 autres sources dans le même cas migrées le 2026-11-13 sur son accord (question 12), 72 pages ciblées en tout,
+plus aucune `url_validee` « à confirmer ». Poussées vers GitHub
 suspendues tant que les constructions Netlify du site `jazzy-tarsier-6499a9` ne sont pas arrêtées (question 11). Suite du plan : lots B2
 et B3 (fondations abritées, Recherche), puis lot C (veille de bout en bout).
 

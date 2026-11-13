@@ -1560,9 +1560,9 @@
         "relecteur": "session Claude Code, à confirmer à l'écran par Monsieur DUCOUT (tâche 5.1)"
       }
     },
-    "url_validee": "https://novap.fehap.fr/",
-    "validee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
-    "validee_le": "2026-10-27"
+    "page_ciblee": "https://novap.fehap.fr/",
+    "ciblee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "uniopss",
@@ -21650,7 +21650,6 @@
     "nom": "Gérond'if, gérontopôle d'Île-de-France",
     "categorie": "autre",
     "url_aap": "https://www.gerondif.org/",
-    "url_validee": "https://www.gerondif.org/appel-%C3%A0-projet-tubbe",
     "page_appel": true,
     "perimetre": "medico-social",
     "statut": "page-verifiee",
@@ -21668,8 +21667,9 @@
         "relecteur": "session Claude Code, à confirmer à l'écran par Monsieur DUCOUT (tâche 5.1)"
       }
     },
-    "validee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
-    "validee_le": "2026-10-27"
+    "page_ciblee": "https://www.gerondif.org/appel-%C3%A0-projet-tubbe",
+    "ciblee_par": "session Claude Code (publication LinkedIn transmise par Monsieur DUCOUT), à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "fondation-beatrice-denys",
@@ -21693,9 +21693,6 @@
     "nom": "Turenne Groupe – actualités (gestion de la Fondation Béatrice Denys)",
     "categorie": "autre",
     "url_aap": "https://www.turennecapital.com/actualite/",
-    "url_validee": "https://www.turennecapital.com/actualite/",
-    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
-    "validee_le": "2026-10-27",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21711,16 +21708,16 @@
         "date": "2026-10-27",
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
-    }
+    },
+    "page_ciblee": "https://www.turennecapital.com/actualite/",
+    "ciblee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "canceropole-clara",
     "nom": "Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) – appels à projets",
     "categorie": "etablissement",
     "url_aap": "https://www.canceropole-clara.com/projects/",
-    "url_validee": "https://www.canceropole-clara.com/projects/",
-    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
-    "validee_le": "2026-10-27",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21737,16 +21734,16 @@
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.canceropole-clara.com/projects/",
+    "ciblee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "canceropole-paca",
     "nom": "Cancéropôle Provence-Alpes-Côte d'Azur – appels à projets",
     "categorie": "etablissement",
     "url_aap": "https://canceropole-paca.com/appel-a-projet/",
-    "url_validee": "https://canceropole-paca.com/appel-a-projet/",
-    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
-    "validee_le": "2026-10-27",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21763,16 +21760,16 @@
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://canceropole-paca.com/appel-a-projet/",
+    "ciblee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "eurasante",
     "nom": "Eurasanté – appels à projets",
     "categorie": "autre",
     "url_aap": "https://www.eurasante.com/news/appels-a-projets/",
-    "url_validee": "https://www.eurasante.com/news/appels-a-projets/",
-    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
-    "validee_le": "2026-10-27",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21789,16 +21786,16 @@
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.eurasante.com/news/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "biotech-sante-bretagne",
     "nom": "Biotech Santé Bretagne – appels à projets",
     "categorie": "autre",
     "url_aap": "https://www.biotech-sante-bretagne.fr/appels-a-projets/",
-    "url_validee": "https://www.biotech-sante-bretagne.fr/appels-a-projets/",
-    "validee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
-    "validee_le": "2026-10-27",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21815,16 +21812,16 @@
         "relecteur": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.biotech-sante-bretagne.fr/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page de liste vérifiée au navigateur), demande de Monsieur DUCOUT, à confirmer à l'écran",
+    "ciblee_le": "2026-10-27"
   },
   {
     "id": "canceropole-ile-de-france",
     "nom": "Cancéropôle Île-de-France – appels à projets en cours",
     "categorie": "etablissement",
     "url_aap": "https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/",
-    "url_validee": "https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21841,16 +21838,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.canceropole-idf.fr/nos-actions/appels-a-projets-en-cours/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "canceropole-grand-sud-ouest",
     "nom": "Cancéropôle Grand Sud-Ouest – appels à projets",
     "categorie": "etablissement",
     "url_aap": "https://kgso.fr/consulter-les-appels-a-projets",
-    "url_validee": "https://kgso.fr/consulter-les-appels-a-projets",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21867,16 +21864,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://kgso.fr/consulter-les-appels-a-projets",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "canceropole-nord-ouest",
     "nom": "Cancéropôle Nord-Ouest – appels à projets",
     "categorie": "etablissement",
     "url_aap": "https://canceropole-nordouest.org/appels-projets-cno/",
-    "url_validee": "https://canceropole-nordouest.org/appels-projets-cno/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21893,16 +21890,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://canceropole-nordouest.org/appels-projets-cno/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "atlanpole-biotherapies",
     "nom": "Atlanpole Biotherapies – appels à projets nationaux",
     "categorie": "autre",
     "url_aap": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/",
-    "url_validee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21919,16 +21916,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-nationaux/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "atlanpole-biotherapies-regionaux",
     "nom": "Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, Bretagne, Centre-Val de Loire)",
     "categorie": "autre",
     "url_aap": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/",
-    "url_validee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21945,16 +21942,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.atlanpolebiotherapies.com/appels-a-projets/appels-a-projets-regionaux/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "clubster-nsl",
     "nom": "Clubster NSL (Nutrition Santé Longévité) – appels à projets en cours",
     "categorie": "autre",
     "url_aap": "https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/",
-    "url_validee": "https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21971,16 +21968,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.clubster-nsl.com/financer-vos-innovations/appel-a-projets-en-cours/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "eurobiomed",
     "nom": "Eurobiomed – appels à projets",
     "categorie": "autre",
     "url_aap": "https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/",
-    "url_validee": "https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -21997,7 +21994,10 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.eurobiomed.org/financements/financements-publics/appels-a-projet/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "biovalley-france",
@@ -22021,9 +22021,6 @@
     "nom": "Lyonbiopôle Auvergne-Rhône-Alpes – appels à projets",
     "categorie": "autre",
     "url_aap": "https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets",
-    "url_validee": "https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22040,16 +22037,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://lyonbiopole.com/offre-innovation-de-lyonbiopole/appels-a-projets",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "medicen-paris-region",
     "nom": "Medicen Paris Region – appels à projets",
     "categorie": "autre",
     "url_aap": "https://medicen.org/vous-financer/appels-a-projets/",
-    "url_validee": "https://medicen.org/vous-financer/appels-a-projets/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "sante",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22066,16 +22063,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://medicen.org/vous-financer/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-aura",
     "nom": "Gérontopôle Auvergne-Rhône-Alpes – actualités",
     "categorie": "autre",
     "url_aap": "https://www.gerontopole-aura.fr/actualites/",
-    "url_validee": "https://www.gerontopole-aura.fr/actualites/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22092,16 +22089,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.gerontopole-aura.fr/actualites/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "pole-gerontologie-innovation-bfc",
     "nom": "Pôle de Gérontologie et d'Innovation Bourgogne-Franche-Comté – actualités",
     "categorie": "autre",
     "url_aap": "https://www.pole-gerontologie.fr/News",
-    "url_validee": "https://www.pole-gerontologie.fr/News",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22118,16 +22115,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.pole-gerontologie.fr/News",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "kozh-ensemble-gerontopole-bretagne",
     "nom": "Kozh Ensemble, gérontopôle de Bretagne – veille sur les appels à projets",
     "categorie": "autre",
     "url_aap": "https://kozhensemble.fr/appels-a-projets/",
-    "url_validee": "https://kozhensemble.fr/appels-a-projets/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22144,7 +22141,10 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://kozhensemble.fr/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-centre-val-de-loire",
@@ -22168,9 +22168,6 @@
     "nom": "Gérontopôle di Corsica – appels à projets",
     "categorie": "autre",
     "url_aap": "https://gerontopole.corsica/appels-a-projets/",
-    "url_validee": "https://gerontopole.corsica/appels-a-projets/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22187,7 +22184,10 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://gerontopole.corsica/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-hauts-de-france",
@@ -22211,9 +22211,6 @@
     "nom": "Gérontopôle Seine Estuaire Normandie – appels à projets",
     "categorie": "autre",
     "url_aap": "https://www.gerontopole-normandie.fr/appel-%C3%A0-projet",
-    "url_validee": "https://www.gerontopole-normandie.fr/appel-%C3%A0-projet",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22230,16 +22227,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.gerontopole-normandie.fr/appel-%C3%A0-projet",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-nouvelle-aquitaine",
     "nom": "Gérontopôle Nouvelle-Aquitaine – appels à projets",
     "categorie": "autre",
     "url_aap": "https://gerontopole-na.fr/les-ressources/appels-a-projets/",
-    "url_validee": "https://gerontopole-na.fr/les-ressources/appels-a-projets/",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22256,16 +22253,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://gerontopole-na.fr/les-ressources/appels-a-projets/",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-grand-est",
     "nom": "Gérontopôle Grand Est – actualités",
     "categorie": "autre",
     "url_aap": "https://gerontopolegrandest.fr/actualites",
-    "url_validee": "https://gerontopolegrandest.fr/actualites",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22282,16 +22279,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://gerontopolegrandest.fr/actualites",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-pays-de-la-loire",
     "nom": "Gérontopôle Autonomie Longévité des Pays de la Loire – appels à projets",
     "categorie": "autre",
     "url_aap": "https://www.gerontopole-paysdelaloire.fr/appels-projets",
-    "url_validee": "https://www.gerontopole-paysdelaloire.fr/appels-projets",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22308,16 +22305,16 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://www.gerontopole-paysdelaloire.fr/appels-projets",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-sud",
     "nom": "Gérontopôle Sud – appels à projets",
     "categorie": "autre",
     "url_aap": "https://gerontopolesud.fr/recherche/appels-projet",
-    "url_validee": "https://gerontopolesud.fr/recherche/appels-projet",
-    "validee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
-    "validee_le": "2026-10-28",
     "perimetre": "medico-social",
     "statut": "page-verifiee",
     "connecteur": "",
@@ -22334,7 +22331,10 @@
         "relecteur": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT"
       }
     },
-    "relais": true
+    "relais": true,
+    "page_ciblee": "https://gerontopolesud.fr/recherche/appels-projet",
+    "ciblee_par": "session Claude Code (page lue au navigateur et par recherche web), à confirmer à l'écran par Monsieur DUCOUT",
+    "ciblee_le": "2026-10-28"
   },
   {
     "id": "gerontopole-la-reunion",

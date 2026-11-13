@@ -1,6 +1,6 @@
 # Registre des sources d'appels à projets
 
-Généré le 2026-10-28 par `python scraping/registre.py --tableau` à partir de
+Généré le 2026-11-13 par `python scraping/registre.py --tableau` à partir de
 `scraping/sources/registre.json` (fichier de vérité : corriger le JSON, pas ce tableau).
 
 **1269 sources : 4 opérationnelle, 1 connecteur testé, 731 page vérifiée, 533 identifiée.**

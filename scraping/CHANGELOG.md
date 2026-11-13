@@ -4,6 +4,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-11-13)
+- Page ciblée par une session, suite (changement `page-ciblee-par-la-session`, question 12, accord de Monsieur DUCOUT :
+  « Oui, migre-les ») : les 25 autres sources dont `url_validee` avait été posée par une session « à confirmer à
+  l'écran » les 27 et 28 octobre (FEHAP, Gérond'if, Turenne, cancéropôles, pôles de compétitivité, gérontopôles)
+  passent dans `page_ciblee` ; 0 écart de lecture sur leurs 25 fichiers de liens, Gérond'if et FEHAP relues (un lien
+  chacune). Le registre ne contient plus aucune `url_validee` « à confirmer » : 72 pages ciblées en tout.
+
 ### Modifié (2026-10-28, soir)
 - Page ciblée par une session (changement `page-ciblee-par-la-session`, correction acceptée par Monsieur DUCOUT :
   « Oui, corrige », puis « Marqueur propre ») : nouveau champ du registre `page_ciblee` (avec `ciblee_par`,
