@@ -361,7 +361,8 @@ département liste déjà l'appel, la ligne la désigne ; sinon la rubrique des 
 source du département si elle n'a ni adresse validée ni page déjà relue ; sinon une source dédiée
 `<departement>-commission-des-financeurs` est créée. Une adresse validée par Monsieur DUCOUT n'est jamais remplacée.
 Limite connue : dans 23 des 75 départements couverts (mesure par mots-clés du 2026-10-28), l'appel n'est lié qu'en
-fichier (PDF, document) ; la collecte ignore les fichiers, ces départements ne donnent donc pas de fiche.
+fichier (PDF, document). Depuis le 2026-11-13 (changement `lecture-pdf-appels`), `extraction_locale.py --collecter
+--pdf --ids ...` lit aussi le texte des liens PDF (voir plus bas) ; les fichiers Word, Excel et ZIP restent ignorés.
 Mots-clés (changement `decouverte-mots-cles`, 2026-10-21, décision de Monsieur DUCOUT) : la notation reconnaît aussi les
 libellés anglais (« call for proposals »), les codes HORIZON-HLTH et EU4H, et les adresses dont un segment est `appel`,
 `appels`, `call` ou `calls` (lien « Lire la suite » vers /appel/<id>). HaDEA : 20 liens lus au lieu de 0.
@@ -638,8 +639,12 @@ python ../scripts/import_to_firestore.py --source extraction_locale   # import d
 ```
 
 - Une adresse citée par deux sources (Région et Conseil régional d'Île-de-France, Drôme et sa commission des
-  financeurs) n'est lue et extraite qu'une fois ; les fichiers PDF, Word, Excel et ZIP restent hors périmètre
-  (2 395 adresses web uniques pour 3 236 liens).
+  financeurs) n'est lue et extraite qu'une fois ; les fichiers Word, Excel et ZIP restent hors périmètre
+  (2 395 adresses web uniques pour 3 236 liens). Les PDF se lisent sur option, `--collecter --pdf` (changement
+  `lecture-pdf-appels`, 2026-11-13) : téléchargement sans navigateur (httpx), texte lu par `pypdf` (40 premières pages,
+  20 Mo au plus, pas de lecture optique des PDF scannés), écrit au même format qu'une page web, donc compté par le devis
+  et lu par l'extraction. La veille du lundi ne lit pas encore les PDF : le stock (575 liens dans les rubriques
+  confirmées) se traite par familles, devis écrit et accord de Monsieur DUCOUT avant l'extraction.
 - Chaque fiche porte `scrape_metadata.moteur = "ollama"`, `modele`, `source` (identifiant du registre) et
   `a_verifier = true` ; l'import ajoute l'étiquette `a-verifier` et l'application affiche le badge « À vérifier » dans
   la liste et la fiche. Pages refusées dans `results/extraction_locale_non_aap.json`, échecs dans
@@ -747,7 +752,8 @@ Le fichier `sources/fondation_de_france.py` implémente une **pagination offset*
 
 ## Limitations connues du POC
 
-- **OCR PDF non actif** : les pièces jointes sont téléchargées mais pas lues par Claude. Les champs uniquement présents dans le PDF (ex : grille précise de montants) restent `null`. Prévu en sprint 2 MVP (cascade pdfplumber → Docling → Mistral OCR).
+- **OCR PDF non actif** : les pièces jointes des connecteurs historiques sont téléchargées mais pas lues ; les liens
+  d'appel en PDF des rubriques se lisent depuis le 2026-11-13 par `pypdf` (texte seulement, pas de PDF scanné). Les champs uniquement présents dans le PDF (ex : grille précise de montants) restent `null`. Prévu en sprint 2 MVP (cascade pdfplumber → Docling → Mistral OCR).
 - **Dédoublonnage inter-source non implémenté** : un AAP co-financé listé chez 2 financeurs générera 2 entrées (signatures différentes). Normal au POC, à gérer en base.
 - **Pas encore** : indexation vectorielle (pgvector), back-office admin, matching IA bi-face.
 - **Sources "hors pattern"** (ex : FDF AMI Mayotte à `/fr/mayotte-foret`) : le sélecteur CSS des cartes standard ne les capte pas. Traiter au cas par cas si pertinent pour le périmètre santé/médico-social.

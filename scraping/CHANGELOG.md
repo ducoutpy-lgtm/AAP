@@ -4,6 +4,13 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-11-13, nuit, semaine 2 du plan)
+- Lecture des appels publiés en PDF (changement `lecture-pdf-appels`, question 8 « Oui, avec devis ») :
+  `lecture_pdf.py` (httpx, `pypdf` 6.21.4, 20 Mo et 40 pages au plus, pas de lecture optique) et option
+  `extraction_locale.py --collecter --pdf`. Collecte gratuite des conférences des financeurs : 202 PDF lus, 28 scannés
+  sans texte, 24 introuvables. Devis d'extraction 0,59 euro au plus pour 211 textes, au-delà de la délégation de la
+  semaine : accord demandé. La veille du lundi ne lit pas encore les PDF. 159 tests verts.
+
 ### Ajouté (2026-11-13, soir)
 - Veille autonome (changement `veille-autonome`, semaine 1 du plan, délégation permanente de Monsieur DUCOUT) :
   `veille_payante.py` enchaîne devis, extraction, contrôle et qualification dans la limite de 0,50 euro par semaine,

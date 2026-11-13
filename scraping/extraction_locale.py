@@ -8,6 +8,7 @@ en « rubrique confirmée », au lieu des 10 rubriques de l'échantillon.
 Usage (depuis scraping/, environnement .venv) :
   python extraction_locale.py --bilan                      # avancement, sans appel au modèle
   python extraction_locale.py --collecter [--ids a,b]      # texte de chaque lien web (navigateur), une adresse une fois
+  python extraction_locale.py --collecter --pdf [--ids a,b] # aussi le texte des liens PDF (lecture-pdf-appels, pypdf)
   python extraction_locale.py --extraire --modele qwen3:8b [--limite N] [--ids a,b]
                                                            # fiches -> results/extraction_locale.json (reprise)
   python extraction_locale.py --extraire --moteur api --dry-run
@@ -28,8 +29,11 @@ import sys
 import time
 from pathlib import Path
 
+import httpx
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import echantillon  # noqa: E402
+import lecture_pdf  # noqa: E402
 from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, RESULTS, JS_TEXTE, lire_fiche, nettoyer_texte, nom_fiche  # noqa: E402
 
 REGISTRE = ICI / "sources" / "registre.json"
@@ -73,12 +77,14 @@ def sources_confirmees(registre: list[dict], ids: set[str] | None = None) -> lis
     return sorted(retenues, key=lambda s: rang.get(s.get("categorie"), len(ORDRE_FAMILLES)))
 
 
-def liens_web(liens: list[dict], vus: set[str]) -> list[dict]:
-    """Liens de pages web (pas de fichier à télécharger), jamais vus ; vus est complété au passage."""
+def liens_web(liens: list[dict], vus: set[str], pdf: bool = False) -> list[dict]:
+    """Liens de pages web (pas de fichier à télécharger), jamais vus ; vus est complété au passage. Avec pdf, les liens
+    PDF sont gardés (changement lecture-pdf-appels) ; les autres fichiers restent écartés."""
     retenus = []
     for lien in liens:
         href = lien["href"]
-        if href in vus or href.split("?")[0].lower().endswith(FICHIERS_IGNORES):
+        ignore = href.split("?")[0].lower().endswith(FICHIERS_IGNORES) and not (pdf and lecture_pdf.est_adresse_pdf(href))
+        if href in vus or ignore:
             continue
         vus.add(href)
         retenus.append(lien)
@@ -114,23 +120,35 @@ def rubriques(ids: set[str] | None = None) -> list[dict]:
     return [{"id": s["id"], "nom": s["nom"], "categorie": s.get("categorie", "")} for s in sources_confirmees(registre, ids)]
 
 
-def liens_par_source(sources: list[dict]) -> dict[str, list[dict]]:
+def liens_par_source(sources: list[dict], pdf: bool = False) -> dict[str, list[dict]]:
     """Liens web uniques de chaque source, dans l'ordre de traitement (une adresse va à la première source)."""
     vus, resultat = set(), {}
     for s in sources:
         chemin = DOSSIER / s["id"] / "liens.json"
         liens = json.loads(chemin.read_text(encoding="utf-8"))["liens"] if chemin.exists() else []
-        resultat[s["id"]] = liens_web(liens, vus)
+        resultat[s["id"]] = liens_web(liens, vus, pdf)
     return resultat
 
 
-async def collecter(sources: list[dict]) -> None:
-    """Même méthode que echantillon.collecter, sur tous les liens web ; une adresse n'est lue qu'une fois."""
-    from playwright.async_api import async_playwright
-    from utils import accept_cookies, make_browser_context
+def texte_du_pdf(href: str, client: httpx.Client) -> tuple[str, str]:
+    """(texte nettoyé, motif) d'un lien PDF ; texte vide et motif si rien n'est lisible (changement lecture-pdf-appels)."""
+    donnees = lecture_pdf.telecharger_pdf(href, client)
+    if donnees is None:
+        return "", "PDF introuvable, trop gros ou page d'erreur"
+    texte, pages = lecture_pdf.texte_pdf(donnees)
+    texte = nettoyer_texte(texte)
+    return (texte, f"PDF, {pages} pages") if len(texte) >= 200 else ("", "PDF sans texte lisible (scan ?)")
 
-    par_source = liens_par_source(sources)
-    total_lues = 0
+
+async def collecter(sources: list[dict], pdf: bool = False) -> None:
+    """Même méthode que echantillon.collecter, sur tous les liens web ; une adresse n'est lue qu'une fois. Avec pdf, les
+    liens PDF sont lus sans navigateur et leur texte écrit au même format (changement lecture-pdf-appels)."""
+    from playwright.async_api import async_playwright
+    from utils import DEFAULT_HTTP_HEADERS, accept_cookies, make_browser_context
+
+    par_source = liens_par_source(sources, pdf)
+    total_lues = pdf_lus = pdf_vides = 0
+    client = httpx.Client(follow_redirects=True, headers=DEFAULT_HTTP_HEADERS, timeout=60) if pdf else None
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         try:
@@ -147,6 +165,18 @@ async def collecter(sources: list[dict]) -> None:
                     chemin = dossier_fiches / nom_fiche(lien["href"])
                     if chemin.exists():
                         presentes += 1
+                        continue
+                    if client is not None and lecture_pdf.est_adresse_pdf(lien["href"]):
+                        texte, motif = texte_du_pdf(lien["href"], client)
+                        if not texte:
+                            pdf_vides += 1
+                            print(f"  {s['id']} : {lien['href']} -> {motif}")
+                            continue
+                        chemin.write_text(echantillon.en_tete_collecte() + f"{lien['href']}\n{lien['texte']} ({motif})\n\n{texte}",
+                                          encoding="utf-8")
+                        lues += 1
+                        pdf_lus += 1
+                        await asyncio.sleep(2.0)  # rythme humain
                         continue
                     try:
                         await page.goto(lien["href"], wait_until="domcontentloaded", timeout=30000)
@@ -166,7 +196,9 @@ async def collecter(sources: list[dict]) -> None:
                 print(f"{s['categorie']:16} {s['nom'][:45]:45} {presentes} déjà présentes, {lues} lues sur {len(liens)}")
         finally:
             await browser.close()
-    print(f"\n{total_lues} pages lues à ce passage.")
+            if client is not None:
+                client.close()
+    print(f"\n{total_lues} pages lues à ce passage." + (f" PDF : {pdf_lus} lus, {pdf_vides} sans texte ou introuvables." if pdf else ""))
 
 
 # ---------------------------------------------------------------- entrée
@@ -176,6 +208,7 @@ def main() -> int:
     ensure_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--collecter", action="store_true")
+    parser.add_argument("--pdf", action="store_true", help="avec --collecter : lire aussi les liens PDF (pypdf, sans navigateur)")
     parser.add_argument("--extraire", action="store_true")
     parser.add_argument("--bilan", action="store_true")
     parser.add_argument("--modele", help=f"{MODELE_DEFAUT} en local, {MODELE_API_DEFAUT} avec --moteur api")
@@ -191,7 +224,7 @@ def main() -> int:
     sources = rubriques(ids)
 
     if args.collecter:
-        asyncio.run(collecter(sources))
+        asyncio.run(collecter(sources, pdf=args.pdf))
     if args.extraire and args.moteur == "api":
         import extractor
         if modele not in extractor.TARIFS_USD_PAR_MTOK:

@@ -18,6 +18,16 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    Configure > Stopped builds).
 
 
+17. (2026-11-13) Extraction des appels des conférences des financeurs publiés en PDF : devis 0,59 euro au plus pour 211
+   textes (202 PDF, 9 pages web ; trois appels par texte supposés, le réel est souvent la moitié), au-delà du reste de la
+   délégation de la semaine (0,449 euro). Plafond prévu : 3,463 euros (cumul 2,873 plus devis). Puis contrôle et
+   qualification (devis à part, environ 0,07 euro) et import en « à valider ». Oui / non.
+18. (2026-11-13) Bornes de la lecture des PDF : 20 Mo et 40 pages au plus par fichier. À garder ou à changer.
+19. (2026-11-13) Choix par défaut des recommandations (`recommandations-profil`) : GCS rangé en public et privé non
+   lucratif ; exercice coordonné sans statut déduit ; appel écarté s'il ne cite que d'autres types d'établissement, si son
+   champ contredit le profil, s'il ne finance que de la recherche, ou s'il est national sans élément concret commun ;
+   seuil de 3 points. À valider sur le tirage de vingt recommandations.
+
 ## Tranchées
 
 | Date | Question | Réponse |
