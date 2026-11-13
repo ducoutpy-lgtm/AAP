@@ -17,9 +17,6 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    faire par lui dans Netlify (Project configuration > Build & deploy > Continuous deployment > Build settings >
    Configure > Stopped builds).
 
-16. (2026-11-13) Tâche de la veille : elle refuse de démarrer sur batterie et s'arrête si le PC passe sur batterie
-   (réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » à vrai) ; limite de durée quatre heures. Si le
-   PC est un portable débranché le lundi matin, la veille ne tourne pas. Autoriser la veille sur batterie (oui / non) ?
 
 ## Tranchées
 
@@ -40,6 +37,7 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 | 2026-11-13 | 5. Testeurs | « Pas de test, on continue comme ça pour le moment, la plateforme n'est pas assez développée pour soumettre au test » : aucune invitation ; la prochaine livraison est du développement |
 | 2026-11-13 | 5. Mentions légales encore « à valider » | Mesure d'audience : « Oui, aucun outil » pendant le test (mentions à retirer dans Mentions légales et Confidentialité) ; durées de conservation : « Oui, je confirme » ; tarifs et résiliation : « Tarifs provisoires » (aucun paiement pendant le test, résiliation fixée à l'ouverture du paiement) ; clause de litige : « Garder pour le test » (relecture par un conseil avant l'ouverture du paiement) ; emplacement des comptes et des fichiers vérifié le 2026-11-13 (comptes de connexion aux États-Unis, base en Union européenne `eur3`, stockage de fichiers aux États-Unis `US-CENTRAL1`, vide), texte proposé. Pages modifiées dans le code le 2026-11-13 au soir (changement `mentions-legales-decisions`, tests verts) ; mise en ligne sur son accord ; relecture de la clause de litige par un conseil avant l'ouverture du paiement |
 | 2026-11-13 | 13 à 15. Rejet des doublons, mise en ligne, veille sans fenêtre | « Oui, les trois » (dans la conversation) : 43 fiches archivées après sauvegarde `scripts/sauvegardes/doublons_2026-11-13_1744.json` (363 publiées, 109 dans la file) ; hébergement mis en ligne deux fois (pages légales, appels clos masqués, puis date de mise à jour des pages au 13 novembre), version `index-UGUi_gyX.js` servie ; action de la tâche planifiée remplacée par `wscript.exe "...\scraping\veille_cachee.vbs"`, prochain passage lundi 16 novembre à 8 h |
+| 2026-11-13 | 16. Veille sur batterie (la tâche refusait de démarrer sur batterie et s'arrêtait si le PC y passait) | « Oui, autorise-la » : réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » passés à faux ; action, déclencheur et limite de quatre heures inchangés |
 
 Les réponses du 2026-11-13 (questions 1, 2, 3 bis, 3 ter, 5, 6, 7, 8, 11) ont été données par choix à cocher dans la
 séance de pilotage des projets et transmises à la session AAP par cette séance.

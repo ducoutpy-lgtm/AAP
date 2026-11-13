@@ -24,6 +24,7 @@ Monsieur DUCOUT le 2026-11-13. Coût : au plus 0,50 euro par semaine.
   espaces (« argument=auto ») ; action de la tâche « AAP Sante - veille hebdomadaire » remplacée : « Execute :
   wscript.exe ; Arguments : "...\scraping\veille_cachee.vbs" » ; déclencheur inchangé (lundi 8 h), prochain passage
   16/11/2026 08:00. Constat : la tâche ne démarre pas sur batterie et s'arrête si le PC y passe ; le code de l'arrêt du
-  9 novembre vaut aussi pour un arrêt ou une fermeture de session (question 16 de `docs/A_VALIDER.md`).
+  9 novembre vaut aussi pour un arrêt ou une fermeture de session (question 16 de `docs/A_VALIDER.md`). Sur son « Oui,
+  autorise-la » : « DisallowStartIfOnBatteries : False », « StopIfGoingOnBatteries : False », prochain passage inchangé.
 - [ ] 4.1 Vérification : le lundi 16 novembre, `scraping/logs/veille.log` va jusqu'à « Veille terminee » et Monsieur DUCOUT
   reçoit le bilan par courriel.
