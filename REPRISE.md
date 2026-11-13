@@ -15,7 +15,14 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   comptes de connexion traités aux États-Unis (Firebase Authentication) ; stockage de fichiers
   `aapi-11bc3.firebasestorage.app` en région US-CENTRAL1 (États-Unis), vide au 2026-11-13.
 - Fait le 2026-11-13 : changement `doublons-numero-axe` (axes distincts jamais rapprochés, ancien test réparé) ;
-  `docs/DOUBLONS.md` : 48 groupes, 63 fiches à rejeter (30 dans la file, 33 publiées), rejet en base sur son accord.
+  `docs/DOUBLONS.md` : 48 groupes, 63 fiches à rejeter (30 dans la file, 33 publiées). Changement `rejet-des-doublons` :
+  outil prêt, essai à blanc fait, passage réel BLOQUÉ : le rapport contient de faux doublons (« ESMS numérique » de
+  plusieurs ARS, collèges de la CRSA de Mayotte, deux appels de l'ARS Guyane) ; corriger le rapprochement d'abord.
+- Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
+  vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
+  relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;
+  décisions A à G à cocher, relues par `ArtifactData` collection `decisions`, document `point-2026-11-13`). Base au
+  2026-11-13 : 378 publiées dont 96 ouvertes avec une date, 141 closes, 141 sans date ; 301 validées par le seul modèle.
 
 ## Où on en est au 2026-10-23 (à lire en premier)
 
