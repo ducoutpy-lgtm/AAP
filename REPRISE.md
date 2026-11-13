@@ -1,5 +1,11 @@
 # Reprise du projet AAP Santé (écrit le 2026-10-12, à lire au début de chaque session)
 
+**Pause levée le 13/11/2026 à 20 h 06 par Monsieur DUCOUT** (« je veux que tu épuises les crédits à fond pour les
+autres projets »). Règle de quota jusqu'à la remise à zéro du samedi 14/11 vers 22 h : relire
+`mcp__ccd_session_mgmt__get_usage` (ligne « Weekly · all models ») avant chaque changement et au moins toutes les
+15 minutes ; à 95 %, s'arrêter proprement (commit, `REPRISE.md` à jour) pour laisser la fin du quota au gel de
+Dyslexix (exécutable donné à l'essai des enfants).
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
@@ -30,7 +36,11 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   batterie depuis le 2026-11-13 (question 16).
 - Semaine 2 commencée le 2026-11-13 au soir : recommandations depuis le profil (`recommandations-profil`, joué sur les
   émulateurs, 14 appels pour l'EHPAD de test, mise en ligne sur accord) ; reste la lecture des appels publiés en PDF
-  (changement à ouvrir, `pypdf`, devis avant tout appel).
+  (`lecture-pdf-appels` fait : 202 PDF des conférences collectés, devis d'extraction 0,59 euro en attente de
+  son accord, question 17).
+- Semaine 3 commencée le 2026-11-13 dans la nuit (pause levée à 20 h 06, règle de quota en tête de ce fichier) :
+  `parcours-candidat-sans-impasse` (candidature sans pièce déposée, menus sans pages vides, recherches sauvegardées) ;
+  questions 20 (faille des règles : rôle modifiable par le compte) et 21 (candidature aux fiches importées) à trancher.
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;

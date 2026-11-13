@@ -4,6 +4,7 @@ import { collection, query, where, getDocs, addDoc, updateDoc, deleteDoc, doc, T
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { journaliser } from '../../services/journalService';
+import { sansValeursVides } from '../../utils/recherche';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -36,6 +37,7 @@ export default function SavedSearchesPage() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingSearch, setEditingSearch] = useState<SavedSearch | null>(null);
+  const [erreurSauvegarde, setErreurSauvegarde] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     keywords: '',
@@ -108,18 +110,20 @@ export default function SavedSearchesPage() {
 
   const handleSave = async () => {
     if (!currentUser || !formData.name.trim()) return;
+    setErreurSauvegarde('');
 
     try {
       const searchData = {
         userId: currentUser.uid,
         name: formData.name,
-        filters: {
+        // Champs vides retirés : Firestore refuse undefined (parcours-candidat-sans-impasse)
+        filters: sansValeursVides({
           keywords: formData.keywords || undefined,
           sectors: formData.sectors.length > 0 ? formData.sectors : undefined,
           territories: formData.territories.length > 0 ? formData.territories : undefined,
           budgetMin: formData.budgetMin ? parseFloat(formData.budgetMin) : undefined,
           budgetMax: formData.budgetMax ? parseFloat(formData.budgetMax) : undefined,
-        },
+        }),
         alertEnabled: formData.alertEnabled,
         frequency: formData.frequency,
         updatedAt: Timestamp.now(),
@@ -141,6 +145,7 @@ export default function SavedSearchesPage() {
       loadSavedSearches();
     } catch (err) {
       console.error('Error saving search:', err);
+      setErreurSauvegarde("La recherche n'a pas pu être enregistrée. Réessayez ; si l'erreur persiste, prévenez l'administrateur.");
     }
   };
 
@@ -538,6 +543,7 @@ export default function SavedSearchesPage() {
               )}
             </div>
 
+            {erreurSauvegarde && <p className="text-sm text-red-600" role="alert">{erreurSauvegarde}</p>}
             <div className="flex gap-3 pt-4">
               <Button
                 variant="secondary"

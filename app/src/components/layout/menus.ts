@@ -3,7 +3,7 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
-  Activity, Bell, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageCircle, MessageSquare,
+  Activity, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageCircle,
   PlusCircle, Search, Sparkles, UserCircle, Users,
 } from 'lucide-react';
 import type { UserType } from '../../types';
@@ -36,10 +36,10 @@ const PARAMETRES: SectionMenu = {
   ],
 };
 
+// Alertes et Messagerie retirées du menu le 2026-11-13 (parcours-candidat-sans-impasse) : rien ne crée de conversation
+// ni de notification tant que les fonctions serveur ne sont pas déployées ; les pages restent à leur adresse.
 const COMMUNES: EntreeMenu[] = [
   { libelle: 'Calendrier', adresse: '/calendrier', icone: Calendar },
-  { libelle: 'Alertes', adresse: '/notifications', icone: Bell },
-  { libelle: 'Messagerie', adresse: '/messages', icone: MessageSquare },
 ];
 
 export function entreesMenu(role: UserType): SectionMenu[] {

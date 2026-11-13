@@ -47,6 +47,18 @@ export function statutAppel(aap: Pick<AAP, 'deadline'>): StatutAppel {
 }
 
 // Montant annoncé d'une fiche : enveloppe totale si connue, sinon plafond par projet, sinon rien
+// Objet sans ses champs indéfinis (parcours-candidat-sans-impasse, 2026-11-13) : Firestore refuse undefined, et la
+// sauvegarde d'une recherche échouait sans message dès qu'un filtre restait vide.
+export function sansValeursVides<T extends Record<string, unknown>>(objet: T): Partial<T> {
+  return Object.fromEntries(Object.entries(objet).filter(([, v]) => v !== undefined)) as Partial<T>;
+}
+
+// Pièce de candidature que le stockage a refusée (facturation Firebase fermée) : la candidature part quand même, la
+// pièce est notée « non déposée » pour que le candidat l'adresse au financeur (parcours-candidat-sans-impasse).
+export function pieceNonDeposee(file: Pick<File, 'name' | 'type'>) {
+  return { name: file.name, url: '', type: file.type, uploadedAt: new Date(), nonDeposee: true };
+}
+
 // Filtre de statut (changement appels-clos-masques, 2026-11-13) : sans choix, les appels clos sont masqués ;
 // « tous » les montre aussi ; sinon le statut choisi seulement.
 export const STATUT_TOUS = 'tous';

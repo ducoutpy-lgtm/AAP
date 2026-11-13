@@ -2,6 +2,14 @@
 import { describe, expect, it } from 'vitest';
 import { entreeActive, entreesMenu, tableauDeBord } from './menus';
 
+describe('pages vides retirées (parcours-candidat-sans-impasse)', () => {
+  it.each(['porteur', 'financeur'] as const)('%s : ni Messagerie ni Alertes, tant que rien ne les alimente', (role) => {
+    const adresses = entreesMenu(role).flatMap(s => s.entrees.map(e => e.adresse));
+    expect(adresses).not.toContain('/messages');
+    expect(adresses).not.toContain('/notifications');
+  });
+});
+
 describe('entreesMenu', () => {
   it.each(['porteur', 'financeur', 'admin'] as const)('%s : tableau de bord en tête, Support et Paramètres, aucune adresse en double', (role) => {
     const sections = entreesMenu(role);

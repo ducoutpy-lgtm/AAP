@@ -28,6 +28,16 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    champ contredit le profil, s'il ne finance que de la recherche, ou s'il est national sans élément concret commun ;
    seuil de 3 points. À valider sur le tirage de vingt recommandations.
 
+20. (2026-11-13) Sécurité, relevée par l'audit du parcours candidat : la règle Firestore laisse un compte réécrire son
+   propre rôle (`userType`) dans `users` (`app/firestore.rules`, ligne 46), donc se donner le rôle administrateur ; les
+   pièces de candidature sont lisibles par tout compte connecté qui connaît leur chemin (`app/storage.rules`, ligne 29).
+   Proposition : changement dédié (règle qui interdit de modifier son rôle, tests de règles sur l'émulateur), puis
+   déploiement des règles sur son accord. Oui / non.
+21. (2026-11-13) Candidature à une fiche importée : elle porte `financeurId = "scraped"` et n'est transmise à personne,
+   alors que l'écran dit « transmis à {financeur} ». Proposition : pour une fiche importée, « Candidater sur le site
+   officiel » (lien de l'annonce) et un suivi tenu par le candidat. À trancher.
+22. (2026-11-13) Mise en ligne des corrections du soir (recommandations, parcours candidat sans impasse). Oui / non.
+
 ## Tranchées
 
 | Date | Question | Réponse |

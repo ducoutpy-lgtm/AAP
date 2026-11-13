@@ -19,6 +19,7 @@ import { Input } from '../../components/ui/Input';
 import { Stepper } from '../../components/ui/Stepper';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { libelleMontant } from '../../utils/candidat';
+import { pieceNonDeposee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 
 const ETAPES = [
@@ -111,13 +112,21 @@ export default function ApplicationFormPage() {
     setSubmitting(true);
     setError('');
     try {
-      const pieces: { name: string; url: string; type: string; uploadedAt: Date }[] = [];
+      const pieces: { name: string; url: string; type: string; uploadedAt: Date; nonDeposee?: boolean }[] = [];
       for (const file of documents) {
-        // Dossier autorisé par storage.rules : uploads/applications/<compte>/<fichier>
-        const fichierRef = ref(storage, `uploads/applications/${currentUser.uid}/${Date.now()}_${file.name}`);
-        await uploadBytes(fichierRef, file);
-        pieces.push({ name: file.name, url: await getDownloadURL(fichierRef), type: file.type, uploadedAt: new Date() });
+        // Dossier autorisé par storage.rules : uploads/applications/<compte>/<fichier>. Si le stockage refuse (facturation
+        // Firebase fermée), la candidature part quand même et la pièce est notée « non déposée »
+        // (parcours-candidat-sans-impasse, 2026-11-13).
+        try {
+          const fichierRef = ref(storage, `uploads/applications/${currentUser.uid}/${Date.now()}_${file.name}`);
+          await uploadBytes(fichierRef, file);
+          pieces.push({ name: file.name, url: await getDownloadURL(fichierRef), type: file.type, uploadedAt: new Date() });
+        } catch (errDepot) {
+          console.error('Dépôt de la pièce impossible :', errDepot);
+          pieces.push(pieceNonDeposee(file));
+        }
       }
+      const nonDeposees = pieces.filter(p => p.nonDeposee).map(p => p.name);
       await addDoc(collection(db, 'applications'), {
         aapId,
         aapTitle: aap.title,
@@ -137,7 +146,7 @@ export default function ApplicationFormPage() {
         updatedAt: Timestamp.now(),
       });
       if (userProfile) await journaliser(currentUser.uid, userProfile.userType, 'candidature', aapId, aap.title);
-      navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur' } } });
+      navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur', nonDeposees } } });
     } catch (err) {
       console.error('Error submitting application:', err);
       const message = err instanceof Error ? err.message : '';

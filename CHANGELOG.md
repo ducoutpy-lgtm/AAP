@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-13, nuit, semaine 3 du plan)
+- Parcours candidat sans impasse (changement `parcours-candidat-sans-impasse`) : une candidature part même si le
+  stockage refuse la pièce (pièce notée « non déposée ») ; Messagerie et Alertes retirées du menu tant que rien ne les
+  alimente ; une recherche sauvegardée avec le seul nom s'enregistre, et une erreur s'affiche si l'écriture échoue.
+  84 tests verts ; joué sur les émulateurs. Mise en ligne sur accord.
+
 ### Ajouté (2026-11-13, semaine 2 du plan)
 - Recommandations depuis le profil (changement `recommandations-profil`) : `app/src/utils/recommandations.ts` compare
   chaque appel ouvert et contrôlé à la région, au statut, au type d'établissement, aux projets et au champ du candidat,

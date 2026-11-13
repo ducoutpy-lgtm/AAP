@@ -2,7 +2,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
-  filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, statutAppel, totalMontants,
+  filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee, sansValeursVides,
+  statutAppel, totalMontants,
 } from './recherche';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
@@ -14,6 +15,20 @@ describe('statutAppel', () => {
     expect(statutAppel({ deadline: dans(10) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(30) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(45) })).toBe('ouvert');
+  });
+});
+
+describe('sansValeursVides (parcours-candidat-sans-impasse)', () => {
+  it('retire les champs vides avant écriture (Firestore refuse undefined)', () => {
+    expect(sansValeursVides({ keywords: 'ehpad', sectors: undefined, budgetMin: 0, territories: [], budgetMax: undefined }))
+      .toEqual({ keywords: 'ehpad', budgetMin: 0, territories: [] });
+  });
+});
+
+describe('pieceNonDeposee (parcours-candidat-sans-impasse)', () => {
+  it("garde la trace d'une pièce que le stockage a refusée", () => {
+    const p = pieceNonDeposee({ name: 'dossier.pdf', type: 'application/pdf' } as File);
+    expect(p).toMatchObject({ name: 'dossier.pdf', url: '', type: 'application/pdf', nonDeposee: true });
   });
 });
 

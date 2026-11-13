@@ -29,7 +29,7 @@ export default function MyApplicationsPage() {
   const [loading, setLoading] = useState(true);
   const [erreur, setErreur] = useState('');
   // Confirmation passée par le formulaire après l'envoi (« soumise, mais à qui, quoi, quand ? »)
-  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string } } | null)?.envoyee;
+  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string; nonDeposees?: string[] } } | null)?.envoyee;
 
   useEffect(() => {
     if (!currentUser) return;
@@ -76,8 +76,15 @@ export default function MyApplicationsPage() {
             <p className="text-sm mt-1">
               Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
               {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; il passera dans la colonne « En cours
-              d'examen », puis « Acceptée », « Refusée » ou « Complément demandé », et vous serez prévenu par une alerte.
+              d'examen », puis « Acceptée », « Refusée » ou « Complément demandé » : suivez son avancement sur cette page.
             </p>
+            {(envoyee.nonDeposees?.length ?? 0) > 0 && (
+              <p className="text-sm mt-2 text-amber-800">
+                Pièce{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''} non déposée{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''}
+                {' '}({envoyee.nonDeposees?.join(', ')}) : le dépôt de fichiers n'est pas encore ouvert. Adressez-
+                {(envoyee.nonDeposees?.length ?? 0) > 1 ? 'les' : 'la'} directement au financeur, selon l'annonce officielle.
+              </p>
+            )}
           </div>
         )}
         {erreur && <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>}
