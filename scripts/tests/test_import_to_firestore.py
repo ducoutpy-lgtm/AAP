@@ -383,6 +383,26 @@ def test_doublons_file_axes_distincts():
     assert [sorted(i for i, _ in g) for g in doublons.groupes_file([("axe5", axe5), ("reprise", reprise)])] == [["axe5", "reprise"]]
 
 
+def test_rejet_des_doublons_epargne_les_fiches_relues():
+    """Changement rejet-des-doublons : les fiches marquées « rejeter » reçoivent archived et rejetee au nom de la séance ;
+    une fiche relue par Monsieur DUCOUT n'est jamais touchée ; l'Axe 3 n'est pas rejeté."""
+    import doublons
+    import rejeter_doublons
+
+    titre = "Appel à projets Challenge prévention"
+    fiches = [("garde", _fiche(titre, "Lyonbiopôle", "lyonbiopole", (2028, 12, 31), par=imp.RELECTEUR)),
+              ("relue", _fiche(titre, "Lyonbiopôle", "lyonbiopole", (2028, 12, 31), par=imp.RELECTEUR)),
+              ("auto", _fiche(titre, "Lyonbiopôle", "lyonbiopole", (2028, 12, 31))),
+              ("axe3", _fiche("Appel à projets Axe 3 : coordination", "CFPPA 62", "pas-de-calais", (2026, 11, 30))),
+              ("axe5", _fiche("Appel à projets Axe 5 : coordination", "CFPPA 62", "pas-de-calais", (2026, 11, 30)))]
+    a_ecrire, relues = rejeter_doublons.rejets(doublons.groupes_file(fiches), RELAIS, "2026-11-13")
+    assert [i for i, _, _ in a_ecrire] == ["auto"] and [i for i, _ in relues] == ["relue"]
+    maj = a_ecrire[0][2]
+    assert maj["status"] == "archived" and maj["validation"]["statut"] == "rejetee"
+    assert maj["validation"]["par"] == rejeter_doublons.PAR and "garde" in maj["validation"]["commentaire"]
+    assert maj["validation"]["date"] == "2026-11-13"
+
+
 def test_doublons_file_garde_la_fiche_relue():
     import doublons
 
