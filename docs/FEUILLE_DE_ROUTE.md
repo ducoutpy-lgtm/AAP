@@ -1,11 +1,9 @@
 # Feuille de route AAP Santé
 
-> Depuis le 2026-10-20 au soir, le plan de travail actif est `PLAN_MVP_2026-10-20.md` (sept jours vers un prototype
-> présentable à des testeurs) ; cette feuille de route reste la vue d'ensemble des huit grandes étapes.
-
-Document de pilotage pour Monsieur DUCOUT (ARCADIA SASU). Mis à jour le 2026-10-13 ; à relire et
-compléter à chaque reprise de session, en même temps que `REPRISE.md`. Les huit grandes étapes sont
-celles énoncées par Monsieur DUCOUT ; l'état est celui constaté dans le dépôt, pas une estimation.
+Document de pilotage pour Monsieur DUCOUT (ARCADIA SASU). Mis à jour le 2026-11-13, à la relance du projet ; à relire
+à chaque reprise de session, avec `REPRISE.md`. Les huit grandes étapes sont celles énoncées par Monsieur DUCOUT ;
+l'état est celui constaté dans le dépôt et dans la base, pas une estimation. Point d'étape détaillé du 2026-11-13 :
+https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel, bilan du pilote, freins, décisions à cocher).
 
 ```mermaid
 flowchart LR
@@ -13,60 +11,76 @@ flowchart LR
     classDef encours fill:#FAEEDA,stroke:#854F0B,color:#633806
     classDef afaire fill:#F1EFE8,stroke:#5F5E5A,color:#444441
 
-    S1["1. Sources<br/>1 198 émetteurs, couverture mesurée"]:::encours
-    S2["2. Pages des AAP<br/>155 pages à valider à la main"]:::encours
-    S3["3. Extraction<br/>moteur à décider"]:::encours
-    S4["4. Veille<br/>à concevoir"]:::afaire
-    S5["5. Base consolidée<br/>95 AAP en base"]:::encours
-    S6["6. Consultation<br/>sans compte"]:::fait
-    S7["7. Comptes clients<br/>connexion à revoir"]:::encours
-    S8["8. Financeurs<br/>codé, non testé"]:::afaire
+    S1["1. Sources<br/>1 269 émetteurs"]:::encours
+    S2["2. Pages des AAP<br/>342 sources suivies"]:::encours
+    S3["3. Extraction<br/>Haiku, devis avant appel"]:::encours
+    S4["4. Veille<br/>autonome depuis le 13/11"]:::encours
+    S5["5. Base<br/>378 publiées, 137 à valider"]:::encours
+    S6["6. Consultation<br/>compte obligatoire"]:::fait
+    S7["7. Espace candidat<br/>codé, à vérifier"]:::encours
+    S8["8. Espace financeur<br/>codé, démo 6/9"]:::encours
 
     S1 --> S2 --> S3 --> S4
     S4 --> S5 --> S6 --> S7 --> S8
 ```
 
-Légende : vert = fait, orange = en cours, gris = à faire.
+Légende : vert = fait et vérifié par Monsieur DUCOUT, orange = écrit, en partie vérifié, gris = à faire.
 
-## État par étape
+Mesure du 2026-11-13 (deux mesures indépendantes, cahier des charges et code) : environ 10 % du produit complet fini et
+vérifié par Monsieur DUCOUT, environ 55 % écrit mais pas encore vérifié, environ 35 % pas commencé. 45 chantiers OpenSpec
+ouverts, dont 43 attendent sa vérification.
 
-| Étape | État | Ce qui existe | Ce qui manque |
+## État par étape (2026-11-13)
+
+| Étape | Fait et vérifié par lui | Écrit, à vérifier | Pas commencé |
 |---|---|---|---|
-| 1. Récupérer le fichier des sources | En cours (repris le 2026-10-13) | `scraping/sources/registre.json` : 1 133 émetteurs ; inventaire de 24 familles avec annuaire de référence (`sources/annuaires/familles.json`) et taux de couverture en tête de `REGISTRE_SOURCES.md` ; vague 1 terminée : 664 fondations du Registre national, 365 rapprochées ou créées (54 %) ; famille PLIE ajoutée | 22 adresses à resonder, vagues 2 et 3 (fonds de dotation, abritées, agrégateurs, régions, mutuelles, conférences des financeurs...), rapprochement des familles déjà couvertes |
-| 2. Identifier les pages des AAP | Pages validées par Monsieur DUCOUT et reportées (2026-10-13 nuit) | Découverte (`decouverte.py`, 270 rubriques), qualification par le modèle local puis relecture manuelle tracée (`relecture_qualification.json`) : 155 rubriques confirmées, 20 à vérifier à la main | Aucune des 155 pages gardées n'a encore été vue par Monsieur DUCOUT. Le 2026-10-13, la validation de 27 liens a fait croire à de mauvaises pages (Directions.fr, Territoire de Belfort) ; vérification faite, la découverte avait bien gardé la page des appels de ces deux organismes, ce sont des liens de cette page qui étaient hors sujet. Fait le 2026-10-13 : 257 pages validées à l'écran (181 bonnes, 47 corrigées, 10 mortes, 18 hors champ), verdicts reportés au registre (242 rubriques confirmées), 50 adresses redécouvertes. Reste : 10 pages mortes et 577 sources sans page à chercher par le web, lot par lot, avec validation à l'écran |
-| 3. Scraper les données | V3 locale terminée le 2026-10-15 (1 086 fiches, 28,6 h, étiquette `v3-local`) ; V4 par l'API terminée le 2026-10-19 (856 fiches, 2 h 30, 1,33 euro, décision de Monsieur DUCOUT) | 5 connecteurs historiques (105 AAP) ; échantillon de 45 textes mesuré avec trois moteurs (`ECHANTILLON.md`) ; second tour local : qwen3:8b 16 fiches justes sur 21, mistral 7b 15 sur 23, seuil de 20 non atteint ; décision de Monsieur DUCOUT : passage global au modèle local `qwen3:8b`, zéro euro, fiches « à vérifier » (`scraping/extraction_locale.py`, 2 395 adresses web uniques des 242 rubriques validées, import par lots, badge « À vérifier » dans l'application) | Fin du passage (25 à 40 h de calcul par nuits), vérification humaine des fiches (`validation.py --fiches`), lecture des PDF (533 liens vers des fichiers) |
-| 4. Surveiller les nouveaux AAP | Outillé le 2026-10-20 (`rejeu-collecte-veille` : relecture des pages validées, liens nouveaux et disparus, `VEILLE.md`, péremption à deux absences) après les dates de collecte du 2026-10-19 ; tâche planifiée Windows chaque lundi 8 h (`veille.cmd auto`), premiers textes nouveaux extraits et publiés le 2026-10-20 | Principe validé : garder les pages, comparer chaque jour, ne re-traiter que ce qui change | Tout le code ; dépend de l'étape 3 |
-| 5. Base consolidée des AAP | En cours | Firestore `aapi-11bc3`, collection `aap`, 95 AAP dédoublonnés par signature, import rejouable (`scripts/import_to_firestore.py`) | Consolidation après le passage global ; stockage des pièces jointes en ligne (forfait Blaze refusé pour l'instant) |
-| 6. Application de consultation | Fait (preuve) | Recherche par mot, filtres secteur, territoire, budget ; fiche complète, pièces jointes, mention « Clôturé » ; consultation sans compte depuis le 2026-10-13 | Favoris, alertes, export, filtres fins (type d'établissement) |
-| 7. Comptes clients | Dégelé le 2026-10-19, vérification en cours | Inscription rouverte avec essai de 14 jours, connexion par e-mail, mot de passe oublié, rôles porteur / financeur / admin, règles Firestore testées | Parcours à jouer par Monsieur DUCOUT avec des comptes de test ; bouton Google à activer dans la console Firebase ; Stripe non branché ; fonctions serveur non déployées (Blaze en cours) |
-| 8. Espace financeurs | Dégelé le 2026-10-19, vérification en cours | Pages d'avril rétablies : publication d'AAP, candidatures, évaluation, statistiques ; messagerie, notifications, calendrier | Non testé avec des comptes ; fonctions serveur non déployées |
+| 1. Sources | Registre des émetteurs (1 269) | Fondations 365 / 664, conférences des financeurs 75 / 102, cancéropôles, pôles, gérontopôles ; 72 pages ciblées par les séances (`page_ciblee`) | Pages d'appels des 336 fondations ajoutées ; 299 fondations sans site |
+| 2. Pages des AAP | 257 pages jugées à l'écran le 2026-10-13 | Pages à un seul appel, sites en anglais, sites modernes | 927 sources sans page suivie ; 10 pages mortes |
+| 3. Extraction | Mesure des modèles gratuits (seuil non atteint) | Extraction, contrôle, qualification par Haiku ; portails recherche et européen | Appels publiés seulement en PDF (décidé « oui, avec devis ») |
+| 4. Veille | — | Veille du lundi de bout en bout dans la délégation (changement `veille-autonome`, preuve du 2026-11-13) ; veille sans fenêtre sur accord | Réparation automatique des robots |
+| 5. Base | Import, financeurs, territoires ; 339 verdicts du 2026-10-22 | File « à valider » (137), doublons corrigés (43 à rejeter sur accord) | Mesure d'exactitude avec lui (301 publiées validées par le seul modèle) |
+| 6. Consultation | Recherche et fiche d'appel | Appels clos masqués par défaut (sur accord de mise en ligne), filtres, recherche guidée | Favoris |
+| 7. Espace candidat | Accès administrateur | Inscription, profil, tableau de bord, candidature, alertes ; candidature depuis un PDF (attend Blaze) | Recommandations personnalisées, aide à la rédaction, droits RGPD en libre-service, paiement |
+| 8. Espace financeur | — | Page Financeurs, tableau de bord, candidatures reçues (démo 6 / 9) | Notation des candidatures par l'IA, travail en équipe |
+
+## Plan de quatre semaines (accepté le 2026-11-13, sans testeurs)
+
+| Semaine | Livraison | Critère vérifiable par Monsieur DUCOUT |
+|---|---|---|
+| 1 (16 au 22 novembre) | Doublons corrigés et rejetés ; veille autonome ; appels clos masqués ; pages légales à jour ; feuille de route à jour | Le journal de la veille du 23 novembre va jusqu'à « Veille terminee » sans intervention et le bilan arrive par courriel |
+| 2 (23 au 29 novembre) | Recommandations depuis le profil, avec la raison ; lecture des appels en PDF (sur devis) ; fiches plus complètes | Sur 20 recommandations tirées au sort, au moins 18 jugées pertinentes |
+| 3 (30 novembre au 6 décembre) | Parcours candidat complet, documents réutilisables, alertes ; candidature depuis un PDF si Blaze est ouvert | Parcours joué en 20 minutes sans page vide ni erreur |
+| 4 (7 au 13 décembre) | Espace financeur complet, droits RGPD, mesure d'exactitude sur 30 fiches, liste « prêt pour testeurs » | Démonstration financeur à 9 étapes sur 9 ; décision d'inviter ou non trois testeurs |
+
+Méthode de vérification proposée : une séance guidée de 30 minutes par semaine, par parcours, préparée et jouée d'abord
+par la session sur les émulateurs ; au plus trois chantiers en attente de sa vérification à la fois.
 
 ## Chantiers programmés
 
-Inscrits à la demande de Monsieur DUCOUT, à ouvrir chacun dans un changement OpenSpec.
-
 | Chantier | Inscrit le | Pourquoi | Ce qu'il faudra trancher |
 |---|---|---|---|
-| Pièces jointes des appels | 2026-10-23 | La mise en ligne du 2026-10-22 a publié 121 copies de documents de financeurs sans vérifier le droit de les rediffuser ; retirées du site en ligne le 2026-10-23 (changement `pieces-jointes-hors-ligne`), la fiche renvoie au document d'origine | Rediffuser ou seulement lier ; stockage Firebase Storage (forfait Blaze) ; lecture des PDF pour compléter les fiches (533 liens vers des fichiers) ; liens d'origine morts |
-| Pages à un seul appel | 2026-10-23 | La veille ne retient une page que si elle y voit au moins deux appels : l'ANAP (rubrique confirmée le 2026-10-23) sera sautée tant qu'elle n'en publie qu'un | Ouvert le 2026-10-27 (changement `pages-a-un-seul-appel`, après quatre publications LinkedIn transmises par Monsieur DUCOUT) : seuil d'un lien pour les pages validées à la main et champ `page_appel` ; ANAP, FEHAP (novap) et Gérond'if (Tubbe) retenues ; fiches novap et Tubbe extraites sur accord (0,008 euro) et importées en brouillon ; Fondation Béatrice Denys suivie par cinq relais (aucune page ne publie encore l'édition 2026-2027) ; reste la vérification de Monsieur DUCOUT dans `/admin/aaps` |
+| Pièces jointes des appels | 2026-10-23 | Copies retirées du site le 2026-11-13 (redéploiement vérifié) ; la fiche renvoie au document d'origine | Rediffuser ou seulement lier ; stockage des fichiers (aux États-Unis, région US-CENTRAL1, vide) ; lecture des PDF |
+| Lecture des appels publiés en PDF | 2026-11-13 | 23 départements couverts ne publient l'appel qu'en PDF (estimation) | Devis avant tout appel (décision « oui, avec devis ») |
 
 ## Chemin critique
 
-La ligne du haut commande tout : tant que l'extraction (étape 3) n'est pas tranchée, la veille (4) et la
-consolidation (5) attendent. Les étapes 7 et 8 peuvent avancer en parallèle, mais ne servent à rien sans
-la base. L'ordre de travail retenu avec Monsieur DUCOUT : terminer l'étape 3 à coût nul ou chiffré, puis
-le passage global, puis la veille.
+La veille autonome (étape 4) alimente tout le reste ; elle doit tenir deux lundis de suite avant d'élargir les sources.
+Le développement de l'application (étapes 7 et 8) avance en parallèle pendant les semaines 2 à 4. Les vérifications de
+Monsieur DUCOUT sont le goulet : sans elles, aucun chantier n'est rangé.
 
 ## Décisions structurantes (rappel)
 
-- Zéro dépense sans accord explicite ; tout est testé en local avant déploiement.
-- « Lentement et sûrement sur Ollama » (2026-10-13) : un modèle local est mesuré contre un seuil fixé à
-  l'avance avant tout appel payant.
-- Les appels à projets sont publics : consultation sans compte ; le compte ne sert qu'aux actions.
-- Chaque évolution passe par un changement OpenSpec, validé par Monsieur DUCOUT, puis archivé.
+- Délégation permanente (2026-11-13) : 0,50 euro par semaine d'appels Haiku au plus, devis et plafond obligatoires,
+  arrêt avant 4,50 euros de cumul ; imports en « à valider », jamais en « validée » ; commit et push en fin de
+  changement. Tout le reste (dépense au-delà, mise en ligne, suppression, changement de schéma) sur son accord.
+- Recherche et fiches réservées aux comptes connectés depuis le 2026-10-20 (décision de Monsieur DUCOUT ; la
+  spécification `consultation-aap-scrapes` dit encore « sans compte », à mettre à jour selon son choix F du point
+  d'étape).
+- Pas de testeurs avant que la plateforme soit assez développée (2026-11-13).
+- Chaque évolution passe par un changement OpenSpec, vérifié par Monsieur DUCOUT, puis archivé.
 
 ## Historique des mises à jour
 
-- 2026-10-13 (soir) : étape 2 repassée « à valider à la main » : les pages gardées n'ont jamais été vues par un humain ; les deux « mauvaises pages » signalées étaient en fait des liens hors sujet d'une page juste.
-- 2026-10-13 : création, après les changements `relecture-qualification`, `extraction-echantillon-aap`,
-  `consultation-aap-sans-compte` et le second tour d'extraction.
+- 2026-11-13 : relance du projet ; état par étape remesuré, plan de quatre semaines, chantier PDF ajouté.
+- 2026-10-13 (soir) : étape 2 repassée « à valider à la main » : les pages gardées n'avaient jamais été vues par un humain.
+- 2026-10-13 : création.
