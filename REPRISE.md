@@ -40,7 +40,14 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   son accord, question 17).
 - Semaine 3 commencée le 2026-11-13 dans la nuit (pause levée à 20 h 06, règle de quota en tête de ce fichier) :
   `parcours-candidat-sans-impasse` (candidature sans pièce déposée, menus sans pages vides, recherches sauvegardées) ;
-  questions 20 (faille des règles : rôle modifiable par le compte) et 21 (candidature aux fiches importées) à trancher.
+  questions 20 et 21 tranchées à 21 h 20 (relayées) puis faites : `regles-role-protege` (un compte ne se donne plus le
+  rôle administrateur, 30 tests de règles verts), `candidature-site-officiel` (bouton « Candidater sur le site
+  officiel », 85 tests verts, pas encore joué sur les émulateurs).
+- En attente de son « oui » direct dans la conversation (quota à 89 % à 22 h) : mise en ligne groupée du site et des
+  règles Firestore (`npm run build && firebase deploy --only hosting,firestore:rules --project aapi-11bc3` depuis
+  `app`, JDK 21 en tête du PATH), à vérifier en ligne ; puis extraction des PDF des conférences (devis 0,59 euro,
+  `veille_payante.py`-style : `--plafond 3.463`), contrôle, qualification, import « à valider ». Sans cet accord avant
+  lundi, la veille du 16 novembre s'arrêtera à l'étape payante (« accord demandé »).
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;
