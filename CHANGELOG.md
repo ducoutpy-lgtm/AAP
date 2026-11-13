@@ -5,6 +5,19 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-13, fin d'après-midi)
+- Faux doublons (changement `doublons-appels-distincts`, « Oui, corrige-les ») : la règle approximative du rapport ne
+  rapproche plus deux régions différentes, deux pages d'un même site, ni deux objets chiffrés différents. Rapport :
+  39 groupes, 43 fiches à rejeter (28 dans la file, 15 publiées) contre 63 ; les 22 fiches encore rapprochées par cette
+  règle relues sur leurs pages, toutes le même appel. Rejet en base (`scripts/rejeter_doublons.py --reel`) en attente
+  de l'accord de Monsieur DUCOUT.
+
+### Modifié (2026-11-13)
+- Pages légales selon ses décisions (changement `mentions-legales-decisions`) : plus aucune mention « À VALIDER » ;
+  tarifs provisoires sans paiement ouvert pendant le test ; aucun outil de mesure d'audience ; emplacement vérifié écrit
+  (base dans l'Union européenne, comptes de connexion et fichiers déposés aux États-Unis). Tests, lint et compilation
+  verts ; mise en ligne sur son accord.
+
 ### Corrigé (2026-11-13, questions 3 ter et 7 de `docs/A_VALIDER.md`, « Oui, les deux »)
 - Rapport des doublons : deux appels d'axes, de lots ou de volets de numéros différents ne sont plus rapprochés
   (changement `doublons-numero-axe`, `scripts/doublons.py`) ; l'« Axe 3 » du Pas-de-Calais n'est plus proposé au rejet.

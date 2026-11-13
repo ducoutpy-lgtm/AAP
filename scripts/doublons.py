@@ -24,6 +24,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scraping"))
@@ -35,6 +36,8 @@ RAPPORT = Path(__file__).resolve().parent.parent / "docs" / "DOUBLONS.md"
 CODE = re.compile(r"\b((?:HORIZON|EU4H|I3|DIGITAL)-[A-Z0-9]+(?:-[A-Za-z0-9]+)+)")
 # Numero d'axe, de lot ou de volet dans un titre (changement doublons-numero-axe) : « Axe 3 », « Lot n° 2 », « volet 1 »
 AXE = re.compile(r"\b(?:axe|lot|volet)\s*(?:n\s*°|no\.?|n\.)?\s*(\d+)\b", re.IGNORECASE)
+# Territoires qui ne situent pas un appel (changement doublons-appels-distincts)
+TERRITOIRES_VAGUES = frozenset({"france", "non-precise", ""})
 # Mots qui ne distinguent pas deux appels (et mots vides) : retires avant de comparer deux titres
 GENERIQUES = frozenset("""appel appels projet projets candidature candidatures aap ami manifestation interet france 2030
 programme edition lance lancement nouvel nouvelle 2024 2025 2026 2027 2028 de des du la le les l d a au aux et en pour sur
@@ -64,6 +67,19 @@ def numero_axe(titre: str | None) -> str | None:
     return m.group(1) if m else None
 
 
+def nombres(titre: str | None) -> set[str]:
+    """Nombres du titre hors annees (« 62 a 80 places » -> {"62", "80"}) : capacites, numeros d'appel."""
+    return {n for n in re.findall(r"\d+", titre or "") if not re.fullmatch(r"(?:19|20)\d\d", n)}
+
+
+def _domaine(d: dict) -> str:
+    return urlparse(d.get("externalUrl") or "").netloc.lower().removeprefix("www.")
+
+
+def _territoires(d: dict) -> set[str]:
+    return {t for t in (d.get("territoriesEligible") or []) if t not in TERRITOIRES_VAGUES}
+
+
 def mots_distinctifs(titre: str | None) -> frozenset[str]:
     return frozenset(m for m in normaliser(titre or "").split() if m not in GENERIQUES and len(m) > 1)
 
@@ -85,6 +101,17 @@ def meme_appel(a: dict, b: dict) -> bool:
     ca, cb = code_programme(a), code_programme(b)
     if ca and cb:
         return ca == cb
+    # Changement doublons-appels-distincts : dans le doute, deux fiches restent separees (un doublon manque se rejette a
+    # la main ; un vrai appel rejete disparait). Meme programme dans deux regions, deux pages d'un meme site aux titres
+    # differents, ou objets chiffres differents : deux appels.
+    ta, tb = _territoires(a), _territoires(b)
+    if ta and tb and not ta & tb:
+        return False
+    if _domaine(a) == _domaine(b) and a.get("externalUrl") != b.get("externalUrl"):
+        return False
+    na, nb = nombres(a.get("title")), nombres(b.get("title"))
+    if na and nb and not na & nb:
+        return False
     if _cloture(a) is None or _cloture(a) != _cloture(b):
         return False
     ma, mb = mots_distinctifs(a.get("title")), mots_distinctifs(b.get("title"))

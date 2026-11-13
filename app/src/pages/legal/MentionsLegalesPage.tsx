@@ -1,6 +1,6 @@
 // Mentions légales (articles 6 III et 19 de la loi pour la confiance dans l'économie numérique). Rédigées le
 // 2026-10-19 (changement degel-application-complete) ; données d'entreprise à compléter par Monsieur DUCOUT.
-import { AValider, LegalLayout, Section } from './LegalLayout';
+import { LegalLayout, Section } from './LegalLayout';
 import { EDITEUR } from './editeur';
 
 export default function MentionsLegalesPage() {
@@ -25,8 +25,8 @@ export default function MentionsLegalesPage() {
         <p>
           Les données des comptes et des appels à projets sont stockées par Google Cloud EMEA Limited (services Firebase :
           authentification, base de données Firestore), 70 Sir John Rogerson's Quay, Dublin 2, Irlande. Région de
-          la base de données : eur3, multirégion Europe (Belgique et Pays-Bas) ; emplacement des comptes et des fichiers{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : non vérifié]</AValider>.
+          la base de données : eur3, multirégion Europe (Belgique et Pays-Bas). Les comptes de connexion (Firebase
+          Authentication) et les fichiers déposés (stockage Firebase, région US-CENTRAL1) sont traités aux États-Unis.
         </p>
       </Section>
 
@@ -62,8 +62,8 @@ export default function MentionsLegalesPage() {
         <p>
           Le traitement des données personnelles est décrit dans la politique de confidentialité. Le site n'utilise
           que les témoins de connexion strictement nécessaires au fonctionnement du compte (authentification Firebase) ;
-          aucun témoin publicitaire ni de mesure d'audience n'est déposé{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : à confirmer si un outil de mesure est ajouté]</AValider>.
+          aucun outil de mesure d'audience n'est utilisé pendant la phase de test et aucun témoin publicitaire ni de
+          mesure d'audience n'est déposé.
         </p>
       </Section>
     </LegalLayout>

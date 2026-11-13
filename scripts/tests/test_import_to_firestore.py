@@ -321,8 +321,10 @@ def test_groupes_de_doublons_meme_titre_normalise_et_meme_financeur():
     assert [[i for i, _ in g] for g in groupes] == [["a", "b"]]
 
 
-def _fiche(titre, financeur, source, cloture=None, url="https://x.fr/a", par=""):
-    return {"title": titre, "financeurName": financeur, "externalUrl": url, "scrapeMetadata": {"source": source},
+def _fiche(titre, financeur, source, cloture=None, url=None, par="", territoires=None):
+    # Chaque fiche de test porte par défaut une adresse sur le site de sa source (changement doublons-appels-distincts)
+    return {"title": titre, "financeurName": financeur, "externalUrl": url or f"https://{source}.fr/a",
+            "scrapeMetadata": {"source": source}, "territoriesEligible": territoires or [],
             "deadline": datetime(*cloture, tzinfo=timezone.utc) if cloture else None,
             "validation": {"statut": "proposee", "par": par}}
 
@@ -381,6 +383,33 @@ def test_doublons_file_axes_distincts():
     reprise = _fiche("AAP CFPPA 62 – Axe 5 : actions collectives de prévention", "Département du Pas-de-Calais",
                      "appelaprojets-org", (2026, 11, 30))
     assert [sorted(i for i, _ in g) for g in doublons.groupes_file([("axe5", axe5), ("reprise", reprise)])] == [["axe5", "reprise"]]
+
+
+def test_doublons_file_appels_distincts():
+    """Changement doublons-appels-distincts (faux doublons du 2026-11-13) : même programme dans deux régions, deux appels
+    d'un même site aux titres proches, objets chiffrés différents ; un vrai relais reste rapproché."""
+    import doublons
+
+    def esms(ars, region):
+        return _fiche("Programme ESMS numérique 2026 : appel à projets enfance en situation de handicap", ars,
+                      f"ars-{region}", (2026, 10, 15), url=f"https://www.{region}.ars.sante.fr/esms-numerique-2026",
+                      territoires=[region])
+    assert doublons.groupes_file([("norm", esms("ARS Normandie", "normandie")), ("guad", esms("ARS Guadeloupe", "guadeloupe"))]) == []
+    mayotte = "https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-"
+    crsa = [("agees", _fiche("CRSA de Mayotte : représentants des associations de personnes âgées", "ARS Mayotte", "ars-mayotte",
+                             (2026, 10, 23), url=mayotte + "de-personnes-agees", territoires=["mayotte"])),
+            ("handi", _fiche("CRSA de Mayotte : représentant des associations de personnes handicapées", "ARS Mayotte", "ars-mayotte",
+                             (2026, 10, 23), url=mayotte + "de-personnes-handicapees", territoires=["mayotte"]))]
+    assert doublons.groupes_file(crsa) == []
+    idf = [("ra", _fiche("Création d'une résidence autonomie de 62 à 80 places en Essonne", "ARS Île-de-France", "ars-ile-de-france",
+                         (2026, 12, 1), territoires=["ile-de-france"])),
+           ("ehpad", _fiche("Création d'un EHPAD de 100 places avec PASA en Essonne", "Département de l'Essonne", "appelaprojets-org",
+                            (2026, 12, 1), territoires=["ile-de-france"]))]
+    assert doublons.groupes_file(idf) == []
+    assert doublons.nombres("Création d'un EHPAD de 100 places en 2027") == {"100"}
+    relais = [("bpi", _fiche("Appel à projets « Première Usine »", "Bpifrance", "bpifrance", (2027, 4, 6), territoires=["france"])),
+              ("lyon", _fiche("France 2030 Première Usine", "Lyonbiopôle", "lyonbiopole", (2027, 4, 6), territoires=["auvergne-rhone-alpes"]))]
+    assert len(doublons.groupes_file(relais)) == 1
 
 
 def test_rejet_des_doublons_epargne_les_fiches_relues():

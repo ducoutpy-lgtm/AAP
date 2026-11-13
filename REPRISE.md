@@ -16,8 +16,10 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
   `aapi-11bc3.firebasestorage.app` en région US-CENTRAL1 (États-Unis), vide au 2026-11-13.
 - Fait le 2026-11-13 : changement `doublons-numero-axe` (axes distincts jamais rapprochés, ancien test réparé) ;
   `docs/DOUBLONS.md` : 48 groupes, 63 fiches à rejeter (30 dans la file, 33 publiées). Changement `rejet-des-doublons` :
-  outil prêt, essai à blanc fait, passage réel BLOQUÉ : le rapport contient de faux doublons (« ESMS numérique » de
-  plusieurs ARS, collèges de la CRSA de Mayotte, deux appels de l'ARS Guyane) ; corriger le rapprochement d'abord.
+  outil prêt. Faux doublons (« ESMS numérique » de plusieurs ARS, CRSA de Mayotte, ARS Guyane) corrigés le soir même
+  (changement `doublons-appels-distincts`) : 43 fiches à rejeter (28 de la file, 15 publiées), pages relues ; passage
+  réel `python scripts/rejeter_doublons.py --reel` sur son « oui ». Pages légales mises à jour dans le code
+  (`mentions-legales-decisions`), mise en ligne sur son accord.
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;

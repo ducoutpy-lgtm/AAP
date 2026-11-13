@@ -1,7 +1,7 @@
 // Politique de confidentialité (RGPD, articles 13 et 14). Rédigée le 2026-10-19 (changement
 // degel-application-complete) à partir des traitements réels de l'application ; DPO : Monsieur DUCOUT ; analyse
 // d'impact reportée après le MVP (CLAUDE.md). À relire par Monsieur DUCOUT.
-import { AValider, LegalLayout, Section } from './LegalLayout';
+import { LegalLayout, Section } from './LegalLayout';
 import { EDITEUR } from './editeur';
 
 export default function ConfidentialitePage() {
@@ -48,8 +48,10 @@ export default function ConfidentialitePage() {
           authentification, base de données, stockage des fichiers, fonctions serveur, hébergement du site), et, lorsque le paiement sera ouvert, Stripe Payments Europe Ltd. Des transferts hors de l'Union européenne
           peuvent avoir lieu vers les États-Unis (Google, Stripe) ; ils sont encadrés par les clauses
           contractuelles types de la Commission européenne et, le cas échéant, le cadre de protection des données
-          UE-États-Unis. La base de données est stockée dans l'Union européenne (région Firebase eur3, Belgique et Pays-Bas) ;
-          emplacement des comptes et des fichiers <AValider>[À VALIDER — Monsieur DUCOUT : non vérifié]</AValider>.
+          UE-États-Unis. La base de données est stockée dans l'Union européenne (région Firebase eur3, Belgique et Pays-Bas).
+          Les comptes de connexion (adresse électronique, nom, identifiant Google le cas échéant) sont traités par Firebase
+          Authentication aux États-Unis ; les fichiers déposés dans le service (pièces de candidature, logos) sont stockés
+          aux États-Unis (région US-CENTRAL1).
           Aucune donnée n'est vendue ni cédée à des tiers à des fins commerciales.
         </p>
       </Section>
@@ -59,8 +61,7 @@ export default function ConfidentialitePage() {
           suppression demandée plus tôt. Candidatures et évaluations : cinq ans après la clôture de l'appel, au titre de
           la preuve. Messages : trois ans après le dernier échange. Données de facturation : dix ans (obligation
           comptable). Journaux de connexion et journal d'usage : un an. Fiches d'appels à projets : tant que l'appel est utile aux
-          utilisateurs ; les coordonnées d'un contact sont retirées sur demande{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : durées à confirmer]</AValider>.</p>
+          utilisateurs ; les coordonnées d'un contact sont retirées sur demande.</p>
       </Section>
 
       <Section titre="Vos droits">
@@ -86,8 +87,8 @@ export default function ConfidentialitePage() {
       <Section titre="Témoins de connexion">
         <p>
           Le service n'utilise que les témoins strictement nécessaires à l'authentification et au maintien de la session.
-          Aucun témoin publicitaire ni de mesure d'audience n'est déposé sans votre consentement{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : à mettre à jour si un outil de mesure est ajouté]</AValider>.
+          Aucun outil de mesure d'audience n'est utilisé pendant la phase de test, et aucun témoin publicitaire ni de
+          mesure d'audience n'est déposé.
         </p>
       </Section>
 

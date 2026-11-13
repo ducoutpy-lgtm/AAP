@@ -2,7 +2,7 @@
 
 Généré le 2026-11-13 par `python scripts/doublons.py --file` (lecture seule, rien n'est modifié en base).
 
-**499 fiches comparées (publiées et « Proposée, non relue ») ; 48 groupes, 111 fiches, 63 à rejeter si la proposition convient.**
+**499 fiches comparées (publiées et « Proposée, non relue ») ; 39 groupes, 82 fiches, 43 à rejeter si la proposition convient.**
 
 Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et rejeter les autres.
 
@@ -26,20 +26,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 |---|---|---|---|---|---|
 | garder (relais, mais la mieux renseignée) | Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) | non précisée | draft / proposee | scraped-602ee0340bc8fdfb | https://www.canceropole-clara.com/projects/aap-grands-defis-soutien-aux-innovations-de-rupture-dans-la-filiere-dm-implantable-et-robotique-chirurgicale/ |
 | rejeter | Cancéropôle Lyon Auvergne Rhône-Alpes (CLARA) | non précisée | draft / proposee | scraped-620546624a3dc500 | https://www.canceropole-clara.com/projects/aap-grands-defis-soutien-aux-innovations-de-rupture-dans-la-filiere-dm-implantable-et-robotique-chirurgicale-2/ |
-
-## Appel à Projets 2027 "Emergence Haut Risque haut potentiel" du CNO
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (relais, mais la mieux renseignée) | Cancéropôle Nord-Ouest – appels à projets | 2026-10-30 | draft / proposee | scraped-424059751fc26104 | https://canceropole-nordouest.org/appels-projets-cno/appel-a-projets-2027-emergence-haut-risque-haut-potentiel-du-cno/ |
-| rejeter | Cancéropôle Nord-Ouest | 2026-10-30 | draft / proposee | scraped-98a19be3446b36b5 | https://canceropole-nordouest.org/appels-projets-cno/appel-a-projets-2027-soutien-a-lemergence-du-cno/ |
-
-## Appel à projets 2027 : Actions collectives de prévention en faveur des personnes âgées de 60 ans et 
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | Conseil départemental Gers | 2026-11-03 | published / validee | scraped-ed5b5777556cf228 | https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures/appel-a-projets-2027-actions-collectives-de-prevention-en-faveur-des-personnes-agees-de-60-ans-et-plus-residant-en-ehpad-42419 |
-| rejeter | Conseil départemental Gers | 2026-11-03 | published / validee | scraped-f757a652f6281c9e | https://www.gers.fr/aides-infos-pratiques/appels-a-projets-et-candidatures/appel-a-projets-2027-actions-collectives-de-prevention-en-faveur-des-personnes-agees-de-60-ans-et-plus-residant-a-leur-domicile-et-leurs-aidants-42418 |
 
 ## Appel à projets 2027 – Réduire les expositions dans les établissements accueillant des jeunes : conc
 
@@ -91,22 +77,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 | rejeter | Inserm | 2026-11-02 | draft / proposee | scraped-7f99b472654245a6 | https://canceropole-paca.com/appel-a-projet/cnrs-biologie-inserm-programme-atip-avenir-2027-responsable-dequipe/ |
 | rejeter | CNRS Biologie et Inserm | 2026-11-02 | published / validee | scraped-eba78cebf14da2d9 | https://www.canceropole-grandouest.com/appel-projets/cnrs-inserm-aap-atip-avenir-2027/ |
 
-## CRSA de Mayotte : représentants des associations de personnes âgées
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | ARS Mayotte | 2026-10-23 | published / validee | scraped-2bb89ce9033468aa | https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-de-personnes-agees |
-| rejeter | ARS Mayotte | 2026-10-23 | published / validee | scraped-3cde85376f717370 | https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-oeuvrant-en-faveur-des-personnes-vulnerables |
-| rejeter | ARS Mayotte | 2026-10-23 | published / validee | scraped-b3828bad0c4446fd | https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representants-des-associations-agreees-dusagers-du-systeme-de-sante |
-| rejeter | ARS Mayotte | 2026-10-23 | published / validee | scraped-ef286e7a9ad28742 | https://www.mayotte.ars.sante.fr/crsa-de-mayotte-representant-des-associations-de-personnes-handicapees |
-
-## Création d'une résidence autonomie de 62 à 80 places
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | Conseil départemental Val-d'Oise | 2027-03-31 | published / validee | scraped-1d9df07eaa59b5e9 | https://www.valdoise.fr/annuaire/2556/294-libelle.htm |
-| rejeter | ARS Île-de-France | 2027-03-31 | published / validee | scraped-d7dd5770f98f448c | https://www.iledefrance.ars.sante.fr/creation-dun-ehpad-de-100-places-avec-pasa-avec-possibilite-dune-residence-autonomie-associee-dans |
-
 ## Création de 22 places en Service d'Accompagnement Médico-Social pour Adultes Handicapés (SAMSAH) pou
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
@@ -141,14 +111,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 |---|---|---|---|---|---|
 | garder (déjà publiée) | Fondation pour la Recherche Médicale (FRM) | 2026-11-06 | published / validee | scraped-41661469675c5c2d | https://www.canceropole-grandouest.com/appel-projets/frm-aap-amorcage-de-jeunes-equipes/ |
 | rejeter | Fondation pour la Recherche Médicale (FRM) | 2026-11-06 | draft / proposee | scraped-9df745c87ea48f1d | https://www.canceropole-idf.fr/aap/amorcage-jeunes-equipes-2026/ |
-
-## Financement d’équipements à destination des professionnels exerçant dans les établissements médico-s
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | ARS Normandie | 2026-10-15 | published / validee | scraped-b948f290cd3fc9ec | https://www.normandie.ars.sante.fr/financement-dequipements-destination-des-professionnels-exercant-dans-les-etablissements-medico-0 |
-| rejeter | ARS La Réunion | 2026-10-15 | published / validee | scraped-d943132a52b09f28 | https://www.lareunion.ars.sante.fr/segur-du-numerique-2026-pour-les-etablissements-et-services-medico-sociaux-etablissements-et |
-| rejeter | ARS Normandie | 2026-10-15 | published / validee | scraped-dde4d7de15bf6e32 | https://www.normandie.ars.sante.fr/dispositif-infirmier-de-nuit-mutualise-entre-etablissements-medico-sociaux-0 |
 
 ## Fondation SILAB – Jean PAUFIQUE
 
@@ -286,35 +248,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 | garder (déjà publiée) | Fondation Sandrine Castellotti | 2026-10-15 | published / validee | scraped-5d82231ad8ab6f07 | https://www.appelaprojets.org/appelprojet/display/4206 |
 | rejeter | Fondation Sandrine Castellotti | 2026-10-15 | published / validee | scraped-f64d6568db10e9a0 | https://www.fondationdelavenir.org/appel-projet/prix-de-linnovation-de-la-fondation-sandrine-castellotti-3/ |
 
-## Programme ESMS numérique : phase de généralisation 2026 - secteur PH enfant et protection de l'enfan
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | ARS Auvergne-Rhône-Alpes | 2026-10-15 | published / validee | scraped-0f60ac84f534520a | https://www.auvergne-rhone-alpes.ars.sante.fr/programme-esms-numerique-phase-de-generalisation-2026-secteur-ph-enfant-et-protection-de-lenfance |
-| rejeter | ARS Normandie | 2026-10-15 | published / validee | scraped-2360ffd5914dd868 | https://www.normandie.ars.sante.fr/appel-projet-esms-numerique-2026 |
-| rejeter | ARS Guadeloupe | 2026-10-15 | published / validee | scraped-50dc4e278a526568 | https://www.guadeloupe.ars.sante.fr/ami-programme-esms-numerique-2026 |
-| rejeter | ARS Corse | 2026-10-15 | published / validee | scraped-56c21051363dd1a4 | https://www.corse.ars.sante.fr/esms-numerique-2026-enfance-en-situation-de-handicap-et-protection-de-lenfance-0 |
-| rejeter | ARS Grand Est | 2026-10-15 | published / validee | scraped-7be92a6fc02810e8 | https://www.grand-est.ars.sante.fr/programme-esms-numerique-2026 |
-| rejeter | ARS Pays de la Loire | 2026-10-15 | published / validee | scraped-a0dcddc44eea1118 | https://www.pays-de-la-loire.ars.sante.fr/appel-projet-esms-numerique-destination-des-structures-des-champs-ph-enfance-et-protection-de |
-| rejeter | Caisse nationale de solidarité pour l’autonomie (CNSA), Délégation au numérique en santé (DNS), Direction générale de la cohésion sociale (DGCS) | 2026-10-15 | published / validee | scraped-ab2b774a0cfe274a | https://www.paca.ars.sante.fr/appel-projet-programme-esms-numerique |
-| rejeter | ARS Bourgogne-Franche-Comté | 2026-10-15 | published / validee | scraped-b141e8e81ce1669f | https://www.bourgogne-franche-comte.ars.sante.fr/esms-numerique-2026-dui-compatible-mon-espace-sante |
-| rejeter | ARS Hauts-de-France | 2026-10-15 | published / validee | scraped-e75b585ac6fb397a | https://www.hauts-de-france.ars.sante.fr/programme-esms-numerique-2026-derniere-campagne-de-financement |
-| rejeter | ARS Île-de-France | 2026-10-15 | published / validee | scraped-fd692afbff46a954 | https://www.iledefrance.ars.sante.fr/esms-numerique-2026-enfance-en-situation-de-handicap-et-protection-de-lenfance |
-
-## Projets d'Innovation – France 2030 (Pays de la Loire)
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (relue par Monsieur DUCOUT) | Conseil régional Pays de la Loire | 2027-09-30 | published / validee | scraped-0142d5b289b305f4 | https://pia.paysdelaloire.fr/projets-d-innovation/ |
-| rejeter | Atlanpole Biotherapies – appels à projets régionaux (Pays de la Loire, Bretagne, Centre-Val de Loire) | 2027-09-30 | draft / proposee | scraped-707f7684e319bf30 | https://innovationavenir.centrevaldeloire.fr/projets-d-innovation/ |
-
-## Recherche Santé Environnement «Guyane Santé 2030»
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | ARS Guyane | 2027-03-31 | published / validee | scraped-a9fb1dd79d63c328 | https://www.guyane.ars.sante.fr/recherche-sante-environnement-guyane-sante-2030 |
-| rejeter | ARS Guyane | 2027-03-31 | published / validee | scraped-ac560766071a3a6c | https://www.guyane.ars.sante.fr/fonds-amorcage-recherche-guyane-sante-2030 |
-
 ## Recherche clinique et fondamentale sur les maladies cardiovasculaires
 
 | | Financeur | Clôture | Statut | Identifiant | Adresse |
@@ -328,13 +261,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 |---|---|---|---|---|---|
 | garder (relue par Monsieur DUCOUT) | Fondation de France | 2026-07-01 | published / validee | scraped-ceb87c6869209f96 | https://www.fondationdefrance.org/fr/appels-a-projets/recherche-collaborative-sur-les-maladies-psychiatriques |
 | rejeter | Fondation de France | non précisée | published / validee | scraped-dc76178f40ea017f | https://www.appelsprojetsrecherche.fr/appel/20-fdf00-13068601-003 |
-
-## Renforcement de l'offre en psychiatrie périnatale et psychiatrie de l'enfant et de l'adolescent 2026
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (déjà publiée) | ARS Corse | 2026-10-23 | published / validee | scraped-0a786754eb6dc153 | https://www.corse.ars.sante.fr/renforcement-de-loffre-en-psychiatrie-perinatale-et-psychiatrie-de-lenfant-et-de-ladolescent-2026 |
-| rejeter | ARS Normandie | 2026-10-23 | published / validee | scraped-c5d4cfff8f1fcf7a | https://www.normandie.ars.sante.fr/renforcement-regional-de-loffre-en-psychiatrie-de-lenfant-et-de-ladolescent-pour-lannee-2026 |
 
 ## Renouvellement des membres du Comité de démocratie sanitaire pour le mandat 2027-2030 (AAC)
 

@@ -33,7 +33,16 @@ describe('pages légales', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Politique de confidentialité' })).toBeInTheDocument();
     expect(screen.getAllByText(new RegExp(EDITEUR.dpo)).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/CNIL/).length).toBeGreaterThan(0);
-    // Les données d'entreprise inconnues du dépôt sont marquées, jamais inventées
-    expect(screen.getAllByText(/À VALIDER/).length).toBeGreaterThan(0);
+    // Décisions de Monsieur DUCOUT du 2026-11-13 appliquées : plus rien en suspens, emplacement vérifié écrit en clair
+    expect(screen.queryAllByText(/À VALIDER/)).toHaveLength(0);
+    expect(screen.getAllByText(/comptes de connexion .* États-Unis/).length).toBeGreaterThan(0);
+  });
+
+  it('les conditions générales et les mentions légales ne laissent plus rien en suspens', () => {
+    rendre(<CguPage />);
+    expect(screen.queryAllByText(/À VALIDER/)).toHaveLength(0);
+    expect(screen.getAllByText(/tarifs affichés sont provisoires/).length).toBeGreaterThan(0);
+    rendre(<MentionsLegalesPage />);
+    expect(screen.queryAllByText(/À VALIDER/)).toHaveLength(0);
   });
 });

@@ -1,6 +1,6 @@
 // Conditions générales d'utilisation. Rédigées le 2026-10-19 (changement degel-application-complete) ; à relire par
 // Monsieur DUCOUT, en particulier les conditions tarifaires (Stripe non branché, essai de 14 jours).
-import { AValider, LegalLayout, Section } from './LegalLayout';
+import { LegalLayout, Section } from './LegalLayout';
 import { EDITEUR } from './editeur';
 
 export default function CguPage() {
@@ -41,9 +41,9 @@ export default function CguPage() {
       <Section titre="4. Période d'essai et abonnement">
         <p>
           Toute création de compte ouvre une période d'essai gratuite de quatorze jours. Au-delà, l'accès aux fonctions
-          réservées est soumis à un abonnement dont les tarifs et modalités sont affichés dans le service{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : grille tarifaire et conditions de résiliation ; le paiement en ligne
-          n'est pas encore ouvert]</AValider>. Aucun paiement n'est prélevé sans action explicite de l'utilisateur.
+          réservées est soumis à un abonnement. Pendant la phase de test, les tarifs affichés sont provisoires et aucun
+          paiement n'est ouvert : aucun abonnement ne peut être souscrit ni prélevé. Les conditions de résiliation seront
+          fixées et publiées à l'ouverture du paiement. Aucun paiement n'est prélevé sans action explicite de l'utilisateur.
         </p>
       </Section>
 
@@ -105,8 +105,7 @@ export default function CguPage() {
       <Section titre="11. Droit applicable">
         <p>
           Les présentes conditions sont soumises au droit français. En cas de litige, et à défaut d'accord amiable, les
-          tribunaux compétents sont ceux du ressort du siège de l'éditeur{' '}
-          <AValider>[À VALIDER — Monsieur DUCOUT : clause à faire relire par un conseil]</AValider>.
+          tribunaux compétents sont ceux du ressort du siège de l'éditeur.
         </p>
       </Section>
     </LegalLayout>
