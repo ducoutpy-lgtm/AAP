@@ -1,5 +1,22 @@
 # Reprise du projet AAP Santé (écrit le 2026-10-12, à lire au début de chaque session)
 
+## 2026-11-13 : relance du projet (à lire en premier)
+
+Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
+devrait être développé ») ; pas de testeurs pour l'instant, la prochaine livraison est du développement.
+- Constat lu le 2026-11-13 : base 899 fiches, 378 publiées, 121 dans la file « à valider » (inchangée depuis le
+  2026-10-28), 5 comptes, 0 retour de testeur ; veille du lundi jamais aboutie pendant le pilote (2 novembre : aucune
+  sortie ; 9 novembre : interrompue pendant la collecte, `scraping/logs/veille.log`) ; 43 chantiers OpenSpec ouverts dont
+  41 attendent sa vérification.
+- Questions ouvertes tranchées par choix à cocher (séance de pilotage) : `docs/A_VALIDER.md`. Délégation permanente
+  collée par lui dans la conversation (0,50 euro par semaine, imports « à valider », commit et push en fin de
+  changement) ; à recopier par lui dans `CLAUDE.md` pour les séances suivantes.
+- Faits pour les mentions légales : base Firestore en région `eur3` (Belgique, Pays-Bas, copie témoin en Finlande) ;
+  comptes de connexion traités aux États-Unis (Firebase Authentication) ; stockage de fichiers
+  `aapi-11bc3.firebasestorage.app` en région US-CENTRAL1 (États-Unis), vide au 2026-11-13.
+- Fait le 2026-11-13 : changement `doublons-numero-axe` (axes distincts jamais rapprochés, ancien test réparé) ;
+  `docs/DOUBLONS.md` : 48 groupes, 63 fiches à rejeter (30 dans la file, 33 publiées), rejet en base sur son accord.
+
 ## Où on en est au 2026-10-23 (à lire en premier)
 
 Session du 2026-10-21 au 2026-10-23 close sur la demande de Monsieur DUCOUT (« repartir de là dans une nouvelle

@@ -5,6 +5,15 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-13, questions 3 ter et 7 de `docs/A_VALIDER.md`, « Oui, les deux »)
+- Rapport des doublons : deux appels d'axes, de lots ou de volets de numéros différents ne sont plus rapprochés
+  (changement `doublons-numero-axe`, `scripts/doublons.py`) ; l'« Axe 3 » du Pas-de-Calais n'est plus proposé au rejet.
+  `docs/DOUBLONS.md` régénéré en lecture seule : 48 groupes, 63 fiches proposées au rejet (30 dans la file « à valider »,
+  33 publiées).
+- Ancien test en échec `test_six_orthographes_un_financeur_nom_extrait_conserve` : nom vraiment inconnu du registre.
+  Suites vertes : `scripts/tests` 40, `scraping/tests` 150.
+- Réponses du 2026-11-13 aux questions ouvertes reportées dans `docs/A_VALIDER.md`.
+
 ### Modifié (2026-10-23, décisions de Monsieur DUCOUT après la relecture du journal des décisions)
 - Pièces jointes retirées du site en ligne : `documents/**` exclu de l'hébergement (`app/firebase.json`, changement
   `pieces-jointes-hors-ligne`) ; la fiche renvoyait déjà au document d'origine ; effet au prochain déploiement.

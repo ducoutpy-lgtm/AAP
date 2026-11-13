@@ -1,8 +1,8 @@
 # Doublons de la file « à valider »
 
-Généré le 2026-10-28 par `python scripts/doublons.py --file` (lecture seule, rien n'est modifié en base).
+Généré le 2026-11-13 par `python scripts/doublons.py --file` (lecture seule, rien n'est modifié en base).
 
-**499 fiches comparées (publiées et « Proposée, non relue ») ; 49 groupes, 113 fiches, 64 à rejeter si la proposition convient.**
+**499 fiches comparées (publiées et « Proposée, non relue ») ; 48 groupes, 111 fiches, 63 à rejeter si la proposition convient.**
 
 Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et rejeter les autres.
 
@@ -47,13 +47,6 @@ Dans `/admin/aaps`, chercher le titre, garder la fiche marquée « garder » et 
 |---|---|---|---|---|---|
 | garder (déjà publiée) | Institut national du cancer (INCa) | 2026-11-24 | published / validee | scraped-cdb67deed24f1fd0 | https://www.cancer.fr/professionnels-de-la-recherche/appels-a-projets-et-a-candidatures/nos-appels-a-projets/zeroexpo27 |
 | rejeter | Institut national du cancer (INCa) | 2026-11-24 | draft / proposee | scraped-b4a6769e93463be2 | https://canceropole-nordouest.org/appels-projets-cno/appel-a-projets-2027-reduire-les-expositions-dans-les-etablissements-accueillant-des-jeunes-concevoir-des-politiques-et-agir-des-maintenant-plan-zero-exposition/ |
-
-## Appel à projets Axe 5 : actions collectives de prévention de la perte d'autonomie
-
-| | Financeur | Clôture | Statut | Identifiant | Adresse |
-|---|---|---|---|---|---|
-| garder (source officielle (connecteur ou site du financeur)) | Pas-de-Calais – Conférence des financeurs (CFPPA) | 2026-11-30 | draft / proposee | scraped-0f9bac3c0014c6f7 | https://www.pasdecalais.fr/appel-projets-axe-5-actions-collectives-de-prevention-de-la-perte-dautonomie |
-| rejeter | Pas-de-Calais – Conférence des financeurs (CFPPA) | 2026-11-30 | draft / proposee | scraped-eacbb66c9e5f3d00 | https://www.pasdecalais.fr/appel-projets-axe-3-coordination-et-appui-des-actions-de-prevention-mises-en-oeuvre-par-les |
 
 ## Appel à projets CFPPA Aisne 2027
 

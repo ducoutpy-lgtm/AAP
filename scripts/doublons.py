@@ -33,6 +33,8 @@ from territoires import normaliser  # noqa: E402
 
 RAPPORT = Path(__file__).resolve().parent.parent / "docs" / "DOUBLONS.md"
 CODE = re.compile(r"\b((?:HORIZON|EU4H|I3|DIGITAL)-[A-Z0-9]+(?:-[A-Za-z0-9]+)+)")
+# Numero d'axe, de lot ou de volet dans un titre (changement doublons-numero-axe) : « Axe 3 », « Lot n° 2 », « volet 1 »
+AXE = re.compile(r"\b(?:axe|lot|volet)\s*(?:n\s*°|no\.?|n\.)?\s*(\d+)\b", re.IGNORECASE)
 # Mots qui ne distinguent pas deux appels (et mots vides) : retires avant de comparer deux titres
 GENERIQUES = frozenset("""appel appels projet projets candidature candidatures aap ami manifestation interet france 2030
 programme edition lance lancement nouvel nouvelle 2024 2025 2026 2027 2028 de des du la le les l d a au aux et en pour sur
@@ -56,6 +58,12 @@ def code_programme(d: dict) -> str | None:
     return None
 
 
+def numero_axe(titre: str | None) -> str | None:
+    """Numero d'axe, de lot ou de volet lu dans le titre (« Axe 3 » -> "3"), sinon None."""
+    m = AXE.search(titre or "")
+    return m.group(1) if m else None
+
+
 def mots_distinctifs(titre: str | None) -> frozenset[str]:
     return frozenset(m for m in normaliser(titre or "").split() if m not in GENERIQUES and len(m) > 1)
 
@@ -67,9 +75,13 @@ def _cloture(d: dict) -> date | None:
 
 def meme_appel(a: dict, b: dict) -> bool:
     """Deux fiches decrivent-elles le meme appel ? Meme titre et financeur, meme code europeen, ou meme cloture et au
-    moins la moitie des mots distinctifs (deux au moins) en commun (fonction pure)."""
+    moins la moitie des mots distinctifs (deux au moins) en commun ; jamais deux axes ou lots de numeros differents
+    (fonction pure)."""
     if cle(a.get("title")) == cle(b.get("title")) and (a.get("financeurName") or "") == (b.get("financeurName") or ""):
         return True
+    na, nb = numero_axe(a.get("title")), numero_axe(b.get("title"))
+    if na and nb and na != nb:
+        return False
     ca, cb = code_programme(a), code_programme(b)
     if ca and cb:
         return ca == cb

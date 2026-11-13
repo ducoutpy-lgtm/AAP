@@ -295,8 +295,9 @@ def test_six_orthographes_un_financeur_nom_extrait_conserve(petit_registre):
     docs = [imp.to_app_aap(fiche(financeur=n), "ars_idf", MAINTENANT) for n in noms]
     assert {d["financeurName"] for d in docs} == {"ARS Île-de-France"}
     assert [d["scrapeMetadata"]["financeurExtrait"] for d in docs] == noms
-    inconnu = imp.to_app_aap(fiche(financeur="Département du Rhône"), "ars_test", MAINTENANT)
-    assert inconnu["financeurName"] == "Département du Rhône"  # rien ne le rattache : garde tel quel
+    # Nom qu'aucune source du registre ne rattache (« Département du Rhône » l'est depuis la famille des collectivités)
+    inconnu = imp.to_app_aap(fiche(financeur="Fondation Zéphyrine pour les essais"), "ars_test", MAINTENANT)
+    assert inconnu["financeurName"] == "Fondation Zéphyrine pour les essais"  # rien ne le rattache : garde tel quel
 
 
 def test_territoire_deduit_jamais_france_par_defaut(petit_registre):
@@ -364,6 +365,22 @@ def test_doublons_file_titres_proches_dates_differentes():
     fiches = [("a", _fiche("Appel à Projets 2027 « Soutien à l'émergence »", "Cancéropôle Nord-Ouest", "canceropole-nord-ouest", (2026, 10, 30))),
               ("b", _fiche("Appel à projets 2027 Soutien à l'émergence", "Cancéropôle Est", "canceropole-est", (2027, 1, 15)))]
     assert doublons.groupes_file(fiches) == []
+
+
+def test_doublons_file_axes_distincts():
+    """Changement doublons-numero-axe : l'Axe 3 et l'Axe 5 d'une même conférence ne sont pas le même appel."""
+    import doublons
+
+    cfppa = "Pas-de-Calais – Conférence des financeurs (CFPPA)"
+    axe3 = _fiche("Appel à projets Axe 3 : coordination et appui des actions de prévention", cfppa,
+                  "pas-de-calais-commission-des-financeurs", (2026, 11, 30))
+    axe5 = _fiche("Appel à projets Axe 5 : actions collectives de prévention de la perte d'autonomie", cfppa,
+                  "pas-de-calais-commission-des-financeurs", (2026, 11, 30))
+    assert doublons.numero_axe(axe3["title"]) == "3" and doublons.numero_axe("Lot n° 2 : formation") == "2"
+    assert doublons.groupes_file([("axe3", axe3), ("axe5", axe5)]) == []
+    reprise = _fiche("AAP CFPPA 62 – Axe 5 : actions collectives de prévention", "Département du Pas-de-Calais",
+                     "appelaprojets-org", (2026, 11, 30))
+    assert [sorted(i for i, _ in g) for g in doublons.groupes_file([("axe5", axe5), ("reprise", reprise)])] == [["axe5", "reprise"]]
 
 
 def test_doublons_file_garde_la_fiche_relue():
