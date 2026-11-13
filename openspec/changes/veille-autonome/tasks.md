@@ -20,7 +20,10 @@ Monsieur DUCOUT le 2026-11-13. Coût : au plus 0,50 euro par semaine.
   0,051 euro sur 0,50.)
 - [x] 2.2 `veille.cmd` (étape payante puis courriels) et `veille_cachee.vbs`. Documentation : `scraping/CHANGELOG.md`,
   `scraping/README.md`, `docs/PILOTE_MVP.md`, `docs/A_VALIDER.md`, `REPRISE.md`.
-- [ ] 3.1 Sur accord de Monsieur DUCOUT : action de la tâche « AAP Sante - veille hebdomadaire » remplacée par
-  `wscript.exe "...\scraping\veille_cachee.vbs"` (veille sans fenêtre).
+- [x] 3.1 Sur accord de Monsieur DUCOUT (« Oui, les trois », 2026-11-13) : lanceur essayé à blanc dans un dossier à
+  espaces (« argument=auto ») ; action de la tâche « AAP Sante - veille hebdomadaire » remplacée : « Execute :
+  wscript.exe ; Arguments : "...\scraping\veille_cachee.vbs" » ; déclencheur inchangé (lundi 8 h), prochain passage
+  16/11/2026 08:00. Constat : la tâche ne démarre pas sur batterie et s'arrête si le PC y passe ; le code de l'arrêt du
+  9 novembre vaut aussi pour un arrêt ou une fermeture de session (question 16 de `docs/A_VALIDER.md`).
 - [ ] 4.1 Vérification : le lundi 16 novembre, `scraping/logs/veille.log` va jusqu'à « Veille terminee » et Monsieur DUCOUT
   reçoit le bilan par courriel.

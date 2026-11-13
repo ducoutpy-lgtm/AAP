@@ -23,9 +23,11 @@ devrait être développé ») ; pas de testeurs pour l'instant, la prochaine liv
 - Semaine 1 du plan lancée le 2026-11-13 au soir (« continue avec le plan ») : appels clos masqués par défaut dans la
   recherche (`appels-clos-masques`, joué sur les émulateurs ; lanceur `emulateurs-firebase` ajouté à
   `.claude/launch.json`) ; veille autonome (`veille-autonome` : `scraping/veille_payante.py`, import `--a-valider`,
-  preuve réelle 0,051 euro, 16 fiches de plus dans la file, qui compte 137 fiches). Accords en attente : questions 13 à
-  15 de `docs/A_VALIDER.md` (rejet des doublons, mise en ligne, veille sans fenêtre). Reste de la semaine 1 : feuille de
-  route et spécifications.
+  preuve réelle 0,051 euro, 16 fiches de plus dans la file). Feuille de route remise à jour. Sur son « Oui, les trois »
+  (soir) : 43 doublons rejetés après sauvegarde (363 publiées, 109 dans la file), hébergement mis en ligne (version
+  `index-UGUi_gyX.js`), tâche de la veille passée sans fenêtre (`veille_cachee.vbs`). À surveiller : la veille du lundi
+  16 novembre doit aller jusqu'à « Veille terminee » dans `scraping/logs/veille.log` ; la tâche ne tourne pas sur
+  batterie (question 16). Semaine 2 ensuite : recommandations depuis le profil, lecture des PDF sur devis.
 - Point d'étape publié pour lui le 2026-11-13 : https://claude.ai/artifact/1JQWMY4bTGMf6P7Bkyt5nR (état réel : 10 %
   vérifié par lui, environ 55 % écrit non vérifié, 35 % pas commencé ; bilan du pilote : autonomie et effort de
   relecture en échec, coût atteint, couverture et exactitude non mesurées ; plan de quatre semaines de développement ;

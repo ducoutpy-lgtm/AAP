@@ -5,6 +5,14 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Mis en ligne (2026-11-13, soir, « Oui, les trois »)
+- 43 doublons rejetés en base après sauvegarde (`scripts/sauvegardes/doublons_2026-11-13_1744.json`) : 363 appels
+  publiés, 109 fiches dans la file « à valider ».
+- Hébergement redéployé : pages légales selon ses décisions (date de mise à jour au 13 novembre), appels clos masqués
+  par défaut ; version servie vérifiée.
+- Veille du lundi lancée sans fenêtre (`scraping/veille_cachee.vbs`, action de la tâche planifiée remplacée) ;
+  prochain passage le lundi 16 novembre à 8 h.
+
 ### Corrigé (2026-11-13, fin d'après-midi)
 - Faux doublons (changement `doublons-appels-distincts`, « Oui, corrige-les ») : la règle approximative du rapport ne
   rapproche plus deux régions différentes, deux pages d'un même site, ni deux objets chiffrés différents. Rapport :

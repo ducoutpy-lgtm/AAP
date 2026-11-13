@@ -10,7 +10,12 @@ Question 3 bis de `docs/A_VALIDER.md`, « La séance, avec sauvegarde » (Monsie
   63 à rejeter (draft / proposee : 30, published / validee : 33) » ; « Relues par Monsieur DUCOUT, à trancher par lui : 0 » ;
   « Essai à blanc : rien n'a été écrit. » Les 33 publiées ont été validées par le modèle (`claude-haiku-5-5`), aucune par
   Monsieur DUCOUT.)
-- [ ] 2.2 Débloquée le 2026-11-13 après le changement `doublons-appels-distincts` : nouvel essai à blanc « 499 fiches
+- [x] 2.2 Fait le 2026-11-13 à 17 h 44 sur son « Oui, les trois » : nouvel essai à blanc avant écriture (515 fiches
+  comparées après l'import de la veille, 43 à rejeter ; dans la paire du Morbihan, la fiche gardée a changé : l'ARS
+  Bretagne plutôt que la page relayée par « Pour bien vieillir Bretagne », même appel relu sur les pages) ; passage réel :
+  « Sauvegarde : scripts\sauvegardes\doublons_2026-11-13_1744.json (43 fiches) », « Relecture en base : {'archived': 43}
+  sur 43 fiches rejetées » ; base relue : 363 publiées (378 moins 15), 109 dans la file (137 moins 28), 436 rejetées.
+  Historique : débloquée le 2026-11-13 après le changement `doublons-appels-distincts` : nouvel essai à blanc « 499 fiches
   comparées ; 43 à rejeter (draft / proposee : 28, published / validee : 15) », « Relues par Monsieur DUCOUT, à trancher
   par lui : 0 », « Essai à blanc : rien n'a été écrit » ; passage réel en attente de son « oui ». Historique : bloquée
   le même jour parce que la relecture du rapport montrait de faux doublons (appels « ESMS numérique » de plusieurs
@@ -20,6 +25,7 @@ Question 3 bis de `docs/A_VALIDER.md`, « La séance, avec sauvegarde » (Monsie
   d'objets différents), régénérer le rapport, puis passage réel après son « oui » dans la conversation :
   `python scripts/rejeter_doublons.py --reel`. Fait quand : sauvegarde `scripts/sauvegardes/doublons_<date>.json` et
   relecture en base collées.
-- [ ] 3.1 Documentation : `CHANGELOG.md`, `docs/A_VALIDER.md`, `REPRISE.md`, liste remise à Monsieur DUCOUT.
-- [ ] 4.1 Vérification par Monsieur DUCOUT : `/aap/search` affiche 345 appels (378 moins 33) ; la file « à valider »
-  compte 91 fiches (121 moins 30).
+- [x] 3.1 Documentation : `CHANGELOG.md`, `docs/A_VALIDER.md`, `REPRISE.md` ; liste des 43 fiches dans la sauvegarde et
+  dans `docs/DOUBLONS.md` (lignes « rejeter »).
+- [ ] 4.1 Vérification par Monsieur DUCOUT : `/admin/aaps` compte 363 publiées et 109 « Proposée, non relue » ;
+  `/aap/search` affiche les appels ouverts et sans date parmi les 363 (option « Tous, clôturés compris » : 363).

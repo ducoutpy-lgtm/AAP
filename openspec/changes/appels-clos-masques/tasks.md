@@ -12,5 +12,6 @@ Semaine 1 du plan de quatre semaines (« continue avec le plan », Monsieur DUCO
   mot ne figure que dans la liste des statuts) ; « Tous, clôturés compris » : « 10 appels à projets » ; « Clôturé » :
   « 2 appels à projets ».)
 - [x] 2.2 Documentation : `CHANGELOG.md`.
-- [ ] 3.1 Mise en ligne après accord de Monsieur DUCOUT (avec les pages légales).
+- [x] 3.1 Mise en ligne après accord de Monsieur DUCOUT (« Oui, les trois », 2026-11-13), avec les pages légales : la
+  version servie contient « Tous, clôturés compris » (vérification connectée réservée à Monsieur DUCOUT, 4.1).
 - [ ] 4.1 Vérification par Monsieur DUCOUT : `/aap/search` sans carte « Clôturé » par défaut.

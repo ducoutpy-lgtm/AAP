@@ -13,5 +13,5 @@ export const EDITEUR = {
   contact: 'contact@arcadiaco.fr',
   dpo: 'Monsieur Pierre-Yves DUCOUT',
   nomService: 'AAP Santé',
-  dateMiseAJour: '22 octobre 2026',
+  dateMiseAJour: '13 novembre 2026',
 };
