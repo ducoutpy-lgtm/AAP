@@ -29,7 +29,7 @@ export default function MyApplicationsPage() {
   const [loading, setLoading] = useState(true);
   const [erreur, setErreur] = useState('');
   // Confirmation passée par le formulaire après l'envoi (« soumise, mais à qui, quoi, quand ? »)
-  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string; nonDeposees?: string[] } } | null)?.envoyee;
+  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string; nonDeposees?: string[]; externe?: boolean } } | null)?.envoyee;
 
   useEffect(() => {
     if (!currentUser) return;
@@ -72,12 +72,19 @@ export default function MyApplicationsPage() {
 
         {envoyee && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-            <p className="font-medium">Candidature envoyée</p>
+            <p className="font-medium">{envoyee.externe ? 'Candidature notée' : 'Candidature envoyée'}</p>
+            {envoyee.externe ? (
+              <p className="text-sm mt-1">
+                Votre candidature à « {envoyee.aapTitle} », déposée sur le site de {envoyee.financeurName}, est notée ici
+                pour la suivre. La réponse du financeur vous parviendra directement, hors de l'application.
+              </p>
+            ) : (
             <p className="text-sm mt-1">
               Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
               {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; il passera dans la colonne « En cours
               d'examen », puis « Acceptée », « Refusée » ou « Complément demandé » : suivez son avancement sur cette page.
             </p>
+            )}
             {(envoyee.nonDeposees?.length ?? 0) > 0 && (
               <p className="text-sm mt-2 text-amber-800">
                 Pièce{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''} non déposée{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''}

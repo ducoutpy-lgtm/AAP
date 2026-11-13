@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -13,7 +13,7 @@ import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
-import { aQuiSAdresse, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE } from '../../utils/candidat';
+import { aQuiSAdresse, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
@@ -226,6 +226,18 @@ export default function AapDetailPage() {
                 Cet appel est publié par {aap.financeurName || 'le financeur'} : le dossier se dépose sur son site, selon
                 l'annonce officielle. Notez votre démarche dans « Mes candidatures » pour la suivre.
               </p>
+              {/* Suivi tenu par le candidat (suivi-candidature-externe, 2026-11-13) */}
+              {currentUser && userProfile?.userType === 'porteur' && aapId && (
+                <Button variant="secondary" className="w-full mt-3" onClick={async () => {
+                  await addDoc(collection(db, 'applications'), {
+                    ...suiviCandidatureExterne({ id: aapId, title: aap.title, financeurId: aap.financeurId }, currentUser.uid),
+                    submittedAt: Timestamp.now(), createdAt: Timestamp.now(), updatedAt: Timestamp.now(),
+                  });
+                  navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur', externe: true } } });
+                }}>
+                  J'ai déposé ma candidature : la suivre ici
+                </Button>
+              )}
             </div>
           )}
           {!candidatureSurSiteOfficiel(aap) && (userProfile?.userType === 'porteur' || !currentUser) && (

@@ -70,6 +70,17 @@ export function candidatureSurSiteOfficiel(aap: Pick<AAP, 'source' | 'financeurI
   return (aap.source === 'scraped' || aap.financeurId === 'scraped') && !!aap.externalUrl;
 }
 
+// Suivi d'une candidature déposée sur le site officiel (suivi-candidature-externe, 2026-11-13) : le candidat la note dans
+// « Mes candidatures » ; elle est marquée externe et n'est transmise à personne par l'application.
+export function suiviCandidatureExterne(aap: { id: string; title: string; financeurId: string }, porteurId: string) {
+  return {
+    aapId: aap.id, aapTitle: aap.title, porteurId, financeurId: aap.financeurId, projectTitle: aap.title,
+    projectDescription: 'Candidature déposée sur le site officiel du financeur (suivi tenu par le candidat).',
+    objectives: '', methodology: '', timeline: '', expectedImpact: '', budget: { total: 0, breakdown: '' },
+    documents: [], status: 'submitted' as const, externe: true,
+  };
+}
+
 export function echeancesProches<T extends Pick<AAP, 'deadline'>>(aaps: T[], jours = 30): T[] {
   return aaps.filter(aap => {
     const j = getDaysUntilDeadline(aap.deadline);

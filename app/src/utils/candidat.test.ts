@@ -1,6 +1,15 @@
 // Tests du parcours candidat (changement parcours-candidat-jour-1, tâche 1.1).
 import { describe, expect, it } from 'vitest';
-import { candidatureSurSiteOfficiel } from './candidat';
+import { candidatureSurSiteOfficiel, suiviCandidatureExterne } from './candidat';
+
+describe('suiviCandidatureExterne (suivi-candidature-externe)', () => {
+  it('note une candidature déposée sur le site officiel, sans prétendre la transmettre', () => {
+    const suivi = suiviCandidatureExterne({ id: 'a1', title: 'AAP EHPAD', financeurId: 'scraped' }, 'p1');
+    expect(suivi).toMatchObject({ aapId: 'a1', aapTitle: 'AAP EHPAD', porteurId: 'p1', financeurId: 'scraped',
+      projectTitle: 'AAP EHPAD', status: 'submitted', externe: true, documents: [] });
+    expect(suivi.projectDescription).toContain('site officiel');
+  });
+});
 
 describe('candidatureSurSiteOfficiel (candidature-site-officiel, question 21)', () => {
   it("renvoie au site officiel pour une fiche importée qui a une adresse, au formulaire sinon", () => {
