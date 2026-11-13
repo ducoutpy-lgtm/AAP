@@ -29,6 +29,11 @@ service cloud.firestore {
       return isAuthenticated() && userData().userType == 'admin';
     }
 
+    // Rôles qu'un compte peut se donner lui-même (question 20, 2026-11-13) : jamais « admin »
+    function roleOuvert(role) {
+      return role in ['porteur', 'financeur'];
+    }
+
     function isPorteur() {
       return isAuthenticated() && userData().userType == 'porteur';
     }
@@ -40,10 +45,15 @@ service cloud.firestore {
     // Utilisateurs
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
-      // Création par le propriétaire seulement : le document naît avec le compte
-      allow create: if isOwner(userId);
-      // Mise à jour : le propriétaire, ou l'administrateur (suspendre / activer écrit subscriptionStatus)
-      allow update: if isOwner(userId) || isAdmin();
+      // Création par le propriétaire seulement : le document naît avec le compte, en porteur ou financeur, jamais en
+      // administrateur (faille relevée le 2026-11-13, question 20 ; les administrateurs sont créés par
+      // scripts/creer_admin.py, qui passe par la clé de service)
+      allow create: if isOwner(userId) && roleOuvert(request.resource.data.get('userType', ''));
+      // Mise à jour : l'administrateur ; le propriétaire sans toucher au rôle, sauf passage entre porteur et financeur
+      // (parcours d'intégration)
+      allow update: if isAdmin() || (isOwner(userId) && (
+        request.resource.data.get('userType', '') == resource.data.get('userType', '') ||
+        (roleOuvert(request.resource.data.get('userType', '')) && roleOuvert(resource.data.get('userType', '')))));
       allow delete: if isOwner(userId) || isAdmin();
     }
 

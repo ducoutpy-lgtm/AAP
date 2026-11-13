@@ -23,10 +23,11 @@ service firebase.storage {
     }
 
     // Pièces d'une candidature, déposées par le candidat avant la création du dossier (2026-10-20 : le formulaire
-    // écrivait dans ce dossier sans règle, d'où « storage/unauthorized ») ; lecture par tout compte connecté (le
-    // financeur destinataire), écriture par le propriétaire du dossier
+    // écrivait dans ce dossier sans règle, d'où « storage/unauthorized ») ; lecture et écriture par le propriétaire du
+    // dossier seulement depuis le 2026-11-13 (question 20 : tout compte connecté pouvait lire les pièces d'un autre).
+    // L'accès du financeur destinataire sera à concevoir avec l'ouverture du stockage (facturation).
     match /uploads/applications/{userId}/{filename} {
-      allow read: if isAuthenticated();
+      allow read: if isOwner(userId);
       allow write: if isOwner(userId);
       allow delete: if isOwner(userId);
     }

@@ -107,6 +107,18 @@ describe('users : propriétaire et administrateur', () => {
   it('un visiteur ne lit pas un utilisateur', async () => {
     await assertFails(getDoc(doc(visiteur(), 'users/porteur1')));
   });
+
+  // Faille relevée le 2026-11-13 (question 20, « Oui, corriger ») : un compte pouvait se donner le rôle administrateur
+  it('un compte ne se donne jamais le rôle administrateur', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'users/porteur1'), { userType: 'admin' }));
+    const nouveau = env.authenticatedContext('pirate').firestore();
+    await assertFails(setDoc(doc(nouveau, 'users/pirate'), { userType: 'admin', subscriptionStatus: 'trial' }));
+  });
+
+  it('le parcours peut encore passer de porteur à financeur, l’administrateur garde la main', async () => {
+    await assertSucceeds(updateDoc(doc(porteur(), 'users/porteur1'), { userType: 'financeur' }));
+    await assertSucceeds(updateDoc(doc(admin(), 'users/porteur1'), { userType: 'porteur' }));
+  });
 });
 
 describe('aap : création et modification par un financeur (dégel du 2026-10-19)', () => {

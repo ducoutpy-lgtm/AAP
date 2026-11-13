@@ -38,6 +38,11 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    officiel » (lien de l'annonce) et un suivi tenu par le candidat. À trancher.
 22. (2026-11-13) Mise en ligne des corrections du soir (recommandations, parcours candidat sans impasse). Oui / non.
 
+Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
+corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
+le correctif » (une seule mise en ligne, site et règles ensemble). La dépense (17) et la mise en ligne (22) attendent
+son « oui » direct dans la conversation de la séance AAP, selon la règle de la séance.
+
 ## Tranchées
 
 | Date | Question | Réponse |
