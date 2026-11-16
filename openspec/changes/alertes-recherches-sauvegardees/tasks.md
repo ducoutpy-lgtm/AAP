@@ -18,7 +18,8 @@
 
 ## 3. Courriel
 
-- [ ] 3.1 `alertes.py` : section par recherche active (tests d'abord : active, arrêtée, aucun appel).
+- [x] 3.1 `alertes.py` : section par recherche active (tests d'abord : active, arrêtée, aucun appel). (2026-11-16 : 3 tests
+  en échec puis verts, pytest 163 verts ; le sujet compte les appels distincts du profil et des recherches.)
 
 ## 4. Preuve
 

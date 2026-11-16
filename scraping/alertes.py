@@ -17,7 +17,7 @@ import re
 import math
 import sys
 from datetime import datetime, timedelta, timezone
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlencode
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -181,24 +181,77 @@ def montant(f: dict) -> str:
     return "montant non précisé"
 
 
-def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int = 10) -> tuple[str, str]:
-    """(sujet, texte) du courriel hebdomadaire d'un candidat ; les fiches sont déjà filtrées et triées."""
+def _lignes_fiche(f: dict, url: str) -> list[str]:
+    cloture = _date(f.get("deadline"))
+    quand = f"clôture le {cloture.strftime('%d/%m/%Y')}" if cloture else "date de clôture non précisée"
+    return [f"- {f.get('title', '')}", f"  {f.get('financeurName') or 'Financeur non précisé'} · {montant(f)} · {quand}",
+            f"  {url}/aap/{f.get('id', '')}", ""]
+
+
+def _nombre(x) -> str:
+    """Comme String(x) en JavaScript : 1000 et non 1000.0."""
+    return str(int(x)) if float(x).is_integer() else str(x)
+
+
+def params_de_recherche(r: dict) -> str:
+    """Adresse d'une recherche sauvegardée ; une recherche d'avril (champ « filters ») garde ses mots-clés et ses montants,
+    comme depuisAncienneRecherche dans l'application (secteurs et régions d'avril sans équivalent)."""
+    if r.get("params") is not None:
+        return r["params"]
+    ancien = r.get("filters") or {}
+    morceaux = [("q", ancien["keywords"])] if ancien.get("keywords") else []
+    morceaux += [(cle, _nombre(ancien[cle])) for cle in ("budgetMin", "budgetMax") if ancien.get(cle)]
+    return urlencode(morceaux)
+
+
+def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: datetime) -> list[dict]:
+    """Une section par recherche dont l'alerte est active : fiches visibles publiées depuis `depuis` qui passent ses
+    filtres, clôture la plus proche d'abord (fonction pure, alertes-recherches-sauvegardees)."""
+    loin = datetime.max.replace(tzinfo=timezone.utc)
+    sections = []
+    for r in recherches:
+        if not r.get("alertEnabled"):
+            continue
+        params = params_de_recherche(r)
+        filtres = filtres_depuis_params(params)
+        retenues = []
+        for f in fiches:
+            quand = _date(f.get("publishedAt")) or _date(f.get("createdAt"))
+            if visible(f) and quand and quand >= depuis and correspond(f, filtres):
+                retenues.append(f)
+        retenues.sort(key=lambda f: _date(f.get("deadline")) or loin)
+        sections.append({"nom": r.get("name") or "Recherche sans nom", "params": params, "fiches": retenues})
+    return sections
+
+
+def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int = 10,
+                      sections: list[dict] | None = None) -> tuple[str, str]:
+    """(sujet, texte) du courriel hebdomadaire d'un candidat ; les fiches sont déjà filtrées et triées ; une section par
+    recherche sauvegardée dont l'alerte est active (`sections_recherches`)."""
+    sections = sections or []
     nom = profil.get("structureName") or "votre structure"
     n = len(fiches)
-    sujet = (f"AAP Santé : {n} nouveaux appels à projets pour {nom}" if n > 1
-             else f"AAP Santé : 1 nouvel appel à projets pour {nom}" if n == 1
+    total = len({f.get("id") for f in fiches} | {f.get("id") for s in sections for f in s["fiches"]})
+    sujet = (f"AAP Santé : {total} nouveaux appels à projets pour {nom}" if total > 1
+             else f"AAP Santé : 1 nouvel appel à projets pour {nom}" if total == 1
              else f"AAP Santé : aucun nouvel appel cette semaine pour {nom}")
     lignes = ["Bonjour,", "", f"Voici les appels à projets publiés cette semaine qui concernent {nom} :" if n else "Aucun nouvel appel à projets ne concerne votre structure cette semaine.", ""]
     for f in fiches[:maximum]:
-        cloture = _date(f.get("deadline"))
-        quand = f"clôture le {cloture.strftime('%d/%m/%Y')}" if cloture else "date de clôture non précisée"
-        lignes += [f"- {f.get('title', '')}", f"  {f.get('financeurName') or 'Financeur non précisé'} · {montant(f)} · {quand}",
-                   f"  {url}/aap/{f.get('id', '')}", ""]
+        lignes += _lignes_fiche(f, url)
     if n > maximum:
         lignes.append(f"... et {n - maximum} autre{'s' if n - maximum > 1 else ''} : {url}/aap/search")
         lignes.append("")
-    lignes += [f"Tous les appels de votre région : {url}/aap/search", "",
-               "Pour ne plus recevoir ces courriels : Mon profil, préférences des alertes.", "", "AAP Santé."]
+    lignes += [f"Tous les appels de votre région : {url}/aap/search", ""]
+    for s in sections:
+        k = len(s["fiches"])
+        compte = (f"{k} nouveaux appels" if k > 1 else "1 nouvel appel" if k == 1 else "aucun nouvel appel cette semaine")
+        lignes += [f"Votre recherche « {s['nom']} » : {compte}", ""]
+        for f in s["fiches"][:5]:
+            lignes += _lignes_fiche(f, url)
+        lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}" if s["params"] else f"  Voir la recherche : {url}/aap/search", ""]
+    if sections:
+        lignes += [f"Pour arrêter l'alerte d'une recherche : Recherches sauvegardées, {url}/recherches-sauvegardees.", ""]
+    lignes += ["Pour ne plus recevoir ces courriels : Mon profil, préférences des alertes.", "", "AAP Santé."]
     return sujet, "\n".join(lignes)
 
 
@@ -225,7 +278,7 @@ def etat_base(fiches: list[dict], depuis: datetime) -> dict:
 
 
 def lire_candidats(db) -> list[tuple[dict, dict]]:
-    """(compte, profil) des candidats au profil complet qui acceptent les courriels."""
+    """(compte, profil, recherches sauvegardées) des candidats au profil complet qui acceptent les courriels."""
     resultat = []
     for u in db.collection("users").where("userType", "==", "porteur").stream():
         compte = u.to_dict()
@@ -235,7 +288,8 @@ def lire_candidats(db) -> list[tuple[dict, dict]]:
             continue
         p = db.collection("porteurProfiles").document(u.id).get()
         if p.exists:
-            resultat.append((compte, p.to_dict()))
+            recherches = [r.to_dict() for r in db.collection("savedSearches").where("userId", "==", u.id).stream()]
+            resultat.append((compte, p.to_dict(), recherches))
     return resultat
 
 
@@ -260,10 +314,12 @@ def main() -> int:
         dest = (config or {}).get("admin") or "admin (COURRIEL_ADMIN non renseigné)"
         print("admin :", courriel.envoyer(dest, sujet, texte, args.dry_run))
     if args.candidats:
-        for compte, profil in lire_candidats(db):
+        for compte, profil, recherches in lire_candidats(db):
             retenues = fiches_nouvelles_pour(profil, fiches, depuis)
-            sujet, texte = courriel_candidat(profil, retenues, args.url)
-            print(f"candidat {compte['email']} : {len(retenues)} appel(s) ;", courriel.envoyer(compte["email"], sujet, texte, args.dry_run))
+            sections = sections_recherches(recherches, fiches, depuis)
+            sujet, texte = courriel_candidat(profil, retenues, args.url, sections=sections)
+            print(f"candidat {compte['email']} : {len(retenues)} appel(s), {len(sections)} recherche(s) en alerte ;",
+                  courriel.envoyer(compte["email"], sujet, texte, args.dry_run))
     return 0
 
 

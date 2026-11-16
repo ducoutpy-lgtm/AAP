@@ -109,3 +109,43 @@ def test_correspond_donne_les_memes_resultats_que_l_application():
     for cas in CAS["cas"]:
         filtres = a.filtres_depuis_params(cas["params"])
         assert [f["id"] for f in fiches if a.correspond(f, filtres)] == cas["attendus"], cas["nom"]
+
+
+# ---------------------------------------------------------------- alertes des recherches sauvegardées (tâche 3.1)
+
+def _fiches_idf():
+    return [
+        fiche(id="ms1", title="Répit des aidants", territoriesEligible=["ile-de-france"], scrapeMetadata={"champ": "medico-social"}),
+        fiche(id="ms2", title="Habitat inclusif", territoriesEligible=["france"], scrapeMetadata={"champ": "medico-social"},
+              deadline=MAINTENANT + timedelta(days=10)),
+        fiche(id="sante", title="Télémédecine", territoriesEligible=["ile-de-france"], scrapeMetadata={"champ": "sante"}),
+        fiche(id="ancienne", territoriesEligible=["ile-de-france"], scrapeMetadata={"champ": "medico-social"},
+              publishedAt=MAINTENANT - timedelta(days=30)),
+    ]
+
+
+RECHERCHE_IDF = {"name": "IDF médico-social", "params": "thematique=medico-social&territory=ile-de-france", "alertEnabled": True}
+
+
+def test_section_par_recherche_active_avec_les_appels_nouveaux_qui_passent_ses_filtres():
+    sections = a.sections_recherches([RECHERCHE_IDF, {**RECHERCHE_IDF, "name": "Arrêtée", "alertEnabled": False}], _fiches_idf(), DEPUIS)
+    assert [(s["nom"], s["params"], [f["id"] for f in s["fiches"]]) for s in sections] == \
+        [("IDF médico-social", "thematique=medico-social&territory=ile-de-france", ["ms2", "ms1"])]
+
+
+def test_recherche_d_avril_convertie_comme_dans_l_application():
+    ancienne = {"name": "Avril", "alertEnabled": True, "filters": {"keywords": "habitat", "sectors": ["energie"], "budgetMin": 1000}}
+    sections = a.sections_recherches([ancienne], _fiches_idf(), DEPUIS)
+    assert sections[0]["params"] == "q=habitat&budgetMin=1000" and [f["id"] for f in sections[0]["fiches"]] == ["ms2"]
+
+
+def test_courriel_candidat_avec_sections_de_recherche():
+    sections = a.sections_recherches([RECHERCHE_IDF, {"name": "Rien", "params": "q=introuvable", "alertEnabled": True}], _fiches_idf(), DEPUIS)
+    sujet, texte = a.courriel_candidat({"structureName": "EHPAD Test"}, [], "https://aap.exemple.fr", sections=sections)
+    assert sujet == "AAP Santé : 2 nouveaux appels à projets pour EHPAD Test"
+    assert "Votre recherche « IDF médico-social » : 2 nouveaux appels" in texte
+    assert "https://aap.exemple.fr/aap/search?thematique=medico-social&territory=ile-de-france" in texte
+    assert "Votre recherche « Rien » : aucun nouvel appel cette semaine" in texte
+    assert "Recherches sauvegardées" in texte
+    # sans recherche active : courriel inchangé
+    assert "Votre recherche" not in a.courriel_candidat({"structureName": "X"}, [], "u")[1]
