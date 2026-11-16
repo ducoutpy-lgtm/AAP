@@ -57,11 +57,9 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    national (il faut un type d'établissement cité ou un objet commun) ; (b) requalifier les fiches avec une consigne plus
    stricte (payant, devis d'abord, environ 0,0003 euro par fiche, soit 0,11 euro pour 363) ; (c) les deux. Proposition de
    la session : (a) maintenant, (b) après votre lecture du tirage. À trancher après avoir noté les vingt lignes.
-30. (2026-11-16) Étape payante de la veille du 16 novembre : devis d'extraction 0,52 euro au plus pour 341 textes
-   nouveaux (trois appels par texte supposés), au-delà du budget de la semaine (0,50 euro) et de la limite de 0,20 euro
-   par commande : la veille s'est arrêtée avant l'extraction, comme prévu. Le contrôle et la qualification des 65 fiches
-   nouvelles tirées des PDF des conférences (13 novembre) attendent aussi. Plafond prévu : 3,982 euros (cumul 3,462 plus
-   devis), sous les 4,50 euros. Puis contrôle et qualification sur devis séparé, import en « à valider ». Oui / non.
+32. (2026-11-16) Qualification des 76 fiches contrôlées l'après-midi du 16 novembre : devis 0,054 euro (estimation de
+   l'outil 0,027 doublée), au-delà du reste du budget de la semaine (0,019 euro). Plafond prévu : 3,997 euros (cumul
+   3,943 plus devis). Puis import en « à valider » (sans coût). Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
@@ -92,6 +90,7 @@ conférences lancée en tâche de fond avec `--plafond 3.463` (journal `scraping
 | 2026-11-13 | 13 à 15. Rejet des doublons, mise en ligne, veille sans fenêtre | « Oui, les trois » (dans la conversation) : 43 fiches archivées après sauvegarde `scripts/sauvegardes/doublons_2026-11-13_1744.json` (363 publiées, 109 dans la file) ; hébergement mis en ligne deux fois (pages légales, appels clos masqués, puis date de mise à jour des pages au 13 novembre), version `index-UGUi_gyX.js` servie ; action de la tâche planifiée remplacée par `wscript.exe "...\scraping\veille_cachee.vbs"`, prochain passage lundi 16 novembre à 8 h |
 | 2026-11-16 | 24, 26, 27, 28. Mise en ligne des alertes des recherches, de l'export des données, des règles du stockage et des correctifs financeur et premier clic | « Oui, mets en ligne » (dans la conversation) : relecture à plusieurs agents d'abord (19 constats, 11 confirmés, corrigés par `corrections-relecture-16-novembre`), puis `firebase deploy --only hosting,storage --project aapi-11bc3` : « released rules storage.rules », « Deploy complete! » ; version servie `index-BB_FScPX.js`, qui contient « Enregistrer cette recherche », « Télécharger mes données » et « suivez-le sur cette page ». Règles Firestore non déployées (question 31) |
 | 2026-11-16 | 31. Règles Firestore corrigées après la relecture (propriétaire figé des recherches, favoris et notifications ; financeur suspendu lit ses appels) | « Oui, déploie les règles » (dans la conversation) : 36 tests de règles rejoués juste avant, `firebase deploy --only firestore:rules --project aapi-11bc3` : « released rules firestore.rules », « Deploy complete! » ; contrôle sur la vraie base : lecture sans compte des appels publiés acceptée, lecture sans compte des recherches sauvegardées refusée (« PERMISSION_DENIED ») |
+| 2026-11-16 | 30. Extraction des 341 textes nouveaux de la veille du 16 novembre (devis 0,52 euro) | « Oui, 0,52 € » (dans la conversation) : `extraction_locale.py --extraire --moteur api --plafond 3.982` : « 1516 réussites (189 nouvelles), 50 échecs ; coût cumulé 3.889 euros », soit 0,427 euro ; puis contrôle de 76 fiches dans la délégation (0,054 euro, cumul 3,943), après correction d'un défaut qui rendait le devis du contrôle illisible (sortie des scripts enfants en UTF-8) ; qualification arrêtée au devis (question 32) |
 | 2026-11-13 | 16. Veille sur batterie (la tâche refusait de démarrer sur batterie et s'arrêtait si le PC y passait) | « Oui, autorise-la » : réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » passés à faux ; action, déclencheur et limite de quatre heures inchangés |
 
 Les réponses du 2026-11-13 (questions 1, 2, 3 bis, 3 ter, 5, 6, 7, 8, 11) ont été données par choix à cocher dans la

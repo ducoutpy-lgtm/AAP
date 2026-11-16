@@ -35,6 +35,9 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   de fond (`extraction_locale.py --extraire --moteur api --plafond 3.982`, journal
   `scraping/logs/extraction_veille_2026-11-16.log`). Ensuite : devis du contrôle et de la qualification (hors budget de
   la semaine, accord à demander), puis import en « à valider ».
+  Fait : extraction 189 fiches nouvelles pour 0,427 euro (cumul 3,889) ; contrôle de 76 fiches dans la délégation pour
+  0,054 euro (cumul 3,943), après le correctif d'encodage de `veille_payante.lancer` ; qualification (devis 0,054) et
+  import attendent son accord (question 32). Semaine du 16 novembre : 0,481 euro dépensé sur 0,50.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

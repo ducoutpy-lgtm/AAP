@@ -4,6 +4,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-11-16)
+- `veille_payante.py` : la sortie des scripts enfants est imposée en UTF-8. Sous Windows, la sortie à blanc du contrôle
+  arrivait en encodage local (« estim�s »), le devis était illisible et la veille s'arrêtait au contrôle chaque lundi.
+
 ### Ajouté (2026-11-16, semaine 3 du plan)
 - `alertes.py` : section par recherche sauvegardée dont l'alerte est active (`sections_recherches`), filtres de la
   recherche appliqués comme dans l'application (`filtres_depuis_params`, `correspond`, cas communs
