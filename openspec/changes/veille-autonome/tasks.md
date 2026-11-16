@@ -26,5 +26,11 @@ Monsieur DUCOUT le 2026-11-13. Coût : au plus 0,50 euro par semaine.
   16/11/2026 08:00. Constat : la tâche ne démarre pas sur batterie et s'arrête si le PC y passe ; le code de l'arrêt du
   9 novembre vaut aussi pour un arrêt ou une fermeture de session (question 16 de `docs/A_VALIDER.md`). Sur son « Oui,
   autorise-la » : « DisallowStartIfOnBatteries : False », « StopIfGoingOnBatteries : False », prochain passage inchangé.
+- [x] 3.4 (2026-11-16) Correctif : `veille_payante.lancer` impose l'UTF-8 aux scripts enfants. Constat : la sortie à blanc
+  du contrôle arrivait en encodage Windows (« estim�s »), « devis illisible », arrêt au contrôle. Test
+  `test_devis_lu_dans_la_sortie_d_un_script_enfant_avec_accents` en échec puis vert, pytest 173 verts.
 - [ ] 4.1 Vérification : le lundi 16 novembre, `scraping/logs/veille.log` va jusqu'à « Veille terminee » et Monsieur DUCOUT
   reçoit le bilan par courriel.
+  (2026-11-16 : « Veille terminee le 16/11/2026 11:33:24 », « admin : envoyé à ducout@hotmail.fr » ; étape payante
+  arrêtée au devis d'extraction, au-delà du budget de la semaine, comme prévu. Réception du courriel à confirmer par
+  Monsieur DUCOUT.)

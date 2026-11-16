@@ -46,3 +46,11 @@ def test_decision_dans_la_delegation():
     ok, _, motif = vp.decision(0.10, depense=0.0, cumul=4.45)
     assert not ok and "4,50" in motif
     assert vp.decision(None, depense=0.0, cumul=2.822)[0] is False
+
+
+def test_devis_lu_dans_la_sortie_d_un_script_enfant_avec_accents():
+    """Constat du 2026-11-16 : la sortie à blanc du contrôle arrivait en encodage Windows (« estim�s »), le devis était
+    illisible et la veille s'arrêtait au contrôle."""
+    import veille_payante as v
+    code, sortie = v.lancer(["-c", "print('76 fiches à vérifier, 0.031 euros estimés')"])
+    assert code == 0 and "estimés" in sortie and v.montant_devis(sortie) == 0.031
