@@ -31,7 +31,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 
 | # | Condition | État | Preuve |
 |---|---|---|---|
-| 11 | Démonstration financeur à 9 étapes sur 9 | 7 sur 9 jouées | `docs/DEMO_FINANCEUR.md` (étape « Nouvel appel » non jouée par la session) ; question 5 |
+| 11 | Démonstration financeur à 9 étapes sur 9 | 9 sur 9 jouées sur les émulateurs, correctif pas en ligne | `docs/DEMO_FINANCEUR.md` ; la publication d'un appel échouait toujours, corrigée (changement `publication-appel-financeur`) ; question 28 |
 
 ## Conformité et sécurité
 

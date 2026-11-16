@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-16, semaine 4)
+- Publication d'un appel par un financeur (changement `publication-appel-financeur`) : « Publier l'AAP » échouait
+  toujours (champs facultatifs vides écrits à `undefined`, refusés par Firestore) ; les champs vides sont désormais
+  omis à la création et supprimés à la modification (`app/src/utils/firestore.ts`). Démonstration financeur jouée
+  9 étapes sur 9 sur les émulateurs. `npm test` 113 verts. Mise en ligne sur accord.
+
 ### Mesuré (2026-11-16, semaine 4)
 - Exactitude des fiches du pilote (changement `mesure-exactitude-30-fiches`, `scraping/exactitude.py`) : 30 fiches tirées
   (graine fixe), comparées à leur texte source : 110 champs justes sur 120 (91,7 %), aucune date inventée, seuil du pilote

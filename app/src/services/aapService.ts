@@ -1,3 +1,4 @@
+import { pourMiseAJour, sansIndefinis } from '../utils/firestore';
 import {
   collection,
   doc,
@@ -58,7 +59,8 @@ export const aapService = {
       source: 'manual',
     };
 
-    const docRef = await addDoc(collection(db, 'aap'), aapData);
+    // Champs facultatifs vides omis : Firestore refuse undefined (publication-appel-financeur, 2026-11-16)
+    const docRef = await addDoc(collection(db, 'aap'), sansIndefinis(aapData));
     return docRef.id;
   },
 
@@ -115,7 +117,7 @@ export const aapService = {
       updateData.endDate = Timestamp.fromDate(data.endDate);
     }
 
-    await updateDoc(doc(db, 'aap', aapId), updateData);
+    await updateDoc(doc(db, 'aap', aapId), pourMiseAJour(updateData));
   },
 
   // Publier un AAP

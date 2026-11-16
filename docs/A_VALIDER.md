@@ -59,6 +59,9 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    seule, ancien dossier fermé, pièces de candidature à leur seul auteur ; 34 tests de règles verts). Commande :
    `firebase deploy --only storage` depuis `app`. Le stockage est vide et la facturation fermée : aucun effet visible
    aujourd'hui, la faille est fermée avant l'ouverture. Oui / non.
+28. (2026-11-16) Mise en ligne du correctif `publication-appel-financeur` : sur le site en ligne, un financeur ne peut pas
+   publier d'appel (erreur « Unsupported field value: undefined »). Peut partir avec les questions 24 et 26 en une seule
+   mise en ligne de l'hébergement (`firebase deploy --only hosting` depuis `app`, après `npm run build`). Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
