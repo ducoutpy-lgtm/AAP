@@ -16,6 +16,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   RGPD) codé et joué sur les émulateurs ; suppression du compte : question 25 ; mise en ligne : question 26. Prochains
   lots sans décision : mesure d'exactitude sur 30 fiches, espace financeur (démonstration à 9 étapes), liste « prêt pour
   testeurs ».
+- 2026-11-16, 11 h 30 : faits : liste `docs/PRET_POUR_TESTEURS.md` ; mesure d'exactitude (`scraping/EXACTITUDE.md`,
+  110 / 120, 0 date inventée, seuil atteint ; financeurs remplacés par le relais dans 6 fiches sur 30) ; règles du
+  stockage durcies et testées (`regles-stockage-durcies`, question 27). Reste en semaine 4 : démonstration financeur
+  9 / 9 (étape « Nouvel appel » à jouer sur les émulateurs).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

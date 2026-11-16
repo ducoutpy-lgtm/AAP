@@ -156,6 +156,12 @@ Spécification : `openspec/specs/registre-sources/`.
 document de la collection Firestore `coutsIa` (identifiant dérivé du texte de la ligne : relançable sans doublon),
 lu par la page « Appels externes » de l'administration (`/admin/couts-ia`). `--dry-run` compte sans écrire.
 
+### Mesure d'exactitude (changement `mesure-exactitude-30-fiches`, 2026-11-16)
+
+`python exactitude.py --tirer` tire 30 fiches du pilote dans le champ (graine fixe, `results/exactitude_tirage.json`) ;
+les verdicts champ par champ contre le texte source vont dans `sources/exactitude_verdicts.json` ; `python exactitude.py
+--rapport` écrit `EXACTITUDE.md` (part de champs justes, dates inventées, écarts, dix fiches à relire). Zéro euro.
+
 ### Courriels hebdomadaires (jour 3 du plan MVP, changement `alertes-courriel`, 2026-10-20)
 
 Après la relecture des pages, `veille.cmd` appelle `alertes.py --admin --candidats` : bilan à l'administrateur (chiffres

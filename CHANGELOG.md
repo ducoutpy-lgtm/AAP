@@ -3,6 +3,13 @@
 Toutes les modifications notables du dépôt AAP Santé sont documentées ici (format Keep a Changelog, en
 français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.md`.
 
+## [Non publié]
+
+### Mesuré (2026-11-16, semaine 4)
+- Exactitude des fiches du pilote (changement `mesure-exactitude-30-fiches`, `scraping/exactitude.py`) : 30 fiches tirées
+  (graine fixe), comparées à leur texte source : 110 champs justes sur 120 (91,7 %), aucune date inventée, seuil du pilote
+  atteint ; financeur juste dans 24 fiches sur 30, les 6 écarts sont des relais (Lyonbiopôle, Gérontopôle Sud). Rapport
+  `scraping/EXACTITUDE.md` ; dix fiches à relire par Monsieur DUCOUT.
 
 ### Sécurité (2026-11-16)
 - Règles du stockage (changement `regles-stockage-durcies`) : documents des appels en lecture seule depuis
