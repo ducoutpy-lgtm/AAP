@@ -20,6 +20,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   110 / 120, 0 date inventée, seuil atteint ; financeurs remplacés par le relais dans 6 fiches sur 30) ; règles du
   stockage durcies et testées (`regles-stockage-durcies`, question 27). Reste en semaine 4 : démonstration financeur
   9 / 9 (étape « Nouvel appel » à jouer sur les émulateurs).
+- 2026-11-16, fin de matinée : démonstration financeur 9 / 9 sur les émulateurs (la publication d'un appel échouait
+  toujours : corrigé, `publication-appel-financeur`) ; parcours candidat complet joué avec un compte neuf (premier clic
+  sur « Candidater » renvoyait au tableau de bord : corrigé, `premier-clic-candidater` ; cloche « Alertes » retirée) ;
+  tirage de vingt recommandations `docs/TIRAGE_RECOMMANDATIONS.md` (avis de la session : environ 4 pertinentes,
+  qualification trop large, question 29) ; bilan du pilote dans `docs/PILOTE_MVP.md` section 4. Questions ouvertes du
+  jour : 23 à 29 de `docs/A_VALIDER.md` (une seule mise en ligne possible pour 24, 26 et 28 ; règles du stockage 27).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
