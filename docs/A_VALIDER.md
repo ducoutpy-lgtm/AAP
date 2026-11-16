@@ -17,7 +17,6 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    faire par lui dans Netlify (Project configuration > Build & deploy > Continuous deployment > Build settings >
    Configure > Stopped builds).
 
-
 17. (2026-11-13) Extraction des appels des conférences des financeurs publiés en PDF : devis 0,59 euro au plus pour 211
    textes (202 PDF, 9 pages web ; trois appels par texte supposés, le réel est souvent la moitié), au-delà du reste de la
    délégation de la semaine (0,449 euro). Plafond prévu : 3,463 euros (cumul 2,873 plus devis). Puis contrôle et
@@ -43,9 +42,6 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    références, moyens humains) qui préremplissent le formulaire de candidature : aucun stockage de fichiers. Proposition
    de la session : (b) maintenant, (a) à l'ouverture de Blaze. À trancher ; en attendant, la session passe aux lots de la
    semaine 4.
-24. (2026-11-16) Mise en ligne du changement `alertes-recherches-sauvegardees` (bouton « Enregistrer cette recherche »,
-   page des recherches réécrite ; aucune règle Firestore modifiée). Le courriel du lundi le prend en compte dès la
-   prochaine veille, mise en ligne ou non. Oui / non.
 25. (2026-11-16) Suppression du compte en libre-service (droit à l'effacement) : que deviennent les candidatures
    déposées auprès d'un financeur inscrit (il les a reçues : les garder anonymisées, ou les supprimer) et les lignes du
    journal des actions ? Proposition de la session : bouton « Supprimer mon compte » avec confirmation ; profil, recherches,
@@ -53,16 +49,6 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    reçues par un financeur inscrit gardées sans nom ni coordonnées ; journal gardé sans l'identifiant. Règles Firestore
    à changer (tests sur l'émulateur), puis mise en ligne sur accord. À trancher. En attendant, l'effacement passe par le
    DPO (page Mon profil et page Confidentialité).
-26. (2026-11-16) Mise en ligne du changement `export-donnees-personnelles` (bouton « Télécharger mes données », phrase de
-   la page Confidentialité ; aucune règle modifiée). Oui / non.
-27. (2026-11-16) Déploiement des règles du stockage (changement `regles-stockage-durcies` : documents d'appel en lecture
-   seule, ancien dossier fermé, pièces de candidature à leur seul auteur ; 34 tests de règles verts). Commande :
-   `firebase deploy --only storage` depuis `app`. Le stockage est vide et la facturation fermée : aucun effet visible
-   aujourd'hui, la faille est fermée avant l'ouverture. Oui / non.
-28. (2026-11-16) Mise en ligne des correctifs `publication-appel-financeur` (sur le site en ligne, un financeur ne peut pas
-   publier d'appel : erreur « Unsupported field value: undefined ») et `premier-clic-candidater` (au premier clic sur
-   « Candidater », un compte neuf est renvoyé au tableau de bord ; supposé aussi en ligne, non vérifié). Peut partir avec les questions 24 et 26 en une seule
-   mise en ligne de l'hébergement (`firebase deploy --only hosting` depuis `app`, après `npm run build`). Oui / non.
 29. (2026-11-16) Recommandations (question 19) : tirage de vingt prêt dans `docs/TIRAGE_RECOMMANDATIONS.md` (quatre
    profils types, 363 fiches visibles). Avis de la session : environ 4 pertinentes sur 20 ; cause vérifiée sur trois
    fiches : qualification trop large (appels de recherche ouverts « à toute structure », programmes européens
@@ -71,6 +57,18 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    national (il faut un type d'établissement cité ou un objet commun) ; (b) requalifier les fiches avec une consigne plus
    stricte (payant, devis d'abord, environ 0,0003 euro par fiche, soit 0,11 euro pour 363) ; (c) les deux. Proposition de
    la session : (a) maintenant, (b) après votre lecture du tirage. À trancher après avoir noté les vingt lignes.
+30. (2026-11-16) Étape payante de la veille du 16 novembre : devis d'extraction 0,52 euro au plus pour 341 textes
+   nouveaux (trois appels par texte supposés), au-delà du budget de la semaine (0,50 euro) et de la limite de 0,20 euro
+   par commande : la veille s'est arrêtée avant l'extraction, comme prévu. Le contrôle et la qualification des 65 fiches
+   nouvelles tirées des PDF des conférences (13 novembre) attendent aussi. Plafond prévu : 3,982 euros (cumul 3,462 plus
+   devis), sous les 4,50 euros. Puis contrôle et qualification sur devis séparé, import en « à valider ». Oui / non.
+
+31. (2026-11-16) Règles Firestore corrigées après la relecture du jour (changement `corrections-relecture-16-novembre`,
+   36 tests de règles verts) : une recherche sauvegardée, un favori ou une notification ne peut plus changer de
+   propriétaire (une recherche réattribuée à un autre compte ferait partir le lundi, depuis contact@arcadiaco.fr, un nom
+   choisi par l'auteur de la réattribution ; le courriel retire déjà les liens des noms en attendant) ; le financeur
+   auteur lit ses appels même suspendu (son export échouait). Commande : `firebase deploy --only firestore:rules
+   --project aapi-11bc3` depuis `app`. Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
@@ -99,6 +97,7 @@ conférences lancée en tâche de fond avec `--plafond 3.463` (journal `scraping
 | 2026-11-13 | 5. Testeurs | « Pas de test, on continue comme ça pour le moment, la plateforme n'est pas assez développée pour soumettre au test » : aucune invitation ; la prochaine livraison est du développement |
 | 2026-11-13 | 5. Mentions légales encore « à valider » | Mesure d'audience : « Oui, aucun outil » pendant le test (mentions à retirer dans Mentions légales et Confidentialité) ; durées de conservation : « Oui, je confirme » ; tarifs et résiliation : « Tarifs provisoires » (aucun paiement pendant le test, résiliation fixée à l'ouverture du paiement) ; clause de litige : « Garder pour le test » (relecture par un conseil avant l'ouverture du paiement) ; emplacement des comptes et des fichiers vérifié le 2026-11-13 (comptes de connexion aux États-Unis, base en Union européenne `eur3`, stockage de fichiers aux États-Unis `US-CENTRAL1`, vide), texte proposé. Pages modifiées dans le code le 2026-11-13 au soir (changement `mentions-legales-decisions`, tests verts) ; mise en ligne sur son accord ; relecture de la clause de litige par un conseil avant l'ouverture du paiement |
 | 2026-11-13 | 13 à 15. Rejet des doublons, mise en ligne, veille sans fenêtre | « Oui, les trois » (dans la conversation) : 43 fiches archivées après sauvegarde `scripts/sauvegardes/doublons_2026-11-13_1744.json` (363 publiées, 109 dans la file) ; hébergement mis en ligne deux fois (pages légales, appels clos masqués, puis date de mise à jour des pages au 13 novembre), version `index-UGUi_gyX.js` servie ; action de la tâche planifiée remplacée par `wscript.exe "...\scraping\veille_cachee.vbs"`, prochain passage lundi 16 novembre à 8 h |
+| 2026-11-16 | 24, 26, 27, 28. Mise en ligne des alertes des recherches, de l'export des données, des règles du stockage et des correctifs financeur et premier clic | « Oui, mets en ligne » (dans la conversation) : relecture à plusieurs agents d'abord (19 constats, 11 confirmés, corrigés par `corrections-relecture-16-novembre`), puis `firebase deploy --only hosting,storage --project aapi-11bc3` : « released rules storage.rules », « Deploy complete! » ; version servie `index-BB_FScPX.js`, qui contient « Enregistrer cette recherche », « Télécharger mes données » et « suivez-le sur cette page ». Règles Firestore non déployées (question 31) |
 | 2026-11-13 | 16. Veille sur batterie (la tâche refusait de démarrer sur batterie et s'arrêtait si le PC y passait) | « Oui, autorise-la » : réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » passés à faux ; action, déclencheur et limite de quatre heures inchangés |
 
 Les réponses du 2026-11-13 (questions 1, 2, 3 bis, 3 ter, 5, 6, 7, 8, 11) ont été données par choix à cocher dans la

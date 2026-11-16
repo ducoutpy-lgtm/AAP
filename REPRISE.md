@@ -26,6 +26,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   tirage de vingt recommandations `docs/TIRAGE_RECOMMANDATIONS.md` (avis de la session : environ 4 pertinentes,
   qualification trop large, question 29) ; bilan du pilote dans `docs/PILOTE_MVP.md` section 4. Questions ouvertes du
   jour : 23 à 29 de `docs/A_VALIDER.md` (une seule mise en ligne possible pour 24, 26 et 28 ; règles du stockage 27).
+- 2026-11-16, 13 h : veille du lundi terminée sans intervention (« Veille terminee le 16/11/2026 11:33 », courriels
+  partis), étape payante arrêtée au devis (0,52 euro, question 30). « Oui, mets en ligne » : relecture à plusieurs agents,
+  11 constats corrigés (`corrections-relecture-16-novembre`), hébergement et règles du stockage déployés (version
+  `index-BB_FScPX.js`) ; règles Firestore corrigées non déployées (question 31). Questions ouvertes : 23, 25, 29, 30, 31.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

@@ -5,6 +5,15 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Mis en ligne (2026-11-16, après accord « Oui, mets en ligne »)
+- Hébergement et règles du stockage (`firebase deploy --only hosting,storage --project aapi-11bc3`, version
+  `index-BB_FScPX.js`) : alertes des recherches sauvegardées, téléchargement des données, publication d'un appel par un
+  financeur, premier clic sur « Candidater », règles du stockage durcies. Avant : relecture à plusieurs agents des
+  modifications du jour, 11 constats confirmés et corrigés (changement `corrections-relecture-16-novembre` : montants
+  illisibles qui arrêtaient le courriel du lundi, candidat en erreur isolé, recherches d'avril vides, double clic,
+  doublons de recherches, messages, liens retirés des noms). Règles Firestore corrigées et testées, non déployées
+  (question 31).
+
 ### Corrigé (2026-11-16, semaine 3, parcours candidat joué en entier)
 - Premier clic sur « Candidater à cet AAP » d'un compte neuf (changement `premier-clic-candidater`) : le candidat était
   renvoyé au tableau de bord (passage par `/admin`), le profil relu après la coche de la liste « Démarrer » ayant perdu

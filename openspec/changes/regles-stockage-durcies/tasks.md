@@ -7,4 +7,5 @@
   `uploadDocument` et `deleteDocument` d'`aapService.ts`, jamais appelées, échoueraient désormais : code mort signalé,
   laissé en place.)
 - [x] 2.1 Documentation (`CHANGELOG.md`, `docs/PRET_POUR_TESTEURS.md` ligne 14, `docs/A_VALIDER.md` question 27).
-- [ ] 2.2 Déploiement des règles du stockage sur accord de Monsieur DUCOUT.
+- [x] 2.2 Déploiement des règles du stockage sur accord de Monsieur DUCOUT. (2026-11-16, « Oui, mets en ligne » :
+  « released rules storage.rules to firebase.storage », « Deploy complete! ».)

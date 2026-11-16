@@ -8,6 +8,6 @@
   `ConfidentialitePage.tsx`, `firestore.rules`. Fait quand : `npm test`, pytest, `npm run test:rules`, lint et build verts.
   (2026-11-16 : `npm test` 117, pytest 172, règles 36 verts ; règles d'avant remises un instant : les deux nouveaux tests
   échouent ; lint, types et build verts.)
-- [ ] 2.1 Documentation (`CHANGELOG.md`, `docs/A_VALIDER.md` questions 27, 28, 31).
-- [ ] 2.2 Mise en ligne de l'hébergement et des règles du stockage (accord du 2026-11-16) ; règles Firestore sur accord
-  (question 31).
+- [x] 2.1 Documentation (`CHANGELOG.md`, `docs/A_VALIDER.md` questions 27, 28, 31).
+- [x] 2.2 Mise en ligne de l'hébergement et des règles du stockage (accord du 2026-11-16) ; règles Firestore sur accord
+  (question 31). (2026-11-16 : version servie `index-BB_FScPX.js` ; règles Firestore non déployées, question 31.)
