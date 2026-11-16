@@ -10,6 +10,9 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
 - 2026-11-16 : extraction des PDF des conférences finie (« 1327 réussites (65 nouvelles), 42 échecs », cumul Haiku
   3,462 euros, soit 0,589 pour un devis de 0,59) ; veille du lundi lancée à 9 h 11 (PC éteint à 8 h), en cours à 10 h 25 ;
   contrôle, qualification et import en « à valider » par sa partie payante (`veille_payante.py`).
+- 2026-11-16 matin : changement `alertes-recherches-sauvegardees` (semaine 3, « alertes ») codé, testé et joué sur les
+  émulateurs ; reste sa vérification 4.3 et la mise en ligne sur accord. Prochain lot : documents réutilisables d'une
+  candidature à l'autre (semaine 3).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

@@ -5,6 +5,17 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-16, semaine 3 du plan)
+- Alertes des recherches sauvegardées (changement `alertes-recherches-sauvegardees`) : bouton « Enregistrer cette
+  recherche » sur `/aap/search` (candidat connecté, au moins un filtre) ; la recherche garde l'adresse de la page, donc
+  « Lancer » rouvre les mêmes résultats ; page `/recherches-sauvegardees` réécrite (étiquettes, Lancer, « Alerte chaque
+  lundi » active ou arrêtée, suppression), l'ancienne fenêtre de création (secteurs et régions d'avril que la recherche
+  ne lisait pas) retirée, une recherche d'avril affiche ses critères non repris ; le courriel du lundi contient une
+  section par recherche dont l'alerte est active. Filtrage commun `filtrerAppels` (`app/src/utils/recherche.ts`) et sa
+  copie Python (`scraping/alertes.py`, `correspond`), rejoués sur les mêmes 17 cas
+  (`app/src/utils/cas_filtres_recherche.json`). `npm test` 108 verts, pytest 163 verts ; joué sur les émulateurs.
+  Mise en ligne sur accord.
+
 ### Corrigé (2026-11-13, nuit, semaine 3 du plan)
 - Parcours candidat sans impasse (changement `parcours-candidat-sans-impasse`) : une candidature part même si le
   stockage refuse la pièce (pièce notée « non déposée ») ; Messagerie et Alertes retirées du menu tant que rien ne les

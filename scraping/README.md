@@ -165,6 +165,12 @@ famille de structure, dix au plus. Boîte d'envoi : Zoho Mail d'ARCADIA, variabl
 `scraping/.env` (voir `.env.example`), mot de passe d'application jamais affiché. Sans ces variables, ou avec
 `--dry-run`, les courriels sont écrits dans `logs/courriels/` pour relecture.
 
+Depuis le 2026-11-16 (changement `alertes-recherches-sauvegardees`), le courriel d'un candidat contient aussi une
+section par recherche sauvegardée dont l'alerte est active (« Votre recherche « X » : n nouveaux appels », cinq au plus,
+lien vers la recherche). Les filtres sont ceux de `/aap/search`, appliqués par `correspond` ; la même règle existe en
+TypeScript (`filtrerAppels`), et les deux sont rejouées sur `app/src/utils/cas_filtres_recherche.json` : toute
+modification du filtrage se fait des deux côtés, avec un cas ajouté au fichier commun.
+
 ```bash
 configurer_courriel.cmd                        # assistant : questions, écriture de .env, courriel de test (2026-10-21)
 python courriel.py --test                      # courriel de contrôle à COURRIEL_ADMIN

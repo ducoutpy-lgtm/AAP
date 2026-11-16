@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-11-16, semaine 3 du plan)
+- `alertes.py` : section par recherche sauvegardée dont l'alerte est active (`sections_recherches`), filtres de la
+  recherche appliqués comme dans l'application (`filtres_depuis_params`, `correspond`, cas communs
+  `app/src/utils/cas_filtres_recherche.json`) ; le sujet compte les appels distincts (changement
+  `alertes-recherches-sauvegardees`).
+
 ### Ajouté (2026-11-13, nuit, semaine 2 du plan)
 - Lecture des appels publiés en PDF (changement `lecture-pdf-appels`, question 8 « Oui, avec devis ») :
   `lecture_pdf.py` (httpx, `pypdf` 6.21.4, 20 Mo et 40 pages au plus, pas de lecture optique) et option

@@ -23,7 +23,15 @@
 
 ## 4. Preuve
 
-- [ ] 4.1 Jouer sur les émulateurs : enregistrer, relancer (même nombre d'appels), arrêter l'alerte ; composer le
-  courriel à blanc sur les données des émulateurs si `alertes.py` le permet, sinon le dire.
-- [ ] 4.2 Documentation (`app/CHANGELOG.md`, `CHANGELOG.md`, `scraping/README.md`, `REPRISE.md`).
+- [x] 4.1 Jouer sur les émulateurs : enregistrer, relancer (même nombre d'appels), arrêter l'alerte ; composer le
+  courriel à blanc sur les données des émulateurs si `alertes.py` le permet, sinon le dire. (2026-11-16, compte
+  `candidat@test.local` : filtres Médico-social et Île-de-France, « 1 appel à projets », « Recherche « Médico-social ·
+  Île-de-France » enregistrée » ; « Lancer » rouvre `/aap/search?thematique=medico-social&territory=ile-de-france`,
+  « 1 appel à projets » ; courriel à blanc : « Votre recherche « Médico-social · Île-de-France » : 1 nouvel appel » et le
+  lien de la recherche ; « Alerte arrêtée » gardé au rechargement, document `alertEnabled` faux, `frequency` « weekly »,
+  courriel recomposé sans section ; « Effacer tout » : bouton absent ; recherche d'avril écrite dans l'émulateur :
+  « « aidants » », « Budget min. 1 000 € », « Critères non repris : energie, culture, Corse ». `alertes.py` vise le vrai
+  projet par sa clé : le courriel a été composé par ses fonctions avec le projet `demo-aap` de l'émulateur, sans
+  modifier l'outil.)
+- [x] 4.2 Documentation (`app/CHANGELOG.md`, `CHANGELOG.md`, `scraping/README.md`, `REPRISE.md`).
 - [ ] 4.3 Vérification de Monsieur DUCOUT.
