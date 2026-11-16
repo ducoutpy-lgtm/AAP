@@ -3,8 +3,8 @@
 // le profil, fiches consultées. Pourquoi un fichier à part : testable par Vitest sans React ni Firebase.
 import type { AAP, PorteurProfile } from '../types';
 import { getDaysUntilDeadline } from './deadline';
-import { libelleTerritoire, LIBELLES_THEMATIQUES } from './territoires';
-import { libelleDestinataire, libelleTypeAppel } from './qualification';
+import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique } from './territoires';
+import { correspondDestinataire, correspondTypeAppel, libelleDestinataire, libelleTypeAppel } from './qualification';
 
 export interface FiltresRecherche {
   q: string;
@@ -167,4 +167,26 @@ export function memoriserFicheConsultee(id: string): void {
   } catch {
     // stockage indisponible : commodité perdue, rien d'autre
   }
+}
+
+// Filtrage de /aap/search sorti de la page (alertes-recherches-sauvegardees, 2026-11-16) pour que le courriel du lundi
+// applique la même règle : copie Python dans scraping/alertes.py (correspond), cas communs dans
+// cas_filtres_recherche.json. L'ordre d'entrée est conservé ; le tri (montants, dates) reste dans la page.
+type AppelFiltrable = Pick<AAP, 'title' | 'description' | 'financeurName' | 'territoriesEligible' | 'deadline' |
+  'scrapeMetadata' | 'qualification' | 'budgetMin' | 'budgetMax'>;
+export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRecherche): T[] {
+  const terme = f.q.toLowerCase();
+  const min = f.budgetMin ? parseFloat(f.budgetMin) : null;
+  const max = f.budgetMax ? parseFloat(f.budgetMax) : null;
+  return aaps.filter(aap =>
+    (!terme || aap.title.toLowerCase().includes(terme) || aap.description.toLowerCase().includes(terme) ||
+      (aap.financeurName || 'Non spécifié').toLowerCase().includes(terme)) &&
+    (!f.thematique || thematique(aap) === f.thematique) &&
+    (!f.territory || correspondTerritoire(aap, f.territory)) &&
+    garderSelonStatut(aap, f.statut) &&
+    correspondDestinataire(aap, f.destinataire) &&
+    correspondTypeAppel(aap, f.typeAppel) &&
+    (!f.financeur || (aap.financeurName || 'Non spécifié') === f.financeur) &&
+    (min === null || aap.budgetMax == null || aap.budgetMax >= min) &&
+    (max === null || aap.budgetMin == null || aap.budgetMin <= max));
 }

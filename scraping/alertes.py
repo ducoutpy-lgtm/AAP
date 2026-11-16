@@ -14,8 +14,10 @@ from __future__ import annotations
 
 import argparse
 import re
+import math
 import sys
 from datetime import datetime, timedelta, timezone
+from urllib.parse import parse_qs
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -112,6 +114,62 @@ def fiches_nouvelles_pour(profil: dict, fiches: list[dict], depuis: datetime) ->
         retenues.append(f)
     loin = datetime.max.replace(tzinfo=timezone.utc)
     return sorted(retenues, key=lambda f: _date(f.get("deadline")) or loin)
+
+
+# ---------------------------------------------------------------- filtres d'une recherche sauvegardée
+# Copie de filtrerAppels (app/src/utils/recherche.ts) : même règle que /aap/search, pour que l'alerte d'une recherche
+# envoie les appels que la page affiche. Cas communs : app/src/utils/cas_filtres_recherche.json (Vitest et pytest).
+# Changement alertes-recherches-sauvegardees, 2026-11-16.
+
+CLES_FILTRES = ("q", "thematique", "territory", "financeur", "source", "relecture", "statut", "budgetMin", "budgetMax",
+                "destinataire", "typeAppel")
+SEUIL_BIENTOT_CLOS_JOURS = 30
+
+
+def filtres_depuis_params(params: str) -> dict:
+    """Filtres d'après l'adresse de la recherche (« thematique=sante&territory=ile-de-france ») ; absents = vides."""
+    lus = parse_qs(params or "", keep_blank_values=True)
+    return {cle: (lus.get(cle) or [""])[0] for cle in CLES_FILTRES}
+
+
+def statut_appel(fiche: dict, maintenant: datetime | None = None) -> str:
+    cloture = _date(fiche.get("deadline"))
+    if not cloture:
+        return "sans-date"
+    jours = math.ceil((cloture - (maintenant or datetime.now(timezone.utc))).total_seconds() / 86400)
+    if jours < 0:
+        return "clos"
+    return "bientot-clos" if jours <= SEUIL_BIENTOT_CLOS_JOURS else "ouvert"
+
+
+def correspond(fiche: dict, f: dict) -> bool:
+    """Vrai si la fiche passe les filtres de la recherche (fonction pure, même règle que l'application)."""
+    terme = (f.get("q") or "").lower()
+    financeur = fiche.get("financeurName") or "Non spécifié"
+    if terme and not any(terme in (x or "").lower() for x in (fiche.get("title"), fiche.get("description"), financeur)):
+        return False
+    champ = (fiche.get("scrapeMetadata") or {}).get("champ")
+    if f.get("thematique") and (champ if champ in ("sante", "medico-social") else "non-classee") != f["thematique"]:
+        return False
+    territoire, t = f.get("territory") or "", fiche.get("territoriesEligible") or []
+    if territoire and territoire not in t and not (territoire not in ("france", "non-precise") and "france" in t):
+        return False
+    statut = f.get("statut") or ""
+    if statut != "tous" and (statut_appel(fiche) == "clos" if not statut else statut_appel(fiche) != statut):
+        return False
+    qualif = fiche.get("qualification") or {}
+    dest = qualif.get("destinataires") or []
+    if f.get("destinataire") and dest and f["destinataire"] not in dest and "tous" not in dest:
+        return False
+    if f.get("typeAppel") and (qualif.get("typeAppel") or "") != f["typeAppel"]:
+        return False
+    if f.get("financeur") and financeur != f["financeur"]:
+        return False
+    if f.get("budgetMin") and fiche.get("budgetMax") is not None and fiche["budgetMax"] < float(f["budgetMin"]):
+        return False
+    if f.get("budgetMax") and fiche.get("budgetMin") is not None and fiche["budgetMin"] > float(f["budgetMax"]):
+        return False
+    return True
 
 
 def montant(f: dict) -> str:

@@ -2,10 +2,12 @@
 
 ## 1. Filtrage commun (tests d'abord)
 
-- [ ] 1.1 Fichier de cas `app/src/utils/cas_filtres_recherche.json` ; test Vitest de `filtrerAppels` et test pytest de
-  `alertes.correspond` sur ces cas. Fait quand : les deux échouent (fonctions absentes).
-- [ ] 1.2 `filtrerAppels` dans `recherche.ts`, `SearchAapPage.tsx` l'utilise ; copie Python dans `alertes.py`. Fait
-  quand : les deux jeux passent, `npm run lint` et `npm run build` verts.
+- [x] 1.1 Fichier de cas `app/src/utils/cas_filtres_recherche.json` ; test Vitest de `filtrerAppels` et test pytest de
+  `alertes.correspond` sur ces cas. Fait quand : les deux échouent (fonctions absentes). (2026-11-16 : 17 cas Vitest en
+  échec, 1 test pytest en échec.)
+- [x] 1.2 `filtrerAppels` dans `recherche.ts`, `SearchAapPage.tsx` l'utilise ; copie Python dans `alertes.py`. Fait
+  quand : les deux jeux passent, `npm run lint` et `npm run build` verts. (2026-11-16 : `npm test` 103 verts, pytest
+  160 verts, lint et build verts.)
 
 ## 2. Enregistrer et relire
 

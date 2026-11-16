@@ -84,3 +84,28 @@ def test_courriel_ecrit_a_blanc_dans_un_fichier(tmp_path):
     chemin = c.ecrire_courriel("test@exemple.fr", "Objet : test", "Corps", dossier=tmp_path)
     assert chemin.exists() and chemin.read_text(encoding="utf-8").startswith("À : test@exemple.fr\nObjet : Objet : test")
     assert c.nom_fichier("a.b@c.fr", "Veille du 20/10", datetime(2026, 10, 20, 8, 0, 0)) == "2026-10-20_080000_a-b-c-fr_veille-du-20-10.txt"
+
+
+# ---------------------------------------------------------------- filtrage commun (alertes-recherches-sauvegardees)
+
+import json  # noqa: E402
+
+CAS = json.loads((Path(__file__).resolve().parents[2] / "app" / "src" / "utils" / "cas_filtres_recherche.json").read_text(encoding="utf-8"))
+
+
+def _fiche_firestore(f: dict) -> dict:
+    """Fiche du fichier commun au format lu dans Firestore par alertes.py."""
+    j = f["deadline_jours"]
+    return {"id": f["id"], "title": f["title"], "description": f["description"], "financeurName": f["financeurName"],
+            "territoriesEligible": f["territoriesEligible"],
+            "deadline": None if j is None else MAINTENANT + timedelta(days=j, hours=1),
+            "scrapeMetadata": {"champ": f["champ"]} if f["champ"] else {},
+            "qualification": {"destinataires": f["destinataires"], "typeAppel": f["typeAppel"]},
+            "budgetMin": f["budgetMin"], "budgetMax": f["budgetMax"]}
+
+
+def test_correspond_donne_les_memes_resultats_que_l_application():
+    fiches = [_fiche_firestore(f) for f in CAS["fiches"]]
+    for cas in CAS["cas"]:
+        filtres = a.filtres_depuis_params(cas["params"])
+        assert [f["id"] for f in fiches if a.correspond(f, filtres)] == cas["attendus"], cas["nom"]

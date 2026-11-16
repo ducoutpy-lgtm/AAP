@@ -12,14 +12,14 @@ import { Badge } from '../../components/ui/Badge';
 import {
   ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText, X, Link2, UserCheck } from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
-import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique, valeursPresentes } from '../../utils/territoires';
+import { libelleTerritoire, LIBELLES_THEMATIQUES, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { libelleFiltres } from '../../utils/journal';
-import { correspondDestinataire, correspondTypeAppel, LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
+import { LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
-  correspondTerritoire, etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams,
-  filtresDepuisProfil, garderSelonStatut, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
+  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, filtrerAppels,
+  filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
   type FiltresRecherche,
   type StatutAppel,
 } from '../../utils/recherche';
@@ -130,59 +130,10 @@ export default function SearchAapPage() {
   };
 
   const applyFilters = () => {
-    let result = [...aaps];
+    // Filtres communs avec le courriel du lundi (alertes-recherches-sauvegardees) : utils/recherche.ts, filtrerAppels.
+    // Sans choix de statut, les appels clos sont masqués ; une fiche sans montant n'est pas écartée par les montants.
+    let result = filtrerAppels(aaps, filters);
 
-    // Recherche par texte
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(
-        aap =>
-          aap.title.toLowerCase().includes(term) ||
-          aap.description.toLowerCase().includes(term) ||
-          (aap.financeurName || 'Non spécifié').toLowerCase().includes(term)
-      );
-    }
-
-    // Filtre par thématique (champ classé par le modèle : santé, médico-social, sinon non classée)
-    if (filters.thematique) {
-      result = result.filter(aap => thematique(aap) === filters.thematique);
-    }
-
-    // Filtre par territoire : identifiant enregistré (ile-de-france, france...) ; un appel national reste visible dans
-    // chaque région (recherche-guidee, 2026-10-20)
-    if (filters.territory) {
-      result = result.filter(aap => correspondTerritoire(aap, filters.territory));
-    }
-
-    // Filtre par statut calculé d'après la date de clôture (recherche-guidee) : ouvert, bientôt clôturé, clôturé, sans date ;
-    // sans choix, les appels clos sont masqués (appels-clos-masques, 2026-11-13)
-    result = result.filter(aap => garderSelonStatut(aap, filters.statut));
-
-    // Qualification (jour 2 du plan MVP) : à qui s'adresse l'appel (« tous » répond à tout), type d'appel
-    if (filters.destinataire) {
-      result = result.filter(aap => correspondDestinataire(aap, filters.destinataire));
-    }
-    if (filters.typeAppel) {
-      result = result.filter(aap => correspondTypeAppel(aap, filters.typeAppel));
-    }
-
-    // Filtre par financeur (nom canonique)
-    if (filters.financeur) {
-      result = result.filter(aap => (aap.financeurName || 'Non spécifié') === filters.financeur);
-    }
-
-    // Les filtres Source et Relecture ont été retirés de la recherche publique le 2026-10-20 (administration-controle) :
-    // toutes les fiches affichées ici sont contrôlées, et le site d'origine n'intéresse que l'administration.
-
-    // Filtres par budget : une fiche sans montant connu n'est pas écartée, elle est classée après les fiches chiffrées
-    if (filters.budgetMin) {
-      const min = parseFloat(filters.budgetMin);
-      result = result.filter(aap => aap.budgetMax == null || aap.budgetMax >= min);
-    }
-    if (filters.budgetMax) {
-      const max = parseFloat(filters.budgetMax);
-      result = result.filter(aap => aap.budgetMin == null || aap.budgetMin <= max);
-    }
     if (filters.budgetMin || filters.budgetMax) {
       const chiffree = (aap: AAP) => aap.budgetMin != null || aap.budgetMax != null;
       result = [...result.filter(chiffree), ...result.filter(aap => !chiffree(aap))];

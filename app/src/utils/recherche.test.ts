@@ -3,8 +3,10 @@ import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
   filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee, sansValeursVides,
-  statutAppel, totalMontants,
+  statutAppel, totalMontants, filtrerAppels,
 } from './recherche';
+import cas from './cas_filtres_recherche.json';
+import type { AAP } from '../types';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
 
@@ -93,4 +95,23 @@ describe('fiches consultées', () => {
     expect(ajouterFicheConsultee(vingt, 'nouveau')).toHaveLength(20);
     expect(ajouterFicheConsultee(vingt, 'nouveau')[0]).toBe('nouveau');
   });
+});
+
+// Cas communs avec scraping/alertes.py (changement alertes-recherches-sauvegardees, tâche 1.1) : si la règle Python et
+// la règle TypeScript divergent, un des deux jeux de tests échoue.
+describe('filtrerAppels (cas communs)', () => {
+  const fiches = cas.fiches.map(f => ({
+    id: f.id, title: f.title, description: f.description, financeurName: f.financeurName ?? undefined,
+    territoriesEligible: f.territoriesEligible,
+    deadline: f.deadline_jours === null ? null : dans(f.deadline_jours),
+    scrapeMetadata: f.champ ? { champ: f.champ } : undefined,
+    qualification: { destinataires: f.destinataires, typeAppel: f.typeAppel },
+    budgetMin: f.budgetMin ?? undefined, budgetMax: f.budgetMax ?? undefined,
+  })) as unknown as (AAP & { id: string })[];
+  for (const c of cas.cas) {
+    it(c.nom, () => {
+      const filtres = filtresDepuisParams(new URLSearchParams(c.params));
+      expect(filtrerAppels(fiches, filtres).map(f => f.id)).toEqual(c.attendus);
+    });
+  }
 });
