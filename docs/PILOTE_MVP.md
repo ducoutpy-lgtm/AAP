@@ -52,3 +52,31 @@ conférences) et 39 hors champ, les deux se recoupant. Le devis du contrôle sou
 Écart à la délégation : le devis d'extraction (0,28 euro) dépassait la limite de 0,20 euro par commande, qui prévoyait
 de s'arrêter et de demander ; la session a coupé la commande en deux (0,15 et 0,13) sans demander. Désormais, un devis
 au-dessus de 0,20 euro est soumis à Monsieur DUCOUT, jamais découpé.
+
+## 4. Bilan du pilote contre les cinq seuils (écrit par la session le 2026-11-16)
+
+Demandé le 2026-11-13 (question 2, « Oui, tels quels »). Chaque chiffre renvoie à sa source ; « estimation » signale un
+calcul sur des hypothèses écrites.
+
+| Critère | Seuil | Mesure | Verdict |
+|---|---|---|---|
+| Couverture | 80 % du panel | Panel de 3 appels transmis le 2026-10-27 : 2 trouvés par le robot après correction (novap, Tubbe), 1 sans page web (Fondation Béatrice Denys, saisi à la main) ; aucun autre appel transmis pendant le pilote | 67 %, non atteint ; panel trop petit pour conclure |
+| Exactitude | 90 % de champs justes, aucune date inventée | `scraping/EXACTITUDE.md` : 110 / 120 à l'extraction (91,7 %), 114 / 120 tels qu'affichés après la règle des relais (95,0 %), 0 date inventée | Atteint (relecture de 10 fiches par Monsieur DUCOUT à faire) |
+| Autonomie | Les deux lundis de bout en bout | 2 novembre : rien d'écrit après le démarrage ; 9 novembre : interrompue pendant la collecte (`scraping/logs/veille.log`, changement `veille-autonome`) | Non atteint ; corrigé le 13 novembre (veille sans fenêtre, étape payante dans la délégation) ; veille du 16 novembre en cours |
+| Coût | 0,01 euro au plus par fiche ouverte importée | Lot B1 : 0,153 euro pour 13 fiches ouvertes ou sans date, soit 0,012 ; veille du 13 novembre : 0,051 euro pour 16 fiches contrôlées et qualifiées, soit 0,003 par fiche (part des fiches ouvertes non mesurée) | Non atteint sur B1 (fiches closes extraites pour rien), atteint sur la veille |
+| Effort de relecture | Moins de 10 % de la file avec doublon ou financeur remplacé par le relais | 2026-10-28 : 46 fiches sur 113 au nom du relais (41 %), 10 corrigées par la règle des relais, 36 restées ; 2026-11-13 : 63 doublons dont 30 dans la file, 43 rejetés | Non atteint pendant le pilote ; part actuelle non mesurée |
+
+Conclusion de la session : deux seuils atteints sur cinq (exactitude, coût de la veille), deux corrigés depuis (autonomie,
+doublons et relais) mais pas encore prouvés, un non mesurable (couverture : panel de 3 appels).
+
+### Chiffrage du passage à l'échelle (estimation)
+
+- Registre : 1 269 sources ; 118 ont une page lue par la veille (adresse validée, ciblée par une session ou page d'appel),
+  et la veille relit environ 200 pages (`scraping/VEILLE.md`, dernier rejeu : 198 sources relues).
+- Coût Haiku mesuré : 0,051 euro pour la veille du 13 novembre (60 textes nouveaux, deux semaines sans veille) ; lecture
+  des PDF : 0,589 euro pour 211 textes (0,003 euro par texte, en une fois).
+- Estimation pour l'ensemble du registre, à rythme hebdomadaire : 0,051 x 1 269 / 200 / 2, soit environ 0,16 euro par
+  semaine (hypothèses : nouveautés proportionnelles au nombre de sources, deux semaines couvertes le 13 novembre) ; plus
+  une première lecture des PDF des nouvelles sources, de l'ordre de 0,003 euro par texte.
+- Le coût principal n'est pas le modèle : il faut trouver la page des appels de plus de 1 100 sources (travail de session
+  ou de Monsieur DUCOUT, 577 sources sans page au 2026-10-13) et relire la file « à valider ».
