@@ -63,6 +63,14 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    publier d'appel : erreur « Unsupported field value: undefined ») et `premier-clic-candidater` (au premier clic sur
    « Candidater », un compte neuf est renvoyé au tableau de bord ; supposé aussi en ligne, non vérifié). Peut partir avec les questions 24 et 26 en une seule
    mise en ligne de l'hébergement (`firebase deploy --only hosting` depuis `app`, après `npm run build`). Oui / non.
+29. (2026-11-16) Recommandations (question 19) : tirage de vingt prêt dans `docs/TIRAGE_RECOMMANDATIONS.md` (quatre
+   profils types, 363 fiches visibles). Avis de la session : environ 4 pertinentes sur 20 ; cause vérifiée sur trois
+   fiches : qualification trop large (appels de recherche ouverts « à toute structure », programmes européens
+   interrégionaux marqués « france »). Trois voies : (a) règles sans coût : un appel marqué ouvert aux cinq familles ou
+   « recherche » parmi ses destinataires ne donne plus de point de statut, et le champ seul ne suffit plus pour un appel
+   national (il faut un type d'établissement cité ou un objet commun) ; (b) requalifier les fiches avec une consigne plus
+   stricte (payant, devis d'abord, environ 0,0003 euro par fiche, soit 0,11 euro pour 363) ; (c) les deux. Proposition de
+   la session : (a) maintenant, (b) après votre lecture du tirage. À trancher après avoir noté les vingt lignes.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec

@@ -22,6 +22,12 @@ Semaine 2 du plan de quatre semaines (« continue avec la semaine 2 », Monsieur
   mention « Infinity ». `npm test` « 80 passed », lint, compilation ; `scripts/tests` « 43 passed ».)
 - [x] 3.1 Documentation : `CHANGELOG.md`, `REPRISE.md`.
 - [ ] 4.1 Mise en ligne après accord de Monsieur DUCOUT.
+- [x] 5.0 (ajoutée le 2026-11-16) Préparer le tirage de la vérification 5.1 : `scripts/exporter_fiches_visibles.py`
+  (lecture seule de la base, fiches visibles par le public, fichier local ignoré par Git) et
+  `app/scripts/tirage_recommandations.ts` (fonction `recommander` de l'application sur quatre profils types, vingt
+  recommandations tirées avec une graine fixe) ; liste à juger dans `docs/TIRAGE_RECOMMANDATIONS.md`. Zéro euro.
+  (2026-11-16 : 363 fiches, 130 recommandations, vingt tirées, tirage identique au second passage (`cmp`) ; avis de la
+  session : environ 4 pertinentes sur 20, qualification trop large ; question 29.)
 - [ ] 5.1 Vérification par Monsieur DUCOUT : vingt recommandations tirées au sort pour un profil réel, au moins dix-huit
   pertinentes ; validation des choix par défaut (GCS, exercice coordonné, appel écarté s'il ne cite que d'autres types
   d'établissement, règles nationales et de domaine, seuil de 3 points).
