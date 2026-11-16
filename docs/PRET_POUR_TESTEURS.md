@@ -12,7 +12,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | # | Condition | État | Preuve |
 |---|---|---|---|
 | 1 | Appels publiés, doublons retirés | Fait | 363 fiches publiées après le rejet de 43 doublons (2026-11-13, sauvegarde `scripts/sauvegardes/doublons_2026-11-13_1744.json`, `docs/A_VALIDER.md`) |
-| 2 | Exactitude : 90 % de champs justes, aucune date inventée | En cours | Changement `mesure-exactitude-30-fiches`, rapport `scraping/EXACTITUDE.md` |
+| 2 | Exactitude : 90 % de champs justes, aucune date inventée | Fait (session), relecture de 10 fiches par lui à faire | `scraping/EXACTITUDE.md` : 110 / 120 (91,7 %), 0 date inventée ; point faible : financeur remplacé par le relais dans 6 fiches sur 30 |
 | 3 | Veille du lundi de bout en bout, sans intervention, et courriel de bilan | En cours | Veille du 2026-11-16 lancée à 9 h 11, encore en collecte à 10 h 51 (`scraping/logs/veille.log`) ; critère : « Veille terminee » |
 | 4 | File « à valider » relue | À sa charge | Question 3 de `docs/A_VALIDER.md` (109 fiches après le rejet des doublons, 2026-11-13) |
 

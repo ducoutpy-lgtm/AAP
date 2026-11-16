@@ -1,0 +1,632 @@
+[
+ {
+  "url": "https://gerontopolesud.fr/recherche/appel-candidatures-handilab-2026-les-start-de-lautonomie-et-de-laccessibilite-numerique",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à candidatures Handilab 2026 : les start-up de l'autonomie et de l'accessibilité numérique"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Soutenu par Orange depuis 2024, Handilab lance un nouvel appel à candidatures"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "15 septembre 2026 : clôture des candidatures"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "Aucune dotation financière n'est mentionnée dans l'appel à candidatures."
+   }
+  }
+ },
+ {
+  "url": "https://gerontopolesud.fr/recherche/appel-manifestation-dinteret-les-olympiades-silver-geek-2026-2027",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à Manifestation d'Intérêt : Les Olympiades Silver Geek (2026-2027)"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "Silver Geek, en partenariat avec AG2R LA MONDIALE, poursuit le développement des Olympiades ; texte : Silver Geek (avec AG2R LA MONDIALE) porte l'appel, Gérontopôle Sud n'est que le diffuseur"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Candidatures jusqu'au vendredi 9 octobre 2026"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "Pour la région Nouvelle-Aquitaine : 6 structures sélectionnées ; texte : aucun montant en euros, le nombre de structures retenues n'est pas une enveloppe financière"
+   }
+  }
+ },
+ {
+  "url": "https://www.fondationhopitaux.fr/lutter-contre-lisolement-des-personnes-agees-lappel-a-projets-2026-est-lance/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Lutter contre l'isolement des personnes âgées : l'appel à projets 2026 est lancé !"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Fondation des Hôpitaux lance son appel à projets 2026"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Jusqu'au 24 septembre, les établissements publics ou privés à but non lucratif peuvent candidater"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (2 010 519 € = total financé l'an dernier, pas une enveloppe de l'appel)"
+   }
+  }
+ },
+ {
+  "url": "https://lyonbiopole.com/appel-a-projet/microbiote-intestinal",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Interactions entre l'alimentation et le microbiome : leur influence sur la fonction immunitaire dans le traitement des maladies humaines"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Fondation Biocodex Microbiota soutient depuis 2025 des projets de recherche internationaux"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "Appel continu ; Prochaine relève Le 30 novembre 2026 (pas de date limite unique)"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "La subvention est fixée à 200 000 €."
+   }
+  }
+ },
+ {
+  "url": "https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-08",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "HORIZON-HLTH-2027-01-DISEASE-08: Development of innovative antimicrobials against pathogens resistant to antimicrobials"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "Commission européenne, programme HORIZON EUROPE ; texte : appel de la Commission européenne, Lyonbiopôle n'est qu'un relais d'accompagnement"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture de l'AAP Le 17 février 2027"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Montant de l'aide : 8000 à 10000 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.canceropole-idf.fr/aap/emergence-2027-1/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "EMERGENCE 2027-1 ... thématique Vieillissement et cancers"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Organisateur : Cancéropôle IDF"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite soumission : 10/09/2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "montant maximal de 40 000 € par projet, pour une durée de 1 an"
+   }
+  }
+ },
+ {
+  "url": "https://www.hautes-alpes.fr/nos-actions/autonomie/la-commission-des-financeurs/prevention-de-la-perte-dautonomie/appel-aux-initiatives-dactions-de-prevention-2027/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel aux initiatives d'actions de prévention 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "soutien de la Commission des financeurs des Hautes-Alpes"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des candidatures : 15 juin 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-05",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "HORIZON-HLTH-2027-01-DISEASE-05: Development of novel small molecule antiviral therapeutics for pathogens with epidemic potential"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "Commission européenne, programme HORIZON EUROPE ; texte : appel de la Commission européenne, Lyonbiopôle n'est qu'un relais d'accompagnement"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture de l'AAP Le 17 février 2027"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Montant de l'aide : 9000 à 11000 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.ctguyane.fr/appel-a-projet-annuel-de-la-commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie-pour-lannee-2026-2/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projet annuel de la commission des financeurs de la prévention de la perte d'autonomie pour l'année 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "La Collectivité Territoriale de Guyane (CTG), en lien avec la CFPPA et avec le soutien de la CNSA, lance un appel à projets"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des projets : 1er juillet 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://artsconvergences.com/prix-video/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "PRIX ARTS CONVERGENCES 6E ÉDITION ... Je ne rentre pas dans une case !"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Arts Convergences s'associe avec Thanks for Nothing"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Ouverture de l'espace candidat le 6 mai et jusqu'au 19 octobre 2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Plusieurs Prix dont 5 000€ de dotations"
+   }
+  }
+ },
+ {
+  "url": "https://www.paris.fr/pages/appel-a-projets-actions-de-prevention-de-la-perte-d-autonomie-des-seniors-parisiens-a-paris-33034",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets : Actions de prévention de la perte d'autonomie des séniors parisiens"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Commission des Financeurs de la prévention de la perte d'autonomie de Paris lance son nouvel appel à candidatures pour 2026"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "vous pouvez déposer votre dossier jusqu'au vendredi 9 janvier 2026 inclus"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://gerontopole.corsica/fondation-des-petits-freres-des-pauvres-appel-a-projets-habitat-2026-2028-date-de-cloture-2-avril-2026/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "6e édition de son appel à projets “Habitat inclusif” ; Appel à projets Habitat 2026/2028"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "La Fondation des Petits Frères des Pauvres, en lançant la 6e édition de son appel à projets"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "déposez votre dossier entre le 2 mars 2026 et le 2 avril 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.loire.fr/jcms/lw_1318681/fr/-appel-a-candidatures-actions-de-prevention-en-faveur-des-personnes-de-60-ans-et-plus-et-de-leurs-aidants-commission-des-financeurs",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "[APPEL À CANDIDATURES] ACTIONS DE PRÉVENTION EN FAVEUR DES PERSONNES DE 60 ANS ET PLUS ... COMMISSION DES FINANCEURS"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Le Département de la Loire soutient un programme d'actions ... Commission des financeurs"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "DATE LIMITE DE DÉPÔT : 04/12/2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://appel-a-projet.fondationhopitaux.fr/ameliorer-le-quotidien-des-personnes-agees---2025-1",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Améliorer le quotidien des personnes âgées 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Fondation des Hôpitaux a dédié plus de 40 millions d'euros"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture : 24/09/2026 à 15h00"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "Le coût global du projet devra être supérieur à 2 000 euros ; texte : 2 000 € est un seuil de coût global du projet, pas un minimum d'aide ; plafonds : 5 000 € activités, 20 000 € véhicules (max 20000 correct)"
+   }
+  }
+ },
+ {
+  "url": "https://www.canceropole-idf.fr/aap/phrck2027/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "PHRC-K 2026-2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "L'Institut national du cancer lance l'appel à projets du PHRC-K 2026-2027"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Lettre d'intention – date limite de soumission le 13 octobre 2026 – 16h00 (projets complets 9 mars 2027)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.loiret.fr/mon-departement/les-appels-projets/appel-projet-sante-innovations-loiret",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projet \"Santé Innovations Loiret\""
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Le Département lance l'appel à initiatives « Santé innovations Loiret »"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (page tronquée : seule la présentation est collectée)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.fondation-pfg.fr/fr/Appels-a-projets.htm",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "L'appel à projets 2026 de la Fondation PFG vise à soutenir des actions ... deuil, la mort et de la fin de vie"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "L'appel à projets 2026 de la Fondation PFG ; résultats sous réserve de validation par la Fondation de France"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "25 juin 2026 Clôture de l'appel à projets"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "limité à 10 000 € (structure prestataire ou redistributrice) ; 5 000 € formations ; non limité pour structure d'accueil"
+   }
+  }
+ },
+ {
+  "url": "https://www.loiret.fr/mon-departement/les-appels-projets/commission-des-financeurs-de-la-prevention-de-la-perte",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets de la CFPPA 2026 – Territoire Loirétain"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "lancé à l'initiative de la Commission des financeurs du Loiret en partenariat avec les Caisses de retraite (CARSAT et MSA) et l'ARS"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Fenêtre 1 : 09 janvier 2026 au plus tard (fenêtre 2 : 15 mai 2026)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-02-disease-01",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "HORIZON-HLTH-2027-02-DISEASE-01-two-stage Innovative healthcare interventions for non-communicable diseases"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "Commission européenne, programme HORIZON EUROPE ; texte : appel de la Commission européenne, Lyonbiopôle n'est qu'un relais d'accompagnement"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "clôture au 17 février 2027 pour l'étape 1 (16 septembre 2027 pour l'étape 2)"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Montant de l'aide : 7000 à 8000 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.isula.corsica/Chjama-a-prugetti-Una-sola-saluta-Alimentation-Sante-Developpement-Durable-2026_a5951.html",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Chjama à prugetti : Una sola saluta - Alimentation Santé & Développement Durable 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "page de la Collectivité de Corse (isula.corsica), délibération de l'assemblée de Corse"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "déposés, avant le 15 mai 2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://gerontopolesud.fr/recherche/appel-projets-fondation-des-hopitaux-ameliorer-le-quotidien-des-personnes-agees",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets Fondation des Hôpitaux - Améliorer le quotidien des personnes âgées"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "L'objectif de ce nouvel appel à projets de la Fondation des Hôpitaux"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture des candidatures : 24 septembre 2026 à 13 h"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "un coût total du projet d'au moins 4 000 € ; texte : 4 000 € est un seuil de coût total, pas un minimum d'aide ; plafonds d'aide : 10 000 € activités, 15 000 € minibus"
+   }
+  }
+ },
+ {
+  "url": "https://www.ctguyane.fr/appel-a-projet-2026-pour-la-creation-et-extension-de-services-autonomie-a-domicile-mixtes-en-guyane/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projet 2026 pour la création et extension de Services Autonomie à Domicile mixtes en Guyane"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Collectivité Territoriale de Guyane et l'Agence Régionale de Santé Guyane lancent un appel à projet conjoint"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "transmis au plus tard le 30 mai 2026 à 12 heures (le calendrier indique aussi : 15 juin 2026, texte contradictoire)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (118 places de soins, pas de montant)"
+   }
+  }
+ },
+ {
+  "url": "https://www.le64.fr/appel-candidature-2026-pour-le-deploiement-de-laide-la-vie-partagee-en-direction-des-porteurs-de",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À CANDIDATURE 2026 POUR LE DÉPLOIEMENT DE L'AIDE À LA VIE PARTAGÉE ... HABITAT INCLUSIF"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Le Département des Pyrénées-Atlantiques lance un nouvel Appel à candidature"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://nievre.fr/2026/07/07/appel-a-projets-2026-de-la-commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie-cfppa-2/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets 2026 de la Commission des financeurs de la prévention de la perte d'autonomie (CFPPA) ... aides techniques"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "La Commission des financeurs de la prévention de la perte d'autonomie lance un appel à projets"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "jusqu'au dimanche 13 septembre 2026 – 23h59"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.clubster-nsl.com/appels-projets/offre-de-financement-financement-de-la-sante-numerique-et-des-services-lies-au-prendre-soin/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "OFFRE DE FINANCEMENT : Financement de la santé numérique et des services liés au « prendre soin »"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Ce contenu est réservé aux membres Clubster NSL (texte tronqué, financeur réel non lisible ; développement « Nutrition Santé Longévité » absent du tex"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (contenu réservé aux membres)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (contenu réservé aux membres)"
+   }
+  }
+ },
+ {
+  "url": "https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-envhlth-missclima-03",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "HORIZON-HLTH-2027-01-ENVHLTH-MISSCLIMA-03: Tools and technologies to support health adaptation to climate change"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "Commission européenne, programme HORIZON EUROPE ; texte : appel de la Commission européenne, Lyonbiopôle n'est qu'un relais d'accompagnement"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture de l'AAP Le 13 avril 2027"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Montant de l'aide : 4000 à 5000 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.departement18.fr/Appel-a-manifestation-d-interet-SAD",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL à MANIFESTATION D'INTERET 2025-2026 visant à soutenir le déploiement de la transformation en Service Autonomie à Domicile (SAD)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "le Département du Cher lance un appel à manifestation d'intérêt avec l'appui financier de la CNSA"
+   },
+   "date_cloture": {
+    "verdict": "faux",
+    "preuve": "mobilisable à cet effet jusqu'au 31/12/2026 ; texte : 31/12/2026 est la fin de mobilisation des crédits, aucune date limite de dépôt n'est donnée"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Un montant total de 160 000 € est mobilisable"
+   }
+  }
+ },
+ {
+  "url": "https://gerontopolesud.fr/recherche/appel-projets-france-active-linnovation-sociale-pour-le-maintien-domicile-des-personnes",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets - France Active - L'innovation sociale pour le maintien à domicile des personnes âgées ou dépendantes"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "France Active et ses partenaires lancent l'appel à projets \"Bien vieillir\" ; texte : France Active, Gérontopôle Sud n'est que le diffuseur"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Candidatures jusqu'au 23 octobre 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte (5 lauréats, pas de montant)"
+   }
+  }
+ },
+ {
+  "url": "https://canceropole-nordouest.org/appels-projets-cno/appel-a-projets-2027-reduire-les-expositions-dans-les-etablissements-accueillant-des-jeunes-concevoir-des-politiques-et-agir-des-maintenant-plan-zero-exposition/",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets 2027 – Réduire les expositions dans les établissements accueillant des jeunes ... Plan Zéro Exposition"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "INCa ... organisé par le département Prévention de l'INCa"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de soumission : 24 novembre 2026 à 16:00"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://gerontopolesud.fr/recherche/appel-manifestation-dinteret-participez-lexperimentation-carelib-portee-par-le",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à Manifestation d'Intérêt : participez à l'expérimentation CARELIB portée par le Gérontopôle Sud"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Le Gérontopôle Sud, en partenariat avec Malta Informatique, lance un Appel à Manifestation d'Intérêt"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de candidature : 15 août 2026 (prolongation jusqu'au 30 août 2026)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ }
+]
