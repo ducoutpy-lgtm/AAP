@@ -14,6 +14,12 @@ modalités, 15 juin dans le calendrier) : 30 mai jugé juste. Les six financeurs
 pour la Commission européenne, Gérontopôle Sud pour Silver Geek et France Active) : 20 % des fiches, au-dessus du seuil
 de 10 % du critère « Effort de relecture » du pilote.
 
+Après l'import (vérifié le 2026-11-16 en appliquant `financeurs.financeur_reel_du_relais` aux six noms, comme le fait
+`scripts/import_to_firestore.py` pour une source relais) : les quatre appels Horizon Europe de Lyonbiopôle affichent
+« Commission européenne » (trois) ou « Horizon Europe – Cluster Santé (PCN France) » (un) ; les deux du Gérontopôle Sud
+restent au nom du relais (Silver Geek et France Active absents du référentiel). Financeur affiché juste : 28 / 30 ;
+champs justes tels qu'affichés : 114 / 120 (95,0 %). Non relu dans la base elle-même.
+
 | Champ | Justes | Total | Part |
 |---|---|---|---|
 | titre | 30 | 30 | 100,0 % |

@@ -13,7 +13,7 @@ de dépenses Haiku, arrêt et accord demandé avant 4,50 euros de cumul (plafond
 | Critère | Mesure | Seuil |
 |---|---|---|
 | Couverture | Panel d'appels de santé repérés hors du robot (publications que Monsieur DUCOUT transmet, appels listés par un agrégateur indépendant) : part présente dans la base dans les 7 jours suivant leur publication | 80 % au moins |
-| Exactitude | Tirage de 30 fiches importées pendant le pilote, comparées à leur page par la session (dont 10 relues par Monsieur DUCOUT) : titre, financeur, date limite, montant | 90 % de champs justes, aucune date inventée. Mesure du 2026-11-16 (`scraping/EXACTITUDE.md`) : 110 / 120 (91,7 %), 0 date inventée, seuil atteint ; financeur juste 24 / 30 (les 6 écarts sont des relais) ; relecture de 10 fiches par Monsieur DUCOUT à faire |
+| Exactitude | Tirage de 30 fiches importées pendant le pilote, comparées à leur page par la session (dont 10 relues par Monsieur DUCOUT) : titre, financeur, date limite, montant | 90 % de champs justes, aucune date inventée. Mesure du 2026-11-16 (`scraping/EXACTITUDE.md`) : 110 / 120 (91,7 %), 0 date inventée, seuil atteint ; financeur juste 24 / 30 à l'extraction (les 6 écarts sont des relais), 28 / 30 après la règle de l'import (114 / 120 tels qu'affichés) ; relecture de 10 fiches par Monsieur DUCOUT à faire |
 | Autonomie | Veille du lundi de bout en bout (relecture, collecte, extraction, contrôle, qualification, import en « à valider ») sans intervention | les deux lundis |
 | Coût | Coût Haiku par fiche ouverte importée | 0,01 euro au plus (0,0035 le 2026-10-28) |
 | Effort de relecture | Part des fiches de la file avec doublon ou financeur remplacé par le relais | moins de 10 % |
