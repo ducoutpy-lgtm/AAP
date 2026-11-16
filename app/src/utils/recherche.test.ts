@@ -2,8 +2,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
-  filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee, sansValeursVides,
-  statutAppel, totalMontants, filtrerAppels,
+  filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee,
+  statutAppel, totalMontants, filtrerAppels, rechercheAEnregistrer, depuisAncienneRecherche,
 } from './recherche';
 import cas from './cas_filtres_recherche.json';
 import type { AAP } from '../types';
@@ -17,13 +17,6 @@ describe('statutAppel', () => {
     expect(statutAppel({ deadline: dans(10) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(30) })).toBe('bientot-clos');
     expect(statutAppel({ deadline: dans(45) })).toBe('ouvert');
-  });
-});
-
-describe('sansValeursVides (parcours-candidat-sans-impasse)', () => {
-  it('retire les champs vides avant écriture (Firestore refuse undefined)', () => {
-    expect(sansValeursVides({ keywords: 'ehpad', sectors: undefined, budgetMin: 0, territories: [], budgetMax: undefined }))
-      .toEqual({ keywords: 'ehpad', budgetMin: 0, territories: [] });
   });
 });
 
@@ -114,4 +107,30 @@ describe('filtrerAppels (cas communs)', () => {
       expect(filtrerAppels(fiches, filtres).map(f => f.id)).toEqual(c.attendus);
     });
   }
+});
+
+describe('rechercheAEnregistrer (alertes-recherches-sauvegardees, 2.1)', () => {
+  it('aucun filtre : rien à enregistrer', () => {
+    expect(rechercheAEnregistrer(FILTRES_VIDES, 'u1', 'Ma recherche')).toBeNull();
+  });
+  it('garde l adresse de la recherche, alerte du lundi active', () => {
+    const r = rechercheAEnregistrer({ ...FILTRES_VIDES, territory: 'ile-de-france', thematique: 'medico-social' }, 'u1', '  IDF médico-social ');
+    expect(r).toEqual({ userId: 'u1', name: 'IDF médico-social', params: 'thematique=medico-social&territory=ile-de-france', alertEnabled: true, frequency: 'weekly' });
+  });
+  it('sans nom : nom tiré des étiquettes', () => {
+    expect(rechercheAEnregistrer({ ...FILTRES_VIDES, q: 'chutes', territory: 'france' }, 'u1', '')?.name).toBe('« chutes » · National, toute la France');
+  });
+});
+
+describe('depuisAncienneRecherche (alertes-recherches-sauvegardees, 2.1)', () => {
+  it('une recherche récente garde son adresse', () => {
+    expect(depuisAncienneRecherche({ params: 'territory=corse' })).toEqual({ params: 'territory=corse', nonRepris: [] });
+  });
+  it('une recherche d avril : mots-clés et montants repris, secteurs et régions signalés', () => {
+    expect(depuisAncienneRecherche({ filters: { keywords: 'ehpad', sectors: ['energie'], territories: ['Corse'], budgetMin: 1000 } }))
+      .toEqual({ params: 'q=ehpad&budgetMin=1000', nonRepris: ['energie', 'Corse'] });
+  });
+  it('aucun critère', () => {
+    expect(depuisAncienneRecherche({})).toEqual({ params: '', nonRepris: [] });
+  });
 });

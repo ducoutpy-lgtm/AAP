@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { collection, query, where, orderBy, getDocs, doc, getDoc } from 'firebase/firestore';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { addDoc, collection, query, where, orderBy, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP, PorteurProfile } from '../../types';
@@ -18,7 +18,7 @@ import { journaliser } from '../../services/journalService';
 import { libelleFiltres } from '../../utils/journal';
 import { LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
-  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, filtrerAppels,
+  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, filtrerAppels, rechercheAEnregistrer,
   filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
   type FiltresRecherche,
   type StatutAppel,
@@ -52,6 +52,20 @@ export default function SearchAapPage() {
   const [regionProfil, setRegionProfil] = useState('');
   const [lienCopie, setLienCopie] = useState('');
   const etiquettes = etiquettesActives(filters);
+  // Recherche sauvegardée avec alerte du lundi (alertes-recherches-sauvegardees) : candidat connecté seulement
+  const [enregistrement, setEnregistrement] = useState<{ ok: boolean; texte: string } | null>(null);
+  const enregistrerRecherche = async () => {
+    const recherche = currentUser ? rechercheAEnregistrer(filters, currentUser.uid, '') : null;
+    if (!recherche) return;
+    try {
+      await addDoc(collection(db, 'savedSearches'), { ...recherche, createdAt: Timestamp.now(), updatedAt: Timestamp.now() });
+      if (currentUser && userProfile) await journaliser(currentUser.uid, userProfile.userType, 'recherche-sauvegardee', '', recherche.name);
+      setEnregistrement({ ok: true, texte: `Recherche « ${recherche.name} » enregistrée : alerte chaque lundi par courriel.` });
+    } catch (err) {
+      console.error('Error saving search:', err);
+      setEnregistrement({ ok: false, texte: "La recherche n'a pas pu être enregistrée. Réessayez dans un instant." });
+    }
+  };
 
   // Journal des actions (suivi-testeurs) : une ligne « recherche » par ouverture de la page, avec les filtres d'arrivée
   useEffect(() => {
@@ -222,6 +236,15 @@ export default function SearchAapPage() {
             <button type="button" onClick={resetFilters} className="text-sm text-gray-600 hover:text-gray-900 underline">
               Effacer tout
             </button>
+            {userProfile?.userType === 'porteur' && (
+              <Button variant="secondary" onClick={enregistrerRecherche}>Enregistrer cette recherche</Button>
+            )}
+          </div>
+        )}
+        {enregistrement && (
+          <div className={`mb-6 p-3 rounded-lg text-sm border ${enregistrement.ok ? 'bg-green-50 border-green-200 text-green-800' : 'bg-error-50 border-error-200 text-error-600'}`}>
+            {enregistrement.texte}{' '}
+            {enregistrement.ok && <Link to="/recherches-sauvegardees" className="underline">Voir mes recherches</Link>}
           </div>
         )}
 

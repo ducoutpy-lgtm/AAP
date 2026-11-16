@@ -11,8 +11,10 @@
 
 ## 2. Enregistrer et relire
 
-- [ ] 2.1 Fonctions pures `rechercheAEnregistrer` et `depuisAncienneRecherche` (tests d'abord) ; bouton sur
+- [x] 2.1 Fonctions pures `rechercheAEnregistrer` et `depuisAncienneRecherche` (tests d'abord) ; bouton sur
   `/aap/search` ; page `/recherches-sauvegardees` réécrite (étiquettes, Lancer, Alerte chaque lundi, supprimer).
+  (2026-11-16 : 6 tests en échec puis verts, `npm test` 108 verts, lint et types verts ; `sansValeursVides`, devenue
+  inutile, retirée avec son test ; écran joué en 4.1.)
 
 ## 3. Courriel
 

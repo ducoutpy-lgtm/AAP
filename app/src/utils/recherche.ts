@@ -46,13 +46,6 @@ export function statutAppel(aap: Pick<AAP, 'deadline'>): StatutAppel {
   return 'ouvert';
 }
 
-// Montant annoncé d'une fiche : enveloppe totale si connue, sinon plafond par projet, sinon rien
-// Objet sans ses champs indéfinis (parcours-candidat-sans-impasse, 2026-11-13) : Firestore refuse undefined, et la
-// sauvegarde d'une recherche échouait sans message dès qu'un filtre restait vide.
-export function sansValeursVides<T extends Record<string, unknown>>(objet: T): Partial<T> {
-  return Object.fromEntries(Object.entries(objet).filter(([, v]) => v !== undefined)) as Partial<T>;
-}
-
 // Pièce de candidature que le stockage a refusée (facturation Firebase fermée) : la candidature part quand même, la
 // pièce est notée « non déposée » pour que le candidat l'adresse au financeur (parcours-candidat-sans-impasse).
 export function pieceNonDeposee(file: Pick<File, 'name' | 'type'>) {
@@ -68,6 +61,7 @@ export function garderSelonStatut(aap: Pick<AAP, 'deadline'>, statut: string): b
   return statutAppel(aap) === statut;
 }
 
+// Montant annoncé d'une fiche : enveloppe totale si connue, sinon plafond par projet, sinon rien
 export function montantAnnonce(aap: Pick<AAP, 'budgetTotal' | 'budgetMax'>): number | null {
   if (aap.budgetTotal != null && aap.budgetTotal > 0) return aap.budgetTotal;
   if (aap.budgetMax != null && aap.budgetMax > 0) return aap.budgetMax;
@@ -189,4 +183,29 @@ export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRec
     (!f.financeur || (aap.financeurName || 'Non spécifié') === f.financeur) &&
     (min === null || aap.budgetMax == null || aap.budgetMax >= min) &&
     (max === null || aap.budgetMin == null || aap.budgetMin <= max));
+}
+
+// Recherche sauvegardée (alertes-recherches-sauvegardees) : l'adresse de /aap/search, pour que « Lancer » rouvre les
+// mêmes résultats et que le courriel du lundi applique les mêmes filtres. Seule fréquence tenue : chaque lundi.
+export function rechercheAEnregistrer(f: FiltresRecherche, userId: string, nom: string) {
+  const params = paramsDepuisFiltres(f).toString();
+  if (!params) return null;
+  const name = nom.trim() || etiquettesActives(f).map(e => e.libelle).join(' · ');
+  return { userId, name, params, alertEnabled: true, frequency: 'weekly' as const };
+}
+
+// Recherche enregistrée avant ce changement (champ « filters » du gabarit d'avril) : mots-clés et montants ont leur
+// équivalent ; secteurs et régions d'avril n'en ont pas, ils sont rendus pour être signalés « non repris ».
+export interface AncienneRecherche {
+  params?: string;
+  filters?: { keywords?: string; sectors?: string[]; territories?: string[]; budgetMin?: number; budgetMax?: number };
+}
+export function depuisAncienneRecherche(r: AncienneRecherche): { params: string; nonRepris: string[] } {
+  if (r.params !== undefined) return { params: r.params, nonRepris: [] };
+  const a = r.filters ?? {};
+  const params = paramsDepuisFiltres({
+    ...FILTRES_VIDES, q: a.keywords ?? '', budgetMin: a.budgetMin ? String(a.budgetMin) : '',
+    budgetMax: a.budgetMax ? String(a.budgetMax) : '',
+  }).toString();
+  return { params, nonRepris: [...(a.sectors ?? []), ...(a.territories ?? [])] };
 }
