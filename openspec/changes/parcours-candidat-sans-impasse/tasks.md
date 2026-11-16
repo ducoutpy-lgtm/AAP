@@ -14,5 +14,8 @@ Semaine 3 du plan (reprise du 2026-11-13 au soir). Zéro euro.
   aucune erreur. Non joué : la pièce refusée, car le stockage des émulateurs accepte les dépôts ; couvert par le test de
   `pieceNonDeposee` seulement. L'échec d'avant la correction n'a pas été rejoué.)
 - [x] 2.2 Documentation : `CHANGELOG.md`, `REPRISE.md`, `docs/A_VALIDER.md`.
+- [x] 2.3 (2026-11-16, constat du parcours complet joué sur les émulateurs) Cloche « Alertes » de la barre du haut
+  retirée comme l'entrée du menu (oubliée le 2026-11-13) : `Gabarit.tsx`. Lint et build verts ; aucun test d'affichage
+  du gabarit n'existe, vérification par lecture du code.
 - [ ] 3.1 Mise en ligne après accord de Monsieur DUCOUT.
 - [ ] 4.1 Vérification par Monsieur DUCOUT : parcours candidat complet en vingt minutes.

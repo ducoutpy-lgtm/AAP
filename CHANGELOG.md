@@ -11,6 +11,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   son rôle ; la relecture complète désormais le profil connu (`app/src/contexts/profil.ts`). La page de détail d'une
   candidature ne promet plus d'alerte automatique. Parcours complet joué sur les émulateurs avec un compte neuf, sans
   erreur. `npm test` 115 verts. Mise en ligne sur accord.
+- Cloche « Alertes » de la barre du haut retirée (page toujours vide tant que les fonctions serveur ne sont pas
+  déployées), comme l'entrée du menu le 2026-11-13.
 
 ### Corrigé (2026-11-16, semaine 4)
 - Publication d'un appel par un financeur (changement `publication-appel-financeur`) : « Publier l'AAP » échouait

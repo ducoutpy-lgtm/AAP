@@ -4,7 +4,7 @@
 // d'intégration, le menu complet n'a pas encore de sens.
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Bell, ChevronLeft, ChevronRight, LogOut, Target, UserCircle } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, LogOut, Target, UserCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { entreeActive, entreesMenu, tableauDeBord } from './menus';
 import { LimiteErreur } from './LimiteErreur';
@@ -228,11 +228,8 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
             {userProfile?.subscriptionStatus === 'trial' && role !== 'admin' && (
               <Link to="/abonnement/choisir" className="text-primary-700 font-medium hover:underline">Voir nos offres</Link>
             )}
-            {role !== 'admin' && (
-              <Link to="/notifications" title="Alertes" className="text-gray-600 hover:text-gray-900">
-                <Bell className="h-5 w-5" />
-              </Link>
-            )}
+            {/* Cloche « Alertes » retirée le 2026-11-16, comme l'entrée du menu le 2026-11-13 (parcours-candidat-sans-impasse) :
+                rien ne crée de notification tant que les fonctions serveur ne sont pas déployées */}
             <Link to="/profil" className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
               <UserCircle className="h-6 w-6" />
               <span className="hidden sm:inline max-w-[180px] truncate">{userProfile?.email}</span>
