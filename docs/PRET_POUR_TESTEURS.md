@@ -41,7 +41,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 |---|---|---|---|
 | 12 | Mentions légales, confidentialité, conditions d'utilisation à jour | Fait, en ligne | Mise en ligne du 2026-11-13 (`docs/A_VALIDER.md`, questions 13 à 15) ; clause de litige à relire par un conseil avant l'ouverture du paiement |
 | 13 | Un compte ne peut pas se donner le rôle administrateur | Fait, en ligne | Changement `regles-role-protege`, 30 tests de règles, règles publiées le 2026-11-13 |
-| 14 | Pièces de candidature lisibles par leur seul auteur, documents d'appel en lecture seule (règles du stockage) | Testé, en ligne le 2026-11-16 | Changement `regles-stockage-durcies` (« released rules storage.rules ») ; propriétaire figé des recherches, favoris et notifications : règles Firestore testées, à déployer (question 31) |
+| 14 | Pièces de candidature lisibles par leur seul auteur, documents d'appel en lecture seule (règles du stockage) | Testé, en ligne le 2026-11-16 | Changement `regles-stockage-durcies` (« released rules storage.rules ») ; propriétaire figé des recherches, favoris et notifications : règles Firestore en ligne le 2026-11-16 |
 | 15 | Télécharger ses données (accès, portabilité) | Fait, en ligne le 2026-11-16 | Changement `export-donnees-personnelles` ; question 26 |
 | 16 | Supprimer son compte (effacement) | Décision attendue | Question 25 ; en attendant, par le délégué à la protection des données |
 
@@ -56,4 +56,4 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 ## Avant d'inviter
 
 Lignes à fermer d'abord, selon la session : 6 (recommandations, question 29), relecture de 10 fiches de la mesure
-d'exactitude (ligne 2), règles Firestore de la ligne 14 (question 31) ; veille du 23 novembre comme seconde preuve (ligne 3). Décision d'inviter : Monsieur DUCOUT.
+d'exactitude (ligne 2) ; veille du 23 novembre comme seconde preuve (ligne 3). Décision d'inviter : Monsieur DUCOUT.

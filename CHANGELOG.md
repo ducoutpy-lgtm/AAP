@@ -11,8 +11,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   financeur, premier clic sur « Candidater », règles du stockage durcies. Avant : relecture à plusieurs agents des
   modifications du jour, 11 constats confirmés et corrigés (changement `corrections-relecture-16-novembre` : montants
   illisibles qui arrêtaient le courriel du lundi, candidat en erreur isolé, recherches d'avril vides, double clic,
-  doublons de recherches, messages, liens retirés des noms). Règles Firestore corrigées et testées, non déployées
-  (question 31).
+  doublons de recherches, messages, liens retirés des noms). Règles Firestore corrigées et testées, déployées le même
+  jour sur accord (« Oui, déploie les règles », question 31).
 
 ### Corrigé (2026-11-16, semaine 3, parcours candidat joué en entier)
 - Premier clic sur « Candidater à cet AAP » d'un compte neuf (changement `premier-clic-candidater`) : le candidat était

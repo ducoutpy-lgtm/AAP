@@ -29,7 +29,8 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
 - 2026-11-16, 13 h : veille du lundi terminée sans intervention (« Veille terminee le 16/11/2026 11:33 », courriels
   partis), étape payante arrêtée au devis (0,52 euro, question 30). « Oui, mets en ligne » : relecture à plusieurs agents,
   11 constats corrigés (`corrections-relecture-16-novembre`), hébergement et règles du stockage déployés (version
-  `index-BB_FScPX.js`) ; règles Firestore corrigées non déployées (question 31). Questions ouvertes : 23, 25, 29, 30, 31.
+  `index-BB_FScPX.js`) ; règles Firestore déployées ensuite sur « Oui, déploie les règles ». Questions ouvertes : 23,
+  25, 29, 30.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

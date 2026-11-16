@@ -10,4 +10,5 @@
   échouent ; lint, types et build verts.)
 - [x] 2.1 Documentation (`CHANGELOG.md`, `docs/A_VALIDER.md` questions 27, 28, 31).
 - [x] 2.2 Mise en ligne de l'hébergement et des règles du stockage (accord du 2026-11-16) ; règles Firestore sur accord
-  (question 31). (2026-11-16 : version servie `index-BB_FScPX.js` ; règles Firestore non déployées, question 31.)
+  (question 31). (2026-11-16 : version servie `index-BB_FScPX.js` ; règles Firestore déployées le même jour sur « Oui,
+  déploie les règles » : « released rules firestore.rules », lecture publique des appels vérifiée sur la vraie base.)
