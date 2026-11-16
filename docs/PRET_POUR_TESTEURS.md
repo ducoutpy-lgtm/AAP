@@ -5,7 +5,8 @@ ou non trois testeurs. Chaque ligne donne l'état et sa preuve ; « en ligne » 
 https://aapi-11bc3.web.app (contrôle du 2026-11-16 : fichier `assets/index-DWY0k7Mk.js`, recherche du texte de l'écran).
 Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 
-État au 2026-11-16, 11 h : 7 lignes faites, 2 décidées (paiement, invitations), 10 ouvertes.
+État au 2026-11-16, 11 h 30 : 6 lignes faites, 2 décidées (paiement, invitations), 12 ouvertes (ligne 7 bis ajoutée, ligne 6
+rouverte).
 
 ## Contenu
 
@@ -21,7 +22,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | # | Condition | État | Preuve |
 |---|---|---|---|
 | 5 | Inscription, connexion Google, mot de passe oublié, profil | Fait, en ligne | « Mot de passe oublié » présent dans la version servie ; Google activé le 2026-10-19 |
-| 6 | Recherche avec appels clos masqués, recommandations d'après le profil | Fait, en ligne | Mise en ligne du 2026-11-13 au soir (« Oui pour les deux ») ; « Recommandations » présent dans la version servie |
+| 6 | Recherche avec appels clos masqués, recommandations d'après le profil | En ligne, recommandations peu pertinentes | Mise en ligne du 2026-11-13 au soir ; tirage de vingt recommandations (`docs/TIRAGE_RECOMMANDATIONS.md`) : environ 4 pertinentes selon la session, qualification trop large ; question 29 |
 | 7 | Candidater sur le site officiel d'un appel importé, puis suivre sa candidature | Fait, en ligne | « Candidater sur le site officiel » et « la suivre ici » présents dans la version servie ; joué sur les émulateurs le 2026-11-16 |
 | 7 bis | Premier clic d'un compte neuf sur « Candidater » (appel d'un financeur inscrit) | Corrigé, pas en ligne | Renvoi au tableau de bord au premier clic, trouvé en jouant le parcours complet le 2026-11-16 ; changement `premier-clic-candidater` ; question 28 |
 | 8 | Recherches sauvegardées avec alerte du lundi | Codé, pas en ligne | Changement `alertes-recherches-sauvegardees`, joué sur les émulateurs ; question 24 (mise en ligne) |
@@ -54,5 +55,5 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 
 ## Avant d'inviter
 
-Lignes à fermer d'abord, selon la session : 2 (exactitude), 3 (veille autonome), 8 et 15 (mise en ligne), 11
-(démonstration financeur), 14 (règles du stockage). Décision d'inviter : Monsieur DUCOUT.
+Lignes à fermer d'abord, selon la session : 3 (veille autonome), 6 (recommandations), 7 bis, 8, 11 et 15 (mise en ligne,
+questions 24, 26 et 28), 14 (règles du stockage, question 27) ; relecture de 10 fiches de la mesure d'exactitude (ligne 2). Décision d'inviter : Monsieur DUCOUT.
