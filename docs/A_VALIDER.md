@@ -46,6 +46,15 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 24. (2026-11-16) Mise en ligne du changement `alertes-recherches-sauvegardees` (bouton « Enregistrer cette recherche »,
    page des recherches réécrite ; aucune règle Firestore modifiée). Le courriel du lundi le prend en compte dès la
    prochaine veille, mise en ligne ou non. Oui / non.
+25. (2026-11-16) Suppression du compte en libre-service (droit à l'effacement) : que deviennent les candidatures
+   déposées auprès d'un financeur inscrit (il les a reçues : les garder anonymisées, ou les supprimer) et les lignes du
+   journal des actions ? Proposition de la session : bouton « Supprimer mon compte » avec confirmation ; profil, recherches,
+   favoris, notifications et compte de connexion supprimés ; candidatures aux appels importés supprimées ; candidatures
+   reçues par un financeur inscrit gardées sans nom ni coordonnées ; journal gardé sans l'identifiant. Règles Firestore
+   à changer (tests sur l'émulateur), puis mise en ligne sur accord. À trancher. En attendant, l'effacement passe par le
+   DPO (page Mon profil et page Confidentialité).
+26. (2026-11-16) Mise en ligne du changement `export-donnees-personnelles` (bouton « Télécharger mes données », phrase de
+   la page Confidentialité ; aucune règle modifiée). Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec

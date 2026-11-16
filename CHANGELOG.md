@@ -5,6 +5,14 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-16, semaine 4 du plan)
+- Droits RGPD : « Télécharger mes données » sur `/profil` (changement `export-donnees-personnelles`) produit un fichier
+  JSON des données que le compte lit (compte de connexion, profil, candidatures, recherches, favoris, notifications,
+  messages, paiements, appels d'un financeur), dates en ISO 8601, partie illisible notée « nonLue » ; journal des
+  actions, retours de test et messages du formulaire de contact restent sur demande au DPO ; phrase ajoutée à la page
+  Confidentialité. Aucune règle modifiée. `npm test` 111 verts ; joué sur les émulateurs. Suppression du compte en
+  libre-service : question 25. Mise en ligne sur accord.
+
 ### Ajouté (2026-11-16, semaine 3 du plan)
 - Alertes des recherches sauvegardées (changement `alertes-recherches-sauvegardees`) : bouton « Enregistrer cette
   recherche » sur `/aap/search` (candidat connecté, au moins un filtre) ; la recherche garde l'adresse de la page, donc
