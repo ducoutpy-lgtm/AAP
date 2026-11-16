@@ -11,7 +11,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest run src",
-    "test:rules": "firebase emulators:exec --only firestore --project demo-aap \"npx vitest run tests/rules\""
+    "test:rules": "firebase emulators:exec --only firestore,storage --project demo-aap \"npx vitest run tests/rules --no-file-parallelism\""
   },
   "dependencies": {
     "@sentry/react": "^7.91.0",

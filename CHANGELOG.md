@@ -3,7 +3,12 @@
 Toutes les modifications notables du dépôt AAP Santé sont documentées ici (format Keep a Changelog, en
 français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.md`.
 
-## [Non publié]
+
+### Sécurité (2026-11-16)
+- Règles du stockage (changement `regles-stockage-durcies`) : documents des appels en lecture seule depuis
+  l'application (tout compte en essai pouvait écrire, tout compte connecté supprimer) ; ancien dossier
+  `uploads/application-documents` fermé ; pièces de candidature à leur seul auteur, désormais testées. Quatre tests sur
+  l'émulateur du stockage, `npm run test:rules` lance Firestore et Storage (34 verts). Déploiement sur accord.
 
 ### Ajouté (2026-11-16, semaine 4 du plan)
 - Droits RGPD : « Télécharger mes données » sur `/profil` (changement `export-donnees-personnelles`) produit un fichier

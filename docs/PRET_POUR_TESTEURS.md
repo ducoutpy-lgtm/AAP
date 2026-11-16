@@ -39,7 +39,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 |---|---|---|---|
 | 12 | Mentions légales, confidentialité, conditions d'utilisation à jour | Fait, en ligne | Mise en ligne du 2026-11-13 (`docs/A_VALIDER.md`, questions 13 à 15) ; clause de litige à relire par un conseil avant l'ouverture du paiement |
 | 13 | Un compte ne peut pas se donner le rôle administrateur | Fait, en ligne | Changement `regles-role-protege`, 30 tests de règles, règles publiées le 2026-11-13 |
-| 14 | Pièces de candidature lisibles par leur seul auteur (règles du stockage) | Écrit, non testé, non déployé | `app/storage.rules` ; aucun test de règles du stockage (changement `regles-role-protege`, tâche notée) |
+| 14 | Pièces de candidature lisibles par leur seul auteur, documents d'appel en lecture seule (règles du stockage) | Testé, non déployé | Changement `regles-stockage-durcies`, 4 tests sur l'émulateur du stockage (34 tests de règles verts) ; question 27 |
 | 15 | Télécharger ses données (accès, portabilité) | Codé, pas en ligne | Changement `export-donnees-personnelles` ; question 26 |
 | 16 | Supprimer son compte (effacement) | Décision attendue | Question 25 ; en attendant, par le délégué à la protection des données |
 

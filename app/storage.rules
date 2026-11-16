@@ -15,11 +15,13 @@ service firebase.storage {
       return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.subscriptionStatus in ['active', 'trial'];
     }
 
-    // AAP documents
+    // Documents des appels : lecture par un compte avec abonnement ou essai. Écriture et suppression refusées depuis
+    // l'application (regles-stockage-durcies, 2026-11-16) : tout compte en essai pouvait écrire et tout compte connecté
+    // supprimer ; seul l'import (SDK administrateur, hors règles) dépose ces fichiers. Le dépôt par un financeur sera
+    // conçu avec l'ouverture du stockage (facturation).
     match /uploads/aap-documents/{aapId}/{filename} {
       allow read: if isAuthenticated() && hasActiveSubscription();
-      allow write: if isAuthenticated() && hasActiveSubscription();
-      allow delete: if isAuthenticated();
+      allow write, delete: if false;
     }
 
     // Pièces d'une candidature, déposées par le candidat avant la création du dossier (2026-10-20 : le formulaire
@@ -32,12 +34,8 @@ service firebase.storage {
       allow delete: if isOwner(userId);
     }
 
-    // Application documents
-    match /uploads/application-documents/{applicationId}/{filename} {
-      allow read: if isAuthenticated();
-      allow write: if isAuthenticated() && hasActiveSubscription();
-      allow delete: if isAuthenticated();
-    }
+    // Ancien dossier uploads/application-documents : règle retirée le 2026-11-16 (regles-stockage-durcies), aucun code ne
+    // l'utilisait et tout compte connecté y lisait et supprimait ; un chemin sans règle est refusé.
 
     // Financeur logos
     match /uploads/logos/financeurs/{financeurId}/{filename} {

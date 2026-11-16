@@ -55,6 +55,10 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    DPO (page Mon profil et page Confidentialité).
 26. (2026-11-16) Mise en ligne du changement `export-donnees-personnelles` (bouton « Télécharger mes données », phrase de
    la page Confidentialité ; aucune règle modifiée). Oui / non.
+27. (2026-11-16) Déploiement des règles du stockage (changement `regles-stockage-durcies` : documents d'appel en lecture
+   seule, ancien dossier fermé, pièces de candidature à leur seul auteur ; 34 tests de règles verts). Commande :
+   `firebase deploy --only storage` depuis `app`. Le stockage est vide et la facturation fermée : aucun effet visible
+   aujourd'hui, la faille est fermée avant l'ouverture. Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
