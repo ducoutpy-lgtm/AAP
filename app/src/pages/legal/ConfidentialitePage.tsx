@@ -72,6 +72,10 @@ export default function ConfidentialitePage() {
           apportée dans un délai d'un mois. Vous pouvez introduire une réclamation auprès de la Commission nationale de
           l'informatique et des libertés (CNIL, 3 place de Fontenoy, 75007 Paris, www.cnil.fr).
         </p>
+        <p className="mt-2">
+          Pour l'accès et la portabilité, un compte connecté peut aussi télécharger lui-même ses données dans un fichier
+          JSON, depuis Mon profil, bouton « Télécharger mes données ».
+        </p>
       </Section>
 
       <Section titre="Sécurité">
