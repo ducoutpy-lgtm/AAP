@@ -203,6 +203,28 @@ describe('recherches sauvegardées, favoris, notifications, messages', () => {
   });
 });
 
+describe('propriétaire figé et financeur suspendu (corrections-relecture-16-novembre)', () => {
+  it('une recherche, un favori, une notification ne changent pas de propriétaire', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'favoriteAap/fav1'), { userId: 'porteur1', aapId: 'publie' }));
+    await assertFails(updateDoc(doc(porteur(), 'savedSearches/s1'), { userId: 'porteur2', name: 'piège' }));
+    await assertFails(updateDoc(doc(porteur(), 'favoriteAap/fav1'), { userId: 'porteur2' }));
+    await assertFails(updateDoc(doc(porteur(), 'notifications/n1'), { userId: 'porteur2' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'savedSearches/s1'), { alertEnabled: false }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'notifications/n1'), { read: true }));
+  });
+
+  it('un financeur suspendu lit encore la liste de ses appels, pas ceux d’un autre', async () => {
+    await env.withSecurityRulesDisabled(async ctx => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'users/f2'), { userType: 'financeur', subscriptionStatus: 'cancelled' });
+      await setDoc(doc(db, 'aap/du-f2'), { status: 'draft', financeurId: 'f2', title: 'Brouillon de f2' });
+    });
+    const f2 = env.authenticatedContext('f2').firestore();
+    await assertSucceeds(getDocs(query(collection(f2, 'aap'), where('financeurId', '==', 'f2'))));
+    await assertFails(getDoc(doc(f2, 'aap/du-financeur')));
+  });
+});
+
 describe('paiements et statistiques : fonctions serveur seulement', () => {
   it('même l’administrateur n’écrit pas dans payments ni analytics', async () => {
     await assertFails(setDoc(doc(admin(), 'payments/p1'), { userId: 'porteur1', amount: 1 }));

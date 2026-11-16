@@ -38,9 +38,11 @@ export default function SavedSearchesPage() {
 
   const basculerAlerte = async (r: RechercheSauvegardee) => {
     setErreur('');
+    // Valeur calculée une fois et reprise telle quelle : un double clic n'inverse plus l'écran par rapport à la base
+    const active = !r.alertEnabled;
     try {
-      await updateDoc(doc(db, 'savedSearches', r.id), { alertEnabled: !r.alertEnabled, frequency: 'weekly' });
-      setRecherches(rs => rs.map(x => (x.id === r.id ? { ...x, alertEnabled: !x.alertEnabled } : x)));
+      await updateDoc(doc(db, 'savedSearches', r.id), { alertEnabled: active, frequency: 'weekly' });
+      setRecherches(rs => rs.map(x => (x.id === r.id ? { ...x, alertEnabled: active } : x)));
     } catch (err) {
       console.error('Error toggling alert:', err);
       setErreur("L'alerte n'a pas pu être modifiée.");
@@ -105,7 +107,13 @@ export default function SavedSearchesPage() {
                       <div className="min-w-0">
                         <h2 className="font-semibold text-gray-900">{r.name}</h2>
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {etiquettes.length === 0 && <span className="text-sm text-gray-500">Tous les appels ouverts</span>}
+                          {etiquettes.length === 0 && (
+                            <span className="text-sm text-gray-500">
+                              {nonRepris.length > 0
+                                ? "Aucun critère repris : cette recherche n'envoie pas d'alerte, enregistrez-en une nouvelle depuis la page de recherche"
+                                : 'Tous les appels ouverts'}
+                            </span>
+                          )}
                           {etiquettes.map(e => (
                             <span key={e.cle} className="bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-0.5 text-xs">{e.libelle}</span>
                           ))}

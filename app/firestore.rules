@@ -109,7 +109,8 @@ service cloud.firestore {
       // Lecture : un AAP publié est public (lisible sans compte) ; les autres statuts sont lisibles par
       // l'administrateur, par les comptes avec abonnement et par le financeur auteur. Les requêtes de liste sans
       // compte doivent filtrer sur status == 'published'.
-      allow read: if resource.data.status == 'published' || isAdmin() || hasActiveSubscription();
+      allow read: if resource.data.status == 'published' || isAdmin() || hasActiveSubscription()
+        || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
 
       // Création : un financeur abonné, pour son propre compte (financeurId = son identifiant). Les fiches
       // importées (financeurId 'scraped') passent par le SDK admin, hors de ces règles.
@@ -143,20 +144,25 @@ service cloud.firestore {
     }
 
     // Recherches sauvegardées et favoris : le propriétaire seulement (userId dans le document)
+    // Propriétaire figé à la mise à jour (corrections-relecture-16-novembre) : une recherche réattribuée à un autre compte
+    // ferait partir le lundi, depuis la boîte officielle, un nom choisi par l'auteur de la réattribution
     match /savedSearches/{searchId} {
-      allow read, update, delete: if isOwner(resource.data.userId);
+      allow read, delete: if isOwner(resource.data.userId);
+      allow update: if isOwner(resource.data.userId) && request.resource.data.userId == resource.data.userId;
       allow create: if isOwner(request.resource.data.userId);
     }
 
     match /favoriteAap/{favoriteId} {
-      allow read, update, delete: if isOwner(resource.data.userId);
+      allow read, delete: if isOwner(resource.data.userId);
+      allow update: if isOwner(resource.data.userId) && request.resource.data.userId == resource.data.userId;
       allow create: if isOwner(request.resource.data.userId);
     }
 
     // Notifications : le destinataire les lit, les marque lues et les supprime ; l'administrateur peut en créer.
     // Les notifications automatiques viennent des fonctions serveur (SDK admin), hors de ces règles.
     match /notifications/{notificationId} {
-      allow read, update, delete: if isOwner(resource.data.userId);
+      allow read, delete: if isOwner(resource.data.userId);
+      allow update: if isOwner(resource.data.userId) && request.resource.data.userId == resource.data.userId;
       allow create: if isOwner(request.resource.data.userId) || isAdmin();
     }
 

@@ -54,16 +54,32 @@ export default function SearchAapPage() {
   const etiquettes = etiquettesActives(filters);
   // Recherche sauvegardée avec alerte du lundi (alertes-recherches-sauvegardees) : candidat connecté seulement
   const [enregistrement, setEnregistrement] = useState<{ ok: boolean; texte: string } | null>(null);
+  const [enregistrementEnCours, setEnregistrementEnCours] = useState(false);
   const enregistrerRecherche = async () => {
     const recherche = currentUser ? rechercheAEnregistrer(filters, currentUser.uid, '') : null;
-    if (!recherche) return;
+    if (!recherche || enregistrementEnCours) return;
+    setEnregistrementEnCours(true);
+    // L'alerte ne part qu'aux candidats au profil complété qui acceptent les courriels (scraping/alertes.py)
+    const alerte = !userProfile?.profileComplete
+      ? "l'alerte du lundi partira quand votre profil sera complété"
+      : userProfile.notificationPreferences?.email === false
+        ? 'vos courriels sont désactivés dans Mon profil, aucune alerte ne partira'
+        : 'alerte chaque lundi par courriel';
     try {
+      // Une recherche identique déjà enregistrée n'est pas recréée (sinon deux sections identiques dans le courriel)
+      const deja = await getDocs(query(collection(db, 'savedSearches'), where('userId', '==', recherche.userId), where('params', '==', recherche.params)));
+      if (!deja.empty) {
+        setEnregistrement({ ok: true, texte: `Cette recherche est déjà enregistrée : ${alerte}.` });
+        return;
+      }
       await addDoc(collection(db, 'savedSearches'), { ...recherche, createdAt: Timestamp.now(), updatedAt: Timestamp.now() });
       if (currentUser && userProfile) await journaliser(currentUser.uid, userProfile.userType, 'recherche-sauvegardee', '', recherche.name);
-      setEnregistrement({ ok: true, texte: `Recherche « ${recherche.name} » enregistrée : alerte chaque lundi par courriel.` });
+      setEnregistrement({ ok: true, texte: `Recherche « ${recherche.name} » enregistrée : ${alerte}.` });
     } catch (err) {
       console.error('Error saving search:', err);
       setEnregistrement({ ok: false, texte: "La recherche n'a pas pu être enregistrée. Réessayez dans un instant." });
+    } finally {
+      setEnregistrementEnCours(false);
     }
   };
 
@@ -237,7 +253,7 @@ export default function SearchAapPage() {
               Effacer tout
             </button>
             {userProfile?.userType === 'porteur' && (
-              <Button variant="secondary" onClick={enregistrerRecherche}>Enregistrer cette recherche</Button>
+              <Button variant="secondary" onClick={enregistrerRecherche} disabled={enregistrementEnCours}>Enregistrer cette recherche</Button>
             )}
           </div>
         )}

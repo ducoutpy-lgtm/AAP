@@ -142,6 +142,16 @@ def statut_appel(fiche: dict, maintenant: datetime | None = None) -> str:
     return "bientot-clos" if jours <= SEUIL_BIENTOT_CLOS_JOURS else "ouvert"
 
 
+_DEBUT_NOMBRE = re.compile(r"\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+
+
+def _parse_float(s: str) -> float:
+    """Comme parseFloat en JavaScript : début numérique du texte, sinon nan (« 50 000 » vaut 50, « abc » nan) ;
+    float() levait une erreur et arrêtait l'envoi (relecture du 2026-11-16)."""
+    m = _DEBUT_NOMBRE.match(s or "")
+    return float(m.group()) if m else math.nan
+
+
 def correspond(fiche: dict, f: dict) -> bool:
     """Vrai si la fiche passe les filtres de la recherche (fonction pure, même règle que l'application)."""
     terme = (f.get("q") or "").lower()
@@ -165,9 +175,10 @@ def correspond(fiche: dict, f: dict) -> bool:
         return False
     if f.get("financeur") and financeur != f["financeur"]:
         return False
-    if f.get("budgetMin") and fiche.get("budgetMax") is not None and fiche["budgetMax"] < float(f["budgetMin"]):
+    # Même comparaison que filtrerAppels : avec nan (montant illisible), la fiche chiffrée est écartée
+    if f.get("budgetMin") and fiche.get("budgetMax") is not None and not fiche["budgetMax"] >= _parse_float(f["budgetMin"]):
         return False
-    if f.get("budgetMax") and fiche.get("budgetMin") is not None and fiche["budgetMin"] > float(f["budgetMax"]):
+    if f.get("budgetMax") and fiche.get("budgetMin") is not None and not fiche["budgetMin"] <= _parse_float(f["budgetMax"]):
         return False
     return True
 
@@ -204,6 +215,13 @@ def params_de_recherche(r: dict) -> str:
     return urlencode(morceaux)
 
 
+def _nom_sur(nom) -> str:
+    """Nom de recherche affiché dans le courriel : liens retirés, 80 caractères au plus (le nom est saisi par le compte
+    et part depuis la boîte officielle ; défense en profondeur, relecture du 2026-11-16)."""
+    propre = re.sub(r"(https?://|www\.)\S*", "[lien retiré]", str(nom or "")).strip()
+    return (propre[:79] + "…") if len(propre) > 80 else (propre or "Recherche sans nom")
+
+
 def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: datetime) -> list[dict]:
     """Une section par recherche dont l'alerte est active : fiches visibles publiées depuis `depuis` qui passent ses
     filtres, clôture la plus proche d'abord (fonction pure, alertes-recherches-sauvegardees)."""
@@ -213,6 +231,11 @@ def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: date
         if not r.get("alertEnabled"):
             continue
         params = params_de_recherche(r)
+        # Recherche d'avril sans critère repris : aucune section « toute la France » sous son nom
+        if not params:
+            continue
+        ancien = r.get("filters") or {}
+        non_repris = [] if r.get("params") is not None else [*(ancien.get("sectors") or []), *(ancien.get("territories") or [])]
         filtres = filtres_depuis_params(params)
         retenues = []
         for f in fiches:
@@ -220,7 +243,7 @@ def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: date
             if visible(f) and quand and quand >= depuis and correspond(f, filtres):
                 retenues.append(f)
         retenues.sort(key=lambda f: _date(f.get("deadline")) or loin)
-        sections.append({"nom": r.get("name") or "Recherche sans nom", "params": params, "fiches": retenues})
+        sections.append({"nom": _nom_sur(r.get("name")), "params": params, "fiches": retenues, "non_repris": non_repris})
     return sections
 
 
@@ -246,6 +269,9 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
         k = len(s["fiches"])
         compte = (f"{k} nouveaux appels" if k > 1 else "1 nouvel appel" if k == 1 else "aucun nouvel appel cette semaine")
         lignes += [f"Votre recherche « {s['nom']} » : {compte}", ""]
+        if s.get("non_repris"):
+            lignes += [f"  Critères non repris : {', '.join(s['non_repris'])} (ancienne version de la page : enregistrez de "
+                       "nouveau cette recherche depuis la page de recherche)", ""]
         for f in s["fiches"][:5]:
             lignes += _lignes_fiche(f, url)
         lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}" if s["params"] else f"  Voir la recherche : {url}/aap/search", ""]
@@ -293,6 +319,21 @@ def lire_candidats(db) -> list[tuple[dict, dict]]:
     return resultat
 
 
+def envoyer_aux_candidats(candidats, fiches: list[dict], depuis: datetime, url: str, dry_run: bool) -> list[str]:
+    """Courriel de chaque candidat ; une erreur sur l'un est notée et n'arrête pas l'envoi aux suivants."""
+    lignes = []
+    for compte, profil, recherches in candidats:
+        try:
+            retenues = fiches_nouvelles_pour(profil, fiches, depuis)
+            sections = sections_recherches(recherches, fiches, depuis)
+            sujet, texte = courriel_candidat(profil, retenues, url, sections=sections)
+            lignes.append(f"candidat {compte['email']} : {len(retenues)} appel(s), {len(sections)} recherche(s) en alerte ; "
+                          + courriel.envoyer(compte["email"], sujet, texte, dry_run))
+        except Exception as e:  # noqa: BLE001 - une donnée imprévue ne doit priver personne d'autre de son courriel
+            lignes.append(f"candidat {compte.get('email')} : ÉCHEC {type(e).__name__} {e}")
+    return lignes
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--admin", action="store_true")
@@ -314,12 +355,8 @@ def main() -> int:
         dest = (config or {}).get("admin") or "admin (COURRIEL_ADMIN non renseigné)"
         print("admin :", courriel.envoyer(dest, sujet, texte, args.dry_run))
     if args.candidats:
-        for compte, profil, recherches in lire_candidats(db):
-            retenues = fiches_nouvelles_pour(profil, fiches, depuis)
-            sections = sections_recherches(recherches, fiches, depuis)
-            sujet, texte = courriel_candidat(profil, retenues, args.url, sections=sections)
-            print(f"candidat {compte['email']} : {len(retenues)} appel(s), {len(sections)} recherche(s) en alerte ;",
-                  courriel.envoyer(compte["email"], sujet, texte, args.dry_run))
+        for ligne in envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run):
+            print(ligne)
     return 0
 
 

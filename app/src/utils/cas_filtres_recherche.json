@@ -24,6 +24,8 @@
     {"nom": "financeur exact", "params": "financeur=Non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"]},
     {"nom": "montant minimum : sans montant gardé", "params": "budgetMin=60000", "attendus": ["b", "d"]},
     {"nom": "montant maximum : sans montant gardé", "params": "budgetMax=50000", "attendus": ["a", "d", "e"]},
-    {"nom": "filtres cumulés", "params": "thematique=sante&territory=ile-de-france&budgetMax=200000", "attendus": ["b", "e"]}
+    {"nom": "filtres cumulés", "params": "thematique=sante&territory=ile-de-france&budgetMax=200000", "attendus": ["b", "e"]},
+    {"nom": "montant non numérique : seules les fiches sans montant", "params": "budgetMin=abc", "attendus": ["d"]},
+    {"nom": "montant avec espace lu comme parseFloat (50)", "params": "budgetMin=50%20000", "attendus": ["a", "b", "d", "e"]}
   ]
 }

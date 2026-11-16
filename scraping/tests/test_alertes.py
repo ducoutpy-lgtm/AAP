@@ -149,3 +149,41 @@ def test_courriel_candidat_avec_sections_de_recherche():
     assert "Recherches sauvegardées" in texte
     # sans recherche active : courriel inchangé
     assert "Votre recherche" not in a.courriel_candidat({"structureName": "X"}, [], "u")[1]
+
+
+# ---------------------------------------------------------------- corrections de la relecture du 2026-11-16
+
+def test_montants_lus_comme_parsefloat():
+    import math
+    assert a._parse_float("50 000") == 50 and a._parse_float("1e5") == 100000 and a._parse_float(" 12.5x") == 12.5
+    assert math.isnan(a._parse_float("abc")) and math.isnan(a._parse_float(""))
+
+
+def test_recherche_d_avril_sans_critere_repris_n_envoie_rien():
+    vide = {"name": "Corse", "alertEnabled": True, "filters": {"sectors": ["sante"], "territories": ["Corse"]}}
+    assert a.sections_recherches([vide], _fiches_idf(), DEPUIS) == []
+
+
+def test_criteres_non_repris_annonces_dans_le_courriel():
+    partielle = {"name": "Habitat", "alertEnabled": True, "filters": {"keywords": "habitat", "territories": ["Corse"]}}
+    sections = a.sections_recherches([partielle], _fiches_idf(), DEPUIS)
+    assert sections[0]["non_repris"] == ["Corse"]
+    texte = a.courriel_candidat({"structureName": "X"}, [], "u", sections=sections)[1]
+    assert "Critères non repris : Corse" in texte
+
+
+def test_nom_de_recherche_sans_lien_et_raccourci():
+    piege = {**RECHERCHE_IDF, "name": "Dossier incomplet, régularisez sur https://piege.example/x " + "z" * 100}
+    s = a.sections_recherches([piege], _fiches_idf(), DEPUIS)[0]
+    assert "piege.example" not in s["nom"] and len(s["nom"]) <= 80
+    assert "piege.example" not in a.courriel_candidat({"structureName": "X"}, [], "u", sections=[s])[1]
+
+
+def test_un_candidat_en_erreur_n_arrete_pas_les_suivants(monkeypatch):
+    envoyes = []
+    monkeypatch.setattr(a.courriel, "envoyer", lambda dest, sujet, texte, dry_run=False: envoyes.append(dest) or "envoyé")
+    candidats = [({"email": "casse@x.fr"}, {"structureName": "A"}, [None]),
+                 ({"email": "ok@x.fr"}, {"structureName": "B"}, [RECHERCHE_IDF])]
+    lignes = a.envoyer_aux_candidats(candidats, _fiches_idf(), DEPUIS, "u", True)
+    assert envoyes == ["ok@x.fr"]
+    assert any("casse@x.fr" in l and "ÉCHEC" in l for l in lignes)
