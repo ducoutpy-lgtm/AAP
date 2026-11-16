@@ -41,6 +41,7 @@ La session chiffre le passage à l'échelle à partir des coûts mesurés : tout
 | 2026-11-13 | Veille autonome (preuve avant le lundi 16), extraction de 60 textes nouveaux : 25 fiches, 1 échec | 0,07 | 0,037 | 2,859 |
 | 2026-11-13 | Veille autonome, contrôle de 16 fiches (arrêt au plafond après 9, devis du contrôle doublé, puis 7) | 0,005 + 0,004 | 0,009 | 2,868 |
 | 2026-11-13 | Veille autonome, qualification de 16 fiches | 0,01 | 0,005 | 2,873 |
+| 2026-11-13 | Extraction des 211 textes des conférences des financeurs (202 PDF), sur son « Oui pour les deux » : 65 fiches nouvelles, 42 échecs | 0,59 | 0,589 | 3,462 |
 
 Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50. Semaine du 2026-11-09 : 0,051 euro sur 0,50 (délégation permanente
 collée par Monsieur DUCOUT dans la conversation du 2026-11-13).
