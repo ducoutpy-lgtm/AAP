@@ -1,10 +1,15 @@
 # Reprise du projet AAP Santé (écrit le 2026-10-12, à lire au début de chaque session)
 
-**Pause levée le 13/11/2026 à 20 h 06 par Monsieur DUCOUT** (« je veux que tu épuises les crédits à fond pour les
-autres projets »). Règle de quota jusqu'à la remise à zéro du samedi 14/11 vers 22 h : relire
-`mcp__ccd_session_mgmt__get_usage` (ligne « Weekly · all models ») avant chaque changement et au moins toutes les
-15 minutes ; à 95 %, s'arrêter proprement (commit, `REPRISE.md` à jour) pour laisser la fin du quota au gel de
-Dyslexix (exécutable donné à l'essai des enfants).
+**Règle de quota de la semaine du 16/11/2026** (relance de Monsieur DUCOUT, « Rythme régulier ») : plafond par jour sur
+la ligne « Weekly · all models » de `mcp__ccd_session_mgmt__get_usage`, partagé par quatre projets : lundi 16 : 22 % ;
+mardi 17 : 37 % ; mercredi 18 : 52 % ; jeudi 19 : 67 % ; vendredi 20 : 82 % ; samedi 21 : 95 %. Relire la consommation
+avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : arrêt propre (commit, push, `REPRISE.md`
+à jour), fin du tour ; relance automatique le lendemain matin. Mise en ligne et dépense hors délégation : son « oui »
+écrit dans la conversation.
+
+- 2026-11-16 : extraction des PDF des conférences finie (« 1327 réussites (65 nouvelles), 42 échecs », cumul Haiku
+  3,462 euros, soit 0,589 pour un devis de 0,59) ; veille du lundi lancée à 9 h 11 (PC éteint à 8 h), en cours à 10 h 25 ;
+  contrôle, qualification et import en « à valider » par sa partie payante (`veille_payante.py`).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
