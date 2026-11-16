@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-16, semaine 3, parcours candidat joué en entier)
+- Premier clic sur « Candidater à cet AAP » d'un compte neuf (changement `premier-clic-candidater`) : le candidat était
+  renvoyé au tableau de bord (passage par `/admin`), le profil relu après la coche de la liste « Démarrer » ayant perdu
+  son rôle ; la relecture complète désormais le profil connu (`app/src/contexts/profil.ts`). La page de détail d'une
+  candidature ne promet plus d'alerte automatique. Parcours complet joué sur les émulateurs avec un compte neuf, sans
+  erreur. `npm test` 115 verts. Mise en ligne sur accord.
+
 ### Corrigé (2026-11-16, semaine 4)
 - Publication d'un appel par un financeur (changement `publication-appel-financeur`) : « Publier l'AAP » échouait
   toujours (champs facultatifs vides écrits à `undefined`, refusés par Firestore) ; les champs vides sont désormais

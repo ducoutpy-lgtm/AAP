@@ -1,3 +1,4 @@
+import { fusionnerProfil } from './profil';
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import {
   User as FirebaseUser,
@@ -133,10 +134,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (currentUser) {
       const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
       if (userDoc.exists()) {
-        setUserProfile({
-          uid: currentUser.uid,
-          ...userDoc.data(),
-        } as User);
+        // Complète le profil connu au lieu de le remplacer (premier-clic-candidater, 2026-11-16)
+        const relu = userDoc.data();
+        setUserProfile(connu => fusionnerProfil(connu, currentUser.uid, relu) as User);
       }
     }
   };

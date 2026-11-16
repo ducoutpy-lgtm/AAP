@@ -23,6 +23,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | 5 | Inscription, connexion Google, mot de passe oublié, profil | Fait, en ligne | « Mot de passe oublié » présent dans la version servie ; Google activé le 2026-10-19 |
 | 6 | Recherche avec appels clos masqués, recommandations d'après le profil | Fait, en ligne | Mise en ligne du 2026-11-13 au soir (« Oui pour les deux ») ; « Recommandations » présent dans la version servie |
 | 7 | Candidater sur le site officiel d'un appel importé, puis suivre sa candidature | Fait, en ligne | « Candidater sur le site officiel » et « la suivre ici » présents dans la version servie ; joué sur les émulateurs le 2026-11-16 |
+| 7 bis | Premier clic d'un compte neuf sur « Candidater » (appel d'un financeur inscrit) | Corrigé, pas en ligne | Renvoi au tableau de bord au premier clic, trouvé en jouant le parcours complet le 2026-11-16 ; changement `premier-clic-candidater` ; question 28 |
 | 8 | Recherches sauvegardées avec alerte du lundi | Codé, pas en ligne | Changement `alertes-recherches-sauvegardees`, joué sur les émulateurs ; question 24 (mise en ligne) |
 | 9 | Pièces jointes d'une candidature | Limite annoncée | Le stockage de fichiers exige la facturation Blaze (question 5) ; la candidature part et l'écran nomme les pièces « non déposées » |
 | 10 | Documents réutilisables d'une candidature à l'autre | Décision attendue | Question 23 |

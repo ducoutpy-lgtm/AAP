@@ -93,7 +93,7 @@ export default function ApplicationDetailPage() {
           {statut === 'submitted' && (
             <p className="mt-6 text-sm text-gray-600 bg-primary-50 border border-primary-200 rounded-lg p-3">
               Le financeur a reçu votre dossier. Le statut passera à « En cours d'examen » quand il l'ouvrira, puis à
-              « Acceptée », « Refusée » ou « Complément demandé » ; vous serez prévenu par une alerte.
+              « Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
             </p>
           )}
           {(dossier.financeurComments || dossier.financeurNotes) && (
