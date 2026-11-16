@@ -31,6 +31,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   11 constats corrigés (`corrections-relecture-16-novembre`), hébergement et règles du stockage déployés (version
   `index-BB_FScPX.js`) ; règles Firestore déployées ensuite sur « Oui, déploie les règles ». Questions ouvertes : 23,
   25, 29, 30.
+- 2026-11-16, après-midi : « Oui, 0,52 € » (question 30) : extraction des 341 textes nouveaux de la veille lancée en tâche
+  de fond (`extraction_locale.py --extraire --moteur api --plafond 3.982`, journal
+  `scraping/logs/extraction_veille_2026-11-16.log`). Ensuite : devis du contrôle et de la qualification (hors budget de
+  la semaine, accord à demander), puis import en « à valider ».
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
