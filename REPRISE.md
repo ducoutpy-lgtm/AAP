@@ -38,6 +38,9 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   Fait : extraction 189 fiches nouvelles pour 0,427 euro (cumul 3,889) ; contrôle de 76 fiches dans la délégation pour
   0,054 euro (cumul 3,943), après le correctif d'encodage de `veille_payante.lancer` ; qualification (devis 0,054) et
   import attendent son accord (question 32). Semaine du 16 novembre : 0,481 euro dépensé sur 0,50.
+- 2026-11-17 : « Oui, 0,054 € » : 74 fiches qualifiées pour 0,028 euro (cumul Haiku 3,971), import en « à valider » (159
+  créées, 435 mises à jour) ; base 1 080 fiches, 363 visibles (inchangé), file « Proposée » 171. Semaine du 16 novembre :
+  0,509 euro. Questions ouvertes : 3 (file à relire), 23, 25, 29.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

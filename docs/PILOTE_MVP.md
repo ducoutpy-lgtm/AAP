@@ -44,6 +44,7 @@ La session chiffre le passage à l'échelle à partir des coûts mesurés : tout
 | 2026-11-13 | Extraction des 211 textes des conférences des financeurs (202 PDF), sur son « Oui pour les deux » : 65 fiches nouvelles, 42 échecs | 0,59 | 0,589 | 3,462 |
 | 2026-11-16 | Extraction des 341 textes nouveaux de la veille du 16 novembre, sur son « Oui, 0,52 € » (question 30), `--plafond 3.982` : 189 fiches nouvelles, 50 échecs | 0,52 | 0,427 | 3,889 |
 | 2026-11-16 | Contrôle de 76 fiches, dans la délégation (devis de l'outil 0,031 doublé), `--plafond 3.951` | 0,062 | 0,054 | 3,943 |
+| 2026-11-17 | Qualification de 74 fiches, sur son « Oui, 0,054 € » (question 32), `--plafond 3.997` ; import : 159 créées, 435 mises à jour, aucune publiée | 0,054 | 0,028 | 3,971 |
 
 Semaine du 2026-10-26 (pilote) : 0,165 euro sur 0,50. Semaine du 2026-11-09 : 0,051 euro sur 0,50 (délégation permanente
 collée par Monsieur DUCOUT dans la conversation du 2026-11-13).
