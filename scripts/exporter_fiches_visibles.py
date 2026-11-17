@@ -13,13 +13,11 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 ICI = Path(__file__).resolve().parent
+sys.path.insert(0, str(ICI.parent / "scraping"))
+from alertes import visible  # noqa: E402  (règle « visible du public », la même que le courriel du lundi)
+
 SORTIE = ICI / "sauvegardes" / "fiches_visibles.json"
 CHAMPS = ("title", "financeurName", "territoriesEligible", "qualification", "structureTypeEligible", "externalUrl")
-
-
-def visible(f: dict) -> bool:
-    v = f.get("validation")
-    return f.get("status") == "published" and (not v or v.get("statut") == "validee")
 
 
 def main() -> int:

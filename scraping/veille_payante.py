@@ -84,7 +84,7 @@ def decision(devis: float | None, depense: float, cumul: float) -> tuple[bool, f
 def lancer(arguments: list[str]) -> tuple[int, str]:
     # Sortie des scripts enfants imposée en UTF-8 (2026-11-16) : sous Windows, elle arrivait en encodage local
     # (« estim�s »), le devis du contrôle devenait illisible et la veille s'arrêtait à cette étape
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    env = {**os.environ, "PYTHONUTF8": "1"}
     r = subprocess.run([PYTHON, *arguments], cwd=ICI, capture_output=True, text=True, encoding="utf-8", errors="replace",
                        env=env)
     sortie = (r.stdout or "") + (r.stderr or "")

@@ -10,6 +10,8 @@ rem Lancement planifie (tache Windows « AAP Sante - veille hebdomadaire », lun
 rem   -> pas de pause finale, sortie ajoutee au journal logs\veille.log. Une page deja relue le jour meme est sautee.
 rem Sans boite d'envoi dans .env (SMTP_UTILISATEUR, SMTP_MOT_DE_PASSE), les courriels sont ecrits dans logs\courriels\.
 chcp 65001 >nul
+rem Sortie de Python en UTF-8 pour toute la chaîne (journal homogène, devis lisibles ; 2026-11-16)
+set PYTHONUTF8=1
 cd /d "%~dp0"
 if "%~1"=="auto" (
   echo ==== Veille automatique du %date% %time% ====>> "logs\veille.log"

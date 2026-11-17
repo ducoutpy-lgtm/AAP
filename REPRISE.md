@@ -41,6 +41,15 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
 - 2026-11-17 : « Oui, 0,054 € » : 74 fiches qualifiées pour 0,028 euro (cumul Haiku 3,971), import en « à valider » (159
   créées, 435 mises à jour) ; base 1 080 fiches, 363 visibles (inchangé), file « Proposée » 171. Semaine du 16 novembre :
   0,509 euro. Questions ouvertes : 3 (file à relire), 23, 25, 29.
+- 2026-11-17 : /simplify appliqué au code de la séance (sans changement de comportement, rien de mis en ligne).
+  Constats écartés, à reprendre dans des changements dédiés : réglage `ignoreUndefinedProperties` de Firestore à la place
+  de `sansIndefinis` (à rejouer sur les émulateurs) ; profil tenu par un écouteur `onSnapshot` au lieu de
+  `fusionnerProfil` (cause de la relecture partielle non prouvée) ; règle Firestore générale « champs propriétaires
+  figés » pour `aap`, `applications`, `messages` (déploiement sur accord) ; migration unique des recherches d'avril
+  (écriture en base sur accord) ; liste filtrée de `/aap/search` calculée au lieu d'être un état ; texte de la FAQ qui
+  promet encore des alertes dans l'application ; textes écrits à la main dans `scraping/EXACTITUDE.md`, effacés si le
+  rapport est régénéré ; montant illisible normalisé à l'entrée au lieu d'imiter `parseFloat` (changement de
+  comportement, à valider).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

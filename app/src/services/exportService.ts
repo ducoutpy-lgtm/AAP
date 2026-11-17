@@ -27,6 +27,20 @@ const listeDe = (chemin: string, champ: string, uid: string) =>
 
 export async function exporterMesDonnees(utilisateur: User, role: UserType) {
   const uid = utilisateur.uid;
+  // Lectures indépendantes lancées ensemble ; chacune note son échec sans arrêter les autres (lire)
+  const [utilisateurDoc, profilDeStructure, candidatures, recherchesSauvegardees, favoris, notifications, messagesEnvoyes,
+    messagesRecus, paiements, appelsPublies] = await Promise.all([
+    documentDe('users', uid),
+    role === 'admin' ? null : documentDe(role === 'porteur' ? 'porteurProfiles' : 'financeurProfiles', uid),
+    listeDe('applications', 'porteurId', uid),
+    listeDe('savedSearches', 'userId', uid),
+    listeDe('favoriteAap', 'userId', uid),
+    listeDe('notifications', 'userId', uid),
+    listeDe('messages', 'senderId', uid),
+    listeDe('messages', 'receiverId', uid),
+    listeDe('payments', 'userId', uid),
+    role === 'financeur' ? listeDe('aap', 'financeurId', uid) : [],
+  ]);
   const donnees = {
     exporteLe: new Date(),
     responsableDuTraitement: `${EDITEUR.raisonSociale}, contact du délégué à la protection des données : ${EDITEUR.contact}`,
@@ -35,16 +49,16 @@ export async function exporterMesDonnees(utilisateur: User, role: UserType) {
       creeLe: utilisateur.metadata.creationTime ?? null, derniereConnexion: utilisateur.metadata.lastSignInTime ?? null,
       fournisseurs: utilisateur.providerData.map(p => p.providerId),
     },
-    utilisateur: await documentDe('users', uid),
-    profilDeStructure: role === 'admin' ? null : await documentDe(role === 'porteur' ? 'porteurProfiles' : 'financeurProfiles', uid),
-    candidatures: await listeDe('applications', 'porteurId', uid),
-    recherchesSauvegardees: await listeDe('savedSearches', 'userId', uid),
-    favoris: await listeDe('favoriteAap', 'userId', uid),
-    notifications: await listeDe('notifications', 'userId', uid),
-    messagesEnvoyes: await listeDe('messages', 'senderId', uid),
-    messagesRecus: await listeDe('messages', 'receiverId', uid),
-    paiements: await listeDe('payments', 'userId', uid),
-    appelsPublies: role === 'financeur' ? await listeDe('aap', 'financeurId', uid) : [],
+    utilisateur: utilisateurDoc,
+    profilDeStructure,
+    candidatures,
+    recherchesSauvegardees,
+    favoris,
+    notifications,
+    messagesEnvoyes,
+    messagesRecus,
+    paiements,
+    appelsPublies,
     surDemandeAuDpo: SUR_DEMANDE_AU_DPO,
   };
   return pourExport(donnees);

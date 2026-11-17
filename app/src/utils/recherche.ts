@@ -176,7 +176,7 @@ export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRec
     (!terme || aap.title.toLowerCase().includes(terme) || aap.description.toLowerCase().includes(terme) ||
       (aap.financeurName || 'Non spécifié').toLowerCase().includes(terme)) &&
     (!f.thematique || thematique(aap) === f.thematique) &&
-    (!f.territory || correspondTerritoire(aap, f.territory)) &&
+    correspondTerritoire(aap, f.territory) &&
     garderSelonStatut(aap, f.statut) &&
     correspondDestinataire(aap, f.destinataire) &&
     correspondTypeAppel(aap, f.typeAppel) &&
@@ -187,10 +187,10 @@ export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRec
 
 // Recherche sauvegardée (alertes-recherches-sauvegardees) : l'adresse de /aap/search, pour que « Lancer » rouvre les
 // mêmes résultats et que le courriel du lundi applique les mêmes filtres. Seule fréquence tenue : chaque lundi.
-export function rechercheAEnregistrer(f: FiltresRecherche, userId: string, nom: string) {
+export function rechercheAEnregistrer(f: FiltresRecherche, userId: string) {
   const params = paramsDepuisFiltres(f).toString();
   if (!params) return null;
-  const name = nom.trim() || etiquettesActives(f).map(e => e.libelle).join(' · ');
+  const name = etiquettesActives(f).map(e => e.libelle).join(' · ');
   return { userId, name, params, alertEnabled: true, frequency: 'weekly' as const };
 }
 

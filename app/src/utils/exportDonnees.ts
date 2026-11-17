@@ -1,6 +1,7 @@
 // Export des données personnelles d'un compte (changement export-donnees-personnelles, 2026-11-16 ; RGPD, droits
 // d'accès et de portabilité, articles 15 et 20). Fonctions pures, testables sans Firebase.
 import { Timestamp } from 'firebase/firestore';
+import { format } from 'date-fns';
 
 // Collections que le compte ne lit pas lui-même (règles du chantier suivi-testeurs) : communiquées sur demande au DPO
 export const SUR_DEMANDE_AU_DPO = ['journal des actions', 'retours de test', 'messages du formulaire de contact'];
@@ -18,6 +19,5 @@ export function pourExport(valeur: unknown): unknown {
 
 // Nom du fichier : date locale du jour
 export function nomFichierExport(maintenant: Date): string {
-  const deux = (n: number) => String(n).padStart(2, '0');
-  return `mes-donnees-aap-sante-${maintenant.getFullYear()}-${deux(maintenant.getMonth() + 1)}-${deux(maintenant.getDate())}.json`;
+  return `mes-donnees-aap-sante-${format(maintenant, 'yyyy-MM-dd')}.json`;
 }

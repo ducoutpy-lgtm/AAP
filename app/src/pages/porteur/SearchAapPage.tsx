@@ -56,7 +56,7 @@ export default function SearchAapPage() {
   const [enregistrement, setEnregistrement] = useState<{ ok: boolean; texte: string } | null>(null);
   const [enregistrementEnCours, setEnregistrementEnCours] = useState(false);
   const enregistrerRecherche = async () => {
-    const recherche = currentUser ? rechercheAEnregistrer(filters, currentUser.uid, '') : null;
+    const recherche = currentUser ? rechercheAEnregistrer(filters, currentUser.uid) : null;
     if (!recherche || enregistrementEnCours) return;
     setEnregistrementEnCours(true);
     // L'alerte ne part qu'aux candidats au profil complété qui acceptent les courriels (scraping/alertes.py)

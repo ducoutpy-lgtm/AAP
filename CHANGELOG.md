@@ -5,6 +5,17 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Nettoyé (2026-11-17, /simplify sur le code de la séance, quatre relectures : réutilisation, simplification, efficacité, niveau)
+- `scraping/alertes.py` : règle « fiches nouvelles et visibles » et tri par clôture écrits une fois (`_nouvelles_visibles`,
+  `_par_cloture`), lecture des recherches d'avril réunie (`depuis_ancienne_recherche`), branche morte et paramètre
+  inutilisé retirés ; `scripts/exporter_fiches_visibles.py` réutilise `alertes.visible` ; `scraping/exactitude.py`
+  réutilise `champ.DANS_LE_CHAMP` et compte plus simplement ; `veille.cmd` et `veille_payante.lancer` : `PYTHONUTF8=1`
+  pour toute la chaîne.
+- Application : lectures de l'export lancées ensemble, date du fichier par `date-fns`, paramètre `nom` inutile retiré de
+  `rechercheAEnregistrer`, vérification redondante retirée de `filtrerAppels`, état de l'export de Mon profil réduit.
+  Comportement inchangé : 117 tests, pytest 173, rapport d'exactitude et export identiques avant et après. Rien de mis
+  en ligne.
+
 ### Mis en ligne (2026-11-16, après accord « Oui, mets en ligne »)
 - Hébergement et règles du stockage (`firebase deploy --only hosting,storage --project aapi-11bc3`, version
   `index-BB_FScPX.js`) : alertes des recherches sauvegardées, téléchargement des données, publication d'un appel par un

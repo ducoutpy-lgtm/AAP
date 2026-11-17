@@ -111,14 +111,14 @@ describe('filtrerAppels (cas communs)', () => {
 
 describe('rechercheAEnregistrer (alertes-recherches-sauvegardees, 2.1)', () => {
   it('aucun filtre : rien à enregistrer', () => {
-    expect(rechercheAEnregistrer(FILTRES_VIDES, 'u1', 'Ma recherche')).toBeNull();
+    expect(rechercheAEnregistrer(FILTRES_VIDES, 'u1')).toBeNull();
   });
   it('garde l adresse de la recherche, alerte du lundi active', () => {
-    const r = rechercheAEnregistrer({ ...FILTRES_VIDES, territory: 'ile-de-france', thematique: 'medico-social' }, 'u1', '  IDF médico-social ');
-    expect(r).toEqual({ userId: 'u1', name: 'IDF médico-social', params: 'thematique=medico-social&territory=ile-de-france', alertEnabled: true, frequency: 'weekly' });
+    const r = rechercheAEnregistrer({ ...FILTRES_VIDES, territory: 'ile-de-france', thematique: 'medico-social' }, 'u1');
+    expect(r).toEqual({ userId: 'u1', name: 'Médico-social · Île-de-France', params: 'thematique=medico-social&territory=ile-de-france', alertEnabled: true, frequency: 'weekly' });
   });
   it('sans nom : nom tiré des étiquettes', () => {
-    expect(rechercheAEnregistrer({ ...FILTRES_VIDES, q: 'chutes', territory: 'france' }, 'u1', '')?.name).toBe('« chutes » · National, toute la France');
+    expect(rechercheAEnregistrer({ ...FILTRES_VIDES, q: 'chutes', territory: 'france' }, 'u1')?.name).toBe('« chutes » · National, toute la France');
   });
 });
 

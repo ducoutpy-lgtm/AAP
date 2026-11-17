@@ -90,18 +90,27 @@ def visible(fiche: dict) -> bool:
     return fiche.get("status") == "published" and (not v or v.get("statut") == "validee")
 
 
+LOIN = datetime.max.replace(tzinfo=timezone.utc)
+
+
+def _nouvelles_visibles(fiches: list[dict], depuis: datetime) -> list[dict]:
+    """Fiches visibles du public publiées (ou créées) depuis `depuis` : règle commune au profil et aux recherches."""
+    return [f for f in fiches if visible(f)
+            and (quand := _date(f.get("publishedAt")) or _date(f.get("createdAt"))) and quand >= depuis]
+
+
+def _par_cloture(fiches: list[dict]) -> list[dict]:
+    """Clôture la plus proche d'abord, appels sans date en dernier (tri stable)."""
+    return sorted(fiches, key=lambda f: _date(f.get("deadline")) or LOIN)
+
+
 def fiches_nouvelles_pour(profil: dict, fiches: list[dict], depuis: datetime) -> list[dict]:
     """Fiches visibles publiées depuis `depuis`, de la région du candidat ou nationales, ouvertes à sa famille de
     structure (ou à toutes), clôture la plus proche d'abord (fonction pure)."""
     region = ((profil.get("address") or {}).get("region") or "").strip()
     famille = FAMILLE_PAR_FORME.get(profil.get("structureType") or "")
     retenues = []
-    for f in fiches:
-        if not visible(f):
-            continue
-        quand = _date(f.get("publishedAt")) or _date(f.get("createdAt"))
-        if not quand or quand < depuis:
-            continue
+    for f in _nouvelles_visibles(fiches, depuis):
         territoires = f.get("territoriesEligible") or []
         if region and territoires and region not in territoires and "france" not in territoires:
             continue
@@ -112,8 +121,7 @@ def fiches_nouvelles_pour(profil: dict, fiches: list[dict], depuis: datetime) ->
         if cloture and cloture < datetime.now(timezone.utc):
             continue
         retenues.append(f)
-    loin = datetime.max.replace(tzinfo=timezone.utc)
-    return sorted(retenues, key=lambda f: _date(f.get("deadline")) or loin)
+    return _par_cloture(retenues)
 
 
 # ---------------------------------------------------------------- filtres d'une recherche sauvegardée
@@ -132,11 +140,11 @@ def filtres_depuis_params(params: str) -> dict:
     return {cle: (lus.get(cle) or [""])[0] for cle in CLES_FILTRES}
 
 
-def statut_appel(fiche: dict, maintenant: datetime | None = None) -> str:
+def statut_appel(fiche: dict) -> str:
     cloture = _date(fiche.get("deadline"))
     if not cloture:
         return "sans-date"
-    jours = math.ceil((cloture - (maintenant or datetime.now(timezone.utc))).total_seconds() / 86400)
+    jours = math.ceil((cloture - datetime.now(timezone.utc)).total_seconds() / 86400)
     if jours < 0:
         return "clos"
     return "bientot-clos" if jours <= SEUIL_BIENTOT_CLOS_JOURS else "ouvert"
@@ -204,15 +212,16 @@ def _nombre(x) -> str:
     return str(int(x)) if float(x).is_integer() else str(x)
 
 
-def params_de_recherche(r: dict) -> str:
-    """Adresse d'une recherche sauvegardée ; une recherche d'avril (champ « filters ») garde ses mots-clés et ses montants,
-    comme depuisAncienneRecherche dans l'application (secteurs et régions d'avril sans équivalent)."""
+def depuis_ancienne_recherche(r: dict) -> tuple[str, list[str]]:
+    """(adresse, critères non repris) d'une recherche sauvegardée, comme depuisAncienneRecherche dans l'application :
+    une recherche d'avril (champ « filters ») garde ses mots-clés et ses montants ; ses secteurs et régions, sans
+    équivalent, sont rendus pour être signalés."""
     if r.get("params") is not None:
-        return r["params"]
+        return r["params"], []
     ancien = r.get("filters") or {}
     morceaux = [("q", ancien["keywords"])] if ancien.get("keywords") else []
     morceaux += [(cle, _nombre(ancien[cle])) for cle in ("budgetMin", "budgetMax") if ancien.get(cle)]
-    return urlencode(morceaux)
+    return urlencode(morceaux), [*(ancien.get("sectors") or []), *(ancien.get("territories") or [])]
 
 
 def _nom_sur(nom) -> str:
@@ -225,24 +234,17 @@ def _nom_sur(nom) -> str:
 def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: datetime) -> list[dict]:
     """Une section par recherche dont l'alerte est active : fiches visibles publiées depuis `depuis` qui passent ses
     filtres, clôture la plus proche d'abord (fonction pure, alertes-recherches-sauvegardees)."""
-    loin = datetime.max.replace(tzinfo=timezone.utc)
+    nouvelles = _nouvelles_visibles(fiches, depuis)
     sections = []
     for r in recherches:
         if not r.get("alertEnabled"):
             continue
-        params = params_de_recherche(r)
+        params, non_repris = depuis_ancienne_recherche(r)
         # Recherche d'avril sans critère repris : aucune section « toute la France » sous son nom
         if not params:
             continue
-        ancien = r.get("filters") or {}
-        non_repris = [] if r.get("params") is not None else [*(ancien.get("sectors") or []), *(ancien.get("territories") or [])]
         filtres = filtres_depuis_params(params)
-        retenues = []
-        for f in fiches:
-            quand = _date(f.get("publishedAt")) or _date(f.get("createdAt"))
-            if visible(f) and quand and quand >= depuis and correspond(f, filtres):
-                retenues.append(f)
-        retenues.sort(key=lambda f: _date(f.get("deadline")) or loin)
+        retenues = _par_cloture([f for f in nouvelles if correspond(f, filtres)])
         sections.append({"nom": _nom_sur(r.get("name")), "params": params, "fiches": retenues, "non_repris": non_repris})
     return sections
 
@@ -274,7 +276,7 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
                        "nouveau cette recherche depuis la page de recherche)", ""]
         for f in s["fiches"][:5]:
             lignes += _lignes_fiche(f, url)
-        lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}" if s["params"] else f"  Voir la recherche : {url}/aap/search", ""]
+        lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}", ""]
     if sections:
         lignes += [f"Pour arrêter l'alerte d'une recherche : Recherches sauvegardées, {url}/recherches-sauvegardees.", ""]
     lignes += ["Pour ne plus recevoir ces courriels : Mon profil, préférences des alertes.", "", "AAP Santé."]
@@ -303,7 +305,7 @@ def etat_base(fiches: list[dict], depuis: datetime) -> dict:
             "publiees": sum(1 for f in fiches if visible(f))}
 
 
-def lire_candidats(db) -> list[tuple[dict, dict]]:
+def lire_candidats(db) -> list[tuple[dict, dict, list[dict]]]:
     """(compte, profil, recherches sauvegardées) des candidats au profil complet qui acceptent les courriels."""
     resultat = []
     for u in db.collection("users").where("userType", "==", "porteur").stream():

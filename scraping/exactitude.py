@@ -18,6 +18,8 @@ import random
 import sys
 from pathlib import Path
 
+from champ import DANS_LE_CHAMP
+
 ICI = Path(__file__).resolve().parent
 EXTRACTION = ICI / "results" / "extraction_api.json"
 TIRAGE = ICI / "results" / "exactitude_tirage.json"
@@ -33,30 +35,26 @@ SEUIL = 0.90
 def tirer(fiches: list[dict], n: int = 30, graine: int = GRAINE, debut: str = "2026-10-28", fin: str = "2026-11-11") -> list[dict]:
     """n fiches produites entre `debut` et `fin` (inclus) et classées santé ou médico-social ; l'ordre d'entrée ne compte
     pas (tri par adresse avant le tirage), la graine fixe rend le tirage rejouable (fonction pure)."""
-    candidates = sorted(
-        (f for f in fiches
-         if debut <= (f.get("scrape_metadata") or {}).get("produite_le", "")[:10] <= fin
-         and (f.get("scrape_metadata") or {}).get("champ") in ("sante", "medico-social")),
-        key=lambda f: f.get("url_source") or "")
+    meta = lambda f: f.get("scrape_metadata") or {}  # noqa: E731
+    candidates = sorted((f for f in fiches if debut <= meta(f).get("produite_le", "")[:10] <= fin
+                         and meta(f).get("champ") in DANS_LE_CHAMP), key=lambda f: f.get("url_source") or "")
     choix = random.Random(graine).sample(candidates, min(n, len(candidates)))
     return [{"url": f.get("url_source"), "titre": f.get("titre"), "financeur": f.get("financeur"),
              "date_cloture": f.get("date_cloture"),
              "montant": {"min": f.get("montant_min"), "max": f.get("montant_max"), "enveloppe": f.get("enveloppe_globale")},
-             "fichier": (f.get("scrape_metadata") or {}).get("fichier")} for f in choix]
+             "fichier": meta(f).get("fichier")} for f in choix]
+
+
+def _verdict(v: dict, champ: str) -> str | None:
+    return (v["champs"].get(champ) or {}).get("verdict")
 
 
 def resume(verdicts: list[dict]) -> dict:
     """Champs justes au total et par champ, dates inventées, seuil (fonction pure)."""
-    par_champ = {c: {"justes": 0, "total": 0} for c in CHAMPS}
-    dates_inventees = 0
-    for v in verdicts:
-        for c in CHAMPS:
-            verdict = (v["champs"].get(c) or {}).get("verdict")
-            par_champ[c]["total"] += 1
-            par_champ[c]["justes"] += verdict in JUSTES
-            dates_inventees += c == "date_cloture" and verdict == "invente"
+    par_champ = {c: {"justes": sum(_verdict(v, c) in JUSTES for v in verdicts), "total": len(verdicts)} for c in CHAMPS}
+    dates_inventees = sum(_verdict(v, "date_cloture") == "invente" for v in verdicts)
     justes = sum(x["justes"] for x in par_champ.values())
-    total = sum(x["total"] for x in par_champ.values())
+    total = len(verdicts) * len(CHAMPS)
     part = justes / total if total else 0.0
     return {"justes": justes, "total": total, "part": part, "par_champ": par_champ, "dates_inventees": dates_inventees,
             "seuil_atteint": total > 0 and part >= SEUIL and dates_inventees == 0}
@@ -77,7 +75,7 @@ def texte_rapport(r: dict, verdicts: list[dict]) -> str:
     for c, x in r["par_champ"].items():
         lignes.append(f"| {c} | {x['justes']} | {x['total']} | {_pourcent(x['justes'] / x['total']) if x['total'] else '-'} |")
     ecarts = [(v["url"], c, v["champs"][c]) for v in verdicts for c in CHAMPS
-              if (v["champs"].get(c) or {}).get("verdict") not in JUSTES]
+              if _verdict(v, c) not in JUSTES]
     lignes += ["", "## Écarts", ""]
     lignes += [f"- {c} ({x['verdict']}) : {url} ; {x.get('preuve', '')}" for url, c, x in ecarts] or ["Aucun."]
     lignes += ["", "## Dix fiches à relire par Monsieur DUCOUT (les dix premières du tirage)", ""]
