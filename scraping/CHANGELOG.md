@@ -4,6 +4,10 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-11-18)
+- `alertes.py` : les liens des courriels du lundi pointent vers le site en ligne (https://aapi-11bc3.web.app) ; ils
+  pointaient vers http://localhost:3000, adresse qui ne marche que sur le PC de Monsieur DUCOUT.
+
 ### Corrigé (2026-11-16)
 - `veille_payante.py` : la sortie des scripts enfants est imposée en UTF-8. Sous Windows, la sortie à blanc du contrôle
   arrivait en encodage local (« estim�s »), le devis était illisible et la veille s'arrêtait au contrôle chaque lundi.

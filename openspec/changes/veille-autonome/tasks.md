@@ -29,6 +29,9 @@ Monsieur DUCOUT le 2026-11-13. Coût : au plus 0,50 euro par semaine.
 - [x] 3.4 (2026-11-16) Correctif : `veille_payante.lancer` impose l'UTF-8 aux scripts enfants. Constat : la sortie à blanc
   du contrôle arrivait en encodage Windows (« estim�s »), « devis illisible », arrêt au contrôle. Test
   `test_devis_lu_dans_la_sortie_d_un_script_enfant_avec_accents` en échec puis vert, pytest 173 verts.
+- [x] 3.5 (2026-11-18) Correctif : liens des courriels du lundi vers le site en ligne (`alertes.py`, adresse par défaut
+  `https://aapi-11bc3.web.app` au lieu de `http://localhost:3000`, que `veille.cmd` utilisait faute de `--url`). Essai à
+  blanc : « https://aapi-11bc3.web.app/admin/aaps?validation=proposee » ; `test_alertes` 14 verts.
 - [ ] 4.1 Vérification : le lundi 16 novembre, `scraping/logs/veille.log` va jusqu'à « Veille terminee » et Monsieur DUCOUT
   reçoit le bilan par courriel.
   (2026-11-16 : « Veille terminee le 16/11/2026 11:33:24 », « admin : envoyé à ducout@hotmail.fr » ; étape payante

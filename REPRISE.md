@@ -55,6 +55,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   y a un doute », « oui ok change la phrase de délégation ») : tri automatique (`tri-automatique-file`), 23 doublons
   rejetés, 83 publiées, 61 restent avec leur motif, 450 visibles ; la veille du lundi trie désormais après l'import.
   Hébergement mis en ligne ensuite (version `index-DhLlUBUZ.js`). Questions ouvertes : 23, 25, 29, 33.
+- 2026-11-18, 16 h 50 (relance de la séance de pilotage, quota 41 % pour 52 %) : liens du courriel du lundi corrigés
+  (site en ligne au lieu de localhost). Plus aucune étape du plan sans dépense, mise en ligne ni décision : le reste
+  attend ses réponses (23 documents réutilisables, 25 suppression du compte, 29 recommandations, 33 lecture des PDF) ou
+  le budget de la semaine prochaine (contrôle des 27 fiches jamais contrôlées, environ 0,02 euro). Prochaine preuve : la
+  veille du lundi 23 novembre (tri automatique après l'import, liens du courriel).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

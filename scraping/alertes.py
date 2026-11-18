@@ -322,7 +322,9 @@ def main() -> int:
     parser.add_argument("--candidats", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--jours", type=int, default=7)
-    parser.add_argument("--url", default="http://localhost:3000", help="adresse de l'application dans les liens")
+    # Adresse du site en ligne par défaut (2026-11-18) : les courriels partent à de vraies personnes, et l'ancienne valeur
+    # http://localhost:3000 donnait des liens qui ne marchent que sur le PC de Monsieur DUCOUT
+    parser.add_argument("--url", default="https://aapi-11bc3.web.app", help="adresse de l'application dans les liens")
     args = parser.parse_args()
     if not (args.admin or args.candidats):
         parser.print_help()
