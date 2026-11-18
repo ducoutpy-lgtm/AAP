@@ -1,4 +1,4 @@
-import { pourMiseAJour, sansIndefinis } from '../utils/firestore';
+import { pourMiseAJour } from '../utils/firestore';
 import {
   collection,
   doc,
@@ -59,8 +59,8 @@ export const aapService = {
       source: 'manual',
     };
 
-    // Champs facultatifs vides omis : Firestore refuse undefined (publication-appel-financeur, 2026-11-16)
-    const docRef = await addDoc(collection(db, 'aap'), sansIndefinis(aapData));
+    // Champs facultatifs vides omis par le réglage ignoreUndefinedProperties (config/firebase.ts)
+    const docRef = await addDoc(collection(db, 'aap'), aapData);
     return docRef.id;
   },
 

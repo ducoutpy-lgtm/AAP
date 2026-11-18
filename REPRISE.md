@@ -42,14 +42,15 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   créées, 435 mises à jour) ; base 1 080 fiches, 363 visibles (inchangé), file « Proposée » 171. Semaine du 16 novembre :
   0,509 euro. Questions ouvertes : 3 (file à relire), 23, 25, 29.
 - 2026-11-17 : /simplify appliqué au code de la séance (sans changement de comportement, rien de mis en ligne).
-  Constats écartés, à reprendre dans des changements dédiés : réglage `ignoreUndefinedProperties` de Firestore à la place
-  de `sansIndefinis` (à rejouer sur les émulateurs) ; profil tenu par un écouteur `onSnapshot` au lieu de
+  Constats écartés, à reprendre dans des changements dédiés (le réglage `ignoreUndefinedProperties` est fait le 2026-11-18) : profil tenu par un écouteur `onSnapshot` au lieu de
   `fusionnerProfil` (cause de la relecture partielle non prouvée) ; règle Firestore générale « champs propriétaires
   figés » pour `aap`, `applications`, `messages` (déploiement sur accord) ; liste filtrée de `/aap/search` calculée au lieu d'être un état ; montant illisible normalisé à l'entrée au lieu d'imiter `parseFloat` (changement de
   comportement, à valider).
 - 2026-11-18 : « reprends ». Lecture des PDF par la veille chiffrée (400 PDF jamais lus, environ 1 euro) : question 33.
   Aucune recherche sauvegardée en base : conversion des recherches d'avril retirée ; FAQ corrigée (alertes, messagerie) ;
   `EXACTITUDE.md` régénérable sans perte. Questions ouvertes : 3, 23, 25, 29, 33. Rien de mis en ligne depuis le 16.
+  Puis réglage `ignoreUndefinedProperties` de Firestore (rejoué sur les émulateurs). À mettre en ligne sur accord : FAQ,
+  retrait de la conversion d'avril, réglage Firestore (hébergement seulement).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

@@ -12,6 +12,9 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   l'application) ; plus de promesse d'échange avec un financeur (messagerie retirée). Vérifié à l'écran, pas en ligne.
 - `scraping/exactitude.py --rapport` garde le texte écrit à la main après un repère (il l'effaçait).
 - Question 33 : lecture des PDF par la veille du lundi, environ 1 euro la première fois, au-delà du seuil de 4,50 euros.
+- Firestore initialisé avec `ignoreUndefinedProperties` : un champ vide est omis au lieu de faire échouer l'écriture
+  (cause des pannes du 13 et du 16 novembre) ; l'aide `sansIndefinis` est retirée. Rejoué sur les émulateurs (publication
+  d'un appel avec des champs vides). Pas en ligne.
 
 ### Nettoyé (2026-11-17, /simplify sur le code de la séance, quatre relectures : réutilisation, simplification, efficacité, niveau)
 - `scraping/alertes.py` : règle « fiches nouvelles et visibles » et tri par clôture écrits une fois (`_nouvelles_visibles`,
