@@ -133,12 +133,6 @@ def test_section_par_recherche_active_avec_les_appels_nouveaux_qui_passent_ses_f
         [("IDF médico-social", "thematique=medico-social&territory=ile-de-france", ["ms2", "ms1"])]
 
 
-def test_recherche_d_avril_convertie_comme_dans_l_application():
-    ancienne = {"name": "Avril", "alertEnabled": True, "filters": {"keywords": "habitat", "sectors": ["energie"], "budgetMin": 1000}}
-    sections = a.sections_recherches([ancienne], _fiches_idf(), DEPUIS)
-    assert sections[0]["params"] == "q=habitat&budgetMin=1000" and [f["id"] for f in sections[0]["fiches"]] == ["ms2"]
-
-
 def test_courriel_candidat_avec_sections_de_recherche():
     sections = a.sections_recherches([RECHERCHE_IDF, {"name": "Rien", "params": "q=introuvable", "alertEnabled": True}], _fiches_idf(), DEPUIS)
     sujet, texte = a.courriel_candidat({"structureName": "EHPAD Test"}, [], "https://aap.exemple.fr", sections=sections)
@@ -159,17 +153,9 @@ def test_montants_lus_comme_parsefloat():
     assert math.isnan(a._parse_float("abc")) and math.isnan(a._parse_float(""))
 
 
-def test_recherche_d_avril_sans_critere_repris_n_envoie_rien():
-    vide = {"name": "Corse", "alertEnabled": True, "filters": {"sectors": ["sante"], "territories": ["Corse"]}}
+def test_recherche_sans_adresse_n_envoie_rien():
+    vide = {"name": "Sans filtre", "alertEnabled": True}
     assert a.sections_recherches([vide], _fiches_idf(), DEPUIS) == []
-
-
-def test_criteres_non_repris_annonces_dans_le_courriel():
-    partielle = {"name": "Habitat", "alertEnabled": True, "filters": {"keywords": "habitat", "territories": ["Corse"]}}
-    sections = a.sections_recherches([partielle], _fiches_idf(), DEPUIS)
-    assert sections[0]["non_repris"] == ["Corse"]
-    texte = a.courriel_candidat({"structureName": "X"}, [], "u", sections=sections)[1]
-    assert "Critères non repris : Corse" in texte
 
 
 def test_nom_de_recherche_sans_lien_et_raccourci():

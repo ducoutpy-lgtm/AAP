@@ -6,20 +6,6 @@ Changement `mesure-exactitude-30-fiches`. Fiches tirées par `exactitude.py --ti
 - Dates inventées : 0
 - Conclusion : seuil atteint (90 % au moins et aucune date inventée)
 
-Méthode et limites (2026-11-16) : verdicts écrits par un sous-agent de la session (modèle Sonnet) contre le texte source ;
-la session en a contrôlé six dans les textes (dates de la Guyane, du Cher et de la Loire, montant du Cher, financeur et
-montant de Silver Geek), tous concordants. La date du Cher (31/12/2026, fin de mobilisation des crédits) est comptée
-« faux » et non « inventée » : la date figure dans le texte. Texte de la Guyane contradictoire (30 mai dans les
-modalités, 15 juin dans le calendrier) : 30 mai jugé juste. Les six financeurs faux sont tous des relais (Lyonbiopôle
-pour la Commission européenne, Gérontopôle Sud pour Silver Geek et France Active) : 20 % des fiches, au-dessus du seuil
-de 10 % du critère « Effort de relecture » du pilote.
-
-Après l'import (vérifié le 2026-11-16 en appliquant `financeurs.financeur_reel_du_relais` aux six noms, comme le fait
-`scripts/import_to_firestore.py` pour une source relais) : les quatre appels Horizon Europe de Lyonbiopôle affichent
-« Commission européenne » (trois) ou « Horizon Europe – Cluster Santé (PCN France) » (un) ; les deux du Gérontopôle Sud
-restent au nom du relais (Silver Geek et France Active absents du référentiel). Financeur affiché juste : 28 / 30 ;
-champs justes tels qu'affichés : 114 / 120 (95,0 %). Non relu dans la base elle-même.
-
 | Champ | Justes | Total | Part |
 |---|---|---|---|
 | titre | 30 | 30 | 100,0 % |
@@ -52,3 +38,21 @@ champs justes tels qu'affichés : 114 / 120 (95,0 %). Non relu dans la base elle
 8. https://lyonbiopole.com/appel-a-projet/horizon-hlth-2027-01-disease-05
 9. https://www.ctguyane.fr/appel-a-projet-annuel-de-la-commission-des-financeurs-de-la-prevention-de-la-perte-dautonomie-pour-lannee-2026-2/
 10. https://artsconvergences.com/prix-video/
+
+<!-- Fin du calcul. La suite est écrite à la main ; exactitude.py --rapport la garde. -->
+
+## Analyse (écrite à la main)
+
+Méthode et limites (2026-11-16) : verdicts écrits par un sous-agent de la session (modèle Sonnet) contre le texte source ;
+la session en a contrôlé six dans les textes (dates de la Guyane, du Cher et de la Loire, montant du Cher, financeur et
+montant de Silver Geek), tous concordants. La date du Cher (31/12/2026, fin de mobilisation des crédits) est comptée
+« faux » et non « inventée » : la date figure dans le texte. Texte de la Guyane contradictoire (30 mai dans les
+modalités, 15 juin dans le calendrier) : 30 mai jugé juste. Les six financeurs faux sont tous des relais (Lyonbiopôle
+pour la Commission européenne, Gérontopôle Sud pour Silver Geek et France Active) : 20 % des fiches, au-dessus du seuil
+de 10 % du critère « Effort de relecture » du pilote.
+
+Après l'import (vérifié le 2026-11-16 en appliquant `financeurs.financeur_reel_du_relais` aux six noms, comme le fait
+`scripts/import_to_firestore.py` pour une source relais) : les quatre appels Horizon Europe de Lyonbiopôle affichent
+« Commission européenne » (trois) ou « Horizon Europe – Cluster Santé (PCN France) » (un) ; les deux du Gérontopôle Sud
+restent au nom du relais (Silver Geek et France Active absents du référentiel). Financeur affiché juste : 28 / 30 ;
+champs justes tels qu'affichés : 114 / 120 (95,0 %). Non relu dans la base elle-même.

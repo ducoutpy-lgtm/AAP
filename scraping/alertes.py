@@ -17,7 +17,7 @@ import re
 import math
 import sys
 from datetime import datetime, timedelta, timezone
-from urllib.parse import parse_qs, urlencode
+from urllib.parse import parse_qs
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -207,23 +207,6 @@ def _lignes_fiche(f: dict, url: str) -> list[str]:
             f"  {url}/aap/{f.get('id', '')}", ""]
 
 
-def _nombre(x) -> str:
-    """Comme String(x) en JavaScript : 1000 et non 1000.0."""
-    return str(int(x)) if float(x).is_integer() else str(x)
-
-
-def depuis_ancienne_recherche(r: dict) -> tuple[str, list[str]]:
-    """(adresse, critères non repris) d'une recherche sauvegardée, comme depuisAncienneRecherche dans l'application :
-    une recherche d'avril (champ « filters ») garde ses mots-clés et ses montants ; ses secteurs et régions, sans
-    équivalent, sont rendus pour être signalés."""
-    if r.get("params") is not None:
-        return r["params"], []
-    ancien = r.get("filters") or {}
-    morceaux = [("q", ancien["keywords"])] if ancien.get("keywords") else []
-    morceaux += [(cle, _nombre(ancien[cle])) for cle in ("budgetMin", "budgetMax") if ancien.get(cle)]
-    return urlencode(morceaux), [*(ancien.get("sectors") or []), *(ancien.get("territories") or [])]
-
-
 def _nom_sur(nom) -> str:
     """Nom de recherche affiché dans le courriel : liens retirés, 80 caractères au plus (le nom est saisi par le compte
     et part depuis la boîte officielle ; défense en profondeur, relecture du 2026-11-16)."""
@@ -239,13 +222,13 @@ def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: date
     for r in recherches:
         if not r.get("alertEnabled"):
             continue
-        params, non_repris = depuis_ancienne_recherche(r)
-        # Recherche d'avril sans critère repris : aucune section « toute la France » sous son nom
+        # Une recherche sans adresse ne filtrerait rien : aucune section « toute la France » sous son nom
+        params = r.get("params") or ""
         if not params:
             continue
         filtres = filtres_depuis_params(params)
         retenues = _par_cloture([f for f in nouvelles if correspond(f, filtres)])
-        sections.append({"nom": _nom_sur(r.get("name")), "params": params, "fiches": retenues, "non_repris": non_repris})
+        sections.append({"nom": _nom_sur(r.get("name")), "params": params, "fiches": retenues})
     return sections
 
 
@@ -271,9 +254,6 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
         k = len(s["fiches"])
         compte = (f"{k} nouveaux appels" if k > 1 else "1 nouvel appel" if k == 1 else "aucun nouvel appel cette semaine")
         lignes += [f"Votre recherche « {s['nom']} » : {compte}", ""]
-        if s.get("non_repris"):
-            lignes += [f"  Critères non repris : {', '.join(s['non_repris'])} (ancienne version de la page : enregistrez de "
-                       "nouveau cette recherche depuis la page de recherche)", ""]
         for f in s["fiches"][:5]:
             lignes += _lignes_fiche(f, url)
         lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}", ""]

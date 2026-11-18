@@ -193,19 +193,3 @@ export function rechercheAEnregistrer(f: FiltresRecherche, userId: string) {
   const name = etiquettesActives(f).map(e => e.libelle).join(' · ');
   return { userId, name, params, alertEnabled: true, frequency: 'weekly' as const };
 }
-
-// Recherche enregistrée avant ce changement (champ « filters » du gabarit d'avril) : mots-clés et montants ont leur
-// équivalent ; secteurs et régions d'avril n'en ont pas, ils sont rendus pour être signalés « non repris ».
-export interface AncienneRecherche {
-  params?: string;
-  filters?: { keywords?: string; sectors?: string[]; territories?: string[]; budgetMin?: number; budgetMax?: number };
-}
-export function depuisAncienneRecherche(r: AncienneRecherche): { params: string; nonRepris: string[] } {
-  if (r.params !== undefined) return { params: r.params, nonRepris: [] };
-  const a = r.filters ?? {};
-  const params = paramsDepuisFiltres({
-    ...FILTRES_VIDES, q: a.keywords ?? '', budgetMin: a.budgetMin ? String(a.budgetMin) : '',
-    budgetMax: a.budgetMax ? String(a.budgetMax) : '',
-  }).toString();
-  return { params, nonRepris: [...(a.sectors ?? []), ...(a.territories ?? [])] };
-}

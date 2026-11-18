@@ -55,3 +55,10 @@ def test_rapport_seuil_atteint_et_vide_juste_compte_comme_juste():
     r = e.resume(v)
     assert (r["justes"], r["seuil_atteint"]) == (120, True)
     assert "seuil atteint" in e.texte_rapport(r, [])
+
+
+def test_le_texte_ecrit_a_la_main_apres_le_repere_est_garde():
+    ancien = "# Ancien calcul\n\n" + e.REPERE + "\n## Méthode\n\nTexte écrit à la main.\n"
+    nouveau = e.assembler("# Nouveau calcul\n", ancien)
+    assert nouveau.startswith("# Nouveau calcul\n") and "Texte écrit à la main." in nouveau and "Ancien calcul" not in nouveau
+    assert e.assembler("# Calcul\n", "") == "# Calcul\n\n" + e.REPERE + "\n"

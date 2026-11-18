@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
   filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee,
-  statutAppel, totalMontants, filtrerAppels, rechercheAEnregistrer, depuisAncienneRecherche,
+  statutAppel, totalMontants, filtrerAppels, rechercheAEnregistrer,
 } from './recherche';
 import cas from './cas_filtres_recherche.json';
 import type { AAP } from '../types';
@@ -119,18 +119,5 @@ describe('rechercheAEnregistrer (alertes-recherches-sauvegardees, 2.1)', () => {
   });
   it('sans nom : nom tiré des étiquettes', () => {
     expect(rechercheAEnregistrer({ ...FILTRES_VIDES, q: 'chutes', territory: 'france' }, 'u1')?.name).toBe('« chutes » · National, toute la France');
-  });
-});
-
-describe('depuisAncienneRecherche (alertes-recherches-sauvegardees, 2.1)', () => {
-  it('une recherche récente garde son adresse', () => {
-    expect(depuisAncienneRecherche({ params: 'territory=corse' })).toEqual({ params: 'territory=corse', nonRepris: [] });
-  });
-  it('une recherche d avril : mots-clés et montants repris, secteurs et régions signalés', () => {
-    expect(depuisAncienneRecherche({ filters: { keywords: 'ehpad', sectors: ['energie'], territories: ['Corse'], budgetMin: 1000 } }))
-      .toEqual({ params: 'q=ehpad&budgetMin=1000', nonRepris: ['energie', 'Corse'] });
-  });
-  it('aucun critère', () => {
-    expect(depuisAncienneRecherche({})).toEqual({ params: '', nonRepris: [] });
   });
 });

@@ -18,10 +18,9 @@ Une recherche sauvegardée MUST garder les filtres de `/aap/search` sous la form
 - **WHEN** aucun filtre n'est choisi
 - **THEN** le bouton « Enregistrer cette recherche » n'est pas proposé
 
-#### Scenario: ancienne recherche d'avril
-- **WHEN** une recherche porte l'ancien champ `filters` (`keywords`, `sectors`, `territories`, `budgetMin`)
-- **THEN** elle s'affiche avec `q` et `budgetMin` repris, et la mention « critères non repris : » suivie des secteurs et
-  régions d'avril
+Scénario « ancienne recherche d'avril » retiré le 2026-11-18 : la vraie base ne contient aucune recherche sauvegardée
+(lecture du 2026-11-18 : 0 document dans `savedSearches`) et la page qui produisait l'ancien format n'existe plus ; la
+conversion a été retirée de l'application et du courriel.
 
 ### Requirement: Même filtrage dans l'application et dans le courriel
 

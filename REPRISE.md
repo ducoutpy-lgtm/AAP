@@ -45,11 +45,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   Constats écartés, à reprendre dans des changements dédiés : réglage `ignoreUndefinedProperties` de Firestore à la place
   de `sansIndefinis` (à rejouer sur les émulateurs) ; profil tenu par un écouteur `onSnapshot` au lieu de
   `fusionnerProfil` (cause de la relecture partielle non prouvée) ; règle Firestore générale « champs propriétaires
-  figés » pour `aap`, `applications`, `messages` (déploiement sur accord) ; migration unique des recherches d'avril
-  (écriture en base sur accord) ; liste filtrée de `/aap/search` calculée au lieu d'être un état ; texte de la FAQ qui
-  promet encore des alertes dans l'application ; textes écrits à la main dans `scraping/EXACTITUDE.md`, effacés si le
-  rapport est régénéré ; montant illisible normalisé à l'entrée au lieu d'imiter `parseFloat` (changement de
+  figés » pour `aap`, `applications`, `messages` (déploiement sur accord) ; liste filtrée de `/aap/search` calculée au lieu d'être un état ; montant illisible normalisé à l'entrée au lieu d'imiter `parseFloat` (changement de
   comportement, à valider).
+- 2026-11-18 : « reprends ». Lecture des PDF par la veille chiffrée (400 PDF jamais lus, environ 1 euro) : question 33.
+  Aucune recherche sauvegardée en base : conversion des recherches d'avril retirée ; FAQ corrigée (alertes, messagerie) ;
+  `EXACTITUDE.md` régénérable sans perte. Questions ouvertes : 3, 23, 25, 29, 33. Rien de mis en ligne depuis le 16.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

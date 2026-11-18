@@ -8,12 +8,13 @@ import { collection, query, where, getDocs, updateDoc, deleteDoc, doc } from 'fi
 import { Bell, BellOff, Search, Trash2 } from 'lucide-react';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { depuisAncienneRecherche, etiquettesActives, filtresDepuisParams, type AncienneRecherche } from '../../utils/recherche';
+import { etiquettesActives, filtresDepuisParams } from '../../utils/recherche';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 
-interface RechercheSauvegardee extends AncienneRecherche {
+interface RechercheSauvegardee {
   id: string;
+  params: string;
   name: string;
   alertEnabled: boolean;
 }
@@ -98,8 +99,7 @@ export default function SavedSearchesPage() {
         ) : (
           <ul className="space-y-4">
             {recherches.map(r => {
-              const { params, nonRepris } = depuisAncienneRecherche(r);
-              const etiquettes = etiquettesActives(filtresDepuisParams(new URLSearchParams(params)));
+              const etiquettes = etiquettesActives(filtresDepuisParams(new URLSearchParams(r.params)));
               return (
                 <li key={r.id}>
                   <Card className="p-5">
@@ -107,25 +107,13 @@ export default function SavedSearchesPage() {
                       <div className="min-w-0">
                         <h2 className="font-semibold text-gray-900">{r.name}</h2>
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {etiquettes.length === 0 && (
-                            <span className="text-sm text-gray-500">
-                              {nonRepris.length > 0
-                                ? "Aucun critère repris : cette recherche n'envoie pas d'alerte, enregistrez-en une nouvelle depuis la page de recherche"
-                                : 'Tous les appels ouverts'}
-                            </span>
-                          )}
                           {etiquettes.map(e => (
                             <span key={e.cle} className="bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-0.5 text-xs">{e.libelle}</span>
                           ))}
                         </div>
-                        {nonRepris.length > 0 && (
-                          <p className="text-xs text-amber-700 mt-2">
-                            Critères non repris : {nonRepris.join(', ')} (ancienne version de la page, sans équivalent dans la recherche).
-                          </p>
-                        )}
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        <Button onClick={() => navigate(params ? `/aap/search?${params}` : '/aap/search')}>Lancer</Button>
+                        <Button onClick={() => navigate(`/aap/search?${r.params}`)}>Lancer</Button>
                         <Button variant="secondary" onClick={() => basculerAlerte(r)}>
                           {r.alertEnabled
                             ? <><Bell className="h-4 w-4 mr-2" />Alerte chaque lundi : active</>

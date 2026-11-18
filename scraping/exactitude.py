@@ -83,6 +83,16 @@ def texte_rapport(r: dict, verdicts: list[dict]) -> str:
     return "\n".join(lignes) + "\n"
 
 
+REPERE = "<!-- Fin du calcul. La suite est écrite à la main ; exactitude.py --rapport la garde. -->"
+
+
+def assembler(calcul: str, ancien: str) -> str:
+    """Nouveau calcul suivi du texte écrit à la main après le repère de l'ancien rapport (rien ne s'efface en
+    régénérant ; constat du 2026-11-17)."""
+    _, trouve, main = ancien.partition(REPERE)
+    return calcul.rstrip("\n") + "\n\n" + REPERE + (main if trouve else "\n")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--tirer", action="store_true")
@@ -95,7 +105,8 @@ def main() -> int:
     if args.rapport:
         verdicts = json.loads(VERDICTS.read_text(encoding="utf-8"))
         r = resume(verdicts)
-        RAPPORT.write_text(texte_rapport(r, verdicts), encoding="utf-8")
+        ancien = RAPPORT.read_text(encoding="utf-8") if RAPPORT.exists() else ""
+        RAPPORT.write_text(assembler(texte_rapport(r, verdicts), ancien), encoding="utf-8")
         print(f"{r['justes']} / {r['total']} champs justes, dates inventées : {r['dates_inventees']} -> {RAPPORT.name}")
     if not (args.tirer or args.rapport):
         parser.print_help()

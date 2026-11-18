@@ -57,6 +57,15 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    national (il faut un type d'établissement cité ou un objet commun) ; (b) requalifier les fiches avec une consigne plus
    stricte (payant, devis d'abord, environ 0,0003 euro par fiche, soit 0,11 euro pour 363) ; (c) les deux. Proposition de
    la session : (a) maintenant, (b) après votre lecture du tirage. À trancher après avoir noté les vingt lignes.
+33. (2026-11-18) Lecture des PDF par la veille du lundi (plan, semaine 2) : la veille relit 278 sources ; leurs pages
+   portent 586 liens PDF, dont 400 jamais lus (compte du 2026-11-18 ; en tête : Charente-Maritime 41, ministère de la
+   Culture 36, Côtes-d'Armor 30, Cancéropôle Est 29, Anses 28, préfecture du Cantal 28). Estimation de la première
+   extraction : environ 1 euro (0,003 euro par texte mesuré sur les PDF des conférences), soit un cumul d'environ 4,97
+   euros, au-delà du seuil d'arrêt de 4,50 et près du plafond du projet de 5 euros ; ensuite quelques centimes par
+   semaine. Collecte : environ une demi-heure de plus le premier lundi (estimation), sous la limite de quatre heures.
+   Trois voies : (a) relever le plafond du projet et activer la lecture des PDF ; (b) l'activer seulement pour les
+   familles où l'appel n'est publié qu'en PDF (conseils départementaux) ; (c) attendre. À trancher ; rien n'est activé.
+
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
 le correctif » (une seule mise en ligne, site et règles ensemble). La dépense (17) et la mise en ligne (22) attendent
