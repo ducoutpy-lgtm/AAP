@@ -54,7 +54,7 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
 - 2026-11-18, fin de matinée : il arrête de relire la file non triée (« tu dois me proposer uniquement les fiches où il
   y a un doute », « oui ok change la phrase de délégation ») : tri automatique (`tri-automatique-file`), 23 doublons
   rejetés, 83 publiées, 61 restent avec leur motif, 450 visibles ; la veille du lundi trie désormais après l'import.
-  Mise en ligne de l'hébergement accordée « après » ce travail.
+  Hébergement mis en ligne ensuite (version `index-DhLlUBUZ.js`). Questions ouvertes : 23, 25, 29, 33.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

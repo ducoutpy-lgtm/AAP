@@ -11,6 +11,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   dans `/admin/aaps`). Premier passage : 23 rejetées, 83 publiées, 61 restent (au lieu de 167) ; 450 fiches visibles.
   Lancé ensuite par la veille du lundi après l'import. Doublons : nouvelle règle « même financeur, même édition, une
   date manquante » (cas Béatrice Denys).
+- Mis en ligne le 2026-11-18 (« OUI après ») : hébergement, version `index-DhLlUBUZ.js` (FAQ, réglage Firestore,
+  retrait de la conversion d'avril).
 
 ### Modifié (2026-11-18)
 - Recherches sauvegardées : conversion des recherches d'avril retirée de l'application et du courriel (lecture de la
