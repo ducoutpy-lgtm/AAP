@@ -3,7 +3,8 @@
 Pourquoi : pendant le pilote, la veille s'arrêtait à un devis ; extraction, contrôle, qualification et import
 attendaient une séance. Délégation de Monsieur DUCOUT, permanente depuis le 2026-11-13 : jusqu'à 0,50 euro par semaine
 d'appels Haiku, devis et --plafond obligatoires pour chaque commande payante, arrêt et accord demandé avant 4,50 euros
-de cumul ; import en « à valider », jamais en « validée ».
+de cumul ; import en « à valider », puis tri de la file : une fiche que le contrôle juge bonne, sans doute, est publiée,
+seules les fiches douteuses restent à relire (décision du 2026-11-18, changement tri-automatique-file).
 
 Pour chaque étape (extraction, contrôle, qualification) : devis à blanc écrit dans le journal, puis passage réel
 seulement si le devis tient dans le reste du budget de la semaine (du lundi au dimanche) et sous 4,50 euros de cumul,
@@ -123,6 +124,12 @@ def main() -> int:
     if args.reel:
         print("--- import des fiches nouvelles en « à valider »", flush=True)
         code, _ = lancer([str(ICI.parent / "scripts" / "import_to_firestore.py"), "--source", "extraction_api", "--a-valider"])
+        if code != 0:
+            return code
+        # Tri de la file (changement tri-automatique-file, décision du 2026-11-18) : doublons rejetés, fiches sans doute
+        # publiées, seules les fiches douteuses restent pour Monsieur DUCOUT
+        print("--- tri de la file « à valider »", flush=True)
+        code, _ = lancer([str(ICI.parent / "scripts" / "trier_file.py"), "--reel"])
         return code
     return 0
 

@@ -71,8 +71,9 @@ Monsieur DUCOUT sont le goulet : sans elles, aucun chantier n'est rangé.
 ## Décisions structurantes (rappel)
 
 - Délégation permanente (2026-11-13) : 0,50 euro par semaine d'appels Haiku au plus, devis et plafond obligatoires,
-  arrêt avant 4,50 euros de cumul ; imports en « à valider », jamais en « validée » ; commit et push en fin de
-  changement. Tout le reste (dépense au-delà, mise en ligne, suppression, changement de schéma) sur son accord.
+  arrêt avant 4,50 euros de cumul ; commit et push en fin de changement. Depuis le 2026-11-18 (« oui ok change la phrase
+  de délégation ») : une fiche que le contrôle du modèle juge bonne, sans doute, est publiée ; les doublons sûrs sont
+  rejetés après sauvegarde ; seules les fiches douteuses vont dans sa file (`scripts/trier_file.py`, lancé par la veille). Tout le reste (dépense au-delà, mise en ligne, suppression, changement de schéma) sur son accord.
 - Recherche et fiches réservées aux comptes connectés depuis le 2026-10-20 (décision de Monsieur DUCOUT ; la
   spécification `consultation-aap-scrapes` dit encore « sans compte », à mettre à jour selon son choix F du point
   d'étape).

@@ -15,7 +15,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | 1 | Appels publiés, doublons retirés | Fait | 363 fiches publiées après le rejet de 43 doublons (2026-11-13, sauvegarde `scripts/sauvegardes/doublons_2026-11-13_1744.json`, `docs/A_VALIDER.md`) |
 | 2 | Exactitude : 90 % de champs justes, aucune date inventée | Fait (session), relecture de 10 fiches par lui à faire | `scraping/EXACTITUDE.md` : 110 / 120 (91,7 %), 0 date inventée ; point faible : financeur remplacé par le relais dans 6 fiches sur 30 |
 | 3 | Veille du lundi de bout en bout, sans intervention, et courriel de bilan | Fait le 2026-11-16, étape payante en attente d'accord | `scraping/logs/veille.log` : « Veille terminee le 16/11/2026 11:33 », « admin : envoyé à ducout@hotmail.fr » ; devis d'extraction 0,52 euro au-delà du budget de la semaine, accord demandé (question 30) ; preuve suivante attendue le 23 novembre |
-| 4 | File « à valider » relue | À sa charge | Question 3 de `docs/A_VALIDER.md` : 171 fiches « Proposée » au 2026-11-17 (109 le 13, puis 62 de la veille du 16) |
+| 4 | File « à valider » relue | À sa charge, triée | 2026-11-18 : tri automatique, 61 fiches douteuses restent (motif affiché dans `/admin/aaps`), au lieu de 167 |
 
 ## Parcours candidat
 

@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-18, décision de Monsieur DUCOUT « tu dois me proposer uniquement les fiches où il y a un doute »)
+- Tri automatique de la file « à valider » (changement `tri-automatique-file`, `scripts/trier_file.py`) : doublons
+  rejetés après sauvegarde, fiches contrôlées sans doute publiées, fiches douteuses laissées avec leur motif (visible
+  dans `/admin/aaps`). Premier passage : 23 rejetées, 83 publiées, 61 restent (au lieu de 167) ; 450 fiches visibles.
+  Lancé ensuite par la veille du lundi après l'import. Doublons : nouvelle règle « même financeur, même édition, une
+  date manquante » (cas Béatrice Denys).
+
 ### Modifié (2026-11-18)
 - Recherches sauvegardées : conversion des recherches d'avril retirée de l'application et du courriel (lecture de la
   vraie base le 2026-11-18 : aucune recherche sauvegardée ; la page qui produisait l'ancien format n'existe plus).

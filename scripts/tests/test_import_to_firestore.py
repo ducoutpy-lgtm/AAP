@@ -645,3 +645,28 @@ def test_une_qualification_humaine_en_base_n_est_pas_ecrasee():
     existant = {"qualification": {"destinataires": ["prive-lucratif"], "par": imp.RELECTEUR}}
     assert "qualification" not in imp.document_a_envoyer(doc, True, existant)
     assert "qualification" in imp.document_a_envoyer(doc, True, {"qualification": {"par": "claude-haiku-5-5"}})
+
+
+def test_doublons_file_meme_financeur_meme_edition_une_date_manquante():
+    """Changement tri-automatique-file (2026-11-18) : Fondation Béatrice Denys 2026-2027 reprise par un relais sans date
+    et publiée par la FRM au 22 novembre ; l'édition 2025-2026 reste un autre appel."""
+    import doublons
+
+    relais = ("relais", _fiche("Appel à Projets de la Fondation Béatrice Denys 2026-2027", "Fondation Béatrice Denys",
+                               "biotech-sante-bretagne", territoires=["bretagne"]))
+    officielle = ("frm", _fiche("Appel à projets 2026-2027 – 28e prix de la Fondation Béatrice Denys (de la recherche biomédicale à la création d'entreprise)",
+                                "Fondation Béatrice Denys (sous l'égide de la Fondation pour la Recherche Médicale)", "frm", (2026, 11, 22),
+                                territoires=["france"]))
+    ancienne = ("2025", _fiche("AAP Fondation Béatrice Denys 2025-2026", "Fondation Béatrice Denys (diffusé par le Cancéropôle CLARA)",
+                               "canceropole-clara"))
+    groupes = doublons.groupes_file([relais, officielle, ancienne])
+    assert [sorted(i for i, _ in g) for g in groupes] == [["frm", "relais"]]
+
+
+def test_doublons_file_meme_financeur_meme_annee_appels_differents():
+    import doublons
+
+    a = ("a", _fiche("Appel à projets 2026 : vivre avec une maladie psychique", "Fondation de France", "fondation-de-france"))
+    b = ("b", _fiche("Appel à projets 2026 : soutien aux proches aidants", "Fondation de France", "fondation-de-france-2",
+                     (2026, 12, 1), url="https://autre.fr/b"))
+    assert doublons.groupes_file([a, b]) == []

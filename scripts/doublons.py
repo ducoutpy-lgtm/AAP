@@ -84,6 +84,22 @@ def mots_distinctifs(titre: str | None) -> frozenset[str]:
     return frozenset(m for m in normaliser(titre or "").split() if m not in GENERIQUES and len(m) > 1)
 
 
+def annees(titre: str | None) -> set[str]:
+    """Années d'édition lues dans le titre (« 2026-2027 » -> {"2026", "2027"})."""
+    return set(re.findall(r"\b(?:19|20)\d\d\b", titre or ""))
+
+
+def meme_edition_meme_financeur(a: dict, b: dict) -> bool:
+    """Même financeur (parenthèse « diffusé par… » retirée), mêmes années d'édition, et tous les mots distinctifs du
+    titre court (deux au moins) dans l'autre (changement tri-automatique-file, cas Béatrice Denys ; fonction pure)."""
+    racine = lambda d: cle(re.sub(r"\(.*?\)", "", d.get("financeurName") or ""))  # noqa: E731
+    ya, yb = annees(a.get("title")), annees(b.get("title"))
+    if not ya or ya != yb or not racine(a) or racine(a) != racine(b):
+        return False
+    petit, grand = sorted((mots_distinctifs(a.get("title")), mots_distinctifs(b.get("title"))), key=len)
+    return len(petit) >= 2 and petit <= grand
+
+
 def _cloture(d: dict) -> date | None:
     v = d.get("deadline")
     return v.date() if hasattr(v, "date") else None
@@ -112,6 +128,9 @@ def meme_appel(a: dict, b: dict) -> bool:
     na, nb = nombres(a.get("title")), nombres(b.get("title"))
     if na and nb and not na & nb:
         return False
+    # Une seule des deux fiches datée (appel relayé sans date) : même financeur et même édition suffisent
+    if (_cloture(a) is None) != (_cloture(b) is None) and meme_edition_meme_financeur(a, b):
+        return True
     if _cloture(a) is None or _cloture(a) != _cloture(b):
         return False
     ma, mb = mots_distinctifs(a.get("title")), mots_distinctifs(b.get("title"))

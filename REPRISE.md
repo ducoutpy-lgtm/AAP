@@ -51,6 +51,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   `EXACTITUDE.md` régénérable sans perte. Questions ouvertes : 3, 23, 25, 29, 33. Rien de mis en ligne depuis le 16.
   Puis réglage `ignoreUndefinedProperties` de Firestore (rejoué sur les émulateurs). À mettre en ligne sur accord : FAQ,
   retrait de la conversion d'avril, réglage Firestore (hébergement seulement).
+- 2026-11-18, fin de matinée : il arrête de relire la file non triée (« tu dois me proposer uniquement les fiches où il
+  y a un doute », « oui ok change la phrase de délégation ») : tri automatique (`tri-automatique-file`), 23 doublons
+  rejetés, 83 publiées, 61 restent avec leur motif, 450 visibles ; la veille du lundi trie désormais après l'import.
+  Mise en ligne de l'hébergement accordée « après » ce travail.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
