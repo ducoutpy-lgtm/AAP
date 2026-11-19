@@ -33,7 +33,7 @@ PYTHON = sys.executable
 MODELE = "claude-haiku-5-5"
 BUDGET_SEMAINE, ARRET_CUMUL = 0.50, 4.50
 FICHES_API = "results/extraction_api.json"
-ETAPES = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", "api"]),
+ETAPES = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", "api", "--sans-pdf"]),
           ("contrôle", ["verification.py", "--verifier", "--fichier", FICHES_API]),
           ("qualification", ["qualifier_fiches.py", "--qualifier", "--fichier", FICHES_API])]
 DEVIS = re.compile(r"(\d+(?:\.\d+)?) euros (?:au plus|estimés)")

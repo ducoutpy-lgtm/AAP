@@ -59,3 +59,21 @@ def test_textes_restants_et_devis(tmp_path, monkeypatch):
     attendu = sum(echantillon.estimation_appel_euros(3400, tarifs, 0.95) for _ in range(1808))
     assert f"{attendu:.2f} euros au plus" in texte and "DÉPASSEMENT" not in texte
     assert "DÉPASSEMENT" in extraction_locale.devis([3400] * 1808, "m", tarifs, 4.9, 5.0, 0.95)
+
+
+def test_separer_pdf_et_pages_web(tmp_path):
+    """Changement lecture-pdf-locale (2026-11-19) : la veille du matin extrait les pages web par l'API, la chaîne de nuit
+    extrait les PDF en local."""
+    import extraction_locale as e
+    page = tmp_path / "page.txt"
+    page.write_text("https://ars.fr/appel\nTexte de la page", encoding="utf-8")
+    pdf = tmp_path / "doc.txt"
+    pdf.write_text("https://ars.fr/cahier-des-charges.pdf\nTexte du PDF", encoding="utf-8")
+    fiches = [({}, page), ({}, pdf)]
+    assert [c.name for _, c in e.filtrer_pdf(fiches, pdf=False)] == ["page.txt"]
+    assert [c.name for _, c in e.filtrer_pdf(fiches, pdf=True)] == ["doc.txt"]
+
+
+def test_la_veille_payante_n_extrait_que_les_pages_web():
+    import veille_payante as v
+    assert "--sans-pdf" in dict(v.ETAPES)["extraction"]

@@ -20,7 +20,7 @@ if "%~1"=="auto" (
 )
 echo Veille AAP Sante : relecture des pages validees (une page a la fois, deux secondes de pause). Zero euro.
 echo.
-"..\.venv\Scripts\python.exe" rejeu.py --relire --collecter --marquer --rapport
+"..\.venv\Scripts\python.exe" rejeu.py --relire --collecter --pdf --marquer --rapport
 echo.
 echo Portail appelsprojetsrecherche.fr (export CSV, sans navigateur ni modele) :
 "..\.venv\Scripts\python.exe" portail_recherche.py

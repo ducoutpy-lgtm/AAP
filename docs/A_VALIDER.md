@@ -74,6 +74,7 @@ conférences lancée en tâche de fond avec `--plafond 3.463` (journal `scraping
 | 2026-11-19 | 25. Suppression du compte en libre-service | « Proposition telle quelle » (séance de pilotage) ; mise en ligne des règles sur son accord, comme d'habitude |
 | 2026-11-19 | 29. Recommandations trop larges | « (a) maintenant, (b) ensuite » ; (b) par le modèle local, et non par l'API (réponse à 33) |
 | 2026-11-19 | 33. Lecture des PDF par la veille | Aucune des trois voies : lecture par le **modèle local** de son ordinateur, à zéro euro ; rien ne presse (mise à jour hebdomadaire, une lecture d'une semaine n'est pas grave) ; « il faut minimiser les coûts de traitement de la préqualification », « c'est la même chose pour tout » (relayé par la séance de pilotage) |
+| 2026-11-19 | Voie de la lecture locale des PDF, puis tâche de nuit | « Voie A, tout local » puis « Oui, lundi 23 h » (dans la conversation) : contrôle et qualification en local (`--moteur ollama`), mesure contre Haiku (`scraping/LOCAL_CONTRE_HAIKU.md`), tâche Windows « AAP Sante - lecture locale des PDF » créée (lundi 23 h, limite 12 h, pas sur batterie) |
 | 2026-11-13 | 16. Veille sur batterie (la tâche refusait de démarrer sur batterie et s'arrêtait si le PC y passait) | « Oui, autorise-la » : réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » passés à faux ; action, déclencheur et limite de quatre heures inchangés |
 
 Les réponses du 2026-11-13 (questions 1, 2, 3 bis, 3 ter, 5, 6, 7, 8, 11) ont été données par choix à cocher dans la

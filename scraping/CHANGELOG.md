@@ -8,6 +8,9 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 - `verification.py` et `qualifier_fiches.py` : option `--moteur ollama` (modèle local `qwen3:8b`, zéro euro, sans
   plafond), même question et même schéma que l'API (`extractor.contenu_verification`, `contenu_qualification`).
   Mesure contre Haiku sur 14 fiches : `LOCAL_CONTRE_HAIKU.md`.
+- Lecture des PDF en local : la veille collecte aussi les PDF (`rejeu.py --pdf`), l'extraction payante du matin ne
+  prend que les pages web (`--sans-pdf`), et la tâche « AAP Sante - lecture locale des PDF » (lundi 23 h,
+  `chaine_pdf_locale.cmd`) fait tout en local : extraction, contrôle, qualification, import en « à valider », tri.
 
 ### Corrigé (2026-11-18)
 - `alertes.py` : les liens des courriels du lundi pointent vers le site en ligne (https://aapi-11bc3.web.app) ; ils

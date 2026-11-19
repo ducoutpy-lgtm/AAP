@@ -252,6 +252,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--relire", action="store_true")
     parser.add_argument("--collecter", action="store_true")
+    parser.add_argument("--pdf", action="store_true", help="avec --collecter : lire aussi les liens PDF (lecture-pdf-locale)")
     parser.add_argument("--marquer", action="store_true")
     parser.add_argument("--rapport", action="store_true")
     parser.add_argument("--ids", help="identifiants de sources séparés par des virgules")
@@ -265,7 +266,7 @@ def main() -> int:
         print(f"\n{len(relues)} sources relues, {len(bilans) - len(relues)} ignorées (erreur ou aucun lien), "
               f"{sum(len(b['nouveaux']) for b in relues)} liens nouveaux, {sum(len(b['disparus']) for b in relues)} disparus")
     if args.collecter:
-        asyncio.run(extraction_locale.collecter(sources))
+        asyncio.run(extraction_locale.collecter(sources, pdf=args.pdf))
     if args.marquer:
         marquer()
     if args.rapport:

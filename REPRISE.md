@@ -76,8 +76,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   verdicts retirés dans une copie (dossier de travail de la séance : `reference_haiku.json`, `mesure_locale.json`,
   journaux `mesure_verif.log` et `mesure_qualif.log`). Résultat dans `scraping/LOCAL_CONTRE_HAIKU.md` : contrôle local
   utilisable pour le tri (plus prudent), qualification locale sans gain pour les recommandations. Prochaine étape (3.1) :
-  collecte des PDF par la veille et tâche planifiée de nuit pour la chaîne locale (création d'une tâche Windows : son
-  accord).
+  collecte des PDF par la veille et tâche planifiée de nuit : faites sur son « Oui, lundi 23 h » (tâche « AAP Sante -
+  lecture locale des PDF », premier passage 23/11 à 23 h, journal `scraping/logs/chaine_pdf_locale.log`). À vérifier
+  mardi 24 au matin. Restent ses réponses : mise en ligne (règles de suppression, hébergement) et règle « modèle local
+  par défaut ».
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

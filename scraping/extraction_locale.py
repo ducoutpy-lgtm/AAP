@@ -39,6 +39,7 @@ from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, RESULTS, JS_TEXTE, lire_
 REGISTRE = ICI / "sources" / "registre.json"
 SORTIE = RESULTS / "extraction_locale.json"
 SORTIE_API = RESULTS / "extraction_api.json"  # V4 : fiches du moteur API, fichier à part (la V3 reste intacte)
+SORTIE_PDF_LOCALE = RESULTS / "extraction_pdf_locale.json"  # PDF lus en local par la chaîne de nuit (lecture-pdf-locale)
 MOTEUR, MODELE_DEFAUT = "ollama", "qwen3:8b"
 MODELE_API_DEFAUT, PLAFOND_DEFAUT = "claude-haiku-5-5", 5.0
 # Familles du registre dans l'ordre de traitement : les plus proches du champ santé d'abord, les collectivités
@@ -50,6 +51,12 @@ DUREE_REFUS_S, DUREE_FICHE_S = 22, 69
 
 
 # ---------------------------------------------------------------- fonctions pures (testées)
+
+def filtrer_pdf(fiches: list[tuple[dict, Path]], pdf: bool) -> list[tuple[dict, Path]]:
+    """Textes tirés d'un PDF (pdf=True) ou de pages web (pdf=False), d'après leur adresse d'origine ; la veille du matin
+    extrait les pages web, la chaîne locale de nuit les PDF (changement lecture-pdf-locale, 2026-11-19)."""
+    return [(r, c) for r, c in fiches if lecture_pdf.est_adresse_pdf(lire_fiche(c)[0]) == pdf]
+
 
 def textes_restants(fiches: list[tuple[dict, Path]], chemin_sortie: Path) -> list[tuple[dict, Path]]:
     """Textes pas encore traités par le fichier de sortie donné (fiches, refus, échecs) : ce que le devis compte."""
@@ -217,6 +224,9 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="avec --moteur api : écrire le devis, n'appeler rien")
     parser.add_argument("--limite", type=int, help="n'extraire que les N premiers textes (essai)")
     parser.add_argument("--ids", help="identifiants de sources séparés par des virgules")
+    parser.add_argument("--sans-pdf", action="store_true", help="avec --extraire : pages web seulement (veille du matin)")
+    parser.add_argument("--seulement-pdf", action="store_true",
+                        help="avec --extraire en local : PDF seulement, sortie results/extraction_pdf_locale.json (chaîne de nuit)")
     args = parser.parse_args()
     modele = args.modele or (MODELE_API_DEFAUT if args.moteur == "api" else MODELE_DEFAUT)
 
@@ -230,7 +240,10 @@ def main() -> int:
         if modele not in extractor.TARIFS_USD_PAR_MTOK:
             print(f"Tarif inconnu pour {modele} : l'ajouter à extractor.TARIFS_USD_PAR_MTOK avant tout appel.", file=sys.stderr)
             return 1
-        fiches = textes_restants(echantillon.fiches_disponibles(sources), SORTIE_API)[:args.limite]
+        disponibles = echantillon.fiches_disponibles(sources)
+        if args.sans_pdf:
+            disponibles = filtrer_pdf(disponibles, pdf=False)
+        fiches = textes_restants(disponibles, SORTIE_API)[:args.limite]
         caracteres = []
         for _, chemin in fiches:
             _, texte = lire_fiche(chemin)
@@ -241,7 +254,13 @@ def main() -> int:
             print("Essai à blanc : aucun appel, rien d'écrit.")
             return 0
         echantillon.extraire_api({}, modele, args.limite, args.plafond, chemin_sortie=SORTIE_API,
-                                 fiches=echantillon.fiches_disponibles(sources), metadonnees={"a_verifier": True})
+                                 fiches=disponibles, metadonnees={"a_verifier": True})
+    elif args.extraire and args.seulement_pdf:
+        # PDF jamais extraits, ni par l'API (conférences du 13 novembre) ni par une nuit précédente
+        pdf = textes_restants(filtrer_pdf(echantillon.fiches_disponibles(sources), pdf=True), SORTIE_API)
+        print(f"Chaîne locale des PDF : {len(textes_restants(pdf, SORTIE_PDF_LOCALE))} textes à extraire, modèle {modele}, zéro euro.")
+        echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE_PDF_LOCALE,
+                             metadonnees={"a_verifier": True}, fiches=pdf)
     elif args.extraire:
         echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE,
                              metadonnees={"a_verifier": True})
