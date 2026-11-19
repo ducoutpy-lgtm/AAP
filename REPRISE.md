@@ -91,6 +91,8 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   libres (`ollama ps`, `nvidia-smi`), puis lancer la chaîne (`Start-ScheduledTask -TaskName "AAP Sante - lecture locale
   des PDF"`, ou `scraping\chaine_pdf_locale.cmd`) ; elle demande à Windows de rester éveillé ; journal
   `scraping/logs/chaine_pdf_locale.log`. La tâche du lundi 23 h reste en place.
+  Collecte finie vers 16 h 30 : « 283 pages lues à ce passage. PDF : 278 lus, 122 sans texte ou introuvables » ; la
+  chaîne locale a 278 textes PDF à extraire (compte de `extraction_locale.py --extraire --seulement-pdf --limite 0`).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
