@@ -36,35 +36,6 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    alors que l'écran dit « transmis à {financeur} ». Proposition : pour une fiche importée, « Candidater sur le site
    officiel » (lien de l'annonce) et un suivi tenu par le candidat. À trancher.
 22. (2026-11-13) Mise en ligne des corrections du soir (recommandations, parcours candidat sans impasse). Oui / non.
-23. (2026-11-16) « Documents réutilisables » (semaine 3) : deux lectures possibles. (a) Pièces jointes (statuts, Kbis,
-   budget) déposées une fois et rattachées à chaque candidature : il faut le stockage de fichiers, donc la facturation
-   Blaze (question 5), sinon le dépôt échoue comme aujourd'hui. (b) Textes réutilisables (présentation de la structure,
-   références, moyens humains) qui préremplissent le formulaire de candidature : aucun stockage de fichiers. Proposition
-   de la session : (b) maintenant, (a) à l'ouverture de Blaze. À trancher ; en attendant, la session passe aux lots de la
-   semaine 4.
-25. (2026-11-16) Suppression du compte en libre-service (droit à l'effacement) : que deviennent les candidatures
-   déposées auprès d'un financeur inscrit (il les a reçues : les garder anonymisées, ou les supprimer) et les lignes du
-   journal des actions ? Proposition de la session : bouton « Supprimer mon compte » avec confirmation ; profil, recherches,
-   favoris, notifications et compte de connexion supprimés ; candidatures aux appels importés supprimées ; candidatures
-   reçues par un financeur inscrit gardées sans nom ni coordonnées ; journal gardé sans l'identifiant. Règles Firestore
-   à changer (tests sur l'émulateur), puis mise en ligne sur accord. À trancher. En attendant, l'effacement passe par le
-   DPO (page Mon profil et page Confidentialité).
-29. (2026-11-16) Recommandations (question 19) : tirage de vingt prêt dans `docs/TIRAGE_RECOMMANDATIONS.md` (quatre
-   profils types, 363 fiches visibles). Avis de la session : environ 4 pertinentes sur 20 ; cause vérifiée sur trois
-   fiches : qualification trop large (appels de recherche ouverts « à toute structure », programmes européens
-   interrégionaux marqués « france »). Trois voies : (a) règles sans coût : un appel marqué ouvert aux cinq familles ou
-   « recherche » parmi ses destinataires ne donne plus de point de statut, et le champ seul ne suffit plus pour un appel
-   national (il faut un type d'établissement cité ou un objet commun) ; (b) requalifier les fiches avec une consigne plus
-   stricte (payant, devis d'abord, environ 0,0003 euro par fiche, soit 0,11 euro pour 363) ; (c) les deux. Proposition de
-   la session : (a) maintenant, (b) après votre lecture du tirage. À trancher après avoir noté les vingt lignes.
-33. (2026-11-18) Lecture des PDF par la veille du lundi (plan, semaine 2) : la veille relit 278 sources ; leurs pages
-   portent 586 liens PDF, dont 400 jamais lus (compte du 2026-11-18 ; en tête : Charente-Maritime 41, ministère de la
-   Culture 36, Côtes-d'Armor 30, Cancéropôle Est 29, Anses 28, préfecture du Cantal 28). Estimation de la première
-   extraction : environ 1 euro (0,003 euro par texte mesuré sur les PDF des conférences), soit un cumul d'environ 4,97
-   euros, au-delà du seuil d'arrêt de 4,50 et près du plafond du projet de 5 euros ; ensuite quelques centimes par
-   semaine. Collecte : environ une demi-heure de plus le premier lundi (estimation), sous la limite de quatre heures.
-   Trois voies : (a) relever le plafond du projet et activer la lecture des PDF ; (b) l'activer seulement pour les
-   familles où l'appel n'est publié qu'en PDF (conseils départementaux) ; (c) attendre. À trancher ; rien n'est activé.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
@@ -99,6 +70,10 @@ conférences lancée en tâche de fond avec `--plafond 3.463` (journal `scraping
 | 2026-11-17 | 32. Qualification des fiches contrôlées le 16 novembre (devis 0,054 euro) | « Oui, 0,054 € » (dans la conversation) : 74 fiches qualifiées pour 0,028 euro (cumul 3,971), `--plafond 3.997` ; import `--a-valider` : « 159 crees, 435 mis a jour » ; base : 1 080 fiches, 363 visibles du public (inchangé), file « Proposée » 171 (62 créées le 17), 94 « à corriger » et 3 rejetées créées le 17. Semaine du 16 novembre : 0,509 euro dépensé (0,50 de délégation plus ses deux accords) |
 | 2026-11-18 | Tri de la file « à valider » (il arrête de relire 167 fiches non triées, dont deux Béatrice Denys) | « oui ok change la phrase de délégation » ; « tu dois me proposer uniquement les fiches où il y a un doute » : `scripts/trier_file.py --reel` (sauvegarde `scripts/sauvegardes/tri_file_2026-11-18_1114.json`) : 23 doublons rejetés, 83 fiches publiées, 61 laissées avec leur motif (dont 4 gardées par la séance à la lecture de l'essai à blanc) ; 450 fiches visibles du public ; tri lancé ensuite par la veille de chaque lundi |
 | 2026-11-18 | Mise en ligne de l'hébergement (FAQ corrigée, réglage Firestore, retrait de la conversion d'avril) | « OUI après » : faite après le tri, `firebase deploy --only hosting --project aapi-11bc3` (« Deploy complete! »), version servie `index-DhLlUBUZ.js` avec la nouvelle réponse de la FAQ ; gratuit (offre Firebase sans facturation) |
+| 2026-11-19 | 23. Documents réutilisables | « (b) maintenant, (a) plus tard » (choix à cocher, séance de pilotage) : textes réutilisables sans stockage de fichiers ; pièces jointes à l'ouverture de Blaze |
+| 2026-11-19 | 25. Suppression du compte en libre-service | « Proposition telle quelle » (séance de pilotage) ; mise en ligne des règles sur son accord, comme d'habitude |
+| 2026-11-19 | 29. Recommandations trop larges | « (a) maintenant, (b) ensuite » ; (b) par le modèle local, et non par l'API (réponse à 33) |
+| 2026-11-19 | 33. Lecture des PDF par la veille | Aucune des trois voies : lecture par le **modèle local** de son ordinateur, à zéro euro ; rien ne presse (mise à jour hebdomadaire, une lecture d'une semaine n'est pas grave) ; « il faut minimiser les coûts de traitement de la préqualification », « c'est la même chose pour tout » (relayé par la séance de pilotage) |
 | 2026-11-13 | 16. Veille sur batterie (la tâche refusait de démarrer sur batterie et s'arrêtait si le PC y passait) | « Oui, autorise-la » : réglages « DisallowStartIfOnBatteries » et « StopIfGoingOnBatteries » passés à faux ; action, déclencheur et limite de quatre heures inchangés |
 
 Les réponses du 2026-11-13 (questions 1, 2, 3 bis, 3 ter, 5, 6, 7, 8, 11) ont été données par choix à cocher dans la
