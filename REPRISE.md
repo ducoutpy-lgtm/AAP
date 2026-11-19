@@ -80,6 +80,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   lecture locale des PDF », premier passage 23/11 à 23 h, journal `scraping/logs/chaine_pdf_locale.log`). À vérifier
   mardi 24 au matin. Restent ses réponses : mise en ligne (règles de suppression, hébergement) et règle « modèle local
   par défaut ».
+- 2026-11-19, 15 h 45 (demande relayée par la séance de pilotage) : premier passage anticipé. Collecte des PDF lancée
+  (`rejeu.py --collecter --pdf`, journal `scraping/logs/collecte_pdf_2026-11-19.log`, sans coût) ; ensuite, si la carte
+  graphique et Ollama sont libres (`ollama ps`, `nvidia-smi` ; la séance Perroquet fait une mesure d'environ 40 min),
+  la chaîne locale est lancée par la tâche planifiée (`Start-ScheduledTask` « AAP Sante - lecture locale des PDF »),
+  journal `scraping/logs/chaine_pdf_locale.log`.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
