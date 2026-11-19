@@ -1,4 +1,4 @@
-# Proposal (brouillon, en attente de son choix)
+# Proposal
 
 ## Why
 
@@ -36,3 +36,20 @@ par une tâche de nuit, import en « à valider » puis tri automatique.
    renverse la décision du 2026-10-19 écrite dans `CLAUDE.md` (« V4 avec modèle API payant ») ; à confirmer par lui,
    et à écrire par lui dans `CLAUDE.md` (le garde-fou du poste empêche la session d'y écrire).
 3. Heure de la tâche de nuit (carte graphique libre : Unity pour Dyslexix).
+
+## Décision
+
+Voie A, « tout local », choisie par Monsieur DUCOUT le 2026-11-19 dans la conversation.
+
+## What Changes
+
+- `extractor.py` : texte des questions de contrôle et de qualification construit par deux fonctions pures, partagées par
+  l'API et le modèle local.
+- `verification.py` et `qualifier_fiches.py` : option `--moteur ollama` (même question, même schéma de réponse, zéro
+  euro, sans plafond) ; Haiku reste le moteur par défaut tant que la veille n'est pas basculée.
+- Mesure avant usage : contrôle et qualification locales comparés aux verdicts Haiku déjà en base sur un échantillon
+  (accord sur « est un appel », champs douteux, destinataires, type d'appel), résultat écrit avant toute publication
+  sur l'avis du modèle local.
+- Puis : collecte des PDF par la veille (`rejeu.py --pdf`), extraction, champ, contrôle et qualification en local par
+  une tâche de nuit, import en « à valider » et tri automatique.
+
