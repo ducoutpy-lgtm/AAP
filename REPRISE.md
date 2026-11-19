@@ -69,6 +69,9 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   contrôle Haiku), heure de la tâche de nuit ; en attente de son choix.
   25 fait aussi (`suppression-compte`, joué sur les émulateurs). À mettre en ligne sur son accord : règles Firestore
   (suppression) et hébergement (textes réutilisables, recommandations, suppression).
+- 2026-11-19 après-midi : « Voie A, tout local » (question 33) : contrôle et qualification savent travailler en local
+  (`--moteur ollama`, zéro euro, changement `lecture-pdf-locale` tâches 1.1-1.2). Suite : mesure local contre Haiku
+  (tâche 2.1), puis collecte des PDF et chaîne locale de nuit (3.1).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

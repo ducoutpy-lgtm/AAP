@@ -154,23 +154,39 @@ def couvertes_pour(chemin: Path, prioritaires: set[str]) -> set[str] | None:
     return prioritaires if chemin.stem == "extraction_locale" else None
 
 
-def qualifier(fichiers: list[Path], modele: str, limite: int | None, plafond: float, dry_run: bool) -> int:
+def demander(moteur: str, modele: str, texte: str, url: str, source: str) -> dict:
+    """Question de qualification posée à l'API (outil forcé) ou au modèle local (même question, schéma JSON de l'outil) ;
+    changement lecture-pdf-locale, voie A du 2026-11-19."""
+    import extractor
+    if moteur == "api":
+        return extractor.qualifier_fiche(texte, url, CONSIGNE_QUALIFICATION, QUALIFICATION_TOOL, source, modele)
+    question = extractor.contenu_qualification(texte, url, avec_outil=False)
+    return echantillon.appeler_ollama(modele, [{"role": "system", "content": CONSIGNE_QUALIFICATION},
+                                              {"role": "user", "content": question}], QUALIFICATION_TOOL["input_schema"])
+
+
+def qualifier(fichiers: list[Path], modele: str, limite: int | None, plafond: float, dry_run: bool, moteur: str = "api") -> int:
     echantillon.charger_env()
     import extractor
-    extractor.cout_usd(modele, 0, 0)  # tarif connu, sinon exception avant tout appel
+    local = moteur != "api"
+    if not local:
+        extractor.cout_usd(modele, 0, 0)  # tarif connu, sinon exception avant tout appel
     aujourdhui = datetime.now().strftime("%Y-%m-%d")
     prioritaires = adresses_prioritaires(fichiers)
     total, total_est = 0, 0.0
     for chemin in fichiers:
         fiches = echantillon._charger_liste(chemin)
         restantes = a_qualifier(fiches, aujourdhui, couvertes_pour(chemin, prioritaires))
-        est = sum(estimation_euros(len(texte_pour_classement(f)[0]), modele) for f in restantes)
+        est = 0.0 if local else sum(estimation_euros(len(texte_pour_classement(f)[0]), modele) for f in restantes)
         if restantes:
             print(f"{chemin.name} : {len(fiches)} fiches, {len(restantes)} à qualifier, {est:.3f} euros estimés")
         total += len(restantes)
         total_est += est
-    print(f"Modèle {modele}, tarif {extractor.TARIFS_USD_PAR_MTOK[modele]} USD par million de tokens, "
-          f"cumul déjà dépensé {echantillon.cout_cumule(modele):.3f} euros, plafond {plafond:.2f} euros.")
+    if local:
+        print(f"Modèle local {modele} (Ollama) : zéro euro, sans plafond.")
+    else:
+        print(f"Modèle {modele}, tarif {extractor.TARIFS_USD_PAR_MTOK[modele]} USD par million de tokens, "
+              f"cumul déjà dépensé {echantillon.cout_cumule(modele):.3f} euros, plafond {plafond:.2f} euros.")
     if dry_run:
         print(f"Essai à blanc : {total} fiches à qualifier, {total_est:.3f} euros estimés ; rien n'a été écrit ni appelé.")
         return 0
@@ -185,14 +201,14 @@ def qualifier(fichiers: list[Path], modele: str, limite: int | None, plafond: fl
         for f in a_qualifier(fiches, aujourdhui, couvertes):
             if limite is not None and faites >= limite:
                 break
-            if echantillon.cout_cumule(modele) >= plafond:
+            if not local and echantillon.cout_cumule(modele) >= plafond:
                 print(f"Plafond {plafond:.2f} euros atteint pour {modele} : arrêt, fiches déjà qualifiées conservées.")
                 return 1
             texte, origine = texte_pour_classement(f)
             url, source = f.get("url_source", ""), (f.get("scrape_metadata") or {}).get("source", "")
             t0 = time.time()
             try:
-                reponse = extractor.qualifier_fiche(texte, url, CONSIGNE_QUALIFICATION, QUALIFICATION_TOOL, source, modele)
+                reponse = demander(moteur, modele, texte, url, source)
                 q = normaliser_qualification(reponse, modele, time.strftime("%Y-%m-%dT%H:%M:%S"), origine)
             except Exception as err:
                 print(f"  échec {url[:70]} {type(err).__name__}: {str(err).splitlines()[0][:80]}")
@@ -203,7 +219,7 @@ def qualifier(fichiers: list[Path], modele: str, limite: int | None, plafond: fl
             print(f"  [{faites}] {','.join(q['destinataires']) or '-':28s} {q['type_appel']:20s} {q['champ']:13s} {time.time() - t0:4.1f}s  {(f.get('titre') or '')[:40]}")
         if limite is not None and faites >= limite:
             break
-    print(f"{faites} fiches qualifiées ; coût cumulé de {modele} : {echantillon.cout_cumule(modele):.3f} euros"
+    print(f"{faites} fiches qualifiées ; " + ("zéro euro (modèle local)" if local else f"coût cumulé de {modele} : {echantillon.cout_cumule(modele):.3f} euros")
           + (f" ; sauvegardes dans {dossier}" if faites else ""))
     return 0
 
@@ -217,14 +233,16 @@ def main() -> int:
     parser.add_argument("--limite", type=int)
     parser.add_argument("--plafond", type=float, default=5.0)
     parser.add_argument("--fichier", action="append", help="fichier de résultats (défaut : ceux de l'import)")
+    parser.add_argument("--moteur", default="api", choices=["api", "ollama"], help="ollama : modèle local, zéro euro")
     args = parser.parse_args()
+    modele = "qwen3:8b" if args.moteur == "ollama" and args.modele == MODELE_DEFAUT else args.modele
     fichiers = [Path(f) for f in args.fichier] if args.fichier else fichiers_de_l_import()
     if args.bilan:
         fiches = [f for chemin in fichiers for f in echantillon._charger_liste(chemin)]
         print(bilan(fiches))
         return 0
     if args.qualifier:
-        return qualifier(fichiers, args.modele, args.limite, args.plafond, args.dry_run)
+        return qualifier(fichiers, modele, args.limite, args.plafond, args.dry_run, args.moteur)
     parser.print_help()
     return 0
 

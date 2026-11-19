@@ -323,36 +323,36 @@ def est_un_aap(text: str, url: str, consigne: str, source: str = "", model: str 
     return _appeler(model or MODEL, consigne, EST_AAP_TOOL, user_content, 1024, source, url, "est_aap")
 
 
+def contenu_verification(text: str, fiche: dict, url: str, avec_outil: bool = True) -> str:
+    """Texte de la question de controle, commun a l API et au modele local (lecture-pdf-locale, 2026-11-19)."""
+    import json as _json
+    contenu = (f"URL source : {url}" + chr(10) + chr(10)
+               + "Fiche produite par l extracteur (JSON) :" + chr(10) + _json.dumps(fiche, ensure_ascii=False, indent=1)
+               + chr(10) + chr(10) + "Texte de la page :" + chr(10) + "-----" + chr(10) + text[:MAX_TEXT_CHARS] + chr(10)
+               + "-----")
+    return contenu + chr(10) + chr(10) + "Reponds en appelant l outil verification." if avec_outil else contenu
+
+
+def contenu_qualification(text: str, url: str, avec_outil: bool = True) -> str:
+    """Texte de la question de qualification, commun a l API et au modele local (lecture-pdf-locale, 2026-11-19)."""
+    contenu = (f"URL source : {url}" + chr(10) + chr(10) + "Texte de la page :" + chr(10) + "-----" + chr(10)
+               + text[:MAX_TEXT_CHARS] + chr(10) + "-----")
+    return contenu + chr(10) + chr(10) + "Reponds en appelant l outil qualification." if avec_outil else contenu
+
+
 def verifier_fiche(text: str, fiche: dict, url: str, consigne: str, source: str = "", model: str | None = None) -> dict:
     """Relecture d une fiche contre le texte de sa page : un verdict par champ (verification-assistee-haiku).
 
     fiche : les seuls champs verifies, tels que la fiche les porte ; consigne : CONSIGNE_VERIFICATION de verification.py.
     """
-    import json as _json
-
-    user_content = (
-        f"URL source : {url}\n\n"
-        f"Fiche produite par l extracteur (JSON) :\n{_json.dumps(fiche, ensure_ascii=False, indent=1)}\n\n"
-        f"Texte de la page :\n"
-        f"-----\n"
-        f"{text[:MAX_TEXT_CHARS]}\n"
-        f"-----\n\n"
-        f"Reponds en appelant l outil verification."
-    )
+    user_content = contenu_verification(text, fiche, url)
     return _appeler(model or MODEL, consigne, VERIFICATION_TOOL, user_content, 2048, source, url, "verification")
 
 
 def qualifier_fiche(text: str, url: str, consigne: str, tool: dict, source: str = "", model: str | None = None) -> dict:
     """Qualification d une fiche a choix fermes : destinataires, type d appel, objets, date d ouverture, pieces, champ
     (qualifier_fiches.py, jour 2 du plan MVP, 2026-10-20)."""
-    user_content = (
-        f"URL source : {url}" + chr(10) + chr(10)
-        + "Texte de la page :" + chr(10)
-        + "-----" + chr(10)
-        + f"{text[:MAX_TEXT_CHARS]}" + chr(10)
-        + "-----" + chr(10) + chr(10)
-        + "Reponds en appelant l outil qualification."
-    )
+    user_content = contenu_qualification(text, url)
     return _appeler(model or MODEL, consigne, tool, user_content, 1024, source, url, "qualification")
 
 

@@ -54,3 +54,16 @@ def test_bilan_compte_par_destinataire_et_type():
 
 def test_estimation_connue_et_positive():
     assert 0 < q.estimation_euros(10_000, "claude-haiku-5-5") < 0.01
+
+
+def test_qualification_par_le_moteur_local(monkeypatch):
+    """Changement lecture-pdf-locale, voie A (2026-11-19) : même question et même schéma que l'API, modèle local."""
+    import echantillon
+    import extractor
+    import qualifier_fiches as q
+    contenu = extractor.contenu_qualification("Texte de la page", "https://x.fr/a", avec_outil=False)
+    assert "https://x.fr/a" in contenu and "Texte de la page" in contenu and "outil" not in contenu
+    vu = {}
+    monkeypatch.setattr(echantillon, "appeler_ollama", lambda modele, messages, schema: vu.update(s=schema, msg=messages) or {"ok": 1})
+    assert q.demander("ollama", "qwen3:8b", "Texte de la page", "https://x.fr/a", "src") == {"ok": 1}
+    assert vu["s"] == q.QUALIFICATION_TOOL["input_schema"] and vu["msg"][0]["content"] == q.CONSIGNE_QUALIFICATION

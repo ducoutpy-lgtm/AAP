@@ -240,21 +240,37 @@ def rapport_markdown(fiches: list[dict], aujourdhui: str) -> str:
 
 # ---------------------------------------------------------------- appels et écriture
 
-def verifier(fichiers: list[Path], modele: str, limite: int | None, plafond: float, dry_run: bool) -> int:
+def demander(moteur: str, modele: str, texte: str, fiche: dict, url: str, source: str) -> dict:
+    """Question de contrôle posée à l'API (outil forcé) ou au modèle local (même question, schéma JSON de l'outil) ;
+    changement lecture-pdf-locale, voie A du 2026-11-19."""
+    import extractor
+    if moteur == "api":
+        return extractor.verifier_fiche(texte, fiche, url, CONSIGNE_VERIFICATION, source, modele)
+    question = extractor.contenu_verification(texte, fiche, url, avec_outil=False)
+    return echantillon.appeler_ollama(modele, [{"role": "system", "content": CONSIGNE_VERIFICATION},
+                                              {"role": "user", "content": question}], extractor.VERIFICATION_TOOL["input_schema"])
+
+
+def verifier(fichiers: list[Path], modele: str, limite: int | None, plafond: float, dry_run: bool, moteur: str = "api") -> int:
     echantillon.charger_env()
     import extractor
-    extractor.cout_usd(modele, 0, 0)  # tarif connu, sinon exception avant tout appel
+    local = moteur != "api"
+    if not local:
+        extractor.cout_usd(modele, 0, 0)  # tarif connu, sinon exception avant tout appel
     aujourdhui = datetime.now().strftime("%Y-%m-%d")
     total, total_est = 0, 0.0
     for chemin in fichiers:
         fiches = echantillon._charger_liste(chemin)
         restantes = a_verifier(fiches, aujourdhui)
-        est = sum(estimation_euros(len(texte_pour_classement(f)[0]), modele) for f in restantes)
+        est = 0.0 if local else sum(estimation_euros(len(texte_pour_classement(f)[0]), modele) for f in restantes)
         print(f"{chemin.name} : {len(fiches)} fiches, {len(restantes)} à vérifier, {est:.3f} euros estimés")
         total += len(restantes)
         total_est += est
-    print(f"Modèle {modele}, tarif {extractor.TARIFS_USD_PAR_MTOK[modele]} USD par million de tokens (entrée, sortie), "
-          f"cumul déjà dépensé {echantillon.cout_cumule(modele):.3f} euros, plafond {plafond:.2f} euros.")
+    if local:
+        print(f"Modèle local {modele} (Ollama) : zéro euro, sans plafond.")
+    else:
+        print(f"Modèle {modele}, tarif {extractor.TARIFS_USD_PAR_MTOK[modele]} USD par million de tokens (entrée, sortie), "
+              f"cumul déjà dépensé {echantillon.cout_cumule(modele):.3f} euros, plafond {plafond:.2f} euros.")
     if dry_run:
         print(f"Essai à blanc : {total} fiches à vérifier, {total_est:.3f} euros estimés ; rien n'a été écrit ni appelé.")
         return 0
@@ -268,14 +284,14 @@ def verifier(fichiers: list[Path], modele: str, limite: int | None, plafond: flo
         for f in a_verifier(fiches, aujourdhui):
             if limite is not None and faites >= limite:
                 break
-            if echantillon.cout_cumule(modele) >= plafond:
+            if not local and echantillon.cout_cumule(modele) >= plafond:
                 print(f"Plafond {plafond:.2f} euros atteint pour {modele} : arrêt, fiches déjà vérifiées conservées.")
                 return 1
             texte, origine = texte_pour_classement(f)
             url, source = f.get("url_source", ""), (f.get("scrape_metadata") or {}).get("source", "")
             t0 = time.time()
             try:
-                reponse = extractor.verifier_fiche(texte, fiche_resumee(f), url, CONSIGNE_VERIFICATION, source, modele)
+                reponse = demander(moteur, modele, texte, fiche_resumee(f), url, source)
                 v = normaliser_verification(reponse, modele, origine, time.strftime("%Y-%m-%dT%H:%M:%S"))
             except Exception as err:  # une fiche en echec n arrete pas le lot : elle reste a verifier a la relance
                 print(f"  échec {url[:70]} {type(err).__name__}: {str(err).splitlines()[0][:80]}")
@@ -287,7 +303,7 @@ def verifier(fichiers: list[Path], modele: str, limite: int | None, plafond: flo
                   + (f"  <- {', '.join(v['douteux'])}" if v["douteux"] else ""))
         if limite is not None and faites >= limite:
             break
-    print(f"{faites} fiches vérifiées ; coût cumulé de {modele} : {echantillon.cout_cumule(modele):.3f} euros"
+    print(f"{faites} fiches vérifiées ; " + ("zéro euro (modèle local)" if local else f"coût cumulé de {modele} : {echantillon.cout_cumule(modele):.3f} euros")
           + (f" ; sauvegardes dans {dossier}" if faites else ""))
     return 0
 
@@ -308,10 +324,12 @@ def main() -> int:
     parser.add_argument("--limite", type=int, help="nombre de fiches à vérifier au plus (essai)")
     parser.add_argument("--plafond", type=float, default=echantillon.PLAFOND_EUROS)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--moteur", default="api", choices=["api", "ollama"], help="ollama : modèle local, zéro euro")
     args = parser.parse_args()
     fichiers = [Path(f) for f in args.fichier] if args.fichier else fichiers_de_l_import()
+    modele = "qwen3:8b" if args.moteur == "ollama" and args.modele == MODELE_DEFAUT else args.modele
     if args.verifier:
-        return verifier(fichiers, args.modele, args.limite, args.plafond, args.dry_run)
+        return verifier(fichiers, modele, args.limite, args.plafond, args.dry_run, args.moteur)
     if args.rapport:
         rapport()
         return 0

@@ -128,3 +128,18 @@ def test_decision_du_modele_garde_dates_et_montants_du_portail_europeen():
     fiche["scrape_metadata"]["moteur"] = "api-portail"
     d = v.decision_du_modele(fiche)
     assert d["statut"] == "validee" and d["corrections"] == {}
+
+
+# ---------------------------------------------------------------- moteur local (lecture-pdf-locale, voie A, 2026-11-19)
+
+def test_question_de_controle_partagee_et_moteur_local(monkeypatch):
+    import extractor
+    import echantillon
+    contenu = extractor.contenu_verification("Texte de la page", {"titre": "T"}, "https://x.fr/a", avec_outil=False)
+    assert "https://x.fr/a" in contenu and '"titre": "T"' in contenu and "Texte de la page" in contenu
+    assert "outil" not in contenu
+    vu = {}
+    monkeypatch.setattr(echantillon, "appeler_ollama", lambda modele, messages, schema: vu.update(m=modele, msg=messages, s=schema) or {"ok": 1})
+    assert v.demander("ollama", "qwen3:8b", "Texte de la page", {"titre": "T"}, "https://x.fr/a", "src") == {"ok": 1}
+    assert vu["m"] == "qwen3:8b" and vu["s"] == extractor.VERIFICATION_TOOL["input_schema"]
+    assert vu["msg"][0] == {"role": "system", "content": v.CONSIGNE_VERIFICATION} and "https://x.fr/a" in vu["msg"][1]["content"]
