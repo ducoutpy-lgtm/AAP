@@ -4,6 +4,11 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Ajouté (2026-11-19, voie A « tout local », question 33)
+- `verification.py` et `qualifier_fiches.py` : option `--moteur ollama` (modèle local `qwen3:8b`, zéro euro, sans
+  plafond), même question et même schéma que l'API (`extractor.contenu_verification`, `contenu_qualification`).
+  Mesure contre Haiku sur 14 fiches : `LOCAL_CONTRE_HAIKU.md`.
+
 ### Corrigé (2026-11-18)
 - `alertes.py` : les liens des courriels du lundi pointent vers le site en ligne (https://aapi-11bc3.web.app) ; ils
   pointaient vers http://localhost:3000, adresse qui ne marche que sur le PC de Monsieur DUCOUT.

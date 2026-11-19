@@ -74,8 +74,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   (tâche 2.1), puis collecte des PDF et chaîne locale de nuit (3.1).
   Mesure 2.1 lancée vers 12 h 15 (Ollama démarré, Unity arrêté) : 14 fiches contrôlées et qualifiées par Haiku,
   verdicts retirés dans une copie (dossier de travail de la séance : `reference_haiku.json`, `mesure_locale.json`,
-  journaux `mesure_verif.log` et `mesure_qualif.log`) ; à comparer champ par champ, puis résultat dans
-  `scraping/LOCAL_CONTRE_HAIKU.md`.
+  journaux `mesure_verif.log` et `mesure_qualif.log`). Résultat dans `scraping/LOCAL_CONTRE_HAIKU.md` : contrôle local
+  utilisable pour le tri (plus prudent), qualification locale sans gain pour les recommandations. Prochaine étape (3.1) :
+  collecte des PDF par la veille et tâche planifiée de nuit pour la chaîne locale (création d'une tâche Windows : son
+  accord).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
