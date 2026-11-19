@@ -60,6 +60,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   attend ses réponses (23 documents réutilisables, 25 suppression du compte, 29 recommandations, 33 lecture des PDF) ou
   le budget de la semaine prochaine (contrôle des 27 fiches jamais contrôlées, environ 0,02 euro). Prochaine preuve : la
   veille du lundi 23 novembre (tri automatique après l'import, liens du courriel).
+- 2026-11-19 (réponses 23, 25, 29, 33 relayées par la séance de pilotage, rangées dans « Tranchées ») : 29 (a) fait
+  (règles plus strictes et règle Horizon Europe ; tirage au mieux 12 pertinentes sur 20) ; 23 (b) fait (textes
+  réutilisables, joué sur les émulateurs). Restent : 25 (suppression du compte, règles à déployer sur son accord), 33 et
+  29 (b) par le modèle local (règle « modèle local par défaut » à confirmer par lui, car elle renverse la décision V4 du
+  19 octobre écrite dans `CLAUDE.md`). Rien de mis en ligne depuis le 18.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

@@ -27,7 +27,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | 7 bis | Premier clic d'un compte neuf sur « Candidater » (appel d'un financeur inscrit) | Corrigé, en ligne le 2026-11-16 | Renvoi au tableau de bord au premier clic, trouvé en jouant le parcours complet le 2026-11-16 ; changement `premier-clic-candidater` ; question 28 |
 | 8 | Recherches sauvegardées avec alerte du lundi | Fait, en ligne le 2026-11-16 | Changement `alertes-recherches-sauvegardees`, joué sur les émulateurs ; question 24 (mise en ligne) |
 | 9 | Pièces jointes d'une candidature | Limite annoncée | Le stockage de fichiers exige la facturation Blaze (question 5) ; la candidature part et l'écran nomme les pièces « non déposées » |
-| 10 | Documents réutilisables d'une candidature à l'autre | Décision attendue | Question 23 |
+| 10 | Documents réutilisables d'une candidature à l'autre | Textes faits, pas en ligne ; pièces jointes à l'ouverture de Blaze | Changement `textes-reutilisables` (question 23 (b), 2026-11-19), joué sur les émulateurs |
 
 ## Parcours financeur
 

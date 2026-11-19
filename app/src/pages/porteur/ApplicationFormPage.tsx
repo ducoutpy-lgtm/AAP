@@ -3,6 +3,7 @@
 // le vrai dossier est le formulaire du financeur, joint à l'appel). Trois étapes : le projet en quelques lignes, le
 // montant demandé, les pièces (le dossier de candidature rempli). Le pré-remplissage à partir du dossier PDF est le
 // jour 5 du plan MVP.
+import { ajouterTexte, LIBELLES_TEXTES, textesRemplis, type TextesReutilisables } from '../../utils/textesReutilisables';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { doc, getDoc, addDoc, collection, Timestamp } from 'firebase/firestore';
@@ -40,11 +41,20 @@ export default function ApplicationFormPage() {
   const [etape, setEtape] = useState(0);
   const [titre, setTitre] = useState('');
   const [resume, setResume] = useState('');
+  // Textes réutilisables du profil (changement textes-reutilisables, 2026-11-19)
+  const [textes, setTextes] = useState<TextesReutilisables | undefined>();
   const [montant, setMontant] = useState('');
   const [documents, setDocuments] = useState<File[]>([]);
   // Pré-remplissage depuis le dossier PDF (candidature-depuis-pdf, jour 5) : lecture par la fonction serveur
   const [lecture, setLecture] = useState(false);
   const [lu, setLu] = useState<PreRemplissage | null>(null);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    getDoc(doc(db, 'porteurProfiles', currentUser.uid))
+      .then(snap => setTextes((snap.data() as { textesReutilisables?: TextesReutilisables } | undefined)?.textesReutilisables))
+      .catch(err => console.error('Error loading reusable texts:', err));
+  }, [currentUser]);
 
   const preremplir = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fichier = e.target.files?.[0];
@@ -223,6 +233,17 @@ export default function ApplicationFormPage() {
                   className="input-field"
                   placeholder="En quelques lignes : quoi, pour qui, où, quand. Le détail est dans le dossier de candidature joint à l'étape 3."
                 />
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+                  {textesRemplis(textes).length === 0 ? (
+                    <span className="text-gray-500">
+                      Textes réutilisables (présentation, références, moyens) : à enregistrer dans <Link to="/profil" className="underline">Mon profil</Link>.
+                    </span>
+                  ) : textesRemplis(textes).map(([cle, texte]) => (
+                    <Button key={cle} type="button" variant="ghost" onClick={() => setResume(ajouterTexte(resume, cle, texte))}>
+                      Ajouter : {LIBELLES_TEXTES[cle]}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           )}

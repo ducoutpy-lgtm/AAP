@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-19, question 23 (b))
+- Textes réutilisables (changement `textes-reutilisables`) : présentation de la structure, références, moyens humains et
+  matériels enregistrés dans Mon profil, ajoutés d'un clic au résumé d'une candidature ; sans stockage de fichiers.
+  Joué sur les émulateurs. Pas en ligne.
+
 ### Modifié (2026-11-19, question 29 (a))
 - Recommandations plus strictes : pas de point « votre statut » pour un appel ouvert à toute structure ou aux équipes de
   recherche ; un appel national n'est plus recommandé sur le seul champ ; un appel Horizon Europe n'est recommandé qu'à

@@ -47,6 +47,8 @@ export interface PorteurProfile {
   publics?: string[];
   // Fenêtre « Préciser mon profil » de la liste de démarrage (liste-demarrage, 2026-10-20)
   objetsProjet?: string[];
+  // Textes réutilisables d'une candidature à l'autre (changement textes-reutilisables, 2026-11-19)
+  textesReutilisables?: { presentation?: string; references?: string; moyens?: string };
   anneeOuverture?: number | null;
   rayonAction?: string | null;
   address?: Address;

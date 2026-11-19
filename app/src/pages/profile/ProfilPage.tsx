@@ -14,6 +14,7 @@ import CompleteFinanceurProfile from './CompleteFinanceurProfile';
 import { Button } from '../../components/ui/Button';
 import { EDITEUR } from '../legal/editeur';
 import { exporterMesDonnees } from '../../services/exportService';
+import { TextesReutilisablesCarte } from '../../components/profil/TextesReutilisablesCarte';
 import { nomFichierExport, SUR_DEMANDE_AU_DPO } from '../../utils/exportDonnees';
 
 const ROLES: Record<UserType, string> = { porteur: 'Candidat (établissement)', financeur: 'Financeur', admin: 'Administrateur' };
@@ -108,6 +109,9 @@ export default function ProfilPage() {
               </p>
             )}
           </div>
+          {userProfile.userType === 'porteur' && (
+            <TextesReutilisablesCarte uid={currentUser.uid} initial={(profil as PorteurProfile | null)?.textesReutilisables} />
+          )}
         </div>
       </div>
       {userProfile.userType === 'porteur' && <CompletePorteurProfile profilExistant={profil as PorteurProfile} />}
