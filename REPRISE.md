@@ -72,6 +72,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
 - 2026-11-19 après-midi : « Voie A, tout local » (question 33) : contrôle et qualification savent travailler en local
   (`--moteur ollama`, zéro euro, changement `lecture-pdf-locale` tâches 1.1-1.2). Suite : mesure local contre Haiku
   (tâche 2.1), puis collecte des PDF et chaîne locale de nuit (3.1).
+  Mesure 2.1 lancée vers 12 h 15 (Ollama démarré, Unity arrêté) : 14 fiches contrôlées et qualifiées par Haiku,
+  verdicts retirés dans une copie (dossier de travail de la séance : `reference_haiku.json`, `mesure_locale.json`,
+  journaux `mesure_verif.log` et `mesure_qualif.log`) ; à comparer champ par champ, puis résultat dans
+  `scraping/LOCAL_CONTRE_HAIKU.md`.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
