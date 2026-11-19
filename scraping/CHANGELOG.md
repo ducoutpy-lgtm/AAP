@@ -11,6 +11,8 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 - Lecture des PDF en local : la veille collecte aussi les PDF (`rejeu.py --pdf`), l'extraction payante du matin ne
   prend que les pages web (`--sans-pdf`), et la tâche « AAP Sante - lecture locale des PDF » (lundi 23 h,
   `chaine_pdf_locale.cmd`) fait tout en local : extraction, contrôle, qualification, import en « à valider », tri.
+- `chaine_pdf_locale.py` : la chaîne demande à Windows de rester éveillé pendant qu'elle tourne (SetThreadExecutionState),
+  sans modifier les réglages d'alimentation (une mesure locale avait échoué sur une mise en veille le 2026-11-19).
 
 ### Corrigé (2026-11-18)
 - `alertes.py` : les liens des courriels du lundi pointent vers le site en ligne (https://aapi-11bc3.web.app) ; ils

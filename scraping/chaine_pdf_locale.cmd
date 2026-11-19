@@ -13,9 +13,6 @@ if /i not "%~1"=="sanspause" (
 echo Chaine locale des PDF : debut %date% %time%
 rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance)
 "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
-"..\.venv\Scripts\python.exe" extraction_locale.py --extraire --seulement-pdf
-"..\.venv\Scripts\python.exe" verification.py --verifier --moteur ollama --fichier results\extraction_pdf_locale.json
-"..\.venv\Scripts\python.exe" qualifier_fiches.py --qualifier --moteur ollama --fichier results\extraction_pdf_locale.json
-"..\.venv\Scripts\python.exe" ..\scripts\import_to_firestore.py --source extraction_pdf_locale --a-valider
-"..\.venv\Scripts\python.exe" ..\scripts\trier_file.py --reel
+rem Etapes et demande de rester eveille : chaine_pdf_locale.py
+"..\.venv\Scripts\python.exe" chaine_pdf_locale.py
 echo Chaine locale des PDF terminee le %date% %time%.
