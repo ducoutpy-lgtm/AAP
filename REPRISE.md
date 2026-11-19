@@ -65,6 +65,8 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   réutilisables, joué sur les émulateurs). Restent : 25 (suppression du compte, règles à déployer sur son accord), 33 et
   29 (b) par le modèle local (règle « modèle local par défaut » à confirmer par lui, car elle renverse la décision V4 du
   19 octobre écrite dans `CLAUDE.md`). Rien de mis en ligne depuis le 18.
+  Brouillon `openspec/changes/lecture-pdf-locale/proposal.md` : voies A (tout local, à mesurer) et B (extraction locale,
+  contrôle Haiku), heure de la tâche de nuit ; en attente de son choix.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
