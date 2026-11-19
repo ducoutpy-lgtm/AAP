@@ -225,6 +225,22 @@ describe('propriétaire figé et financeur suspendu (corrections-relecture-16-no
   });
 });
 
+describe('suppression du compte (question 25, 2026-11-19)', () => {
+  it('le candidat supprime sa candidature à un appel importé, pas une candidature envoyée à un financeur inscrit', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'applications/c3'),
+      { porteurId: 'porteur1', financeurId: 'scraped', status: 'submitted' }));
+    await assertSucceeds(deleteDoc(doc(porteur(), 'applications/c3')));
+    await assertFails(deleteDoc(doc(porteur(), 'applications/c2')));
+  });
+
+  it('sur une candidature envoyée, il ne peut que remplacer son identifiant par « compte-supprime »', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'applications/c2'), { porteurId: 'porteur2' }));
+    await assertFails(updateDoc(doc(porteur(), 'applications/c2'), { porteurId: 'compte-supprime', status: 'accepted' }));
+    await assertFails(updateDoc(doc(porteur2(), 'applications/c2'), { porteurId: 'compte-supprime' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'applications/c2'), { porteurId: 'compte-supprime' }));
+  });
+});
+
 describe('paiements et statistiques : fonctions serveur seulement', () => {
   it('même l’administrateur n’écrit pas dans payments ni analytics', async () => {
     await assertFails(setDoc(doc(admin(), 'payments/p1'), { userId: 'porteur1', amount: 1 }));

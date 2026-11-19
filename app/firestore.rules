@@ -136,11 +136,16 @@ service cloud.firestore {
       // Mise à jour : le porteur propriétaire tant que la candidature est en brouillon, ou le financeur (évaluation)
       allow update: if isAuthenticated() && (
         (resource.data.porteurId == request.auth.uid && resource.data.status == 'draft') ||
-        resource.data.financeurId == request.auth.uid
+        resource.data.financeurId == request.auth.uid ||
+        // Suppression du compte (question 25, 2026-11-19) : sur une candidature envoyée, le candidat ne peut que
+        // remplacer son identifiant par « compte-supprime »
+        (resource.data.porteurId == request.auth.uid && request.resource.data.porteurId == 'compte-supprime'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['porteurId']))
       );
 
-      // Suppression : le porteur propriétaire, en brouillon seulement
-      allow delete: if isOwner(resource.data.porteurId) && resource.data.status == 'draft';
+      // Suppression : le porteur propriétaire, en brouillon, ou candidature à un appel importé (suivi tenu par lui seul ;
+      // suppression du compte, question 25)
+      allow delete: if isOwner(resource.data.porteurId) && (resource.data.status == 'draft' || resource.data.financeurId == 'scraped');
     }
 
     // Recherches sauvegardées et favoris : le propriétaire seulement (userId dans le document)

@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-19, question 25)
+- Suppression du compte en libre-service (changement `suppression-compte`) : bouton dans Mon profil (connexion récente
+  exigée), profil, recherches, favoris, notifications, candidatures aux appels importés et compte effacés ; candidatures
+  reçues par un financeur inscrit gardées avec « compte-supprime » ; règles Firestore des candidatures adaptées (38
+  tests) ; `scripts/anonymiser_journal.py` pour le journal. Joué sur les émulateurs. Règles et hébergement à mettre en
+  ligne sur accord.
+
 ### Ajouté (2026-11-19, question 23 (b))
 - Textes réutilisables (changement `textes-reutilisables`) : présentation de la structure, références, moyens humains et
   matériels enregistrés dans Mon profil, ajoutés d'un clic au résumé d'une candidature ; sans stockage de fichiers.

@@ -67,6 +67,8 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   19 octobre écrite dans `CLAUDE.md`). Rien de mis en ligne depuis le 18.
   Brouillon `openspec/changes/lecture-pdf-locale/proposal.md` : voies A (tout local, à mesurer) et B (extraction locale,
   contrôle Haiku), heure de la tâche de nuit ; en attente de son choix.
+  25 fait aussi (`suppression-compte`, joué sur les émulateurs). À mettre en ligne sur son accord : règles Firestore
+  (suppression) et hébergement (textes réutilisables, recommandations, suppression).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

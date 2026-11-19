@@ -43,7 +43,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | 13 | Un compte ne peut pas se donner le rôle administrateur | Fait, en ligne | Changement `regles-role-protege`, 30 tests de règles, règles publiées le 2026-11-13 |
 | 14 | Pièces de candidature lisibles par leur seul auteur, documents d'appel en lecture seule (règles du stockage) | Testé, en ligne le 2026-11-16 | Changement `regles-stockage-durcies` (« released rules storage.rules ») ; propriétaire figé des recherches, favoris et notifications : règles Firestore en ligne le 2026-11-16 |
 | 15 | Télécharger ses données (accès, portabilité) | Fait, en ligne le 2026-11-16 | Changement `export-donnees-personnelles` ; question 26 |
-| 16 | Supprimer son compte (effacement) | Décision attendue | Question 25 ; en attendant, par le délégué à la protection des données |
+| 16 | Supprimer son compte (effacement) | Fait, pas en ligne | Changement `suppression-compte` (question 25), joué sur les émulateurs ; règles et hébergement à mettre en ligne sur accord |
 
 ## Exploitation
 

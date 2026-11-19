@@ -74,8 +74,9 @@ export default function ConfidentialitePage() {
         </p>
         <p className="mt-2">
           Pour l'accès et la portabilité, un compte dont le profil est complété peut aussi télécharger lui-même ses données
-          dans un fichier JSON, depuis Mon profil, bouton « Télécharger mes données » ; à défaut, écrivez au délégué à la
-          protection des données.
+          dans un fichier JSON, depuis Mon profil, bouton « Télécharger mes données » ; il peut aussi supprimer son compte
+          depuis Mon profil (les candidatures déjà reçues par un financeur restent chez lui, sans identifiant du candidat) ;
+          à défaut, écrivez au délégué à la protection des données.
         </p>
       </Section>
 

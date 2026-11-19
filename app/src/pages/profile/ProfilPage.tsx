@@ -14,6 +14,8 @@ import CompleteFinanceurProfile from './CompleteFinanceurProfile';
 import { Button } from '../../components/ui/Button';
 import { EDITEUR } from '../legal/editeur';
 import { exporterMesDonnees } from '../../services/exportService';
+import { supprimerMonCompte } from '../../services/suppressionService';
+import { connexionRecente } from '../../utils/suppressionCompte';
 import { TextesReutilisablesCarte } from '../../components/profil/TextesReutilisablesCarte';
 import { nomFichierExport, SUR_DEMANDE_AU_DPO } from '../../utils/exportDonnees';
 
@@ -31,6 +33,23 @@ export default function ProfilPage() {
   const [chargement, setChargement] = useState(true);
   // Export RGPD (export-donnees-personnelles, 2026-11-16) : fichier JSON construit dans le navigateur
   const [exportEtat, setExportEtat] = useState<'' | 'en-cours' | 'echec'>('');
+  // Suppression du compte (suppression-compte, question 25, 2026-11-19)
+  const [suppression, setSuppression] = useState<'' | 'en-cours' | 'reconnexion' | 'echec'>('');
+  const supprimerCompte = async () => {
+    if (!currentUser || !userProfile) return;
+    if (!connexionRecente(currentUser.metadata.lastSignInTime, new Date())) { setSuppression('reconnexion'); return; }
+    if (!confirm('Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications et '
+      + 'vos candidatures aux appels importés seront effacés ; les candidatures déjà reçues par un financeur resteront chez '
+      + 'lui, sans votre identifiant. Cette action est irréversible.')) return;
+    setSuppression('en-cours');
+    try {
+      await supprimerMonCompte(currentUser, userProfile.userType);
+      window.location.assign('/');
+    } catch (err) {
+      console.error('Error deleting account:', err);
+      setSuppression('echec');
+    }
+  };
   const telechargerMesDonnees = async () => {
     if (!currentUser || !userProfile) return;
     setExportEtat('en-cours');
@@ -97,8 +116,7 @@ export default function ProfilPage() {
             <h2 className="font-semibold text-gray-900 mb-1">Mes données personnelles</h2>
             <p className="text-gray-600 mb-2">
               Fichier JSON de vos données : compte, profil, candidatures, recherches, favoris, notifications, messages. Sur
-              demande au délégué à la protection des données ({EDITEUR.contact}) : {SUR_DEMANDE_AU_DPO.join(', ')} ; de
-              même pour la suppression du compte.
+              demande au délégué à la protection des données ({EDITEUR.contact}) : {SUR_DEMANDE_AU_DPO.join(', ')}.
             </p>
             <Button variant="secondary" onClick={telechargerMesDonnees} disabled={exportEtat === 'en-cours'}>
               {exportEtat === 'en-cours' ? 'Préparation du fichier...' : 'Télécharger mes données'}
@@ -108,6 +126,23 @@ export default function ProfilPage() {
                 Le fichier n'a pas pu être produit. Réessayez, ou écrivez au délégué à la protection des données.
               </p>
             )}
+            <div className="mt-3">
+              <Button variant="danger" onClick={supprimerCompte} disabled={suppression === 'en-cours'}>
+                {suppression === 'en-cours' ? 'Suppression...' : 'Supprimer mon compte'}
+              </Button>
+              {suppression === 'reconnexion' && (
+                <p className="text-amber-700 mt-2">
+                  Par sécurité, la suppression demande une connexion récente : déconnectez-vous, reconnectez-vous, puis
+                  recommencez dans les cinq minutes.
+                </p>
+              )}
+              {suppression === 'echec' && (
+                <p className="text-error-600 mt-2">
+                  La suppression n'a pas abouti. Reconnectez-vous et recommencez, ou écrivez au délégué à la protection des
+                  données ({EDITEUR.contact}).
+                </p>
+              )}
+            </div>
           </div>
           {userProfile.userType === 'porteur' && (
             <TextesReutilisablesCarte uid={currentUser.uid} initial={(profil as PorteurProfile | null)?.textesReutilisables} />
