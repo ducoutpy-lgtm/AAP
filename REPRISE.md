@@ -85,6 +85,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   graphique et Ollama sont libres (`ollama ps`, `nvidia-smi` ; la séance Perroquet fait une mesure d'environ 40 min),
   la chaîne locale est lancée par la tâche planifiée (`Start-ScheduledTask` « AAP Sante - lecture locale des PDF »),
   journal `scraping/logs/chaine_pdf_locale.log`.
+- 2026-11-19, 16 h 10 : contre-ordre de Monsieur DUCOUT (relayé) : **premier passage des PDF : demain 20/11**. La
+  collecte des PDF (sans modèle) lancée à 15 h 45 finit d'elle-même ; la chaîne locale n'est PAS lancée aujourd'hui.
+  Demain : relire la fin de `scraping/logs/collecte_pdf_2026-11-19.log`, vérifier que la carte graphique et Ollama sont
+  libres (`ollama ps`, `nvidia-smi`), puis lancer la chaîne (`Start-ScheduledTask -TaskName "AAP Sante - lecture locale
+  des PDF"`, ou `scraping\chaine_pdf_locale.cmd`) ; elle demande à Windows de rester éveillé ; journal
+  `scraping/logs/chaine_pdf_locale.log`. La tâche du lundi 23 h reste en place.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
