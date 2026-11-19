@@ -11,6 +11,7 @@ import { regionDepuisCodePostal } from '../pages/onboarding/parcours';
 
 export type ProfilReco = Pick<PorteurProfile, 'structureType' | 'typeEtablissement' | 'objetsProjet' | 'address'>;
 export type AppelReco = Pick<AAP, 'territoriesEligible' | 'deadline' | 'qualification' | 'structureTypeEligible'
+  | 'title' | 'financeurName'
   | 'scrapeMetadata' | 'validation'>;
 export interface Recommandation<T> { aap: T; points: number; raisons: string[]; aVerifier: string[] }
 
@@ -76,12 +77,14 @@ export function evaluerAppel<T extends AppelReco>(aap: T, p: ProfilReco): Recomm
   const destinataires = aap.qualification?.destinataires ?? [];
   const statut = destinatairesDuProfil(p.structureType);
   if (destinataires.length === 0) aVerifier.push("À qui s'adresse l'appel : non précisé");
-  else if (destinataires.includes('tous')) { points += 1; raisons.push('Ouvert à toute structure'); }
+  // Question 29 (a), décision du 2026-11-19 : « toute structure » ou les équipes de recherche parmi les destinataires ne
+  // disent rien du public visé (qualification souvent trop large) : la raison reste affichée, sans point
+  else if (destinataires.includes('tous')) raisons.push('Ouvert à toute structure');
   else if (statut.length === 0) aVerifier.push("À qui s'adresse l'appel : à comparer à votre statut");
   else {
     const communs = destinataires.filter(d => statut.includes(d));
     if (communs.length === 0) return null;
-    points += 3;
+    if (!destinataires.includes('recherche')) points += 3;
     raisons.push(`Ouvert aux ${communs.map(libelleDestinataire).join(', ')}, votre statut`);
   }
 
@@ -110,11 +113,16 @@ export function evaluerAppel<T extends AppelReco>(aap: T, p: ProfilReco): Recomm
   const rechercheSeule = objetsFiche.includes('recherche-innovation') && objetsFiche.every(o => o === 'recherche-innovation' || o === 'autre');
   const faitDeLaRecherche = (p.objetsProjet ?? []).includes('recherche-innovation') || p.typeEtablissement === 'recherche'
     || p.structureType === 'laboratoire';
+  // Horizon Europe finance des consortiums de recherche (tirage du 2026-11-19 : cinq appels sur vingt proposés à des
+  // structures de soin parce que la qualification leur prêtait l'objet « prévention ») : réservé aux profils de recherche
+  const horizonEurope = /\bHORIZON-/.test(aap.title ?? '') || /horizon europe/i.test(aap.financeurName ?? '');
+  if (horizonEurope && !faitDeLaRecherche) return null;
   if (cites.length === 0 && objets.length === 0) {
     if (rechercheSeule && !faitDeLaRecherche) return null;
     // Un appel national ne se recommande que sur un élément concret commun (« Première Usine » de Bpifrance, ouvert
     // aux associations, proposé à un EHPAD le 2026-11-13) ; un appel de la région sans domaine connu reste, avec réserve.
-    if (national && !champEgal) return null;
+    // Question 29 (a) : le champ seul ne suffit plus pour un appel national (type d'établissement cité ou objet commun)
+    if (national) return null;
     if (!champEgal && champ !== '' && (champFiche === 'sante' || champFiche === 'medico-social')) return null;
     if (!champEgal && (champFiche === '' || champFiche === 'incertain')) aVerifier.push("Domaine de l'appel non précisé");
   }

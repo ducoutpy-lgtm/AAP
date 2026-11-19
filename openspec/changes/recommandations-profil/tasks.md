@@ -28,6 +28,11 @@ Semaine 2 du plan de quatre semaines (« continue avec la semaine 2 », Monsieur
   recommandations tirées avec une graine fixe) ; liste à juger dans `docs/TIRAGE_RECOMMANDATIONS.md`. Zéro euro.
   (2026-11-16 : 363 fiches, 130 recommandations, vingt tirées, tirage identique au second passage (`cmp`) ; avis de la
   session : environ 4 pertinentes sur 20, qualification trop large ; question 29.)
+- [x] 5.0 bis (2026-11-19, question 29 « (a) maintenant ») Règles sans coût : pas de point de statut pour un appel ouvert à
+  toute structure ou aux équipes de recherche ; un appel national a besoin d'un type cité ou d'un objet commun ; un appel
+  Horizon Europe est réservé aux profils de recherche (ajout de la session, même famille de règles). Tests d'abord
+  (3 en échec, 2 anciens tests adaptés), `npm test` 116 verts. Tirage refait : 129 recommandations, au mieux 12
+  pertinentes sur 20 (avis dans `docs/TIRAGE_RECOMMANDATIONS.md`). Reste la voie (b), par le modèle local.
 - [ ] 5.1 Vérification par Monsieur DUCOUT : vingt recommandations tirées au sort pour un profil réel, au moins dix-huit
   pertinentes ; validation des choix par défaut (GCS, exercice coordonné, appel écarté s'il ne cite que d'autres types
   d'établissement, règles nationales et de domaine, seuil de 3 points).

@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié (2026-11-19, question 29 (a))
+- Recommandations plus strictes : pas de point « votre statut » pour un appel ouvert à toute structure ou aux équipes de
+  recherche ; un appel national n'est plus recommandé sur le seul champ ; un appel Horizon Europe n'est recommandé qu'à
+  une structure de recherche. Tirage : au mieux 12 pertinentes sur 20 (environ 4 avant) ; la suite passe par une
+  requalification des fiches par le modèle local. Pas en ligne.
+
 ### Ajouté (2026-11-18, décision de Monsieur DUCOUT « tu dois me proposer uniquement les fiches où il y a un doute »)
 - Tri automatique de la file « à valider » (changement `tri-automatique-file`, `scripts/trier_file.py`) : doublons
   rejetés après sauvegarde, fiches contrôlées sans doute publiées, fiches douteuses laissées avec leur motif (visible

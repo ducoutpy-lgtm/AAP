@@ -66,8 +66,10 @@ describe('evaluerAppel', () => {
   });
 
   it('signale les appels nationaux, sans date ou proches de la clôture', () => {
-    const national = evaluerAppel(appel('a', { territoriesEligible: ['france'], deadline: null, scrapeMetadata: { champ: 'medico-social' } }), ehpad as never);
-    expect(national?.points).toBe(2);
+    // Depuis le 2026-11-19 (question 29 a), un appel national a besoin d'un objet commun ou d'un type cité
+    const national = evaluerAppel(appel('a', { territoriesEligible: ['france'], deadline: null, scrapeMetadata: { champ: 'medico-social' },
+      qualification: { destinataires: [], objets: ['prevention'] } }), ehpad as never);
+    expect(national?.points).toBe(4);
     // un appel national sans rien de concret en commun (type, objet, champ) n'est pas recommandé
     expect(evaluerAppel(appel('n', { territoriesEligible: ['france'], qualification: { destinataires: ['prive-non-lucratif'], objets: [] } }), ehpad as never)).toBeNull();
     expect(national?.aVerifier).toContain('Date de clôture non précisée');
@@ -79,12 +81,46 @@ describe('recommander', () => {
   it("garde les appels au seuil, les plus concordants d'abord, puis la clôture la plus proche", () => {
     const liste = recommander([
       appel('national', { territoriesEligible: ['france'], scrapeMetadata: { champ: 'medico-social' },
-        qualification: { destinataires: ['prive-non-lucratif'], objets: [] } }),
+        qualification: { destinataires: ['prive-non-lucratif'], objets: ['prevention'] } }),
       appel('loin', { deadline: dans(90) }),
       appel('proche', { deadline: dans(20) }),
       appel('faible', { territoriesEligible: ['france'] }),
       appel('autre', { territoriesEligible: ['bretagne'] }),
     ], ehpad as never);
     expect(liste.map(r => (r.aap as { id: string }).id)).toEqual(['national', 'proche', 'loin']);
+  });
+});
+
+// Question 29 (a), décision du 2026-11-19 : tirage de vingt recommandations jugé à environ 4 pertinentes sur 20
+describe('règles plus strictes (recommandations-plus-strictes)', () => {
+  const tousLesStatuts = ['public', 'prive-non-lucratif', 'prive-lucratif', 'collectivites', 'recherche'];
+
+  it('un appel ouvert à toutes les familles ou aux équipes de recherche ne donne pas de point de statut', () => {
+    const large = evaluerAppel(appel('a', { qualification: { destinataires: tousLesStatuts, objets: [] } }), ehpad as never);
+    expect(large?.points).toBe(3); // région seulement
+    const recherche = evaluerAppel(appel('b', { qualification: { destinataires: ['prive-non-lucratif', 'recherche'], objets: [] } }), ehpad as never);
+    expect(recherche?.points).toBe(3);
+    const tous = evaluerAppel(appel('c', { qualification: { destinataires: ['tous'], objets: [] } }), ehpad as never);
+    expect(tous?.points).toBe(3);
+  });
+
+  it('un appel national n est recommandé que sur un type d établissement cité ou un objet commun', () => {
+    const national = { territoriesEligible: ['france'], scrapeMetadata: { champ: 'medico-social' } };
+    expect(evaluerAppel(appel('a', { ...national, qualification: { destinataires: ['prive-non-lucratif'], objets: [] } }), ehpad as never)).toBeNull();
+    const avecObjet = evaluerAppel(appel('b', { ...national, qualification: { destinataires: ['prive-non-lucratif'], objets: ['prevention'] } }), ehpad as never);
+    expect(avecObjet).not.toBeNull();
+    const avecType = evaluerAppel(appel('c', { ...national, structureTypeEligible: ['EHPAD'], qualification: { destinataires: [], objets: [] } }), ehpad as never);
+    expect(avecType).not.toBeNull();
+  });
+});
+
+describe('programme européen de recherche (question 29 a, tirage du 2026-11-19)', () => {
+  it('un appel Horizon Europe n est recommandé qu à une structure qui fait de la recherche', () => {
+    const horizon = { territoriesEligible: ['france'], title: 'HORIZON-HLTH-2027-01-DISEASE-08 : antimicrobiens',
+      financeurName: 'Commission européenne', qualification: { destinataires: ['tous'], objets: ['prevention'] } };
+    expect(evaluerAppel(appel('a', horizon), ehpad as never)).toBeNull();
+    expect(evaluerAppel(appel('b', { ...horizon, title: 'Antimicrobiens', financeurName: 'Horizon Europe – Cluster Santé' }), ehpad as never)).toBeNull();
+    const labo = { ...ehpad, structureType: 'laboratoire', typeEtablissement: 'recherche', objetsProjet: ['prevention'] };
+    expect(evaluerAppel(appel('c', horizon), labo as never)).not.toBeNull();
   });
 });
