@@ -36,6 +36,15 @@ cd "C:\Users\pierr\Documents\Projets Claude Code\AAP\app" && firebase deploy --o
 La commande affiche l'adresse publique (`https://aapi-11bc3.web.app`). Les fonctions serveur ne sont pas dans cette
 commande : elles attendent l'ouverture de la facturation Blaze (jour 5).
 
+Si la commande s'arrête sur « Error: An unexpected error has occurred » (avec `--debug` : « Connect Timeout Error »,
+« Timed out ») : le réseau annonce une adresse IPv6 qui ne fonctionne pas, et Node.js, sur lequel repose `firebase`,
+perd son délai à l'essayer (constaté le 2026-11-20 sur le Wi-Fi ; `git` et `curl` passaient). Relancer depuis
+PowerShell en obligeant Node.js à passer par l'IPv4 :
+
+```powershell
+$env:NODE_OPTIONS='--no-network-family-autoselection --dns-result-order=ipv4first'; firebase deploy --only hosting,firestore:rules --project aapi-11bc3
+```
+
 ## 3. Après le déploiement
 
 1. Ouvrir l'adresse publique sans compte : accueil, « Financeurs » (chiffres présents), « Tarifs », pages légales.

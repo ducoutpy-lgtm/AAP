@@ -112,6 +112,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   commits locaux ; déployer les règles Firestore (suppression du compte, champs figés) et l'hébergement (textes
   réutilisables, recommandations plus strictes, suppression du compte) ; règle « modèle local d'abord » à recopier par
   lui dans `CLAUDE.md`.
+- 2026-11-20, 20 h 20 : sur son « Oui : pousse les 3 commits sur GitHub, et mets en ligne les règles Firestore et
+  l'hébergement » : commits poussés (`220aa51..d6cb729`), règles et site en ligne (`index-BHWkCLGZ.js`), lecture
+  publique contrôlée (3 appels publiés lus sans compte, brouillon refusé en 403). `firebase deploy` échouait sur
+  « Timed out » : IPv6 en panne sur le Wi-Fi, contourné par `NODE_OPTIONS` (voir `docs/MISE_EN_LIGNE.md`). Reste à sa
+  charge : recopier la règle « modèle local d'abord » dans `CLAUDE.md` ; suppression du compte non jouée sur le vrai
+  projet.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

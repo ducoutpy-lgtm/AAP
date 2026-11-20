@@ -2,11 +2,11 @@
 
 Semaine 4 du plan de quatre semaines (`docs/FEUILLE_DE_ROUTE.md`). But : permettre à Monsieur DUCOUT de décider d'inviter
 ou non trois testeurs. Chaque ligne donne l'état et sa preuve ; « en ligne » veut dire présent dans la version servie par
-https://aapi-11bc3.web.app (contrôle du 2026-11-16 : fichier `assets/index-DWY0k7Mk.js`, recherche du texte de l'écran).
+https://aapi-11bc3.web.app (contrôle du 2026-11-20 : fichier `assets/index-BHWkCLGZ.js`, recherche du texte de l'écran).
 Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 
-État au 2026-11-16, 13 h : 12 lignes faites, 2 décidées (paiement, invitations), 6 ouvertes (2 relecture de dix fiches,
-4 file à valider, 6 recommandations, 9 pièces jointes, 10 documents réutilisables, 16 suppression du compte).
+État au 2026-11-20, 20 h 20 : 13 lignes faites, 2 décidées (paiement, invitations), 5 ouvertes (2 relecture de dix
+fiches, 4 file à valider, 6 recommandations, 9 pièces jointes, 10 pièces jointes réutilisables).
 
 ## Contenu
 
@@ -22,12 +22,12 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | # | Condition | État | Preuve |
 |---|---|---|---|
 | 5 | Inscription, connexion Google, mot de passe oublié, profil | Fait, en ligne | « Mot de passe oublié » présent dans la version servie ; Google activé le 2026-10-19 |
-| 6 | Recherche avec appels clos masqués, recommandations d'après le profil | En ligne, recommandations peu pertinentes | Mise en ligne du 2026-11-13 au soir ; tirage de vingt recommandations (`docs/TIRAGE_RECOMMANDATIONS.md`) : environ 4 pertinentes selon la session, qualification trop large ; question 29 |
+| 6 | Recherche avec appels clos masqués, recommandations d'après le profil | En ligne, recommandations resserrées le 2026-11-20 | Tirage de vingt recommandations (`docs/TIRAGE_RECOMMANDATIONS.md`) : environ 4 pertinentes avant, au mieux 12 après la question 29 (a), en ligne le 2026-11-20 ; la suite (29 (b)) passe par une requalification des fiches |
 | 7 | Candidater sur le site officiel d'un appel importé, puis suivre sa candidature | Fait, en ligne | « Candidater sur le site officiel » et « la suivre ici » présents dans la version servie ; joué sur les émulateurs le 2026-11-16 |
 | 7 bis | Premier clic d'un compte neuf sur « Candidater » (appel d'un financeur inscrit) | Corrigé, en ligne le 2026-11-16 | Renvoi au tableau de bord au premier clic, trouvé en jouant le parcours complet le 2026-11-16 ; changement `premier-clic-candidater` ; question 28 |
 | 8 | Recherches sauvegardées avec alerte du lundi | Fait, en ligne le 2026-11-16 | Changement `alertes-recherches-sauvegardees`, joué sur les émulateurs ; question 24 (mise en ligne) |
 | 9 | Pièces jointes d'une candidature | Limite annoncée | Le stockage de fichiers exige la facturation Blaze (question 5) ; la candidature part et l'écran nomme les pièces « non déposées » |
-| 10 | Documents réutilisables d'une candidature à l'autre | Textes faits, pas en ligne ; pièces jointes à l'ouverture de Blaze | Changement `textes-reutilisables` (question 23 (b), 2026-11-19), joué sur les émulateurs |
+| 10 | Documents réutilisables d'une candidature à l'autre | Textes faits, en ligne le 2026-11-20 ; pièces jointes à l'ouverture de Blaze | Changement `textes-reutilisables` (question 23 (b), 2026-11-19), joué sur les émulateurs ; « Textes réutilisables » présent dans la version servie |
 
 ## Parcours financeur
 
@@ -43,7 +43,7 @@ Mise à jour à chaque lot ; la session ne coche une ligne qu'avec sa preuve.
 | 13 | Un compte ne peut pas se donner le rôle administrateur | Fait, en ligne | Changement `regles-role-protege`, 30 tests de règles, règles publiées le 2026-11-13 |
 | 14 | Pièces de candidature lisibles par leur seul auteur, documents d'appel en lecture seule (règles du stockage) | Testé, en ligne le 2026-11-16 | Changement `regles-stockage-durcies` (« released rules storage.rules ») ; propriétaire figé des recherches, favoris et notifications : règles Firestore en ligne le 2026-11-16 |
 | 15 | Télécharger ses données (accès, portabilité) | Fait, en ligne le 2026-11-16 | Changement `export-donnees-personnelles` ; question 26 |
-| 16 | Supprimer son compte (effacement) | Fait, pas en ligne | Changement `suppression-compte` (question 25), joué sur les émulateurs ; règles et hébergement à mettre en ligne sur accord |
+| 16 | Supprimer son compte (effacement) | Fait, en ligne le 2026-11-20 | Changement `suppression-compte` (question 25), joué sur les émulateurs ; « Supprimer mon compte » présent dans la version servie, règles Firestore publiées ; pas encore joué sur le vrai projet |
 
 ## Exploitation
 

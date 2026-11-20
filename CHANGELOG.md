@@ -5,9 +5,16 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Mis en ligne (2026-11-20, 20 h 20, sur l'accord de Monsieur DUCOUT)
+- https://aapi-11bc3.web.app sert `assets/index-BHWkCLGZ.js` : textes réutilisables, recommandations plus strictes,
+  suppression du compte. Règles Firestore publiées (« released rules firestore.rules ») : suppression du compte et
+  champs figés. Contrôle : lecture sans compte de trois appels publiés réussie, lecture d'un brouillon refusée (403).
+- Procédure (`docs/MISE_EN_LIGNE.md`) : contournement d'une connexion IPv6 en panne, qui fait échouer `firebase deploy`
+  par « Timed out ».
+
 ### Sécurité (2026-11-20)
 - Règles Firestore : un compte ne peut plus transférer à un autre compte un appel, une candidature ou un message par une
-  mise à jour (fonction `figes`), 41 tests de règles verts. Pas déployé.
+  mise à jour (fonction `figes`), 41 tests de règles verts. En ligne le 2026-11-20.
 
 ### Ajouté (2026-11-19, question 25)
 - Suppression du compte en libre-service (changement `suppression-compte`) : bouton dans Mon profil (connexion récente
