@@ -45,7 +45,7 @@ export default function ViewApplicationsPage() {
   }, [statusFilter, sortBy, applications]);
 
   const loadData = async () => {
-    if (!aapId) return;
+    if (!aapId || !currentUser) return;
 
     try {
       // Load AAP
@@ -54,10 +54,13 @@ export default function ViewApplicationsPage() {
         setAap({ ...aapDoc.data() } as AAP);
       }
 
-      // Load applications
+      // Candidatures de l'appel reçues par le financeur connecté. La condition sur financeurId est obligatoire : la règle
+      // de lecture des candidatures ne s'applique pas comme un filtre, et une requête sur aapId seul était refusée en
+      // entier, d'où « 0 candidature reçue » (corrections-relecture 1.3, 2026-11-20).
       const applicationsQuery = query(
         collection(db, 'applications'),
-        where('aapId', '==', aapId)
+        where('aapId', '==', aapId),
+        where('financeurId', '==', currentUser.uid)
       );
 
       const snapshot = await getDocs(applicationsQuery);
