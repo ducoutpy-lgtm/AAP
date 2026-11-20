@@ -634,6 +634,32 @@ Le comparateur a été relu par sondage (5 fiches par modèle) et corrigé deux 
 confirmés par le texte de la page, et compare les montants cités quel que soit le champ. La décision du moteur du
 passage global revient à Monsieur DUCOUT (tâche 3.2 du changement).
 
+## Modèle local par défaut : PDF, contrôle et qualification (changements `lecture-pdf-locale` et `tri-automatique-file`, 2026-11-18 et 19)
+
+Décision de Monsieur DUCOUT du 2026-11-19 (« Voie A, tout local ») : les PDF sont lus par le modèle local (Ollama,
+`qwen3:8b`), à zéro euro.
+
+```bash
+python verification.py --verifier --moteur ollama --fichier results/x.json      # contrôle en local, zéro euro
+python qualifier_fiches.py --qualifier --moteur ollama --fichier results/x.json # qualification en local
+python extraction_locale.py --extraire --seulement-pdf                         # PDF jamais lus -> results/extraction_pdf_locale.json
+python extraction_locale.py --extraire --moteur api --sans-pdf --dry-run       # veille du matin : pages web seulement
+python chaine_pdf_locale.py                                                     # toute la chaîne locale (PC tenu éveillé)
+python ../scripts/trier_file.py [--reel] [--douter id,id]                       # tri de la file « à valider »
+```
+
+- Chaque semaine : la veille du lundi 8 h collecte aussi les PDF (`rejeu.py --pdf`) sans les lire avec un modèle ; la
+  tâche « AAP Sante - lecture locale des PDF » (lundi 23 h, `chaine_pdf_locale.cmd`, journal
+  `logs/chaine_pdf_locale.log`) fait extraction, contrôle, qualification, import en « à valider » et tri. Rythme
+  mesuré le 2026-11-20 : environ 12 PDF par heure.
+- Tri de la file (`scripts/trier_file.py`, lancé aussi par `veille_payante.py` après l'import) : doublons rejetés
+  après sauvegarde, fiches contrôlées sans doute publiées, fiches douteuses laissées à Monsieur DUCOUT avec leur motif
+  (visible dans `/admin/aaps`). Lire l'essai à blanc avant `--reel` ; `--douter` garde dans la file ce qui ne semble
+  pas être un appel.
+- Mesures : `LOCAL_CONTRE_HAIKU.md` (contrôle local fiable pour le tri, plus prudent ; qualification locale sans gain
+  pour les recommandations) ; `EXACTITUDE_PDF_LOCALE.md` (58 fiches de PDF : 85,8 % de champs justes, 3 dates
+  inventées, contre 91,7 % et aucune pour Haiku sur les pages web).
+
 ## Extraction locale globale (changement `extraction-locale-globale`, 2026-10-13)
 
 Décision de Monsieur DUCOUT (2026-10-13, soir) : extraire les pages des 242 rubriques validées avec le modèle local
