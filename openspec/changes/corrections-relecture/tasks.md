@@ -44,7 +44,8 @@ sont verts.
 - [x] 3.3 Calendrier : fiches visibles seulement, appels clos non urgents. (2026-11-20 : `urgenceEcheance`, test en échec
   avant ; émulateurs, trois échéances posées en novembre : appel clos le 5 affiché en gris, absent des « Deadlines
   urgentes » ; appel du 24 présent ; fiche publiée non contrôlée du 26 absente.)
-- [ ] 3.4 Prochaine échéance du financeur : l'appel qui clôt aujourd'hui compte.
+- [x] 3.4 Prochaine échéance du financeur : l'appel qui clôt aujourd'hui compte. (2026-11-20 : test en échec avant,
+  « plus-tard » au lieu de « aujourdhui » ; même règle d'arrondi que la recherche.)
 - [ ] 3.5 Suppression du compte : Firebase juge de la connexion récente, pas l'horloge du poste.
 
 ## 4. Clôture
