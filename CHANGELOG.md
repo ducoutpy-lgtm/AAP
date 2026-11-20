@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-20, lien de recherche partagé)
+- Connexion : retour sur la page demandée avec ses filtres. Un lien de recherche partagé (`/aap/search?q=…`) ouvert
+  sans compte revenait, après la connexion, sur la recherche sans filtres. Test en échec avant la correction
+  (`auth.test.tsx`), rejoué sur les émulateurs (« 3 appels à projets » pour `q=handicap`). Pas en ligne.
+
 ### Corrigé (2026-11-20, accessibilité)
 - Champs de formulaire (`Input`, `Select`, `Textarea`) : l'étiquette est reliée à son champ. Un lecteur d'écran annonce
   le nom du champ et un clic sur l'étiquette y place le curseur, ce qui n'était le cas sur aucun formulaire. 4 tests

@@ -1,14 +1,18 @@
-// Tests de l'inscription (2026-11-20) : le rôle choisi par le lien de l'accueil (« /signup?type=financeur ») est celui
-// du compte créé, et deux mots de passe différents ou trop courts bloquent l'envoi. Le compte (AuthContext) est remplacé
-// par une doublure : aucun appel à Firebase.
+// Tests de l'inscription et de la connexion (2026-11-20) : le rôle choisi par le lien de l'accueil
+// (« /signup?type=financeur ») est celui du compte créé, deux mots de passe différents ou trop courts bloquent l'envoi, et
+// la connexion ramène sur la page demandée avec ses filtres. Le compte (AuthContext) et Firestore sont remplacés par des
+// doublures : aucun appel à Firebase.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 
-const compte = vi.hoisted(() => ({ signup: vi.fn(), loginWithGoogle: vi.fn() }));
+const compte = vi.hoisted(() => ({ signup: vi.fn(), login: vi.fn(), loginWithGoogle: vi.fn(), currentUser: null }));
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => compte }));
+vi.mock('../../config/firebase', () => ({ db: {} }));
+vi.mock('firebase/firestore', () => ({ doc: vi.fn(), getDoc: vi.fn() }));
 
 import SignupPage from './SignupPage';
+import LoginPage from './LoginPage';
 
 const ouvrir = (adresse: string) => render(
   <MemoryRouter initialEntries={[adresse]}>
@@ -57,5 +61,28 @@ describe('inscription', () => {
     remplir('c@test.local', 'abc', 'abc');
     expect(screen.getByText(/au moins 6 caractères/)).toBeInTheDocument();
     expect(compte.signup).not.toHaveBeenCalled();
+  });
+});
+
+describe('connexion', () => {
+  afterEach(cleanup);
+
+  // Depuis le 2026-10-20 la recherche demande un compte : un lien de recherche partagé passe par la connexion
+  it('un lien de recherche avec filtres, ouvert sans compte, revient sur la recherche avec ses filtres', async () => {
+    compte.login.mockReset().mockResolvedValue(undefined);
+    const Arrivee = () => <p>arrivée {useLocation().pathname}{useLocation().search}</p>;
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/login', state: { from: { pathname: '/aap/search', search: '?territory=normandie&q=chutes', hash: '' } } }]}>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/aap/search" element={<Arrivee />} />
+          <Route path="/complete-profile" element={<p>arrivée /complete-profile</p>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+    fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
+    fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
+    expect(await screen.findByText(/^arrivée/, {}, { timeout: 3000 })).toHaveTextContent('arrivée /aap/search?territory=normandie&q=chutes');
   });
 });

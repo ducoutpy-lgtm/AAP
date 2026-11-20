@@ -17,7 +17,10 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname;
+  // Adresse complète de la page demandée, filtres compris (2026-11-20) : un lien de recherche partagé ouvert sans compte
+  // revenait sur /aap/search sans ses filtres
+  const origine = (location.state as { from?: { pathname?: string; search?: string; hash?: string } } | null)?.from;
+  const from = origine?.pathname ? `${origine.pathname}${origine.search ?? ''}${origine.hash ?? ''}` : undefined;
 
   const getRedirectPath = async () => {
     if (from && from !== '/') {
