@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { InputHTMLAttributes, forwardRef, useId } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,16 +8,20 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, className = '', ...props }, ref) => {
+    // Étiquette reliée au champ (2026-11-20) : annoncée par les lecteurs d'écran, un clic dessus place le curseur
+    const idAuto = useId();
+    const id = props.id ?? idAuto;
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
             {label}
             {props.required && <span className="text-error-500 ml-1">*</span>}
           </label>
         )}
         <input
           ref={ref}
+          id={id}
           className={`input-field ${error ? 'border-error-500 focus:ring-error-500' : ''} ${className}`}
           {...props}
         />

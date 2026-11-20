@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-20, accessibilité)
+- Champs de formulaire (`Input`, `Select`, `Textarea`) : l'étiquette est reliée à son champ. Un lecteur d'écran annonce
+  le nom du champ et un clic sur l'étiquette y place le curseur, ce qui n'était le cas sur aucun formulaire. 4 tests
+  (`champs.test.tsx`), vérifié dans le navigateur sur la page Contact. Inscription testée (`auth.test.tsx`, 4 tests) :
+  rôle venu du lien de l'accueil, mots de passe différents ou trop courts. Pas en ligne.
+
 ### Tests (2026-11-20)
 - Pages publiques et légales (`app/src/pages/public/public.test.tsx`, 12 tests) : titre affiché, aucun lien interne vers
   une route absente de `App.tsx` ; menus des trois rôles contrôlés de même (`menus.test.ts`). Lecture des routes dans

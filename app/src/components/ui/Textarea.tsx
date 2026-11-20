@@ -1,4 +1,4 @@
-import { TextareaHTMLAttributes, forwardRef } from 'react';
+import { TextareaHTMLAttributes, forwardRef, useId } from 'react';
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -8,16 +8,20 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ label, error, helperText, className = '', ...props }, ref) => {
+    // Étiquette reliée au champ (2026-11-20) : annoncée par les lecteurs d'écran, un clic dessus place le curseur
+    const idAuto = useId();
+    const id = props.id ?? idAuto;
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
             {label}
             {props.required && <span className="text-error-500 ml-1">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
+          id={id}
           className={`input-field resize-y min-h-[100px] ${error ? 'border-error-500 focus:ring-error-500' : ''} ${className}`}
           {...props}
         />
