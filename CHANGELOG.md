@@ -8,7 +8,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 ### Tests (2026-11-20)
 - Pages publiques et légales (`app/src/pages/public/public.test.tsx`, 12 tests) : titre affiché, aucun lien interne vers
   une route absente de `App.tsx` ; menus des trois rôles contrôlés de même (`menus.test.ts`). Lecture des routes dans
-  `app/src/test/routes.ts`.
+  `app/src/test/routes.ts`. Toutes les adresses écrites dans le code (environ 175 : liens, redirections, menus, liste
+  de démarrage) confrontées aux routes (`app/src/test/liens.test.ts`) : aucune morte.
 
 ### Modifié (2026-11-20, simplification)
 - Recherche `/aap/search` : la liste affichée est calculée à chaque changement de filtres (`resultatsRecherche`,
