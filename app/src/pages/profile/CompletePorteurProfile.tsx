@@ -87,6 +87,8 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
       if (!currentUser) throw new Error('Non authentifié');
 
       // Sauvegarder le profil porteur
+      // Fusion (2026-11-20) : le formulaire ne réécrit que ses champs ; sans elle, les champs écrits ailleurs (textes
+      // réutilisables de la carte de Mon profil) étaient effacés à chaque enregistrement
       await setDoc(doc(db, 'porteurProfiles', currentUser.uid), {
         userId: currentUser.uid,
         structureName: formData.structureName,
@@ -119,7 +121,7 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
         website: formData.website || null,
         description: formData.description || null,
         updatedAt: Timestamp.now(),
-      });
+      }, { merge: true });
 
       // Mettre à jour le statut de complétion du profil
       await setDoc(

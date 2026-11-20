@@ -104,6 +104,8 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
       }
 
       // Sauvegarder le profil financeur
+      // Fusion (2026-11-20) : le formulaire ne réécrit que ses champs ; sans elle, les champs écrits ailleurs (textes
+      // réutilisables de la carte de Mon profil) étaient effacés à chaque enregistrement
       await setDoc(doc(db, 'financeurProfiles', currentUser.uid), {
         userId: currentUser.uid,
         organisationName: formData.organisationName,
@@ -126,7 +128,7 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
         logo: logoUrl,
         description: formData.description || null,
         updatedAt: Timestamp.now(),
-      });
+      }, { merge: true });
 
       // Mettre à jour le statut de complétion du profil
       await setDoc(
