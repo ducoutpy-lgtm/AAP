@@ -40,6 +40,7 @@ beforeEach(async () => {
     await setDoc(doc(db, 'aap/publie'), { status: 'published', financeurId: 'scraped', title: 'Publié' });
     await setDoc(doc(db, 'aap/brouillon'), { status: 'draft', financeurId: 'scraped', title: 'Brouillon' });
     await setDoc(doc(db, 'aap/du-financeur'), { status: 'draft', financeurId: 'f1', title: 'Appel du financeur' });
+    await setDoc(doc(db, 'aap/archive-f1'), { status: 'archived', financeurId: 'f1', title: 'Archivé par l’administrateur' });
     await setDoc(doc(db, 'applications/c1'), { porteurId: 'porteur1', financeurId: 'f1', status: 'draft' });
     await setDoc(doc(db, 'applications/c2'), { porteurId: 'porteur1', financeurId: 'f1', status: 'submitted' });
     await setDoc(doc(db, 'savedSearches/s1'), { userId: 'porteur1', name: 'ma recherche' });
@@ -155,8 +156,8 @@ describe('profils : le propriétaire écrit, l’administrateur lit', () => {
 
 describe('candidatures : porteur en brouillon, financeur en évaluation', () => {
   it('un porteur en essai crée une candidature à son nom et la modifie en brouillon', async () => {
-    await assertSucceeds(setDoc(doc(porteur(), 'applications/nouvelle'), { porteurId: 'porteur1', financeurId: 'f1', status: 'draft' }));
-    await assertFails(setDoc(doc(porteur(), 'applications/usurpee'), { porteurId: 'porteur2', financeurId: 'f1', status: 'draft' }));
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/nouvelle'), { porteurId: 'porteur1', financeurId: 'f1', aapId: 'du-financeur', status: 'draft' }));
+    await assertFails(setDoc(doc(porteur(), 'applications/usurpee'), { porteurId: 'porteur2', financeurId: 'f1', aapId: 'du-financeur', status: 'draft' }));
     await assertSucceeds(updateDoc(doc(porteur(), 'applications/c1'), { projectTitle: 'Projet' }));
     await assertFails(updateDoc(doc(porteur2(), 'applications/c1'), { projectTitle: 'volé' }));
   });
@@ -318,3 +319,58 @@ describe('retours des testeurs (mise-en-ligne-testeurs, 2026-10-21)', () => {
     await assertFails(deleteDoc(doc(admin(), 'retours/r1')));
   });
 });
+
+// Corrections-relecture 2.4 (2026-11-20) : champs et statuts bornés. Avant, le financeur pouvait réécrire le dossier du
+// candidat, le candidat créer une candidature déjà acceptée, et l'auteur d'un appel republier un appel archivé par
+// l'administrateur ou se poser un verdict de relecture.
+describe('candidatures : champs et statuts bornés', () => {
+  const maintenant = new Date();
+  it('le financeur évalue (statut, note, avis) mais ne réécrit pas le dossier du candidat', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'applications/c2'), { projectDescription: 'texte modifié' }));
+    await assertFails(updateDoc(doc(financeur(), 'applications/c2'), { budget: { total: 1, breakdown: '' } }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'applications/c2'),
+      { status: 'accepted', financeurScore: 80, financeurFeedback: 'Bon dossier', evaluatedAt: maintenant, updatedAt: maintenant }));
+  });
+
+  it('le candidat ne crée pas une candidature déjà évaluée, ni adressée à un autre financeur que celui de l’appel', async () => {
+    const base = { porteurId: 'porteur1', financeurId: 'f1', aapId: 'du-financeur' };
+    await assertFails(setDoc(doc(porteur(), 'applications/acceptee'), { ...base, status: 'accepted' }));
+    await assertFails(setDoc(doc(porteur(), 'applications/notee'), { ...base, status: 'submitted', financeurScore: 100 }));
+    await assertFails(setDoc(doc(porteur(), 'applications/detournee'), { ...base, financeurId: 'autre', status: 'submitted' }));
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/envoyee'), { ...base, status: 'submitted' }));
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/externe'),
+      { porteurId: 'porteur1', financeurId: 'scraped', aapId: 'publie', status: 'submitted', externe: true }));
+  });
+
+  it('en brouillon, le candidat ne se donne pas lui-même une décision', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'applications/c1'), { status: 'accepted' }));
+    await assertFails(updateDoc(doc(porteur(), 'applications/c1'), { financeurFeedback: 'parfait' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'applications/c1'), { status: 'submitted' }));
+  });
+});
+
+describe('appels : statut et relecture réservés à l’administrateur', () => {
+  it('l’auteur ne republie pas un appel archivé ; l’administrateur le peut', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'aap/archive-f1'), { status: 'published' }));
+    await assertSucceeds(updateDoc(doc(admin(), 'aap/archive-f1'), { status: 'published' }));
+  });
+
+  it('l’auteur publie son brouillon, le corrige, le clôture, mais ne revient pas en arrière', async () => {
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', publishedAt: maintenantAap() }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Corrigé' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'closed' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
+  });
+
+  it('l’auteur n’écrit ni verdict de relecture ni source', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { validation: { statut: 'validee', par: 'Monsieur DUCOUT' } }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { source: 'scraped' }));
+    await assertFails(setDoc(doc(financeur(), 'aap/avec-verdict'), { status: 'draft', financeurId: 'f1', title: 'x', validation: { statut: 'validee' } }));
+    await assertFails(setDoc(doc(financeur(), 'aap/faux-import'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'scraped' }));
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/saisi'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual' }));
+  });
+});
+
+function maintenantAap() {
+  return new Date();
+}

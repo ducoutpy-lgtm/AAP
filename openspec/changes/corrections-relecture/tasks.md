@@ -29,7 +29,10 @@ sont verts.
 - [x] 2.3 Validation et rejet groupés alignés sur les boutons unitaires. (2026-11-20 : `selectionATraiter`, 2 tests en
   échec avant ; émulateurs, 88 fiches cochées : « valider et publier 64 fiches (24 ignorées) », « rejeter 75 fiches
   (13 ignorées) », comptes attendus d'après la base ; « Annuler » sur le motif : aucune fiche modifiée.)
-- [ ] 2.4 Règles des candidatures et des appels bornées (tests de règles d'abord).
+- [x] 2.4 Règles des candidatures et des appels bornées (tests de règles d'abord). (2026-11-20 : 6 tests en échec avant,
+  43 verts après, joués sur l'émulateur en marche (port 8080 occupé, d'où `npx vitest run tests/rules/...` au lieu de
+  `npm run test:rules`) ; candidature réelle envoyée ensuite dans le navigateur : « Candidature envoyée », `submitted`.
+  Règles non déployées.)
 
 ## 3. Défauts mineurs
 
