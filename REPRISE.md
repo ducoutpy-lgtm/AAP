@@ -99,6 +99,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   contrôle et qualification des fiches produites environ 2 h ; estimation). Journal : `scraping/logs/chaine_pdf_locale.log`
   (« Chaine locale des PDF terminee » à la fin) ; fiches : `scraping/results/extraction_pdf_locale.json`. À vérifier
   ensuite : bilan de l'import (« a valider ») et du tri (`trier_file.py`), file de Monsieur DUCOUT.
+- 2026-11-20, 19 h (reprise relayée, quota jusqu'à 97 %) : la chaîne a été arrêtée à 18 h 05 par la séance de
+  pilotage sur demande de pause : 72 PDF sur 278 lus, 58 fiches (santé 42, médico-social 6, hors champ 6, incertain
+  4), 14 écartés, aucune contrôlée ni qualifiée. Rythme réel environ 12 PDF par heure (mon estimation de 17 h 30 était
+  fausse : j'avais repris le rythme des pages web) ; fin plutôt samedi. Ne pas relancer : Perroquet relance la tâche
+  après sa mesure. Relecture des 58 fiches lancée (sous-agent, verdicts dans
+  `scraping/sources/exactitude_pdf_locale_verdicts.json`, liste `scraping/results/relecture_pdf_locale.json`).
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
