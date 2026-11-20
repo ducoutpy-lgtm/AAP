@@ -5,6 +5,10 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Sécurité (2026-11-20)
+- Règles Firestore : un compte ne peut plus transférer à un autre compte un appel, une candidature ou un message par une
+  mise à jour (fonction `figes`), 41 tests de règles verts. Pas déployé.
+
 ### Ajouté (2026-11-19, question 25)
 - Suppression du compte en libre-service (changement `suppression-compte`) : bouton dans Mon profil (connexion récente
   exigée), profil, recherches, favoris, notifications, candidatures aux appels importés et compte effacés ; candidatures

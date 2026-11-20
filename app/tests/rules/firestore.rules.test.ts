@@ -241,6 +241,27 @@ describe('suppression du compte (question 25, 2026-11-19)', () => {
   });
 });
 
+describe('champs propriétaires figés (relecture du 2026-11-17, suite)', () => {
+  it('un financeur ne transfère pas son appel à un autre compte', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { financeurId: 'porteur1' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Titre modifié' }));
+  });
+
+  it('ni le porteur ni le financeur ne changent les comptes d’une candidature', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'applications/c1'), { porteurId: 'porteur2' }));
+    await assertFails(updateDoc(doc(porteur(), 'applications/c1'), { financeurId: 'autre' }));
+    await assertFails(updateDoc(doc(financeur(), 'applications/c2'), { porteurId: 'porteur2' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'applications/c1'), { projectTitle: 'Nouveau titre' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'applications/c2'), { status: 'under_review' }));
+  });
+
+  it('le destinataire d’un message ne change ni l’expéditeur ni le destinataire', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'messages/m1'), { senderId: 'porteur2' }));
+    await assertFails(updateDoc(doc(porteur(), 'messages/m1'), { receiverId: 'porteur2' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'messages/m1'), { read: true }));
+  });
+});
+
 describe('paiements et statistiques : fonctions serveur seulement', () => {
   it('même l’administrateur n’écrit pas dans payments ni analytics', async () => {
     await assertFails(setDoc(doc(admin(), 'payments/p1'), { userId: 'porteur1', amount: 1 }));

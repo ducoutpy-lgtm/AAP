@@ -12,3 +12,7 @@
 - [x] 2.2 Mise en ligne de l'hébergement et des règles du stockage (accord du 2026-11-16) ; règles Firestore sur accord
   (question 31). (2026-11-16 : version servie `index-BB_FScPX.js` ; règles Firestore déployées le même jour sur « Oui,
   déploie les règles » : « released rules firestore.rules », lecture publique des appels vérifiée sur la vraie base.)
+- [x] 3.1 (2026-11-20, constat écarté du 2026-11-17 repris en autonomie) Règle générale `figes(...)` : une mise à jour ne
+  change plus le propriétaire d'un appel (`financeurId`), d'une candidature (`porteurId`, `financeurId`, hors
+  anonymisation de la suppression du compte) ni d'un message (`senderId`, `receiverId`). Tests d'abord (3 en échec),
+  `npm run test:rules` 41 verts. Déploiement sur accord.

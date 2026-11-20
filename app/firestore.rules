@@ -12,6 +12,12 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Champs de propriétaire inchangés par une mise à jour (relecture du 2026-11-17 : un compte ne transfère pas un
+    // document à un autre compte)
+    function figes(champs) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(champs);
+    }
+
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
@@ -118,7 +124,8 @@ service cloud.firestore {
 
       // Mise à jour et suppression : l'administrateur (publier, clôturer, archiver, supprimer, y compris les fiches
       // importées), ou le financeur auteur de l'appel.
-      allow update, delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
+      allow update: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid && figes(['financeurId']));
+      allow delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
     }
 
     // Candidatures
@@ -135,8 +142,8 @@ service cloud.firestore {
 
       // Mise à jour : le porteur propriétaire tant que la candidature est en brouillon, ou le financeur (évaluation)
       allow update: if isAuthenticated() && (
-        (resource.data.porteurId == request.auth.uid && resource.data.status == 'draft') ||
-        resource.data.financeurId == request.auth.uid ||
+        (resource.data.porteurId == request.auth.uid && resource.data.status == 'draft' && figes(['porteurId', 'financeurId'])) ||
+        (resource.data.financeurId == request.auth.uid && figes(['porteurId', 'financeurId'])) ||
         // Suppression du compte (question 25, 2026-11-19) : sur une candidature envoyée, le candidat ne peut que
         // remplacer son identifiant par « compte-supprime »
         (resource.data.porteurId == request.auth.uid && request.resource.data.porteurId == 'compte-supprime'
@@ -178,7 +185,7 @@ service cloud.firestore {
         resource.data.receiverId == request.auth.uid
       );
       allow create: if hasActiveSubscription() && request.resource.data.senderId == request.auth.uid;
-      allow update: if isOwner(resource.data.receiverId);
+      allow update: if isOwner(resource.data.receiverId) && figes(['senderId', 'receiverId']);
     }
 
     // Paiements et statistiques agrégées : écrits par les fonctions serveur seulement
