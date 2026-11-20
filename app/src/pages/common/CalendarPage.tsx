@@ -4,6 +4,8 @@ import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
+import { getDaysUntilDeadline, urgenceEcheance, type UrgenceEcheance } from '../../utils/deadline';
+import { visiblePubliquement } from '../../utils/relecture';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
@@ -15,7 +17,7 @@ interface DeadlineEvent {
   title: string;
   deadline: Date;
   type: 'aap' | 'application';
-  urgency: 'high' | 'medium' | 'low';
+  urgency: UrgenceEcheance;
 }
 
 export default function CalendarPage() {
@@ -54,15 +56,16 @@ export default function CalendarPage() {
         snapshot.docs.forEach(doc => {
           const aap = doc.data() as AAP;
           if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher (deadline nullable depuis le lot 0)
+          // Mêmes fiches que la recherche : une fiche non contrôlée n'est pas visible des candidats (corrections-relecture 3.3)
+          if (!visiblePubliquement(aap)) return;
           const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
-          const daysUntil = Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
           eventsData.push({
             id: doc.id,
             title: aap.title,
             deadline,
             type: 'aap',
-            urgency: daysUntil <= 7 ? 'high' : daysUntil <= 30 ? 'medium' : 'low',
+            urgency: urgenceEcheance(getDaysUntilDeadline(deadline) ?? 0),
           });
         });
       }
@@ -85,14 +88,13 @@ export default function CalendarPage() {
           const aap = doc.data() as AAP;
           if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher
           const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
-          const daysUntil = Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
           eventsData.push({
             id: doc.id,
             title: `Deadline: ${aap.title}`,
             deadline,
             type: 'aap',
-            urgency: daysUntil <= 7 ? 'high' : daysUntil <= 30 ? 'medium' : 'low',
+            urgency: urgenceEcheance(getDaysUntilDeadline(deadline) ?? 0),
           });
         });
       }
@@ -123,6 +125,8 @@ export default function CalendarPage() {
         return 'bg-warning-500';
       case 'low':
         return 'bg-primary-500';
+      case 'passee':
+        return 'bg-gray-400';
     }
   };
 

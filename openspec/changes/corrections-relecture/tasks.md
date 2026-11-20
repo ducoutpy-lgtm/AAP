@@ -41,7 +41,9 @@ sont verts.
 - [x] 3.2 Retour à la recherche avec ses filtres. (2026-11-20, émulateurs, compte candidat : avant, parti de
   `?statut=tous&q=handicap`, retour sur `?territory=ile-de-france` ; après, retour sur `?statut=tous&q=handicap`,
   « 3 appels à projets ». Pas de test automatique : navigation entre deux pages reliées à Firebase.)
-- [ ] 3.3 Calendrier : fiches visibles seulement, appels clos non urgents.
+- [x] 3.3 Calendrier : fiches visibles seulement, appels clos non urgents. (2026-11-20 : `urgenceEcheance`, test en échec
+  avant ; émulateurs, trois échéances posées en novembre : appel clos le 5 affiché en gris, absent des « Deadlines
+  urgentes » ; appel du 24 présent ; fiche publiée non contrôlée du 26 absente.)
 - [ ] 3.4 Prochaine échéance du financeur : l'appel qui clôt aujourd'hui compte.
 - [ ] 3.5 Suppression du compte : Firebase juge de la connexion récente, pas l'horloge du poste.
 

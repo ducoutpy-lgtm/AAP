@@ -29,3 +29,9 @@ export const datesDAbord = <T extends { deadline: Date | Timestamp | null }>(aap
   ...aaps.filter(aap => aap.deadline),
   ...aaps.filter(aap => !aap.deadline),
 ];
+
+// Urgence d'une échéance pour le calendrier (corrections-relecture 3.3, 2026-11-20) : un appel clos est « passé », jamais
+// urgent ; sinon urgent sous 7 jours, moyen sous 30 jours.
+export type UrgenceEcheance = 'passee' | 'high' | 'medium' | 'low';
+export const urgenceEcheance = (daysLeft: number): UrgenceEcheance =>
+  isClosed(daysLeft) ? 'passee' : daysLeft <= 7 ? 'high' : daysLeft <= 30 ? 'medium' : 'low';
