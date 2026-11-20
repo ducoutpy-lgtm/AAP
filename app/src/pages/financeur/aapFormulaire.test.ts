@@ -49,6 +49,11 @@ describe('donneesDepuisFormulaire', () => {
     expect(d.contactEmail).toBe('contact@exemple.fr');
   });
 
+  // corrections-relecture 1.4 (2026-11-20) : une date invalide faisait échouer l'écriture (« Invalid time value »)
+  it('date de clôture vide : échéance nulle, pas une date invalide', () => {
+    expect(donneesDepuisFormulaire({ ...FORMULAIRE_VIDE, title: 'T' }).deadline).toBeNull();
+  });
+
   it('ignore les champs vides et les étiquettes vides', () => {
     const d = donneesDepuisFormulaire({ ...FORMULAIRE_VIDE, title: 'T', tags: 'a, , b,' });
     expect(d.tags).toEqual(['a', 'b']);

@@ -83,7 +83,8 @@ export function donneesDepuisFormulaire(f: FormulaireAap): CreateAapData {
     budgetMin: f.budgetMin ? parseFloat(f.budgetMin) : undefined,
     budgetMax: f.budgetMax ? parseFloat(f.budgetMax) : undefined,
     budgetTotal: f.budgetTotal ? parseFloat(f.budgetTotal) : undefined,
-    deadline: new Date(f.deadline),
+    // Date vide : échéance nulle (type AAP nullable depuis le lot 0) ; new Date('') faisait échouer l'écriture
+    deadline: f.deadline ? new Date(f.deadline) : null,
     eligibilityCriteria: f.eligibilityCriteria || undefined,
     evaluationCriteria: f.evaluationCriteria || undefined,
     contactEmail: f.contactEmail || undefined,

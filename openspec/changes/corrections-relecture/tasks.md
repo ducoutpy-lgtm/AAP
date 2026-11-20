@@ -15,7 +15,9 @@ sont verts.
 - [x] 1.3 Candidatures d'un appel : requête bornée au financeur connecté, rejouée sur les émulateurs. (2026-11-20,
   financeur de test, appel `test-fin-1` : avant « 0 candidature reçue » et refus des règles dans la console ; après
   « 2 candidatures reçues ». Index : deux égalités, aucun index composé attendu, non vérifié sur le vrai projet.)
-- [ ] 1.4 Route d'édition ouverte à l'administrateur ; date vide = échéance nulle (formulaire, création, modification).
+- [x] 1.4 Route d'édition ouverte à l'administrateur ; date vide = échéance nulle (formulaire, création, modification).
+  (2026-11-20 : test de la date vide en échec avant ; émulateurs, compte administrateur : avant renvoi vers `/admin`,
+  après formulaire pré-rempli, fiche importée sans date enregistrée, `deadline` nulle, `scrapeMetadata` conservé.)
 
 ## 2. Défauts moyens
 

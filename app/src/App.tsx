@@ -141,7 +141,9 @@ function App() {
           <Route path="/candidatures-recues" element={<RoutePourRole roles={['financeur']}><CandidaturesRecuesPage /></RoutePourRole>} />
           <Route path="/mes-aap" element={<RoutePourRole roles={['financeur']}><MyAapPage /></RoutePourRole>} />
           <Route path="/aap/nouveau" element={<RoutePourRole roles={['financeur']}><CreateAapPage /></RoutePourRole>} />
-          <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur']}><EditAapPage /></RoutePourRole>} />
+          {/* Édition : le financeur auteur, et l'administrateur pour corriger toute fiche depuis /admin/aaps (la route ne
+              l'admettait pas : renvoi vers /admin, corrections-relecture 1.4, 2026-11-20) */}
+          <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur', 'admin']}><EditAapPage /></RoutePourRole>} />
           <Route path="/aap/:aapId/candidatures" element={<RoutePourRole roles={['financeur']}><ViewApplicationsPage /></RoutePourRole>} />
           <Route path="/aap/:aapId/candidature/:applicationId/evaluer" element={<RoutePourRole roles={['financeur']}><EvaluateApplicationPage /></RoutePourRole>} />
           <Route path="/statistiques" element={<RoutePourRole roles={['financeur']}><StatisticsPage /></RoutePourRole>} />

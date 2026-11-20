@@ -27,7 +27,7 @@ export interface CreateAapData {
   budgetMin?: number;
   budgetMax?: number;
   budgetTotal?: number;
-  deadline: Date;
+  deadline: Date | null;
   publicationDate?: Date;
   startDate?: Date;
   endDate?: Date;
@@ -47,7 +47,7 @@ export const aapService = {
       ...data,
       financeurId,
       financeurName,
-      deadline: Timestamp.fromDate(data.deadline),
+      deadline: data.deadline ? Timestamp.fromDate(data.deadline) : null,
       publicationDate: data.publicationDate ? Timestamp.fromDate(data.publicationDate) : undefined,
       startDate: data.startDate ? Timestamp.fromDate(data.startDate) : undefined,
       endDate: data.endDate ? Timestamp.fromDate(data.endDate) : undefined,
