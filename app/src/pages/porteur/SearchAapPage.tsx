@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { addDoc, collection, query, where, orderBy, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
@@ -11,14 +11,14 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import {
   ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText, X, Link2, UserCheck } from 'lucide-react';
-import { getDaysUntilDeadline, isClosed, deadlineLabel, datesDAbord } from '../../utils/deadline';
+import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { libelleFiltres } from '../../utils/journal';
 import { LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
-  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, filtrerAppels, rechercheAEnregistrer,
+  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, rechercheAEnregistrer, resultatsRecherche,
   filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
   type FiltresRecherche,
   type StatutAppel,
@@ -34,7 +34,6 @@ export default function SearchAapPage() {
   useMarquerDemarrage('recherche');
   const { currentUser, userProfile } = useAuth();
   const [aaps, setAaps] = useState<(AAP & { id: string })[]>([]);
-  const [filteredAaps, setFilteredAaps] = useState<(AAP & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
   // Filtres dans l'adresse de la page (recherche-guidee, 2026-10-20) : une recherche se partage par son lien et
   // survit au rechargement ; l'état React est dérivé des paramètres, chaque changement réécrit l'adresse sans empiler
@@ -89,6 +88,9 @@ export default function SearchAapPage() {
     // à l'ouverture et au changement de compte seulement
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid, userProfile?.uid]);
+  // Filtres communs avec le courriel du lundi (alertes-recherches-sauvegardees) : utils/recherche.ts. Sans choix de
+  // statut, les appels clos sont masqués ; une fiche sans montant n'est pas écartée par les montants.
+  const filteredAaps = useMemo(() => resultatsRecherche(aaps, filtresDepuisParams(searchParams)), [aaps, searchParams]);
   const montants = totalMontants(filteredAaps);
 
   useEffect(() => {
@@ -128,13 +130,6 @@ export default function SearchAapPage() {
     loadAaps();
   }, []);
 
-  useEffect(() => {
-    applyFilters();
-    // Fonction redéfinie à chaque rendu : la lister relancerait l'effet en boucle (chargement ou filtrage voulu
-    // seulement quand les valeurs listées changent).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, aaps]);
-
   const loadAaps = async () => {
     try {
       const aapsQuery = query(
@@ -151,26 +146,11 @@ export default function SearchAapPage() {
       })) as (AAP & { id: string })[]).filter(visiblePubliquement);
 
       setAaps(aapsData);
-      setFilteredAaps(aapsData);
     } catch (err) {
       console.error('Error loading AAPs:', err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const applyFilters = () => {
-    // Filtres communs avec le courriel du lundi (alertes-recherches-sauvegardees) : utils/recherche.ts, filtrerAppels.
-    // Sans choix de statut, les appels clos sont masqués ; une fiche sans montant n'est pas écartée par les montants.
-    let result = filtrerAppels(aaps, filters);
-
-    if (filters.budgetMin || filters.budgetMax) {
-      const chiffree = (aap: AAP) => aap.budgetMin != null || aap.budgetMax != null;
-      result = [...result.filter(chiffree), ...result.filter(aap => !chiffree(aap))];
-    }
-
-    // Appels sans date de clôture classés après les datés, ordre des datés conservé (réponse Q4, 2026-10-14)
-    setFilteredAaps(datesDAbord(result));
   };
 
   const resetFilters = () => setFilters(FILTRES_VIDES);

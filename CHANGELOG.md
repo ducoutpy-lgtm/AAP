@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié (2026-11-20, simplification)
+- Recherche `/aap/search` : la liste affichée est calculée à chaque changement de filtres (`resultatsRecherche`,
+  `utils/recherche.ts`, 3 tests) au lieu d'être recopiée dans un état par un effet, qui laissait un rendu avec l'ancienne
+  liste. Même résultat vérifié sur les émulateurs, avant et après, sur quatre recherches. Pas en ligne.
+
 ### Mis en ligne (2026-11-20, 20 h 20, sur l'accord de Monsieur DUCOUT)
 - https://aapi-11bc3.web.app sert `assets/index-BHWkCLGZ.js` : textes réutilisables, recommandations plus strictes,
   suppression du compte. Règles Firestore publiées (« released rules firestore.rules ») : suppression du compte et

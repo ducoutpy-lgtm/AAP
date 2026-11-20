@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ajouterFicheConsultee, correspondTerritoire, etiquettesActives, FILTRES_VIDES, filtresDepuisParams,
   filtresDepuisProfil, garderSelonStatut, montantAnnonce, paramsDepuisFiltres, pieceNonDeposee,
-  statutAppel, totalMontants, filtrerAppels, rechercheAEnregistrer,
+  statutAppel, totalMontants, filtrerAppels, rechercheAEnregistrer, resultatsRecherche,
 } from './recherche';
 import cas from './cas_filtres_recherche.json';
 import type { AAP } from '../types';
@@ -119,5 +119,26 @@ describe('rechercheAEnregistrer (alertes-recherches-sauvegardees, 2.1)', () => {
   });
   it('sans nom : nom tiré des étiquettes', () => {
     expect(rechercheAEnregistrer({ ...FILTRES_VIDES, q: 'chutes', territory: 'france' }, 'u1')?.name).toBe('« chutes » · National, toute la France');
+  });
+});
+
+// Liste affichée par /aap/search, calculée au lieu d'être un état recopié par un effet (2026-11-20) : même ordre
+// qu'avant, montants chiffrés d'abord quand un filtre de montant est posé, puis appels datés avant les appels sans date.
+describe('resultatsRecherche (ordre de la liste affichée)', () => {
+  const fiche = (id: string, jours: number | null, budgetMax?: number) => ({
+    id, title: id, description: '', financeurName: 'F', territoriesEligible: ['france'],
+    deadline: jours === null ? null : dans(jours), budgetMax,
+  }) as unknown as AAP & { id: string };
+  const fiches = [fiche('sans-date-chiffree', null, 5000), fiche('datee', 60), fiche('datee-chiffree', 90, 8000)];
+
+  it('sans filtre de montant : appels datés d abord, ordre d arrivée conservé', () => {
+    expect(resultatsRecherche(fiches, FILTRES_VIDES).map(f => f.id)).toEqual(['datee', 'datee-chiffree', 'sans-date-chiffree']);
+  });
+  it('avec un filtre de montant : chiffrés d abord parmi les datés, puis parmi les sans date', () => {
+    const filtres = { ...FILTRES_VIDES, budgetMin: '1000' };
+    expect(resultatsRecherche(fiches, filtres).map(f => f.id)).toEqual(['datee-chiffree', 'datee', 'sans-date-chiffree']);
+  });
+  it('les fiches écartées par les filtres ne figurent pas', () => {
+    expect(resultatsRecherche(fiches, { ...FILTRES_VIDES, q: 'chiffree' }).map(f => f.id)).toEqual(['datee-chiffree', 'sans-date-chiffree']);
   });
 });

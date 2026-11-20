@@ -2,7 +2,7 @@
 // quatre valeurs, total des montants, étiquettes des filtres actifs, filtres dans l'adresse de la page, filtres d'après
 // le profil, fiches consultées. Pourquoi un fichier à part : testable par Vitest sans React ni Firebase.
 import type { AAP, PorteurProfile } from '../types';
-import { getDaysUntilDeadline } from './deadline';
+import { datesDAbord, getDaysUntilDeadline } from './deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, thematique } from './territoires';
 import { correspondDestinataire, correspondTypeAppel, libelleDestinataire, libelleTypeAppel } from './qualification';
 
@@ -183,6 +183,18 @@ export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRec
     (!f.financeur || (aap.financeurName || 'Non spécifié') === f.financeur) &&
     (min === null || aap.budgetMax == null || aap.budgetMax >= min) &&
     (max === null || aap.budgetMin == null || aap.budgetMin <= max));
+}
+
+// Liste affichée par /aap/search (2026-11-20) : calculée à chaque rendu au lieu d'être recopiée dans un état par un
+// effet, qui laissait un rendu avec l'ancienne liste. Avec un filtre de montant, les fiches chiffrées passent d'abord ;
+// les appels sans date de clôture restent après les datés (réponse Q4, 2026-10-14).
+export function resultatsRecherche<T extends AppelFiltrable>(aaps: T[], f: FiltresRecherche): T[] {
+  let result = filtrerAppels(aaps, f);
+  if (f.budgetMin || f.budgetMax) {
+    const chiffree = (aap: T) => aap.budgetMin != null || aap.budgetMax != null;
+    result = [...result.filter(chiffree), ...result.filter(aap => !chiffree(aap))];
+  }
+  return datesDAbord(result);
 }
 
 // Recherche sauvegardée (alertes-recherches-sauvegardees) : l'adresse de /aap/search, pour que « Lancer » rouvre les
