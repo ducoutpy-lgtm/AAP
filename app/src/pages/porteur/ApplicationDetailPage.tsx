@@ -26,7 +26,9 @@ type Dossier = Omit<Application, 'budget' | 'team' | 'documents'> & {
   partnersInvolved?: string;
   riskManagement?: string;
   sustainabilityPlan?: string;
-  documents?: { name: string; url: string }[];
+  documents?: { name: string; url: string; nonDeposee?: boolean }[];
+  // Candidature déposée sur le site du financeur et suivie par le candidat seul (suivi-candidature-externe)
+  externe?: boolean;
 };
 
 const dateFr = (v: Timestamp | Date | null | undefined) => enDate(v)?.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) ?? '';
@@ -86,11 +88,20 @@ export default function ApplicationDetailPage() {
             </div>
             <div className="text-sm text-gray-600 text-right">
               {dossier.submittedAt && <p>Envoyée le {dateFr(dossier.submittedAt)}</p>}
-              {dossier.budget?.total != null && <p className="mt-1">Budget demandé : <span className="font-semibold text-gray-900">{euros(dossier.budget.total)}</span></p>}
+              {/* Montant nul ou inconnu (suivi hors de l'application) : pas de ligne « Budget demandé : 0 € » */}
+              {!!dossier.budget?.total && <p className="mt-1">Budget demandé : <span className="font-semibold text-gray-900">{euros(dossier.budget.total)}</span></p>}
             </div>
           </div>
 
-          {statut === 'submitted' && (
+          {/* Corrections-relecture 3.1 (2026-11-20) : une candidature suivie hors de l'application n'a été transmise à
+              personne par elle, et son statut ne bougera que si le candidat le change */}
+          {dossier.externe && (
+            <p className="mt-6 text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-lg p-3">
+              Candidature déposée sur le site du financeur : l'application ne l'a transmise à personne. Elle vous sert à
+              suivre vos démarches ; la réponse arrivera par le financeur.
+            </p>
+          )}
+          {statut === 'submitted' && !dossier.externe && (
             <p className="mt-6 text-sm text-gray-600 bg-primary-50 border border-primary-200 rounded-lg p-3">
               Le financeur a reçu votre dossier. Le statut passera à « En cours d'examen » quand il l'ouvrira, puis à
               « Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
@@ -140,9 +151,14 @@ export default function ApplicationDetailPage() {
             <ul className="space-y-2">
               {dossier.documents.map((d, i) => (
                 <li key={i}>
-                  <a href={d.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline inline-flex items-center gap-1">
-                    <ExternalLink className="h-4 w-4" />{d.name}
-                  </a>
+                  {/* Pièce non déposée (stockage fermé) : sans lien, le lien vide rouvrait la page */}
+                  {d.nonDeposee || !d.url ? (
+                    <span className="text-gray-700">{d.name} <span className="text-sm text-warning-600">(non déposée : à adresser directement au financeur)</span></span>
+                  ) : (
+                    <a href={d.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline inline-flex items-center gap-1">
+                      <ExternalLink className="h-4 w-4" />{d.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

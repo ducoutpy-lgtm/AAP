@@ -36,7 +36,8 @@ sont verts.
 
 ## 3. Défauts mineurs
 
-- [ ] 3.1 Détail d'une candidature suivie hors de l'application, pièces non déposées.
+- [x] 3.1 Détail d'une candidature suivie hors de l'application, pièces non déposées. (2026-11-20 :
+  `detailCandidature.test.tsx`, 2 tests en échec avant ; le cas d'une candidature envoyée par l'application reste couvert.)
 - [ ] 3.2 Retour à la recherche avec ses filtres.
 - [ ] 3.3 Calendrier : fiches visibles seulement, appels clos non urgents.
 - [ ] 3.4 Prochaine échéance du financeur : l'appel qui clôt aujourd'hui compte.
