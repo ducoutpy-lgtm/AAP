@@ -105,6 +105,7 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   fausse : j'avais repris le rythme des pages web) ; fin plutôt samedi. Ne pas relancer : Perroquet relance la tâche
   après sa mesure. Relecture des 58 fiches lancée (sous-agent, verdicts dans
   `scraping/sources/exactitude_pdf_locale_verdicts.json`, liste `scraping/results/relecture_pdf_locale.json`).
+  Relecture faite : rapport `scraping/EXACTITUDE_PDF_LOCALE.md`.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

@@ -1,0 +1,1336 @@
+[
+ {
+  "url": "https://www.carsat-nordest.fr/files/live/sites/carsat-nordest/files/documents/partenaires/etre-partenaire-AS/aap-autres-partenaires/2025/AAP%2054/AAP-2026-cahier-des-charges-et-annexes-maj-09-01-2026.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Date limite de dépôt des candidatures : 01/03/2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Cahier des charges 2026 de l’AAP, CFPPA 54"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la CFPPA lance auprès de ses partenaires l’appel"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "DATE LIMITE DE DEPOT DES CANDIDATURES : 01/03/2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement un seuil de cofinancement (10 000 €) et un seuil d’examen (23 000 €), pas de montant d’aide"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges%20-%20Nutrition.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 MIS EN PLACE PAR L’ASSURANCE MALADIE",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "CAHIER DES CHARGES - ACTIONS INNOVANTES – NUTRITION"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en place par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "manque",
+    "preuve": "La date limite de retour des fiches projets est fixée au 15 Mai 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges%20-Sant%C3%A9%20sexuelle%20.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 MIS EN PLACE PAR L’ASSURANCE MALADIE",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "CAHIER DES CHARGES SANTE SEXUELLE"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en place par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "invente",
+    "preuve": "texte : 15 Mai 2026 ; 2026-12-31 absent du texte"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges-%20Vaccination%20contre%20la%20grippe%20et%20le%20Covid-19%20-%20Annexe%2022.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 MIS EN PLACE PAR L’ASSURANCE MALADIE",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "CAHIER DES CHARGES GRIPPE, COVID-19 ET GESTES BARRIERES"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en place par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "La date limite de retour des fiches projets est fixée au 15 Mai 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges%20%20-%20Vaccinations%20autres%20que%20grippe%20Covid-19%20et%20HPV.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 MIS EN PLACE PAR L’ASSURANCE MALADIE",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "ACTIONS INNOVANTES – VACCINATION (HORS GRIPPE, COVID-19 et HPV)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en place par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "manque",
+    "preuve": "La date limite de retour des fiches projets est fixée au 15 Mai 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges%20-D%C3%A9pistage%20organis%C3%A9%20des%20cancers%20.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets 2026 mis en œuvre par l’Assurance Maladie",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "CAHIER DES CHARGES DÉPISTAGES ORGANISÉS DES CANCERS"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en œuvre par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "La date limite de retour des fiches projets est fixée au 15 Mai 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.cssm.fr/uploads//MALADIE/A/Cahier%20des%20charges%20-Sant%C3%A9%20environnementale.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets 2026 mis en place par l’Assurance Maladie",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "PROJETS INNOVANTS EN SANTE ENVIRONNEMENTALE"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "mis en place par l’Assurance Maladie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "La date limite de retour des fiches projets est fixée au 15 Mai 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des forfaits horaires (75/50/40 euros) et un plafond de 5 % de frais"
+   }
+  }
+ },
+ {
+  "url": "https://www.carsat-normandie.fr/files/live/sites/carsat-normandie/files/pdf/pdf_partenaires/Appel_projets_bienvenue_retraite_Appel_candidature.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A CANDIDATURES – Mise œuvre de l’action « Bienvenue à la retraite »",
+  "champs": {
+   "titre": {
+    "verdict": "faux",
+    "preuve": "titre générique ; l’appel porte sur l’action « Bienvenue à la retraite »"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Carsat Normandie, Direction de l’Action Sociale"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "dossier de candidature avant le 30 octobre 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.carsat-normandie.fr/files/live/sites/carsat-normandie/files/pdf/pdf_partenaires/Appel_projets_bienvenue_retraite_Dossier_candidature.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à candidatures « Bienvenue à la retraite » - Carsat Normandie",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à candidatures Bienvenue à la retraite (dossier de candidature)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Carsat Normandie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "transmis à la Carsat Normandie, avant le 30 octobre 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement des lignes de budget vierges à 0,00 €"
+   }
+  }
+ },
+ {
+  "url": "https://alpes-vaucluse.msa.fr/lfp/documents/98795/1202571/APJ+-+Dossier+de+candidature.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "MSA Appels à projets Jeunes – Dossier de candidature",
+  "champs": {
+   "titre": {
+    "verdict": "faux",
+    "preuve": "titre réel : MSA Appels à projets Jeunes – Dossier de candidature ; « Jeunes porteurs du projet » est un intitulé de rubrique"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "MUTUALITE SOCIALE AGRICOLE / MSA Alpes Vaucluse"
+   },
+   "date_cloture": {
+    "verdict": "invente",
+    "preuve": "texte : avant le 31 janvier 2026 ; 30 juin absent du texte"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://alpes-vaucluse.msa.fr/lfp/documents/98795/1202571/APJ+-+Cahier+des+charges.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "MSA Appels à projets Jeunes – Cahier des charges",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "MSA Appels à projets Jeunes – Cahier des charges 2025-2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "MUTUALITE SOCIALE AGRICOLE"
+   },
+   "date_cloture": {
+    "verdict": "faux",
+    "preuve": "20 mars 2026 = date limite de remontée par les caisses au niveau national, pas dépôt des jeunes"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "deux 1ers prix dotés de 2 500€ ... 4èmes prix dotés de 1 900 €"
+   }
+  }
+ },
+ {
+  "url": "https://picardie.msa.fr/lfp/documents/98875/488250023/APJ+2027+-+Cahier+des+charges+Picardie.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS JEUNES Edition 2026-2027 – Cahier des charges – règlement",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APJ 2027 - Cahier des charges Picardie"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "MSA Picardie, communiquer les candidatures à la MSA Picardie"
+   },
+   "date_cloture": {
+    "verdict": "faux",
+    "preuve": "19 mars 2027 = remontée nationale ; dépôt local : au plus tard le vendredi 15 janvier 2027"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "deux 1ers prix dotés de 2 500€ (max 2 500 €), le plus bas 1 900 €"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/AAP_Prix_V_et_E_Mescle_2026v2_72998a738d.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 FONDATION VICTOR ET ERMINIA MESCLE",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Prix Victor et Erminia Mescle 2026 / AAP Mescle"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation Victor et Erminia Mescle sous l’égide de la FRM"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "21 avril 2026, 16h00 Clôture de saisie des demandes"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Le montant du soutien financier est de 100 000 euros pour une durée de 2 ans"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2026_AJE_AAP_ad987fcbdc.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 Amorçage de jeunes équipes FRM",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Amorçage de jeunes équipes 2026 FRM"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "proposé par la Fondation pour la Recherche Médicale (FRM)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "ouvert ... jusqu’au 6 novembre 2026 (session 3, dernière clôture)"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "Le budget alloué en 2026 à cet appel à projets est de 2,7 millions d’euros (enveloppe absente de la fiche)"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2027_Sante_cerveau_AO_AAP_9f662b3597.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "PROGRAMME THÉMATIQUE SANTE DU CERVEAU, Appel à projets FRM 2027",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "SANTE DU CERVEAU, Appel à projets FRM 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation pour la Recherche Médicale (FRM)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture de saisie des pré-demandes 3 décembre 2026, 16h00"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "ne doit pas excéder 700 000 euros au total"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2027_Equipes_FRM_AO_AAP_V2_f371f2de07.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets FRM Équipes FRM 2027",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets FRM Équipes FRM 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation pour la Recherche Médicale (FRM)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "11 juin 2026, 16h00 Clôture de saisie des pré-demandes"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Montant total : entre 200 000 € et 450 000 € pour une durée de 3 ans"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2027_Danone_AAP_10742e745e.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2027 PRIX DE RECHERCHE POUR LES SCIENCES DE L’ALIMENTATION",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Prix de Recherche pour les Sciences de l’Alimentation – Règlement AAP 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Institut Danone France et Fondation pour la Recherche Médicale"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des candidatures : le 15 février 2027"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "dotation globale de 100 000 € (enveloppe) ; chaque projet reçoit 50 000 €, donc max 50 000"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2025_PER_FRM_AAP_d038a3796e.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appels à projets Aides individuelles 2025 (Fin de thèse de sciences, etc.)",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme Espoirs de la Recherche - Appels à projets Aides individuelles 2025"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation pour la Recherche Médicale (FRM)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "première date limite de saisie : 27 janvier 2025 à 16 heures (autres aides plus tard)"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "Montant : 42000 €/an, 50 000 €/an, 60 000 €/an, 70 000 €/an selon l’aide (plusieurs aides, ambigu)"
+   }
+  }
+ },
+ {
+  "url": "https://www.frm.org/uploads/2027_Fondation_Beatrice_Denys_AAP_5a1eb923c3.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Elle ouvre son appel à projets 2026-2027 pour distinguer une équipe de recherche",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL A PROJETS 2026-2027 – 28ème prix"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la Fondation Béatrice Denys ... ouvre son appel à projets"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Jusqu’au 22 novembre 2026 Période de réception des Lettres d’Intention"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "subvention pouvant aller de 80 000€ à 100 000€"
+   }
+  }
+ },
+ {
+  "url": "https://www.fondation-ca-solidaritedeveloppement.org/wp-content/uploads/2026/09/Modalites-participation-AAP-Fondation-CASD.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Dépôt de projets en ligne : du 28 septembre au 9 novembre 2026 inclus",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Aide Sociale à l’Enfance : accompagner les jeunes dans leur vie d’adulte"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "La Fondation Solidarité et Développement (Crédit Agricole)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "du 28 septembre au 9 novembre 2026 inclus"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "subvention d’au moins 8 000 € ; enveloppe : doté d’un budget de 400 000 € (non reprise)"
+   }
+  }
+ },
+ {
+  "url": "https://www.fondation-ca-solidaritedeveloppement.org/wp-content/uploads/2026/07/AAP2026-Criteres-ligibilite.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Candidatez entre le 28 septembre et le 9 novembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "AAP2026 - Critères d’éligibilité (appel ASE jeunes 16-25 ans)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation Crédit Agricole Solidarité et Développement"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Candidatez entre le 28 septembre et le 9 novembre 2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Ne peut être inférieure à 8 000 € ; supérieures à 35 000 € refusées"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_lettre-AAP_SM_2026_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets « Sciences médicales et biologiques » 2026 ... Subventions jusqu’à 125 000 €",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Sciences médicales et biologiques 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "France Alzheimer et maladies apparentées"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de soumission des lettres d’intention 06 mai 2026 – 12h00"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Subventions allant jusqu’à 125 000 €"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_lettre-AAP-soutien-aux-jeunes-chercheurs-2026_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "« Soutien aux jeunes chercheurs » 2026 – Soumission des projets : Jusqu’au 6 mai 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Soutien aux jeunes chercheurs 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "France Alzheimer et maladies apparentées"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Jusqu’au 6 mai 2026 (midi)"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "jusqu’à un maximum de 50.000€"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_Instruction_tech_AAP_SHS_2026_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Instructions techniques « Sciences Humaines et Sociales » 2026, soumission via la plateforme",
+  "champs": {
+   "titre": {
+    "verdict": "faux",
+    "preuve": "« AAP PFA 2026 » est un pied de page commun à plusieurs appels ; thématique SHS non nommée"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "France Alzheimer"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "date limite évoquée sans date dans ce document"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Les financements attribués par France Alzheimer ne dépassent pas 100 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_Lettre_AAP_SHS_2026_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets SHS 2026 Subventions allant jusqu’à 100.000 Euros",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "AAP SHS 2026 – France Alzheimer et maladies apparentées"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "France Alzheimer et maladies apparentées"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Soumission des projets : Jusqu’au 06 mai 2026 (midi)"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Subventions allant jusqu’à 100.000 Euros"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_instructions-tech-AAP2026_PFA_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Instructions techniques « Sciences médicales et biologiques » 2026",
+  "champs": {
+   "titre": {
+    "verdict": "faux",
+    "preuve": "« AAP PFA 2026 » est un pied de page commun ; thématique sciences médicales non nommée"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "France Alzheimer"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "date limite évoquée sans date dans ce document"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Les financements attribués par France Alzheimer ne dépassent pas 125 k€"
+   }
+  }
+ },
+ {
+  "url": "https://www.francealzheimer.org/wp-content/uploads/2026/03/FADOC_instructions-tech-AAP-Soutien-aux-jeunes-chercheurs-2026_VF.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Lettre de l’appel à projet « Soutien aux jeunes chercheurs » 2026, dossiers soumis via la plateforme",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "« Soutien aux jeunes chercheurs » 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "AAPJC 2026 – France Alzheimer"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "date limite évoquée sans date dans ce document"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://fondationparalysiecerebrale.org/wp-content/uploads/2026/01/PARTAGE-2026-LETTRE-INTENTION.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "cette lettre d’intention est obligatoire ... projet dans le cadre de l’appel à projet PARTAGE 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL A PROJET PARTAGE 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Fondation Paralysie Cérébrale"
+   },
+   "date_cloture": {
+    "verdict": "manque",
+    "preuve": "A retourner au plus tard le : 22 mars 2026 (14h)"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement un tableau de budget vierge (en euros)"
+   }
+  }
+ },
+ {
+  "url": "https://www.lesouffle.org/sites/default/files/2026-03/EMERGENCE2026_RI_DEF_0.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS \"EMERGENCE EN SANTÉ RESPIRATOIRE\" 2026 – règlement",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS \"EMERGENCE EN SANTÉ RESPIRATOIRE\" 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Cet appel à projets est lancé par la Fondation du Souffle"
+   },
+   "date_cloture": {
+    "verdict": "faux",
+    "preuve": "texte : soumis avant le 27 avril 2026 ; 1er septembre = annonce des résultats"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "subventions de 42 500 euros ... 133 200 euros pour les thèses de 3 ans"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/324787/file/Bilan%20dispositif%20regional%20Culture%20et%20Sante%202017-2021.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": false,
+  "preuve_appel": "Rapport : Bilan du dispositif régional Culture et Santé 2017-2021, réalisé par une étudiante en santé publique",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Bilan du dispositif régional Culture et Santé en Bretagne (2017-2021)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC et ARS Bretagne (dispositif évalué)"
+   },
+   "date_cloture": {
+    "verdict": "invente",
+    "preuve": "rien dans le texte (2021-01-01 inventé)"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "budget stable 146 000 € ; 273 301 € / 439 000 € = enveloppes de demandes, pas d’appel ouvert"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/386760/file/Cahier%20des%20charges%20Plaines%20sant%C3%A9%20AMI%20ESMS%2026-27.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "13 avril 2026 : clôture de l’AMI Plaines santé ESMS",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme de diffusion artistique ... Plaines santé, cahier des charges ESMS"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la DRAC et l’ARS Hauts-de-France impulsent ... l’offre"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "13 avril 2026 : clôture de l’AMI Plaines santé ESMS"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "à hauteur de 6 000 euros versés à l’artiste ou la compagnie"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/384278/file/Cahier%20des%20charges%20Culture%20et%20Sant%C3%A9%20IDF%202026.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projet « Culture & Santé en Île-de-France 2026 » – modalités de dépôt",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Culture & Santé en Île-de-France 2026"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "le texte dit seulement DRAC et ARS ; « de l’Art et des Musées » est une mauvaise expansion de DRAC"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "au plus tard le 12 mars à minuit, délai de rigueur"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "L’enveloppe de subvention disponible en 2026 est de 700 000€ ; minimum 5 000 €"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/386492/file/AAP_culture%20sante_2026_cahier%20des%20charges_jumelages.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Programme Culture et Santé Bretagne – Appel à projets contractuel 2026 cahier des charges jumelages",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme Culture et Santé Bretagne – AAP contractuel 2026, cahier des charges jumelages"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DIRECTION REGIONALE DES AFFAIRES CULTURELLES DE BRETAGNE / AGENCE REGIONALE DE SANTE"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture le 7 MAI 2026, délai de rigueur"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans ce cahier des charges"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395407/file/CDC_AAP2027_MEDICOSOCIAL.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... EN ÉTABLISSEMENTS MÉDICOSOCIAUX",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... ÉTABLISSEMENTS MÉDICOSOCIAUX"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "politique portée conjointement par l’ARS, la DRAC et le Conseil Régional"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dates limite du dépôt des dossiers dans Démarches simplifiées 17 décembre 2026"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "max 60 vient de « 60 €/h » et « 60 % du coût », ce n’est pas un montant par projet"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395781/file/CDC_AAP2027_SANITAIRE.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... EN ÉTABLISSEMENTS SANITAIRES",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS 2027 CULTURE ET SANTÉ (établissements sanitaires)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "politique portée conjointement par l’ARS, la DRAC et la Région"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dates limite du dépôt des dossiers ... 13 novembre 2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement 60 €/h et plafond de 60 % du coût"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/383303/file/AAP%20CES%202026.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJETS 2026 CULTURE ET SANTE GUADELOUPE ... Clôture du dépôt des projets 27/02/2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme Culture et Santé Guadeloupe Saint-Barthélemy et Saint-Martin – AAP 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Agence de Santé de Guadeloupe ... / Direction des affaires Culturelles"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture du dépôt des projets 27/02/2026 à 18h"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "montant total de 90 000€ ; fourchette entre 1000 et 5 000€ par projet (min et enveloppe absents)"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395358/file/CDC_AAP2027_MEDICOSOCIAL.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... EN ÉTABLISSEMENTS MÉDICOSOCIAUX",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... ÉTABLISSEMENTS MÉDICOSOCIAUX"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "politique portée conjointement par l’ARS, la DRAC et le Conseil Régional"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dates limite du dépôt des dossiers ... 17 décembre 2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement 60 €/h et plafond de 60 % du coût"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/324786/file/Bilan%20dispositif%20regional%20culture%20et%20sante%202004-2016.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": false,
+  "preuve_appel": "Rapport : Culture-Santé en Bretagne, Bilan du dispositif régional (2004-2016)",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Culture-Santé en Bretagne, Bilan du dispositif régional (2004-2016) (titre reformulé)"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "le dispositif est celui de la DRAC et de l’ARS Bretagne, pas de la Région"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "aucune date limite (bilan)"
+   },
+   "montant": {
+    "verdict": "invente",
+    "preuve": "0 / 0 non fondés ; le texte cite 24 000 € par an et 458 900 € sur 2004-2010"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/386491/file/AAP%20culture_sante_2026_presentation.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "DATE DE CLOTURE : 7 MAI 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme Culture et Santé Bretagne – Appel à projets 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS Bretagne et DRAC Bretagne"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "DATE DE CLOTURE : 7 MAI 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement un taux maximal de 60 % du projet"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/393718/file/CDC_AAP2027_NA_SANITAIRE.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... EN ÉTABLISSEMENTS SANITAIRES",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS 2027 CULTURE ET SANTÉ ... ÉTABLISSEMENTS SANITAIRES"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS, DRAC, Région Nouvelle-Aquitaine"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dates limite du dépôt des dossiers dans Démarches simplifiées 4 novembre 2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "max 60 vient de « 60 €/h » et « 60 % du coût », pas un montant par projet"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/392470/file/2026_AAP_CultureSante-PDL_CDC_%20jumelage.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS CULTURE SANTÉ 2026 JUMELAGES 2026-2027 – Date de clôture : 14 août 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS CULTURE SANTÉ 2026 JUMELAGES 2026-2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS et DRAC des Pays de la Loire"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date de clôture : 14 août 2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "La subvention accordée est plafonnée à 15 000 euros"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395808/file/CDC_Culture-Sante_2027.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Cahier des charges Culture/Santé - 2027, dossier à finaliser avant le 31 décembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Cahier des charges Culture/Santé - 2027, dispositif Culture Santé, Handicap et Dépendance"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS Occitanie / DRAC Occitanie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "à finaliser avant le 31 décembre 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/381680/file/2026_Cahier%20des%20charges_%20Appel%20%C3%A0%20projets%20CULTURE_SANTE.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJET CULTURE ET SANTE 2026 – Dépôt des dossiers jusqu’au 14 janvier 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL A PROJET CULTURE ET SANTE 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC et ARS, en partenariat avec les collectivités régionales (PACA)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dépôt des dossier : du lundi 17 novembre 2025 au mercredi 14 janvier 2026 minuit"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395810/file/CDC_R%C3%A9sidence%20longue_2027.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "cahier des charges « résidence longue » 2027, dossier à finaliser avant le 31 décembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Résidence longue en établissement de santé ou médico-social"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS Occitanie / DRAC Occitanie"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "à finaliser avant le 31 décembre 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "seulement un cofinancement minimal de 50 % du montant global"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395809/file/CDC_CHD_2027.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Cahier des charges Culture/Handicap & Dépendance – 2027, dossier à remplir en ligne",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Cahier des charges Culture/Handicap & Dépendance – 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC Occitanie ARS Occitanie"
+   },
+   "date_cloture": {
+    "verdict": "manque",
+    "preuve": "à finaliser avant le 31 décembre 2026 afin de permettre une notification"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/390259/file/2026_AAP_CultureSante-PDL_CDC_r%C3%A9sidences.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS CULTURE SANTÉ 2026 RÉSIDENCES – Date de clôture : 14 août 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS CULTURE SANTÉ 2026 (résidences d’artistes)"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "ARS et DRAC des Pays de la Loire"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date de clôture : 14 août 2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "plafonné à 15 000 € pour une résidence de 2 mois"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/381392/file/Cahier%20des%20charges%20Culture%20Sant%C3%A9%20et%20M%C3%A9dico-social%20en%20Normandie%202026.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Culture Santé et Médico-social en Normandie – APPEL A PROJETS 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Culture Santé et Médico-social en Normandie, appel à projets 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC, ARS, Région Normandie, Départements du Calvados, de l’Eure et de la Seine-Maritime"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "validé au plus tard le : Lundi 9 FÉVRIER 2026 à 23h59"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "L’aide financière est plafonnée à 10 000 euros"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/386493/file/AAP_culture%20sante_2026_cahier%20des%20charges_projet%20annuel.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets annuel \"culture et santé\" 2026 – Clôture le 7 MAI 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme Culture et Santé Bretagne – Appel à projets annuel 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC Bretagne / ARS Bretagne"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Clôture le 7 MAI 2026, délai de rigueur"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/376995/file/ARA_Culture%20%26%20Sant%C3%A9_Cahier_des_charges_annuel_2026.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À PROJETS ANNUEL CULTURE ET SANTÉ AUVERGNE-RHÔNE-ALPES 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À PROJETS ANNUEL CULTURE ET SANTÉ AUVERGNE-RHÔNE-ALPES 2026"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "développé par la DRAC, l’ARS et la Région Auvergne-Rhône-Alpes"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "calendrier : date butoir de dépôt des candidatures 4 novembre 2025 (frise mal ordonnée, probable)"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "minimum 2 000 €, maximum 12 000 €"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/376274/file/CAHIER%20DES%20CHARGES%20AAP%20CULTURE%20SANTE%202025.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets « Culture et Santé » 2025 – Clôture : le dimanche 17 août 2025",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets « Culture et Santé » 2025"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Direction des affaires culturelles et Agence régionale de Santé de Martinique"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des candidatures : Dimanche 17 août 2025 inclus"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/395895/file/2027_Cahier%20des%20charges_%20Appel%20%C3%A0%20projets%20CULTURE_SANTE.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A PROJET CULTURE ET SANTE 2027 – Dépôt du 2 novembre 2026 au 13 janvier 2027",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL A PROJET CULTURE ET SANTE 2027"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC et ARS PACA, en partenariat avec les collectivités régionales"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Dépôt des dossiers : du lundi 2 novembre 2026 au mercredi 13 janvier 2027 minuit"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/393126/file/Cahier%20des%20charges%20CVL%202027.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL A CANDIDATURE 2027 Centre-Val de Loire – Période de dépôt 15 septembre – 15 décembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à candidature 2027 « Culture et Santé » DRAC et ARS Centre-Val de Loire"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "DRAC et ARS Centre-Val de Loire"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Période de dépôt des dossiers : 15 septembre – 15 décembre 2026"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "Solliciter une subvention supérieure ou égale à 1 500,00 euros"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/386758/file/Cahier%20des%20charges%20Plaines%20sant%C3%A9%20artistes%2026-27.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": true,
+  "preuve_appel": "La date limite de dépôt des candidatures est fixée au 13 avril 2026 à 23H59",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Programme de diffusion artistique ... Plaines santé, cahier des charges artistes"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "la DRAC et l’ARS Hauts-de-France"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "La date limite de dépôt des candidatures est fixée au 13 avril 2026 à 23H59"
+   },
+   "montant": {
+    "verdict": "juste",
+    "preuve": "accompagnée par la DRAC Hauts-de-France à hauteur de 6 000 euros"
+   }
+  }
+ },
+ {
+  "url": "https://www.culture.gouv.fr/mc/content/download/370958/file/Proc%C3%A9dure%20d%C3%A9p%C3%B4t%20en%20ligne_DRAC%20ARS_%20Bretagne.pdf?inLanguage=fre-FR&version=1",
+  "est_un_appel": false,
+  "preuve_appel": "Procédure de dépôt en ligne sur Démarches simplifiées : guide technique sans appel ni critères",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL A PROJETS CULTURE SANTE 2025 (en-tête du guide)"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "« Ministère de la Culture » absent du corps ; seul le nom de fichier cite DRAC ARS Bretagne"
+   },
+   "date_cloture": {
+    "verdict": "vide-juste",
+    "preuve": "aucune date dans le guide"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "rien dans le texte"
+   }
+  }
+ },
+ {
+  "url": "https://www.cantal.fr/wp-content/uploads/2025/12/aap-11-fa1-27112025-vf.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets n° 1.1 ... Date limite de dépôt des projets : 31 décembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "AAP 1.1 « Soutien à l’investissement des opérateurs économiques ... »"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "GAL AUVERGNE-RHONE-ALPES CANTAL"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des projets : 31 décembre 2026"
+   },
+   "montant": {
+    "verdict": "manque",
+    "preuve": "dépenses minimum 10 000 € HT, plafonnées à 150 000 € HT ; taux d’aide 40 % (dépenses, pas subvention)"
+   }
+  }
+ },
+ {
+  "url": "https://www.cantal.fr/wp-content/uploads/2025/12/aac-consocantal.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "APPEL À CANDIDATURES CONSOCANTAL – Date limite de dépôt des candidatures : 30 avril 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "APPEL À CANDIDATURES CONSOCANTAL"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "Conseil départemental du Cantal (cahier des charges publié sur cantal.fr)"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des candidatures : 30 avril 2026"
+   },
+   "montant": {
+    "verdict": "vide-juste",
+    "preuve": "aucun montant d’aide, seulement des seuils de produits locaux"
+   }
+  }
+ },
+ {
+  "url": "https://www.cantal.fr/wp-content/uploads/2025/12/aap-21-fa2-27112025-vf.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets 2.1 ... Date limite de dépôt des projets : 31 décembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets 2.1 « Soutien à la création et au développement des services ... »"
+   },
+   "financeur": {
+    "verdict": "faux",
+    "preuve": "nom du programme FEADER pris pour l’organisme ; l’appel est lancé par le GAL Cantal"
+   },
+   "date_cloture": {
+    "verdict": "manque",
+    "preuve": "Date limite de dépôt des projets : 31 décembre 2026"
+   },
+   "montant": {
+    "verdict": "invente",
+    "preuve": "0 / 0 non fondés ; dépenses minimum 5 000 € HT, matériel plafonné à 50 000 € HT"
+   }
+  }
+ },
+ {
+  "url": "https://www.cantal.fr/wp-content/uploads/2026/08/aap-13-fa1-30062026-vf.pdf",
+  "est_un_appel": true,
+  "preuve_appel": "Appel à projets n° 1.3 ... Date limite de dépôt des projets : 30 septembre 2026",
+  "champs": {
+   "titre": {
+    "verdict": "juste",
+    "preuve": "Appel à projets n° 1.3 « Soutien à l’investissement des exploitations agricoles ... agritouristiques »"
+   },
+   "financeur": {
+    "verdict": "juste",
+    "preuve": "GAL AUVERGNE-RHONE-ALPES - CANTAL"
+   },
+   "date_cloture": {
+    "verdict": "juste",
+    "preuve": "Date limite de dépôt des projets : 30 septembre 2026"
+   },
+   "montant": {
+    "verdict": "faux",
+    "preuve": "200 000 € = enveloppe FEADER (non mise en enveloppe) ; par projet : dépenses 50 000 à 150 000 € HT"
+   }
+  }
+ }
+]
