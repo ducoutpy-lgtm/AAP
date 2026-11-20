@@ -21,7 +21,9 @@ sont verts.
 
 ## 2. Défauts moyens
 
-- [ ] 2.1 Candidature refusée sur un appel clos (fiche et formulaire).
+- [x] 2.1 Candidature refusée sur un appel clos (fiche et formulaire). (2026-11-20 : `candidatureOuverte`, 3 tests en
+  échec avant ; émulateurs, `test-fin-2` reculé au 10/11 : plus de bouton, formulaire « Cet appel est clôturé » ;
+  `test-fin-1` ouvert : bouton présent ; date remise.)
 - [ ] 2.2 Écran d'erreur réinitialisé au changement de page.
 - [ ] 2.3 Validation et rejet groupés alignés sur les boutons unitaires.
 - [ ] 2.4 Règles des candidatures et des appels bornées (tests de règles d'abord).

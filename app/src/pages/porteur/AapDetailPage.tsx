@@ -13,7 +13,7 @@ import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
-import { aQuiSAdresse, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
+import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
@@ -240,7 +240,8 @@ export default function AapDetailPage() {
               )}
             </div>
           )}
-          {!candidatureSurSiteOfficiel(aap) && (userProfile?.userType === 'porteur' || !currentUser) && (
+          {/* Appel clos : plus de bouton (corrections-relecture 2.1) ; l'encadré « Clôturé » reste affiché */}
+          {!candidatureSurSiteOfficiel(aap) && candidatureOuverte(aap) && (userProfile?.userType === 'porteur' || !currentUser) && (
             <div className="mt-6">
               <Button
                 size="lg"

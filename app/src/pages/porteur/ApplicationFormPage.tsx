@@ -19,7 +19,7 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Stepper } from '../../components/ui/Stepper';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
-import { libelleMontant } from '../../utils/candidat';
+import { candidatureOuverte, libelleMontant } from '../../utils/candidat';
 import { pieceNonDeposee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 
@@ -118,7 +118,7 @@ export default function ApplicationFormPage() {
   };
 
   const envoyer = async () => {
-    if (!currentUser || !aap || !aapId || !etapeValide()) return;
+    if (!currentUser || !aap || !aapId || !etapeValide() || !candidatureOuverte(aap)) return;
     setSubmitting(true);
     setError('');
     try {
@@ -177,6 +177,18 @@ export default function ApplicationFormPage() {
         <Card className="p-8 text-center max-w-md">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Appel introuvable</h2>
           <Button onClick={() => navigate('/aap/search')}>Retour à la recherche</Button>
+        </Card>
+      </div>
+    );
+  }
+  // Appel clos (corrections-relecture 2.1, 2026-11-20) : le formulaire, ouvert par son adresse, n'envoie plus rien
+  if (!candidatureOuverte(aap)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="p-8 text-center max-w-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Cet appel est clôturé</h2>
+          <p className="text-gray-600 mb-4">Il n'accepte plus de candidature.</p>
+          <Button onClick={() => navigate(`/aap/${aapId}`)}>Retour à l'appel</Button>
         </Card>
       </div>
     );

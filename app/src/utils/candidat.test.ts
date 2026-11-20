@@ -1,6 +1,6 @@
 // Tests du parcours candidat (changement parcours-candidat-jour-1, tâche 1.1).
 import { describe, expect, it } from 'vitest';
-import { candidatureSurSiteOfficiel, suiviCandidatureExterne } from './candidat';
+import { candidatureSurSiteOfficiel, suiviCandidatureExterne, candidatureOuverte } from './candidat';
 
 describe('suiviCandidatureExterne (suivi-candidature-externe)', () => {
   it('note une candidature déposée sur le site officiel, sans prétendre la transmettre', () => {
@@ -86,5 +86,23 @@ describe('colonnes des candidatures', () => {
     expect(r.envoyee).toHaveLength(2);
     expect(r.acceptee).toHaveLength(1);
     expect(r.refusee).toHaveLength(0);
+  });
+});
+
+// Appel clos (corrections-relecture 2.1, 2026-11-20) : la fiche montrait « Candidatures fermées » mais gardait le bouton
+// « Candidater », et le formulaire envoyait la candidature au financeur après la clôture.
+describe('candidatureOuverte', () => {
+  const jours = (n: number) => new Date(Date.now() + n * 24 * 3600 * 1000);
+  it('appel publié avant sa date : ouvert ; sans date : ouvert', () => {
+    expect(candidatureOuverte({ status: 'published', deadline: jours(10) })).toBe(true);
+    expect(candidatureOuverte({ status: 'published', deadline: null })).toBe(true);
+  });
+  it('date passée : fermé', () => {
+    expect(candidatureOuverte({ status: 'published', deadline: jours(-2) })).toBe(false);
+  });
+  it('appel clôturé, archivé ou brouillon : fermé, même avant sa date', () => {
+    for (const status of ['closed', 'archived', 'draft'] as const) {
+      expect(candidatureOuverte({ status, deadline: jours(10) })).toBe(false);
+    }
   });
 });

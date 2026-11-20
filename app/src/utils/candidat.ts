@@ -2,7 +2,7 @@
 // lisible, « à qui s'adresse », appels pour un profil, échéances proches, colonnes des candidatures. Pourquoi un
 // fichier à part : testable par Vitest sans React ni Firebase.
 import type { AAP, ApplicationStatus } from '../types';
-import { getDaysUntilDeadline } from './deadline';
+import { getDaysUntilDeadline, isClosed } from './deadline';
 import { euros } from './recherche';
 import { destinatairesDe } from './qualification';
 
@@ -122,4 +122,10 @@ export function repartirCandidatures<T extends { status: string }>(apps: T[]): R
   const colonnes: Record<ColonneCandidature, T[]> = { envoyee: [], examen: [], complement: [], acceptee: [], refusee: [] };
   for (const a of apps) colonnes[colonneDe(a.status)].push(a);
   return colonnes;
+}
+
+// Candidature possible dans l'application (corrections-relecture 2.1, 2026-11-20) : appel publié dont la date de clôture
+// n'est pas passée (sans date : ouvert). Un appel clôturé ou archivé par l'administrateur reste lisible mais fermé.
+export function candidatureOuverte(aap: Pick<AAP, 'status' | 'deadline'>): boolean {
+  return aap.status === 'published' && !isClosed(getDaysUntilDeadline(aap.deadline));
 }
