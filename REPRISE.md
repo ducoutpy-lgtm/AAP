@@ -93,6 +93,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   `scraping/logs/chaine_pdf_locale.log`. La tâche du lundi 23 h reste en place.
   Collecte finie vers 16 h 30 : « 283 pages lues à ce passage. PDF : 278 lus, 122 sans texte ou introuvables » ; la
   chaîne locale a 278 textes PDF à extraire (compte de `extraction_locale.py --extraire --seulement-pdf --limite 0`).
+- 2026-11-20, 11 h 42 (reprise demandée par Monsieur DUCOUT, PC branché sur secteur après mon signalement de la
+  batterie) : chaîne locale lancée par `Start-ScheduledTask` (« AAP Sante - lecture locale des PDF », état Running) ;
+  carte graphique 48 %, qwen3:8b chargé. Fin estimée vers 17 h 30 - 18 h (extraction des 278 PDF environ 3 h 40, puis
+  contrôle et qualification des fiches produites environ 2 h ; estimation). Journal : `scraping/logs/chaine_pdf_locale.log`
+  (« Chaine locale des PDF terminee » à la fin) ; fiches : `scraping/results/extraction_pdf_locale.json`. À vérifier
+  ensuite : bilan de l'import (« a valider ») et du tri (`trier_file.py`), file de Monsieur DUCOUT.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
