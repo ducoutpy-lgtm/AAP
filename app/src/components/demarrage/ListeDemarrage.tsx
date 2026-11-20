@@ -13,7 +13,7 @@ import { Input } from '../ui/Input';
 import { Modal } from '../ui/Modal';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
-import { anneeOuvertureValide, etatDemarrage, OBJETS_PROJET, RAYONS_ACTION } from './demarrage';
+import { etatDemarrage, OBJETS_PROJET, precisionsAEnregistrer, RAYONS_ACTION } from './demarrage';
 
 export function ListeDemarrage() {
   const { currentUser, userProfile, refreshUserProfile } = useAuth();
@@ -37,20 +37,10 @@ export function ListeDemarrage() {
     setErreur('');
     setEnregistrement(true);
     try {
-      if (role === 'porteur') {
-        await setDoc(doc(db, 'porteurProfiles', currentUser.uid), {
-          objetsProjet: objets,
-          anneeOuverture: anneeOuvertureValide(annee),
-          rayonAction: rayon || null,
-          updatedAt: Timestamp.now(),
-        }, { merge: true });
-      } else {
-        await setDoc(doc(db, 'financeurProfiles', currentUser.uid), {
-          website: site.trim() || null,
-          description: presentation.trim() || null,
-          updatedAt: Timestamp.now(),
-        }, { merge: true });
-      }
+      // Seuls les champs saisis sont écrits : la fenêtre s'ouvre vide et effaçait sinon le profil déjà rempli
+      const champs = precisionsAEnregistrer(role, { objets, annee, rayon, site, presentation });
+      await setDoc(doc(db, role === 'porteur' ? 'porteurProfiles' : 'financeurProfiles', currentUser.uid),
+        { ...champs, updatedAt: Timestamp.now() }, { merge: true });
       await setDoc(doc(db, 'users', currentUser.uid), { demarrage: { profil: true } }, { merge: true });
       await refreshUserProfile();
       setFenetre(false);

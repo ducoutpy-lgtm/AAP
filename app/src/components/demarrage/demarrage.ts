@@ -68,3 +68,26 @@ export function anneeOuvertureValide(texte: string, anneeCourante = new Date().g
   const annee = Number(texte.trim());
   return annee >= 1800 && annee <= anneeCourante ? annee : null;
 }
+
+// Champs écrits par la fenêtre « Préciser mon profil » (corrections-relecture 1.2, 2026-11-20) : la fenêtre s'ouvre
+// vide, donc un champ laissé vide n'est pas écrit ; sinon il effaçait la valeur déjà enregistrée dans Mon profil.
+export interface PrecisionsSaisies {
+  objets: string[];
+  annee: string;
+  rayon: string;
+  site: string;
+  presentation: string;
+}
+export function precisionsAEnregistrer(role: UserType, s: PrecisionsSaisies): Record<string, unknown> {
+  const champs: Record<string, unknown> = {};
+  if (role === 'porteur') {
+    const annee = anneeOuvertureValide(s.annee);
+    if (s.objets.length) champs.objetsProjet = s.objets;
+    if (annee !== null) champs.anneeOuverture = annee;
+    if (s.rayon) champs.rayonAction = s.rayon;
+  } else {
+    if (s.site.trim()) champs.website = s.site.trim();
+    if (s.presentation.trim()) champs.description = s.presentation.trim();
+  }
+  return champs;
+}
