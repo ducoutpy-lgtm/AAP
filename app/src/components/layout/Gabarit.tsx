@@ -237,7 +237,8 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
           </div>
         </header>
         <main className="flex-1">
-          <LimiteErreur><Outlet /></LimiteErreur>
+          {/* Clé = adresse : la limite d'erreur repart à zéro à chaque page (corrections-relecture 2.2) */}
+          <LimiteErreur key={pathname}><Outlet /></LimiteErreur>
         </main>
         <PiedDePage />
       </div>
@@ -247,6 +248,7 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
 
 export default function Gabarit() {
   const { currentUser, userProfile } = useAuth();
+  const { pathname } = useLocation();
   const connecteComplet = Boolean(currentUser && userProfile && (userProfile.profileComplete || userProfile.userType === 'admin'));
 
   return (
@@ -258,7 +260,7 @@ export default function Gabarit() {
         <div className="min-h-screen flex flex-col">
           <EnTetePublic />
           <main className="flex-1">
-            <LimiteErreur><Outlet /></LimiteErreur>
+            <LimiteErreur key={pathname}><Outlet /></LimiteErreur>
           </main>
           <PiedDePage />
         </div>
