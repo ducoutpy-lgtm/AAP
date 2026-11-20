@@ -15,7 +15,7 @@ import { Button } from '../../components/ui/Button';
 import { EDITEUR } from '../legal/editeur';
 import { exporterMesDonnees } from '../../services/exportService';
 import { supprimerMonCompte } from '../../services/suppressionService';
-import { connexionRecente } from '../../utils/suppressionCompte';
+import { connexionRecenteSelonServeur } from '../../utils/suppressionCompte';
 import { TextesReutilisablesCarte } from '../../components/profil/TextesReutilisablesCarte';
 import { nomFichierExport, SUR_DEMANDE_AU_DPO } from '../../utils/exportDonnees';
 
@@ -37,7 +37,10 @@ export default function ProfilPage() {
   const [suppression, setSuppression] = useState<'' | 'en-cours' | 'reconnexion' | 'echec'>('');
   const supprimerCompte = async () => {
     if (!currentUser || !userProfile) return;
-    if (!connexionRecente(currentUser.metadata.lastSignInTime, new Date())) { setSuppression('reconnexion'); return; }
+    // Heures du serveur (jeton renouvelé), pas celle du poste (corrections-relecture 3.5)
+    let recente = false;
+    try { recente = connexionRecenteSelonServeur(await currentUser.getIdTokenResult(true)); } catch { setSuppression('echec'); return; }
+    if (!recente) { setSuppression('reconnexion'); return; }
     if (!confirm('Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications et '
       + 'vos candidatures aux appels importés seront effacés ; les candidatures déjà reçues par un financeur resteront chez '
       + 'lui, sans votre identifiant. Cette action est irréversible.')) return;

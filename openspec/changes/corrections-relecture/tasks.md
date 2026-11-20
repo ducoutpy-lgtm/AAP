@@ -46,7 +46,10 @@ sont verts.
   urgentes » ; appel du 24 présent ; fiche publiée non contrôlée du 26 absente.)
 - [x] 3.4 Prochaine échéance du financeur : l'appel qui clôt aujourd'hui compte. (2026-11-20 : test en échec avant,
   « plus-tard » au lieu de « aujourdhui » ; même règle d'arrondi que la recherche.)
-- [ ] 3.5 Suppression du compte : Firebase juge de la connexion récente, pas l'horloge du poste.
+- [x] 3.5 Suppression du compte : Firebase juge de la connexion récente, pas l'horloge du poste. (2026-11-20 :
+  `connexionRecenteSelonServeur` (heure de connexion et heure d'un jeton renouvelé, toutes deux du serveur), test en
+  échec avant ; le contrôle reste préalable, car le compte de connexion est effacé en dernier. Émulateurs : connexion
+  ancienne -> message « connexion récente » ; juste après reconnexion -> confirmation affichée, annulée d'office.)
 
 ## 4. Clôture
 
