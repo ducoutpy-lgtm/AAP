@@ -438,7 +438,8 @@ export default function SearchAapPage() {
                     <Card
                       key={aap.id}
                       className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-                      onClick={() => navigate(`/aap/${aap.id}`)}
+                      // Adresse de la recherche, filtres compris, pour « Retour à la recherche » (corrections-relecture 3.2)
+                      onClick={() => navigate(`/aap/${aap.id}`, { state: { retour: `/aap/search?${searchParams.toString()}` } })}
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">

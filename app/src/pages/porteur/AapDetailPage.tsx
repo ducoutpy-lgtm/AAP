@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../config/firebase';
@@ -45,6 +45,10 @@ const lienPieceJointe = (
 export default function AapDetailPage() {
   const { aapId } = useParams<{ aapId: string }>();
   const navigate = useNavigate();
+  // Retour à la recherche telle qu'elle était, filtres compris, quand la fiche a été ouverte depuis elle
+  // (corrections-relecture 3.2, 2026-11-20) ; sinon la recherche sans filtre
+  const etatArrivee = useLocation().state as { retour?: string } | null;
+  const retourRecherche = etatArrivee?.retour?.startsWith('/aap/search') ? etatArrivee.retour : '/aap/search';
   const { currentUser, userProfile } = useAuth();
   useMarquerDemarrage('fiche');
   const [aap, setAap] = useState<AAP | null>(null);
@@ -139,7 +143,7 @@ export default function AapDetailPage() {
         {/* Back button */}
         <Button
           variant="ghost"
-          onClick={() => navigate('/aap/search')}
+          onClick={() => navigate(retourRecherche)}
           className="mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
