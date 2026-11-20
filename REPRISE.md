@@ -106,6 +106,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   après sa mesure. Relecture des 58 fiches lancée (sous-agent, verdicts dans
   `scraping/sources/exactitude_pdf_locale_verdicts.json`, liste `scraping/results/relecture_pdf_locale.json`).
   Relecture faite : rapport `scraping/EXACTITUDE_PDF_LOCALE.md`.
+- 2026-11-20, 19 h 15 : consigne « deux heures en autonomie » (relayée) : commits locaux seulement, une demande groupée à
+  la fin. Faits : README du scraping (modèle local, chaîne des PDF, tri) ; règle Firestore `figes` (41 tests). À faire
+  ensuite : liste filtrée de `/aap/search` calculée au lieu d'un état. **Demande groupée à présenter** : pousser les
+  commits locaux ; déployer les règles Firestore (suppression du compte, champs figés) et l'hébergement (textes
+  réutilisables, recommandations plus strictes, suppression du compte) ; règle « modèle local d'abord » à recopier par
+  lui dans `CLAUDE.md`.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
