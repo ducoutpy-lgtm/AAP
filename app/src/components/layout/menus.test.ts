@@ -1,6 +1,7 @@
 // Tests des entrées de menu (changement navigation-et-pages-publiques, tâche 1.1).
 import { describe, expect, it } from 'vitest';
 import { entreeActive, entreesMenu, tableauDeBord } from './menus';
+import { routeExiste } from '../../test/routes';
 
 describe('pages vides retirées (parcours-candidat-sans-impasse)', () => {
   it.each(['porteur', 'financeur'] as const)('%s : ni Messagerie ni Alertes, tant que rien ne les alimente', (role) => {
@@ -34,5 +35,12 @@ describe('entreeActive', () => {
     expect(entreeActive(admin, '/admin/aaps/123')).toBe('/admin/aaps');
     expect(entreeActive(admin, '/aap/42')).toBeNull();
     expect(entreeActive(entreesMenu('porteur'), '/aap/search')).toBe('/aap/search');
+  });
+});
+
+describe('liens des menus (2026-11-20)', () => {
+  it.each(['porteur', 'financeur', 'admin'] as const)('%s : chaque entrée et le tableau de bord mènent à une route de App.tsx', (role) => {
+    const adresses = [tableauDeBord(role), ...entreesMenu(role).flatMap(s => s.entrees.map(e => e.adresse))];
+    expect(adresses.filter(a => !routeExiste(a))).toEqual([]);
   });
 });

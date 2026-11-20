@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Tests (2026-11-20)
+- Pages publiques et légales (`app/src/pages/public/public.test.tsx`, 12 tests) : titre affiché, aucun lien interne vers
+  une route absente de `App.tsx` ; menus des trois rôles contrôlés de même (`menus.test.ts`). Lecture des routes dans
+  `app/src/test/routes.ts`.
+
 ### Modifié (2026-11-20, simplification)
 - Recherche `/aap/search` : la liste affichée est calculée à chaque changement de filtres (`resultatsRecherche`,
   `utils/recherche.ts`, 3 tests) au lieu d'être recopiée dans un état par un effet, qui laissait un rendu avec l'ancienne
