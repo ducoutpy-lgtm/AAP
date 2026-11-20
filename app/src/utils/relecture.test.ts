@@ -1,7 +1,7 @@
 // Tests de la mention de relecture (changement mention-relecture-fiches, testé dans degel-application-complete 5.1).
 import { describe, expect, it } from 'vitest';
 import type { AAP } from '../types';
-import { dateExtraction, estRelue, formatDateFr, mentionRelecture, RELECTEUR_HUMAIN, visiblePubliquement } from './relecture';
+import { dateExtraction, estRelue, formatDateFr, mentionRelecture, RELECTEUR_HUMAIN, visiblePubliquement, selectionATraiter } from './relecture';
 
 const base: AAP = {
   financeurId: 'scraped',
@@ -69,5 +69,22 @@ describe('visiblePubliquement', () => {
     expect(visiblePubliquement({ validation: { statut: 'proposee', commentaire: '', date: '', par: '' } })).toBe(false);
     expect(visiblePubliquement({ validation: { statut: 'a_corriger', commentaire: '', date: '', par: '' } })).toBe(false);
     expect(visiblePubliquement({ validation: { statut: 'rejetee', commentaire: '', date: '', par: '' } })).toBe(false);
+  });
+});
+
+// Traitement groupé de /admin/aaps (corrections-relecture 2.3, 2026-11-20) : mêmes conditions que les boutons unitaires ;
+// « Valider et publier la sélection » republiait des fiches rejetées, archivées ou clôturées.
+describe('selectionATraiter', () => {
+  const f = (id: string, status: string, statut?: string) =>
+    ({ id, status, validation: statut ? { statut } : undefined }) as Parameters<typeof selectionATraiter>[0][number];
+  const fiches = [
+    f('proposee', 'draft', 'proposee'), f('a-corriger', 'published', 'a_corriger'), f('deja', 'published', 'validee'),
+    f('rejetee', 'archived', 'rejetee'), f('close', 'closed', 'proposee'), f('manuelle', 'published'),
+  ];
+  it('valider : ni archivée, ni clôturée, ni déjà validée, ni sans contrôle', () => {
+    expect(selectionATraiter(fiches, 'validee')).toEqual({ aTraiter: ['proposee', 'a-corriger'], ignorees: 4 });
+  });
+  it('rejeter : ni déjà rejetée, ni sans contrôle', () => {
+    expect(selectionATraiter(fiches, 'rejetee')).toEqual({ aTraiter: ['proposee', 'a-corriger', 'deja', 'close'], ignorees: 2 });
   });
 });

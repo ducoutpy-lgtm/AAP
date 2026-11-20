@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP, ValidationStatut } from '../../types';
-import { RELECTEUR_HUMAIN } from '../../utils/relecture';
+import { RELECTEUR_HUMAIN, selectionATraiter } from '../../utils/relecture';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
@@ -173,14 +173,20 @@ export default function ManageAAPsPage() {
   const toutDeselectionner = () => setSelection(new Set());
 
   // Valider ou rejeter toutes les fiches cochées (une écriture par fiche, même verdict que les boutons unitaires)
+  // Fiches ignorées comme le feraient les boutons unitaires (corrections-relecture 2.3) ; « Annuler » sur le motif arrête
+  // le rejet groupé
   const traiterSelection = async (verdict: 'validee' | 'rejetee') => {
     if (selection.size === 0) return;
+    const { aTraiter, ignorees } = selectionATraiter(aaps.filter(a => selection.has(a.id)), verdict);
     const libelle = verdict === 'validee' ? 'valider et publier' : 'rejeter';
-    if (!confirm(`Confirmer : ${libelle} ${selection.size} fiche${selection.size > 1 ? 's' : ''} ?`)) return;
-    const commentaire = verdict === 'rejetee' ? (prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') ?? '') : '';
+    const note = ignorees ? ` (${ignorees} ignorée${ignorees > 1 ? 's' : ''} : ${verdict === 'validee' ? 'déjà validée, rejetée, archivée, clôturée ou sans contrôle' : 'déjà rejetée ou sans contrôle'})` : '';
+    if (aTraiter.length === 0) { alert(`Aucune fiche à ${libelle}${note}.`); return; }
+    if (!confirm(`Confirmer : ${libelle} ${aTraiter.length} fiche${aTraiter.length > 1 ? 's' : ''}${note} ?`)) return;
+    const commentaire = verdict === 'rejetee' ? prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') : '';
+    if (commentaire === null) return;
     setTraitement(true);
     try {
-      for (const id of selection) {
+      for (const id of aTraiter) {
         await updateDoc(doc(db, 'aap', id), verdict === 'validee'
           ? { validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'published', publishedAt: new Date() }
           : { validation: { statut: 'rejetee', commentaire: commentaire.trim(), date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'archived' });

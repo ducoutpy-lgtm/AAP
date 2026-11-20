@@ -26,7 +26,9 @@ sont verts.
   `test-fin-1` ouvert : bouton présent ; date remise.)
 - [x] 2.2 Écran d'erreur réinitialisé au changement de page. (2026-11-20 : `gabarit.test.tsx` en échec avant, l'écran
   d'erreur restait après un clic sur « FAQ » ; clé = chemin de la page, les filtres de recherche ne la changent pas.)
-- [ ] 2.3 Validation et rejet groupés alignés sur les boutons unitaires.
+- [x] 2.3 Validation et rejet groupés alignés sur les boutons unitaires. (2026-11-20 : `selectionATraiter`, 2 tests en
+  échec avant ; émulateurs, 88 fiches cochées : « valider et publier 64 fiches (24 ignorées) », « rejeter 75 fiches
+  (13 ignorées) », comptes attendus d'après la base ; « Annuler » sur le motif : aucune fiche modifiée.)
 - [ ] 2.4 Règles des candidatures et des appels bornées (tests de règles d'abord).
 
 ## 3. Défauts mineurs

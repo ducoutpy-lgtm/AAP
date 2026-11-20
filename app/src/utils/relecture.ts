@@ -52,3 +52,17 @@ export function formatDateFr(iso: string): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
 }
+
+// Fiches cochées réellement traitées par l'action groupée de /admin/aaps (corrections-relecture 2.3, 2026-11-20) : mêmes
+// conditions que les boutons unitaires. Valider ignore les fiches sans contrôle, déjà validées, archivées (les rejetées
+// le sont) ou clôturées ; rejeter ignore les fiches sans contrôle ou déjà rejetées.
+export function selectionATraiter(
+  fiches: (Pick<AAP, 'status' | 'validation'> & { id: string })[],
+  verdict: 'validee' | 'rejetee',
+): { aTraiter: string[]; ignorees: number } {
+  const garder = (a: Pick<AAP, 'status' | 'validation'>) => Boolean(a.validation) && (verdict === 'validee'
+    ? a.validation!.statut !== 'validee' && a.status !== 'archived' && a.status !== 'closed'
+    : a.validation!.statut !== 'rejetee');
+  const aTraiter = fiches.filter(garder).map(a => a.id);
+  return { aTraiter, ignorees: fiches.length - aTraiter.length };
+}
