@@ -5,6 +5,32 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-20 et 21, changement `corrections-relecture`)
+Relecture de toute l'application par six relecteurs, puis double vérification de chaque signalement : 21 défauts
+confirmés, 8 écartés. Chaque correction a eu un test en échec avant, ou a été reproduite sur les émulateurs. Pas en ligne.
+- Mon profil n'efface plus les textes réutilisables ; la fenêtre « Préciser mon profil » n'efface plus le site, la
+  présentation ni les objets déjà saisis.
+- La page des candidatures d'un appel n'est plus vide pour le financeur : sa requête était refusée par les règles.
+- L'administrateur ouvre « Modifier » sur une fiche (il était renvoyé sur `/admin`). Une date de clôture vide donne une
+  échéance nulle, au lieu de l'erreur « Invalid time value ».
+- Plus de candidature sur un appel clos : le bouton disparaît et le formulaire affiche « Cet appel est clôturé ».
+- L'écran « Cette page a rencontré une erreur » disparaît au changement de page.
+- La validation groupée de `/admin/aaps` ne republie plus les fiches rejetées, archivées ou clôturées ; elle annonce le
+  nombre de fiches ignorées, et « Annuler » sur le motif arrête le rejet groupé.
+- Règles Firestore bornées (43 tests) :
+  - le financeur n'écrit que l'évaluation d'une candidature ;
+  - une candidature naît en brouillon ou envoyée, sans évaluation, adressée au financeur de son appel ;
+  - l'auteur d'un appel ne touche ni au verdict de relecture ni à la source, et ne republie pas un appel archivé ou clos.
+- Défauts mineurs :
+  - le détail d'une candidature suivie hors de l'application ne dit plus que le financeur a reçu le dossier ;
+  - une pièce non déposée s'affiche sans lien ;
+  - « Retour à la recherche » garde les filtres ;
+  - le calendrier ne montre que les fiches visibles, et aucun appel clos n'y est classé urgent ;
+  - l'appel qui clôt aujourd'hui reste la prochaine échéance du financeur ;
+  - la suppression du compte ne dépend plus de l'horloge du poste ;
+  - « Modifier » est proposé sur un appel publié dans « Mes appels ».
+- Questions nées de la relecture : 35 à 41 de `docs/A_VALIDER.md`.
+
 ### Corrigé (2026-11-20, lien de recherche partagé)
 - Connexion : retour sur la page demandée avec ses filtres. Un lien de recherche partagé (`/aap/search?q=…`) ouvert
   sans compte revenait, après la connexion, sur la recherche sans filtres. Test en échec avant la correction

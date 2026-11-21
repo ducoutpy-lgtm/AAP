@@ -27,13 +27,13 @@ fiches, 4 file à valider, 6 recommandations, 9 pièces jointes, 10 pièces join
 | 7 bis | Premier clic d'un compte neuf sur « Candidater » (appel d'un financeur inscrit) | Corrigé, en ligne le 2026-11-16 | Renvoi au tableau de bord au premier clic, trouvé en jouant le parcours complet le 2026-11-16 ; changement `premier-clic-candidater` ; question 28 |
 | 8 | Recherches sauvegardées avec alerte du lundi | Fait, en ligne le 2026-11-16 | Changement `alertes-recherches-sauvegardees`, joué sur les émulateurs ; question 24 (mise en ligne) |
 | 9 | Pièces jointes d'une candidature | Limite annoncée | Le stockage de fichiers exige la facturation Blaze (question 5) ; la candidature part et l'écran nomme les pièces « non déposées » |
-| 10 | Documents réutilisables d'une candidature à l'autre | Textes faits, en ligne le 2026-11-20 ; pièces jointes à l'ouverture de Blaze | Changement `textes-reutilisables` (question 23 (b), 2026-11-19), joué sur les émulateurs ; « Textes réutilisables » présent dans la version servie |
+| 10 | Documents réutilisables d'une candidature à l'autre | Textes faits, en ligne le 2026-11-20 (effacés par un enregistrement de Mon profil : corrigé le 2026-11-20, pas en ligne) ; pièces jointes à l'ouverture de Blaze | Changement `textes-reutilisables` (question 23 (b), 2026-11-19), joué sur les émulateurs ; « Textes réutilisables » présent dans la version servie |
 
 ## Parcours financeur
 
 | # | Condition | État | Preuve |
 |---|---|---|---|
-| 11 | Démonstration financeur à 9 étapes sur 9 | 9 sur 9 jouées sur les émulateurs, correctif en ligne le 2026-11-16 | `docs/DEMO_FINANCEUR.md` ; la publication d'un appel échouait toujours, corrigée (changement `publication-appel-financeur`) ; question 28 |
+| 11 | Démonstration financeur à 9 étapes sur 9 | 9 sur 9 jouées sur les émulateurs, correctif en ligne le 2026-11-16 ; page des candidatures d'un appel toujours vide, corrigée le 2026-11-20 (`corrections-relecture`, pas en ligne) | `docs/DEMO_FINANCEUR.md` ; la publication d'un appel échouait toujours, corrigée (changement `publication-appel-financeur`) ; question 28 |
 
 ## Conformité et sécurité
 
@@ -52,6 +52,13 @@ fiches, 4 file à valider, 6 recommandations, 9 pièces jointes, 10 pièces join
 | 17 | Retours des testeurs : page `/retour`, lecture dans `/admin/testeurs` | Fait, en ligne | Présents dans la version servie (changement `mise-en-ligne-testeurs`) |
 | 18 | Paiement | Non ouvert, décidé | Test gratuit, tarifs provisoires (question 5 tranchée le 2026-11-13) |
 | 19 | Invitations | Aucune, décidé | « Pas de test pour le moment » (2026-11-13) |
+
+## Relecture du 2026-11-20
+
+21 défauts confirmés et corrigés dans le changement `corrections-relecture` (`CHANGELOG.md`), dont 4 graves : textes
+réutilisables effacés, fenêtre « Préciser mon profil » qui efface le profil, candidatures d'un appel invisibles pour le
+financeur, fiche impossible à modifier par l'administrateur. À mettre en ligne sur accord (question 34) ; questions 35 à
+41 de `docs/A_VALIDER.md` à trancher.
 
 ## Avant d'inviter
 

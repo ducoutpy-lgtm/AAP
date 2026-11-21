@@ -125,6 +125,16 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   retour après connexion avec les filtres (`59d9046`). Recherche de défauts lancée (six relecteurs, double vérification,
   aucun fichier modifié par eux) : 35 signalements, vérification en cours ; corrections ensuite, une à une, test d'abord.
 
+- 2026-11-21, 9 h 40 (reprise après une veille du poste de 21 h 54 à 9 h 36, relayée par la séance de pilotage) : rien
+  de perdu (tous les commits en place ; le bouton « Modifier » de « Mes appels » restait sans commit, rejoué puis
+  enregistré). Changement OpenSpec `corrections-relecture` : 21 défauts confirmés par la relecture, toutes les tâches 1.1
+  à 3.6 faites, une correction par commit, test en échec ou reproduction sur les émulateurs avant chaque correction
+  (détail et preuves dans `openspec/changes/corrections-relecture/tasks.md`). Suite complète au 2026-11-21 : 168 tests
+  de l'application, 47 tests de règles, compilation, 227 tests Python. Reste la tâche 4.2 (vérification de Monsieur
+  DUCOUT). **Demande groupée** : question 34 de `docs/A_VALIDER.md` (poussée des commits locaux, déploiement de
+  l'hébergement et des règles Firestore) ; questions 35 à 41 à trancher. Rien de poussé ni de déployé depuis le
+  2026-11-20 à 20 h 20.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui

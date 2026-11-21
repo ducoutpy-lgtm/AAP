@@ -37,6 +37,34 @@ tranchée est déplacée en bas avec sa réponse et sa date.
    officiel » (lien de l'annonce) et un suivi tenu par le candidat. À trancher.
 22. (2026-11-13) Mise en ligne des corrections du soir (recommandations, parcours candidat sans impasse). Oui / non.
 
+Questions du 2026-11-21, nées de la relecture de l'application (changement `corrections-relecture`, signalements dans
+`openspec/changes/corrections-relecture/signalements.json`) :
+
+34. Mise en ligne groupée des corrections des 20 et 21 novembre : pousser les 21 commits locaux sur GitHub, puis
+   déployer l'hébergement et les règles Firestore (règles des candidatures et des appels bornées, 43 tests verts). Oui /
+   non.
+35. Compteur de vues des appels (toujours 0, d'où un taux de conversion à 0 %) : (a) l'alimenter (+1 à l'ouverture de la
+   fiche, règle qui n'autorise que cet ajout) ; (b) retirer les vues et le taux de conversion des écrans ; (c) les
+   afficher « non mesuré ».
+36. Case « Se souvenir de moi » de la connexion (sans effet : la session reste ouverte, même décochée, ce qui pose
+   problème sur un poste partagé d'établissement) : (a) la brancher (case décochée : session fermée à la fermeture du
+   navigateur) ; (b) la retirer.
+37. Thématique des appels saisis par un financeur : ils n'ont pas de champ classé, donc le filtre « Santé » ou
+   « Médico-social » les écarte, ainsi que le courriel du lundi. Proposition : déduire la thématique des « Secteurs ciblés »
+   du formulaire, dans l'application et dans `scraping/alertes.py`. Oui / non.
+38. Jour de clôture hors de la métropole : un appel paraît « Clôturé » le soir de son dernier jour en Guadeloupe,
+   Martinique et Guyane (comptage en heures depuis minuit UTC). Proposition : compter en jours du calendrier, règle
+   commune à l'import, à l'application et au courriel. Oui / non.
+39. Clôture d'un appel par son financeur : le tableau de bord annonce « Modifier, clôturer », mais aucun bouton ne clôture.
+   Proposition : un bouton « Clôturer » dans « Mes appels » (les nouvelles règles autorisent déjà publié vers clôturé).
+   Oui / non.
+40. Avis du financeur : la page d'évaluation l'écrit dans `financeurFeedback`, que la page du candidat ne lit pas ; le
+   candidat ne le voit donc jamais (déjà relevé le 2026-11-13, laissé hors périmètre). Le candidat doit-il voir l'avis du
+   financeur ? Oui / non.
+41. Régions d'outre-mer dans Mon profil : le champ Région ne propose que les 13 régions de métropole, alors que le
+   parcours d'intégration enregistre La Réunion, la Guadeloupe, la Martinique, la Guyane ou Mayotte ; l'enregistrement est
+   alors bloqué (déjà noté hors périmètre de `recommandations-profil`). Ajouter ces cinq régions à la liste. Oui / non.
+
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
 le correctif » (une seule mise en ligne, site et règles ensemble). La dépense (17) et la mise en ligne (22) attendent
