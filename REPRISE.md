@@ -118,6 +118,12 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   « Timed out » : IPv6 en panne sur le Wi-Fi, contourné par `NODE_OPTIONS` (voir `docs/MISE_EN_LIGNE.md`). Reste à sa
   charge : recopier la règle « modèle local d'abord » dans `CLAUDE.md` ; suppression du compte non jouée sur le vrai
   projet.
+- 2026-11-20, 21 h 10 (relayé par la séance de pilotage) : « Non, tout brûler » : travail sans attendre jusqu'à 97 % du
+  quota, sans Ollama ni carte graphique ; la lecture locale des PDF reste arrêtée (batterie) ; poussée et mise en ligne
+  groupées à la fin. Commits locaux faits : liste de la recherche calculée (`99bd416`), tests des pages publiques et des
+  menus (`920febf`), contrôle de toutes les adresses du code (`1748db7`), étiquettes des champs reliées (`82f6739`),
+  retour après connexion avec les filtres (`59d9046`). Recherche de défauts lancée (six relecteurs, double vérification,
+  aucun fichier modifié par eux) : 35 signalements, vérification en cours ; corrections ensuite, une à une, test d'abord.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

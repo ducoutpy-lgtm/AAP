@@ -51,6 +51,11 @@ sont verts.
   échec avant ; le contrôle reste préalable, car le compte de connexion est effacé en dernier. Émulateurs : connexion
   ancienne -> message « connexion récente » ; juste après reconnexion -> confirmation affichée, annulée d'office.)
 
+- [x] 3.6 « Modifier » sur un appel publié dans « Mes appels », comme le prévoit le scénario « Correction du titre d'un
+  appel publié » de `profil-et-edition-aap` (signalement 10 ; la clôture par le financeur reste une question).
+  (2026-11-21, émulateurs, financeur de test : « Modifier » présent sur les deux appels publiés, titre de `test-fin-1`
+  corrigé et enregistré, statut toujours `published` avec les nouvelles règles.)
+
 ## 4. Clôture
 
 - [ ] 4.1 Documentation (`CHANGELOG.md`, `docs/PRET_POUR_TESTEURS.md`, `REPRISE.md`), questions hors périmètre dans

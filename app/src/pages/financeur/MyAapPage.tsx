@@ -202,7 +202,9 @@ export default function MyAapPage() {
                     </Button>
                   </Link>
 
-                  {aap.status === 'draft' && (
+                  {/* Brouillon et appel publié (scénario « Correction du titre d'un appel publié » de profil-et-edition-aap ;
+                      le bouton n'apparaissait que pour un brouillon, corrections-relecture, 2026-11-20) */}
+                  {(aap.status === 'draft' || aap.status === 'published') && (
                     <Link to={`/aap/${aap.id}/edit`}>
                       <Button variant="secondary" size="sm">
                         <Edit className="mr-2 h-4 w-4" />
