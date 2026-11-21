@@ -1,9 +1,10 @@
 @echo off
 rem Veille hebdomadaire des appels (changement rejeu-collecte-veille, 2026-10-20) : relit les pages validees des
-rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiches, ecrit VEILLE.md, lance les etapes
-rem payantes dans la delegation de Monsieur DUCOUT (veille_payante.py --reel, changement veille-autonome du 2026-11-13 :
-rem devis ecrit, 0,50 euro par semaine au plus, --plafond, arret avant 4,50 euros de cumul, import en « a valider »),
-rem puis envoie les courriels hebdomadaires (bilan a l'administrateur, appels de la semaine aux candidats).
+rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiches, ecrit VEILLE.md, lance l'extraction,
+rem le controle et la qualification par le modele local (veille_payante.py --reel, changement veille-modele-local du
+rem 2026-11-21 : zero euro, reportes sur batterie, import en « a valider » puis tri de la file ; l'API Haiku seulement sur
+rem demande de Monsieur DUCOUT, --moteur api), puis envoie les courriels hebdomadaires (bilan a l'administrateur, appels
+rem de la semaine aux candidats).
 rem Fermer la fenetre arrete la veille (reprise possible le jour meme, rien n'est perdu) : veille_cachee.vbs la lance
 rem sans fenetre.
 rem Lancement planifie (tache Windows « AAP Sante - veille hebdomadaire », lundi 8 h) : veille.cmd auto
@@ -28,7 +29,9 @@ echo.
 echo Portail europeen Funding ^& Tenders (interface publique, appels de sante, sans navigateur ni modele) :
 "..\.venv\Scripts\python.exe" funding_tenders.py
 echo.
-echo Etapes payantes dans la delegation (devis, extraction, controle, qualification, import en « a valider ») :
+echo Modele local (extraction, controle, qualification, import en « a valider », tri ; zero euro, reporte sur batterie) :
+rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance), comme la chaine des PDF
+"%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
 "..\.venv\Scripts\python.exe" veille_payante.py --reel
 echo.
 echo Courriels hebdomadaires (bilan administrateur, appels de la semaine aux candidats) :

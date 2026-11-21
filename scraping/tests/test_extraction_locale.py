@@ -74,6 +74,26 @@ def test_separer_pdf_et_pages_web(tmp_path):
     assert [c.name for _, c in e.filtrer_pdf(fiches, pdf=True)] == ["doc.txt"]
 
 
-def test_la_veille_payante_n_extrait_que_les_pages_web():
+def test_la_veille_n_extrait_que_les_pages_web():
     import veille_payante as v
-    assert "--sans-pdf" in dict(v.ETAPES)["extraction"]
+    assert "--sans-pdf" in dict(v.etapes("ollama"))["extraction"]
+    assert "--sans-pdf" in dict(v.etapes("api"))["extraction"]
+
+
+def test_textes_de_la_veille_locale(tmp_path, monkeypatch):
+    """Changement veille-modele-local (2026-11-21) : pages web jamais traitées par l'API, dans un fichier à part."""
+    import json
+    import extraction_locale as e
+    monkeypatch.setattr(e, "ICI", tmp_path)
+    fiches = tmp_path / "decouverte" / "s" / "fiches"
+    fiches.mkdir(parents=True)
+    deja, nouvelle, pdf = fiches / "a.txt", fiches / "b.txt", fiches / "c.txt"
+    deja.write_text("https://x/a\ntexte", encoding="utf-8")
+    nouvelle.write_text("https://x/b\ntexte", encoding="utf-8")
+    pdf.write_text("https://x/c.pdf\ntexte", encoding="utf-8")
+    api = tmp_path / "results" / "extraction_api.json"
+    api.parent.mkdir()
+    api.write_text(json.dumps([{"scrape_metadata": {"fichier": str(deja.relative_to(tmp_path))}}]), encoding="utf-8")
+    monkeypatch.setattr(e, "SORTIE_API", api)
+    assert e.SORTIE_VEILLE_LOCALE.name == "extraction_veille_locale.json"
+    assert [c for _, c in e.textes_veille_locale([({}, deja), ({}, nouvelle), ({}, pdf)])] == [nouvelle]

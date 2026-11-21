@@ -40,6 +40,7 @@ REGISTRE = ICI / "sources" / "registre.json"
 SORTIE = RESULTS / "extraction_locale.json"
 SORTIE_API = RESULTS / "extraction_api.json"  # V4 : fiches du moteur API, fichier à part (la V3 reste intacte)
 SORTIE_PDF_LOCALE = RESULTS / "extraction_pdf_locale.json"  # PDF lus en local par la chaîne de nuit (lecture-pdf-locale)
+SORTIE_VEILLE_LOCALE = RESULTS / "extraction_veille_locale.json"  # pages web de la veille du lundi en local (veille-modele-local)
 MOTEUR, MODELE_DEFAUT = "ollama", "qwen3:8b"
 MODELE_API_DEFAUT, PLAFOND_DEFAUT = "claude-haiku-5-5", 5.0
 # Familles du registre dans l'ordre de traitement : les plus proches du champ santé d'abord, les collectivités
@@ -56,6 +57,12 @@ def filtrer_pdf(fiches: list[tuple[dict, Path]], pdf: bool) -> list[tuple[dict, 
     """Textes tirés d'un PDF (pdf=True) ou de pages web (pdf=False), d'après leur adresse d'origine ; la veille du matin
     extrait les pages web, la chaîne locale de nuit les PDF (changement lecture-pdf-locale, 2026-11-19)."""
     return [(r, c) for r, c in fiches if lecture_pdf.est_adresse_pdf(lire_fiche(c)[0]) == pdf]
+
+
+def textes_veille_locale(fiches: list[tuple[dict, Path]]) -> list[tuple[dict, Path]]:
+    """Pages web jamais traitées par l'API, pour la veille du lundi en local (veille-modele-local, 2026-11-21) ; les
+    pages déjà extraites par une veille locale précédente sont sautées ensuite par echantillon.extraire."""
+    return textes_restants(filtrer_pdf(fiches, pdf=False), SORTIE_API)
 
 
 def textes_restants(fiches: list[tuple[dict, Path]], chemin_sortie: Path) -> list[tuple[dict, Path]]:
@@ -224,7 +231,8 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="avec --moteur api : écrire le devis, n'appeler rien")
     parser.add_argument("--limite", type=int, help="n'extraire que les N premiers textes (essai)")
     parser.add_argument("--ids", help="identifiants de sources séparés par des virgules")
-    parser.add_argument("--sans-pdf", action="store_true", help="avec --extraire : pages web seulement (veille du matin)")
+    parser.add_argument("--sans-pdf", action="store_true",
+                        help="avec --extraire : pages web seulement (veille du lundi) ; en local, sortie results/extraction_veille_locale.json")
     parser.add_argument("--seulement-pdf", action="store_true",
                         help="avec --extraire en local : PDF seulement, sortie results/extraction_pdf_locale.json (chaîne de nuit)")
     args = parser.parse_args()
@@ -261,6 +269,12 @@ def main() -> int:
         print(f"Chaîne locale des PDF : {len(textes_restants(pdf, SORTIE_PDF_LOCALE))} textes à extraire, modèle {modele}, zéro euro.")
         echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE_PDF_LOCALE,
                              metadonnees={"a_verifier": True}, fiches=pdf)
+    elif args.extraire and args.sans_pdf:
+        # Veille du lundi en local (veille-modele-local, 2026-11-21) : fichier à part, la V3 d'octobre reste figée
+        web = textes_veille_locale(echantillon.fiches_disponibles(sources))
+        print(f"Veille locale : {len(textes_restants(web, SORTIE_VEILLE_LOCALE))} pages web à extraire, modèle {modele}, zéro euro.")
+        echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE_VEILLE_LOCALE,
+                             metadonnees={"a_verifier": True}, fiches=web)
     elif args.extraire:
         echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE,
                              metadonnees={"a_verifier": True})

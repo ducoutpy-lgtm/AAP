@@ -4,6 +4,14 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-11-21, changement `veille-modele-local`, réponse « Modèle local »)
+- Veille du lundi : extraction des pages web nouvelles, contrôle et qualification par le modèle local (`qwen3:8b`),
+  zéro euro, sans devis ; fiches dans `results/extraction_veille_locale.json` (le fichier local d'octobre reste figé),
+  import en « à valider » puis tri. Étapes reportées sur batterie ; Windows prié de rester éveillé pendant qu'elles
+  tournent ; `veille.cmd` démarre Ollama. API Haiku seulement sur demande (`veille_payante.py --reel --moteur api`).
+  8 tests ajoutés (234 tests Python verts). Temps de calcul estimé : environ 2 min 30 par texte nouveau, non mesuré sur
+  une veille réelle.
+
 ### Ajouté (2026-11-19, voie A « tout local », question 33)
 - `verification.py` et `qualifier_fiches.py` : option `--moteur ollama` (modèle local `qwen3:8b`, zéro euro, sans
   plafond), même question et même schéma que l'API (`extractor.contenu_verification`, `contenu_qualification`).

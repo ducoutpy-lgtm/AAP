@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié (2026-11-21, veille par le modèle local)
+- La veille du lundi n'appelle plus l'API payante : extraction, contrôle et qualification par le modèle local, reportés
+  sur batterie (changement `veille-modele-local`, détail dans `scraping/CHANGELOG.md`). Première preuve attendue : le
+  journal de la veille du lundi 23 novembre.
+
 ### Mis en ligne (2026-11-21, sur l'accord de Monsieur DUCOUT)
 - https://aapi-11bc3.web.app sert `assets/index-DaDo9GnV.js` : corrections du changement `corrections-relecture`, tests
   des pages, étiquettes des champs, retour avec filtres après la connexion. Règles Firestore bornées publiées (« released

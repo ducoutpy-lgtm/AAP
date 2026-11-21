@@ -54,3 +54,54 @@ def test_devis_lu_dans_la_sortie_d_un_script_enfant_avec_accents():
     import veille_payante as v
     code, sortie = v.lancer(["-c", "print('76 fiches à vérifier, 0.031 euros estimés')"])
     assert code == 0 and "estimés" in sortie and v.montant_devis(sortie) == 0.031
+
+
+# Changement veille-modele-local (2026-11-21, « Modèle local ») : extraction, contrôle et qualification par le modèle
+# local par défaut, fichier à part, rien sur batterie ; l'API seulement avec --moteur api.
+def test_etapes_locales_par_defaut():
+    assert vp.MOTEUR == "ollama"
+    etapes = vp.etapes("ollama")
+    assert [n for n, _ in etapes] == ["extraction", "contrôle", "qualification"]
+    assert all("api" not in commande for _, commande in etapes)
+    assert "--sans-pdf" in dict(etapes)["extraction"]
+    for nom in ("contrôle", "qualification"):
+        assert dict(etapes)[nom][-4:] == ["--moteur", "ollama", "--fichier", vp.FICHES_VEILLE_LOCALE]
+    assert vp.source_import("ollama") == "extraction_veille_locale"
+
+
+def test_chemin_api_inchange_sur_demande():
+    etapes = dict(vp.etapes("api"))
+    assert etapes["extraction"] == ["extraction_locale.py", "--extraire", "--moteur", "api", "--sans-pdf"]
+    assert etapes["contrôle"][-2:] == ["--fichier", vp.FICHES_API]
+    assert vp.source_import("api") == "extraction_api"
+
+
+def test_modele_local_seulement_sur_secteur():
+    # ACLineStatus de Windows : 1 secteur, 0 batterie, 255 inconnu (poste fixe sans batterie : on lance)
+    assert vp.local_permis(1) is True and vp.local_permis(255) is True
+    assert vp.local_permis(0) is False
+
+
+def _veille(monkeypatch, secteur, argv):
+    appels = []
+    monkeypatch.setattr(vp, "etat_secteur", lambda: secteur)
+    monkeypatch.setattr(vp, "rester_eveille", lambda actif: None)
+    monkeypatch.setattr(vp, "lancer", lambda arguments: (appels.append(arguments), (0, ""))[1])
+    assert vp.main(argv) == 0
+    return appels
+
+
+def test_veille_locale_lance_les_trois_etapes_puis_l_import_et_le_tri(monkeypatch):
+    appels = _veille(monkeypatch, 1, ["--reel"])
+    assert [Path(a[0]).name for a in appels] == ["extraction_locale.py", "verification.py", "qualifier_fiches.py",
+                                                 "import_to_firestore.py", "trier_file.py"]
+    assert all("--dry-run" not in a and "--plafond" not in a for a in appels)
+    assert appels[3][1:] == ["--source", "extraction_veille_locale", "--a-valider"]
+
+
+def test_veille_locale_sur_batterie_reporte_tout(monkeypatch):
+    assert _veille(monkeypatch, 0, ["--reel"]) == []
+
+
+def test_veille_locale_a_blanc_ne_lance_rien(monkeypatch):
+    assert _veille(monkeypatch, 1, []) == []

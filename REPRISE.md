@@ -140,6 +140,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   (`01a5d1b..25667d2`), site `index-DaDo9GnV.js` et règles Firestore bornées en ligne, lecture publique contrôlée.
   Restent : sa vérification 4.2 de `corrections-relecture` sur le vrai projet, ses réponses aux questions 35 à 41.
 
+- 2026-11-21, 10 h 40 : question « Pour la veille de lundi, quel moteur utiliser ? », réponse « Modèle local ».
+  Changement `veille-modele-local` fait (tests d'abord, 234 tests Python verts, essai à blanc) : la veille du lundi
+  23 novembre extrait, contrôle et qualifie en local, à zéro euro, et reporte ces étapes si le poste est sur batterie.
+  À vérifier mardi 24 au matin dans `scraping/logs/veille.log` (tâche 3.1). La chaîne des PDF de 23 h est inchangée.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui

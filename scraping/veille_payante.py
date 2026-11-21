@@ -11,9 +11,17 @@ seulement si le devis tient dans le reste du budget de la semaine (du lundi au d
 avec --plafond = cumul + devis ; sinon cette étape et les suivantes attendent son accord, motif écrit. Enfin import des
 fiches nouvelles en « à valider » (import_to_firestore.py --a-valider).
 
+Depuis le 2026-11-21 (changement veille-modele-local, règle « modèle local d'abord » de CLAUDE.md, réponse de Monsieur
+DUCOUT « Modèle local ») : par défaut, extraction, contrôle et qualification par le modèle local (qwen3:8b), à zéro euro,
+sans devis, fiches dans results/extraction_veille_locale.json ; sur batterie, ces étapes sont reportées à la veille
+suivante (la carte graphique viderait la batterie). Le chemin payant ci-dessus ne sert plus que sur sa demande
+(--moteur api). Nom du fichier gardé pour ne pas toucher la tâche planifiée.
+
 Usage (depuis scraping/, environnement ../.venv) :
-  python veille_payante.py          # devis seulement, aucun appel
-  python veille_payante.py --reel   # dans la délégation (veille.cmd)
+  python veille_payante.py                      # essai à blanc : étapes listées, rien lancé
+  python veille_payante.py --reel               # modèle local (veille.cmd)
+  python veille_payante.py --moteur api         # devis seulement, aucun appel
+  python veille_payante.py --reel --moteur api  # API, dans la délégation, sur sa demande seulement
 """
 from __future__ import annotations
 
@@ -27,15 +35,50 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import echantillon
+from chaine_pdf_locale import rester_eveille
 
 ICI = Path(__file__).resolve().parent
 PYTHON = sys.executable
 MODELE = "claude-haiku-5-5"
 BUDGET_SEMAINE, ARRET_CUMUL = 0.50, 4.50
 FICHES_API = "results/extraction_api.json"
-ETAPES = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", "api", "--sans-pdf"]),
-          ("contrôle", ["verification.py", "--verifier", "--fichier", FICHES_API]),
-          ("qualification", ["qualifier_fiches.py", "--qualifier", "--fichier", FICHES_API])]
+FICHES_VEILLE_LOCALE = "results/extraction_veille_locale.json"
+MOTEUR = "ollama"  # règle « modèle local d'abord » (2026-11-21) ; « api » sur demande de Monsieur DUCOUT seulement
+ETAPES_API = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", "api", "--sans-pdf"]),
+              ("contrôle", ["verification.py", "--verifier", "--fichier", FICHES_API]),
+              ("qualification", ["qualifier_fiches.py", "--qualifier", "--fichier", FICHES_API])]
+ETAPES_LOCALES = [("extraction", ["extraction_locale.py", "--extraire", "--sans-pdf"]),
+                  ("contrôle", ["verification.py", "--verifier", "--moteur", "ollama", "--fichier", FICHES_VEILLE_LOCALE]),
+                  ("qualification", ["qualifier_fiches.py", "--qualifier", "--moteur", "ollama", "--fichier",
+                                     FICHES_VEILLE_LOCALE])]
+
+
+def etapes(moteur: str) -> list[tuple[str, list[str]]]:
+    return ETAPES_API if moteur == "api" else ETAPES_LOCALES
+
+
+def source_import(moteur: str) -> str:
+    """Nom du fichier de résultats importé en « à valider » (import_to_firestore.py --source)."""
+    return Path(FICHES_API if moteur == "api" else FICHES_VEILLE_LOCALE).stem
+
+
+def local_permis(etat_ac: int) -> bool:
+    """ACLineStatus de Windows : 0 = batterie (modèle local reporté), 1 = secteur, 255 = inconnu (poste fixe : lancé)."""
+    return etat_ac != 0
+
+
+def etat_secteur() -> int:
+    """État de l'alimentation lu par GetSystemPowerStatus ; 255 (inconnu) hors Windows ou en cas d'échec."""
+    if sys.platform != "win32":
+        return 255
+    import ctypes
+
+    class _Etat(ctypes.Structure):
+        _fields_ = [("ACLineStatus", ctypes.c_ubyte), ("BatteryFlag", ctypes.c_ubyte),
+                    ("BatteryLifePercent", ctypes.c_ubyte), ("SystemStatusFlag", ctypes.c_ubyte),
+                    ("BatteryLifeTime", ctypes.c_ulong), ("BatteryFullLifeTime", ctypes.c_ulong)]
+    etat = _Etat()
+    return etat.ACLineStatus if ctypes.windll.kernel32.GetSystemPowerStatus(ctypes.byref(etat)) else 255
 DEVIS = re.compile(r"(\d+(?:\.\d+)?) euros (?:au plus|estimés)")
 # Le controle et la qualification sous-estiment leur cout (0,0003 euro par fiche annonce, environ 0,0006 mesure le
 # 2026-11-13 : arret au plafond apres 9 fiches sur 16) ; le devis retenu double leur estimation. L'extraction annonce
@@ -93,12 +136,52 @@ def lancer(arguments: list[str]) -> tuple[int, str]:
     return r.returncode, sortie
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Étapes payantes de la veille, dans la délégation de Monsieur DUCOUT.")
-    parser.add_argument("--reel", action="store_true", help="lancer les étapes dont le devis tient dans la délégation")
-    args = parser.parse_args()
+def importer_et_trier(moteur: str) -> int:
+    print("--- import des fiches nouvelles en « à valider »", flush=True)
+    code, _ = lancer([str(ICI.parent / "scripts" / "import_to_firestore.py"), "--source", source_import(moteur),
+                      "--a-valider"])
+    if code != 0:
+        return code
+    # Tri de la file (changement tri-automatique-file, décision du 2026-11-18) : doublons rejetés, fiches sans doute
+    # publiées, seules les fiches douteuses restent pour Monsieur DUCOUT
+    print("--- tri de la file « à valider »", flush=True)
+    code, _ = lancer([str(ICI.parent / "scripts" / "trier_file.py"), "--reel"])
+    return code
+
+
+def veille_locale(reel: bool) -> int:
+    """Étapes par le modèle local, sans devis (zéro euro) ; reportées sur batterie, les textes restent en attente."""
+    if not reel:
+        for nom, commande in ETAPES_LOCALES:
+            print(f"--- {nom} : essai à blanc, étape non lancée ({' '.join(commande)})", flush=True)
+        return 0
+    if not local_permis(etat_secteur()):
+        print("--- sur batterie : étapes du modèle local reportées à la veille suivante (textes gardés en attente)",
+              flush=True)
+        return 0
+    rester_eveille(True)
+    try:
+        for nom, commande in ETAPES_LOCALES:
+            print(f"--- {nom} : modèle local ({datetime.now():%Y-%m-%d %H:%M}, zéro euro)", flush=True)
+            code, _ = lancer(commande)
+            if code != 0:
+                print(f"--- {nom} : arrêt (code {code}), étapes suivantes non lancées", flush=True)
+                return code
+        return importer_et_trier("ollama")
+    finally:
+        rester_eveille(False)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Étapes de la veille qui demandent un modèle (local par défaut).")
+    parser.add_argument("--reel", action="store_true", help="lancer les étapes (en API : celles dont le devis tient)")
+    parser.add_argument("--moteur", choices=["ollama", "api"], default=MOTEUR,
+                        help="ollama (défaut, zéro euro) ou api (Haiku, sur demande de Monsieur DUCOUT seulement)")
+    args = parser.parse_args(argv)
+    if args.moteur != "api":
+        return veille_locale(args.reel)
     journal = echantillon.JOURNAL_COUTS
-    for nom, commande in ETAPES:
+    for nom, commande in ETAPES_API:
         lignes = journal.read_text(encoding="utf-8").splitlines() if journal.exists() else []
         depense, cumul = depense_semaine(lignes, lundi_de(date.today())), echantillon.cout_cumule(MODELE)
         print(f"--- {nom} : devis à blanc ({datetime.now():%Y-%m-%d %H:%M}, dépensé cette semaine {depense:.3f} euro "
@@ -122,15 +205,7 @@ def main() -> int:
             print(f"--- {nom} : arrêt (code {code}), étapes suivantes non lancées", flush=True)
             return code
     if args.reel:
-        print("--- import des fiches nouvelles en « à valider »", flush=True)
-        code, _ = lancer([str(ICI.parent / "scripts" / "import_to_firestore.py"), "--source", "extraction_api", "--a-valider"])
-        if code != 0:
-            return code
-        # Tri de la file (changement tri-automatique-file, décision du 2026-11-18) : doublons rejetés, fiches sans doute
-        # publiées, seules les fiches douteuses restent pour Monsieur DUCOUT
-        print("--- tri de la file « à valider »", flush=True)
-        code, _ = lancer([str(ICI.parent / "scripts" / "trier_file.py"), "--reel"])
-        return code
+        return importer_et_trier("api")
     return 0
 
 

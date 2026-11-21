@@ -555,7 +555,15 @@ devis de l'extraction, du contrôle et de la qualification (devis du contrôle e
 sous-estime d'environ moitié), ne lance une étape que si son devis tient dans le reste des 0,50 euro de la semaine et
 sous 4,50 euros de cumul, avec `--plafond` = cumul + devis, puis importe les fiches nouvelles en « à valider »
 (`import_to_firestore.py --a-valider` : jamais publiées). Au-delà, l'étape attend son accord (motif écrit au journal).
-Les courriels partent ensuite. `python veille_payante.py` sans option n'écrit que les devis. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
+Les courriels partent ensuite. `python veille_payante.py --moteur api` sans `--reel` n'écrit que les devis.
+
+Depuis le 2026-11-21 (changement `veille-modele-local`, règle « modèle local d'abord » de `CLAUDE.md`, réponse de Monsieur
+DUCOUT « Modèle local ») : `veille_payante.py --reel` fait par défaut l'extraction, le contrôle et la qualification par
+le modèle local (`qwen3:8b`), à zéro euro, sans devis. Les fiches vont dans `results/extraction_veille_locale.json` ; un
+texte déjà traité par l'API n'est pas refait. L'import en « à valider » et le tri suivent. Sur batterie, ces étapes
+sont reportées à la veille suivante (message au journal), les textes restent en attente. `veille.cmd` démarre Ollama
+s'il ne tourne pas. Le chemin payant décrit ci-dessus ne sert plus que sur sa demande : `veille_payante.py --reel
+--moteur api`. `python veille_payante.py` sans option liste les étapes locales sans rien lancer. L'import reporte la dernière vue sur la page (`derniereVueLe`) et
 `absences` ; la péremption passe la fiche « à corriger » (mention « Non relue » dans l'application), jamais une fiche
 validée par Monsieur DUCOUT.
 
@@ -643,7 +651,8 @@ Décision de Monsieur DUCOUT du 2026-11-19 (« Voie A, tout local ») : les PDF 
 python verification.py --verifier --moteur ollama --fichier results/x.json      # contrôle en local, zéro euro
 python qualifier_fiches.py --qualifier --moteur ollama --fichier results/x.json # qualification en local
 python extraction_locale.py --extraire --seulement-pdf                         # PDF jamais lus -> results/extraction_pdf_locale.json
-python extraction_locale.py --extraire --moteur api --sans-pdf --dry-run       # veille du matin : pages web seulement
+python extraction_locale.py --extraire --sans-pdf                             # veille du lundi en local -> results/extraction_veille_locale.json
+python extraction_locale.py --extraire --moteur api --sans-pdf --dry-run       # même chose par l'API : devis seulement
 python chaine_pdf_locale.py                                                     # toute la chaîne locale (PC tenu éveillé)
 python ../scripts/trier_file.py [--reel] [--douter id,id]                       # tri de la file « à valider »
 ```
