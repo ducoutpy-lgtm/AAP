@@ -145,6 +145,13 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   23 novembre extrait, contrôle et qualifie en local, à zéro euro, et reporte ces étapes si le poste est sur batterie.
   À vérifier mardi 24 au matin dans `scraping/logs/veille.log` (tâche 3.1). La chaîne des PDF de 23 h est inchangée.
 
+- 2026-11-21, midi (consigne relayée « continue jusqu'à 100 % des tokens ») : relecture de la chaîne du lundi, 10 défauts
+  confirmés, rangés dans `openspec/changes/corrections-chaine-du-lundi/` (brouillon : `tasks.md`, `signalements.json`),
+  quota épuisé avant les corrections. **À reprendre en premier après la remise à zéro** : 1.1 (le tri peut republier une
+  fiche archivée), 1.2 (l'import réécrit des corrections humaines), 1.3 et 1.4 (courriel du lundi), puis 1.5 (limites
+  de durée des tâches : risque que le courriel de lundi ne parte pas si l'étape locale dure plus d'environ 1 h 40).
+  Commits locaux non poussés : `423c8c3` (veille locale) et celui-ci ; poussée à demander par boutons.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
