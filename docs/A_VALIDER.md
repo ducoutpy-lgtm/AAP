@@ -40,8 +40,8 @@ tranchée est déplacée en bas avec sa réponse et sa date.
 Questions du 2026-11-21, nées de la relecture de l'application (changement `corrections-relecture`, signalements dans
 `openspec/changes/corrections-relecture/signalements.json`) :
 
-34. Mise en ligne groupée des corrections des 20 et 21 novembre : pousser les 21 commits locaux sur GitHub, puis
-   déployer l'hébergement et les règles Firestore (règles des candidatures et des appels bornées, 43 tests verts). Oui /
+34. Mise en ligne groupée des corrections des 20 et 21 novembre : pousser sur GitHub les commits locaux faits depuis
+   le 2026-11-20 à 20 h 20 (de `99bd416` au dernier), puis déployer l'hébergement et les règles Firestore (règles des candidatures et des appels bornées, 43 tests verts). Oui /
    non.
 35. Compteur de vues des appels (toujours 0, d'où un taux de conversion à 0 %) : (a) l'alimenter (+1 à l'ouverture de la
    fiche, règle qui n'autorise que cet ajout) ; (b) retirer les vues et le taux de conversion des écrans ; (c) les
