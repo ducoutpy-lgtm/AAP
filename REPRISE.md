@@ -150,7 +150,28 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   quota épuisé avant les corrections. **À reprendre en premier après la remise à zéro** : 1.1 (le tri peut republier une
   fiche archivée), 1.2 (l'import réécrit des corrections humaines), 1.3 et 1.4 (courriel du lundi), puis 1.5 (limites
   de durée des tâches : risque que le courriel de lundi ne parte pas si l'étape locale dure plus d'environ 1 h 40).
-  Commits locaux non poussés : `423c8c3` (veille locale) et celui-ci ; poussée à demander par boutons.
+  Commits locaux non poussés : `423c8c3` (veille locale) et celui-ci ; poussée à demander par boutons. (Poussés à
+  13 h 50 sur son « Oui, pousse » : `4094ddd..9923b26`.)
+- 2026-11-21, 14 h (quota à 98 %, PC éteint ensuite) : décision à préparer pour la tâche 1.5, limite de 4 h de la veille
+  du lundi. Faits lus par la relecture : limite PT4H ; la veille du 16/11 a duré 2 h 22 sans modèle (284 textes
+  collectés) ; les courriels (`alertes.py`), `publier_chiffres` et `publier_couts` passent après `veille_payante.py`. Si
+  l'étape locale dépasse environ 1 h 40, Windows arrête la veille et rien de ce qui suit ne part.
+  - **Option A, réglage Windows** : porter la limite de la tâche « AAP Sante - veille hebdomadaire » de 4 h à 12 h
+    (modification d'un réglage du système : son accord, comme pour la question 16). Conséquences : les courriels
+    comprennent les fiches extraites le jour même. Mais ils peuvent partir en fin de journée une semaine chargée ; le PC
+    doit rester allumé et sur secteur jusqu'au bout ; la carte graphique est occupée tout le lundi.
+  - **Option B, ordre des étapes** : dans `veille.cmd`, lancer `alertes.py`, `publier_chiffres.py` et `publier_couts.py`
+    avant `veille_payante.py --reel` (code seulement, test et essai à blanc). Conséquences : les courriels partent
+    toujours, vers 10 h 30-11 h 30. En revanche, ils ne contiennent que les fiches publiées avant : celles de la semaine
+    arrivent dans le courriel du lundi suivant. L'étape locale peut encore être coupée à 4 h : l'extraction reprend la
+    semaine suivante là où elle s'est arrêtée, mais le contrôle, l'import et le tri peuvent être sautés chaque semaine
+    si le stock grossit. Il faudrait donc borner l'extraction par passage (`--limite`, par exemple 40 textes).
+  - Proposition de la session : B avec une limite de 40 textes par passage, puis mesurer le temps réel de lundi avant de
+    toucher au réglage Windows. Même logique pour la chaîne des PDF de 23 h (limite de 12 h, 197 PDF restants, environ
+    17 h au rythme mesuré) : une limite par nuit, avec contrôle, qualification et import à la fin de chaque nuit.
+  - Pour lundi 23/11, si rien n'est changé d'ici là : la collecte se fait ; l'étape locale et les courriels risquent
+    d'être coupés si la semaine compte beaucoup de pages nouvelles. Rien n'est perdu (textes gardés en attente), mais le
+    courriel de la semaine peut manquer.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
