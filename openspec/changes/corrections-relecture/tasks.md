@@ -61,4 +61,5 @@ sont verts.
 - [x] 4.1 Documentation (`CHANGELOG.md`, `docs/PRET_POUR_TESTEURS.md`, `REPRISE.md`), questions hors périmètre dans
   `REPRISE.md`. (2026-11-21 : questions 34 à 41 rangées dans `docs/A_VALIDER.md`, où le projet tient ses questions,
   et renvoyées depuis `REPRISE.md`.)
-- [ ] 4.2 Vérification de Monsieur DUCOUT ; mise en ligne des règles et de l'hébergement sur son accord.
+- [ ] 4.2 Vérification de Monsieur DUCOUT ; mise en ligne des règles et de l'hébergement sur son accord. (Mise en ligne
+  faite le 2026-11-21 sur son « Oui » : `index-DaDo9GnV.js`, règles publiées ; reste sa vérification.)

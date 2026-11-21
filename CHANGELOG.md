@@ -5,9 +5,16 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Mis en ligne (2026-11-21, sur l'accord de Monsieur DUCOUT)
+- https://aapi-11bc3.web.app sert `assets/index-DaDo9GnV.js` : corrections du changement `corrections-relecture`, tests
+  des pages, étiquettes des champs, retour avec filtres après la connexion. Règles Firestore bornées publiées (« released
+  rules firestore.rules »). Contrôle : lecture sans compte de trois appels publiés réussie, lecture d'un brouillon refusée
+  (403). Règle « modèle local d'abord » commitée dans `CLAUDE.md`.
+
 ### Corrigé (2026-11-20 et 21, changement `corrections-relecture`)
 Relecture de toute l'application par six relecteurs, puis double vérification de chaque signalement : 21 défauts
-confirmés, 8 écartés. Chaque correction a eu un test en échec avant, ou a été reproduite sur les émulateurs. Pas en ligne.
+confirmés, 8 écartés. Chaque correction a eu un test en échec avant, ou a été reproduite sur les émulateurs. En ligne le
+2026-11-21.
 - Mon profil n'efface plus les textes réutilisables ; la fenêtre « Préciser mon profil » n'efface plus le site, la
   présentation ni les objets déjà saisis.
 - La page des candidatures d'un appel n'est plus vide pour le financeur : sa requête était refusée par les règles.

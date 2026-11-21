@@ -135,6 +135,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   l'hébergement et des règles Firestore) ; questions 35 à 41 à trancher. Rien de poussé ni de déployé depuis le
   2026-11-20 à 20 h 20.
 
+- 2026-11-21 : sur son « Oui : pousse les 22 commits sur GitHub, mets en ligne l'hébergement et les règles Firestore,
+  et commite la règle « modèle local d'abord » ajoutée à CLAUDE.md » : règle commitée (`25667d2`), commits poussés
+  (`01a5d1b..25667d2`), site `index-DaDo9GnV.js` et règles Firestore bornées en ligne, lecture publique contrôlée.
+  Restent : sa vérification 4.2 de `corrections-relecture` sur le vrai projet, ses réponses aux questions 35 à 41.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
