@@ -170,12 +170,27 @@ Sources opérationnelles : `fondation_de_france` (64 AAP), `ars_idf` (18), `ars_
 
 ---
 
+## Coût des traitements : modèle local d'abord (décision de Monsieur DUCOUT du 2026-11-19)
+
+Règle écrite ici le 2026-11-21 par la séance de pilotage, à la demande de Monsieur DUCOUT (« Oui, écris-la »).
+Elle remplace la règle d'avril rappelée plus bas (« Claude API jusqu'à > 500 €/mois »).
+
+- Le but est de **minimiser les coûts de traitement**. Rien ne presse : la mise à jour des appels est hebdomadaire ;
+  si la lecture des PDF prend une semaine entière, ce n'est pas grave. Ses mots : « c'est la même chose pour tout ».
+- Tout traitement en lot non urgent (extraction, contrôle, qualification, requalification, lecture des PDF) tourne
+  **par défaut sur le modèle local** (Ollama, `qwen3:8b`, carte graphique de 8 Go), à zéro euro, même lent. La durée
+  n'est pas un motif pour payer.
+- L'**API payante** (Haiku) n'est utilisée **que si Monsieur DUCOUT la demande**, ou si le modèle local échoue à une
+  mesure, chiffres à l'appui ; les règles de devis et de `--plafond` ci-dessous restent alors valables.
+- Honnêteté sur la qualité : le modèle local a été mesuré moins juste que Haiku (octobre 2026 : `qwen3:8b` 16 fiches
+  justes sur 21 et 1 inventée, Haiku 19 sur 20). Le dire une fois, sans en faire un motif de dépense.
+
 ## Ce qu'il NE faut PAS faire sans validation explicite
 
 - Changer le schéma `AapNormalized` (impact toutes les sources) ou le type `AAP` de l'appli.
 - Démarrer la stack FastAPI/PostgreSQL/Next.js (mise en pause).
 - Installer une lib lourde (ex : Crawl4AI — rejetée, voir `docs/comparatif_scraping_2026-04.md`).
-- Proposer un modèle IA local pour le MVP (décision d'avril : Claude API jusqu'à > 500 €/mois). Nuance du 2026-10-13,
+- **Remplacé le 2026-11-19 par la règle « modèle local d'abord » (section précédente).** Historique : proposer un modèle IA local pour le MVP (décision d'avril : Claude API jusqu'à > 500 €/mois). Nuance du 2026-10-13,
   décidée par Monsieur DUCOUT : avant tout appel payant, un second tour d'extraction Ollama à zéro euro est mesuré contre
   les 24 fiches de référence de l'échantillon, avec un seuil fixé à l'avance ; l'API n'est retenue que si le seuil n'est
   pas atteint.
