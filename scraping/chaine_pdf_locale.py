@@ -48,7 +48,8 @@ def main() -> int:
     try:
         for etape in ETAPES:
             print(f"--- {datetime.now():%H:%M} {Path(etape[0]).name} {' '.join(etape[1:])}", flush=True)
-            subprocess.run([sys.executable, "-X", "utf8", "-W", "ignore", *etape], cwd=ICI,
+            # -u : sortie écrite au journal au fil de l'eau (corrections-chaine-du-lundi 1.9)
+            subprocess.run([sys.executable, "-u", "-X", "utf8", "-W", "ignore", *etape], cwd=ICI,
                            env={**os.environ, "PYTHONUTF8": "1"})
     finally:
         rester_eveille(False)

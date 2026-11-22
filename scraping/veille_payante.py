@@ -132,12 +132,16 @@ def decision(devis: float | None, depense: float, cumul: float) -> tuple[bool, f
 def lancer(arguments: list[str]) -> tuple[int, str]:
     # Sortie des scripts enfants imposée en UTF-8 (2026-11-16) : sous Windows, elle arrivait en encodage local
     # (« estim�s »), le devis du contrôle devenait illisible et la veille s'arrêtait à cette étape
+    # Sortie écrite au journal au fil de l'eau (corrections-chaine-du-lundi 1.9, 2026-11-22) : une étape locale dure des
+    # heures, et une coupure par la limite de la tâche ne laissait sinon aucune trace de l'endroit où elle s'arrêtait
     env = {**os.environ, "PYTHONUTF8": "1"}
-    r = subprocess.run([PYTHON, *arguments], cwd=ICI, capture_output=True, text=True, encoding="utf-8", errors="replace",
-                       env=env)
-    sortie = (r.stdout or "") + (r.stderr or "")
-    print(sortie.rstrip(), flush=True)
-    return r.returncode, sortie
+    p = subprocess.Popen([PYTHON, "-u", *arguments], cwd=ICI, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                         encoding="utf-8", errors="replace", env=env)
+    lignes = []
+    for ligne in p.stdout:
+        lignes.append(ligne)
+        print(ligne, end="", flush=True)
+    return p.wait(), "".join(lignes)
 
 
 def importer_et_trier(moteur: str) -> int:

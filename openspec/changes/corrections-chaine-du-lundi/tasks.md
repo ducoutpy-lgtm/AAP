@@ -38,5 +38,7 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
 - [x] 1.8 (moyenne) `scraping/alertes.py:262` : désabonnement annoncé par un réglage inexistant. Fait : « répondez à ce
   message en écrivant « Désabonnement » » ; case dans Mon profil proposée (question 42 de `docs/A_VALIDER.md`). Test en
   échec avant.
-- [ ] 1.9 (basse) `scraping/veille_payante.py:132` : journal muet pendant les étapes locales.
+- [x] 1.9 (basse) `scraping/veille_payante.py:132` : journal muet pendant les étapes locales. Fait : `lancer` lit et
+  écrit la sortie ligne à ligne (Python en `-u`) ; la chaîne des PDF lance aussi ses étapes en `-u`. 2 tests en échec
+  avant.
 - [ ] 2.1 Vérification de Monsieur DUCOUT.

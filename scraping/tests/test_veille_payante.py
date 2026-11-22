@@ -120,3 +120,25 @@ def test_courriels_et_chiffres_avant_le_modele_local():
     modele = rang("veille_payante.py --reel")
     assert rang("alertes.py --admin --candidats") < modele
     assert rang("publier_chiffres.py") < modele and rang("publier_couts.py") < modele
+
+
+
+def test_la_sortie_des_etapes_arrive_au_fil_de_l_eau(monkeypatch, capsys):
+    """corrections-chaine-du-lundi 1.9 (2026-11-22) : la sortie d'une étape n'était écrite qu'à sa fin ; une étape
+    locale de plusieurs heures coupée par la limite de la tâche ne laissait rien au journal. Python lancé en -u, sortie
+    lue et écrite ligne à ligne."""
+    lances = []
+
+    class Faux:
+        def __init__(self, args, **kw):
+            lances.append(args)
+            self.stdout = iter(["première fiche\n", "seconde fiche\n"])
+            self.returncode = 0
+
+        def wait(self):
+            return 0
+
+    monkeypatch.setattr(vp.subprocess, "Popen", Faux)
+    code, sortie = vp.lancer(["extraction_locale.py", "--extraire"])
+    assert code == 0 and "-u" in lances[0] and sortie == "première fiche\nseconde fiche\n"
+    assert "première fiche" in capsys.readouterr().out

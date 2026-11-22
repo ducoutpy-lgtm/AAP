@@ -27,3 +27,13 @@ def test_extraction_de_nuit_bornee():
     (environ 5 h au rythme mesuré de 12 PDF par heure), pour que contrôle, qualification et import passent chaque nuit."""
     extraction = c.ETAPES[0]
     assert extraction[extraction.index("--limite") + 1] == str(c.PDF_PAR_NUIT) == "60"
+
+
+
+def test_les_etapes_de_nuit_ecrivent_sans_tampon(monkeypatch):
+    """corrections-chaine-du-lundi 1.9 (2026-11-22) : sortie des étapes écrite au journal au fil de l'eau (-u)."""
+    lances = []
+    monkeypatch.setattr(c, "_definir_etat", lambda drapeaux: None)
+    monkeypatch.setattr(c.subprocess, "run", lambda args, **kw: lances.append(args))
+    c.main()
+    assert len(lances) == len(c.ETAPES) and all("-u" in a for a in lances)
