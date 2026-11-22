@@ -173,6 +173,14 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
     d'être coupés si la semaine compte beaucoup de pages nouvelles. Rien n'est perdu (textes gardés en attente), mais le
     courriel de la semaine peut manquer.
 
+- 2026-11-22, 17 h 50 à 18 h 30 (« aap et parti ok », AAP prioritaire avant la fin de l'abonnement le 29/11) : question à
+  boutons posée et tranchée, « Ordre des étapes » et chargeur d'origine lundi. Neuf défauts de
+  `corrections-chaine-du-lundi` corrigés, un commit par lot (806c280 à a05de3f), 250 tests Python verts, essais à blanc
+  de la veille (local et API) et du tri sur la vraie base (0 rejet, 3 publications, 58 à relire, rien d'écrit). Date du
+  dernier courriel amorcée au 16/11 10 h 32 UTC. Question 42 ajoutée (case de désabonnement dans Mon profil). Lundi 23 :
+  PC allumé et branché sur le chargeur d'origine à 8 h ; preuve attendue mardi dans `scraping/logs/veille.log`
+  (courriels vers 10 h 30-11 h 30, puis « Veille locale : … au plus 40 »).
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui

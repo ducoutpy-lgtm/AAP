@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-22, chaîne du lundi)
+- Neuf défauts de la chaîne automatique du lundi corrigés : courriels avant le modèle local, extraction bornée, tri qui
+  ne republie plus une fiche archivée, import qui ne réécrit plus une fiche validée, courriel sans doublon ni oubli,
+  bilan administrateur isolé, désabonnement réel, doublons plus prudents, journal au fil de l'eau. Détail :
+  `scraping/CHANGELOG.md`, changement `corrections-chaine-du-lundi`. Aucun déploiement de l'application nécessaire.
+
 ### Modifié (2026-11-21, veille par le modèle local)
 - La veille du lundi n'appelle plus l'API payante : extraction, contrôle et qualification par le modèle local, reportés
   sur batterie (changement `veille-modele-local`, détail dans `scraping/CHANGELOG.md`). Première preuve attendue : le

@@ -557,6 +557,11 @@ sous 4,50 euros de cumul, avec `--plafond` = cumul + devis, puis importe les fic
 (`import_to_firestore.py --a-valider` : jamais publiées). Au-delà, l'étape attend son accord (motif écrit au journal).
 Les courriels partent ensuite. `python veille_payante.py --moteur api` sans `--reel` n'écrit que les devis.
 
+Depuis le 2026-11-22 (changement `corrections-chaine-du-lundi`, décision « Ordre des étapes ») : la tâche Windows coupe
+la veille à 4 h, donc `veille.cmd` envoie les courriels et publie les chiffres avant l'étape du modèle local, qui traite
+au plus 40 textes encore jamais traités (`TEXTES_PAR_VEILLE`) ; la chaîne de nuit en traite au plus 60 (`PDF_PAR_NUIT`).
+Le courriel du lundi annonce les appels publiés depuis le dernier envoi réussi (`logs/alertes_dernier_envoi.txt`).
+
 Depuis le 2026-11-21 (changement `veille-modele-local`, règle « modèle local d'abord » de `CLAUDE.md`, réponse de Monsieur
 DUCOUT « Modèle local ») : `veille_payante.py --reel` fait par défaut l'extraction, le contrôle et la qualification par
 le modèle local (`qwen3:8b`), à zéro euro, sans devis. Les fiches vont dans `results/extraction_veille_locale.json` ; un

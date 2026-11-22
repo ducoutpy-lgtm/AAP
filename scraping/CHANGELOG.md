@@ -4,6 +4,21 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-11-22, changement `corrections-chaine-du-lundi`)
+Relecture de la chaîne du lundi : 10 défauts confirmés, 9 corrigés le 2026-11-22, chacun avec un test en échec avant
+(250 tests Python verts) ; le dixième (limite des tâches) réglé par la décision « Ordre des étapes ».
+- `veille.cmd` : courriels et chiffres avant le modèle local (la tâche Windows coupe la veille à 4 h) ; au plus 40
+  textes par veille et 60 PDF par nuit ; la limite porte sur les textes encore à faire.
+- `trier_file.py` : une fiche archivée ou clôturée à la main n'est plus republiée ; rejet d'un doublon seulement s'il
+  ressemble directement à la fiche gardée.
+- `doublons.py` : deux éditions d'un même appel (clôtures connues et différentes) ne sont plus des doublons.
+- `import_to_firestore.py` : une fiche validée en base garde ses champs, même avec `--a-valider` ; un champ
+  « incertain » après un échec est repris de la qualification.
+- `alertes.py` : fenêtre comptée depuis le dernier envoi réussi (`logs/alertes_dernier_envoi.txt`, amorcé au 16/11) ;
+  un échec du bilan de l'administrateur n'arrête plus l'envoi aux candidats ; désabonnement par réponse
+  « Désabonnement ».
+- `veille_payante.py`, `chaine_pdf_locale.py` : sortie des étapes écrite au journal au fil de l'eau.
+
 ### Modifié (2026-11-21, changement `veille-modele-local`, réponse « Modèle local »)
 - Veille du lundi : extraction des pages web nouvelles, contrôle et qualification par le modèle local (`qwen3:8b`),
   zéro euro, sans devis ; fiches dans `results/extraction_veille_locale.json` (le fichier local d'octobre reste figé),
