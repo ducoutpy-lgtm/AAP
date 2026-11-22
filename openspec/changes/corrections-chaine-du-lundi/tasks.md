@@ -27,8 +27,11 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
   extraire` coupait la liste avant de les sauter et aurait repris les mêmes). 4 tests en échec avant, 238 tests Python
   verts après ; essai à blanc : « --limite 40 ». Réglage Windows non modifié.
 - [ ] 1.6 (moyenne) `scraping/echantillon.py:529` : champ « incertain » après un échec jamais reposé.
-- [ ] 1.7 (moyenne) `scripts/doublons.py:112` et `:153` : nouvelle édition rejetée au profit de l'ancienne ; groupes
-  réunis par transitivité.
+- [x] 1.7 (moyenne) `scripts/doublons.py:112` et `:153`. Fait : même titre et même financeur, mais deux clôtures
+  connues et différentes, ne font plus un doublon (deux éditions) ; le tri ne rejette une fiche que si elle ressemble
+  directement à la fiche gardée, sinon elle reste à relire (« rapprochée … par une autre fiche »). 2 tests en échec
+  avant (`scripts/tests/test_doublons.py`, `test_trier_file.py`), 52 verts après ; tri à blanc sur la vraie base
+  inchangé (0, 3, 58).
 - [ ] 1.8 (moyenne) `scraping/alertes.py:262` : désabonnement annoncé par « Mon profil » sans réglage correspondant.
 - [ ] 1.9 (basse) `scraping/veille_payante.py:132` : journal muet pendant les étapes locales.
 - [ ] 2.1 Vérification de Monsieur DUCOUT.

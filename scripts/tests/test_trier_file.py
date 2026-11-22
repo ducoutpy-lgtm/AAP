@@ -57,3 +57,18 @@ def test_une_fiche_archivee_ou_cloturee_a_la_main_n_entre_pas_dans_le_tri():
     fiches, file = t.selection(docs)
     assert [i for i, _ in file] == ["brouillon", "publiee-proposee"]
     assert [i for i, _ in fiches] == ["brouillon", "publiee-proposee", "validee"]
+
+
+
+def test_un_rapprochement_par_ricochet_ne_rejette_pas():
+    """corrections-chaine-du-lundi 1.7 (2026-11-22) : les groupes se forment par ricochet (A ~ C, C ~ B) ; B, qui ne
+    ressemble pas directement à la fiche gardée A (axes différents), était rejetée. Elle reste à relire."""
+    from datetime import datetime, timezone
+    import trier_file as t
+    maintenant = datetime(2026, 11, 22, tzinfo=timezone.utc)
+    a = ("axe3", {"title": "Appel à projets Axe 3 : coordination et appui", "financeurName": "CFPPA du Nord",
+                  "status": "published", "validation": {"statut": "validee"}})
+    b = ("axe5", {"title": "Appel à projets Axe 5 : actions collectives", "financeurName": "CFPPA du Nord",
+                  "status": "draft", "validation": {"statut": "proposee"}})
+    dec = t.decisions([b], [[a, b]], lambda g: ("axe3", "déjà publiée"), maintenant)
+    assert dec["axe5"][0] != "rejeter"

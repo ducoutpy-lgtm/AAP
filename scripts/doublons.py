@@ -110,7 +110,9 @@ def meme_appel(a: dict, b: dict) -> bool:
     moins la moitie des mots distinctifs (deux au moins) en commun ; jamais deux axes ou lots de numeros differents
     (fonction pure)."""
     if cle(a.get("title")) == cle(b.get("title")) and (a.get("financeurName") or "") == (b.get("financeurName") or ""):
-        return True
+        # Deux clôtures connues et différentes : deux éditions du même appel, pas un doublon (corrections-chaine-du-lundi
+        # 1.7, 2026-11-22 : la nouvelle édition, ouverte, était rejetée au profit de l'ancienne, close mais publiée)
+        return _cloture(a) is None or _cloture(b) is None or _cloture(a) == _cloture(b)
     na, nb = numero_axe(a.get("title")), numero_axe(b.get("title"))
     if na and nb and na != nb:
         return False

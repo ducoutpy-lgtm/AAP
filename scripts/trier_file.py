@@ -61,9 +61,13 @@ def decisions(file: list[tuple[str, dict]], groupes: list[list[tuple[str, dict]]
     resultat: dict[str, tuple[str, str]] = {}
     for groupe in groupes:
         garde, raison = garder(groupe)
+        gardee = dict(groupe)[garde]
         for i, d in groupe:
             if i != garde and i in dans_la_file and not relue(d):
-                resultat[i] = ("rejeter", f"doublon de {garde} ({raison})")
+                # Rejet seulement si la fiche ressemble directement à la fiche gardée : un groupe se forme par ricochet
+                # (A ~ C, C ~ B), et B pouvait être un autre axe du même programme (corrections-chaine-du-lundi 1.7)
+                resultat[i] = (("rejeter", f"doublon de {garde} ({raison})") if doublons.meme_appel(d, gardee)
+                               else ("laisser", f"À relire : rapprochée de {garde} par une autre fiche, sans lui ressembler"))
     for i, d in file:
         if i in resultat or relue(d):
             continue
