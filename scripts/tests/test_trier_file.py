@@ -41,3 +41,19 @@ def test_decisions_doublons_puis_tri():
     assert d["garde"] == ("publier", "")
     assert d["douteuse"][0] == "laisser" and "champ incertain" in d["douteuse"][1]
     assert "relue" not in d
+
+
+
+def test_une_fiche_archivee_ou_cloturee_a_la_main_n_entre_pas_dans_le_tri():
+    """corrections-chaine-du-lundi 1.1 (2026-11-22) : « Archiver » et « Clôturer » de /admin/aaps ne changent que le
+    statut ; la fiche garde « Proposée » et le tri la republiait. Elle ne doit ni être traitée ni servir de référence
+    à un groupe de doublons."""
+    import trier_file as t
+    docs = [("brouillon", {"status": "draft", "validation": {"statut": "proposee"}}),
+            ("publiee-proposee", {"status": "published", "validation": {"statut": "proposee"}}),
+            ("archivee", {"status": "archived", "validation": {"statut": "proposee"}}),
+            ("cloturee", {"status": "closed", "validation": {"statut": "proposee"}}),
+            ("validee", {"status": "published", "validation": {"statut": "validee"}})]
+    fiches, file = t.selection(docs)
+    assert [i for i, _ in file] == ["brouillon", "publiee-proposee"]
+    assert [i for i, _ in fiches] == ["brouillon", "publiee-proposee", "validee"]

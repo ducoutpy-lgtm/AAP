@@ -4,8 +4,10 @@ Relecture de la chaîne du lundi (veille, import, tri, courriels) : 3 relecteurs
 signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuves : `signalements.json`. Proposition et spec
 à écrire avant le code (méthode du projet). Chaque correction : test en échec d'abord.
 
-- [ ] 1.1 (haute) `scripts/trier_file.py:93` : le tri republie une fiche « Proposée » archivée ou clôturée à la main ;
-  ne traiter que `status == 'draft'`, comme `doublons.py --file`.
+- [x] 1.1 (haute) `scripts/trier_file.py:93` : le tri republiait une fiche « Proposée » archivée ou clôturée à la main.
+  Fait : `selection` écarte les fiches archivées et clôturées (les brouillons et les publiées encore « Proposée »
+  restent triées). Test en échec avant ; essai à blanc sur la vraie base le 2026-11-22 : « publier : 3 »,
+  « laisser : 58 », « rejeter : 0 », rien d'écrit.
 - [ ] 1.2 (haute) `scripts/import_to_firestore.py:240` : avec `--a-valider`, les corrections de Monsieur DUCOUT sur une
   fiche validée en base sont réécrites ; protéger les champs métier d'après le document existant.
 - [ ] 1.3 (haute) `scraping/alertes.py:332` : fenêtre de sept jours comptée depuis l'heure du passage, d'où doublons ou

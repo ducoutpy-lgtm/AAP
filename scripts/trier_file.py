@@ -72,6 +72,15 @@ def decisions(file: list[tuple[str, dict]], groupes: list[list[tuple[str, dict]]
     return resultat
 
 
+def selection(docs: list[tuple[str, dict]]) -> tuple[list[tuple[str, dict]], list[tuple[str, dict]]]:
+    """(fiches comparées pour les doublons, file à trier) (fonction pure). La file : les fiches « Proposée » encore en
+    brouillon ou publiées, jamais une fiche archivée ou clôturée à la main dans /admin/aaps, qui garde « Proposée » mais
+    que le tri republiait (corrections-chaine-du-lundi 1.1, 2026-11-22). Les fiches publiées servent aux doublons."""
+    proposee = lambda d: (d.get("validation") or {}).get("statut") == "proposee" and d.get("status") in ("draft", "published")
+    fiches = [(i, d) for i, d in docs if proposee(d) or (d.get("status") == "published")]
+    return fiches, [(i, d) for i, d in fiches if proposee(d)]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--reel", action="store_true", help="écrire en base (sauvegarde d'abord)")
@@ -89,9 +98,7 @@ def main() -> int:
         firebase_admin.initialize_app(credentials.Certificate(args.key))
     col = firestore.client().collection("aap")
     relais = {s["id"] for s in registre.charger() if s.get("relais")}
-    fiches = [(doc.id, d) for doc in col.stream() for d in [doc.to_dict()]
-              if d.get("status") == "published" or (d.get("validation") or {}).get("statut") == "proposee"]
-    file = [(i, d) for i, d in fiches if (d.get("validation") or {}).get("statut") == "proposee"]
+    fiches, file = selection([(doc.id, doc.to_dict()) for doc in col.stream()])
     maintenant = datetime.now(timezone.utc)
     dec = decisions(file, doublons.groupes_file(fiches), lambda g: doublons.a_garder(g, relais), maintenant)
     for i in filter(None, args.douter.split(",")):
