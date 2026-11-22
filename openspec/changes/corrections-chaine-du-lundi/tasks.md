@@ -26,7 +26,10 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
   `textes_veille_locale` et `textes_pdf_locaux` écartent les textes déjà faits avant la limite (sinon `echantillon.
   extraire` coupait la liste avant de les sauter et aurait repris les mêmes). 4 tests en échec avant, 238 tests Python
   verts après ; essai à blanc : « --limite 40 ». Réglage Windows non modifié.
-- [ ] 1.6 (moyenne) `scraping/echantillon.py:529` : champ « incertain » après un échec jamais reposé.
+- [x] 1.6 (moyenne) `scraping/echantillon.py:529` : champ « incertain » après un échec, jamais reposé. Fait, à
+  l'import : quand la raison commence par « échec » et que la qualification classe l'appel en santé ou médico-social,
+  ce champ remplace « incertain » (raison « repris de la qualification (…) ») ; un « incertain » répondu par le modèle
+  reste tel quel. Test en échec avant, 47 tests de l'import verts après.
 - [x] 1.7 (moyenne) `scripts/doublons.py:112` et `:153`. Fait : même titre et même financeur, mais deux clôtures
   connues et différentes, ne font plus un doublon (deux éditions) ; le tri ne rejette une fiche que si elle ressemble
   directement à la fiche gardée, sinon elle reste à relire (« rapprochée … par une autre fiche »). 2 tests en échec

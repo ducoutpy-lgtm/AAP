@@ -686,3 +686,17 @@ def test_une_fiche_validee_en_base_garde_ses_champs_meme_avec_a_valider():
     # Fiche encore « proposée » en base : l'import peut la compléter comme avant
     envoye = imp.document_a_envoyer(recalcule, existe=True, existant={"validation": {"statut": "proposee"}})
     assert envoye["title"] == "Titre extrait"
+
+
+
+def test_champ_incertain_apres_un_echec_repris_de_la_qualification():
+    """corrections-chaine-du-lundi 1.6 (2026-11-22) : quand la question du champ échoue (délai d'Ollama dépassé), la fiche
+    reste « incertain » ; rien ne la repose, et le tri la laisse dans la file chaque lundi. La qualification, posée
+    ensuite, donne pourtant le champ : il remplace « incertain » dans ce seul cas."""
+    doc = {"title": "T", "scrapeMetadata": {"champ": "incertain", "champRaison": "échec : TimeoutError: timed out"}}
+    item = {"scrape_metadata": {"qualification": {"champ": "sante", "type_appel": "subvention", "modele": "qwen3:8b"}}}
+    d = imp.appliquer_qualification(doc, item, date(2026, 11, 22))
+    assert d["scrapeMetadata"]["champ"] == "sante" and "qualification" in d["scrapeMetadata"]["champRaison"]
+    # Un « incertain » répondu par le modèle (pas un échec) reste tel quel
+    doc2 = {"title": "T", "scrapeMetadata": {"champ": "incertain", "champRaison": "texte ambigu"}}
+    assert imp.appliquer_qualification(doc2, item, date(2026, 11, 22))["scrapeMetadata"]["champ"] == "incertain"

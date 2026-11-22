@@ -196,6 +196,12 @@ def appliquer_qualification(doc: dict, item: dict, today: date) -> dict:
             d["startDate"] = ouverture
     if q.get("pieces_attendues") and not d.get("requiredDocuments"):
         d["requiredDocuments"] = list(q["pieces_attendues"])
+    # Question du champ en échec (délai d'Ollama dépassé) : « incertain » n'était jamais reposé et laissait la fiche dans
+    # la file chaque lundi ; le champ de la qualification le remplace dans ce seul cas (corrections-chaine-du-lundi 1.6)
+    meta = d.get("scrapeMetadata") or {}
+    if (meta.get("champ") == "incertain" and str(meta.get("champRaison") or "").startswith("échec")
+            and q.get("champ") in ("sante", "medico-social")):
+        d["scrapeMetadata"] = {**meta, "champ": q["champ"], "champRaison": f"repris de la qualification ({meta['champRaison']})"}
     if q.get("champ") == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR:
         d["tags"] = [t for t in d.get("tags", []) if t != "hors-champ"] + ["hors-champ"]
         d["status"] = "draft"
