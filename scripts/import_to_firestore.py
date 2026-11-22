@@ -237,7 +237,10 @@ def document_a_envoyer(doc: dict, existe: bool, existant: dict | None = None) ->
     if not existe:
         return dict(doc)
     proteges = set(CHAMPS_HUMAINS)
-    if doc.get("validation", {}).get("statut") == "validee":
+    # Fiche validée dans ce calcul, ou déjà validée en base : avec --a-valider le statut recalculé est « proposee », et
+    # lire ce seul statut laissait réécrire les corrections faites dans l'application (corrections-chaine-du-lundi 1.2)
+    valide_en_base = ((existant or {}).get("validation") or {}).get("statut") == "validee"
+    if doc.get("validation", {}).get("statut") == "validee" or valide_en_base:
         proteges |= set(CHAMPS_METIER)
         # La qualification (jour 2 du plan MVP) complete une fiche validee sans la contredire : elle passe toujours,
         # sauf quand une qualification a ete ecrite a la main dans l'application (par = Monsieur DUCOUT)

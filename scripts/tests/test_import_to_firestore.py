@@ -670,3 +670,19 @@ def test_doublons_file_meme_financeur_meme_annee_appels_differents():
     b = ("b", _fiche("Appel à projets 2026 : soutien aux proches aidants", "Fondation de France", "fondation-de-france-2",
                      (2026, 12, 1), url="https://autre.fr/b"))
     assert doublons.groupes_file([a, b]) == []
+
+
+
+def test_une_fiche_validee_en_base_garde_ses_champs_meme_avec_a_valider():
+    """corrections-chaine-du-lundi 1.2 (2026-11-22) : avec --a-valider, le statut recalculé passe à « proposee », et la
+    protection des champs métier, qui ne lisait que ce statut, tombait : la date corrigée par Monsieur DUCOUT dans
+    /aap/:id/edit était remise à nulle chaque lundi. La protection lit aussi la fiche en base."""
+    assert {"title", "deadline"} <= set(imp.CHAMPS_METIER)
+    recalcule = {"title": "Titre extrait", "deadline": None, "status": "draft", "validation": {"statut": "proposee"}}
+    for par in (imp.RELECTEUR, "contrôle du modèle (tri automatique)"):
+        existant = {"title": "Titre corrigé", "deadline": "2026-12-15", "validation": {"statut": "validee", "par": par}}
+        envoye = imp.document_a_envoyer(recalcule, existe=True, existant=existant)
+        assert "title" not in envoye and "deadline" not in envoye, par
+    # Fiche encore « proposée » en base : l'import peut la compléter comme avant
+    envoye = imp.document_a_envoyer(recalcule, existe=True, existant={"validation": {"statut": "proposee"}})
+    assert envoye["title"] == "Titre extrait"

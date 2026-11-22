@@ -8,8 +8,11 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
   Fait : `selection` écarte les fiches archivées et clôturées (les brouillons et les publiées encore « Proposée »
   restent triées). Test en échec avant ; essai à blanc sur la vraie base le 2026-11-22 : « publier : 3 »,
   « laisser : 58 », « rejeter : 0 », rien d'écrit.
-- [ ] 1.2 (haute) `scripts/import_to_firestore.py:240` : avec `--a-valider`, les corrections de Monsieur DUCOUT sur une
-  fiche validée en base sont réécrites ; protéger les champs métier d'après le document existant.
+- [x] 1.2 (haute) `scripts/import_to_firestore.py:240` : avec `--a-valider`, les corrections de Monsieur DUCOUT sur une
+  fiche validée en base étaient réécrites. Fait : `document_a_envoyer` protège les champs métier dès que la fiche est
+  validée en base (par lui ou par le tri). Test en échec avant, 46 tests de l'import verts après. Effet : une fiche
+  validée ne reçoit plus les champs d'une nouvelle extraction, même une date plus récente (règle déjà appliquée sans
+  `--a-valider`).
 - [ ] 1.3 (haute) `scraping/alertes.py:332` : fenêtre de sept jours comptée depuis l'heure du passage, d'où doublons ou
   oublis dans le courriel ; partir de la date du dernier envoi réussi.
 - [ ] 1.4 (moyenne) `scraping/alertes.py:340` : un échec du courriel de l'administrateur arrête l'envoi aux candidats.
