@@ -105,3 +105,18 @@ def test_veille_locale_sur_batterie_reporte_tout(monkeypatch):
 
 def test_veille_locale_a_blanc_ne_lance_rien(monkeypatch):
     assert _veille(monkeypatch, 1, []) == []
+
+
+# corrections-chaine-du-lundi 1.5 (2026-11-22, décision « Ordre des étapes ») : la tâche Windows coupe la veille à 4 h ;
+# courriels et chiffres partent avant le modèle local, qui traite au plus 40 textes par lundi.
+def test_extraction_locale_bornee_a_40_textes():
+    extraction = dict(vp.etapes("ollama"))["extraction"]
+    assert extraction[extraction.index("--limite") + 1] == str(vp.TEXTES_PAR_VEILLE) == "40"
+
+
+def test_courriels_et_chiffres_avant_le_modele_local():
+    lignes = (Path(vp.__file__).parent / "veille.cmd").read_text(encoding="utf-8").splitlines()
+    rang = lambda motif: next(i for i, l in enumerate(lignes) if motif in l and not l.lower().startswith(("rem", "echo")))
+    modele = rang("veille_payante.py --reel")
+    assert rang("alertes.py --admin --candidats") < modele
+    assert rang("publier_chiffres.py") < modele and rang("publier_couts.py") < modele

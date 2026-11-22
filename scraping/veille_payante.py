@@ -47,7 +47,11 @@ MOTEUR = "ollama"  # règle « modèle local d'abord » (2026-11-21) ; « api »
 ETAPES_API = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", "api", "--sans-pdf"]),
               ("contrôle", ["verification.py", "--verifier", "--fichier", FICHES_API]),
               ("qualification", ["qualifier_fiches.py", "--qualifier", "--fichier", FICHES_API])]
-ETAPES_LOCALES = [("extraction", ["extraction_locale.py", "--extraire", "--sans-pdf"]),
+# La tâche Windows coupe la veille à 4 h (corrections-chaine-du-lundi 1.5, décision « Ordre des étapes » du 2026-11-22) :
+# courriels et chiffres partent avant ce lot (veille.cmd), qui traite au plus 40 textes ; les suivants attendent le lundi
+# d'après
+TEXTES_PAR_VEILLE = 40
+ETAPES_LOCALES = [("extraction", ["extraction_locale.py", "--extraire", "--sans-pdf", "--limite", str(TEXTES_PAR_VEILLE)]),
                   ("contrôle", ["verification.py", "--verifier", "--moteur", "ollama", "--fichier", FICHES_VEILLE_LOCALE]),
                   ("qualification", ["qualifier_fiches.py", "--qualifier", "--moteur", "ollama", "--fichier",
                                      FICHES_VEILLE_LOCALE])]

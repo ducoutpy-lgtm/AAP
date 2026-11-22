@@ -1,10 +1,11 @@
 @echo off
 rem Veille hebdomadaire des appels (changement rejeu-collecte-veille, 2026-10-20) : relit les pages validees des
-rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiches, ecrit VEILLE.md, lance l'extraction,
-rem le controle et la qualification par le modele local (veille_payante.py --reel, changement veille-modele-local du
-rem 2026-11-21 : zero euro, reportes sur batterie, import en « a valider » puis tri de la file ; l'API Haiku seulement sur
-rem demande de Monsieur DUCOUT, --moteur api), puis envoie les courriels hebdomadaires (bilan a l'administrateur, appels
-rem de la semaine aux candidats).
+rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiches, ecrit VEILLE.md, envoie les courriels
+rem hebdomadaires (bilan a l'administrateur, appels de la semaine aux candidats) et publie les chiffres, puis lance
+rem l'extraction, le controle et la qualification par le modele local, au plus 40 textes (veille_payante.py --reel,
+rem changements veille-modele-local du 2026-11-21 et corrections-chaine-du-lundi du 2026-11-22 : zero euro, reportes sur
+rem batterie, import en « a valider » puis tri ; l'API Haiku seulement sur demande de Monsieur DUCOUT, --moteur api).
+rem Ordre choisi par Monsieur DUCOUT le 2026-11-22 (« Ordre des etapes ») : la tache Windows coupe la veille a 4 h.
 rem Fermer la fenetre arrete la veille (reprise possible le jour meme, rien n'est perdu) : veille_cachee.vbs la lance
 rem sans fenetre.
 rem Lancement planifie (tache Windows « AAP Sante - veille hebdomadaire », lundi 8 h) : veille.cmd auto
@@ -29,11 +30,6 @@ echo.
 echo Portail europeen Funding ^& Tenders (interface publique, appels de sante, sans navigateur ni modele) :
 "..\.venv\Scripts\python.exe" funding_tenders.py
 echo.
-echo Modele local (extraction, controle, qualification, import en « a valider », tri ; zero euro, reporte sur batterie) :
-rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance), comme la chaine des PDF
-"%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
-"..\.venv\Scripts\python.exe" veille_payante.py --reel
-echo.
 echo Courriels hebdomadaires (bilan administrateur, appels de la semaine aux candidats) :
 "..\.venv\Scripts\python.exe" alertes.py --admin --candidats
 echo.
@@ -42,6 +38,12 @@ echo Chiffres publics de la page Financeurs (statistiquesPubliques/accueil) :
 echo.
 echo Recopie du journal des couts externes vers l'administration (collection coutsIa) :
 "..\.venv\Scripts\python.exe" ..\scripts\publier_couts.py
+echo.
+rem Courriels et chiffres d'abord : la tache Windows coupe la veille a 4 h (decision « Ordre des etapes » du 2026-11-22)
+echo Modele local, au plus 40 textes (extraction, controle, qualification, import en « a valider », tri ; zero euro, reporte sur batterie) :
+rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance), comme la chaine des PDF
+"%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
+"..\.venv\Scripts\python.exe" veille_payante.py --reel
 echo.
 echo Veille terminee le %date% %time%. Rapport : VEILLE.md.
 if "%~1"=="" pause

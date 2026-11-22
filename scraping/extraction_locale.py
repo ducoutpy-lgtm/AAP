@@ -60,9 +60,15 @@ def filtrer_pdf(fiches: list[tuple[dict, Path]], pdf: bool) -> list[tuple[dict, 
 
 
 def textes_veille_locale(fiches: list[tuple[dict, Path]]) -> list[tuple[dict, Path]]:
-    """Pages web jamais traitées par l'API, pour la veille du lundi en local (veille-modele-local, 2026-11-21) ; les
-    pages déjà extraites par une veille locale précédente sont sautées ensuite par echantillon.extraire."""
-    return textes_restants(filtrer_pdf(fiches, pdf=False), SORTIE_API)
+    """Pages web jamais traitées, ni par l'API ni par une veille locale précédente (veille-modele-local, 2026-11-21).
+    Les textes déjà faits sont écartés ici, avant --limite : echantillon.extraire coupe la liste à la limite avant de
+    sauter les textes déjà traités, et reprendrait sinon chaque semaine les mêmes (corrections-chaine-du-lundi 1.5)."""
+    return textes_restants(textes_restants(filtrer_pdf(fiches, pdf=False), SORTIE_API), SORTIE_VEILLE_LOCALE)
+
+
+def textes_pdf_locaux(fiches: list[tuple[dict, Path]]) -> list[tuple[dict, Path]]:
+    """PDF jamais extraits, ni par l'API (conférences du 13 novembre) ni par une nuit précédente ; même raison."""
+    return textes_restants(textes_restants(filtrer_pdf(fiches, pdf=True), SORTIE_API), SORTIE_PDF_LOCALE)
 
 
 def textes_restants(fiches: list[tuple[dict, Path]], chemin_sortie: Path) -> list[tuple[dict, Path]]:
@@ -264,15 +270,16 @@ def main() -> int:
         echantillon.extraire_api({}, modele, args.limite, args.plafond, chemin_sortie=SORTIE_API,
                                  fiches=disponibles, metadonnees={"a_verifier": True})
     elif args.extraire and args.seulement_pdf:
-        # PDF jamais extraits, ni par l'API (conférences du 13 novembre) ni par une nuit précédente
-        pdf = textes_restants(filtrer_pdf(echantillon.fiches_disponibles(sources), pdf=True), SORTIE_API)
-        print(f"Chaîne locale des PDF : {len(textes_restants(pdf, SORTIE_PDF_LOCALE))} textes à extraire, modèle {modele}, zéro euro.")
+        pdf = textes_pdf_locaux(echantillon.fiches_disponibles(sources))
+        print(f"Chaîne locale des PDF : {len(pdf)} textes à extraire (au plus {args.limite or 'tous'} cette nuit), modèle "
+              f"{modele}, zéro euro.")
         echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE_PDF_LOCALE,
                              metadonnees={"a_verifier": True}, fiches=pdf)
     elif args.extraire and args.sans_pdf:
         # Veille du lundi en local (veille-modele-local, 2026-11-21) : fichier à part, la V3 d'octobre reste figée
         web = textes_veille_locale(echantillon.fiches_disponibles(sources))
-        print(f"Veille locale : {len(textes_restants(web, SORTIE_VEILLE_LOCALE))} pages web à extraire, modèle {modele}, zéro euro.")
+        print(f"Veille locale : {len(web)} pages web à extraire (au plus {args.limite or 'toutes'} cette fois), modèle "
+              f"{modele}, zéro euro.")
         echantillon.extraire(sources, MOTEUR, modele, args.limite, chemin_sortie=SORTIE_VEILLE_LOCALE,
                              metadonnees={"a_verifier": True}, fiches=web)
     elif args.extraire:

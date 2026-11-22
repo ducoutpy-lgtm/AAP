@@ -19,3 +19,11 @@ def test_demande_a_windows_de_rester_eveille(monkeypatch):
     c.rester_eveille(True)
     c.rester_eveille(False)
     assert appels == [c.ES_CONTINUOUS | c.ES_SYSTEM_REQUIRED, c.ES_CONTINUOUS]
+
+
+
+def test_extraction_de_nuit_bornee():
+    """corrections-chaine-du-lundi 1.5 (2026-11-22) : la tâche de nuit est coupée à 12 h ; au plus 60 PDF par nuit
+    (environ 5 h au rythme mesuré de 12 PDF par heure), pour que contrôle, qualification et import passent chaque nuit."""
+    extraction = c.ETAPES[0]
+    assert extraction[extraction.index("--limite") + 1] == str(c.PDF_PAR_NUIT) == "60"

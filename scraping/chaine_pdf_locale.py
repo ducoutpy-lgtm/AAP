@@ -18,8 +18,11 @@ from pathlib import Path
 ICI = Path(__file__).resolve().parent
 SCRIPTS = ICI.parent / "scripts"
 PDF = str(Path("results") / "extraction_pdf_locale.json")
+# La tâche de nuit est coupée à 12 h (corrections-chaine-du-lundi 1.5, 2026-11-22) : au plus 60 PDF par nuit, environ
+# 5 h au rythme mesuré de 12 PDF par heure, pour que contrôle, qualification, import et tri passent chaque nuit
+PDF_PAR_NUIT = 60
 ETAPES = [
-    ["extraction_locale.py", "--extraire", "--seulement-pdf"],
+    ["extraction_locale.py", "--extraire", "--seulement-pdf", "--limite", str(PDF_PAR_NUIT)],
     ["verification.py", "--verifier", "--moteur", "ollama", "--fichier", PDF],
     ["qualifier_fiches.py", "--qualifier", "--moteur", "ollama", "--fichier", PDF],
     [str(SCRIPTS / "import_to_firestore.py"), "--source", "extraction_pdf_locale", "--a-valider"],

@@ -97,3 +97,29 @@ def test_textes_de_la_veille_locale(tmp_path, monkeypatch):
     monkeypatch.setattr(e, "SORTIE_API", api)
     assert e.SORTIE_VEILLE_LOCALE.name == "extraction_veille_locale.json"
     assert [c for _, c in e.textes_veille_locale([({}, deja), ({}, nouvelle), ({}, pdf)])] == [nouvelle]
+
+
+def test_la_limite_porte_sur_les_textes_encore_a_faire(tmp_path, monkeypatch):
+    """corrections-chaine-du-lundi 1.5 (2026-11-22) : echantillon.extraire coupe la liste à --limite avant d'écarter les
+    textes déjà traités ; la veille et la chaîne de nuit doivent donc ne lui passer que les textes restants, sinon une
+    limite de 40 reprendrait chaque semaine les 40 mêmes textes déjà faits."""
+    import json
+    import extraction_locale as e
+    monkeypatch.setattr(e, "ICI", tmp_path)
+    fiches = tmp_path / "decouverte" / "s" / "fiches"
+    fiches.mkdir(parents=True)
+    faite, restante, pdf_fait, pdf_restant = (fiches / n for n in ("a.txt", "b.txt", "c.txt", "d.txt"))
+    for chemin, adresse in ((faite, "https://x/a"), (restante, "https://x/b"), (pdf_fait, "https://x/c.pdf"),
+                            (pdf_restant, "https://x/d.pdf")):
+        chemin.write_text(adresse + "\ntexte", encoding="utf-8")
+    resultats = tmp_path / "results"
+    resultats.mkdir()
+    for nom in ("SORTIE_API", "SORTIE_VEILLE_LOCALE", "SORTIE_PDF_LOCALE"):
+        monkeypatch.setattr(e, nom, resultats / getattr(e, nom).name)
+    e.SORTIE_VEILLE_LOCALE.write_text(json.dumps([{"scrape_metadata": {"fichier": str(faite.relative_to(tmp_path))}}]),
+                                      encoding="utf-8")
+    e.SORTIE_PDF_LOCALE.write_text(json.dumps([{"scrape_metadata": {"fichier": str(pdf_fait.relative_to(tmp_path))}}]),
+                                   encoding="utf-8")
+    tous = [({}, c) for c in (faite, restante, pdf_fait, pdf_restant)]
+    assert [c for _, c in e.textes_veille_locale(tous)] == [restante]
+    assert [c for _, c in e.textes_pdf_locaux(tous)] == [pdf_restant]
