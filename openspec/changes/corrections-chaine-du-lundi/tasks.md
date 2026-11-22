@@ -32,6 +32,8 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
   directement à la fiche gardée, sinon elle reste à relire (« rapprochée … par une autre fiche »). 2 tests en échec
   avant (`scripts/tests/test_doublons.py`, `test_trier_file.py`), 52 verts après ; tri à blanc sur la vraie base
   inchangé (0, 3, 58).
-- [ ] 1.8 (moyenne) `scraping/alertes.py:262` : désabonnement annoncé par « Mon profil » sans réglage correspondant.
+- [x] 1.8 (moyenne) `scraping/alertes.py:262` : désabonnement annoncé par un réglage inexistant. Fait : « répondez à ce
+  message en écrivant « Désabonnement » » ; case dans Mon profil proposée (question 42 de `docs/A_VALIDER.md`). Test en
+  échec avant.
 - [ ] 1.9 (basse) `scraping/veille_payante.py:132` : journal muet pendant les étapes locales.
 - [ ] 2.1 Vérification de Monsieur DUCOUT.

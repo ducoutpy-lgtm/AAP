@@ -262,7 +262,9 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
         lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}", ""]
     if sections:
         lignes += [f"Pour arrêter l'alerte d'une recherche : Recherches sauvegardées, {url}/recherches-sauvegardees.", ""]
-    lignes += ["Pour ne plus recevoir ces courriels : Mon profil, préférences des alertes.", "", "AAP Santé."]
+    # Moyen réel de s'opposer à l'envoi (corrections-chaine-du-lundi 1.8, 2026-11-22) : aucun écran ne règle encore les
+    # courriels ; la réponse arrive dans la boîte d'envoi, Monsieur DUCOUT passe alors notificationPreferences.email à faux
+    lignes += ["Pour ne plus recevoir ces courriels : répondez à ce message en écrivant « Désabonnement ».", "", "AAP Santé."]
     return sujet, "\n".join(lignes)
 
 

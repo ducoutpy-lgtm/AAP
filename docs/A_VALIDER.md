@@ -64,6 +64,11 @@ Questions du 2026-11-21, nées de la relecture de l'application (changement `cor
 41. Régions d'outre-mer dans Mon profil : le champ Région ne propose que les 13 régions de métropole, alors que le
    parcours d'intégration enregistre La Réunion, la Guadeloupe, la Martinique, la Guyane ou Mayotte ; l'enregistrement est
    alors bloqué (déjà noté hors périmètre de `recommandations-profil`). Ajouter ces cinq régions à la liste. Oui / non.
+42. (2026-11-22) Désabonnement du courriel du lundi : aucun écran ne permet de l'arrêter (le courriel renvoyait à un réglage
+   de « Mon profil » qui n'existe pas). Depuis le 2026-11-22, le courriel dit « répondez à ce message en écrivant
+   « Désabonnement » » : la réponse arrive dans la boîte d'envoi, et c'est à vous d'arrêter l'envoi pour ce compte.
+   Proposition : une case « Recevoir le courriel du lundi » dans Mon profil (modification de l'application, puis mise en
+   ligne sur votre accord). Oui / non.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec

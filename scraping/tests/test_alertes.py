@@ -211,3 +211,12 @@ def test_bilan_administrateur_sans_adresse_avec_boite_configuree(monkeypatch):
     assert "COURRIEL_ADMIN" in a.envoyer_admin({"utilisateur": "u", "admin": ""}, "s", "t", False) and appels == []
     a.envoyer_admin(None, "s", "t", False)  # boîte absente : le courriel est écrit dans logs/courriels, comme avant
     assert appels and appels[0][0] == "admin (COURRIEL_ADMIN non renseigné)"
+
+
+
+def test_desabonnement_annonce_un_moyen_qui_existe():
+    """corrections-chaine-du-lundi 1.8 (2026-11-22) : le courriel renvoyait à « Mon profil, préférences des alertes »,
+    réglage qu'aucun écran n'offre ; le candidat ne pouvait pas s'opposer à l'envoi (RGPD, droit d'opposition)."""
+    texte = a.courriel_candidat({"structureName": "X"}, [], "u")[1]
+    assert "préférences des alertes" not in texte
+    assert "Désabonnement" in texte and "répondez" in texte
