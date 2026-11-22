@@ -13,9 +13,13 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
   validée en base (par lui ou par le tri). Test en échec avant, 46 tests de l'import verts après. Effet : une fiche
   validée ne reçoit plus les champs d'une nouvelle extraction, même une date plus récente (règle déjà appliquée sans
   `--a-valider`).
-- [ ] 1.3 (haute) `scraping/alertes.py:332` : fenêtre de sept jours comptée depuis l'heure du passage, d'où doublons ou
-  oublis dans le courriel ; partir de la date du dernier envoi réussi.
-- [ ] 1.4 (moyenne) `scraping/alertes.py:340` : un échec du courriel de l'administrateur arrête l'envoi aux candidats.
+- [x] 1.3 (haute) `scraping/alertes.py:332` : fenêtre de sept jours comptée depuis l'heure du passage. Fait : la fenêtre
+  part du dernier envoi réussi aux candidats (`debut_fenetre`, date gardée dans `scraping/logs/alertes_dernier_envoi.txt`,
+  ignoré par Git, écrite après chaque envoi réel) ; amorcée au 16/11/2026 10 h 32 UTC, dernier envoi lu dans
+  `logs/veille.log`. 2 tests en échec avant.
+- [x] 1.4 (moyenne) `scraping/alertes.py:340` : un échec du courriel de l'administrateur arrêtait l'envoi aux
+  candidats. Fait : `envoyer_admin` note l'échec et passe aux candidats ; boîte configurée sans `COURRIEL_ADMIN` :
+  rien n'est envoyé à une adresse fictive. 2 tests en échec avant, 18 tests des alertes verts après.
 - [x] 1.5 (moyenne) Limites des tâches planifiées (veille 4 h, PDF 12 h). Décision de Monsieur DUCOUT du 2026-11-22
   (question à boutons) : « Ordre des étapes » ; chargeur d'origine lundi. Fait : courriels et chiffres avant le modèle
   local dans `veille.cmd` ; au plus 40 textes par veille (`TEXTES_PAR_VEILLE`) et 60 PDF par nuit (`PDF_PAR_NUIT`) ;

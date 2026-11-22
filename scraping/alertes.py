@@ -25,6 +25,9 @@ import courriel  # noqa: E402
 
 ICI = Path(__file__).resolve().parent
 VEILLE_MD = ICI / "VEILLE.md"
+# Date du dernier envoi réussi aux candidats (corrections-chaine-du-lundi 1.3, 2026-11-22) : la fenêtre du courriel part de
+# là, et non plus de « maintenant moins sept jours », qui variait avec l'heure de passage de la veille
+DERNIER_ENVOI = ICI / "logs" / "alertes_dernier_envoi.txt"
 CLE_COMPTE = ICI.parent / "scripts" / "serviceAccountKey.json"
 
 # Famille de destinataires d'un candidat d'après sa forme juridique (pages/onboarding/parcours.ts) ; None = toutes
@@ -316,6 +319,35 @@ def envoyer_aux_candidats(candidats, fiches: list[dict], depuis: datetime, url: 
     return lignes
 
 
+def debut_fenetre(dernier: datetime | None, maintenant: datetime, jours: int) -> datetime:
+    """Début de la fenêtre des appels nouveaux : le dernier envoi réussi, sinon sept jours (fonction pure). Une date à
+    venir (horloge déréglée, fichier modifié) est ignorée."""
+    return dernier if dernier is not None and dernier <= maintenant else maintenant - timedelta(days=jours)
+
+
+def lire_dernier_envoi(chemin: Path) -> datetime | None:
+    try:
+        return datetime.fromisoformat(chemin.read_text(encoding="utf-8").strip())
+    except (OSError, ValueError):
+        return None
+
+
+def noter_envoi(chemin: Path, quand: datetime) -> None:
+    chemin.parent.mkdir(parents=True, exist_ok=True)
+    chemin.write_text(quand.isoformat(), encoding="utf-8")
+
+
+def envoyer_admin(config: dict | None, sujet: str, texte: str, dry_run: bool) -> str:
+    """Bilan de l'administrateur, sans jamais lever d'erreur : un échec ne doit pas priver les candidats de leur courriel
+    (corrections-chaine-du-lundi 1.4). Boîte configurée sans COURRIEL_ADMIN : rien n'est envoyé à une adresse fictive."""
+    if config is not None and not config.get("admin"):
+        return "non envoyé : COURRIEL_ADMIN non renseigné dans scraping/.env"
+    try:
+        return courriel.envoyer((config or {}).get("admin") or "admin (COURRIEL_ADMIN non renseigné)", sujet, texte, dry_run)
+    except Exception as e:  # noqa: BLE001 - noté au journal, puis passage aux candidats
+        return f"ÉCHEC {type(e).__name__} {e}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--admin", action="store_true")
@@ -329,18 +361,20 @@ def main() -> int:
     if not (args.admin or args.candidats):
         parser.print_help()
         return 0
-    depuis = datetime.now(timezone.utc) - timedelta(days=args.jours)
+    maintenant = datetime.now(timezone.utc)
+    depuis = debut_fenetre(lire_dernier_envoi(DERNIER_ENVOI), maintenant, args.jours)
+    print(f"Appels nouveaux depuis le {depuis:%d/%m/%Y %H:%M} (UTC)")
     db = _firestore()
     fiches = lire_fiches(db)
     if args.admin:
         veille = resume_veille(VEILLE_MD.read_text(encoding="utf-8")) if VEILLE_MD.exists() else resume_veille("")
         sujet, texte = courriel_admin(veille, etat_base(fiches, depuis), args.url)
-        config = courriel.charger_config()
-        dest = (config or {}).get("admin") or "admin (COURRIEL_ADMIN non renseigné)"
-        print("admin :", courriel.envoyer(dest, sujet, texte, args.dry_run))
+        print("admin :", envoyer_admin(courriel.charger_config(), sujet, texte, args.dry_run))
     if args.candidats:
         for ligne in envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run):
             print(ligne)
+        if not args.dry_run:
+            noter_envoi(DERNIER_ENVOI, maintenant)
     return 0
 
 

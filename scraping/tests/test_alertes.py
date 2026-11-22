@@ -173,3 +173,41 @@ def test_un_candidat_en_erreur_n_arrete_pas_les_suivants(monkeypatch):
     lignes = a.envoyer_aux_candidats(candidats, _fiches_idf(), DEPUIS, "u", True)
     assert envoyes == ["ok@x.fr"]
     assert any("casse@x.fr" in l and "ÉCHEC" in l for l in lignes)
+
+
+
+# corrections-chaine-du-lundi 1.3 (2026-11-22) : la fenêtre comptait sept jours depuis l'heure du passage, qui varie avec
+# la durée de la veille ; un appel publié entre deux heures de passage était annoncé deux fois ou jamais.
+def test_fenetre_depuis_le_dernier_envoi_reussi():
+    maintenant = datetime(2026, 11, 30, 9, 30, tzinfo=timezone.utc)
+    precedent = datetime(2026, 11, 23, 13, 0, tzinfo=timezone.utc)
+    assert a.debut_fenetre(precedent, maintenant, 7) == precedent
+    assert a.debut_fenetre(None, maintenant, 7) == maintenant - timedelta(days=7)
+    assert a.debut_fenetre(maintenant + timedelta(hours=1), maintenant, 7) == maintenant - timedelta(days=7)
+
+
+def test_date_du_dernier_envoi_notee_puis_relue(tmp_path):
+    chemin = tmp_path / "logs" / "alertes_dernier_envoi.txt"
+    assert a.lire_dernier_envoi(chemin) is None
+    quand = datetime(2026, 11, 23, 13, 0, tzinfo=timezone.utc)
+    a.noter_envoi(chemin, quand)
+    assert a.lire_dernier_envoi(chemin) == quand
+    chemin.write_text("illisible", encoding="utf-8")
+    assert a.lire_dernier_envoi(chemin) is None
+
+
+# corrections-chaine-du-lundi 1.4 (2026-11-22) : une erreur au courriel de l'administrateur arrêtait le script avant
+# l'envoi aux candidats.
+def test_echec_du_bilan_administrateur_sans_exception(monkeypatch):
+    def panne(*_a, **_k):
+        raise OSError("connexion refusée")
+    monkeypatch.setattr(a.courriel, "envoyer", panne)
+    assert a.envoyer_admin({"admin": "admin@x.fr"}, "s", "t", False).startswith("ÉCHEC")
+
+
+def test_bilan_administrateur_sans_adresse_avec_boite_configuree(monkeypatch):
+    appels = []
+    monkeypatch.setattr(a.courriel, "envoyer", lambda *x, **k: appels.append(x) or "envoyé")
+    assert "COURRIEL_ADMIN" in a.envoyer_admin({"utilisateur": "u", "admin": ""}, "s", "t", False) and appels == []
+    a.envoyer_admin(None, "s", "t", False)  # boîte absente : le courriel est écrit dans logs/courriels, comme avant
+    assert appels and appels[0][0] == "admin (COURRIEL_ADMIN non renseigné)"
