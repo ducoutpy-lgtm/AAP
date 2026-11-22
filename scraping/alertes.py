@@ -328,10 +328,18 @@ def debut_fenetre(dernier: datetime | None, maintenant: datetime, jours: int) ->
 
 
 def lire_dernier_envoi(chemin: Path) -> datetime | None:
+    """Date du dernier envoi réussi ; une date écrite sans fuseau est lue en UTC (sinon la comparaison échouait)."""
     try:
-        return datetime.fromisoformat(chemin.read_text(encoding="utf-8").strip())
+        quand = datetime.fromisoformat(chemin.read_text(encoding="utf-8").strip())
     except (OSError, ValueError):
         return None
+    return quand if quand.tzinfo else quand.replace(tzinfo=timezone.utc)
+
+
+def envoi_reussi(lignes: list[str]) -> bool:
+    """Au moins un courriel réellement parti (« envoyé à … »), et non seulement écrit dans logs/courriels ou en échec :
+    la fenêtre n'avance qu'à cette condition (relecture adverse du 2026-11-22, fonction pure)."""
+    return any("envoyé à " in ligne and "non envoyé" not in ligne for ligne in lignes)
 
 
 def noter_envoi(chemin: Path, quand: datetime) -> None:
@@ -373,10 +381,13 @@ def main() -> int:
         sujet, texte = courriel_admin(veille, etat_base(fiches, depuis), args.url)
         print("admin :", envoyer_admin(courriel.charger_config(), sujet, texte, args.dry_run))
     if args.candidats:
-        for ligne in envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run):
+        lignes = envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run)
+        for ligne in lignes:
             print(ligne)
-        if not args.dry_run:
+        if not args.dry_run and envoi_reussi(lignes):
             noter_envoi(DERNIER_ENVOI, maintenant)
+        elif not args.dry_run:
+            print(f"Aucun courriel parti : la fenêtre reste ouverte depuis le {depuis:%d/%m/%Y %H:%M} (UTC)")
     return 0
 
 

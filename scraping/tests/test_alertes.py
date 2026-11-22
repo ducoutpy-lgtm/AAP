@@ -220,3 +220,20 @@ def test_desabonnement_annonce_un_moyen_qui_existe():
     texte = a.courriel_candidat({"structureName": "X"}, [], "u")[1]
     assert "préférences des alertes" not in texte
     assert "Désabonnement" in texte and "répondez" in texte
+
+
+
+def test_la_date_n_avance_que_si_un_courriel_est_vraiment_parti():
+    """Relecture adverse du 2026-11-22 : la date du dernier envoi était notée même quand tous les envois avaient échoué
+    ou que la boîte n'était pas configurée (courriels seulement écrits dans logs/courriels) ; la fenêtre avançait et les
+    appels de la semaine n'étaient jamais annoncés."""
+    assert a.envoi_reussi(["candidat x@x.fr : 2 appel(s), 0 recherche(s) en alerte ; envoyé à x@x.fr"])
+    assert not a.envoi_reussi(["candidat x@x.fr : ÉCHEC SMTPException panne"])
+    assert not a.envoi_reussi(["candidat x@x.fr : 1 appel(s) ; non envoyé (boîte d'envoi non configurée) : f.txt"])
+    assert not a.envoi_reussi([])
+
+
+def test_date_sans_fuseau_lue_en_utc(tmp_path):
+    chemin = tmp_path / "dernier.txt"
+    chemin.write_text("2026-11-16T10:32:00", encoding="utf-8")
+    assert a.lire_dernier_envoi(chemin) == datetime(2026, 11, 16, 10, 32, tzinfo=timezone.utc)

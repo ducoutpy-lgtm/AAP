@@ -41,4 +41,7 @@ signalement ; 10 défauts confirmés, 2 écartés. Détail, scénarios et preuve
 - [x] 1.9 (basse) `scraping/veille_payante.py:132` : journal muet pendant les étapes locales. Fait : `lancer` lit et
   écrit la sortie ligne à ligne (Python en `-u`) ; la chaîne des PDF lance aussi ses étapes en `-u`. 2 tests en échec
   avant.
+- [x] 1.10 Relecture adverse du lot (autre modèle, lecture seule, 2026-11-22) : aucun défaut sûr, 250 tests verts ;
+  deux faiblesses de `alertes.py` corrigées, test d'abord : la date du dernier envoi n'avance que si un courriel est
+  réellement parti (`envoi_reussi`), et une date sans fuseau est lue en UTC. 252 tests Python verts.
 - [ ] 2.1 Vérification de Monsieur DUCOUT.
