@@ -186,7 +186,10 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   avec « paiement bientôt disponible »). Changement `openspec/changes/niveau-a/` (`proposal.md`, `tasks.md` à jour,
   `audit.json` complet). Faits et commités en local : 1.1 à 1.4 (courriel du lundi vers l'adresse vérifiée seulement,
   profil limité, validation des appels de financeurs, contact et liens, dépendances : 20 vulnérabilités à 13, aucune
-  critique) et 2.1 (courriel des candidats en tête de veille). Reprendre à 2.2. Rien de poussé ni de déployé : règles
+  critique) et 2.1 (courriel des candidats en tête de veille). Puis 2.2 à 2.6 le même jour : échecs retentés et JSON
+  sans coupure, journal des coûts à chemin fixe, bilan de la chaîne des PDF, import (compteurs, corrections, montants en
+  millions), migrations jouées rangées. 264 tests Python verts. Reprendre au lot 3 (application), puis 1.5 (mises à
+  niveau majeures de firebase et react-router-dom) ; questions 43 (deux scripts au statut incertain). Rien de poussé ni de déployé : règles
   et hébergement à mettre en ligne sur accord à la fin (tâche 5.2). Constat du 23/11 : poste arrêté à 10 h 13 (veille
   coupée pendant la collecte, aucun courriel), chaîne des PDF refusée par Windows (0x800710E0, batterie probable).
   Incident du 24/11 : `npx tsc` lancé par erreur depuis la racine a téléchargé le paquet public `tsc` 2.0.4 (paquet de
