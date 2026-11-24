@@ -237,3 +237,63 @@ def test_date_sans_fuseau_lue_en_utc(tmp_path):
     chemin = tmp_path / "dernier.txt"
     chemin.write_text("2026-11-16T10:32:00", encoding="utf-8")
     assert a.lire_dernier_envoi(chemin) == datetime(2026, 11, 16, 10, 32, tzinfo=timezone.utc)
+
+
+
+# Plan niveau A, lot 1 (2026-11-24) : faille P0 de l'audit. users.email et structureName sont écrits librement par le
+# compte ; le courriel du lundi servait de relais d'envoi depuis la boîte officielle vers l'adresse et avec le texte de
+# son choix.
+class _Doc:
+    def __init__(self, id_, data):
+        self.id, self._data, self.exists = id_, data, data is not None
+
+    def to_dict(self):
+        return dict(self._data or {})
+
+    def get(self):
+        return self
+
+
+class _Requete:
+    def __init__(self, docs):
+        self.docs = docs
+
+    def where(self, champ, _op, valeur):
+        return _Requete([d for d in self.docs if d.to_dict().get(champ) == valeur])
+
+    def stream(self):
+        return iter(self.docs)
+
+
+class _Collection(_Requete):
+    def document(self, id_):
+        return next((d for d in self.docs if d.id == id_), _Doc(id_, None))
+
+    def get(self):
+        return self
+
+
+class _Base:
+    def __init__(self, collections):
+        self.collections = {k: _Collection([_Doc(i, d) for i, d in v.items()]) for k, v in collections.items()}
+
+    def collection(self, nom):
+        return self.collections.get(nom, _Collection([]))
+
+
+def test_le_courriel_part_a_l_adresse_verifiee_par_firebase():
+    base = _Base({
+        "users": {"vrai": {"userType": "porteur", "profileComplete": True, "email": "victime@exemple.fr"},
+                  "non-verifie": {"userType": "porteur", "profileComplete": True, "email": "a@exemple.fr"}},
+        "porteurProfiles": {"vrai": {"structureName": "EHPAD A"}, "non-verifie": {"structureName": "EHPAD B"}},
+    })
+    comptes = {"vrai": ("connexion@exemple.fr", True), "non-verifie": ("a@exemple.fr", False)}
+    candidats = a.lire_candidats(base, lambda uid: comptes[uid])
+    assert [c["email"] for c, _, _ in candidats] == ["connexion@exemple.fr"]
+
+
+def test_le_nom_de_structure_ne_porte_aucun_lien():
+    sujet, texte = a.courriel_candidat({"structureName": "Gagnez 1000 euros sur http://arnaque.fr ou www.x.fr " + "x" * 200},
+                                       [], "https://aapi-11bc3.web.app")
+    assert "arnaque" not in sujet + texte and "www.x.fr" not in sujet + texte
+    assert max(len(ligne) for ligne in sujet.splitlines()) < 160

@@ -66,12 +66,17 @@ service cloud.firestore {
       // Création par le propriétaire seulement : le document naît avec le compte, en porteur ou financeur, jamais en
       // administrateur (faille relevée le 2026-11-13, question 20 ; les administrateurs sont créés par
       // scripts/creer_admin.py, qui passe par la clé de service)
-      allow create: if isOwner(userId) && roleOuvert(request.resource.data.get('userType', ''));
-      // Mise à jour : l'administrateur ; le propriétaire sans toucher au rôle, sauf passage entre porteur et financeur
-      // (parcours d'intégration)
-      allow update: if isAdmin() || (isOwner(userId) && (
-        request.resource.data.get('userType', '') == resource.data.get('userType', '') ||
-        (roleOuvert(request.resource.data.get('userType', '')) && roleOuvert(resource.data.get('userType', '')))));
+      // Le compte naît en essai, jamais abonné (plan niveau A, lot 1, 2026-11-24)
+      allow create: if isOwner(userId) && roleOuvert(request.resource.data.get('userType', ''))
+        && request.resource.data.get('subscriptionStatus', 'trial') == 'trial';
+      // Mise à jour : l'administrateur ; le propriétaire seulement sur ses champs de parcours (plan niveau A, lot 1 : il
+      // réécrivait son adresse, lue par le courriel du lundi, et pouvait se donner un abonnement ou prolonger son essai),
+      // sans toucher au rôle, sauf passage entre porteur et financeur (parcours d'intégration)
+      allow update: if isAdmin() || (isOwner(userId)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['demarrage', 'profileComplete', 'cguAccepteLe', 'userType', 'notificationPreferences'])
+        && (request.resource.data.get('userType', '') == resource.data.get('userType', '') ||
+            (roleOuvert(request.resource.data.get('userType', '')) && roleOuvert(resource.data.get('userType', '')))));
       allow delete: if isOwner(userId) || isAdmin();
     }
 

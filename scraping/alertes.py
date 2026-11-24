@@ -240,7 +240,8 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
     """(sujet, texte) du courriel hebdomadaire d'un candidat ; les fiches sont déjà filtrées et triées ; une section par
     recherche sauvegardée dont l'alerte est active (`sections_recherches`)."""
     sections = sections or []
-    nom = profil.get("structureName") or "votre structure"
+    # Nom saisi par le compte : liens retirés et longueur bornée avant d'entrer dans le sujet (plan niveau A, lot 1)
+    nom = _nom_sur(profil.get("structureName")) if profil.get("structureName") else "votre structure"
     n = len(fiches)
     total = len({f.get("id") for f in fiches} | {f.get("id") for s in sections for f in s["fiches"]})
     sujet = (f"AAP Santé : {total} nouveaux appels à projets pour {nom}" if total > 1
@@ -290,13 +291,31 @@ def etat_base(fiches: list[dict], depuis: datetime) -> dict:
             "publiees": sum(1 for f in fiches if visible(f))}
 
 
-def lire_candidats(db) -> list[tuple[dict, dict, list[dict]]]:
-    """(compte, profil, recherches sauvegardées) des candidats au profil complet qui acceptent les courriels."""
+def adresse_de_connexion(uid: str) -> tuple[str, bool]:
+    """(adresse, vérifiée) du compte de connexion Firebase : la seule adresse que le compte ne peut pas réécrire."""
+    from firebase_admin import auth
+    u = auth.get_user(uid)
+    return u.email or "", bool(u.email_verified)
+
+
+def lire_candidats(db, connexion=adresse_de_connexion) -> list[tuple[dict, dict, list[dict]]]:
+    """(compte, profil, recherches sauvegardées) des candidats au profil complet qui acceptent les courriels.
+
+    Destinataire = adresse de connexion Firebase, et seulement si elle est vérifiée (plan niveau A, lot 1, 2026-11-24) :
+    users.email est écrit par le compte lui-même, et le courriel du lundi servait de relais d'envoi vers l'adresse de son
+    choix. Les comptes Google sont vérifiés d'office ; un compte par mot de passe l'est par le lien reçu à l'inscription."""
     resultat = []
     for u in db.collection("users").where("userType", "==", "porteur").stream():
         compte = u.to_dict()
-        if not compte.get("profileComplete") or not compte.get("email"):
+        if not compte.get("profileComplete"):
             continue
+        try:
+            adresse, verifiee = connexion(u.id)
+        except Exception:  # noqa: BLE001 - compte de connexion absent ou illisible : pas de courriel
+            continue
+        if not adresse or not verifiee:
+            continue
+        compte["email"] = adresse
         if (compte.get("notificationPreferences") or {}).get("email") is False:
             continue
         p = db.collection("porteurProfiles").document(u.id).get()

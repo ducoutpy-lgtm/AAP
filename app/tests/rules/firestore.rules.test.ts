@@ -374,3 +374,23 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
 function maintenantAap() {
   return new Date();
 }
+
+
+// Plan niveau A, lot 1 (2026-11-24) : faille P0 de l'audit. Un compte réécrivait son adresse (le courriel du lundi la
+// lisait) et pouvait se donner un abonnement actif ou prolonger son essai.
+describe('users : le propriétaire ne modifie que ses champs de parcours', () => {
+  it('ni adresse, ni abonnement, ni fin d’essai ; démarrage, profil complété et CGU passent', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'users/porteur1'), { email: 'victime@exemple.fr' }));
+    await assertFails(updateDoc(doc(porteur(), 'users/porteur1'), { subscriptionStatus: 'active' }));
+    await assertFails(updateDoc(doc(porteur(), 'users/porteur1'), { trialEndsAt: new Date(2030, 0, 1) }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'users/porteur1'), { demarrage: { recherche: true } }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'users/porteur1'), { profileComplete: true, cguAccepteLe: new Date() }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'users/porteur1'), { notificationPreferences: { email: false } }));
+  });
+
+  it('un compte neuf naît en essai, pas abonné', async () => {
+    const neuf = env.authenticatedContext('neuf').firestore();
+    await assertFails(setDoc(doc(neuf, 'users/neuf'), { userType: 'porteur', subscriptionStatus: 'active' }));
+    await assertSucceeds(setDoc(doc(neuf, 'users/neuf'), { userType: 'porteur', subscriptionStatus: 'trial' }));
+  });
+});
