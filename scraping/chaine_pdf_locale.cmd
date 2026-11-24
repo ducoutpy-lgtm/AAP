@@ -14,5 +14,5 @@ echo Chaine locale des PDF : debut %date% %time%
 rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance)
 "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
 rem Etapes et demande de rester eveille : chaine_pdf_locale.py
-"..\.venv\Scripts\python.exe" chaine_pdf_locale.py
+"..\.venv\Scripts\python.exe" -u chaine_pdf_locale.py
 echo Chaine locale des PDF terminee le %date% %time%.

@@ -34,6 +34,24 @@ def test_les_etapes_de_nuit_ecrivent_sans_tampon(monkeypatch):
     """corrections-chaine-du-lundi 1.9 (2026-11-22) : sortie des étapes écrite au journal au fil de l'eau (-u)."""
     lances = []
     monkeypatch.setattr(c, "_definir_etat", lambda drapeaux: None)
-    monkeypatch.setattr(c.subprocess, "run", lambda args, **kw: lances.append(args))
+    import types
+    # La chaîne lit le code de retour depuis le lot 2.4 du plan niveau A
+    monkeypatch.setattr(c.subprocess, "run", lambda args, **kw: lances.append(args) or types.SimpleNamespace(returncode=0))
     c.main()
     assert len(lances) == len(c.ETAPES) and all("-u" in a for a in lances)
+
+
+def test_la_chaine_rend_compte_de_sa_fin_et_de_ses_echecs(monkeypatch, capsys):
+    """Plan niveau A, lot 2.4 (2026-11-24) : les codes de retour étaient ignorés et le journal ne disait jamais si la
+    chaîne avait fini. Une étape en échec n'arrête pas les suivantes (le contrôle et l'import traitent ce qui a été
+    extrait), mais la chaîne le dit et rend un code d'erreur."""
+    import types
+    monkeypatch.setattr(c, "_definir_etat", lambda drapeaux: None)
+    codes = iter([1, 0, 0, 0, 0])
+    monkeypatch.setattr(c.subprocess, "run", lambda args, **kw: types.SimpleNamespace(returncode=next(codes)))
+    assert c.main() == 1
+    sortie = capsys.readouterr().out
+    assert "terminée" in sortie and "extraction_locale.py (code 1)" in sortie
+    codes = iter([0] * 5)
+    monkeypatch.setattr(c.subprocess, "run", lambda args, **kw: types.SimpleNamespace(returncode=next(codes)))
+    assert c.main() == 0 and "5 étapes réussies" in capsys.readouterr().out

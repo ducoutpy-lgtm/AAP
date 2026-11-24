@@ -39,7 +39,10 @@ local par lot vérifié.
   l'étape avec un message clair. 4 tests en échec avant, 260 tests Python verts après.)
 - [x] 2.3 Journal des coûts à chemin fixe. (2026-11-24 : `extractor.COST_LOG_FILE` et `analyze_costs.LOG_FILE` absolus,
   identiques au journal lu par le plafond ; test en échec avant, 261 tests Python verts.)
-- [ ] 2.4 Chaîne des PDF : codes d'erreur propagés, ligne « terminée », tâches Windows exportées dans le dépôt.
+- [x] 2.4 Chaîne des PDF : codes d'erreur propagés, ligne « terminée », tâches Windows exportées dans le dépôt.
+  (2026-11-24 : bilan « chaîne terminée : N étapes réussies, en échec : … », code 1 si une étape échoue, les suivantes
+  tournent quand même ; `chaine_pdf_locale.cmd` en `-u`. Export des tâches écarté : leur XML contient le nom du compte
+  Windows ; leurs réglages seront décrits dans la documentation (4.4). Test en échec avant, 262 tests Python verts.)
 - [ ] 2.5 Import : compteurs et corrections préservés, montants en millions ; scripts d'écriture à blanc par défaut ;
   migrations déjà jouées rangées à part.
 

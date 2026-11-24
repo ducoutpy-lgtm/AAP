@@ -44,16 +44,23 @@ def rester_eveille(actif: bool) -> None:
 
 
 def main() -> int:
+    # Bilan de fin et code de retour (plan niveau A, lot 2.4, 2026-11-24) : une étape en échec n'arrête pas les suivantes
+    # (contrôle et import traitent ce qui a été extrait), mais la chaîne le dit et rend un code d'erreur
+    echecs = []
     rester_eveille(True)
     try:
         for etape in ETAPES:
             print(f"--- {datetime.now():%H:%M} {Path(etape[0]).name} {' '.join(etape[1:])}", flush=True)
             # -u : sortie écrite au journal au fil de l'eau (corrections-chaine-du-lundi 1.9)
-            subprocess.run([sys.executable, "-u", "-X", "utf8", "-W", "ignore", *etape], cwd=ICI,
-                           env={**os.environ, "PYTHONUTF8": "1"})
+            r = subprocess.run([sys.executable, "-u", "-X", "utf8", "-W", "ignore", *etape], cwd=ICI,
+                               env={**os.environ, "PYTHONUTF8": "1"})
+            if r.returncode != 0:
+                echecs.append(f"{Path(etape[0]).name} (code {r.returncode})")
     finally:
         rester_eveille(False)
-    return 0
+    bilan = f"{len(ETAPES) - len(echecs)} étapes réussies" + (f", en échec : {', '.join(echecs)}" if echecs else "")
+    print(f"--- {datetime.now():%H:%M} chaîne terminée : {bilan}", flush=True)
+    return 1 if echecs else 0
 
 
 if __name__ == "__main__":
