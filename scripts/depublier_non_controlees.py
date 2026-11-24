@@ -8,8 +8,11 @@ unique, apres sauvegarde et accord. Le bloc validation n'est pas touche ; un ver
 Monsieur DUCOUT) est toujours laisse tel quel.
 
 Usage :
-  python scripts/depublier_non_controlees.py --dry-run     # compte et exemples, n'ecrit rien
-  python scripts/depublier_non_controlees.py               # sauvegarde puis depublication
+  python scripts/depublier_non_controlees.py               # compte et exemples, n'ecrit rien
+  python scripts/depublier_non_controlees.py --reel        # sauvegarde puis depublication
+
+Deja joue le 2026-10-20 (sauvegarde depublication_2026-10-20_1101.json). Garde mais bloque (decision du 2026-11-24,
+question 43) : rien n'est ecrit sans --reel.
 """
 from __future__ import annotations
 
@@ -37,6 +40,8 @@ def a_depublier(doc: dict) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Fiches publiees sans controle -> brouillon.")
+    # Question 43 (2026-11-24) : bloque par defaut, ecriture seulement avec --reel ; --dry-run garde pour l'ancien usage
+    parser.add_argument("--reel", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--key", default=str(DEFAULT_KEY))
     args = parser.parse_args()
@@ -55,8 +60,8 @@ def main() -> int:
     print(f"Publiees : {len(publiees)} ; a depublier : {len(cibles)} ({par_statut})")
     for i, d in cibles[:5]:
         print(f"  - {i} | {d.get('title', '')[:70]} | {d['validation']['statut']} | {d.get('financeurName', '')}")
-    if args.dry_run:
-        print("Essai a blanc : rien n'est ecrit.")
+    if args.dry_run or not args.reel:
+        print("Essai a blanc : rien n'est ecrit (option --reel pour ecrire).")
         return 0
     if not cibles:
         return 0
