@@ -118,7 +118,8 @@ def test_courriels_et_chiffres_avant_le_modele_local():
     lignes = (Path(vp.__file__).parent / "veille.cmd").read_text(encoding="utf-8").splitlines()
     rang = lambda motif: next(i for i, l in enumerate(lignes) if motif in l and not l.lower().startswith(("rem", "echo")))
     modele = rang("veille_payante.py --reel")
-    assert rang("alertes.py --admin --candidats") < modele
+    # Depuis le lot 2.1 du plan niveau A (2026-11-24), courriel des candidats et bilan de l'administrateur sont séparés
+    assert rang("alertes.py --candidats") < modele and rang("alertes.py --admin") < modele
     assert rang("publier_chiffres.py") < modele and rang("publier_couts.py") < modele
 
 
@@ -142,3 +143,17 @@ def test_la_sortie_des_etapes_arrive_au_fil_de_l_eau(monkeypatch, capsys):
     code, sortie = vp.lancer(["extraction_locale.py", "--extraire"])
     assert code == 0 and "-u" in lances[0] and sortie == "première fiche\nseconde fiche\n"
     assert "première fiche" in capsys.readouterr().out
+
+
+
+def test_courriel_des_candidats_en_tete_de_veille_et_journal_horodate():
+    """Plan niveau A, lot 2.1 (2026-11-24) : le 23/11, la relecture et la collecte ont pris plus de deux heures avant
+    les courriels, et l'arrêt du poste à 10 h 13 a tout coupé. Le courriel des candidats part en premier ; chaque étape
+    Python écrit au fil de l'eau (-u) et note son heure."""
+    lignes = (Path(vp.__file__).parent / "veille.cmd").read_text(encoding="utf-8").splitlines()
+    commandes = [l for l in lignes if l.startswith('"..\\.venv')]
+    assert "alertes.py --candidats" in commandes[0]
+    rang = lambda motif: next(i for i, l in enumerate(commandes) if motif in l)
+    assert rang("rejeu.py") < rang("alertes.py --admin") < rang("veille_payante.py")
+    assert all(" -u " in c for c in commandes)
+    assert sum("%time%" in l for l in lignes if l.startswith("echo")) >= len(commandes)
