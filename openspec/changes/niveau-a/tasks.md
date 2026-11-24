@@ -33,7 +33,10 @@ local par lot vérifié.
   en premier, bilan de l'administrateur après la collecte, modèle local en dernier ; test en échec avant, 256 tests
   Python verts. À blanc sur la vraie base : fenêtre ouverte au 16/11 10 h 32, un seul candidat retenu, le compte de test
   Google vérifié (25 appels) ; `test@test.com`, non vérifié, n'est plus destinataire.)
-- [ ] 2.2 Textes en échec retentés (trois fois au plus) ; JSON écrits sans fichier coupé et relus avec garde.
+- [x] 2.2 Textes en échec retentés (trois fois au plus) ; JSON écrits sans fichier coupé et relus avec garde.
+  (2026-11-24 : `noter_echec`, `echecs_definitifs`, règle commune à l'extraction et à `textes_restants` ; les anciens
+  échecs sans compteur sont retentés ; écriture par fichier temporaire puis remplacement ; un fichier illisible arrête
+  l'étape avec un message clair. 4 tests en échec avant, 260 tests Python verts après.)
 - [ ] 2.3 Journal des coûts à chemin fixe.
 - [ ] 2.4 Chaîne des PDF : codes d'erreur propagés, ligne « terminée », tâches Windows exportées dans le dépôt.
 - [ ] 2.5 Import : compteurs et corrections préservés, montants en millions ; scripts d'écriture à blanc par défaut ;

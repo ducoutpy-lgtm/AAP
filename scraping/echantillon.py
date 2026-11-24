@@ -513,11 +513,41 @@ def appeler_ollama(modele: str, messages: list[dict], schema: dict) -> dict:
 
 
 def _charger_liste(chemin: Path) -> list:
-    return json.loads(chemin.read_text(encoding="utf-8")) if chemin.exists() else []
+    """Liste lue dans un fichier de résultats ; un fichier illisible arrête l'étape avec un message clair, plutôt que de
+    tout reprendre en silence (plan niveau A, lot 2.2, 2026-11-24)."""
+    if not chemin.exists():
+        return []
+    try:
+        return json.loads(chemin.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as err:
+        raise ValueError(f"{chemin} illisible ({err}) : le restaurer depuis Git ou une sauvegarde avant de relancer") from err
 
 
 def _ecrire_json(chemin: Path, donnees) -> None:
-    chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
+    """Écriture sans fichier coupé (plan niveau A, lot 2.2) : un fichier temporaire, puis remplacement d'un coup ; une
+    coupure pendant l'écriture laisse l'ancien fichier intact."""
+    temporaire = chemin.with_name(chemin.name + ".tmp")
+    temporaire.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(temporaire, chemin)
+
+
+# Tentatives d'un texte en échec avant de l'écarter (plan niveau A, lot 2.2) : une panne passagère d'Ollama (délai
+# dépassé, serveur arrêté) écartait sinon le texte pour toujours
+TENTATIVES_MAX = 3
+
+
+def noter_echec(echecs: list[dict], fichier: str, erreur: str) -> None:
+    """Ajoute l'échec, ou compte une tentative de plus pour un texte déjà en échec (fonction pure sur la liste)."""
+    for e in echecs:
+        if e.get("fichier") == fichier:
+            e.update(erreur=erreur, tentatives=int(e.get("tentatives") or 1) + 1)
+            return
+    echecs.append({"fichier": fichier, "erreur": erreur, "tentatives": 1})
+
+
+def echecs_definitifs(echecs: list[dict]) -> set[str]:
+    """Textes écartés : ceux qui ont échoué TENTATIVES_MAX fois (un ancien échec sans compteur vaut une tentative)."""
+    return {e["fichier"] for e in echecs if int(e.get("tentatives") or 1) >= TENTATIVES_MAX}
 
 
 def question_champ_sans_echec(moteur: str, modele: str, texte: str, url: str, source: str) -> dict:
@@ -546,7 +576,7 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
     chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
     sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)
-    deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | {e["fichier"] for e in echecs} | {r["fichier"] for r in refusees})
+    deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | echecs_definitifs(echecs) | {r["fichier"] for r in refusees})
     print(f"{sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} pages déjà traitées sur {len(fiches)}")
     debut, nouvelles = time.time(), 0
     for i, (rubrique, chemin) in enumerate(fiches, 1):
@@ -577,7 +607,7 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
                     brut, a_relire = neutraliser(brut, ecarts), True
             fiche = valider_fiche(brut, url, rubrique["nom"])
         except Exception as err:
-            echecs.append({"fichier": rel, "erreur": type(err).__name__ + ": " + str(err).splitlines()[0][:160]})
+            noter_echec(echecs, rel, type(err).__name__ + ": " + str(err).splitlines()[0][:160])
             _ecrire_json(chemin_echecs, echecs)
             print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
             continue
@@ -683,7 +713,7 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
     chemin_echecs = chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")
     chemin_refus = chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json")
     sortie, echecs, refusees = _charger_liste(chemin_sortie), _charger_liste(chemin_echecs), _charger_liste(chemin_refus)
-    deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | {e["fichier"] for e in echecs} | {r["fichier"] for r in refusees})
+    deja = ({d["scrape_metadata"]["fichier"] for d in sortie} | echecs_definitifs(echecs) | {r["fichier"] for r in refusees})
     print(f"{len(fiches)} textes ({sum(1 for _, c in fiches if str(c.relative_to(ICI)) in deja)} déjà traités) ; "
           f"coût cumulé de {modele} : {cout_cumule(modele):.3f} euros ; plafond {plafond:.2f} euros")
     tarifs, nouvelles = extractor.TARIFS_USD_PAR_MTOK[modele], 0
@@ -713,7 +743,7 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
                 brut, a_relire = neutraliser(brut, ecarts), True
             fiche = valider_fiche(brut, url, rubrique["nom"])
         except Exception as err:
-            echecs.append({"fichier": rel, "erreur": type(err).__name__ + ": " + str(err).splitlines()[0][:160]})
+            noter_echec(echecs, rel, type(err).__name__ + ": " + str(err).splitlines()[0][:160])
             _ecrire_json(chemin_echecs, echecs)
             print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
             continue

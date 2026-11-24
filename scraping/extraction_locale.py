@@ -74,7 +74,7 @@ def textes_pdf_locaux(fiches: list[tuple[dict, Path]]) -> list[tuple[dict, Path]
 def textes_restants(fiches: list[tuple[dict, Path]], chemin_sortie: Path) -> list[tuple[dict, Path]]:
     """Textes pas encore traités par le fichier de sortie donné (fiches, refus, échecs) : ce que le devis compte."""
     deja = {d["scrape_metadata"]["fichier"] for d in echantillon._charger_liste(chemin_sortie)}
-    deja |= {e["fichier"] for e in echantillon._charger_liste(chemin_sortie.with_name(chemin_sortie.stem + ".errors.json"))}
+    deja |= echantillon.echecs_definitifs(echantillon._charger_liste(chemin_sortie.with_name(chemin_sortie.stem + ".errors.json")))
     deja |= {r["fichier"] for r in echantillon._charger_liste(chemin_sortie.with_name(chemin_sortie.stem + "_non_aap.json"))}
     return [(r, c) for r, c in fiches if str(c.relative_to(ICI)) not in deja]
 
