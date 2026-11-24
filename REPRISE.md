@@ -181,6 +181,17 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   PC allumé et branché sur le chargeur d'origine à 8 h ; preuve attendue mardi dans `scraping/logs/veille.log`
   (courriels vers 10 h 30-11 h 30, puis « Veille locale : … au plus 40 »).
 
+- 2026-11-24 : audit « niveau A » demandé par Monsieur DUCOUT (note 11/20, une faille P0), plan validé par boutons
+  (« Tout, failles d'abord », « Validation admin » pour les appels de financeurs, favori branché, écran Abonnement gardé
+  avec « paiement bientôt disponible »). Changement `openspec/changes/niveau-a/` (`proposal.md`, `tasks.md` à jour,
+  `audit.json` complet). Faits et commités en local : 1.1 à 1.4 (courriel du lundi vers l'adresse vérifiée seulement,
+  profil limité, validation des appels de financeurs, contact et liens, dépendances : 20 vulnérabilités à 13, aucune
+  critique) et 2.1 (courriel des candidats en tête de veille). Reprendre à 2.2. Rien de poussé ni de déployé : règles
+  et hébergement à mettre en ligne sur accord à la fin (tâche 5.2). Constat du 23/11 : poste arrêté à 10 h 13 (veille
+  coupée pendant la collecte, aucun courriel), chaîne des PDF refusée par Windows (0x800710E0, batterie probable).
+  Incident du 24/11 : `npx tsc` lancé par erreur depuis la racine a téléchargé le paquet public `tsc` 2.0.4 (paquet de
+  substitution qui n'affiche qu'un avertissement) dans le cache npm ; dépôt vérifié intact.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
