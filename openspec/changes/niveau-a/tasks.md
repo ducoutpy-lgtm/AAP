@@ -77,6 +77,19 @@ local par lot vérifié.
 - [ ] 4.4 README, `app/README.md`, `scraping/README.md`, `scraping/.env.example`, spec de consultation, tableau de
   `CLAUDE.md`, CHANGELOG.
 
+## 6. Décisions du 2026-11-24 (questions 35 à 43, choix à cocher relayés par la séance de pilotage)
+
+- [ ] 6.1 (35) Compteur de vues : +1 à l'ouverture d'une fiche, règle Firestore qui n'autorise que cet ajout.
+- [ ] 6.2 (36) « Se souvenir de moi » : case décochée, session fermée à la fermeture du navigateur.
+- [ ] 6.3 (37) Thématique des appels de financeur déduite des « Secteurs ciblés » (application et `scraping/alertes.py`).
+- [ ] 6.4 (38) Jour de clôture compté en jours du calendrier, règle commune à l'import, à l'application et au courriel.
+- [ ] 6.5 (39) Bouton « Clôturer » dans « Mes appels ».
+- [ ] 6.6 (40) Avis du financeur visible par le candidat.
+- [ ] 6.7 (41) Cinq régions d'outre-mer dans Mon profil.
+- [ ] 6.8 (42) Case « Recevoir le courriel du lundi » dans Mon profil.
+- [ ] 6.9 (43) `depublier_non_controlees.py` et `corriger_financeur_relais.py` gardés, mais sans écriture sans option
+  explicite ; vérifier dans la base s'ils ont servi.
+
 ## 5. Clôture
 
 - [ ] 5.1 Vérification finale (lint, types, tests, règles, compilation, démarrage) et nouvelle note.
