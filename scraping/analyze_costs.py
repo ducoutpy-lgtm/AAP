@@ -13,7 +13,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-LOG_FILE = Path("logs/extraction_costs.jsonl")
+LOG_FILE = Path(__file__).resolve().parent / "logs" / "extraction_costs.jsonl"  # chemin fixe (plan niveau A, lot 2.3)
 
 
 def load(path: Path) -> list[dict]:

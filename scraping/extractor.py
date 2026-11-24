@@ -41,7 +41,9 @@ EURO_PAR_DOLLAR = 0.92  # taux arrondi du journal des couts (cost_eur_approx)
 # Limite de contexte envoye a Claude (protection cout + context window).
 MAX_TEXT_CHARS = 80_000
 
-COST_LOG_FILE = Path("logs") / "extraction_costs.jsonl"
+# Chemin fixe (plan niveau A, lot 2.3, 2026-11-24) : relatif au dossier de lancement, une dépense lancée d'ailleurs
+# échappait au plafond, qui lit scraping/logs/
+COST_LOG_FILE = Path(__file__).resolve().parent / "logs" / "extraction_costs.jsonl"
 
 _client: Anthropic | None = None
 

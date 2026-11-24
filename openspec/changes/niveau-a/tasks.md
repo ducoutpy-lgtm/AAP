@@ -37,7 +37,8 @@ local par lot vérifié.
   (2026-11-24 : `noter_echec`, `echecs_definitifs`, règle commune à l'extraction et à `textes_restants` ; les anciens
   échecs sans compteur sont retentés ; écriture par fichier temporaire puis remplacement ; un fichier illisible arrête
   l'étape avec un message clair. 4 tests en échec avant, 260 tests Python verts après.)
-- [ ] 2.3 Journal des coûts à chemin fixe.
+- [x] 2.3 Journal des coûts à chemin fixe. (2026-11-24 : `extractor.COST_LOG_FILE` et `analyze_costs.LOG_FILE` absolus,
+  identiques au journal lu par le plafond ; test en échec avant, 261 tests Python verts.)
 - [ ] 2.4 Chaîne des PDF : codes d'erreur propagés, ligne « terminée », tâches Windows exportées dans le dépôt.
 - [ ] 2.5 Import : compteurs et corrections préservés, montants en millions ; scripts d'écriture à blanc par défaut ;
   migrations déjà jouées rangées à part.

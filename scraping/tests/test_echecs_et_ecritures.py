@@ -55,3 +55,12 @@ def test_fichier_illisible_arrete_avec_un_message_clair(tmp_path):
     chemin.write_text('[{"titre": "coup', encoding="utf-8")
     with pytest.raises(ValueError, match="illisible"):
         e._charger_liste(chemin)
+
+
+def test_un_seul_journal_des_couts_quel_que_soit_le_dossier_de_lancement():
+    """Plan niveau A, lot 2.3 (2026-11-24) : extractor écrivait dans logs/ relatif au dossier de lancement, le plafond
+    lisait scraping/logs/ : une dépense lancée d'ailleurs échappait au plafond."""
+    import analyze_costs
+    import extractor
+    assert extractor.COST_LOG_FILE.is_absolute()
+    assert extractor.COST_LOG_FILE == e.JOURNAL_COUTS == analyze_costs.LOG_FILE
