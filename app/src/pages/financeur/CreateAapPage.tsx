@@ -54,6 +54,9 @@ const REGIONS = [
 
 // aapExistant (changement profil-et-edition-aap, 2026-10-20) : en modification, le formulaire part de l'appel
 // existant et l'enregistrement le met à jour au lieu d'en créer un second.
+// Message du financeur après une publication ou une modification (plan niveau A, lot 1.2)
+const A_VALIDER = "Appel enregistré : il sera visible des candidats après validation par l'administrateur.";
+
 export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {}) {
   const { currentUser, userProfile } = useAuth();
   useMarquerDemarrage('appel');
@@ -126,9 +129,9 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       const aapData = donneesDepuisFormulaire(formData);
 
       if (aapExistant?.id) {
-        // Modification : l'appel garde son statut (brouillon ou publié)
-        await aapService.updateAap(aapExistant.id, aapData);
-        alert('Appel mis à jour');
+        // Modification : l'appel garde son statut (brouillon ou publié) ; par le financeur, il repasse « Proposée »
+        await aapService.updateAap(aapExistant.id, aapData, userProfile.userType !== 'admin');
+        alert(userProfile.userType === 'admin' ? 'Appel mis à jour' : A_VALIDER);
         navigate(`/aap/${aapExistant.id}`);
         return;
       }
@@ -155,21 +158,22 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       if (aapExistant?.id) {
         // Modification : mise à jour, puis publication seulement d'un brouillon (un appel déjà publié garde sa date
         // de publication)
-        await aapService.updateAap(aapExistant.id, aapData);
+        const revalider = userProfile.userType !== 'admin';
+        await aapService.updateAap(aapExistant.id, aapData, revalider);
         if (aapExistant.status === 'draft') {
-          await aapService.publishAap(aapExistant.id);
+          await aapService.publishAap(aapExistant.id, revalider);
           await journaliser(currentUser.uid, userProfile.userType, 'appel', aapExistant.id, formData.title);
         }
-        alert(aapExistant.status === 'draft' ? 'AAP publié avec succès !' : 'Appel mis à jour');
+        alert(revalider ? A_VALIDER : aapExistant.status === 'draft' ? 'Appel publié' : 'Appel mis à jour');
         navigate(`/aap/${aapExistant.id}`);
         return;
       }
 
       const aapId = await aapService.createAap(currentUser.uid, await nomDuFinanceur(), aapData);
-      await aapService.publishAap(aapId);
+      await aapService.publishAap(aapId, true);
       await journaliser(currentUser.uid, userProfile.userType, 'appel', aapId, formData.title);
 
-      alert('AAP publié avec succès !');
+      alert(A_VALIDER);
       navigate(`/mes-aap`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de la publication');

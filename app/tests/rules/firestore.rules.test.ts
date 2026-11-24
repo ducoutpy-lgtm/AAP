@@ -49,6 +49,7 @@ beforeEach(async () => {
   });
 });
 
+const A_VALIDER = { statut: 'proposee', par: '' };
 const visiteur = () => env.unauthenticatedContext().firestore();
 const admin = () => env.authenticatedContext('admin1').firestore();
 const porteur = () => env.authenticatedContext('porteur1').firestore();
@@ -124,12 +125,12 @@ describe('users : propriétaire et administrateur', () => {
 
 describe('aap : création et modification par un financeur (dégel du 2026-10-19)', () => {
   it('un financeur abonné crée un appel à son nom, pas au nom d’un autre', async () => {
-    await assertSucceeds(setDoc(doc(financeur(), 'aap/nouveau'), { status: 'draft', financeurId: 'f1', title: 'Mon appel' }));
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/nouveau'), { status: 'draft', financeurId: 'f1', title: 'Mon appel', validation: A_VALIDER }));
     await assertFails(setDoc(doc(financeur(), 'aap/usurpe'), { status: 'draft', financeurId: 'autre', title: 'x' }));
   });
 
   it('le financeur modifie et supprime son appel, pas celui d’un autre ni une fiche importée', async () => {
-    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', validation: A_VALIDER }));
     await assertFails(updateDoc(doc(financeur(), 'aap/publie'), { title: 'détourné' }));
     await assertSucceeds(deleteDoc(doc(financeur(), 'aap/du-financeur')));
   });
@@ -245,7 +246,7 @@ describe('suppression du compte (question 25, 2026-11-19)', () => {
 describe('champs propriétaires figés (relecture du 2026-11-17, suite)', () => {
   it('un financeur ne transfère pas son appel à un autre compte', async () => {
     await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { financeurId: 'porteur1' }));
-    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Titre modifié' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Titre modifié', validation: A_VALIDER }));
   });
 
   it('ni le porteur ni le financeur ne changent les comptes d’une candidature', async () => {
@@ -356,8 +357,8 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
   });
 
   it('l’auteur publie son brouillon, le corrige, le clôture, mais ne revient pas en arrière', async () => {
-    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', publishedAt: maintenantAap() }));
-    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Corrigé' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', publishedAt: maintenantAap(), validation: A_VALIDER }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Corrigé', validation: A_VALIDER }));
     await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'closed' }));
     await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
   });
@@ -367,7 +368,7 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
     await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { source: 'scraped' }));
     await assertFails(setDoc(doc(financeur(), 'aap/avec-verdict'), { status: 'draft', financeurId: 'f1', title: 'x', validation: { statut: 'validee' } }));
     await assertFails(setDoc(doc(financeur(), 'aap/faux-import'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'scraped' }));
-    await assertSucceeds(setDoc(doc(financeur(), 'aap/saisi'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual' }));
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/saisi'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual', validation: A_VALIDER }));
   });
 });
 
@@ -392,5 +393,27 @@ describe('users : le propriétaire ne modifie que ses champs de parcours', () =>
     const neuf = env.authenticatedContext('neuf').firestore();
     await assertFails(setDoc(doc(neuf, 'users/neuf'), { userType: 'porteur', subscriptionStatus: 'active' }));
     await assertSucceeds(setDoc(doc(neuf, 'users/neuf'), { userType: 'porteur', subscriptionStatus: 'trial' }));
+  });
+});
+
+
+// Plan niveau A, lot 1.2 (2026-11-24, décision « Validation admin ») : un financeur inscrit seul publiait aussitôt, sans
+// contrôle, un appel au nom et au lien de son choix ; une modification d'un appel validé paraissait sans nouveau contrôle.
+describe('appels de financeurs : validation par l’administrateur', () => {
+  it('l’appel naît « Proposée » ; sans validation ou déjà validé, la création est refusée', async () => {
+    await assertFails(setDoc(doc(financeur(), 'aap/sans'), { status: 'draft', financeurId: 'f1', title: 'x' }));
+    await assertFails(setDoc(doc(financeur(), 'aap/auto'), { status: 'draft', financeurId: 'f1', title: 'x',
+      validation: { statut: 'proposee', par: 'Monsieur DUCOUT' } }));
+  });
+
+  it('l’auteur ne publie ni ne modifie sans repasser l’appel « Proposée » ; il peut seulement le clôturer tel quel', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'aap/valide-f1'),
+      { status: 'published', financeurId: 'f1', title: 'Validé', validation: { statut: 'validee', par: 'Monsieur DUCOUT' } }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/valide-f1'), { title: 'Gagnez de l’argent sur http://x.fr' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/valide-f1'), { title: 'Titre corrigé', validation: A_VALIDER }));
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'aap/valide-f2'),
+      { status: 'published', financeurId: 'f1', title: 'Validé', validation: { statut: 'validee', par: 'Monsieur DUCOUT' } }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/valide-f2'), { status: 'closed' }));
   });
 });

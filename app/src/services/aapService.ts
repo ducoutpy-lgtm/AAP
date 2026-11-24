@@ -40,6 +40,13 @@ export interface CreateAapData {
   tags?: string[];
 }
 
+// Bloc de validation d'un appel saisi ou modifié par un financeur (plan niveau A, lot 1.2, décision « Validation admin »
+// du 2026-11-24) : « Proposée », sans relecteur ; l'appel ne paraît qu'après validation par l'administrateur
+const aValider = () => ({
+  statut: 'proposee' as const, par: '', date: new Date().toISOString().slice(0, 10),
+  commentaire: 'Appel saisi par un financeur : à valider avant publication',
+});
+
 export const aapService = {
   // Créer un AAP
   async createAap(financeurId: string, financeurName: string, data: CreateAapData): Promise<string> {
@@ -57,6 +64,7 @@ export const aapService = {
       views: 0,
       applicationsCount: 0,
       source: 'manual',
+      validation: aValider(),
     };
 
     // Champs facultatifs vides omis par le réglage ignoreUndefinedProperties (config/firebase.ts)
@@ -98,9 +106,11 @@ export const aapService = {
   },
 
   // Mettre à jour un AAP
-  async updateAap(aapId: string, data: Partial<CreateAapData>): Promise<void> {
+  // revalider : modification par le financeur auteur, qui repasse l'appel « Proposée » (pas par l'administrateur)
+  async updateAap(aapId: string, data: Partial<CreateAapData>, revalider = false): Promise<void> {
     const updateData: Record<string, unknown> = {
       ...data,
+      ...(revalider ? { validation: aValider() } : {}),
       updatedAt: Timestamp.now(),
     };
 
@@ -121,8 +131,9 @@ export const aapService = {
   },
 
   // Publier un AAP
-  async publishAap(aapId: string): Promise<void> {
+  async publishAap(aapId: string, revalider = false): Promise<void> {
     await updateDoc(doc(db, 'aap', aapId), {
+      ...(revalider ? { validation: aValider() } : {}),
       status: 'published',
       publishedAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

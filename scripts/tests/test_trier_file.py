@@ -72,3 +72,14 @@ def test_un_rapprochement_par_ricochet_ne_rejette_pas():
                   "status": "draft", "validation": {"statut": "proposee"}})
     dec = t.decisions([b], [[a, b]], lambda g: ("axe3", "déjà publiée"), maintenant)
     assert dec["axe5"][0] != "rejeter"
+
+
+
+def test_un_appel_saisi_par_un_financeur_reste_toujours_a_valider():
+    """Plan niveau A, lot 1.2 (décision « Validation admin » du 2026-11-24) : le tri automatique ne publie jamais un
+    appel saisi par un financeur, même sans autre doute ; seul l'administrateur le valide."""
+    from datetime import datetime, timezone
+    import trier_file as t
+    fiche = {"source": "manual", "status": "published", "validation": {"statut": "proposee"},
+             "scrapeMetadata": {"verification": {"estUnAppel": True, "douteux": []}, "champ": "sante"}}
+    assert "saisi par un financeur" in t.motifs_de_doute(fiche, datetime(2026, 11, 24, tzinfo=timezone.utc))

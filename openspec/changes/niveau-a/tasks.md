@@ -9,7 +9,12 @@ local par lot vérifié.
   et borné ; propriétaire limité à `demarrage`, `profileComplete`, `cguAccepteLe`, `userType`, `notificationPreferences`
   dans `users` ; compte créé en essai seulement. (2026-11-24 : 2 tests Python et 2 tests de règles en échec avant ;
   254 tests Python et 49 tests de règles verts après.)
-- [ ] 1.2 Appels saisis par un financeur : validation « proposée » à la création, publication par l'administrateur.
+- [x] 1.2 Appels saisis par un financeur : validation « proposée » à la création, publication par l'administrateur.
+  Toute modification par l'auteur repasse l'appel « Proposée », sauf la clôture ; le tri automatique ne le publie
+  jamais (motif « saisi par un financeur ») ; message du financeur : « visible après validation par l'administrateur ».
+  Les appels manuels déjà publiés, sans bloc de validation, restent visibles. (2026-11-24 : 2 tests du service, 2 tests
+  de règles et 1 test du tri en échec avant ; 255 tests Python, 170 de l'application, 51 de règles verts après.
+  Parcours sur les émulateurs à rejouer à la vérification finale.)
 - [ ] 1.3 Formulaire de contact borné, liens `javascript:` et `data:` refusés, messagerie limitée au champ « lu ».
 - [ ] 1.4 Dépendances : 7 inutilisées retirées, `npm audit fix` sans version majeure.
 

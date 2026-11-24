@@ -34,7 +34,8 @@ def motifs_de_doute(f: dict, maintenant: datetime) -> list[str]:
     description ne compte pas : la fiche renvoie toujours à l'annonce officielle."""
     sm = f.get("scrapeMetadata") or {}
     ver = sm.get("verification")
-    motifs = []
+    # Appel saisi par un financeur : toujours validé par l'administrateur (plan niveau A, lot 1.2, 2026-11-24)
+    motifs = ["saisi par un financeur"] if f.get("source") == "manual" else []
     if not ver:
         motifs.append("jamais contrôlée")
     else:

@@ -23,6 +23,12 @@ service cloud.firestore {
       return ['financeurScore', 'financeurFeedback', 'evaluatedAt'];
     }
 
+    // Bloc de validation écrit par un financeur : « Proposée », sans relecteur (plan niveau A, lot 1.2)
+    function aValiderSansRelecteur() {
+      return request.resource.data.get('validation', {}).get('statut', '') == 'proposee'
+        && request.resource.data.get('validation', {}).get('par', '') == '';
+    }
+
     // Statut d'un appel modifié par son auteur : inchangé, ou brouillon -> publié, ou publié -> clôturé
     function statutAuteurPermis() {
       let avant = resource.data.get('status', '');
@@ -138,16 +144,21 @@ service cloud.firestore {
       // Création : un financeur abonné, pour son propre compte (financeurId = son identifiant). Les fiches
       // importées (financeurId 'scraped') passent par le SDK admin, hors de ces règles.
       // Ni verdict de relecture ni source autre que « manual » à la création (corrections-relecture 2.4, 2026-11-20).
+      // Plan niveau A, lot 1.2 (décision « Validation admin » du 2026-11-24) : l'appel naît « Proposée », sans relecteur,
+      // et ne paraît qu'après validation par l'administrateur (visiblePubliquement)
       allow create: if isFinanceur() && hasActiveSubscription() && request.resource.data.financeurId == request.auth.uid
-        && request.resource.data.get('source', 'manual') == 'manual'
-        && !request.resource.data.keys().hasAny(['validation']);
+        && request.resource.data.get('source', 'manual') == 'manual' && aValiderSansRelecteur();
 
       // Mise à jour et suppression : l'administrateur (publier, clôturer, archiver, supprimer, y compris les fiches
       // importées), ou le financeur auteur de l'appel. L'auteur ne touche ni au verdict de relecture ni à la source, et
       // ne change le statut que vers l'avant : brouillon -> publié -> clôturé ; un appel archivé ou clôturé par
       // l'administrateur ne revient pas dans la recherche par lui (corrections-relecture 2.4, 2026-11-20).
+      // Plan niveau A, lot 1.2 : toute modification par l'auteur repasse l'appel « Proposée » (une fois validé, il pouvait
+      // le réécrire sans nouveau contrôle) ; seule la clôture d'un appel publié se fait telle quelle.
       allow update: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid
-        && figes(['financeurId', 'validation', 'source']) && statutAuteurPermis());
+        && figes(['financeurId', 'source']) && statutAuteurPermis()
+        && (aValiderSansRelecteur() || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+                                        && request.resource.data.status == 'closed')));
       allow delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
     }
 
