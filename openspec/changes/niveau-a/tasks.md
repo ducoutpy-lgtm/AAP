@@ -46,7 +46,11 @@ local par lot vérifié.
 - [x] 2.5 Import : compteurs et corrections préservés, montants en millions. (2026-11-24 : vues et candidatures écrites à
   la création seulement ; adresse officielle et secteurs protégés sur une fiche validée ; montants en millions,
   milliards, M€ et k€, virgule décimale, espaces insécables. 2 tests en échec avant, 264 tests Python verts.)
-- [ ] 2.6 Scripts d'écriture à blanc par défaut (option `--reel`) ; migrations déjà jouées rangées à part.
+- [x] 2.6 Scripts d'écriture à blanc par défaut (option `--reel`) ; migrations déjà jouées rangées à part. (2026-11-24 :
+  `migrer_identifiants`, `migrer_echeances`, `publier_sans_date` rangés dans `scripts/migrations_jouees/` avec un README ;
+  les scripts récurrents lancés par la veille sans option (`import_to_firestore`, `publier_chiffres`, `publier_couts`)
+  gardent leur convention, sinon la chaîne cassait : convention à documenter (4.4) ; `depublier_non_controlees` et
+  `corriger_financeur_relais` : question 43. 264 tests Python verts.)
 
 ## 3. Application
 

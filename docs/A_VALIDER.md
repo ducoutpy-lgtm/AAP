@@ -69,6 +69,9 @@ Questions du 2026-11-21, nées de la relecture de l'application (changement `cor
    « Désabonnement » » : la réponse arrive dans la boîte d'envoi, et c'est à vous d'arrêter l'envoi pour ce compte.
    Proposition : une case « Recevoir le courriel du lundi » dans Mon profil (modification de l'application, puis mise en
    ligne sur votre accord). Oui / non.
+43. (2026-11-24) Scripts `scripts/depublier_non_controlees.py` (20/10, 34 fiches à dépublier « en attente d'accord ») et
+   `scripts/corriger_financeur_relais.py` : je ne trouve pas la preuve qu'ils ont été joués. Ils écrivent en base par
+   défaut. Les ranger avec les migrations jouées (`scripts/migrations_jouees/`), ou les garder ? À trancher.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec
