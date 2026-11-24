@@ -72,12 +72,16 @@ CHAMPS_HUMAINS = ("status", "publishedAt", "validation")
 CHAMPS_METIER = ("title", "description", "deadline", "publicationDate", "budgetMin", "budgetMax", "budgetTotal",
                  "eligibilityCriteria", "requiredDocuments", "structureTypeEligible", "territoriesEligible", "tags",
                  # Jour 2 du plan MVP (qualification-appels, 2026-10-20) : bloc de qualification et date d'ouverture
-                 "qualification", "startDate")
+                 "qualification", "startDate",
+                 # Plan niveau A, lot 2.5 (2026-11-24) : adresse officielle et secteurs, corrigeables dans l'application
+                 "externalUrl", "sectorsTargeted")
 # Champs techniques ecrits par l'import, ni humains ni metier. Les trois listes forment la liste blanche des champs
 # envoyes a Firestore (rapport du 2026-10-14, instruction 5) : un champ ajoute au document sans etre classe ici
 # arrete l'import, a blanc comme en reel, avant toute ecriture (voir verifier_champs).
-CHAMPS_TECHNIQUES = ("financeurId", "financeurName", "sectorsTargeted", "externalUrl", "source", "scrapeMetadata",
+CHAMPS_TECHNIQUES = ("financeurId", "financeurName", "source", "scrapeMetadata",
                      "views", "applicationsCount", "createdAt", "updatedAt")
+# Compteurs posés à zéro à la création seulement : un ré-import les remettait à zéro (plan niveau A, lot 2.5)
+COMPTEURS = ("views", "applicationsCount")
 CHAMPS_ENVOYES = frozenset(CHAMPS_HUMAINS + CHAMPS_METIER + CHAMPS_TECHNIQUES)
 CHAMPS_FICHE = frozenset(AapNormalized.model_fields)
 # Correspondance verdict du raccourci -> statut de validation du document.
@@ -242,7 +246,7 @@ def document_a_envoyer(doc: dict, existe: bool, existant: dict | None = None) ->
     proteges (l'application lit la relecture dans validation, plus dans les tags, depuis le 2026-10-19)."""
     if not existe:
         return dict(doc)
-    proteges = set(CHAMPS_HUMAINS)
+    proteges = set(CHAMPS_HUMAINS) | set(COMPTEURS)
     # Fiche validée dans ce calcul, ou déjà validée en base : avec --a-valider le statut recalculé est « proposee », et
     # lire ce seul statut laissait réécrire les corrections faites dans l'application (corrections-chaine-du-lundi 1.2)
     valide_en_base = ((existant or {}).get("validation") or {}).get("statut") == "validee"
@@ -314,17 +318,27 @@ def parse_date(value: str | None) -> datetime | None:
         return None
 
 
+# Multiplicateurs lus après le nombre (plan niveau A, lot 2.5, 2026-11-24 : « 12 millions d'euros » donnait 12 euros)
+MULTIPLICATEURS = ((r"milliards?|md\s*€|mds?\b", 1_000_000_000), (r"millions?|m\s*€|m\b", 1_000_000), (r"k\s*€|k\b", 1_000))
+
+
 def parse_budget_total(enveloppe: str | None) -> int | None:
-    """Extrait un montant entier d'une chaine du type '2 500 000 euros'. Retourne None si ambigu."""
+    """Montant entier d'une chaîne comme « 2 500 000 euros », « 12 millions d'euros », « 1,5 M€ » ou « 300 k€ » ;
+    None si absent ou ambigu (plusieurs nombres). Les espaces insécables séparent aussi les milliers."""
     if not enveloppe:
         return None
-    digits = re.findall(r"\d[\d\s .]*", enveloppe)
-    if len(digits) != 1:
+    trouves = [(n, u) for n, u in re.findall(r"(\d[\d\s.]*(?:,\d+)?)\s*([a-zA-Zé€]*\s*€?)", enveloppe) if n.strip()]
+    if len(trouves) != 1:
         return None
+    nombre, unite = trouves[0]
     try:
-        return int(re.sub(r"[\s .]", "", digits[0]))
+        valeur = float(re.sub(r"[\s.]", "", nombre).replace(",", "."))
     except ValueError:
         return None
+    for motif, facteur in MULTIPLICATEURS:
+        if re.match(motif, unite.strip().lower()):
+            return int(round(valeur * facteur))
+    return int(round(valeur))
 
 
 def piece_jointe(fichier: dict, doc_id: str) -> dict:

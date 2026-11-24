@@ -700,3 +700,26 @@ def test_champ_incertain_apres_un_echec_repris_de_la_qualification():
     # Un « incertain » répondu par le modèle (pas un échec) reste tel quel
     doc2 = {"title": "T", "scrapeMetadata": {"champ": "incertain", "champRaison": "texte ambigu"}}
     assert imp.appliquer_qualification(doc2, item, date(2026, 11, 22))["scrapeMetadata"]["champ"] == "incertain"
+
+
+
+def test_montants_en_millions_et_en_milliers():
+    """Plan niveau A, lot 2.5 (2026-11-24) : « 12 millions d'euros » devenait 12 euros."""
+    assert imp.parse_budget_total("12 millions d'euros") == 12_000_000
+    assert imp.parse_budget_total("1,5 million €") == 1_500_000
+    assert imp.parse_budget_total("2,5 M€") == 2_500_000
+    assert imp.parse_budget_total("300 k€") == 300_000
+    assert imp.parse_budget_total("1 milliard d'euros") == 1_000_000_000
+    assert imp.parse_budget_total("2 500 000 euros") == 2_500_000
+    assert imp.parse_budget_total("entre 10 000 et 50 000 euros") is None
+
+
+def test_un_reimport_ne_remet_pas_les_compteurs_a_zero_ni_l_adresse_corrigee():
+    """Plan niveau A, lot 2.5 : chaque import remettait vues et candidatures à zéro, et réécrivait l'adresse officielle et
+    les secteurs corrigés dans l'application sur une fiche validée."""
+    recalcule = {"title": "T", "views": 0, "applicationsCount": 0, "externalUrl": "https://ancienne", "sectorsTargeted": ["x"],
+                 "status": "draft", "validation": {"statut": "proposee"}}
+    envoye = imp.document_a_envoyer(recalcule, existe=True, existant={"validation": {"statut": "validee"}, "views": 31})
+    assert "views" not in envoye and "applicationsCount" not in envoye
+    assert "externalUrl" not in envoye and "sectorsTargeted" not in envoye
+    assert imp.document_a_envoyer(recalcule, existe=False)["views"] == 0  # création : compteurs posés à zéro

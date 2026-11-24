@@ -43,8 +43,10 @@ local par lot vérifié.
   (2026-11-24 : bilan « chaîne terminée : N étapes réussies, en échec : … », code 1 si une étape échoue, les suivantes
   tournent quand même ; `chaine_pdf_locale.cmd` en `-u`. Export des tâches écarté : leur XML contient le nom du compte
   Windows ; leurs réglages seront décrits dans la documentation (4.4). Test en échec avant, 262 tests Python verts.)
-- [ ] 2.5 Import : compteurs et corrections préservés, montants en millions ; scripts d'écriture à blanc par défaut ;
-  migrations déjà jouées rangées à part.
+- [x] 2.5 Import : compteurs et corrections préservés, montants en millions. (2026-11-24 : vues et candidatures écrites à
+  la création seulement ; adresse officielle et secteurs protégés sur une fiche validée ; montants en millions,
+  milliards, M€ et k€, virgule décimale, espaces insécables. 2 tests en échec avant, 264 tests Python verts.)
+- [ ] 2.6 Scripts d'écriture à blanc par défaut (option `--reel`) ; migrations déjà jouées rangées à part.
 
 ## 3. Application
 
