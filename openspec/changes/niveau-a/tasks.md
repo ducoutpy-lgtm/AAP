@@ -19,7 +19,13 @@ local par lot vérifié.
   (2026-11-24 : `utils/liens.ts`, `lienSur` sur les 7 liens d'adresses saisies ou collectées ; contact : sujet de la
   liste, adresse de 254 caractères au plus, compte vide ou le sien ; le nombre d'envois par visiteur ne se borne pas
   par une règle Firestore, limite notée. Tests en échec avant ; 172 tests de l'application et 53 de règles verts.)
-- [ ] 1.4 Dépendances : 7 inutilisées retirées, `npm audit fix` sans version majeure.
+- [x] 1.4 Dépendances : 7 inutilisées retirées, `npm audit fix` sans version majeure. (2026-11-24 : `zod`, `dompurify`
+  et ses types, `react-hook-form`, `recharts`, `@sentry/react`, `@sentry/tracing`, `@tanstack/react-query` retirés ;
+  vulnérabilités de production de 20 (2 critiques, 7 élevées) à 13 (0 critique, 5 élevées) ; 172 tests, 53 tests de
+  règles et compilation verts.)
+- [ ] 1.5 Mises à niveau majeures restantes : `firebase` 10 vers 12 et `react-router-dom` 6 vers 7 (les 13
+  vulnérabilités restantes) ; correctif proposé par npm inutilisable (`firebase` 9.14.0) ; parcours complets sur les
+  émulateurs avant de conclure.
 
 ## 2. Chaîne du lundi
 
