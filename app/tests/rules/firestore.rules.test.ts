@@ -417,3 +417,23 @@ describe('appels de financeurs : validation par l’administrateur', () => {
     await assertSucceeds(updateDoc(doc(financeur(), 'aap/valide-f2'), { status: 'closed' }));
   });
 });
+
+
+// Plan niveau A, lot 1.3 (2026-11-24) : formulaire de contact ouvert aux visiteurs, champs bornés ; messagerie, le
+// destinataire ne fait que marquer lu.
+describe('contact et messagerie : champs bornés', () => {
+  const message = { sujet: 'question', email: 'a@exemple.fr', message: 'Bonjour', userId: null, createdAt: new Date() };
+  it('le contact accepte un message normal, refuse un sujet inconnu, une adresse géante et un compte usurpé', async () => {
+    await assertSucceeds(setDoc(doc(visiteur(), 'messagesContact/ok'), message));
+    await assertFails(setDoc(doc(visiteur(), 'messagesContact/sujet'), { ...message, sujet: 'publicité' }));
+    await assertFails(setDoc(doc(visiteur(), 'messagesContact/adresse'), { ...message, email: 'a'.repeat(300) }));
+    await assertFails(setDoc(doc(visiteur(), 'messagesContact/compte'), { ...message, userId: 'porteur1' }));
+    await assertSucceeds(setDoc(doc(porteur(), 'messagesContact/connecte'), { ...message, userId: 'porteur1' }));
+  });
+  it('le destinataire marque un message lu, sans en réécrire le contenu', async () => {
+    await env.withSecurityRulesDisabled(async ctx => setDoc(doc(ctx.firestore(), 'messages/m2'),
+      { senderId: 'f1', receiverId: 'porteur1', content: 'Bonjour', read: false }));
+    await assertFails(updateDoc(doc(porteur(), 'messages/m2'), { content: 'Texte réécrit' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'messages/m2'), { read: true }));
+  });
+});

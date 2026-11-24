@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { lienSur } from '../../utils/liens';
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../config/firebase';
@@ -167,7 +168,7 @@ export default function AapDetailPage() {
                   {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
                   {aap.externalUrl && (
                     <a
-                      href={aap.externalUrl}
+                      href={lienSur(aap.externalUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary-600 hover:underline inline-flex items-center gap-1 font-medium"
@@ -222,7 +223,7 @@ export default function AapDetailPage() {
           {/* Fiche importée : la candidature se fait sur le site officiel (question 21, 2026-11-13) */}
           {candidatureSurSiteOfficiel(aap) && (
             <div className="mt-6">
-              <a href={aap.externalUrl} target="_blank" rel="noopener noreferrer"
+              <a href={lienSur(aap.externalUrl)} target="_blank" rel="noopener noreferrer"
                 className="block w-full text-center px-6 py-3 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700">
                 Candidater sur le site officiel
               </a>
@@ -457,7 +458,7 @@ export default function AapDetailPage() {
               <div className="flex items-center gap-2 text-gray-700">
                 <span className="font-medium">Site web:</span>
                 <a
-                  href={aap.externalUrl}
+                  href={lienSur(aap.externalUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:underline inline-flex items-center gap-1"

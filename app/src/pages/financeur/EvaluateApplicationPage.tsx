@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { lienSur } from '../../utils/liens';
 import { doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { Button } from '../../components/ui/Button';
@@ -320,7 +321,7 @@ export default function EvaluateApplicationPage() {
                       <span className="text-gray-700">{doc.name}</span>
                     </div>
                     <a
-                      href={doc.url}
+                      href={lienSur(doc.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}

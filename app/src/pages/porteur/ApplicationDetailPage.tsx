@@ -2,6 +2,7 @@
 // vers une page inexistante. Page mince : lecture du document, vérification du propriétaire, affichage.
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { lienSur } from '../../utils/liens';
 import { doc, getDoc, Timestamp } from 'firebase/firestore';
 import { ExternalLink, FileText } from 'lucide-react';
 import { db } from '../../config/firebase';
@@ -155,7 +156,7 @@ export default function ApplicationDetailPage() {
                   {d.nonDeposee || !d.url ? (
                     <span className="text-gray-700">{d.name} <span className="text-sm text-warning-600">(non déposée : à adresser directement au financeur)</span></span>
                   ) : (
-                    <a href={d.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline inline-flex items-center gap-1">
+                    <a href={lienSur(d.url)} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline inline-flex items-center gap-1">
                       <ExternalLink className="h-4 w-4" />{d.name}
                     </a>
                   )}

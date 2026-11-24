@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { lienSur } from '../../utils/liens';
 import { addDoc, collection, query, where, orderBy, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -479,7 +480,7 @@ export default function SearchAapPage() {
                           {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
                           {aap.externalUrl && (
                             <a
-                              href={aap.externalUrl}
+                              href={lienSur(aap.externalUrl)}
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}

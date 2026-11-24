@@ -15,7 +15,10 @@ local par lot vérifié.
   Les appels manuels déjà publiés, sans bloc de validation, restent visibles. (2026-11-24 : 2 tests du service, 2 tests
   de règles et 1 test du tri en échec avant ; 255 tests Python, 170 de l'application, 51 de règles verts après.
   Parcours sur les émulateurs à rejouer à la vérification finale.)
-- [ ] 1.3 Formulaire de contact borné, liens `javascript:` et `data:` refusés, messagerie limitée au champ « lu ».
+- [x] 1.3 Formulaire de contact borné, liens `javascript:` et `data:` refusés, messagerie limitée au champ « lu ».
+  (2026-11-24 : `utils/liens.ts`, `lienSur` sur les 7 liens d'adresses saisies ou collectées ; contact : sujet de la
+  liste, adresse de 254 caractères au plus, compte vide ou le sien ; le nombre d'envois par visiteur ne se borne pas
+  par une règle Firestore, limite notée. Tests en échec avant ; 172 tests de l'application et 53 de règles verts.)
 - [ ] 1.4 Dépendances : 7 inutilisées retirées, `npm audit fix` sans version majeure.
 
 ## 2. Chaîne du lundi
