@@ -20,6 +20,7 @@ import {
   profilPorteurDepuisParcours, PUBLICS, regionDepuisCodePostal, SECTEURS_FINANCES, TAILLES, TYPES_ETABLISSEMENT,
   TYPES_ORGANISATION, type FormulaireParcours,
 } from './parcours';
+import { messageErreur } from '../../utils/erreurs';
 
 const ETAPES = [
   { label: 'Votre structure', description: 'Qui portera le projet ?' },
@@ -70,7 +71,7 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
       await refreshUserProfile();
       navigate(destination);
     } catch (err) {
-      setErreur(err instanceof Error ? err.message : "Erreur lors de l'enregistrement");
+      setErreur(messageErreur(err, "Erreur lors de l'enregistrement"));
     } finally {
       setEnregistrement(false);
     }

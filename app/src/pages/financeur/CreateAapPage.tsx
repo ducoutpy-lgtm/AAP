@@ -13,6 +13,7 @@ import type { AAP } from '../../types';
 import { donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
+import { messageErreur } from '../../utils/erreurs';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -141,7 +142,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       alert('AAP sauvegardé en brouillon');
       navigate(`/aap/${aapId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde');
+      setError(messageErreur(err, 'Erreur lors de la sauvegarde'));
     } finally {
       setLoading(false);
     }
@@ -176,7 +177,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       alert(A_VALIDER);
       navigate(`/mes-aap`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la publication');
+      setError(messageErreur(err, 'Erreur lors de la publication'));
     } finally {
       setLoading(false);
     }

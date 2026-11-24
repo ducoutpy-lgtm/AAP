@@ -86,3 +86,18 @@ describe('connexion', () => {
     expect(await screen.findByText(/^arrivée/, {}, { timeout: 3000 })).toHaveTextContent('arrivée /aap/search?territory=normandie&q=chutes');
   });
 });
+
+describe('connexion refusée', () => {
+  afterEach(cleanup);
+
+  it('un mauvais mot de passe affiche un message en français, pas le texte technique de Firebase', async () => {
+    compte.login.mockReset().mockRejectedValue(Object.assign(new Error('Firebase: Error (auth/invalid-credential).'),
+      { code: 'auth/invalid-credential' }));
+    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
+    fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'mauvais' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
+    expect(await screen.findByText('Adresse ou mot de passe incorrect.')).toBeInTheDocument();
+    expect(screen.queryByText(/Firebase/)).toBeNull();
+  });
+});

@@ -14,6 +14,7 @@ import { Modal } from '../ui/Modal';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
 import { etatDemarrage, OBJETS_PROJET, precisionsAEnregistrer, RAYONS_ACTION } from './demarrage';
+import { messageErreur } from '../../utils/erreurs';
 
 export function ListeDemarrage() {
   const { currentUser, userProfile, refreshUserProfile } = useAuth();
@@ -45,7 +46,7 @@ export function ListeDemarrage() {
       await refreshUserProfile();
       setFenetre(false);
     } catch (err) {
-      setErreur(err instanceof Error ? err.message : "Erreur lors de l'enregistrement");
+      setErreur(messageErreur(err, "Erreur lors de l'enregistrement"));
     } finally {
       setEnregistrement(false);
     }

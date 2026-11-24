@@ -10,6 +10,7 @@ import { Card } from '../../components/ui/Card';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import type { Application } from '../../types';
 import { COLONNES, dateDe, LIBELLES_STATUTS_CANDIDATURE, parColonne } from '../../utils/financeur';
+import { messageErreur } from '../../utils/erreurs';
 
 const BORDURES: Record<string, string> = {
   submitted: 'border-primary-400', under_review: 'border-warning-400', shortlisted: 'border-secondary-400', accepted: 'border-success-400', rejected: 'border-error-400',
@@ -29,7 +30,7 @@ export default function CandidaturesRecuesPage() {
         setCandidatures(snap.docs.map(d => ({ id: d.id, ...d.data() }) as Application));
       } catch (err) {
         console.error('Candidatures non chargées :', err);
-        setErreur(err instanceof Error ? err.message : 'Chargement impossible');
+        setErreur(messageErreur(err, 'Chargement impossible'));
       } finally {
         setChargement(false);
       }

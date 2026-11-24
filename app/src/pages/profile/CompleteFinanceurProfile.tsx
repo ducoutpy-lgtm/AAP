@@ -11,6 +11,7 @@ import { Textarea } from '../../components/ui/Textarea';
 import { Target, Upload } from 'lucide-react';
 import type { FinanceurProfile } from '../../types';
 import { formulaireFinanceurDepuisProfil, FORMULAIRE_FINANCEUR_VIDE } from './profilFormulaire';
+import { messageErreur } from '../../utils/erreurs';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -148,7 +149,7 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
       // Rediriger vers la sélection d'abonnement
       navigate('/abonnement/choisir');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde du profil');
+      setError(messageErreur(err, 'Erreur lors de la sauvegarde du profil'));
     } finally {
       setLoading(false);
     }

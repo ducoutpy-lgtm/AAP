@@ -8,6 +8,7 @@ import { Card } from '../../components/ui/Card';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { coutParFicheQualifiee, cumuls, dateCout, euros3, libelleEtape, parCle, parSemaine, PLAFOND_EUROS, type LigneCout } from '../../utils/couts';
 import { visiblePubliquement } from '../../utils/relecture';
+import { messageErreur } from '../../utils/erreurs';
 
 export default function CoutsExternesPage() {
   const [lignes, setLignes] = useState<LigneCout[]>([]);
@@ -32,7 +33,7 @@ export default function CoutsExternesPage() {
         setFichesQualifiees(aaps.docs.filter(d => visiblePubliquement(d.data())).length);
       } catch (err) {
         console.error('Coûts non chargés :', err);
-        setErreur(err instanceof Error ? err.message : 'Chargement impossible');
+        setErreur(messageErreur(err, 'Chargement impossible'));
       } finally {
         setChargement(false);
       }

@@ -12,6 +12,7 @@ import type { PorteurProfile } from '../../types';
 import { formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
 import { BUDGETS, FORMES_JURIDIQUES, PUBLICS, TAILLES, TYPES_ETABLISSEMENT } from '../onboarding/parcours';
 import { anneeOuvertureValide, OBJETS_PROJET, RAYONS_ACTION } from '../../components/demarrage/demarrage';
+import { messageErreur } from '../../utils/erreurs';
 
 const REGIONS = [
   { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
@@ -141,7 +142,7 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
       // Rediriger vers la sélection d'abonnement
       navigate('/abonnement/choisir');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde du profil');
+      setError(messageErreur(err, 'Erreur lors de la sauvegarde du profil'));
     } finally {
       setLoading(false);
     }

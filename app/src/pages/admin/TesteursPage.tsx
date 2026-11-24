@@ -11,6 +11,7 @@ import type { User, UserType } from '../../types';
 import { enDate } from '../../utils/dates';
 import { chiffresDepuis, dateLigne, LIBELLES_ACTIONS, resumerParCompte, type CompteSuivi, type LigneJournal, type ResumeCompte } from '../../utils/journal';
 import { dateRetour, lesPlusRecents, LIBELLES_TYPES_RETOUR, type Retour } from '../../utils/retours';
+import { messageErreur } from '../../utils/erreurs';
 
 const ROLES: Record<UserType, string> = { porteur: 'Candidat', financeur: 'Financeur', admin: 'Administrateur' };
 const dateFr = (d: Date | null) => (d ? d.toLocaleDateString('fr-FR') : '-');
@@ -47,7 +48,7 @@ export default function TesteursPage() {
         setResumes(resumerParCompte(comptes, j));
       } catch (err) {
         console.error('Suivi des testeurs non chargé :', err);
-        setErreur(err instanceof Error ? err.message : 'Chargement impossible');
+        setErreur(messageErreur(err, 'Chargement impossible'));
       } finally {
         setChargement(false);
       }

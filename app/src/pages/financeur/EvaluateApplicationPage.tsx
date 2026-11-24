@@ -15,6 +15,7 @@ import {
   TrendingUp,
   FileText,
 } from 'lucide-react';
+import { messageErreur } from '../../utils/erreurs';
 
 interface Application {
   id: string;
@@ -103,7 +104,7 @@ export default function EvaluateApplicationPage() {
       navigate(`/aap/${aapId}/candidatures`);
     } catch (err) {
       console.error('Error updating status:', err);
-      setError(err instanceof Error ? err.message : 'Erreur lors de la mise à jour');
+      setError(messageErreur(err, 'Erreur lors de la mise à jour'));
     } finally {
       setSaving(false);
     }
@@ -125,7 +126,7 @@ export default function EvaluateApplicationPage() {
       alert('Évaluation sauvegardée');
     } catch (err) {
       console.error('Error saving:', err);
-      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde');
+      setError(messageErreur(err, 'Erreur lors de la sauvegarde'));
     } finally {
       setSaving(false);
     }

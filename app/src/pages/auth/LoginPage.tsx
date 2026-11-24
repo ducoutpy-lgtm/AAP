@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { messageErreur } from '../../utils/erreurs';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -67,7 +68,7 @@ export default function LoginPage() {
       const redirectPath = await getRedirectPath();
       navigate(redirectPath, { replace: true });
     } catch (err) {
-      setError(err instanceof Error && err.message ? err.message : 'Échec de la connexion');
+      setError(messageErreur(err, 'Échec de la connexion'));
     } finally {
       setLoading(false);
     }
@@ -86,7 +87,7 @@ export default function LoginPage() {
       const redirectPath = await getRedirectPath();
       navigate(redirectPath, { replace: true });
     } catch (err) {
-      setError(err instanceof Error && err.message ? err.message : 'Échec de la connexion avec Google');
+      setError(messageErreur(err, 'Échec de la connexion avec Google'));
     } finally {
       setLoading(false);
     }

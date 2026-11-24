@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { UserType } from '../../types';
+import { messageErreur } from '../../utils/erreurs';
 
 export default function SignupPage() {
   const [searchParams] = useSearchParams();
@@ -47,7 +48,7 @@ export default function SignupPage() {
       // Redirection vers la page de complétion du profil
       navigate('/complete-profile');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Échec de l\'inscription');
+      setError(messageErreur(err, 'Échec de l\'inscription'));
     } finally {
       setLoading(false);
     }
@@ -62,7 +63,7 @@ export default function SignupPage() {
       // La logique de sélection du type de compte sera gérée après
       navigate('/complete-profile');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Échec de l\'inscription avec Google');
+      setError(messageErreur(err, 'Échec de l\'inscription avec Google'));
     } finally {
       setLoading(false);
     }

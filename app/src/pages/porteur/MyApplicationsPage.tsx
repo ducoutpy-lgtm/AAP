@@ -11,6 +11,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import type { ApplicationStatus } from '../../types';
 import { COLONNES_CANDIDATURES, repartirCandidatures } from '../../utils/candidat';
+import { messageErreur } from '../../utils/erreurs';
 
 interface Candidature {
   id: string;
@@ -40,7 +41,7 @@ export default function MyApplicationsPage() {
       })
       .catch(err => {
         console.error('Error loading applications:', err);
-        setErreur(err instanceof Error ? err.message : "Les candidatures n'ont pas pu être chargées");
+        setErreur(messageErreur(err, "Les candidatures n'ont pas pu être chargées"));
       })
       .finally(() => setLoading(false));
   }, [currentUser]);

@@ -8,6 +8,7 @@ import { Card } from '../../components/ui/Card';
 import { STRIPE_PLANS, TRIAL_DAYS } from '../../config/stripe';
 import { Check, AlertCircle } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
+import { messageErreur } from '../../utils/erreurs';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -83,7 +84,7 @@ export default function SelectPlanPage() {
       }
     } catch (err) {
       console.error('Erreur:', err);
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      setError(messageErreur(err, 'Une erreur est survenue'));
       setLoading(null);
     }
   };
