@@ -188,8 +188,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   profil limité, validation des appels de financeurs, contact et liens, dépendances : 20 vulnérabilités à 13, aucune
   critique) et 2.1 (courriel des candidats en tête de veille). Puis 2.2 à 2.6 le même jour : échecs retentés et JSON
   sans coupure, journal des coûts à chemin fixe, bilan de la chaîne des PDF, import (compteurs, corrections, montants en
-  millions), migrations jouées rangées. 264 tests Python verts. Reprendre au lot 3 (application), puis 1.5 (mises à
-  niveau majeures de firebase et react-router-dom) ; questions 43 (deux scripts au statut incertain). Rien de poussé ni de déployé : règles
+  millions), migrations jouées rangées. 264 tests Python verts. Lot 3 commencé : palette complète (bandeaux d'erreur
+  colorés) et messages d'erreur en français (`utils/erreurs.ts`, 17 affichages) ; 176 tests de l'application verts.
+  **Reprendre à** : 3.1 (états d'erreur des pages, `alert()` en bandeaux), 3.2 (menu sur téléphone), 3.3 (clavier,
+  modale), 3.4 à 3.7, puis lot 4, puis 1.5 (firebase 10 vers 12, react-router-dom 6 vers 7), puis vérification finale
+  et question de mise en ligne (5.1, 5.2). Questions ouvertes : 35 à 43 de `docs/A_VALIDER.md`. Rien de poussé ni de déployé : règles
   et hébergement à mettre en ligne sur accord à la fin (tâche 5.2). Constat du 23/11 : poste arrêté à 10 h 13 (veille
   coupée pendant la collecte, aucun courriel), chaîne des PDF refusée par Windows (0x800710E0, batterie probable).
   Incident du 24/11 : `npx tsc` lancé par erreur depuis la racine a téléchargé le paquet public `tsc` 2.0.4 (paquet de
