@@ -56,7 +56,9 @@ local par lot vérifié.
 
 - [ ] 3.1 Messages d'erreur en français et composant d'erreur commun ; bandeaux au lieu d'`alert`.
 - [ ] 3.2 Menu sur téléphone.
-- [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette.
+- [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
+  2026-11-24 : échelles complètes de success, warning, error, info ; `src/test/palette.test.ts` en échec avec l'ancienne
+  configuration, vert avec la nouvelle ; classes générées vérifiées dans la feuille compilée. Restent clavier et modale.)
 - [ ] 3.4 Fiche non visible fermée par son adresse directe ; saisie des montants et dates contrôlée ; CSV échappés.
 - [ ] 3.5 Connexion qui attend le profil et redirige selon le rôle.
 - [ ] 3.6 Chargement découpé, Stripe seulement là où il sert.
