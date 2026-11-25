@@ -102,9 +102,15 @@ describe('aap : consultation publique et actions de l’administrateur', () => {
 
   it('un porteur ne modifie ni ne crée un AAP', async () => {
     await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { status: 'archived' }));
-    // Bloc de validation joint (relecture du 2026-11-25, constat 38) : seul le rôle produit le refus
+    // Bloc de validation et source « manual » joints (relecture du 2026-11-25, constats 38 et 6) : seul le rôle produit
+    // le refus
     await assertFails(
-      setDoc(doc(porteur(), 'aap/nouveau'), { status: 'draft', financeurId: 'porteur1', validation: A_VALIDER }),
+      setDoc(doc(porteur(), 'aap/nouveau'), {
+        status: 'draft',
+        financeurId: 'porteur1',
+        source: 'manual',
+        validation: A_VALIDER,
+      }),
     );
   });
 
@@ -154,16 +160,18 @@ describe('aap : création et modification par un financeur (dégel du 2026-10-19
         status: 'draft',
         financeurId: 'f1',
         title: 'Mon appel',
+        source: 'manual',
         validation: A_VALIDER,
       }),
     );
-    // Les refus de ce bloc joignent le bloc de validation (relecture du 2026-11-25, constat 38) : sans lui, ils
-    // échouaient sur aValiderSansRelecteur, quel que soit le contrôle visé
+    // Les refus de ce bloc joignent le bloc de validation (relecture du 2026-11-25, constat 38) et la source « manual »
+    // (constat 6) : sans eux, ils échouaient sur aValiderSansRelecteur ou sur la source, quel que soit le contrôle visé
     await assertFails(
       setDoc(doc(financeur(), 'aap/usurpe'), {
         status: 'draft',
         financeurId: 'autre',
         title: 'x',
+        source: 'manual',
         validation: A_VALIDER,
       }),
     );
@@ -258,6 +266,52 @@ describe('candidatures : porteur en brouillon, financeur en évaluation', () => 
     await assertFails(setDoc(doc(porteur(), 'applications/vers-propose'), vers('propose-f1')));
     await assertFails(setDoc(doc(porteur(), 'applications/vers-archive'), vers('archive-f1')));
     await assertSucceeds(setDoc(doc(porteur(), 'applications/vers-ouvert'), vers('ouvert-f1')));
+  });
+
+  // Relecture du 2026-11-25 (remarque sur le constat 14) : une fiche importée clôturée mais contrôlée reste ouverte au
+  // candidat (ficheConsultable) avec le bouton « J'ai déposé ma candidature : la suivre ici » ; ce seul suivi y est admis
+  it('sur une fiche importée clôturée et visible, seul le suivi externe se crée', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'aap/close-importee'), {
+        status: 'closed',
+        financeurId: 'scraped',
+        title: 'Clôturée',
+        validation: { statut: 'validee', par: 'claude-haiku-5-5' },
+      });
+      await setDoc(doc(db, 'aap/close-proposee'), {
+        status: 'closed',
+        financeurId: 'scraped',
+        title: 'Clôturée, non relue',
+        validation: { statut: 'proposee', par: '' },
+      });
+      await setDoc(doc(db, 'aap/close-f1'), {
+        status: 'closed',
+        financeurId: 'f1',
+        title: 'Clôturée par son financeur',
+        validation: { statut: 'validee', par: 'Monsieur DUCOUT' },
+      });
+      await setDoc(doc(db, 'aap/archive-importee'), { status: 'archived', financeurId: 'scraped', title: 'Archivée' });
+    });
+    const dossier = (aapId: string, financeurId = 'scraped') => ({
+      porteurId: 'porteur1',
+      financeurId,
+      aapId,
+      status: 'submitted',
+    });
+    const suivi = (aapId: string, financeurId = 'scraped') => ({ ...dossier(aapId, financeurId), externe: true });
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/suivi-close'), suivi('close-importee')));
+    await assertFails(setDoc(doc(porteur(), 'applications/dossier-close'), dossier('close-importee')));
+    await assertFails(
+      setDoc(doc(porteur(), 'applications/faux-suivi'), { ...dossier('close-importee'), externe: false }),
+    );
+    await assertFails(setDoc(doc(porteur(), 'applications/suivi-proposee'), suivi('close-proposee')));
+    await assertFails(setDoc(doc(porteur(), 'applications/suivi-close-f1'), suivi('close-f1', 'f1')));
+    await assertFails(setDoc(doc(porteur(), 'applications/suivi-archive'), suivi('archive-importee')));
+    // Contre-vérification : un suivi en brouillon devenait ensuite, en retirant « externe », un dossier ordinaire
+    await assertFails(
+      setDoc(doc(porteur(), 'applications/suivi-brouillon'), { ...suivi('close-importee'), status: 'draft' }),
+    );
   });
 });
 
@@ -532,6 +586,7 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
         status: 'draft',
         financeurId: 'f1',
         title: 'x',
+        source: 'manual',
         validation: { statut: 'validee' },
       }),
     );
@@ -585,12 +640,15 @@ describe('users : le propriétaire ne modifie que ses champs de parcours', () =>
 // contrôle, un appel au nom et au lien de son choix ; une modification d'un appel validé paraissait sans nouveau contrôle.
 describe('appels de financeurs : validation par l’administrateur', () => {
   it('l’appel naît « Proposée » ; sans validation ou déjà validé, la création est refusée', async () => {
-    await assertFails(setDoc(doc(financeur(), 'aap/sans'), { status: 'draft', financeurId: 'f1', title: 'x' }));
+    await assertFails(
+      setDoc(doc(financeur(), 'aap/sans'), { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual' }),
+    );
     await assertFails(
       setDoc(doc(financeur(), 'aap/auto'), {
         status: 'draft',
         financeurId: 'f1',
         title: 'x',
+        source: 'manual',
         validation: { statut: 'proposee', par: 'Monsieur DUCOUT' },
       }),
     );
@@ -619,6 +677,35 @@ describe('appels de financeurs : validation par l’administrateur', () => {
       }),
     );
     await assertSucceeds(updateDoc(doc(financeur(), 'aap/valide-f2'), { status: 'closed' }));
+  });
+});
+
+// Relecture du 2026-11-25 (constat 6, volet règles) : le bloc scrapeMetadata est réservé à l'import (SDK admin) ; le tri
+// (scripts/trier_file.py) y lit le contrôle du modèle et l'écran la thématique. Un financeur ne l'écrit ni à la création
+// ni en modifiant son appel, et son appel naît avec la source « manual », comme l'écrit aapService.createAap.
+describe('appels de financeurs : champs réservés à l’import', () => {
+  const saisi = { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual', validation: A_VALIDER };
+  const faux = { source: 'ars_test', signature: 'x', champ: 'sante', verification: { estUnAppel: true, douteux: [] } };
+
+  it('à la création : ni bloc scrapeMetadata, ni source absente', async () => {
+    await assertFails(setDoc(doc(financeur(), 'aap/faux-controle'), { ...saisi, scrapeMetadata: faux }));
+    await assertFails(
+      setDoc(doc(financeur(), 'aap/sans-source'), {
+        status: 'draft',
+        financeurId: 'f1',
+        title: 'x',
+        validation: A_VALIDER,
+      }),
+    );
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/saisi-main'), saisi));
+  });
+
+  it('en modifiant son appel, l’auteur n’ajoute pas de bloc scrapeMetadata', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { scrapeMetadata: faux, validation: A_VALIDER }));
+    await assertFails(
+      updateDoc(doc(financeur(), 'aap/du-financeur'), { 'scrapeMetadata.champ': 'sante', validation: A_VALIDER }),
+    );
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Corrigé', validation: A_VALIDER }));
   });
 });
 

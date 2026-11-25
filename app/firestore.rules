@@ -29,11 +29,25 @@ service cloud.firestore {
         && request.resource.data.get('validation', {}).get('par', '') == '';
     }
 
-    // Appel publié et visible du public (relecture du 2026-11-25, constats 2, 14 et 43) : validation absente (saisi à la
-    // main avant le lot 1.2) ou « validee », comme visiblePubliquement (src/utils/relecture.ts) à l'écran
+    // Appel visible du public (relecture du 2026-11-25, constats 2, 14 et 43) : validation absente (saisi à la main avant
+    // le lot 1.2) ou « validee », comme visiblePubliquement (src/utils/relecture.ts) à l'écran
+    function relectureVisible(appel) {
+      return appel.get('validation', null) == null || appel.validation.get('statut', '') == 'validee';
+    }
+
     function publieEtVisible(appel) {
-      return appel.get('status', '') == 'published'
-        && (appel.get('validation', null) == null || appel.validation.get('statut', '') == 'validee');
+      return appel.get('status', '') == 'published' && relectureVisible(appel);
+    }
+
+    // Appel auquel un candidat écrit une candidature : publié et visible, ou fiche importée clôturée mais visible pour le
+    // seul suivi externe (relecture du 2026-11-25, remarque sur le constat 14 : ficheConsultable ouvre cette fiche et
+    // le bouton « J'ai déposé ma candidature : la suivre ici » y reste affiché)
+    function ouvertALaCandidature(appel) {
+      return publieEtVisible(appel)
+        || (appel.get('status', '') == 'closed' && appel.get('financeurId', '') == 'scraped' && relectureVisible(appel)
+            && request.resource.data.get('externe', false) == true
+            // Suivi envoyé d'emblée : un suivi en brouillon devenait ensuite un dossier ordinaire en retirant « externe »
+            && request.resource.data.get('status', '') == 'submitted');
     }
 
     // Statut d'un appel modifié par son auteur : inchangé, ou brouillon -> publié, ou publié -> clôturé
@@ -169,8 +183,11 @@ service cloud.firestore {
       // Ni verdict de relecture ni source autre que « manual » à la création (corrections-relecture 2.4, 2026-11-20).
       // Plan niveau A, lot 1.2 (décision « Validation admin » du 2026-11-24) : l'appel naît « Proposée », sans relecteur,
       // et ne paraît qu'après validation par l'administrateur (visiblePubliquement)
+      // Relecture du 2026-11-25 (constat 6) : source « manual » obligatoire, comme l'écrit aapService.createAap, et pas de
+      // bloc scrapeMetadata, réservé à l'import (le tri y lit le contrôle du modèle, l'écran la thématique)
       allow create: if isFinanceur() && hasActiveSubscription() && request.resource.data.financeurId == request.auth.uid
-        && request.resource.data.get('source', 'manual') == 'manual' && aValiderSansRelecteur();
+        && request.resource.data.get('source', '') == 'manual' && aValiderSansRelecteur()
+        && !request.resource.data.keys().hasAny(['scrapeMetadata']);
 
       // Mise à jour et suppression : l'administrateur (publier, clôturer, archiver, supprimer, y compris les fiches
       // importées), ou le financeur auteur de l'appel. L'auteur ne touche ni au verdict de relecture ni à la source, et
@@ -178,8 +195,9 @@ service cloud.firestore {
       // l'administrateur ne revient pas dans la recherche par lui (corrections-relecture 2.4, 2026-11-20).
       // Plan niveau A, lot 1.2 : toute modification par l'auteur repasse l'appel « Proposée » (une fois validé, il pouvait
       // le réécrire sans nouveau contrôle) ; seule la clôture d'un appel publié se fait telle quelle.
+      // L'auteur ne touche pas non plus au bloc scrapeMetadata, réservé à l'import (relecture du 2026-11-25, constat 6).
       allow update: if isAdmin() || ajouteUneVue() || (isAuthenticated() && resource.data.financeurId == request.auth.uid
-        && figes(['financeurId', 'source']) && statutAuteurPermis()
+        && figes(['financeurId', 'source', 'scrapeMetadata']) && statutAuteurPermis()
         && (aValiderSansRelecteur() || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
                                         && request.resource.data.status == 'closed')));
       allow delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
@@ -197,11 +215,12 @@ service cloud.firestore {
       // Création : un porteur abonné, pour son propre compte, en brouillon ou envoyée, sans évaluation, adressée au
       // financeur de l'appel (corrections-relecture 2.4, 2026-11-20 : une candidature pouvait naître « acceptée »), et
       // seulement à un appel publié et visible, comme candidatureOuverte à l'écran (relecture du 2026-11-25, constat 14 :
-      // par le SDK, un candidat écrivait à un brouillon, à un appel « Proposée » ou archivé)
+      // par le SDK, un candidat écrivait à un brouillon, à un appel « Proposée » ou archivé) ; sur une fiche importée
+      // clôturée et visible, le seul suivi externe (ouvertALaCandidature)
       allow create: if isPorteur() && hasActiveSubscription() && request.resource.data.porteurId == request.auth.uid
         && request.resource.data.get('status', '') in ['draft', 'submitted']
         && !request.resource.data.keys().hasAny(champsEvaluation())
-        && publieEtVisible(get(/databases/$(database)/documents/aap/$(request.resource.data.aapId)).data)
+        && ouvertALaCandidature(get(/databases/$(database)/documents/aap/$(request.resource.data.aapId)).data)
         && request.resource.data.financeurId == get(/databases/$(database)/documents/aap/$(request.resource.data.aapId)).data.financeurId;
 
       // Mise à jour : le porteur propriétaire tant que la candidature est en brouillon (sans se donner de décision), ou le
