@@ -29,11 +29,11 @@ describe('versCsv', () => {
         ['Répit', null],
       ],
     );
-    expect(csv.startsWith('﻿')).toBe(true);
+    expect(csv.startsWith('\uFEFF')).toBe(true);
     expect(csv.slice(1).split('\r\n')).toEqual(['"Titre";"Budget"', '"Équipe mobile";"12000"', '"Répit";""']);
   });
 
   it('liste vide : l’en-tête seul (l’ancien export plantait sur une liste vide)', () => {
-    expect(versCsv(['Email'], [])).toBe('﻿"Email"');
+    expect(versCsv(['Email'], [])).toBe('\uFEFF"Email"');
   });
 });
