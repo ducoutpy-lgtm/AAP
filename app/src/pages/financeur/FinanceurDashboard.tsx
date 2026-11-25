@@ -13,6 +13,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { ListeDemarrage } from '../../components/demarrage/ListeDemarrage';
 import type { AAP, Application, ApplicationStatus } from '../../types';
 import { COLONNES, dateDe, LIBELLES_STATUTS_CANDIDATURE, resumeFinanceur } from '../../utils/financeur';
+import { formatDateCloture } from '../../utils/datesCloture';
 import { MessageErreur } from '../../components/ui/MessageErreur';
 
 const COULEURS: Record<ApplicationStatus, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
@@ -134,7 +135,7 @@ export default function FinanceurDashboard() {
                       </Link>
                       <p className="text-xs text-gray-500">
                         {a.views || 0} vues
-                        {dateDe(a.deadline) ? ` · clôture le ${dateDe(a.deadline)!.toLocaleDateString('fr-FR')}` : ''}
+                        {dateDe(a.deadline) ? ` · clôture le ${formatDateCloture(dateDe(a.deadline)!)}` : ''}
                       </p>
                     </div>
                     <Badge variant={a.status === 'published' ? 'success' : a.status === 'draft' ? 'gray' : 'warning'}>
@@ -147,7 +148,7 @@ export default function FinanceurDashboard() {
             {echeance && r.prochaineEcheance && (
               <p className="mt-4 text-sm text-gray-600 flex items-center gap-2">
                 <CalendarClock className="h-4 w-4 text-primary-600" />
-                Prochaine échéance : {echeance.toLocaleDateString('fr-FR')} ({r.prochaineEcheance.title})
+                Prochaine échéance : {formatDateCloture(echeance)} ({r.prochaineEcheance.title})
               </p>
             )}
           </Card>

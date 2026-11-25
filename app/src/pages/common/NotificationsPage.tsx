@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, orderBy, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
@@ -8,6 +8,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Bell, Check, Trash2, Filter, MessageSquare, FileText, AlertCircle, TrendingUp } from 'lucide-react';
 import { MessageErreur } from '../../components/ui/MessageErreur';
+import { annoncer } from '../../utils/annonces';
 
 interface Notification {
   id: string;
@@ -100,12 +101,16 @@ export default function NotificationsPage() {
     }
   };
 
+  // Suppression en base (relecture du plan niveau A, 2026-11-25) : la corbeille ne retirait la notification que de
+  // l'écran, elle revenait au rechargement. La règle Firestore autorise la suppression au destinataire ; la notification
+  // ne quitte l'écran qu'une fois supprimée.
   const deleteNotification = async (notificationId: string) => {
     try {
-      // In production, you might want to use a soft delete or archive
-      setNotifications(notifications.filter((n) => n.id !== notificationId));
+      await deleteDoc(doc(db, 'notifications', notificationId));
+      setNotifications((courantes) => courantes.filter((n) => n.id !== notificationId));
     } catch (err) {
       console.error('Error deleting notification:', err);
+      annoncer("La notification n'a pas pu être supprimée : réessayez dans un instant.", 'erreur');
     }
   };
 

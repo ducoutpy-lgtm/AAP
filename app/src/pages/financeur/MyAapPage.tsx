@@ -6,6 +6,7 @@ import { db } from '../../config/firebase';
 import { aapService } from '../../services/aapService';
 import { AAP, Application } from '../../types';
 import { candidaturesParAppel } from '../../utils/financeur';
+import { formatDateCloture } from '../../utils/datesCloture';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -197,14 +198,7 @@ export default function MyAapPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    <span>
-                      Deadline:{' '}
-                      {aap.deadline
-                        ? new Date(
-                            aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate(),
-                          ).toLocaleDateString('fr-FR')
-                        : 'Non précisée'}
-                    </span>
+                    <span>Deadline: {aap.deadline ? formatDateCloture(aap.deadline) : 'Non précisée'}</span>
                   </div>
                 </div>
 

@@ -5,6 +5,7 @@ import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
 import { getDaysUntilDeadline, urgenceEcheance, type UrgenceEcheance } from '../../utils/deadline';
+import { bornesMoisCloture, formatDateCloture, memeJourCloture } from '../../utils/datesCloture';
 import { visiblePubliquement } from '../../utils/relecture';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -57,8 +58,9 @@ export default function CalendarPage() {
 
       // Load AAPs deadlines (for porteurs)
       if (userProfile.userType === 'porteur') {
-        const start = startOfMonth(currentMonth);
-        const end = endOfMonth(currentMonth);
+        // Clôtures du mois affiché lues en jours UTC (constat 4 de la relecture, 2026-11-25) : à l'ouest de Greenwich,
+        // les bornes locales écartaient les appels qui clôturent le 1er du mois
+        const { debut: start, fin: end } = bornesMoisCloture(currentMonth);
 
         const aapsQuery = query(
           collection(db, 'aap'),
@@ -87,8 +89,7 @@ export default function CalendarPage() {
 
       // Load application deadlines (for financeurs)
       if (userProfile.userType === 'financeur') {
-        const start = startOfMonth(currentMonth);
-        const end = endOfMonth(currentMonth);
+        const { debut: start, fin: end } = bornesMoisCloture(currentMonth);
 
         const aapsQuery = query(
           collection(db, 'aap'),
@@ -129,8 +130,9 @@ export default function CalendarPage() {
     return eachDayOfInterval({ start, end });
   };
 
+  // Une case (jour local) porte les clôtures de ce jour du calendrier (jour UTC), outre-mer compris
   const getEventsForDate = (date: Date): DeadlineEvent[] => {
-    return events.filter((event) => isSameDay(event.deadline, date));
+    return events.filter((event) => memeJourCloture(event.deadline, date));
   };
 
   const getUrgencyColor = (urgency: DeadlineEvent['urgency']): string => {
@@ -314,7 +316,9 @@ export default function CalendarPage() {
                       className="p-2 bg-white border border-error-200 rounded hover:shadow cursor-pointer"
                     >
                       <p className="text-sm font-medium text-gray-900 truncate">{event.title}</p>
-                      <p className="text-xs text-error-600">{format(event.deadline, 'dd MMM yyyy', { locale: fr })}</p>
+                      <p className="text-xs text-error-600">
+                        {formatDateCloture(event.deadline, { day: '2-digit', month: 'short', year: 'numeric' })}
+                      </p>
                     </div>
                   ))}
                 {events.filter((e) => e.urgency === 'high').length === 0 && (

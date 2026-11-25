@@ -4,6 +4,7 @@ import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'fireb
 import { db } from '../../config/firebase';
 import { AAP, ValidationStatut } from '../../types';
 import { RELECTEUR_HUMAIN, selectionATraiter } from '../../utils/relecture';
+import { formatDateCloture } from '../../utils/datesCloture';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
@@ -357,10 +358,10 @@ export default function ManageAAPsPage() {
     return <Badge variant={variants[status]}>{labels[status]}</Badge>;
   };
 
+  // Date limite : jour du calendrier lu en UTC, sans la veille outre-mer (constat 4 de la relecture, 2026-11-25)
   const formatDate = (date: Timestamp | Date | null | undefined): string => {
     if (!date) return '-';
-    const dateObj = date instanceof Date ? date : date.toDate();
-    return dateObj.toLocaleDateString('fr-FR');
+    return formatDateCloture(date);
   };
 
   // Libellés et couleurs du statut de validation (type AapValidation). Le relecteur est Monsieur DUCOUT ou un modèle.
