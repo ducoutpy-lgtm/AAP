@@ -20,7 +20,12 @@ import {
 import cas from './cas_filtres_recherche.json';
 import type { AAP } from '../types';
 
-const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
+// Échéance à minuit UTC d'un jour du calendrier compté depuis la date locale, comme l'import (décision 38) : le décompte
+// ne dépend ni de l'heure ni du fuseau du poste (relecture, constat 40 ; avant, deux échecs sous Pacific/Pago_Pago)
+const dans = (jours: number) => {
+  const auj = new Date();
+  return new Date(Date.UTC(auj.getFullYear(), auj.getMonth(), auj.getDate() + jours));
+};
 
 describe('statutAppel', () => {
   it('quatre valeurs d après la date de clôture', () => {

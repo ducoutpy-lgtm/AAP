@@ -22,10 +22,19 @@ describe('urgenceEcheance', () => {
 // de son dernier jour aux Antilles et en Guyane.
 describe('jours avant la clôture, en jours du calendrier', () => {
   const fuseau = process.env.TZ;
+  // Fuseau effectif et décalage du poste au départ, lus avant tout changement
+  const fuseauDepart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const decalage = () => new Date(Date.UTC(2026, 11, 1)).getTimezoneOffset();
+  const decalageDepart = decalage();
+  // Seule une affectation fait relire le fuseau à Node : on réaffecte celui du départ, puis on retire la variable si
+  // elle était absente (le fuseau effectif reste alors celui du poste)
+  const retablirFuseau = () => {
+    process.env.TZ = fuseau ?? fuseauDepart;
+    if (fuseau === undefined) delete process.env.TZ;
+  };
   afterEach(() => {
     vi.useRealTimers();
-    if (fuseau === undefined) delete process.env.TZ;
-    else process.env.TZ = fuseau;
+    retablirFuseau();
   });
   const le1erDecembre = new Date(Date.UTC(2026, 11, 1));
 
@@ -54,5 +63,17 @@ describe('jours avant la clôture, en jours du calendrier', () => {
   // « undefined » (fuseau Etc/Unknown, lu comme UTC) ; les tests suivants du fichier ne tournaient plus à l'heure du poste
   it('rétablit le fuseau de départ après chaque test, y compris quand TZ était absent', () => {
     expect(process.env.TZ).toBe(fuseau);
+  });
+
+  // Relecture du constat 47 : sous Node 22, « delete process.env.TZ » vide la variable sans rendre à Node le fuseau du
+  // poste (le processus restait à l'heure de la Martinique) ; le contrôle porte donc sur le fuseau effectif et le décalage
+  it('après le rétablissement, le fuseau effectif et le décalage sont ceux du départ', () => {
+    // Fuseau d'essai choisi par son décalage : un poste à UTC-4 (Guadeloupe, Martinique) part vers Kiritimati
+    process.env.TZ = decalageDepart === 240 ? 'Pacific/Kiritimati' : 'America/Martinique';
+    expect(decalage()).not.toBe(decalageDepart);
+    retablirFuseau();
+    expect(process.env.TZ).toBe(fuseau);
+    expect(Intl.DateTimeFormat().resolvedOptions().timeZone).toBe(fuseauDepart);
+    expect(decalage()).toBe(decalageDepart);
   });
 });

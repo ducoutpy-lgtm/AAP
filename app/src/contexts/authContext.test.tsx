@@ -128,3 +128,61 @@ describe('chargement tenu jusqu’à la lecture du profil (lot 3.5)', () => {
     expect(etats.filter((e) => e.uid && !e.loading && !e.role)).toEqual([]);
   });
 });
+
+// Lecture de profil devenue périmée (relecture, défaut signalé par le groupe « tests-fuseau ») : une déconnexion ou un
+// changement de compte survient pendant la lecture du document users ; sa réponse tardive ne doit plus rien écrire
+describe('lecture du profil devenue périmée', () => {
+  // getDoc reste en attente ; le test répond quand il veut
+  const lectureEnAttente = () => {
+    let repondre!: (role: string) => void;
+    vi.mocked(getDoc).mockReturnValueOnce(
+      new Promise((resoudre) => {
+        repondre = (role) => resoudre({ exists: () => true, data: () => ({ userType: role }) });
+      }) as never,
+    );
+    return (role: string) => repondre(role);
+  };
+
+  it('déconnexion pendant la lecture : aucun profil sans compte connecté', async () => {
+    monter();
+    const repondreU1 = lectureEnAttente();
+    let arriveeU1!: Promise<void>;
+    act(() => {
+      arriveeU1 = simu.rappel!({ uid: 'u1' });
+    });
+    await act(() => simu.rappel!(null));
+
+    await act(async () => {
+      repondreU1('porteur');
+      await arriveeU1;
+    });
+    expect(etats[etats.length - 1]).toEqual({ uid: null, loading: false, role: null });
+  });
+
+  it('changement de compte u1 puis u2, la lecture de u1 finit après celle de u2 : u2 garde son propre rôle', async () => {
+    monter();
+    const repondreU1 = lectureEnAttente();
+    const repondreU2 = lectureEnAttente();
+    let arriveeU1!: Promise<void>;
+    let arriveeU2!: Promise<void>;
+    act(() => {
+      arriveeU1 = simu.rappel!({ uid: 'u1' });
+    });
+    act(() => {
+      arriveeU2 = simu.rappel!({ uid: 'u2' });
+    });
+
+    await act(async () => {
+      repondreU2('financeur');
+      await arriveeU2;
+    });
+    expect(etats[etats.length - 1]).toEqual({ uid: 'u2', loading: false, role: 'financeur' });
+
+    await act(async () => {
+      repondreU1('porteur');
+      await arriveeU1;
+    });
+    expect(etats[etats.length - 1]).toEqual({ uid: 'u2', loading: false, role: 'financeur' });
+    expect(etats.filter((e) => e.uid === 'u2' && e.role === 'porteur')).toEqual([]);
+  });
+});

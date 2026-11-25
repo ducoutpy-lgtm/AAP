@@ -148,7 +148,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   useEffect(() => {
+    // Numéro du dernier rappel reçu (relecture, lecture périmée) : une déconnexion ou un changement de compte pendant la
+    // lecture du profil rend sa réponse périmée ; elle est ignorée, le rappel le plus récent fixe seul profil et chargement
+    let dernierRappel = 0;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      const rappel = ++dernierRappel;
       // Chargement remis à vrai jusqu'à la lecture du profil (plan niveau A, lot 3.5) : sinon une page voyait le compte
       // connecté sans son profil, et la connexion menait à « compléter le profil » au lieu du tableau de bord
       if (user) setLoading(true);
@@ -158,6 +162,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
           // Récupération du profil utilisateur
           const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (rappel !== dernierRappel) return;
           if (userDoc.exists()) {
             setUserProfile({
               uid: user.uid,
@@ -169,6 +174,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }
         } catch (error) {
           console.error('Error fetching user profile:', error);
+          if (rappel !== dernierRappel) return;
           setUserProfile(null);
         }
       } else {
