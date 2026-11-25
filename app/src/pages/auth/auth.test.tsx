@@ -101,3 +101,23 @@ describe('connexion refusée', () => {
     expect(screen.queryByText(/Firebase/)).toBeNull();
   });
 });
+
+describe('Se souvenir de moi (décision 36 du 2026-11-24)', () => {
+  afterEach(cleanup);
+
+  it('case décochée : session fermée à la fermeture du navigateur ; cochée : session gardée', async () => {
+    compte.login.mockReset().mockResolvedValue(undefined);
+    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
+    fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
+    await waitFor(() => expect(compte.login).toHaveBeenCalledWith('c@test.local', 'secret12', false));
+    cleanup();
+    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
+    fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
+    fireEvent.click(screen.getByLabelText(/Se souvenir de moi/));
+    fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
+    await waitFor(() => expect(compte.login).toHaveBeenLastCalledWith('c@test.local', 'secret12', true));
+  });
+});

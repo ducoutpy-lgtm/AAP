@@ -10,6 +10,9 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   sendEmailVerification,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
@@ -29,7 +32,7 @@ interface AuthContextType {
   userProfile: User | null;
   loading: boolean;
   signup: (email: string, password: string, userType: UserType) => Promise<void>;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, seSouvenir?: boolean) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -104,7 +107,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await creerDocumentsDuCompte(currentUser, userType);
   };
 
-  const login = async (email: string, password: string) => {
+  // « Se souvenir de moi » (décision 36 du 2026-11-24) : case décochée, la session se ferme à la fermeture du navigateur
+  // (poste partagé d'établissement) ; cochée, elle est gardée
+  const login = async (email: string, password: string, seSouvenir = true) => {
+    await setPersistence(auth, seSouvenir ? browserLocalPersistence : browserSessionPersistence);
     const credential = await signInWithEmailAndPassword(auth, email, password);
     await journaliserConnexion(credential.user);
   };

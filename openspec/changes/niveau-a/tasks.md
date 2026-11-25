@@ -80,7 +80,9 @@ local par lot vérifié.
 ## 6. Décisions du 2026-11-24 (questions 35 à 43, choix à cocher relayés par la séance de pilotage)
 
 - [ ] 6.1 (35) Compteur de vues : +1 à l'ouverture d'une fiche, règle Firestore qui n'autorise que cet ajout.
-- [ ] 6.2 (36) « Se souvenir de moi » : case décochée, session fermée à la fermeture du navigateur.
+- [x] 6.2 (36) « Se souvenir de moi » : case décochée, session fermée à la fermeture du navigateur. (2026-11-25 :
+  `login(email, mot de passe, seSouvenir)` et `setPersistence` ; décochée par défaut ; test en échec sans la correction ;
+  181 tests verts. La connexion par Google garde la session, non modifiée.)
 - [ ] 6.3 (37) Thématique des appels de financeur déduite des « Secteurs ciblés » (application et `scraping/alertes.py`).
 - [ ] 6.4 (38) Jour de clôture compté en jours du calendrier, règle commune à l'import, à l'application et au courriel.
 - [x] 6.5 (39) Bouton « Clôturer » dans « Mes appels ». (2026-11-25 : sur un appel publié, avec confirmation ; test de page

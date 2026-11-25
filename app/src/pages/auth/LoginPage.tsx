@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [seSouvenir, setSeSouvenir] = useState(false);
 
   const { login, loginWithGoogle, currentUser } = useAuth();
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(email, password, seSouvenir);
 
       // Attendre un peu pour que le profil soit chargé
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -139,6 +140,8 @@ export default function LoginPage() {
               <label className="flex items-center">
                 <input
                   type="checkbox"
+                  checked={seSouvenir}
+                  onChange={e => setSeSouvenir(e.target.checked)}
                   className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                 />
                 <span className="ml-2 text-gray-600">Se souvenir de moi</span>
