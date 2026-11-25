@@ -13,6 +13,7 @@ import { deadlineLabel, getDaysUntilDeadline } from '../../utils/deadline';
 import { candidatureSurSiteOfficiel, libelleMontant } from '../../utils/candidat';
 import { libelleTerritoire } from '../../utils/territoires';
 import { manquesDuProfil, recommander, type Recommandation } from '../../utils/recommandations';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 type Appel = AAP & { id: string };
 
@@ -22,6 +23,7 @@ export default function RecommendationsPage() {
   const [recommandations, setRecommandations] = useState<Recommandation<Appel>[]>([]);
   const [manques, setManques] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -35,6 +37,7 @@ export default function RecommendationsPage() {
         setRecommandations(recommander(aaps, profil));
       } catch (err) {
         console.error('Erreur au chargement des recommandations :', err);
+        setErreurChargement(true);
       } finally {
         setLoading(false);
       }
@@ -42,6 +45,8 @@ export default function RecommendationsPage() {
     charger();
   }, [currentUser]);
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

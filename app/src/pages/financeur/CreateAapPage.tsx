@@ -14,6 +14,7 @@ import { erreursEtape, ErreursFormulaire, donneesDepuisFormulaire, formulaireDep
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { messageErreur } from '../../utils/erreurs';
+import { annoncer } from '../../utils/annonces';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -122,14 +123,14 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       if (aapExistant?.id) {
         // Modification : l'appel garde son statut (brouillon ou publié) ; par le financeur, il repasse « Proposée »
         await aapService.updateAap(aapExistant.id, aapData, userProfile.userType !== 'admin');
-        alert(userProfile.userType === 'admin' ? 'Appel mis à jour' : A_VALIDER);
+        annoncer(userProfile.userType === 'admin' ? 'Appel mis à jour' : A_VALIDER);
         navigate(`/aap/${aapExistant.id}`);
         return;
       }
 
       const aapId = await aapService.createAap(currentUser.uid, await nomDuFinanceur(), aapData);
 
-      alert('AAP sauvegardé en brouillon');
+      annoncer('AAP sauvegardé en brouillon');
       navigate(`/aap/${aapId}`);
     } catch (err) {
       setError(messageErreur(err, 'Erreur lors de la sauvegarde'));
@@ -155,7 +156,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
           await aapService.publishAap(aapExistant.id, revalider);
           await journaliser(currentUser.uid, userProfile.userType, 'appel', aapExistant.id, formData.title);
         }
-        alert(revalider ? A_VALIDER : aapExistant.status === 'draft' ? 'Appel publié' : 'Appel mis à jour');
+        annoncer(revalider ? A_VALIDER : aapExistant.status === 'draft' ? 'Appel publié' : 'Appel mis à jour');
         navigate(`/aap/${aapExistant.id}`);
         return;
       }
@@ -164,7 +165,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
       await aapService.publishAap(aapId, true);
       await journaliser(currentUser.uid, userProfile.userType, 'appel', aapId, formData.title);
 
-      alert(A_VALIDER);
+      annoncer(A_VALIDER);
       navigate(`/mes-aap`);
     } catch (err) {
       setError(messageErreur(err, 'Erreur lors de la publication'));

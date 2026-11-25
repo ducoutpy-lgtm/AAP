@@ -11,6 +11,7 @@ import { Button } from '../../components/ui/Button';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface DeadlineEvent {
   id: string;
@@ -27,6 +28,7 @@ export default function CalendarPage() {
   const [events, setEvents] = useState<DeadlineEvent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -35,6 +37,7 @@ export default function CalendarPage() {
   }, [currentUser, currentMonth]);
 
   const loadEvents = async () => {
+    setErreurChargement(false);
     if (!currentUser || !userProfile) return;
 
     try {
@@ -102,6 +105,7 @@ export default function CalendarPage() {
       setEvents(eventsData);
     } catch (err) {
       console.error('Error loading calendar events:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -133,6 +137,8 @@ export default function CalendarPage() {
   const days = getDaysInMonth();
   const weekDays = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadEvents} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

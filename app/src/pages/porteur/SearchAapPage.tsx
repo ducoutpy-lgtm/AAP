@@ -25,6 +25,7 @@ import {
   type FiltresRecherche,
   type StatutAppel,
 } from '../../utils/recherche';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 // Pastille de statut d'une carte (recherche-guidee) : couleur selon l'urgence
 const VARIANT_STATUT: Record<StatutAppel, 'success' | 'warning' | 'gray' | 'primary'> = {
@@ -39,6 +40,7 @@ export default function SearchAapPage() {
   const { currentUser, userProfile } = useAuth();
   const [aaps, setAaps] = useState<(AAP & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   // Filtres dans l'adresse de la page (recherche-guidee, 2026-10-20) : une recherche se partage par son lien et
   // survit au rechargement ; l'état React est dérivé des paramètres, chaque changement réécrit l'adresse sans empiler
   // d'historique.
@@ -135,6 +137,7 @@ export default function SearchAapPage() {
   }, []);
 
   const loadAaps = async () => {
+    setErreurChargement(false);
     try {
       const aapsQuery = query(
         collection(db, 'aap'),
@@ -152,6 +155,7 @@ export default function SearchAapPage() {
       setAaps(aapsData);
     } catch (err) {
       console.error('Error loading AAPs:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -163,6 +167,8 @@ export default function SearchAapPage() {
     ? consultees.map(id => aaps.find(a => a.id === id)).filter((a): a is AAP & { id: string } => Boolean(a))
     : filteredAaps;
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadAaps} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { BarChart3, TrendingUp, Users, FileText, Eye, Target, Award } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface Stats {
   totalAAP: number;
@@ -27,6 +28,7 @@ export default function StatisticsPage() {
   const { currentUser } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -35,6 +37,7 @@ export default function StatisticsPage() {
   }, [currentUser]);
 
   const loadStatistics = async () => {
+    setErreurChargement(false);
     if (!currentUser) return;
 
     try {
@@ -113,11 +116,14 @@ export default function StatisticsPage() {
       });
     } catch (err) {
       console.error('Error loading statistics:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadStatistics} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

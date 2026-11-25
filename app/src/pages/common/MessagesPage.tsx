@@ -7,6 +7,7 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { MessageSquare, Send, Search, User } from 'lucide-react';
+import { annoncer } from '../../utils/annonces';
 
 interface Message {
   id: string;
@@ -139,6 +140,7 @@ export default function MessagesPage() {
       setNewMessage('');
     } catch (err) {
       console.error('Error sending message:', err);
+      annoncer("Le message n'a pas pu être envoyé : réessayez dans un instant.", 'erreur');
     }
   };
 

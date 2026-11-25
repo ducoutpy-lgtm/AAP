@@ -15,6 +15,7 @@ import {
   DollarSign,
   BarChart3,
 } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface GlobalStats {
   totalUsers: number;
@@ -45,12 +46,14 @@ export default function GlobalStatisticsPage() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
   const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     loadStatistics();
   }, []);
 
   const loadStatistics = async () => {
+    setErreurChargement(false);
     try {
       // Load users
       const usersSnapshot = await getDocs(collection(db, 'users'));
@@ -157,11 +160,14 @@ export default function GlobalStatisticsPage() {
       setMonthlyData(monthlyStats);
     } catch (err) {
       console.error('Error loading statistics:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadStatistics} />;
   if (loading || !stats) {
     return (
       <div className="min-h-screen flex items-center justify-center">

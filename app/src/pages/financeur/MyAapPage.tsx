@@ -11,11 +11,14 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { Plus, Eye, Users, Calendar, Edit, Trash2 } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
+import { annoncer } from '../../utils/annonces';
 
 export default function MyAapPage() {
   const { currentUser } = useAuth();
   const [aaps, setAaps] = useState<AAP[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   const [filter, setFilter] = useState<'all' | 'draft' | 'published' | 'closed'>('all');
 
   useEffect(() => {
@@ -23,6 +26,7 @@ export default function MyAapPage() {
   }, [currentUser]);
 
   const loadAaps = async () => {
+    setErreurChargement(false);
     if (!currentUser) return;
 
     try {
@@ -35,6 +39,7 @@ export default function MyAapPage() {
       setAaps(data.map(a => ({ ...a, applicationsCount: parAppel[a.id!] ?? 0 })));
     } catch (error) {
       console.error('Error loading AAPs:', error);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -49,7 +54,7 @@ export default function MyAapPage() {
       setAaps(prev => prev.map(aap => (aap.id === aapId ? { ...aap, status: 'closed' } : aap)));
     } catch (error) {
       console.error('Error closing AAP:', error);
-      alert('La clôture a échoué : réessayez dans un instant.');
+      annoncer('La clôture a échoué : réessayez dans un instant.', 'erreur');
     }
   };
 
@@ -61,7 +66,7 @@ export default function MyAapPage() {
       setAaps(prev => prev.filter(aap => aap.id !== aapId));
     } catch (error) {
       console.error('Error deleting AAP:', error);
-      alert('Erreur lors de la suppression');
+      annoncer('Erreur lors de la suppression', 'erreur');
     }
   };
 
@@ -83,6 +88,8 @@ export default function MyAapPage() {
     }
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadAaps} />;
   if (loading) {
     return <LoadingSpinner fullScreen />;
   }

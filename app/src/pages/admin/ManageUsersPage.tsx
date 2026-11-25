@@ -17,6 +17,8 @@ import {
   Calendar,
 } from 'lucide-react';
 import { telechargerCsv, versCsv } from '../../utils/csv';
+import { MessageErreur } from '../../components/ui/MessageErreur';
+import { annoncer } from '../../utils/annonces';
 
 interface UserWithId extends User {
   uid: string;
@@ -31,6 +33,7 @@ export default function ManageUsersPage() {
   const [users, setUsers] = useState<UserWithId[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<UserWithId[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [userTypeFilter, setUserTypeFilter] = useState<'all' | 'porteur' | 'financeur'>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'trial' | 'expired' | 'cancelled'>('all');
@@ -47,6 +50,7 @@ export default function ManageUsersPage() {
   }, [searchTerm, userTypeFilter, statusFilter, users]);
 
   const loadUsers = async () => {
+    setErreurChargement(false);
     try {
       const usersSnapshot = await getDocs(collection(db, 'users'));
       const usersData = usersSnapshot.docs.map(doc => ({
@@ -58,6 +62,7 @@ export default function ManageUsersPage() {
       setFilteredUsers(usersData);
     } catch (err) {
       console.error('Error loading users:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -93,11 +98,11 @@ export default function ManageUsersPage() {
       await updateDoc(doc(db, 'users', userId), {
         subscriptionStatus: 'cancelled',
       });
-      alert('Utilisateur suspendu avec succès');
+      annoncer('Utilisateur suspendu avec succès');
       loadUsers();
     } catch (err) {
       console.error('Error suspending user:', err);
-      alert('Erreur lors de la suspension');
+      annoncer('Erreur lors de la suspension', 'erreur');
     }
   };
 
@@ -106,11 +111,11 @@ export default function ManageUsersPage() {
       await updateDoc(doc(db, 'users', userId), {
         subscriptionStatus: 'active',
       });
-      alert('Utilisateur activé avec succès');
+      annoncer('Utilisateur activé avec succès');
       loadUsers();
     } catch (err) {
       console.error('Error activating user:', err);
-      alert('Erreur lors de l\'activation');
+      annoncer('Erreur lors de l\'activation', 'erreur');
     }
   };
 
@@ -149,6 +154,8 @@ export default function ManageUsersPage() {
     return labels[type];
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadUsers} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -14,6 +14,12 @@ describe('écrans finis', () => {
     expect(fautifs).toEqual([]);
   });
 
+  // Lot 3.1 : retours par bandeau (utils/annonces.ts) au lieu des fenêtres alert() du navigateur
+  it('aucun alert() dans les sources', () => {
+    const fautifs = Object.entries(SOURCES).filter(([, texte]) => /\balert\(/.test(texte)).map(([chemin]) => chemin);
+    expect(fautifs).toEqual([]);
+  });
+
   it('aucune route vers les écrans vides de l’administration', () => {
     const app = SOURCES['../App.tsx'];
     expect(app).toBeDefined();

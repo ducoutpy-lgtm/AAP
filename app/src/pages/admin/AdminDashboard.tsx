@@ -15,6 +15,7 @@ import {
   BarChart3,
   Coins,
 } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface DashboardStats {
   totalUsers: number;
@@ -54,12 +55,14 @@ export default function AdminDashboard() {
   });
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
 
   const loadDashboardData = async () => {
+    setErreurChargement(false);
     try {
       // Load users
       const usersSnapshot = await getDocs(collection(db, 'users'));
@@ -166,6 +169,7 @@ export default function AdminDashboard() {
       setRecentActivity(activities.slice(0, 10));
     } catch (err) {
       console.error('Error loading dashboard data:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -200,6 +204,8 @@ export default function AdminDashboard() {
     return <Badge variant={variants[status] || 'gray'}>{status}</Badge>;
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadDashboardData} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

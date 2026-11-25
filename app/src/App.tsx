@@ -64,6 +64,7 @@ import ConfidentialitePage from './pages/legal/ConfidentialitePage';
 
 // Gabarit commun et pages publiques (changement navigation-et-pages-publiques, 2026-10-20)
 import Gabarit from './components/layout/Gabarit';
+import { Annonces } from './components/layout/Annonces';
 import FonctionnalitesPage from './pages/public/FonctionnalitesPage';
 import TarifsPage from './pages/public/TarifsPage';
 import FinanceursPage from './pages/public/FinanceursPage';
@@ -91,6 +92,8 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* Bandeau des annonces (succès, erreurs), au lieu des fenêtres d'alerte du navigateur (plan niveau A, lot 3.1) */}
+        <Annonces />
         <Routes>
           {/* Toutes les pages sous le gabarit commun : en-tête ou barre latérale, retour, pied de page, remontée en haut */}
           <Route element={<Gabarit />}>

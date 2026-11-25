@@ -9,6 +9,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { ArrowLeft, FileText, TrendingUp, Filter, Download } from 'lucide-react';
 import { telechargerCsv, versCsv } from '../../utils/csv';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface Application {
   id: string;
@@ -32,6 +33,7 @@ export default function ViewApplicationsPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [filteredApplications, setFilteredApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'date' | 'score'>('date');
 
@@ -46,6 +48,7 @@ export default function ViewApplicationsPage() {
   }, [statusFilter, sortBy, applications]);
 
   const loadData = async () => {
+    setErreurChargement(false);
     if (!aapId || !currentUser) return;
 
     try {
@@ -74,6 +77,7 @@ export default function ViewApplicationsPage() {
       setFilteredApplications(applicationsData);
     } catch (err) {
       console.error('Error loading data:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -143,6 +147,8 @@ export default function ViewApplicationsPage() {
     telechargerCsv(csv, `candidatures-${aap?.title || 'aap'}.csv`);
   };
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadData} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

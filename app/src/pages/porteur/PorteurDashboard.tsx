@@ -17,6 +17,7 @@ import { deadlineLabel, getDaysUntilDeadline } from '../../utils/deadline';
 import { libelleTerritoire } from '../../utils/territoires';
 import { LIBELLES_STATUT, statutAppel } from '../../utils/recherche';
 import type { ApplicationStatus } from '../../types';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 type AapAvecId = AAP & { id: string };
 interface CandidatureCourte { id: string; projectTitle: string; aapTitle?: string; status: ApplicationStatus; submittedAt?: { toMillis: () => number } }
@@ -27,6 +28,7 @@ export default function PorteurDashboard() {
   const [aaps, setAaps] = useState<AapAvecId[]>([]);
   const [candidatures, setCandidatures] = useState<CandidatureCourte[]>([]);
   const [recherches, setRecherches] = useState(0);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -34,11 +36,11 @@ export default function PorteurDashboard() {
     getDoc(doc(db, 'porteurProfiles', uid)).then(s => setProfil(s.exists() ? (s.data() as PorteurProfile) : null)).catch(() => undefined);
     getDocs(query(collection(db, 'aap'), where('status', '==', 'published'), orderBy('publishedAt', 'desc')))
       .then(s => setAaps((s.docs.map(d => ({ id: d.id, ...d.data() })) as AapAvecId[]).filter(visiblePubliquement)))
-      .catch(err => console.error('Appels non chargés :', err));
+      .catch(err => { console.error('Appels non chargés :', err); setErreurChargement(true); });
     getDocs(query(collection(db, 'applications'), where('porteurId', '==', uid)))
       .then(s => setCandidatures((s.docs.map(d => ({ id: d.id, ...d.data() })) as CandidatureCourte[])
         .sort((a, b) => (b.submittedAt?.toMillis() ?? 0) - (a.submittedAt?.toMillis() ?? 0))))
-      .catch(err => console.error('Candidatures non chargées :', err));
+      .catch(err => { console.error('Candidatures non chargées :', err); setErreurChargement(true); });
     getDocs(query(collection(db, 'savedSearches'), where('userId', '==', uid)))
       .then(s => setRecherches(s.size))
       .catch(() => undefined);
@@ -48,6 +50,8 @@ export default function PorteurDashboard() {
   const pourMoi = appelsPourProfil(aaps, region);
   const proches = echeancesProches(pourMoi);
   const lienRecherche = region ? `/aap/search?territory=${encodeURIComponent(region)}` : '/aap/search';
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur />;
 
   return (
     <div className="min-h-screen bg-gray-50">

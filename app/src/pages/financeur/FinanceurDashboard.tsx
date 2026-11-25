@@ -13,6 +13,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { ListeDemarrage } from '../../components/demarrage/ListeDemarrage';
 import type { AAP, Application, ApplicationStatus } from '../../types';
 import { COLONNES, dateDe, LIBELLES_STATUTS_CANDIDATURE, resumeFinanceur } from '../../utils/financeur';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 const COULEURS: Record<ApplicationStatus, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
   draft: 'gray', submitted: 'primary', under_review: 'warning', pending_info: 'warning', shortlisted: 'warning', accepted: 'success', rejected: 'error',
@@ -23,6 +24,7 @@ export default function FinanceurDashboard() {
   const [aaps, setAaps] = useState<AAP[]>([]);
   const [candidatures, setCandidatures] = useState<Application[]>([]);
   const [chargement, setChargement] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -36,6 +38,7 @@ export default function FinanceurDashboard() {
         setCandidatures(c.docs.map(d => ({ id: d.id, ...d.data() }) as Application));
       } catch (err) {
         console.error('Tableau de bord financeur non chargé :', err);
+        setErreurChargement(true);
       } finally {
         setChargement(false);
       }
@@ -43,6 +46,8 @@ export default function FinanceurDashboard() {
   }, [currentUser]);
 
   if (chargement) return <LoadingSpinner fullScreen />;
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur />;
   const r = resumeFinanceur(aaps, candidatures);
   const titres = Object.fromEntries(aaps.map(a => [a.id, a.title]));
   const echeance = r.prochaineEcheance ? dateDe(r.prochaineEcheance.deadline) : null;

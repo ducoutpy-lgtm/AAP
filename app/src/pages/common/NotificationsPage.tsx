@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Bell, Check, Trash2, Filter, MessageSquare, FileText, AlertCircle, TrendingUp } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface Notification {
   id: string;
@@ -27,6 +28,7 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export default function NotificationsPage() {
   }, [filter, notifications]);
 
   const loadNotifications = async () => {
+    setErreurChargement(false);
     if (!currentUser) return;
 
     try {
@@ -59,6 +62,7 @@ export default function NotificationsPage() {
       setFilteredNotifications(notificationsData);
     } catch (err) {
       console.error('Error loading notifications:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -169,6 +173,8 @@ export default function NotificationsPage() {
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadNotifications} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

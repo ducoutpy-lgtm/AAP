@@ -54,10 +54,13 @@ local par lot vérifié.
 
 ## 3. Application
 
-- [ ] 3.1 Messages d'erreur en français et composant d'erreur commun ; bandeaux au lieu d'`alert`. (Messages faits le
+- [x] 3.1 Messages d'erreur en français et composant d'erreur commun ; bandeaux au lieu d'`alert`. (Messages faits le
   2026-11-24 : `utils/erreurs.ts`, `messageErreur` dans 17 affichages de 13 écrans ; test unitaire et test de la page
-  de connexion, en échec sans la correction ; 176 tests verts. Restent : états d'erreur des pages, où une panne s'affiche
-  comme « aucun résultat », et `alert()` remplacés par des bandeaux.)
+  de connexion, en échec sans la correction ; 176 tests verts. 2026-11-25 : `MessageErreur` (message et « Réessayer »)
+  dans 13 pages dont la lecture échouait en silence (recherche, tableaux de bord, statistiques, administration,
+  calendrier, notifications) ; 25 `alert()` remplacés par `annoncer()` (`utils/annonces.ts`, bandeau `Annonces` posé dans
+  `App.tsx`) ; envoi de message en échec annoncé. Tests en échec avant (recherche, annonces, aucun `alert(` dans les
+  sources) ; 213 verts. Les `confirm()` et `prompt()` restent, comme le prévoyait l'audit.)
 - [ ] 3.2 Menu sur téléphone.
 - [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
   2026-11-24 : échelles complètes de success, warning, error, info ; `src/test/palette.test.ts` en échec avec l'ancienne

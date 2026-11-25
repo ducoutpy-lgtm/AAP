@@ -27,6 +27,8 @@ import {
   ShieldX,
   Tags,
 } from 'lucide-react';
+import { MessageErreur } from '../../components/ui/MessageErreur';
+import { annoncer } from '../../utils/annonces';
 
 interface AAPWithId extends AAP {
   id: string;
@@ -40,6 +42,7 @@ export default function ManageAAPsPage() {
   const [aaps, setAaps] = useState<AAPWithId[]>([]);
   const [filteredAaps, setFilteredAaps] = useState<AAPWithId[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erreurChargement, setErreurChargement] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published' | 'closed' | 'archived'>(
     (params.get('status') as 'draft' | 'published' | 'closed' | 'archived' | null) ?? 'all'
@@ -77,7 +80,7 @@ export default function ManageAAPsPage() {
       await loadAaps();
     } catch (err) {
       console.error('Erreur de qualification :', err);
-      alert('Erreur lors de l\'enregistrement de la qualification');
+      annoncer('Erreur lors de l\'enregistrement de la qualification', 'erreur');
     } finally {
       setQEnregistrement(false);
     }
@@ -116,6 +119,7 @@ export default function ManageAAPsPage() {
   }, [searchTerm, statusFilter, validationFilter, aaps]);
 
   const loadAaps = async () => {
+    setErreurChargement(false);
     try {
       const aapsSnapshot = await getDocs(collection(db, 'aap'));
       const aapsData = aapsSnapshot.docs.map(doc => ({
@@ -127,6 +131,7 @@ export default function ManageAAPsPage() {
       setFilteredAaps(aapsData);
     } catch (err) {
       console.error('Error loading AAPs:', err);
+      setErreurChargement(true);
     } finally {
       setLoading(false);
     }
@@ -180,7 +185,7 @@ export default function ManageAAPsPage() {
     const { aTraiter, ignorees } = selectionATraiter(aaps.filter(a => selection.has(a.id)), verdict);
     const libelle = verdict === 'validee' ? 'valider et publier' : 'rejeter';
     const note = ignorees ? ` (${ignorees} ignorée${ignorees > 1 ? 's' : ''} : ${verdict === 'validee' ? 'déjà validée, rejetée, archivée, clôturée ou sans contrôle' : 'déjà rejetée ou sans contrôle'})` : '';
-    if (aTraiter.length === 0) { alert(`Aucune fiche à ${libelle}${note}.`); return; }
+    if (aTraiter.length === 0) { annoncer(`Aucune fiche à ${libelle}${note}.`, 'info'); return; }
     if (!confirm(`Confirmer : ${libelle} ${aTraiter.length} fiche${aTraiter.length > 1 ? 's' : ''}${note} ?`)) return;
     const commentaire = verdict === 'rejetee' ? prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') : '';
     if (commentaire === null) return;
@@ -195,7 +200,7 @@ export default function ManageAAPsPage() {
       await loadAaps();
     } catch (err) {
       console.error('Erreur de traitement en masse :', err);
-      alert('Erreur pendant le traitement : certaines fiches ont pu être traitées, rechargez la page');
+      annoncer('Erreur pendant le traitement : certaines fiches ont pu être traitées, rechargez la page', 'erreur');
     } finally {
       setTraitement(false);
     }
@@ -208,11 +213,11 @@ export default function ManageAAPsPage() {
       await updateDoc(doc(db, 'aap', aapId), {
         status: 'archived',
       });
-      alert('AAP archivé avec succès');
+      annoncer('AAP archivé avec succès');
       loadAaps();
     } catch (err) {
       console.error('Error archiving AAP:', err);
-      alert('Erreur lors de l\'archivage');
+      annoncer('Erreur lors de l\'archivage', 'erreur');
     }
   };
 
@@ -221,11 +226,11 @@ export default function ManageAAPsPage() {
 
     try {
       await deleteDoc(doc(db, 'aap', aapId));
-      alert('AAP supprimé avec succès');
+      annoncer('AAP supprimé avec succès');
       loadAaps();
     } catch (err) {
       console.error('Error deleting AAP:', err);
-      alert('Erreur lors de la suppression');
+      annoncer('Erreur lors de la suppression', 'erreur');
     }
   };
 
@@ -235,11 +240,11 @@ export default function ManageAAPsPage() {
         status: 'published',
         publishedAt: new Date(),
       });
-      alert('AAP publié avec succès');
+      annoncer('AAP publié avec succès');
       loadAaps();
     } catch (err) {
       console.error('Error publishing AAP:', err);
-      alert('Erreur lors de la publication');
+      annoncer('Erreur lors de la publication', 'erreur');
     }
   };
 
@@ -257,7 +262,7 @@ export default function ManageAAPsPage() {
       loadAaps();
     } catch (err) {
       console.error('Erreur de validation :', err);
-      alert('Erreur lors de la validation');
+      annoncer('Erreur lors de la validation', 'erreur');
     }
   };
 
@@ -272,7 +277,7 @@ export default function ManageAAPsPage() {
       loadAaps();
     } catch (err) {
       console.error('Erreur de rejet :', err);
-      alert('Erreur lors du rejet');
+      annoncer('Erreur lors du rejet', 'erreur');
     }
   };
 
@@ -283,11 +288,11 @@ export default function ManageAAPsPage() {
       await updateDoc(doc(db, 'aap', aapId), {
         status: 'closed',
       });
-      alert('AAP clôturé avec succès');
+      annoncer('AAP clôturé avec succès');
       loadAaps();
     } catch (err) {
       console.error('Error closing AAP:', err);
-      alert('Erreur lors de la clôture');
+      annoncer('Erreur lors de la clôture', 'erreur');
     }
   };
 
@@ -329,6 +334,8 @@ export default function ManageAAPsPage() {
   const publiable = (aap: AAPWithId): boolean =>
     !aap.validation || (aap.validation.statut !== 'proposee' && aap.validation.statut !== 'a_corriger');
 
+  // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
+  if (erreurChargement) return <MessageErreur onReessayer={loadAaps} />;
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

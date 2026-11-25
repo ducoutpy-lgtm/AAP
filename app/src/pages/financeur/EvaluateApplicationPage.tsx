@@ -16,6 +16,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { messageErreur } from '../../utils/erreurs';
+import { annoncer } from '../../utils/annonces';
 
 interface Application {
   id: string;
@@ -100,7 +101,7 @@ export default function EvaluateApplicationPage() {
         updatedAt: Timestamp.now(),
       });
 
-      alert('Statut mis à jour avec succès');
+      annoncer('Statut mis à jour avec succès');
       navigate(`/aap/${aapId}/candidatures`);
     } catch (err) {
       console.error('Error updating status:', err);
@@ -123,7 +124,7 @@ export default function EvaluateApplicationPage() {
         updatedAt: Timestamp.now(),
       });
 
-      alert('Évaluation sauvegardée');
+      annoncer('Évaluation sauvegardée');
     } catch (err) {
       console.error('Error saving:', err);
       setError(messageErreur(err, 'Erreur lors de la sauvegarde'));
