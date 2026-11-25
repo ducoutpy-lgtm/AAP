@@ -16,7 +16,8 @@ Usage (depuis scraping/, environnement ../.venv) :
 Garde-fous : une page en erreur ou sans lien d'appel lisible ne touche pas aux compteurs de ses liens ; une page déjà
 relue le jour même est sautée (sinon une relance compterait une absence de trop) ; une page à la fois, deux secondes de
 pause (règle réseau du projet). liens.json et rejeux.json sont écrits par fichier temporaire ; un fichier coupé est
-signalé, laissé tel quel et sa source sautée, sans arrêter les autres (relecture du plan niveau A, 2026-11-25).
+signalé, laissé tel quel et sa source sautée, sans arrêter les autres (relecture du plan niveau A, 2026-11-25) ; un
+liens.json coupé figure en erreur dans rejeux.json et dans VEILLE.md.
 """
 from __future__ import annotations
 
@@ -127,7 +128,10 @@ def rapport_markdown(journaux: dict[str, list[dict]], perimables: list[dict], au
     disparus = [(b.get("nom", sid), h) for sid, b in sorted(derniers.items()) for h in b.get("disparus", [])]
     lignes += [f"- {nom} : {h}" for nom, h in disparus] or ["Aucun."]
     lignes += ["", f"## Fiches absentes de leur page depuis au moins {SEUIL_PEREMPTION} rejeux", "",
-               "À passer « à corriger » par `scripts/perimer_fiches.py` (essai à blanc, sauvegarde, accord de Monsieur DUCOUT).", ""]
+               "À passer « à corriger » par `scripts/perimer_fiches.py`, depuis la racine du dépôt (environnement `.venv`) : "
+               "d'abord l'essai à blanc `python scripts/perimer_fiches.py --dry-run`, qui n'écrit rien ; puis, seulement "
+               "avec l'accord de Monsieur DUCOUT, `python scripts/perimer_fiches.py`, qui sauvegarde les fiches dans "
+               "`scripts/sauvegardes/` puis écrit dans Firestore.", ""]
     lignes += [f"- {(f.get('titre') or '')[:80]} ({(f.get('scrape_metadata') or {}).get('source', '')}, {(f.get('scrape_metadata') or {}).get('absences')} absences, "
                f"vue le {(f.get('scrape_metadata') or {}).get('vue_rubrique_le', '')[:10]}) : {f.get('url_source', '')}" for f in perimables] or ["Aucune."]
     return "\n".join(lignes) + "\n"
@@ -156,6 +160,15 @@ async def relire_source(browser, url: str, seuil: int = 2, page_appel: bool = Fa
         await contexte.close()
 
 
+def journaliser(journal: Path, bilan: dict) -> None:
+    """Ajoute le bilan au journal rejeux.json de la source ; un journal coupé est laissé tel quel pour être réparé,
+    jamais écrasé."""
+    liste = echantillon._charger_ou_signaler(journal) if journal.exists() else []
+    if liste is not None:
+        liste.append(bilan)
+        echantillon._ecrire_json(journal, liste, indent=1)
+
+
 async def relire(sources: list[dict]) -> list[dict]:
     from playwright.async_api import async_playwright
 
@@ -174,6 +187,8 @@ async def relire(sources: list[dict]) -> list[dict]:
                     donnees = echantillon._charger_ou_signaler(chemin)
                     if donnees is None:  # fichier coupé : source sautée, les autres sont relues
                         bilan["erreur"] = "liens.json illisible (fichier coupé), compteurs inchangés"
+                        # Bilan écrit au journal : sinon VEILLE.md reprenait celui de la semaine précédente
+                        journaliser(dossier / "rejeux.json", bilan)
                         bilans.append(bilan)
                         print(f"{s['id'][:40]:40} {bilan['erreur']}")
                         continue
@@ -192,11 +207,7 @@ async def relire(sources: list[dict]) -> list[dict]:
                     if not b["ignore"]:
                         donnees.update(liens=fusion, dernier_rejeu=jour)
                         echantillon._ecrire_json(chemin, donnees, indent=1)
-                    journal = dossier / "rejeux.json"
-                    liste = echantillon._charger_ou_signaler(journal) if journal.exists() else []
-                    if liste is not None:  # journal coupé : laissé tel quel pour être réparé, jamais écrasé
-                        liste.append(bilan)
-                        echantillon._ecrire_json(journal, liste, indent=1)
+                    journaliser(dossier / "rejeux.json", bilan)
                     await asyncio.sleep(2.0)  # rythme humain
                 bilans.append(bilan)
                 etat = f"erreur : {bilan['erreur']}" if bilan["ignore"] else f"{bilan['vus']} liens, {len(bilan['nouveaux'])} nouveaux, {len(bilan['disparus'])} disparus"

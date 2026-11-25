@@ -519,7 +519,7 @@ def _charger_liste(chemin: Path) -> list:
         return []
     try:
         return json.loads(chemin.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as err:
+    except (json.JSONDecodeError, UnicodeDecodeError) as err:  # coupé, éventuellement au milieu d'un caractère accentué
         raise ValueError(f"{chemin} illisible ({err}) : le restaurer depuis Git ou une sauvegarde avant de relancer") from err
 
 
@@ -531,7 +531,8 @@ def _charger_ou_signaler(chemin: Path):
         return None
     try:
         return json.loads(chemin.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as err:
+    except (json.JSONDecodeError, UnicodeDecodeError) as err:
+        # UnicodeDecodeError : fichier coupé au milieu d'un caractère accentué (deux octets en UTF-8), avant json.loads
         print(f"{chemin} illisible ({err}) : ignoré et laissé tel quel, à réparer ou à recréer")
         return None
 

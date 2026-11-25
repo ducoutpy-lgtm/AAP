@@ -364,3 +364,40 @@ def test_un_texte_reussi_apres_un_echec_sort_du_fichier_des_echecs_moteur_api(tm
                              fiches=[({"id": "src", "nom": "Source"}, chemin)])
     assert [e["fichier"] for e in json.loads(erreurs.read_text(encoding="utf-8"))] == ["b.txt"]
     assert "1 réussites (1 nouvelles), 1 échecs" in capsys.readouterr().out
+
+
+def test_un_texte_refuse_apres_un_echec_sort_du_fichier_des_echecs_moteur_api(tmp_path, monkeypatch, capsys):
+    # Relecture du plan niveau A (sceptique « chaine-textes ») : le retrait de l'échec après un refus, sur le moteur api,
+    # n'était couvert par aucun test (retirer ces deux lignes laissait toute la suite verte). Aucun appel payant.
+    import extractor
+    chemin, (sortie,) = _texte_et_echecs(tmp_path, monkeypatch, "extraction_api_test.json")
+    erreurs = sortie.with_name(sortie.stem + ".errors.json")
+    monkeypatch.setattr(extractor, "est_un_aap", lambda *a, **k: {"est_aap": False, "raison": "pas un appel"})
+    echantillon.extraire_api({}, "claude-haiku-5-5", None, 5.0, chemin_sortie=sortie,
+                             fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    refus = json.loads(sortie.with_name(sortie.stem + "_non_aap.json").read_text(encoding="utf-8"))
+    assert [r["url"] for r in refus] == ["https://x/page-a"]
+    assert [e["fichier"] for e in json.loads(erreurs.read_text(encoding="utf-8"))] == ["b.txt"]
+    assert "1 pages refusées, 0 réussites (0 nouvelles), 1 échecs" in capsys.readouterr().out
+
+
+def test_un_fichier_coupe_au_milieu_d_un_caractere_accentue_est_signale(tmp_path, capsys):
+    # Même relecture : une coupure au milieu de « à » (deux octets en UTF-8) faisait lever UnicodeDecodeError avant
+    # json.loads ; l'exception n'était pas rattrapée et arrêtait toute la relecture du lundi.
+    octets = json.dumps({"url": "https://x", "liens": [{"texte": "Appel à projets"}]}, ensure_ascii=False).encode("utf-8")
+    coupe = octets[: octets.index("à".encode("utf-8")) + 1]
+    chemin = tmp_path / "liens.json"
+    chemin.write_bytes(coupe)
+    assert echantillon._charger_ou_signaler(chemin) is None
+    assert "illisible" in capsys.readouterr().out
+    assert chemin.read_bytes() == coupe
+
+
+def test_liste_coupee_au_milieu_d_un_accent_arrete_l_etape_avec_un_message_clair(tmp_path):
+    """Contre-vérification du 2026-11-25 : un fichier de résultats coupé au milieu d'un caractère accentué levait
+    UnicodeDecodeError, sans le message « illisible ... le restaurer » des fichiers coupés."""
+    chemin = tmp_path / "resultats.json"
+    texte = '[{"titre": "Appel à projets'.encode("utf-8")
+    chemin.write_bytes(texte[: texte.index("à".encode("utf-8")) + 1])  # premier des deux octets de « à »
+    with pytest.raises(ValueError, match="illisible"):
+        echantillon._charger_liste(chemin)

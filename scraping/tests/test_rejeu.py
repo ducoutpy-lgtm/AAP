@@ -155,3 +155,32 @@ def test_marquer_et_rapport_sautent_un_fichier_coupe(tmp_path, monkeypatch):
     assert set(rejeu.liens_connus()) == {"s1", "s2"}
     assert rejeu.rapport() == 0
     assert "| Source 1 | 2026-11-23T08:00 | 1 |" in (tmp_path / "VEILLE.md").read_text(encoding="utf-8")
+
+
+def test_un_liens_json_coupe_est_ecrit_en_erreur_dans_le_journal_et_dans_veille_md(tmp_path, monkeypatch):
+    # Relecture du plan niveau A (sceptique « chaine-textes ») : le bilan d'une source au liens.json coupé n'était pas
+    # ajouté à son rejeux.json ; VEILLE.md reprenait le bilan de la semaine précédente et comptait la source « relue ».
+    sources = _sources(tmp_path, monkeypatch, [COUPE])
+    monkeypatch.setattr(rejeu, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(rejeu, "RAPPORT", tmp_path / "VEILLE.md")
+    (tmp_path / "results").mkdir()
+    semaine_passee = {"id": "s0", "nom": "Source 0", "date": "2026-11-16T08:00:00", "vus": 5, "nouveaux": [], "disparus": [],
+                      "ignore": False, "erreur": None}
+    (tmp_path / "s0" / "rejeux.json").write_text(json.dumps([semaine_passee]), encoding="utf-8")
+    asyncio.run(rejeu.relire(sources))
+    journal = json.loads((tmp_path / "s0" / "rejeux.json").read_text(encoding="utf-8"))
+    assert len(journal) == 2 and journal[-1]["ignore"] is True and "illisible" in journal[-1]["erreur"]
+    assert (tmp_path / "s0" / "liens.json").read_text(encoding="utf-8") == COUPE
+    rejeu.rapport()
+    texte = (tmp_path / "VEILLE.md").read_text(encoding="utf-8")
+    assert "Sources relues : 0 ; en erreur ou sans lien lisible (compteurs inchangés) : 1" in texte
+    assert "liens.json illisible" in texte and "2026-11-16" not in texte
+
+
+def test_veille_md_donne_la_commande_exacte_de_l_essai_a_blanc_de_peremption():
+    # Même relecture : VEILLE.md invitait à un « essai à blanc » sans dire qu'il exige --dry-run ; sans cette option,
+    # scripts/perimer_fiches.py écrit dans Firestore. La commande citée doit être celle que le script déclare.
+    texte = rejeu.rapport_markdown({}, [], "2026-11-25")
+    assert "`python scripts/perimer_fiches.py --dry-run`" in texte
+    script = (Path(__file__).resolve().parents[2] / "scripts" / "perimer_fiches.py").read_text(encoding="utf-8")
+    assert 'add_argument("--dry-run"' in script
