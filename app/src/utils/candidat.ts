@@ -1,10 +1,11 @@
 // Logique du parcours candidat (changement parcours-candidat-jour-1, 2026-10-20, jour 1 du plan MVP) : montant
 // lisible, « à qui s'adresse », appels pour un profil, échéances proches, colonnes des candidatures. Pourquoi un
 // fichier à part : testable par Vitest sans React ni Firebase.
-import type { AAP, ApplicationStatus } from '../types';
+import type { AAP, ApplicationStatus, UserType } from '../types';
 import { getDaysUntilDeadline, isClosed } from './deadline';
 import { euros } from './recherche';
 import { destinatairesDe } from './qualification';
+import { visiblePubliquement } from './relecture';
 
 // « De 10 000 € à 50 000 € », « Jusqu'à 50 000 € », « Enveloppe 2 000 000 € », sinon « Montant non précisé »
 export function libelleMontant(aap: Pick<AAP, 'budgetMin' | 'budgetMax' | 'budgetTotal'>): string {
@@ -125,7 +126,17 @@ export function repartirCandidatures<T extends { status: string }>(apps: T[]): R
 }
 
 // Candidature possible dans l'application (corrections-relecture 2.1, 2026-11-20) : appel publié dont la date de clôture
-// n'est pas passée (sans date : ouvert). Un appel clôturé ou archivé par l'administrateur reste lisible mais fermé.
-export function candidatureOuverte(aap: Pick<AAP, 'status' | 'deadline'>): boolean {
-  return aap.status === 'published' && !isClosed(getDaysUntilDeadline(aap.deadline));
+// n'est pas passée (sans date : ouvert), et visible du public (plan niveau A, lot 3.4 : une fiche proposée acceptait une
+// candidature). Un appel clôturé par l'administrateur reste lisible mais fermé.
+export function candidatureOuverte(aap: Pick<AAP, 'status' | 'deadline' | 'validation'>): boolean {
+  return aap.status === 'published' && visiblePubliquement(aap) && !isClosed(getDaysUntilDeadline(aap.deadline));
+}
+
+// Fiche ouverte par son adresse directe (plan niveau A, lot 3.4, 2026-11-25) : un candidat ne lit que les fiches de la
+// recherche (publiées ou clôturées, et contrôlées) ; l'administrateur et le financeur auteur lisent toutes les leurs, pour
+// l'aperçu (administration, saisie d'un appel). Brouillon et archivé (fiche rejetée) restent fermés aux autres.
+export function ficheConsultable(aap: Pick<AAP, 'status' | 'validation' | 'financeurId'>, userType: UserType | undefined,
+  uid: string | undefined): boolean {
+  if (userType === 'admin' || (uid && aap.financeurId === uid)) return true;
+  return (aap.status === 'published' || aap.status === 'closed') && visiblePubliquement(aap);
 }

@@ -1,6 +1,6 @@
 // Tests du parcours candidat (changement parcours-candidat-jour-1, tâche 1.1).
 import { describe, expect, it } from 'vitest';
-import { candidatureSurSiteOfficiel, suiviCandidatureExterne, candidatureOuverte } from './candidat';
+import { candidatureSurSiteOfficiel, suiviCandidatureExterne, candidatureOuverte, ficheConsultable } from './candidat';
 
 describe('suiviCandidatureExterne (suivi-candidature-externe)', () => {
   it('note une candidature déposée sur le site officiel, sans prétendre la transmettre', () => {
@@ -104,5 +104,26 @@ describe('candidatureOuverte', () => {
     for (const status of ['closed', 'archived', 'draft'] as const) {
       expect(candidatureOuverte({ status, deadline: jours(10) })).toBe(false);
     }
+  });
+});
+
+// Plan niveau A, lot 3.4 (2026-11-25) : une fiche proposée, en brouillon ou archivée s'ouvrait par son adresse directe et
+// acceptait une candidature. Un candidat ne lit que les fiches de la recherche ; l'administrateur et l'auteur, toutes.
+describe('ficheConsultable', () => {
+  const PROPOSEE = { statut: 'proposee' as const, commentaire: '', date: '2026-11-25', par: '' };
+  const VALIDEE = { ...PROPOSEE, statut: 'validee' as const };
+  it('candidat : appel publié ou clôturé et contrôlé seulement', () => {
+    expect(ficheConsultable({ status: 'published', validation: VALIDEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(true);
+    expect(ficheConsultable({ status: 'closed', validation: VALIDEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(true);
+    expect(ficheConsultable({ status: 'published', validation: PROPOSEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(false);
+    expect(ficheConsultable({ status: 'draft', financeurId: 'f1' }, 'porteur', 'p1')).toBe(false);
+    expect(ficheConsultable({ status: 'archived', validation: VALIDEE, financeurId: 'scraped' }, 'financeur', 'f2')).toBe(false);
+  });
+  it('administrateur et financeur auteur : toutes leurs fiches, pour l’aperçu', () => {
+    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'scraped' }, 'admin', 'a1')).toBe(true);
+    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'f1' }, 'financeur', 'f1')).toBe(true);
+  });
+  it('candidature fermée sur une fiche non contrôlée, même publiée', () => {
+    expect(candidatureOuverte({ status: 'published', deadline: null, validation: PROPOSEE })).toBe(false);
   });
 });

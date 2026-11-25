@@ -15,7 +15,7 @@ import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 import { aapService } from '../../services/aapService';
-import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
+import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, ficheConsultable, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
@@ -129,7 +129,8 @@ export default function AapDetailPage() {
     );
   }
 
-  if (!aap) {
+  // Fiche hors de la recherche (proposée, brouillon, archivée) : introuvable, sauf pour l'administrateur et l'auteur
+  if (!aap || !ficheConsultable(aap, userProfile?.userType, currentUser?.uid)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center max-w-md">

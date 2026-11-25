@@ -1,5 +1,5 @@
-// Compteur de vues (décision 35 du 2026-11-24) : il restait à 0 faute d'écriture, d'où un taux de conversion à 0 % chez
-// le financeur. L'ouverture d'une fiche publiée par un compte connecté ajoute une vue, une seule même quand React rejoue
+// Page de la fiche. Compteur de vues (décision 35 du 2026-11-24) : il restait à 0 faute d'écriture, d'où un taux de
+// conversion à 0 % chez le financeur. L'ouverture d'une fiche publiée par un compte connecté ajoute une vue, une seule même quand React rejoue
 // l'effet (mode strict) ; l'auteur de l'appel et l'administrateur ne comptent pas.
 import { StrictMode } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -60,5 +60,27 @@ describe('compteur de vues de la fiche', () => {
     expect(await screen.findByRole('heading', { name: 'Appel test' })).toBeInTheDocument();
     await new Promise(r => setTimeout(r, 20));
     expect(appels).toEqual([]);
+  });
+});
+
+// Plan niveau A, lot 3.4 (2026-11-25) : une fiche proposée s'ouvrait par son adresse directe
+describe('fiche non visible du public', () => {
+  beforeEach(() => {
+    etat.fiche = { title: 'Appel proposé', status: 'published', financeurId: 'f1', deadline: null, territoriesEligible: [],
+      validation: { statut: 'proposee', commentaire: '', date: '2026-11-25', par: '' } };
+  });
+  afterEach(cleanup);
+
+  it('un candidat voit « AAP non trouvé »', async () => {
+    etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
+    ouvrir();
+    expect(await screen.findByText('AAP non trouvé')).toBeInTheDocument();
+    expect(screen.queryByText('Appel proposé')).toBeNull();
+  });
+
+  it('son auteur la lit, pour l’aperçu', async () => {
+    etat.compte = { ...etat.compte, currentUser: { uid: 'f1' }, userProfile: { userType: 'financeur' } };
+    ouvrir();
+    expect(await screen.findByRole('heading', { name: 'Appel proposé' })).toBeInTheDocument();
   });
 });

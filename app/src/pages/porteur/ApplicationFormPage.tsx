@@ -20,7 +20,7 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Stepper } from '../../components/ui/Stepper';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
-import { candidatureOuverte, libelleMontant } from '../../utils/candidat';
+import { candidatureOuverte, ficheConsultable, libelleMontant } from '../../utils/candidat';
 import { pieceNonDeposee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 
@@ -172,7 +172,7 @@ export default function ApplicationFormPage() {
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" /></div>;
   }
-  if (!aap) {
+  if (!aap || !ficheConsultable(aap, userProfile?.userType, currentUser?.uid)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center max-w-md">
