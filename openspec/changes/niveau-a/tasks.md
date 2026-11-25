@@ -73,8 +73,12 @@ local par lot vérifié.
   (`utils/connexion.ts`), sans l'attente fixe d'une seconde. Test d'un profil lu 1,5 s après : l'ancienne page menait à
   `/complete-profile` ; 201 tests verts. Parcours des trois rôles sur les émulateurs : dans la vérification 5.1.)
 - [ ] 3.6 Chargement découpé, Stripe seulement là où il sert.
-- [ ] 3.7 Favori branché ; vraie page 404 ; écrans « en cours de développement » retirés des menus ; mention
-  « paiement bientôt disponible » sur l'écran Abonnement.
+- [x] 3.7 Favori branché ; vraie page 404 ; écrans « en cours de développement » retirés des menus ; mention
+  « paiement bientôt disponible » sur l'écran Abonnement. (2026-11-25 : `favorisService.ts` et `useFavoris` (document
+  `uid_aapId` dans `favoriteAap`), cœur de la fiche et des cartes de la recherche, libellé et `aria-pressed` ;
+  `PageIntrouvable` ; boutons et routes `/admin/paiements` et `/admin/parametres` retirés avec le gabarit provisoire ;
+  mention et boutons d'abonnement inactifs, l'essai reste accessible. Tests en échec avant ; 207 verts. Pas encore de
+  liste « Mes favoris » à l'écran : les favoris se voient au cœur plein.)
 
 ## 4. Outillage, tests, documentation
 

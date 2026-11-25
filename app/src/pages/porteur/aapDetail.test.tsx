@@ -3,7 +3,7 @@
 // l'effet (mode strict) ; l'auteur de l'appel et l'administrateur ne comptent pas.
 import { StrictMode } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 const etat = vi.hoisted(() => ({
@@ -16,6 +16,11 @@ vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => etat.compte }));
 vi.mock('../../services/journalService', () => ({ journaliser: vi.fn() }));
 vi.mock('../../hooks/useMarquerDemarrage', () => ({ useMarquerDemarrage: vi.fn() }));
 vi.mock('../../services/aapService', () => ({ aapService: { incrementViews: (id: string) => etat.incrementViews(id) } }));
+const favoris = vi.hoisted(() => ({ basculer: vi.fn<(uid: string, id: string, actif: boolean) => Promise<void>>(() => Promise.resolve()) }));
+vi.mock('../../services/favorisService', () => ({
+  lireFavoris: () => Promise.resolve(new Set<string>()),
+  basculerFavori: (uid: string, id: string, actif: boolean) => favoris.basculer(uid, id, actif),
+}));
 vi.mock('firebase/storage', () => ({ ref: vi.fn(), getDownloadURL: vi.fn() }));
 vi.mock('firebase/firestore', () => ({
   doc: vi.fn(), collection: vi.fn(), addDoc: vi.fn(),
@@ -82,5 +87,27 @@ describe('fiche non visible du public', () => {
     etat.compte = { ...etat.compte, currentUser: { uid: 'f1' }, userProfile: { userType: 'financeur' } };
     ouvrir();
     expect(await screen.findByRole('heading', { name: 'Appel proposé' })).toBeInTheDocument();
+  });
+});
+
+// Favori (décision du 2026-11-24 « Le brancher », plan niveau A, lot 3.7) : le cœur de la fiche ne faisait rien
+describe('favori de la fiche', () => {
+  beforeEach(() => {
+    etat.fiche = { title: 'Appel test', status: 'published', financeurId: 'f1', deadline: null, territoriesEligible: [] };
+    etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
+    favoris.basculer.mockClear();
+  });
+  afterEach(cleanup);
+
+  it('ajouter puis retirer : enregistré dans les favoris du compte, bouton à jour', async () => {
+    ouvrir();
+    const bouton = await screen.findByRole('button', { name: 'Ajouter aux favoris' });
+    expect(bouton).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.click(bouton);
+    await vi.waitFor(() => expect(favoris.basculer).toHaveBeenCalledWith('p1', 'a1', false));
+    const retirer = await screen.findByRole('button', { name: 'Retirer des favoris' });
+    expect(retirer).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(retirer);
+    await vi.waitFor(() => expect(favoris.basculer).toHaveBeenLastCalledWith('p1', 'a1', true));
   });
 });

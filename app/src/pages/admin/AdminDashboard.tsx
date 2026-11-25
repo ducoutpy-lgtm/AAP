@@ -12,7 +12,6 @@ import {
   CreditCard,
   TrendingUp,
   AlertTriangle,
-  Settings,
   BarChart3,
   Coins,
 } from 'lucide-react';
@@ -358,22 +357,6 @@ export default function AdminDashboard() {
               >
                 <Coins className="h-4 w-4 mr-3" />
                 Appels externes (coûts)
-              </Button>
-              <Button
-                className="w-full justify-start"
-                variant="secondary"
-                onClick={() => navigate('/admin/paiements')}
-              >
-                <CreditCard className="h-4 w-4 mr-3" />
-                Gérer les paiements
-              </Button>
-              <Button
-                className="w-full justify-start"
-                variant="secondary"
-                onClick={() => navigate('/admin/parametres')}
-              >
-                <Settings className="h-4 w-4 mr-3" />
-                Paramètres plateforme
               </Button>
             </div>
           </Card>

@@ -44,6 +44,7 @@ import StatisticsPage from './pages/financeur/StatisticsPage';
 import NotificationsPage from './pages/common/NotificationsPage';
 import MessagesPage from './pages/common/MessagesPage';
 import CalendarPage from './pages/common/CalendarPage';
+import PageIntrouvable from './pages/common/PageIntrouvable';
 
 // Administration
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -71,18 +72,6 @@ import ContactPage from './pages/public/ContactPage';
 // retirées par le lot 0 du 2026-10-14 reviennent avec leurs gardes d'origine (connexion, abonnement, rôle). Les
 // fonctions serveur (paiement, alertes, notifications automatiques) restent non déployées tant que le forfait Blaze
 // n'est pas confirmé : les pages correspondantes fonctionnent avec les données déjà en base.
-
-// Gabarit pour les pages non encore écrites et la page 404
-function PlaceholderPage({ title }: { title: string }) {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{title}</h1>
-        <p className="text-gray-600">Cette page est en cours de développement</p>
-      </div>
-    </div>
-  );
-}
 
 // Route réservée à un rôle, avec abonnement actif ou période d'essai
 function RoutePourRole({ roles, children }: { roles: UserType[]; children: ReactNode }) {
@@ -162,8 +151,6 @@ function App() {
           <Route path="/admin/statistiques" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><GlobalStatisticsPage /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/testeurs" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><TesteursPage /></RoleGuard></ProtectedRoute>} />
           <Route path="/admin/couts-ia" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><CoutsExternesPage /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/paiements" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><PlaceholderPage title="Gestion des Paiements" /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/parametres" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><PlaceholderPage title="Paramètres Plateforme" /></RoleGuard></ProtectedRoute>} />
 
           {/* Pages légales (rédigées le 2026-10-19, changement degel-application-complete) */}
           <Route path="/cgu" element={<CguPage />} />
@@ -171,7 +158,8 @@ function App() {
           <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
 
           {/* 404 */}
-          <Route path="*" element={<PlaceholderPage title="Page non trouvée" />} />
+          {/* Page 404 (plan niveau A, lot 3.7) ; les écrans vides des paiements et des paramètres sont retirés */}
+          <Route path="*" element={<PageIntrouvable />} />
           </Route>
         </Routes>
       </AuthProvider>

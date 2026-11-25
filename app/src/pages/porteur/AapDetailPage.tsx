@@ -15,6 +15,7 @@ import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 import { aapService } from '../../services/aapService';
+import { useFavoris } from '../../hooks/useFavoris';
 import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, ficheConsultable, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
@@ -63,6 +64,9 @@ export default function AapDetailPage() {
   const [pieceUrls, setPieceUrls] = useState<Record<number, string>>({});
   // Fiche déjà comptée : React rejoue l'effet de chargement en mode strict, une ouverture ne vaut qu'une vue
   const vueComptee = useRef<string | null>(null);
+  // Favori (plan niveau A, lot 3.7) : le cœur ne faisait rien
+  const { favoris, basculer } = useFavoris();
+  const estFavori = !!aapId && favoris.has(aapId);
 
   useEffect(() => {
     const fichiers = aap?.scrapeMetadata?.fichiersJoints ?? [];
@@ -196,8 +200,9 @@ export default function AapDetailPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="sm" onClick={currentUser ? undefined : versConnexion}>
-                <Heart className="h-5 w-5" />
+              <Button variant="ghost" size="sm" aria-label={estFavori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                aria-pressed={estFavori} onClick={() => (currentUser && aapId ? basculer(aapId) : versConnexion())}>
+                <Heart className={`h-5 w-5 ${estFavori ? 'fill-current text-error-500' : ''}`} />
               </Button>
             </div>
           </div>

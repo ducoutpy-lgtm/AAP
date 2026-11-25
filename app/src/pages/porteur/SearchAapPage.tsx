@@ -15,6 +15,7 @@ import {
 import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
+import { useFavoris } from '../../hooks/useFavoris';
 import { journaliser } from '../../services/journalService';
 import { libelleFiltres } from '../../utils/journal';
 import { LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
@@ -33,6 +34,8 @@ const VARIANT_STATUT: Record<StatutAppel, 'success' | 'warning' | 'gray' | 'prim
 export default function SearchAapPage() {
   const navigate = useNavigate();
   useMarquerDemarrage('recherche');
+  // Favoris (plan niveau A, lot 3.7) : le cœur des cartes n'exécutait qu'un commentaire
+  const { favoris, basculer } = useFavoris();
   const { currentUser, userProfile } = useAuth();
   const [aaps, setAaps] = useState<(AAP & { id: string })[]>([]);
   const [loading, setLoading] = useState(true);
@@ -458,12 +461,14 @@ export default function SearchAapPage() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          aria-label={favoris.has(aap.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                          aria-pressed={favoris.has(aap.id)}
                           onClick={(e) => {
                             e.stopPropagation();
-                            // Toggle favorite
+                            basculer(aap.id);
                           }}
                         >
-                          <Heart className="h-5 w-5" />
+                          <Heart className={`h-5 w-5 ${favoris.has(aap.id) ? 'fill-current text-error-500' : ''}`} />
                         </Button>
                       </div>
 

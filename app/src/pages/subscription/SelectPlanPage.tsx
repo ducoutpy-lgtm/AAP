@@ -9,6 +9,7 @@ import { STRIPE_PLANS, TRIAL_DAYS } from '../../config/stripe';
 import { Check, AlertCircle } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { messageErreur } from '../../utils/erreurs';
+import { EDITEUR } from '../legal/editeur';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -129,6 +130,13 @@ export default function SelectPlanPage() {
           )}
         </div>
 
+        {/* Paiement non branché (décision du 2026-11-24 « Le garder », plan niveau A, lot 3.7) : les fonctions serveur
+            ne sont pas déployées ; les boutons d'abonnement redeviendront actifs quand elles le seront */}
+        <div className="max-w-3xl mx-auto mb-8 p-4 rounded-lg border border-info-200 bg-info-50 text-info-800 text-center">
+          Paiement bientôt disponible : l'abonnement en ligne n'est pas encore ouvert. Pour toute question, écrivez à{' '}
+          {EDITEUR.contact}.
+        </div>
+
         {error && (
           <div className="max-w-4xl mx-auto mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
             {error}
@@ -165,9 +173,9 @@ export default function SelectPlanPage() {
               fullWidth
               onClick={() => handleSelectPlan('monthly')}
               loading={loading === 'monthly'}
-              disabled={loading !== null}
+              disabled
             >
-              {userProfile.subscriptionStatus === 'trial' ? 'S\'abonner' : 'Démarrer l\'essai gratuit'}
+              Paiement bientôt disponible
             </Button>
           </Card>
 
@@ -211,9 +219,9 @@ export default function SelectPlanPage() {
               fullWidth
               onClick={() => handleSelectPlan('annual')}
               loading={loading === 'annual'}
-              disabled={loading !== null}
+              disabled
             >
-              {userProfile.subscriptionStatus === 'trial' ? 'S\'abonner' : 'Démarrer l\'essai gratuit'}
+              Paiement bientôt disponible
             </Button>
           </Card>
         </div>
