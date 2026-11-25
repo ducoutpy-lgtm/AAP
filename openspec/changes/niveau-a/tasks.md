@@ -151,7 +151,13 @@ local par lot vérifié.
 
 ## 5. Clôture
 
-- [ ] 5.1 Vérification finale (lint, types, tests, règles, compilation, démarrage) et nouvelle note.
+- [x] 5.1 Vérification finale (lint, types, tests, règles, compilation, démarrage) et nouvelle note. (2026-11-25 : lint,
+  types, mise en forme, 254 tests de l'application, 61 de règles, 297 Python, ruff, mypy, compilation et spec verts ;
+  parcours des trois rôles sur les émulateurs (section 7). Note indépendante finale : B, 14,3 sur 20 (départ : 9 à 12,5
+  selon les axes ; B- avant la relecture). Pour un A franc, 27 points restent, hors questions 44 à 53 : chaîne du lundi
+  jamais rejouée de bout en bout, `veille.cmd` sans dossier `logs` ni codes d'erreur, en-têtes HTTP de sécurité, règles
+  des candidatures et des messages, essai de 14 jours jamais appliqué, contraste, `confirm()`, intégration continue et
+  couverture, pages sans test, documentation de pilotage et changements OpenSpec non archivés.)
 - [ ] 5.2 Question à part : poussée et mise en ligne des règles et de l'hébergement.
 
 ## 7. Relecture indépendante et vérification (2026-11-25)
