@@ -1,6 +1,6 @@
-import { loadStripe } from '@stripe/stripe-js';
-
-export const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+// Formules et montants (seule source des prix affichés). Plus aucun import de Stripe ici (plan niveau A, lot 3.6,
+// 2026-11-25) : importer le paquet ajoutait son script à toutes les pages, accueil compris ; il n'est chargé qu'au
+// paiement, par SelectPlanPage.
 
 export const STRIPE_PLANS = {
   porteur: {

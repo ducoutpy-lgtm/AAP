@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import type { ReactNode } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
@@ -12,47 +13,49 @@ import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 
+// Pages des comptes connectés chargées à la demande (plan niveau A, lot 3.6, 2026-11-25) : un seul fichier de plus d'un
+// mégaoctet partait à la première visite ; le gabarit affiche l'attente pendant le chargement d'une page.
 // Profil et abonnement
-import CompleteProfile from './pages/profile/CompleteProfile';
-import SelectPlanPage from './pages/subscription/SelectPlanPage';
-import SubscriptionSuccess from './pages/subscription/SubscriptionSuccess';
-import SubscriptionCancelled from './pages/subscription/SubscriptionCancelled';
+const CompleteProfile = lazy(() => import('./pages/profile/CompleteProfile'));
+const SelectPlanPage = lazy(() => import('./pages/subscription/SelectPlanPage'));
+const SubscriptionSuccess = lazy(() => import('./pages/subscription/SubscriptionSuccess'));
+const SubscriptionCancelled = lazy(() => import('./pages/subscription/SubscriptionCancelled'));
 
 // Porteur (la recherche et la fiche sont la consultation publique, sans compte)
-import PorteurDashboard from './pages/porteur/PorteurDashboard';
-import SearchAapPage from './pages/porteur/SearchAapPage';
-import AapDetailPage from './pages/porteur/AapDetailPage';
-import ApplicationFormPage from './pages/porteur/ApplicationFormPage';
-import MyApplicationsPage from './pages/porteur/MyApplicationsPage';
-import ApplicationDetailPage from './pages/porteur/ApplicationDetailPage';
-import SavedSearchesPage from './pages/porteur/SavedSearchesPage';
-import RecommendationsPage from './pages/porteur/RecommendationsPage';
+const PorteurDashboard = lazy(() => import('./pages/porteur/PorteurDashboard'));
+const SearchAapPage = lazy(() => import('./pages/porteur/SearchAapPage'));
+const AapDetailPage = lazy(() => import('./pages/porteur/AapDetailPage'));
+const ApplicationFormPage = lazy(() => import('./pages/porteur/ApplicationFormPage'));
+const MyApplicationsPage = lazy(() => import('./pages/porteur/MyApplicationsPage'));
+const ApplicationDetailPage = lazy(() => import('./pages/porteur/ApplicationDetailPage'));
+const SavedSearchesPage = lazy(() => import('./pages/porteur/SavedSearchesPage'));
+const RecommendationsPage = lazy(() => import('./pages/porteur/RecommendationsPage'));
 
 // Financeur
-import FinanceurDashboard from './pages/financeur/FinanceurDashboard';
-import CandidaturesRecuesPage from './pages/financeur/CandidaturesRecuesPage';
-import RetourPage from './pages/common/RetourPage';
-import CreateAapPage from './pages/financeur/CreateAapPage';
-import EditAapPage from './pages/financeur/EditAapPage';
-import ProfilPage from './pages/profile/ProfilPage';
-import MyAapPage from './pages/financeur/MyAapPage';
-import ViewApplicationsPage from './pages/financeur/ViewApplicationsPage';
-import EvaluateApplicationPage from './pages/financeur/EvaluateApplicationPage';
-import StatisticsPage from './pages/financeur/StatisticsPage';
+const FinanceurDashboard = lazy(() => import('./pages/financeur/FinanceurDashboard'));
+const CandidaturesRecuesPage = lazy(() => import('./pages/financeur/CandidaturesRecuesPage'));
+const RetourPage = lazy(() => import('./pages/common/RetourPage'));
+const CreateAapPage = lazy(() => import('./pages/financeur/CreateAapPage'));
+const EditAapPage = lazy(() => import('./pages/financeur/EditAapPage'));
+const ProfilPage = lazy(() => import('./pages/profile/ProfilPage'));
+const MyAapPage = lazy(() => import('./pages/financeur/MyAapPage'));
+const ViewApplicationsPage = lazy(() => import('./pages/financeur/ViewApplicationsPage'));
+const EvaluateApplicationPage = lazy(() => import('./pages/financeur/EvaluateApplicationPage'));
+const StatisticsPage = lazy(() => import('./pages/financeur/StatisticsPage'));
 
 // Communs aux comptes connectés
-import NotificationsPage from './pages/common/NotificationsPage';
-import MessagesPage from './pages/common/MessagesPage';
-import CalendarPage from './pages/common/CalendarPage';
+const NotificationsPage = lazy(() => import('./pages/common/NotificationsPage'));
+const MessagesPage = lazy(() => import('./pages/common/MessagesPage'));
+const CalendarPage = lazy(() => import('./pages/common/CalendarPage'));
 import PageIntrouvable from './pages/common/PageIntrouvable';
 
 // Administration
-import AdminDashboard from './pages/admin/AdminDashboard';
-import ManageUsersPage from './pages/admin/ManageUsersPage';
-import ManageAAPsPage from './pages/admin/ManageAAPsPage';
-import GlobalStatisticsPage from './pages/admin/GlobalStatisticsPage';
-import TesteursPage from './pages/admin/TesteursPage';
-import CoutsExternesPage from './pages/admin/CoutsExternesPage';
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const ManageUsersPage = lazy(() => import('./pages/admin/ManageUsersPage'));
+const ManageAAPsPage = lazy(() => import('./pages/admin/ManageAAPsPage'));
+const GlobalStatisticsPage = lazy(() => import('./pages/admin/GlobalStatisticsPage'));
+const TesteursPage = lazy(() => import('./pages/admin/TesteursPage'));
+const CoutsExternesPage = lazy(() => import('./pages/admin/CoutsExternesPage'));
 
 // Pages légales
 import MentionsLegalesPage from './pages/legal/MentionsLegalesPage';

@@ -7,11 +7,9 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { STRIPE_PLANS, TRIAL_DAYS } from '../../config/stripe';
 import { Check, AlertCircle } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { messageErreur } from '../../utils/erreurs';
 import { EDITEUR } from '../legal/editeur';
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export default function SelectPlanPage() {
   const { userProfile } = useAuth();
@@ -75,7 +73,8 @@ export default function SelectPlanPage() {
       const { sessionId } = result.data as { sessionId: string };
 
       // Rediriger vers Stripe Checkout
-      const stripe = await stripePromise;
+      // Version « pure » : le script de Stripe n'est ajouté à la page qu'ici, au moment du paiement (lot 3.6)
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
       if (!stripe) throw new Error('Stripe non initialisé');
 
       const { error: stripeError } = await stripe.redirectToCheckout({ sessionId });

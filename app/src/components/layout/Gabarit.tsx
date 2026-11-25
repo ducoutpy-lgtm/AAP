@@ -2,12 +2,13 @@
 // compte : public (en-tête, contenu, pied de page) ou connecté avec profil complet (barre latérale repliable façon
 // helloDarwin, barre haute, contenu, pied de page). Pourquoi d'après le profil complet : pendant le parcours
 // d'intégration, le menu complet n'a pas encore de sens.
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight, LogOut, Target, UserCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { entreeActive, entreesMenu, tableauDeBord } from './menus';
 import { LimiteErreur } from './LimiteErreur';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 const CLE_REPLI = 'aap-menu-replie';
 
@@ -238,7 +239,7 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
         </header>
         <main className="flex-1">
           {/* Clé = adresse : la limite d'erreur repart à zéro à chaque page (corrections-relecture 2.2) */}
-          <LimiteErreur key={pathname}><Outlet /></LimiteErreur>
+          <LimiteErreur key={pathname}><Suspense fallback={<LoadingSpinner />}><Outlet /></Suspense></LimiteErreur>
         </main>
         <PiedDePage />
       </div>
@@ -260,7 +261,7 @@ export default function Gabarit() {
         <div className="min-h-screen flex flex-col">
           <EnTetePublic />
           <main className="flex-1">
-            <LimiteErreur key={pathname}><Outlet /></LimiteErreur>
+            <LimiteErreur key={pathname}><Suspense fallback={<LoadingSpinner />}><Outlet /></Suspense></LimiteErreur>
           </main>
           <PiedDePage />
         </div>

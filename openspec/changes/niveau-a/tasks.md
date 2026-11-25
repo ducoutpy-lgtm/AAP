@@ -72,7 +72,10 @@ local par lot vérifié.
   jusqu'à la lecture du profil ; la page de connexion redirige dans un effet par `destinationApresConnexion`
   (`utils/connexion.ts`), sans l'attente fixe d'une seconde. Test d'un profil lu 1,5 s après : l'ancienne page menait à
   `/complete-profile` ; 201 tests verts. Parcours des trois rôles sur les émulateurs : dans la vérification 5.1.)
-- [ ] 3.6 Chargement découpé, Stripe seulement là où il sert.
+- [x] 3.6 Chargement découpé, Stripe seulement là où il sert. (2026-11-25 : `config/stripe.ts` sans import de Stripe,
+  `SelectPlanPage` par `@stripe/stripe-js/pure` au moment du paiement ; pages des comptes connectés en `lazy`, attente dans
+  le gabarit. Construction : fichier principal 1 073 ko -> 765 ko (Firebase en tête, avertissement des 500 ko encore
+  affiché), 70 morceaux, script Stripe dans le seul morceau de l'écran Abonnement. Test en échec avant ; 209 verts.)
 - [x] 3.7 Favori branché ; vraie page 404 ; écrans « en cours de développement » retirés des menus ; mention
   « paiement bientôt disponible » sur l'écran Abonnement. (2026-11-25 : `favorisService.ts` et `useFavoris` (document
   `uid_aapId` dans `favoriteAap`), cœur de la fiche et des cartes de la recherche, libellé et `aria-pressed` ;
