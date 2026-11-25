@@ -8,6 +8,7 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 import pytest
+from firebase_admin import firestore
 
 RACINE = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(RACINE / "scripts"))
@@ -49,8 +50,22 @@ class FauxCollection:
         return FauxRef(self.magasin, ident)
 
 
+def fusion_profonde(cible: dict, donnees: dict) -> None:
+    """Comme set(merge=True) de Firestore : les sous-dictionnaires (scrapeMetadata...) se fusionnent clé par clé, une clé
+    absente de l'envoi reste en base, DELETE_FIELD l'efface. Avant la relecture du 2026-11-25, le faux lot fusionnait en
+    surface et cachait la survie d'un ancien scrapeMetadata.verification."""
+    for cle, valeur in donnees.items():
+        if valeur is firestore.DELETE_FIELD:
+            cible.pop(cle, None)
+        elif isinstance(valeur, dict) and isinstance(cible.get(cle), dict):
+            cible[cle] = dict(cible[cle])
+            fusion_profonde(cible[cle], valeur)
+        else:
+            cible[cle] = valeur
+
+
 class FauxBatch:
-    """Imite batch.set(ref, donnees, merge) et batch.commit() : merge fusionne, sinon remplace."""
+    """Imite batch.set(ref, donnees, merge) et batch.commit() : merge fusionne en profondeur, sinon remplace."""
 
     def __init__(self):
         self.operations = []
@@ -61,7 +76,7 @@ class FauxBatch:
     def commit(self):
         for ref, donnees, merge in self.operations:
             if merge and ref.id in ref.magasin:
-                ref.magasin[ref.id].update(donnees)
+                fusion_profonde(ref.magasin[ref.id], donnees)
             else:
                 ref.magasin[ref.id] = dict(donnees)
         self.operations = []
@@ -104,6 +119,22 @@ def test_un_verdict_validee_protege_les_champs_metier():
     stocke = col.magasin[ident]
     assert stocke["title"] == "Titre relu" and stocke["deadline"] == "D1" and stocke["tags"] == ["relu"]
     assert stocke["scrapeMetadata"]["importedAt"] == MAINTENANT  # la provenance, elle, est mise a jour
+
+
+def test_un_controle_perime_ne_survit_pas_a_une_fiche_reextraite_sans_controle():
+    """Relecture du 2026-11-25 (notation, constat P1 de l'audit) : la fusion (merge=True) gardait l'ancien
+    scrapeMetadata.verification quand la fiche ré-extraite n'en portait plus, et trier_file le lisait pour publier."""
+    ident, doc = document()  # fiche ré-extraite, pas encore recontrôlée
+    ancien = {"modele": "claude-haiku-5-5", "le": "2026-10-15T11:00:00", "douteux": [], "estUnAppel": True}
+    col = FauxCollection({ident: {"status": "draft", "validation": {"statut": "proposee"},
+                                  "scrapeMetadata": {"source": "ars-test", "verification": ancien}}})
+    imp.ecrire_documents(col, FauxBatch, [(ident, doc)], MAINTENANT)
+    assert "verification" not in col.magasin[ident]["scrapeMetadata"]
+    # Fiche recontrôlée : le nouveau résumé remplace l'ancien
+    ident, doc = document(scrape_metadata={"moteur": "connecteur", "verification": {"modele": "h", "le": "2026-11-25",
+                                                                                     "douteux": ["date_cloture"]}})
+    imp.ecrire_documents(col, FauxBatch, [(ident, doc)], MAINTENANT)
+    assert col.magasin[ident]["scrapeMetadata"]["verification"]["douteux"] == ["date_cloture"]
 
 
 def test_un_verdict_rejetee_empeche_la_publication():
@@ -712,6 +743,18 @@ def test_montants_en_millions_et_en_milliers():
     assert imp.parse_budget_total("1 milliard d'euros") == 1_000_000_000
     assert imp.parse_budget_total("2 500 000 euros") == 2_500_000
     assert imp.parse_budget_total("entre 10 000 et 50 000 euros") is None
+
+
+def test_montants_point_decimal_devant_un_multiplicateur():
+    """Relecture du 2026-11-25 (constats 19 et 39) : le point était lu comme séparateur de milliers devant « millions » ou
+    « M€ », d'où « 7.6 millions » = 76 M€ ; deux valeurs réelles de scraping/results/extraction_api.json en tête."""
+    assert imp.parse_budget_total("7.6 millions de FEDER") == 7_600_000
+    assert imp.parse_budget_total("1.120 millions d'euros alloué au GIRCI Grand Ouest") == 1_120_000
+    assert imp.parse_budget_total("2.5 M€") == 2_500_000
+    assert imp.parse_budget_total("1.5 million") == 1_500_000
+    assert imp.parse_budget_total("12.000 €") == 12_000  # sans multiplicateur, le point sépare toujours les milliers
+    assert imp.parse_budget_total("1.500.000 euros") == 1_500_000
+    assert imp.parse_budget_total("1.500.000 millions") is None  # plusieurs points devant un multiplicateur : ambigu
 
 
 def test_un_reimport_ne_remet_pas_les_compteurs_a_zero_ni_l_adresse_corrigee():

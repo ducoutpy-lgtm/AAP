@@ -326,21 +326,27 @@ MULTIPLICATEURS = ((r"milliards?|md\s*€|mds?\b", 1_000_000_000), (r"millions?|
 
 def parse_budget_total(enveloppe: str | None) -> int | None:
     """Montant entier d'une chaîne comme « 2 500 000 euros », « 12 millions d'euros », « 1,5 M€ » ou « 300 k€ » ;
-    None si absent ou ambigu (plusieurs nombres). Les espaces insécables séparent aussi les milliers."""
+    None si absent ou ambigu (plusieurs nombres, ou plusieurs points devant un multiplicateur). Les espaces insécables
+    séparent aussi les milliers."""
     if not enveloppe:
         return None
     trouves = [(n, u) for n, u in re.findall(r"(\d[\d\s.]*(?:,\d+)?)\s*([a-zA-Zé€]*\s*€?)", enveloppe) if n.strip()]
     if len(trouves) != 1:
         return None
     nombre, unite = trouves[0]
+    chiffres = re.sub(r"\s", "", nombre)
+    facteur = next((f for motif, f in MULTIPLICATEURS if re.match(motif, unite.strip().lower())), 1)
+    # Devant un multiplicateur, le point est une virgule décimale (« 7.6 millions », « 2.5 M€ » : la relecture du
+    # 2026-11-25 lisait 76 M€) ; sans multiplicateur, il sépare les milliers (« 12.000 € »)
+    if facteur > 1 and "," not in chiffres:
+        if chiffres.count(".") > 1:
+            return None
+        chiffres = chiffres.replace(".", ",")
     try:
-        valeur = float(re.sub(r"[\s.]", "", nombre).replace(",", "."))
+        valeur = float(chiffres.replace(".", "").replace(",", "."))
     except ValueError:
         return None
-    for motif, facteur in MULTIPLICATEURS:
-        if re.match(motif, unite.strip().lower()):
-            return int(round(valeur * facteur))
-    return int(round(valeur))
+    return int(round(valeur * facteur))
 
 
 def piece_jointe(fichier: dict, doc_id: str) -> dict:
@@ -409,7 +415,16 @@ def ecrire_documents(col, nouveau_batch, mapped: list[tuple[str, dict]], now: da
         snap = ref.get()
         if snap.exists:
             compteurs["mis_a_jour"] += 1
-            batch.set(ref, document_a_envoyer(doc, True, snap.to_dict()), merge=True)
+            existant = snap.to_dict()
+            envoye = document_a_envoyer(doc, True, existant)
+            # La fusion (merge=True) garde les clés absentes de l'envoi, jusque dans scrapeMetadata : le contrôle d'une
+            # version précédente survivait à une ré-extraction pas encore recontrôlée, et trier_file le lisait pour
+            # publier (relecture du 2026-11-25). Il est effacé quand la fiche lue n'en porte plus.
+            if "verification" in (existant.get("scrapeMetadata") or {}) and "verification" not in envoye["scrapeMetadata"]:
+                from firebase_admin import firestore
+
+                envoye["scrapeMetadata"] = {**envoye["scrapeMetadata"], "verification": firestore.DELETE_FIELD}
+            batch.set(ref, envoye, merge=True)
         else:
             compteurs["crees"] += 1
             batch.set(ref, {**doc, "createdAt": now, **({"publishedAt": now} if doc["status"] == "published" else {})})

@@ -3,6 +3,7 @@
 Décision de Monsieur DUCOUT du 2026-11-18 : « tu dois me proposer uniquement les fiches où il y a un doute ». Pour chaque
 fiche « Proposée » :
   - doublon d'une autre fiche (publiée ou dans la file) : rejetée, la fiche gardée est choisie par doublons.a_garder ;
+    jamais un appel saisi par un financeur, laissé « Proposée » avec le doublon possible en motif ;
   - aucun motif de doute : publiée, validation « validee » par « contrôle du modèle (tri automatique) » ;
   - au moins un motif : reste « Proposée », motifs écrits dans validation.commentaire (affichés dans /admin/aaps).
 Une fiche relue par Monsieur DUCOUT n'est jamais touchée. Essai à blanc par défaut ; --reel écrit après sauvegarde.
@@ -23,10 +24,17 @@ sys.path.insert(0, str(ICI))
 sys.path.insert(0, str(ICI.parent / "scraping"))
 import doublons  # noqa: E402
 from champ import DANS_LE_CHAMP  # noqa: E402
-from import_to_firestore import DEFAULT_KEY, RELECTEUR, etiqueter  # noqa: E402
+from import_to_firestore import DEFAULT_KEY, RELECTEUR, SCRAPED_FINANCEUR_ID, etiqueter  # noqa: E402
 
 PAR = "contrôle du modèle (tri automatique)"
 SAUVEGARDES = ICI / "sauvegardes"
+
+
+def saisi_par_un_financeur(f: dict) -> bool:
+    """Appel saisi par un financeur : source « manual », ou financeurId autre que celui des fiches collectées. Le champ
+    source peut manquer (appel créé par le SDK, relecture du 2026-11-25, constat 6) ; financeurId, lui, vaut l'uid de
+    l'auteur à la création et ne change plus (firestore.rules)."""
+    return f.get("source") == "manual" or f.get("financeurId") != SCRAPED_FINANCEUR_ID
 
 
 def motifs_de_doute(f: dict, maintenant: datetime) -> list[str]:
@@ -35,7 +43,7 @@ def motifs_de_doute(f: dict, maintenant: datetime) -> list[str]:
     sm = f.get("scrapeMetadata") or {}
     ver = sm.get("verification")
     # Appel saisi par un financeur : toujours validé par l'administrateur (plan niveau A, lot 1.2, 2026-11-24)
-    motifs = ["saisi par un financeur"] if f.get("source") == "manual" else []
+    motifs = ["saisi par un financeur"] if saisi_par_un_financeur(f) else []
     if not ver:
         motifs.append("jamais contrôlée")
     else:
@@ -48,7 +56,9 @@ def motifs_de_doute(f: dict, maintenant: datetime) -> list[str]:
     if champ not in DANS_LE_CHAMP:
         motifs.append("hors champ" if champ == "hors-champ" else "champ incertain")
     cloture = f.get("deadline")
-    if cloture and cloture < maintenant:
+    # Jours du calendrier : appel ouvert tout son dernier jour (règle commune avec l'import, l'application et le courriel,
+    # décision 38 du 2026-11-24 ; relecture du 2026-11-25, constat 22)
+    if cloture and cloture.astimezone(timezone.utc).date() < maintenant.astimezone().date():
         motifs.append("appel clos")
     return motifs
 
@@ -65,6 +75,11 @@ def decisions(file: list[tuple[str, dict]], groupes: list[list[tuple[str, dict]]
         gardee = dict(groupe)[garde]
         for i, d in groupe:
             if i != garde and i in dans_la_file and not relue(d):
+                # Appel saisi par un financeur : seul l'administrateur le rejette, même pris pour un doublon (plan niveau
+                # A, lot 1.2 ; relecture du 2026-11-25, constat 16 : il était archivé sans avoir été vu)
+                if saisi_par_un_financeur(d):
+                    resultat[i] = ("laisser", f"À relire : saisi par un financeur, doublon possible de {garde}")
+                    continue
                 # Rejet seulement si la fiche ressemble directement à la fiche gardée : un groupe se forme par ricochet
                 # (A ~ C, C ~ B), et B pouvait être un autre axe du même programme (corrections-chaine-du-lundi 1.7)
                 resultat[i] = (("rejeter", f"doublon de {garde} ({raison})") if doublons.meme_appel(d, gardee)

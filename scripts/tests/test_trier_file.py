@@ -10,7 +10,9 @@ MAINTENANT = datetime(2026, 11, 18, tzinfo=timezone.utc)
 
 
 def fiche(**kw):
-    base = {"status": "draft", "validation": {"statut": "proposee", "par": "claude-haiku-5-5"},
+    # Fiche collectée : financeurId et source posés par l'import (to_app_aap)
+    base = {"financeurId": "scraped", "source": "scraped", "status": "draft",
+            "validation": {"statut": "proposee", "par": "claude-haiku-5-5"},
             "deadline": MAINTENANT + timedelta(days=30),
             "scrapeMetadata": {"champ": "sante", "verification": {"estUnAppel": True, "douteux": ["description"]}}}
     base.update(kw)
@@ -85,3 +87,36 @@ def test_un_appel_saisi_par_un_financeur_reste_toujours_a_valider():
     fiche = {"source": "manual", "status": "published", "validation": {"statut": "proposee"},
              "scrapeMetadata": {"verification": {"estUnAppel": True, "douteux": []}, "champ": "sante"}}
     assert "saisi par un financeur" in t.motifs_de_doute(fiche, datetime(2026, 11, 24, tzinfo=timezone.utc))
+
+
+def test_un_appel_de_financeur_sans_champ_source_reste_a_valider():
+    """Relecture du 2026-11-25 (constat 6) : un appel créé par le SDK sans le champ `source` passait la règle de création
+    et le tri le publiait. Il se reconnaît aussi à son financeurId (l'uid du financeur, jamais « scraped »)."""
+    sans_source = fiche(financeurId="uid-financeur", scrapeMetadata={"champ": "sante",
+                                                                      "verification": {"estUnAppel": True, "douteux": []}})
+    del sans_source["source"]
+    assert "saisi par un financeur" in t.motifs_de_doute(sans_source, MAINTENANT)
+    assert t.decisions([("x", sans_source)], [], lambda g: ("", ""), MAINTENANT)["x"][0] == "laisser"
+
+
+def test_un_appel_de_financeur_pris_pour_un_doublon_n_est_pas_archive():
+    """Relecture du 2026-11-25 (constat 16) : un financeur saisit l'appel que la collecte a déjà publié ; le tri le
+    rejetait comme doublon (archived, rejetee) sans que l'administrateur l'ait vu. Il reste à relire."""
+    commun = {"title": "Appel à projets prévention des chutes", "financeurName": "ARS Normandie",
+              "deadline": MAINTENANT + timedelta(days=30)}
+    publiee = ("https-site-fr-aap", fiche(**commun, status="published",
+                                          validation={"statut": "validee", "par": "claude-haiku-5-5"}))
+    saisi = ("Xyz123", {**commun, "financeurId": "uid-financeur", "source": "manual", "status": "draft",
+                        "validation": {"statut": "proposee", "par": ""}})
+    dec = t.decisions([saisi], [[publiee, saisi]], lambda g: ("https-site-fr-aap", "déjà publiée"), MAINTENANT)
+    assert dec["Xyz123"][0] == "laisser"
+    assert "saisi par un financeur" in dec["Xyz123"][1] and "https-site-fr-aap" in dec["Xyz123"][1]
+
+
+def test_cloture_comptee_en_jours_du_calendrier():
+    """Relecture du 2026-11-25 (constat 22, décision 38 du 2026-11-24) : un appel qui clôt aujourd'hui (minuit UTC) reste
+    ouvert tout son dernier jour, comme dans l'import, l'application et le courriel ; il est clos le lendemain."""
+    maintenant = datetime(2026, 11, 30, 9, 0, tzinfo=timezone.utc)
+    jour_meme = datetime(2026, 11, 30, tzinfo=timezone.utc)
+    assert "appel clos" not in t.motifs_de_doute(fiche(deadline=jour_meme), maintenant)
+    assert "appel clos" in t.motifs_de_doute(fiche(deadline=jour_meme - timedelta(days=1)), maintenant)
