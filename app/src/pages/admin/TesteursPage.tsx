@@ -12,6 +12,7 @@ import { enDate } from '../../utils/dates';
 import { chiffresDepuis, dateLigne, LIBELLES_ACTIONS, resumerParCompte, type CompteSuivi, type LigneJournal, type ResumeCompte } from '../../utils/journal';
 import { dateRetour, lesPlusRecents, LIBELLES_TYPES_RETOUR, type Retour } from '../../utils/retours';
 import { messageErreur } from '../../utils/erreurs';
+import { activableAuClavier } from '../../utils/clavier';
 
 const ROLES: Record<UserType, string> = { porteur: 'Candidat', financeur: 'Financeur', admin: 'Administrateur' };
 const dateFr = (d: Date | null) => (d ? d.toLocaleDateString('fr-FR') : '-');
@@ -120,7 +121,8 @@ export default function TesteursPage() {
             <tbody className="divide-y divide-gray-100">
               {resumes.map(r => (
                 <Fragment key={r.uid}>
-                  <tr onClick={() => setOuvert(ouvert === r.uid ? null : r.uid)} className={`cursor-pointer hover:bg-gray-50 ${ouvert === r.uid ? 'bg-primary-50' : ''}`}>
+                  <tr onClick={() => setOuvert(ouvert === r.uid ? null : r.uid)} {...activableAuClavier(() => setOuvert(ouvert === r.uid ? null : r.uid))}
+                    aria-expanded={ouvert === r.uid} className={`cursor-pointer hover:bg-gray-50 ${ouvert === r.uid ? 'bg-primary-50' : ''}`}>
                     <td className="px-4 py-3 text-gray-900">{r.email || <span className="text-gray-400">(sans adresse)</span>}</td>
                     <td className="px-4 py-3"><Badge variant={r.role === 'financeur' ? 'primary' : 'gray'}>{ROLES[r.role]}</Badge></td>
                     <td className="px-4 py-3 text-gray-700">{r.structure || '-'}</td>

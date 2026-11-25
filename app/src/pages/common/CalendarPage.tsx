@@ -12,6 +12,7 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, AlertCircle } from
 import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { MessageErreur } from '../../components/ui/MessageErreur';
+import { activableAuClavier } from '../../utils/clavier';
 
 interface DeadlineEvent {
   id: string;
@@ -210,6 +211,7 @@ export default function CalendarPage() {
                     <div
                       key={index}
                       onClick={() => setSelectedDate(day)}
+                      {...activableAuClavier(() => setSelectedDate(day))}
                       className={`min-h-[80px] p-2 border rounded-lg cursor-pointer transition-colors ${
                         !isCurrentMonth
                           ? 'bg-gray-50 text-gray-400'
@@ -282,6 +284,7 @@ export default function CalendarPage() {
                       <div
                         key={event.id}
                         onClick={() => navigate(`/aap/${event.id}`)}
+                        {...activableAuClavier(() => navigate(`/aap/${event.id}`))}
                         className="p-2 border rounded hover:bg-gray-50 cursor-pointer"
                       >
                         <div className="flex items-start gap-2">
@@ -316,6 +319,7 @@ export default function CalendarPage() {
                     <div
                       key={event.id}
                       onClick={() => navigate(`/aap/${event.id}`)}
+                      {...activableAuClavier(() => navigate(`/aap/${event.id}`))}
                       className="p-2 bg-white border border-error-200 rounded hover:shadow cursor-pointer"
                     >
                       <p className="text-sm font-medium text-gray-900 truncate">

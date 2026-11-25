@@ -65,9 +65,12 @@ local par lot vérifié.
   (`aria-expanded`, `aria-controls`) dans la barre haute, menu par-dessus la page, refermé au changement de page, par
   Échap, par sa croix ou un clic à côté ; `menus.ts` inchangé. Test en échec avant ; 214 verts. Rendu sur un écran de
   375 px : dans la vérification 5.1.)
-- [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
+- [x] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
   2026-11-24 : échelles complètes de success, warning, error, info ; `src/test/palette.test.ts` en échec avec l'ancienne
-  configuration, vert avec la nouvelle ; classes générées vérifiées dans la feuille compilée. Restent clavier et modale.)
+  configuration, vert avec la nouvelle ; classes générées vérifiées dans la feuille compilée. 2026-11-25 :
+  `activableAuClavier` (`utils/clavier.ts`) dans `Card` cliquable, les cases et événements du calendrier, les
+  conversations et les lignes des testeurs ; `Modal` en `role="dialog"` nommé par son titre, croix « Fermer », Échap,
+  focus gardé dans la fenêtre et rendu à la fermeture. Tests en échec avant ; 218 verts.)
 - [x] 3.4 Fiche non visible fermée par son adresse directe ; saisie des montants et dates contrôlée ; CSV échappés.
   (2026-11-25 : `ficheConsultable` dans la fiche et le formulaire de candidature, `candidatureOuverte` exige la
   visibilité ; `utils/csv.ts` (guillemets, apostrophe devant = + - @, point-virgule et UTF-8, choix à confirmer) dans les

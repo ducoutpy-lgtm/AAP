@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { MessageSquare, Send, Search, User } from 'lucide-react';
 import { annoncer } from '../../utils/annonces';
+import { activableAuClavier } from '../../utils/clavier';
 
 interface Message {
   id: string;
@@ -215,6 +216,7 @@ export default function MessagesPage() {
                   <div
                     key={conversation.id}
                     onClick={() => setSelectedConversation(conversation)}
+                    {...activableAuClavier(() => setSelectedConversation(conversation))}
                     className={`p-3 rounded-lg cursor-pointer transition-colors ${
                       selectedConversation?.id === conversation.id
                         ? 'bg-primary-50 border border-primary-200'
