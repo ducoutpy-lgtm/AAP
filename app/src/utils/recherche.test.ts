@@ -100,6 +100,7 @@ describe('filtrerAppels (cas communs)', () => {
     scrapeMetadata: f.champ ? { champ: f.champ } : undefined,
     qualification: { destinataires: f.destinataires, typeAppel: f.typeAppel },
     budgetMin: f.budgetMin ?? undefined, budgetMax: f.budgetMax ?? undefined,
+    sectorsTargeted: (f as { sectorsTargeted?: string[] }).sectorsTargeted ?? [],
   })) as unknown as (AAP & { id: string })[];
   for (const c of cas.cas) {
     it(c.nom, () => {

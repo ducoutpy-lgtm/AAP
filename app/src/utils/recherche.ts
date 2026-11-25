@@ -166,7 +166,7 @@ export function memoriserFicheConsultee(id: string): void {
 // Filtrage de /aap/search sorti de la page (alertes-recherches-sauvegardees, 2026-11-16) pour que le courriel du lundi
 // applique la même règle : copie Python dans scraping/alertes.py (correspond), cas communs dans
 // cas_filtres_recherche.json. L'ordre d'entrée est conservé ; le tri (montants, dates) reste dans la page.
-type AppelFiltrable = Pick<AAP, 'title' | 'description' | 'financeurName' | 'territoriesEligible' | 'deadline' |
+type AppelFiltrable = Pick<AAP, 'title' | 'description' | 'financeurName' | 'territoriesEligible' | 'deadline' | 'sectorsTargeted' |
   'scrapeMetadata' | 'qualification' | 'budgetMin' | 'budgetMax'>;
 export function filtrerAppels<T extends AppelFiltrable>(aaps: T[], f: FiltresRecherche): T[] {
   const terme = f.q.toLowerCase();

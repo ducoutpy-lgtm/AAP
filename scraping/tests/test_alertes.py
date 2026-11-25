@@ -101,7 +101,7 @@ def _fiche_firestore(f: dict) -> dict:
             "deadline": None if j is None else MAINTENANT + timedelta(days=j, hours=1),
             "scrapeMetadata": {"champ": f["champ"]} if f["champ"] else {},
             "qualification": {"destinataires": f["destinataires"], "typeAppel": f["typeAppel"]},
-            "budgetMin": f["budgetMin"], "budgetMax": f["budgetMax"]}
+            "budgetMin": f["budgetMin"], "budgetMax": f["budgetMax"], "sectorsTargeted": f.get("sectorsTargeted") or []}
 
 
 def test_correspond_donne_les_memes_resultats_que_l_application():

@@ -36,9 +36,13 @@ export const LIBELLES_THEMATIQUES: Record<string, string> = {
 
 // Thématique d'une fiche pour le filtre : les fiches hors champ sont en brouillon et n'arrivent pas ici ;
 // « incertain » et les fiches pas encore classées comptent comme non classées.
-export const thematique = (aap: Pick<AAP, 'scrapeMetadata'>): string => {
+// Sans champ classé (appel saisi par un financeur), la thématique vient des « Secteurs ciblés » : Santé donne santé,
+// Social donne médico-social (décision 37 du 2026-11-24 ; même règle dans scraping/alertes.py).
+export const thematique = (aap: Pick<AAP, 'scrapeMetadata'> & Partial<Pick<AAP, 'sectorsTargeted'>>): string => {
   const champ = aap.scrapeMetadata?.champ;
-  return champ === 'sante' || champ === 'medico-social' ? champ : 'non-classee';
+  if (champ === 'sante' || champ === 'medico-social') return champ;
+  const secteurs = aap.sectorsTargeted ?? [];
+  return secteurs.includes('sante') ? 'sante' : secteurs.includes('social') ? 'medico-social' : 'non-classee';
 };
 
 // Liste triée des valeurs distinctes d'un champ, pour construire les options d'un filtre à partir des fiches.

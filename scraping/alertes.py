@@ -170,7 +170,12 @@ def correspond(fiche: dict, f: dict) -> bool:
     if terme and not any(terme in (x or "").lower() for x in (fiche.get("title"), fiche.get("description"), financeur)):
         return False
     champ = (fiche.get("scrapeMetadata") or {}).get("champ")
-    if f.get("thematique") and (champ if champ in ("sante", "medico-social") else "non-classee") != f["thematique"]:
+    if champ not in ("sante", "medico-social"):
+        # Appel saisi par un financeur : thématique depuis les « Secteurs ciblés » (décision 37, même règle que
+        # territoires.ts dans l'application)
+        secteurs = fiche.get("sectorsTargeted") or []
+        champ = "sante" if "sante" in secteurs else "medico-social" if "social" in secteurs else None
+    if f.get("thematique") and (champ or "non-classee") != f["thematique"]:
         return False
     territoire, t = f.get("territory") or "", fiche.get("territoriesEligible") or []
     if territoire and territoire not in t and not (territoire not in ("france", "non-precise") and "france" in t):
