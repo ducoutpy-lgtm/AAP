@@ -1,12 +1,11 @@
-import { useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Target, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import { messageErreur } from '../../utils/erreurs';
+import { destinationApresConnexion } from '../../utils/connexion';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,7 +14,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [seSouvenir, setSeSouvenir] = useState(false);
 
-  const { login, loginWithGoogle, currentUser } = useAuth();
+  const { login, loginWithGoogle, currentUser, userProfile, loading: chargementCompte } = useAuth();
+  const [connecte, setConnecte] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,36 +24,11 @@ export default function LoginPage() {
   const origine = (location.state as { from?: { pathname?: string; search?: string; hash?: string } } | null)?.from;
   const from = origine?.pathname ? `${origine.pathname}${origine.search ?? ''}${origine.hash ?? ''}` : undefined;
 
-  const getRedirectPath = async () => {
-    if (from && from !== '/') {
-      return from;
-    }
-
-    // Récupérer le profil utilisateur pour déterminer la redirection
-    if (currentUser) {
-      try {
-        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          const userType = userData.userType;
-
-          // Rediriger vers le dashboard approprié
-          if (userType === 'admin') {
-            return '/admin';
-          } else if (userType === 'porteur') {
-            return '/dashboard/porteur';
-          } else if (userType === 'financeur') {
-            return '/dashboard/financeur';
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching user profile:', err);
-      }
-    }
-
-    // Par défaut, rediriger vers la page de complétion du profil
-    return '/complete-profile';
-  };
+  // Redirection une fois le profil lu (plan niveau A, lot 3.5, 2026-11-25) : la page attendait une seconde fixe, puis
+  // lisait le compte d'avant la connexion ; AuthContext garde loading vrai tant que le profil n'est pas lu
+  useEffect(() => {
+    if (connecte && currentUser && !chargementCompte) navigate(destinationApresConnexion(from, userProfile), { replace: true });
+  }, [connecte, currentUser, chargementCompte, userProfile, from, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,12 +37,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password, seSouvenir);
-
-      // Attendre un peu pour que le profil soit chargé
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      const redirectPath = await getRedirectPath();
-      navigate(redirectPath, { replace: true });
+      setConnecte(true);
     } catch (err) {
       setError(messageErreur(err, 'Échec de la connexion'));
     } finally {
@@ -81,12 +51,7 @@ export default function LoginPage() {
 
     try {
       await loginWithGoogle();
-
-      // Attendre un peu pour que le profil soit chargé
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      const redirectPath = await getRedirectPath();
-      navigate(redirectPath, { replace: true });
+      setConnecte(true);
     } catch (err) {
       setError(messageErreur(err, 'Échec de la connexion avec Google'));
     } finally {

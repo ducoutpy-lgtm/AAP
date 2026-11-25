@@ -68,7 +68,10 @@ local par lot vérifié.
   deux exports ; `erreursEtape` dans `aapFormulaire.ts`, un message sous chaque champ. Tests en échec avant chacune des
   trois corrections ; 199 tests verts, construction réussie. La règle de lecture Firestore laisse encore tout compte en
   essai lire une fiche non publiée par le SDK : la resserrer demande de revoir les requêtes de liste, non fait.)
-- [ ] 3.5 Connexion qui attend le profil et redirige selon le rôle.
+- [x] 3.5 Connexion qui attend le profil et redirige selon le rôle. (2026-11-25 : `AuthContext` garde `loading` vrai
+  jusqu'à la lecture du profil ; la page de connexion redirige dans un effet par `destinationApresConnexion`
+  (`utils/connexion.ts`), sans l'attente fixe d'une seconde. Test d'un profil lu 1,5 s après : l'ancienne page menait à
+  `/complete-profile` ; 201 tests verts. Parcours des trois rôles sur les émulateurs : dans la vérification 5.1.)
 - [ ] 3.6 Chargement découpé, Stripe seulement là où il sert.
 - [ ] 3.7 Favori branché ; vraie page 404 ; écrans « en cours de développement » retirés des menus ; mention
   « paiement bientôt disponible » sur l'écran Abonnement.

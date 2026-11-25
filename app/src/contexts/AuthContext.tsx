@@ -149,6 +149,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      // Chargement remis à vrai jusqu'à la lecture du profil (plan niveau A, lot 3.5) : sinon une page voyait le compte
+      // connecté sans son profil, et la connexion menait à « compléter le profil » au lieu du tableau de bord
+      if (user) setLoading(true);
       setCurrentUser(user);
 
       if (user) {
