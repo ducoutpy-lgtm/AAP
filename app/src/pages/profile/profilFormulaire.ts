@@ -102,3 +102,26 @@ export function formulaireFinanceurDepuisProfil(p: FinanceurProfile): Formulaire
     description: texte(p.description),
   };
 }
+
+// Régions proposées dans Mon profil : les 13 de métropole et les 5 d'outre-mer, avec les identifiants qu'écrit le parcours
+// d'intégration (décision 41 du 2026-11-24 : sans l'outre-mer, le champ obligatoire bloquait l'enregistrement)
+export const REGIONS: { value: string; label: string }[] = [
+  { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
+  { value: 'bourgogne-franche-comte', label: 'Bourgogne-Franche-Comté' },
+  { value: 'bretagne', label: 'Bretagne' },
+  { value: 'centre-val-de-loire', label: 'Centre-Val de Loire' },
+  { value: 'corse', label: 'Corse' },
+  { value: 'grand-est', label: 'Grand Est' },
+  { value: 'hauts-de-france', label: 'Hauts-de-France' },
+  { value: 'ile-de-france', label: 'Île-de-France' },
+  { value: 'normandie', label: 'Normandie' },
+  { value: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine' },
+  { value: 'occitanie', label: 'Occitanie' },
+  { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
+  { value: 'provence-alpes-cote-d-azur', label: "Provence-Alpes-Côte d'Azur" },
+  { value: 'guadeloupe', label: 'Guadeloupe' },
+  { value: 'martinique', label: 'Martinique' },
+  { value: 'guyane', label: 'Guyane' },
+  { value: 'la-reunion', label: 'La Réunion' },
+  { value: 'mayotte', label: 'Mayotte' },
+];

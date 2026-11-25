@@ -68,3 +68,18 @@ describe('formulaireFinanceurDepuisProfil', () => {
     expect(f.website).toBe('https://exemple.fr');
   });
 });
+
+
+// Décision 41 du 2026-11-24 : le parcours d'intégration enregistre les régions d'outre-mer, mais Mon profil ne
+// proposait que les 13 régions de métropole ; le champ obligatoire bloquait l'enregistrement.
+describe('régions de Mon profil', () => {
+  it('toute région déduite du code postal par le parcours est proposée', async () => {
+    const { REGIONS } = await import('./profilFormulaire');
+    const { regionDepuisCodePostal } = await import('../onboarding/parcours');
+    const proposees = new Set(REGIONS.map(r => r.value));
+    for (const cp of ['97100', '97200', '97300', '97400', '97600', '75001', '13001']) {
+      expect(proposees.has(regionDepuisCodePostal(cp))).toBe(true);
+    }
+    expect(REGIONS).toHaveLength(18);
+  });
+});

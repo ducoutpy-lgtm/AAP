@@ -9,26 +9,12 @@ import { Select } from '../../components/ui/Select';
 import { Textarea } from '../../components/ui/Textarea';
 import { Target } from 'lucide-react';
 import type { PorteurProfile } from '../../types';
-import { formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
+import { REGIONS, formulairePorteurDepuisProfil, FORMULAIRE_PORTEUR_VIDE } from './profilFormulaire';
 import { BUDGETS, FORMES_JURIDIQUES, PUBLICS, TAILLES, TYPES_ETABLISSEMENT } from '../onboarding/parcours';
 import { anneeOuvertureValide, OBJETS_PROJET, RAYONS_ACTION } from '../../components/demarrage/demarrage';
 import { messageErreur } from '../../utils/erreurs';
 
-const REGIONS = [
-  { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
-  { value: 'bourgogne-franche-comte', label: 'Bourgogne-Franche-Comté' },
-  { value: 'bretagne', label: 'Bretagne' },
-  { value: 'centre-val-de-loire', label: 'Centre-Val de Loire' },
-  { value: 'corse', label: 'Corse' },
-  { value: 'grand-est', label: 'Grand Est' },
-  { value: 'hauts-de-france', label: 'Hauts-de-France' },
-  { value: 'ile-de-france', label: 'Île-de-France' },
-  { value: 'normandie', label: 'Normandie' },
-  { value: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine' },
-  { value: 'occitanie', label: 'Occitanie' },
-  { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
-  { value: "provence-alpes-cote-d-azur", label: "Provence-Alpes-Côte d'Azur" },
-];
+// Liste commune aux deux formulaires, outre-mer compris : profilFormulaire.ts
 
 const SECTEURS = [
   { value: 'agriculture', label: 'Agriculture & Agroalimentaire' },

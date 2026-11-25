@@ -10,24 +10,10 @@ import { Select } from '../../components/ui/Select';
 import { Textarea } from '../../components/ui/Textarea';
 import { Target, Upload } from 'lucide-react';
 import type { FinanceurProfile } from '../../types';
-import { formulaireFinanceurDepuisProfil, FORMULAIRE_FINANCEUR_VIDE } from './profilFormulaire';
+import { REGIONS, formulaireFinanceurDepuisProfil, FORMULAIRE_FINANCEUR_VIDE } from './profilFormulaire';
 import { messageErreur } from '../../utils/erreurs';
 
-const REGIONS = [
-  { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
-  { value: 'bourgogne-franche-comte', label: 'Bourgogne-Franche-Comté' },
-  { value: 'bretagne', label: 'Bretagne' },
-  { value: 'centre-val-de-loire', label: 'Centre-Val de Loire' },
-  { value: 'corse', label: 'Corse' },
-  { value: 'grand-est', label: 'Grand Est' },
-  { value: 'hauts-de-france', label: 'Hauts-de-France' },
-  { value: 'ile-de-france', label: 'Île-de-France' },
-  { value: 'normandie', label: 'Normandie' },
-  { value: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine' },
-  { value: 'occitanie', label: 'Occitanie' },
-  { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
-  { value: "provence-alpes-cote-d-azur", label: "Provence-Alpes-Côte d'Azur" },
-];
+// Liste commune aux deux formulaires, outre-mer compris : profilFormulaire.ts
 
 const ORGANISATION_TYPES = [
   { value: 'ministere', label: 'Ministère' },
