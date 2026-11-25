@@ -22,6 +22,7 @@ import { journaliser } from '../../services/journalService';
 import { messageErreur } from '../../utils/erreurs';
 import { annoncer } from '../../utils/annonces';
 import { RELECTEUR_HUMAIN } from '../../utils/relecture';
+import { formatDateCloture } from '../../utils/datesCloture';
 import { REGIONS as REGIONS_DU_PROFIL } from '../profile/profilFormulaire';
 
 const STEPS = [
@@ -421,7 +422,8 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
 
               <div>
                 <h3 className="font-semibold text-gray-900">Date limite</h3>
-                <p className="text-gray-700">{new Date(formData.deadline).toLocaleDateString('fr-FR')}</p>
+                {/* Jour saisi (minuit UTC) lu en UTC (relecture du 2026-11-25, constat 4 : la veille outre-mer) */}
+                <p className="text-gray-700">{formatDateCloture(new Date(formData.deadline))}</p>
               </div>
 
               <div>

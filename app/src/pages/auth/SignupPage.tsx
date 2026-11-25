@@ -194,7 +194,7 @@ export default function SignupPage() {
           </p>
 
           <div className="mt-6 p-4 bg-primary-50 rounded-lg">
-            <p className="text-sm text-primary-900 font-medium">🎉 14 jours d'essai gratuit</p>
+            <p className="text-sm text-primary-900 font-medium">14 jours d'essai gratuit</p>
             <p className="text-xs text-primary-700 mt-1">Aucune carte bancaire requise. Annulez à tout moment.</p>
           </div>
         </div>

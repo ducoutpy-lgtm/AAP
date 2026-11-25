@@ -24,7 +24,7 @@ describe('versCsv', () => {
   it('une valeur qui n’est pas une chaîne, tableau ou objet, est neutralisée elle aussi', () => {
     expect(champCsv(['=HYPERLINK("http://x","clic")'])).toBe('"\'=HYPERLINK(""http://x"",""clic"")"');
     expect(champCsv({ toString: () => '+SOMME(A1)' })).toBe('"\'+SOMME(A1)"');
-    expect(versCsv(['a'], [[['@SUM(1)']]])).toBe('﻿"a"\r\n"\'@SUM(1)"');
+    expect(versCsv(['a'], [[['@SUM(1)']]])).toBe('\uFEFF"a"\r\n"\'@SUM(1)"');
     expect(champCsv(-12.5)).toBe('"-12.5"');
   });
 

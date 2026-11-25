@@ -3,26 +3,39 @@
 // l'administration des appels et le calendrier, dont la case du 30 novembre portait l'échéance. Firestore, le service
 // des appels et le compte sont remplacés par des doublures ; seule la date (Date) est simulée, pas les minuteries.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 const donnees = vi.hoisted(() => ({ aap: [] as Record<string, unknown>[] }));
 const service = vi.hoisted(() => ({ getFinanceurAaps: vi.fn() }));
 vi.mock('../services/aapService', () => ({ aapService: service }));
 vi.mock('../config/firebase', () => ({ db: {} }));
+// La doublure de la lecture applique les filtres where(), bornes du mois du calendrier comprises (relecture du
+// 2026-11-25 : la doublure qui les ignorait montrait une échéance que la vraie requête ne charge pas)
+type Filtre = { champ: string; op: string; valeur: unknown };
+const valeurComparee = (v: unknown) => (v instanceof Date ? v.getTime() : v) as number | string;
+const respecte = (fiche: Record<string, unknown>, { champ, op, valeur }: Filtre): boolean => {
+  const a = valeurComparee(fiche[champ]);
+  const b = valeurComparee(valeur);
+  if (op === '==') return a === b;
+  if (op === '>=') return a >= b;
+  if (op === '<=') return a <= b;
+  throw new Error(`Opérateur non doublé : ${op}`);
+};
 vi.mock('firebase/firestore', () => ({
   collection: (_db: unknown, nom: string) => nom,
-  query: (nom: string) => nom,
-  where: vi.fn(),
+  query: (nom: string, ...filtres: Filtre[]) => ({ nom, filtres }),
+  where: (champ: string, op: string, valeur: unknown): Filtre => ({ champ, op, valeur }),
   doc: vi.fn(),
   updateDoc: vi.fn(),
   deleteDoc: vi.fn(),
   setDoc: vi.fn(),
   Timestamp: { fromDate: (d: Date) => d },
-  getDocs: (nom: string) =>
-    Promise.resolve({
-      docs: (nom === 'aap' ? donnees.aap : []).map((a) => ({ id: a.id as string, data: () => a })),
-    }),
+  getDocs: (cible: string | { nom: string; filtres: Filtre[] }) => {
+    const { nom, filtres } = typeof cible === 'string' ? { nom: cible, filtres: [] } : cible;
+    const lues = (nom === 'aap' ? donnees.aap : []).filter((a) => filtres.every((f) => respecte(a, f)));
+    return Promise.resolve({ docs: lues.map((a) => ({ id: a.id as string, data: () => a })) });
+  },
 }));
 // Compte stable : un nouvel objet à chaque affichage relancerait le chargement sans fin
 const compte = vi.hoisted(() => ({
@@ -88,7 +101,11 @@ describe('en Martinique, un appel qui clôt le 1er décembre s’affiche le 1er 
     expect((await screen.findByText('Date limite')).nextElementSibling?.textContent).toBe('01/12/2026');
   });
 
+  // Le calendrier ne lit que les clôtures du mois affiché, qui est celui du jour : l'horloge passe au 1er décembre à 10 h
+  // en Martinique (mois de décembre, échéance du jour, toujours ouverte donc urgente). Avant la correction, la requête
+  // partait du 1er décembre à minuit local (4 h UTC) et n'aurait pas chargé la clôture de minuit UTC.
   it('calendrier : échéance urgente datée du 1er décembre, sur la case du 1er décembre', async () => {
+    vi.setSystemTime(new Date('2026-12-01T10:00:00-04:00'));
     compte.userProfile.userType = 'porteur';
     afficher(<CalendarPage />);
     const titres = await screen.findAllByText('Appel du 1er décembre');
@@ -96,5 +113,18 @@ describe('en Martinique, un appel qui clôt le 1er décembre s’affiche le 1er 
     expect(titres.map((t) => t.nextElementSibling?.textContent).filter(Boolean)).toEqual(['01 déc. 2026']);
     // Grille : numéro de la case qui porte l'échéance
     expect(titres.map((t) => t.parentElement?.previousElementSibling?.textContent).filter(Boolean)).toEqual(['1']);
+  });
+
+  // Panneau du jour choisi : il affichait l'heure locale de minuit UTC (« 20:00 » en Martinique, « 01:00 » à Paris), alors
+  // qu'une clôture désigne un jour, sans heure
+  it('calendrier : le panneau du jour choisi n’affiche pas d’heure', async () => {
+    vi.setSystemTime(new Date('2026-12-01T10:00:00-04:00'));
+    compte.userProfile.userType = 'porteur';
+    afficher(<CalendarPage />);
+    const [caseDuJour] = await screen.findAllByText('Appel du 1er décembre');
+    fireEvent.click(caseDuJour.parentElement!.parentElement!);
+    const panneau = screen.getByRole('heading', { name: '01 décembre 2026' }).parentElement!;
+    expect(within(panneau).getByText('Appel du 1er décembre')).toBeInTheDocument();
+    expect(panneau.textContent).not.toMatch(/\d{2}:\d{2}/);
   });
 });

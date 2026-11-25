@@ -121,3 +121,35 @@ describe('formulaire d’appel', () => {
     expect(doublures.updateDoc).not.toHaveBeenCalled();
   });
 });
+
+// Relecture du 2026-11-25, constat 4 : le récapitulatif lisait le jour saisi (« aaaa-mm-jj », minuit UTC) en heure
+// locale, donc la veille outre-mer
+describe('récapitulatif du formulaire en Martinique', () => {
+  const fuseauInitial = process.env.TZ;
+  beforeEach(() => {
+    process.env.TZ = 'America/Martinique';
+    vi.stubGlobal('scrollTo', vi.fn());
+    doublures.compte = {
+      currentUser: { uid: 'f1' },
+      userProfile: { userType: 'financeur', email: 'f1@exemple.fr' },
+    };
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+    if (fuseauInitial === undefined) delete process.env.TZ;
+    else process.env.TZ = fuseauInitial;
+  });
+
+  it('la date limite récapitulée est le jour saisi', () => {
+    // Garde-fou : le fuseau est bien appliqué (minuit UTC du 1er décembre tombe le 30 novembre en heure locale)
+    expect(new Date('2099-12-01').getDate()).toBe(30);
+    render(
+      <MemoryRouter>
+        <CreateAapPage aapExistant={{ ...brouillon, deadline: new Date('2099-12-01') }} />
+      </MemoryRouter>,
+    );
+    for (let i = 0; i < 4; i++) suivant();
+    expect(screen.getByText('Date limite').nextElementSibling?.textContent).toBe('01/12/2099');
+  });
+});

@@ -165,6 +165,44 @@ describe('pièces jointes de la fiche', () => {
   });
 });
 
+// Dates de la fiche outre-mer (relecture du 2026-11-25, constat 4) : la clôture et l'ouverture, enregistrées à minuit UTC,
+// s'affichaient en heure locale, donc la veille aux Antilles (« Clôture le 30 novembre » à côté de « 3 jours restants »
+// pour un appel du 1er décembre). Seule la date (Date) est simulée, pas les minuteries.
+describe('dates de la fiche en Martinique', () => {
+  const fuseauInitial = process.env.TZ;
+  beforeEach(() => {
+    process.env.TZ = 'America/Martinique';
+    // Le 28 novembre 2026 à 10 h en Martinique : l'appel est ouvert, à trois jours de sa clôture
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-28T10:00:00-04:00'));
+    etat.incrementViews = () => Promise.resolve();
+    etat.fiche = {
+      title: 'Appel test',
+      status: 'published',
+      financeurId: 'f1',
+      deadline: new Date(Date.UTC(2026, 11, 1)),
+      startDate: new Date(Date.UTC(2026, 9, 15)),
+      territoriesEligible: [],
+    };
+    etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
+  });
+  afterEach(() => {
+    cleanup();
+    vi.useRealTimers();
+    if (fuseauInitial === undefined) delete process.env.TZ;
+    else process.env.TZ = fuseauInitial;
+  });
+
+  it('clôture et ouverture au jour enregistré, le même que le décompte', async () => {
+    // Garde-fou : le fuseau est bien appliqué (minuit UTC du 1er décembre tombe le 30 novembre en heure locale)
+    expect(new Date(Date.UTC(2026, 11, 1)).getDate()).toBe(30);
+    ouvrir();
+    expect((await screen.findByText(/^Clôture le/)).textContent).toBe('Clôture le 1 décembre 2026');
+    expect(screen.getByText(/jours restants/).textContent).toBe('3 jours restants · ouvert depuis le 15 octobre 2026');
+    expect(screen.getByText('Date limite de candidature:').nextElementSibling?.textContent).toBe('1 décembre 2026');
+  });
+});
+
 // Favori (décision du 2026-11-24 « Le brancher », plan niveau A, lot 3.7) : le cœur de la fiche ne faisait rien
 describe('favori de la fiche', () => {
   beforeEach(() => {

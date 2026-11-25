@@ -11,6 +11,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
+import { formatDateCloture } from '../../utils/datesCloture';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
@@ -141,6 +142,10 @@ export default function AapDetailPage() {
       day: 'numeric',
     });
   };
+  // Clôture et ouverture : un jour du calendrier enregistré à minuit UTC, lu en UTC (relecture du 2026-11-25, constat 4 :
+  // la fiche affichait la veille outre-mer) ; la publication, un instant réel, reste lue en heure locale
+  const formatJour = (date: Date | Timestamp): string =>
+    formatDateCloture(date, { year: 'numeric', month: 'long', day: 'numeric' });
 
   if (loading) {
     return (
@@ -244,7 +249,7 @@ export default function AapDetailPage() {
                 Dates
               </p>
               <p className={`text-xl font-bold mt-1 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
-                {aap.deadline ? `Clôture le ${formatDate(aap.deadline)}` : 'Date de clôture non précisée'}
+                {aap.deadline ? `Clôture le ${formatJour(aap.deadline)}` : 'Date de clôture non précisée'}
               </p>
               <p className="text-sm text-gray-600 mt-1">
                 {closed
@@ -252,7 +257,7 @@ export default function AapDetailPage() {
                   : daysLeft === null
                     ? "Vérifiez la date sur l'annonce officielle"
                     : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
-                {aap.startDate && ` · ouvert depuis le ${formatDate(aap.startDate)}`}
+                {aap.startDate && ` · ouvert depuis le ${formatJour(aap.startDate)}`}
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-4">
@@ -545,7 +550,7 @@ export default function AapDetailPage() {
             <div className="flex justify-between">
               <span className="text-gray-600">Date limite de candidature:</span>
               <span className={`font-semibold ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
-                {aap.deadline ? formatDate(aap.deadline) : 'Date de clôture non précisée'}
+                {aap.deadline ? formatJour(aap.deadline) : 'Date de clôture non précisée'}
               </span>
             </div>
             {closed && (

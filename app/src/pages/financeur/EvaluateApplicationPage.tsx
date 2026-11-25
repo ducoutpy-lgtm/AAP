@@ -207,7 +207,7 @@ export default function EvaluateApplicationPage() {
           {/* Flags and suggestions */}
           {application.conformityFlags && application.conformityFlags.length > 0 && (
             <div className="mt-4 p-4 bg-warning-50 border border-warning-200 rounded-lg">
-              <p className="text-sm font-medium text-warning-900 mb-2">⚠️ Points d'attention:</p>
+              <p className="text-sm font-medium text-warning-900 mb-2">Points d'attention:</p>
               <ul className="list-disc list-inside text-sm text-warning-800 space-y-1">
                 {application.conformityFlags.map((flag, index) => (
                   <li key={index}>{flag}</li>

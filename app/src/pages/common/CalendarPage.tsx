@@ -286,9 +286,10 @@ export default function CalendarPage() {
                       >
                         <div className="flex items-start gap-2">
                           <div className={`w-2 h-2 rounded-full mt-1.5 ${getUrgencyColor(event.urgency)}`}></div>
+                          {/* Pas d'heure : une clôture désigne un jour (minuit UTC), son heure locale tombait la veille
+                              outre-mer, « 20:00 » en Martinique (relecture du 2026-11-25) */}
                           <div className="flex-1">
                             <p className="text-sm font-medium text-gray-900">{event.title}</p>
-                            <p className="text-xs text-gray-500">{format(event.deadline, 'HH:mm', { locale: fr })}</p>
                           </div>
                         </div>
                       </div>
