@@ -89,7 +89,8 @@ local par lot vérifié.
   champ écrit par l'évaluation ; test en échec avant.)
 - [x] 6.7 (41) Cinq régions d'outre-mer dans Mon profil. (2026-11-25 : liste commune `REGIONS` dans
   `profilFormulaire.ts`, 18 régions, identifiants du parcours ; test en échec avant.)
-- [ ] 6.8 (42) Case « Recevoir le courriel du lundi » dans Mon profil.
+- [x] 6.8 (42) Case « Recevoir le courriel du lundi » dans Mon profil. (2026-11-25 : `PreferenceCourrielCarte`, pour un
+  candidat ; écrit `notificationPreferences.email` ; test en échec avant ; 180 tests verts.)
 - [x] 6.9 (43) `depublier_non_controlees.py` et `corriger_financeur_relais.py` gardés, mais sans écriture sans option
   explicite ; vérifier dans la base s'ils ont servi. (2026-11-24 : tous deux ont servi, d'après leurs sauvegardes
   `depublication_2026-10-20_1101.json` et `financeur_relais_2026-10-28_1229.json` ; `corriger_financeur_relais` exigeait

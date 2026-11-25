@@ -17,6 +17,7 @@ import { exporterMesDonnees } from '../../services/exportService';
 import { supprimerMonCompte } from '../../services/suppressionService';
 import { connexionRecenteSelonServeur } from '../../utils/suppressionCompte';
 import { TextesReutilisablesCarte } from '../../components/profil/TextesReutilisablesCarte';
+import { PreferenceCourrielCarte } from '../../components/profil/PreferenceCourrielCarte';
 import { nomFichierExport, SUR_DEMANDE_AU_DPO } from '../../utils/exportDonnees';
 
 const ROLES: Record<UserType, string> = { porteur: 'Candidat (établissement)', financeur: 'Financeur', admin: 'Administrateur' };
@@ -148,7 +149,10 @@ export default function ProfilPage() {
             </div>
           </div>
           {userProfile.userType === 'porteur' && (
-            <TextesReutilisablesCarte uid={currentUser.uid} initial={(profil as PorteurProfile | null)?.textesReutilisables} />
+            <>
+              <TextesReutilisablesCarte uid={currentUser.uid} initial={(profil as PorteurProfile | null)?.textesReutilisables} />
+              <PreferenceCourrielCarte uid={currentUser.uid} actif={userProfile.notificationPreferences?.email !== false} />
+            </>
           )}
         </div>
       </div>
