@@ -198,6 +198,19 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   Incident du 24/11 : `npx tsc` lancé par erreur depuis la racine a téléchargé le paquet public `tsc` 2.0.4 (paquet de
   substitution qui n'affiche qu'un avertissement) dans le cache npm ; dépôt vérifié intact.
 
+- 2026-11-25, matinée (relance « Oui, relance-les ») : décisions 35 à 43 inscrites (`docs/A_VALIDER.md`) et ajoutées
+  au plan (`openspec/changes/niveau-a/tasks.md`, section 6). Faits : 6.9 (`depublier_non_controlees` bloqué derrière
+  `--reel` ; les deux scripts ont servi d'après leurs sauvegardes), 6.7 (régions d'outre-mer), 6.6 (avis du financeur
+  visible), 6.5 (bouton « Clôturer »). 179 tests de l'application, 265 tests Python verts. **Reprendre à** : 6.8 (case
+  « Recevoir le courriel du lundi » : écrit `notificationPreferences.email`, déjà autorisé par la règle `users`), 6.2
+  (« Se souvenir de moi » : `setPersistence` de Firebase), 6.1 (vues +1 : règle qui n'autorise que l'ajout d'un sur
+  `views`), 6.3 (thématique depuis `sectorsTargeted`, dans l'application et `scraping/alertes.py`), 6.4 (jours du
+  calendrier, règle commune import, application, courriel), puis le reste du lot 3 (3.1 états d'erreur, 3.2 menu mobile,
+  3.3 clavier et modale, 3.4 à 3.7), le lot 4, 1.5 (firebase et react-router-dom), 5.1 vérification finale (dont la
+  saisie d'un appel par un financeur sur les émulateurs) et 5.2 (question à boutons de poussée et de mise en ligne, avec
+  une ligne « AAP attend : … » à la séance de pilotage). Piège de test noté : une doublure de `useAuth` doit renvoyer
+  le même objet à chaque appel, sinon une page qui dépend de `currentUser` recharge sans fin.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
