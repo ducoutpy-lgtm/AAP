@@ -31,10 +31,10 @@ SAUVEGARDES = ICI / "sauvegardes"
 
 
 def saisi_par_un_financeur(f: dict) -> bool:
-    """Appel saisi par un financeur : source « manual », ou financeurId autre que celui des fiches collectées. Le champ
-    source peut manquer (appel créé par le SDK, relecture du 2026-11-25, constat 6) ; financeurId, lui, vaut l'uid de
-    l'auteur à la création et ne change plus (firestore.rules)."""
-    return f.get("source") == "manual" or f.get("financeurId") != SCRAPED_FINANCEUR_ID
+    """Appel saisi par un financeur : source « manual », ou financeurId présent et autre que celui des fiches collectées.
+    Le champ source peut manquer (appel créé par le SDK, relecture du 2026-11-25, constat 6) ; financeurId, lui, vaut
+    l'uid de l'auteur à la création et ne change plus (firestore.rules). Une fiche sans financeurId n'en est pas un."""
+    return f.get("source") == "manual" or f.get("financeurId") not in (None, SCRAPED_FINANCEUR_ID)
 
 
 def motifs_de_doute(f: dict, maintenant: datetime) -> list[str]:

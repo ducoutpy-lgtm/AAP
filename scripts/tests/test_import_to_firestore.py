@@ -747,11 +747,16 @@ def test_montants_en_millions_et_en_milliers():
 
 def test_montants_point_decimal_devant_un_multiplicateur():
     """Relecture du 2026-11-25 (constats 19 et 39) : le point était lu comme séparateur de milliers devant « millions » ou
-    « M€ », d'où « 7.6 millions » = 76 M€ ; deux valeurs réelles de scraping/results/extraction_api.json en tête."""
+    « M€ », d'où « 7.6 millions » = 76 M€ ; deux valeurs réelles de scraping/results/extraction_api.json en tête.
+    Même suivi de trois chiffres, le point reste une décimale : la page de la fiche du GIRCI Grand Ouest donne 1,12 million
+    (projets de 300 000 €), et une lecture en milliers donnait 1,12 milliard (contre-vérification du 2026-11-25)."""
     assert imp.parse_budget_total("7.6 millions de FEDER") == 7_600_000
     assert imp.parse_budget_total("1.120 millions d'euros alloué au GIRCI Grand Ouest") == 1_120_000
     assert imp.parse_budget_total("2.5 M€") == 2_500_000
     assert imp.parse_budget_total("1.5 million") == 1_500_000
+    assert imp.parse_budget_total("1.25 Md€") == 1_250_000_000
+    assert imp.parse_budget_total("12.500 k€") == 12_500
+    assert imp.parse_budget_total("1.500 millions") == 1_500_000
     assert imp.parse_budget_total("12.000 €") == 12_000  # sans multiplicateur, le point sépare toujours les milliers
     assert imp.parse_budget_total("1.500.000 euros") == 1_500_000
     assert imp.parse_budget_total("1.500.000 millions") is None  # plusieurs points devant un multiplicateur : ambigu

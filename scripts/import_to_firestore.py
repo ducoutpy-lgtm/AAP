@@ -336,8 +336,10 @@ def parse_budget_total(enveloppe: str | None) -> int | None:
     nombre, unite = trouves[0]
     chiffres = re.sub(r"\s", "", nombre)
     facteur = next((f for motif, f in MULTIPLICATEURS if re.match(motif, unite.strip().lower())), 1)
-    # Devant un multiplicateur, le point est une virgule décimale (« 7.6 millions », « 2.5 M€ » : la relecture du
-    # 2026-11-25 lisait 76 M€) ; sans multiplicateur, il sépare les milliers (« 12.000 € »)
+    # Devant un multiplicateur, le point est une virgule décimale (« 7.6 millions », « 2.5 M€ » : la relecture du 2026-11-25
+    # lisait 76 M€), même suivi de trois chiffres : la seule valeur réelle de ce type, « 1.120 millions d'euros alloué au
+    # GIRCI Grand Ouest », vaut 1,12 million d'après sa page (projets de 300 000 €). Sans multiplicateur, le point sépare
+    # les milliers (« 12.000 € »). [À VALIDER — Monsieur DUCOUT : « 12.500 k€ » est lu 12 500 €, et non 12,5 millions.]
     if facteur > 1 and "," not in chiffres:
         if chiffres.count(".") > 1:
             return None

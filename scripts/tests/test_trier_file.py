@@ -1,6 +1,6 @@
 """Tests du tri automatique de la file « à valider » (changement tri-automatique-file, 2026-11-18)."""
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -19,6 +19,11 @@ def fiche(**kw):
     return base
 
 
+def cloture(jour: date) -> datetime:
+    # Clôture telle que l'import l'écrit (parse_date) : minuit UTC du jour
+    return datetime(jour.year, jour.month, jour.day, tzinfo=timezone.utc)
+
+
 def test_fiche_sure_sans_motif():
     assert t.motifs_de_doute(fiche(), MAINTENANT) == []
     assert t.motifs_de_doute(fiche(deadline=None), MAINTENANT) == []  # sans date : publiée avec la mention habituelle
@@ -31,7 +36,8 @@ def test_motifs_de_doute():
     assert t.motifs_de_doute(fiche(scrapeMetadata=sm(verification={"estUnAppel": True, "douteux": ["date_cloture", "description"]})), MAINTENANT) == ["doute du contrôle : date_cloture"]
     assert t.motifs_de_doute(fiche(scrapeMetadata=sm(champ="incertain")), MAINTENANT) == ["champ incertain"]
     assert t.motifs_de_doute(fiche(scrapeMetadata=sm(champ="hors-champ")), MAINTENANT) == ["hors champ"]
-    assert t.motifs_de_doute(fiche(deadline=MAINTENANT - timedelta(days=1)), MAINTENANT) == ["appel clos"]
+    veille = MAINTENANT.astimezone().date() - timedelta(days=1)  # veille du jour du poste, quel que soit son fuseau
+    assert t.motifs_de_doute(fiche(deadline=cloture(veille)), MAINTENANT) == ["appel clos"]
 
 
 def test_decisions_doublons_puis_tri():
@@ -75,6 +81,9 @@ def test_un_rapprochement_par_ricochet_ne_rejette_pas():
                   "status": "draft", "validation": {"statut": "proposee"}})
     dec = t.decisions([b], [[a, b]], lambda g: ("axe3", "déjà publiée"), maintenant)
     assert dec["axe5"][0] != "rejeter"
+    # La décision vient bien de la règle du ricochet, pas d'un autre motif (relecture du 2026-11-25 : la fiche sans
+    # financeurId passait pour un appel de financeur et le test ne vérifiait plus rien)
+    assert "rapprochée de axe3 par une autre fiche" in dec["axe5"][1]
 
 
 
@@ -99,6 +108,16 @@ def test_un_appel_de_financeur_sans_champ_source_reste_a_valider():
     assert t.decisions([("x", sans_source)], [], lambda g: ("", ""), MAINTENANT)["x"][0] == "laisser"
 
 
+def test_une_fiche_sans_financeur_id_n_est_pas_un_appel_de_financeur():
+    """Relecture du 2026-11-25 : un appel de financeur porte un financeurId autre que « scraped », ou la source
+    « manual » ; une fiche sans financeurId n'en est pas un."""
+    assert t.saisi_par_un_financeur({}) is False
+    assert t.saisi_par_un_financeur({"source": "scraped"}) is False
+    assert t.saisi_par_un_financeur({"financeurId": "scraped"}) is False
+    assert t.saisi_par_un_financeur({"financeurId": "uid-financeur"}) is True
+    assert t.saisi_par_un_financeur({"source": "manual"}) is True
+
+
 def test_un_appel_de_financeur_pris_pour_un_doublon_n_est_pas_archive():
     """Relecture du 2026-11-25 (constat 16) : un financeur saisit l'appel que la collecte a déjà publié ; le tri le
     rejetait comme doublon (archived, rejetee) sans que l'administrateur l'ait vu. Il reste à relire."""
@@ -115,8 +134,8 @@ def test_un_appel_de_financeur_pris_pour_un_doublon_n_est_pas_archive():
 
 def test_cloture_comptee_en_jours_du_calendrier():
     """Relecture du 2026-11-25 (constat 22, décision 38 du 2026-11-24) : un appel qui clôt aujourd'hui (minuit UTC) reste
-    ouvert tout son dernier jour, comme dans l'import, l'application et le courriel ; il est clos le lendemain."""
-    maintenant = datetime(2026, 11, 30, 9, 0, tzinfo=timezone.utc)
-    jour_meme = datetime(2026, 11, 30, tzinfo=timezone.utc)
-    assert "appel clos" not in t.motifs_de_doute(fiche(deadline=jour_meme), maintenant)
-    assert "appel clos" in t.motifs_de_doute(fiche(deadline=jour_meme - timedelta(days=1)), maintenant)
+    ouvert tout son dernier jour, comme dans l'import, l'application et le courriel ; il est clos le lendemain. Le
+    30/11 à 9 h est pris à l'heure du poste : le test vaut quel que soit son fuseau."""
+    maintenant = datetime(2026, 11, 30, 9, 0).astimezone()
+    assert "appel clos" not in t.motifs_de_doute(fiche(deadline=cloture(date(2026, 11, 30))), maintenant)
+    assert "appel clos" in t.motifs_de_doute(fiche(deadline=cloture(date(2026, 11, 29))), maintenant)
