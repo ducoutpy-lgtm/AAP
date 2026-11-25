@@ -62,7 +62,12 @@ local par lot vérifié.
 - [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
   2026-11-24 : échelles complètes de success, warning, error, info ; `src/test/palette.test.ts` en échec avec l'ancienne
   configuration, vert avec la nouvelle ; classes générées vérifiées dans la feuille compilée. Restent clavier et modale.)
-- [ ] 3.4 Fiche non visible fermée par son adresse directe ; saisie des montants et dates contrôlée ; CSV échappés.
+- [x] 3.4 Fiche non visible fermée par son adresse directe ; saisie des montants et dates contrôlée ; CSV échappés.
+  (2026-11-25 : `ficheConsultable` dans la fiche et le formulaire de candidature, `candidatureOuverte` exige la
+  visibilité ; `utils/csv.ts` (guillemets, apostrophe devant = + - @, point-virgule et UTF-8, choix à confirmer) dans les
+  deux exports ; `erreursEtape` dans `aapFormulaire.ts`, un message sous chaque champ. Tests en échec avant chacune des
+  trois corrections ; 199 tests verts, construction réussie. La règle de lecture Firestore laisse encore tout compte en
+  essai lire une fiche non publiée par le SDK : la resserrer demande de revoir les requêtes de liste, non fait.)
 - [ ] 3.5 Connexion qui attend le profil et redirige selon le rôle.
 - [ ] 3.6 Chargement découpé, Stripe seulement là où il sert.
 - [ ] 3.7 Favori branché ; vraie page 404 ; écrans « en cours de développement » retirés des menus ; mention

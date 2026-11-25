@@ -10,7 +10,7 @@ import { Textarea } from '../../components/ui/Textarea';
 import { Stepper } from '../../components/ui/Stepper';
 import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
 import type { AAP } from '../../types';
-import { donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
+import { erreursEtape, ErreursFormulaire, donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { messageErreur } from '../../utils/erreurs';
@@ -65,6 +65,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [erreurs, setErreurs] = useState<ErreursFormulaire>({});
 
   const [formData, setFormData] = useState(aapExistant ? formulaireDepuisAap(aapExistant) : FORMULAIRE_VIDE);
 
@@ -86,27 +87,16 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
     }));
   };
 
-  const validateStep = (step: number): boolean => {
-    switch (step) {
-      case 0:
-        return formData.title.length >= 10 && formData.description.length >= 100;
-      case 1:
-        return formData.sectorsTargeted.length > 0 && formData.territoriesEligible.length > 0;
-      case 2:
-        return formData.deadline !== '';
-      case 3:
-        return formData.contactEmail !== '';
-      default:
-        return true;
-    }
-  };
-
+  // Contrôle de l'étape (aapFormulaire.ts, plan niveau A, lot 3.4) : chaque message s'affiche sous son champ
   const handleNext = () => {
-    if (validateStep(currentStep)) {
+    const trouvees = erreursEtape(currentStep, formData);
+    setErreurs(trouvees);
+    if (Object.keys(trouvees).length === 0) {
+      setError('');
       setCurrentStep(prev => prev + 1);
       window.scrollTo(0, 0);
     } else {
-      setError('Veuillez remplir tous les champs obligatoires');
+      setError('Corrigez les champs signalés.');
     }
   };
 
@@ -194,6 +184,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               label="Titre de l'appel à projets"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              error={erreurs.title}
               required
               helperText="Minimum 10 caractères"
             />
@@ -202,6 +193,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               label="Description complète"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              error={erreurs.description}
               required
               helperText="Décrivez les objectifs et le contexte de l'appel à projets (minimum 100 caractères)"
               rows={8}
@@ -212,6 +204,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               type="url"
               value={formData.externalUrl}
               onChange={(e) => setFormData({ ...formData, externalUrl: e.target.value })}
+              error={erreurs.externalUrl}
               helperText="URL vers la page officielle de l'AAP"
             />
           </div>
@@ -239,6 +232,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                   </label>
                 ))}
               </div>
+              {erreurs.sectorsTargeted && <p className="mt-1 text-sm text-error-500">{erreurs.sectorsTargeted}</p>}
             </div>
 
             <div>
@@ -258,6 +252,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                   </label>
                 ))}
               </div>
+              {erreurs.territoriesEligible && <p className="mt-1 text-sm text-error-500">{erreurs.territoriesEligible}</p>}
             </div>
 
             <Textarea
@@ -289,6 +284,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                 type="number"
                 value={formData.budgetMin}
                 onChange={(e) => setFormData({ ...formData, budgetMin: e.target.value })}
+                error={erreurs.budgetMin}
                 helperText="Montant minimum par projet"
                 min="0"
               />
@@ -298,6 +294,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                 type="number"
                 value={formData.budgetMax}
                 onChange={(e) => setFormData({ ...formData, budgetMax: e.target.value })}
+                error={erreurs.budgetMax}
                 helperText="Montant maximum par projet"
                 min="0"
               />
@@ -307,6 +304,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                 type="number"
                 value={formData.budgetTotal}
                 onChange={(e) => setFormData({ ...formData, budgetTotal: e.target.value })}
+                error={erreurs.budgetTotal}
                 helperText="Budget total de l'AAP"
                 min="0"
               />
@@ -317,6 +315,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               type="date"
               value={formData.deadline}
               onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
+              error={erreurs.deadline}
               required
               helperText="Date limite de dépôt des candidatures"
               min={new Date().toISOString().split('T')[0]}
@@ -334,6 +333,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               type="email"
               value={formData.contactEmail}
               onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
+              error={erreurs.contactEmail}
               required
               helperText="Email pour les questions des porteurs de projets"
             />

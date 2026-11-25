@@ -5,6 +5,7 @@
 import type { AAP } from '../../types';
 import type { CreateAapData } from '../../services/aapService';
 import { enDate } from '../../utils/dates';
+import { lienSur } from '../../utils/liens';
 
 export interface FormulaireAap {
   title: string;
@@ -92,4 +93,39 @@ export function donneesDepuisFormulaire(f: FormulaireAap): CreateAapData {
     externalUrl: f.externalUrl || undefined,
     tags: etiquettes.length ? etiquettes : undefined,
   };
+}
+
+// Contrôle d'une étape du formulaire (plan niveau A, lot 3.4, 2026-11-25) : un message en français par champ, affiché sous
+// le champ. La page ne vérifiait que la présence d'une date (les attributs min des champs ne jouent que dans un <form>).
+// aujourdhui : date du jour du poste, « aaaa-mm-jj » (comparée comme texte à la date saisie).
+export type ErreursFormulaire = Partial<Record<keyof FormulaireAap, string>>;
+
+const jourLocal = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const montantInvalide = (valeur: string) => valeur.trim() !== '' && !(Number(valeur) >= 0);
+
+export function erreursEtape(etape: number, f: FormulaireAap, aujourdhui = jourLocal(new Date())): ErreursFormulaire {
+  const e: ErreursFormulaire = {};
+  if (etape === 0) {
+    if (f.title.trim().length < 10) e.title = 'Le titre doit compter au moins 10 caractères.';
+    if (f.description.trim().length < 100) {
+      e.description = `La description doit compter au moins 100 caractères (${f.description.trim().length} actuellement).`;
+    }
+    if (f.externalUrl.trim() && !lienSur(f.externalUrl)) e.externalUrl = "L'adresse doit commencer par http:// ou https://.";
+  } else if (etape === 1) {
+    if (f.sectorsTargeted.length === 0) e.sectorsTargeted = 'Choisissez au moins un secteur.';
+    if (f.territoriesEligible.length === 0) e.territoriesEligible = 'Choisissez au moins un territoire.';
+  } else if (etape === 2) {
+    for (const champ of ['budgetMin', 'budgetMax', 'budgetTotal'] as const) {
+      if (montantInvalide(f[champ])) e[champ] = 'Indiquez un montant positif en euros.';
+    }
+    if (!e.budgetMin && !e.budgetMax && f.budgetMin.trim() && f.budgetMax.trim() && Number(f.budgetMin) > Number(f.budgetMax)) {
+      e.budgetMax = 'Le budget maximum doit être supérieur ou égal au minimum.';
+    }
+    if (!f.deadline) e.deadline = 'Indiquez la date limite de candidature.';
+    else if (f.deadline < aujourdhui) e.deadline = 'La date limite est déjà passée.';
+  } else if (etape === 3) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.contactEmail.trim())) e.contactEmail = 'Indiquez une adresse électronique valide.';
+  }
+  return e;
 }
