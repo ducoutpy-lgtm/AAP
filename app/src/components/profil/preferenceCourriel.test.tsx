@@ -18,9 +18,21 @@ describe('préférence du courriel du lundi', () => {
     const caseACocher = screen.getByLabelText(/Recevoir le courriel du lundi/);
     expect(caseACocher).toBeChecked();
     fireEvent.click(caseACocher);
-    await waitFor(() => expect(appels.setDoc).toHaveBeenCalledWith('reference', { notificationPreferences: { email: false } }, { merge: true }));
+    await waitFor(() =>
+      expect(appels.setDoc).toHaveBeenCalledWith(
+        'reference',
+        { notificationPreferences: { email: false } },
+        { merge: true },
+      ),
+    );
     expect(await screen.findByText(/n'est plus envoyé/)).toBeInTheDocument();
     fireEvent.click(caseACocher);
-    await waitFor(() => expect(appels.setDoc).toHaveBeenLastCalledWith('reference', { notificationPreferences: { email: true } }, { merge: true }));
+    await waitFor(() =>
+      expect(appels.setDoc).toHaveBeenLastCalledWith(
+        'reference',
+        { notificationPreferences: { email: true } },
+        { merge: true },
+      ),
+    );
   });
 });

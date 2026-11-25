@@ -6,14 +6,16 @@ import { nomFichierExport, pourExport, SUR_DEMANDE_AU_DPO } from './exportDonnee
 describe('pourExport', () => {
   it('dates Firestore et JavaScript en ISO 8601, tableaux et objets parcourus, autres valeurs gardées', () => {
     const quand = new Date('2026-11-16T09:30:00.000Z');
-    expect(pourExport({
-      createdAt: Timestamp.fromDate(quand),
-      le: quand,
-      budget: { total: 18000, saisiLe: Timestamp.fromDate(quand) },
-      documents: [{ nom: 'statuts.pdf', depose: Timestamp.fromDate(quand) }, 'texte'],
-      vide: null,
-      actif: true,
-    })).toEqual({
+    expect(
+      pourExport({
+        createdAt: Timestamp.fromDate(quand),
+        le: quand,
+        budget: { total: 18000, saisiLe: Timestamp.fromDate(quand) },
+        documents: [{ nom: 'statuts.pdf', depose: Timestamp.fromDate(quand) }, 'texte'],
+        vide: null,
+        actif: true,
+      }),
+    ).toEqual({
       createdAt: '2026-11-16T09:30:00.000Z',
       le: '2026-11-16T09:30:00.000Z',
       budget: { total: 18000, saisiLe: '2026-11-16T09:30:00.000Z' },

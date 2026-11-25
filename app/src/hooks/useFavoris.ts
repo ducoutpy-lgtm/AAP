@@ -13,22 +13,27 @@ export function useFavoris() {
     if (!uid) return;
     let actif = true;
     lireFavoris(uid)
-      .then(lus => { if (actif) setFavoris(lus); })
-      .catch(err => console.error('Favoris non lus :', err));
-    return () => { actif = false; };
+      .then((lus) => {
+        if (actif) setFavoris(lus);
+      })
+      .catch((err) => console.error('Favoris non lus :', err));
+    return () => {
+      actif = false;
+    };
   }, [uid]);
 
   const basculer = (aapId: string) => {
     if (!uid) return;
     const etait = favoris.has(aapId);
-    const marquer = (favori: boolean) => setFavoris(avant => {
-      const apres = new Set(avant);
-      if (favori) apres.add(aapId);
-      else apres.delete(aapId);
-      return apres;
-    });
+    const marquer = (favori: boolean) =>
+      setFavoris((avant) => {
+        const apres = new Set(avant);
+        if (favori) apres.add(aapId);
+        else apres.delete(aapId);
+        return apres;
+      });
     marquer(!etait);
-    basculerFavori(uid, aapId, etait).catch(err => {
+    basculerFavori(uid, aapId, etait).catch((err) => {
       console.error('Favori non enregistré :', err);
       marquer(etait);
     });

@@ -59,10 +59,10 @@ export function resumerParCompte(comptes: CompteSuivi[], journal: LigneJournal[]
     liste.push(l);
     parCompte.set(l.userId, liste);
   }
-  const resumes = comptes.map(c => {
+  const resumes = comptes.map((c) => {
     const lignes = (parCompte.get(c.uid) ?? []).sort((a, b) => dateLigne(b).getTime() - dateLigne(a).getTime());
-    const compter = (action: ActionJournal) => lignes.filter(l => l.action === action).length;
-    const connexion = lignes.find(l => l.action === 'connexion');
+    const compter = (action: ActionJournal) => lignes.filter((l) => l.action === action).length;
+    const connexion = lignes.find((l) => l.action === 'connexion');
     return {
       ...c,
       derniereConnexion: connexion ? dateLigne(connexion) : null,
@@ -87,10 +87,10 @@ export interface ChiffresSemaine {
 }
 
 export function chiffresDepuis(journal: LigneJournal[], depuis: Date): ChiffresSemaine {
-  const recentes = journal.filter(l => dateLigne(l) >= depuis);
-  const compter = (action: ActionJournal) => recentes.filter(l => l.action === action).length;
+  const recentes = journal.filter((l) => dateLigne(l) >= depuis);
+  const compter = (action: ActionJournal) => recentes.filter((l) => l.action === action).length;
   return {
-    comptesActifs: new Set(recentes.map(l => l.userId)).size,
+    comptesActifs: new Set(recentes.map((l) => l.userId)).size,
     connexions: compter('connexion'),
     recherches: compter('recherche'),
     fiches: compter('fiche'),
@@ -100,5 +100,5 @@ export function chiffresDepuis(journal: LigneJournal[], depuis: Date): ChiffresS
 
 // Libellé lisible des filtres actifs d'une recherche, pour la ligne du journal (ex : « Normandie · Bientôt clôturé »)
 export function libelleFiltres(etiquettes: { libelle: string }[]): string {
-  return etiquettes.map(e => e.libelle).join(' · ') || 'sans filtre';
+  return etiquettes.map((e) => e.libelle).join(' · ') || 'sans filtre';
 }

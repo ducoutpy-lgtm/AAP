@@ -16,7 +16,15 @@ import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
 import { aapService } from '../../services/aapService';
 import { useFavoris } from '../../hooks/useFavoris';
-import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, ficheConsultable, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
+import {
+  aQuiSAdresse,
+  candidatureOuverte,
+  candidatureSurSiteOfficiel,
+  ficheConsultable,
+  libelleMontant,
+  LIBELLES_THEMATIQUES_FICHE,
+  suiviCandidatureExterne,
+} from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
 import { libelleTerritoire } from '../../utils/territoires';
@@ -36,10 +44,7 @@ import {
 // Ordre de préférence pour ouvrir une pièce jointe (spec consultation-aap-scrapes) :
 // copie Storage, sinon copie locale (seulement quand l'application tourne sur le PC, dossier
 // app/public/documents -> scraping/downloads), sinon fichier d'origine chez le financeur.
-const lienPieceJointe = (
-  fichier: { url: string; fichierLocal?: string },
-  urlStorage: string | undefined
-): string => {
+const lienPieceJointe = (fichier: { url: string; fichierLocal?: string }, urlStorage: string | undefined): string => {
   if (urlStorage) return urlStorage;
   if (import.meta.env.DEV && fichier.fichierLocal) return `/documents/${fichier.fichierLocal}`;
   return fichier.url;
@@ -73,8 +78,8 @@ export default function AapDetailPage() {
     fichiers.forEach((fichier, index) => {
       if (!fichier.storagePath) return;
       getDownloadURL(ref(storage, fichier.storagePath))
-        .then(url => setPieceUrls(prev => ({ ...prev, [index]: url })))
-        .catch(err => console.error('Pièce jointe indisponible dans Storage:', fichier.storagePath, err));
+        .then((url) => setPieceUrls((prev) => ({ ...prev, [index]: url })))
+        .catch((err) => console.error('Pièce jointe indisponible dans Storage:', fichier.storagePath, err));
     });
   }, [aap]);
 
@@ -96,14 +101,21 @@ export default function AapDetailPage() {
       if (aapDoc.exists()) {
         setAap({ ...aapDoc.data() } as AAP);
         // Journal des actions (suivi-testeurs) : fiche ouverte par un compte connecté
-        if (currentUser && userProfile) journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, (aapDoc.data() as AAP).title);
+        if (currentUser && userProfile)
+          journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, (aapDoc.data() as AAP).title);
         // Compteur de vues (décision 35 du 2026-11-24) : appel publié ouvert par un autre compte que son auteur ou
         // l'administrateur ; un échec n'empêche pas la lecture de la fiche
         const lue = aapDoc.data() as AAP;
-        if (currentUser && userProfile && userProfile.userType !== 'admin' && lue.financeurId !== currentUser.uid
-          && lue.status === 'published' && vueComptee.current !== aapId) {
+        if (
+          currentUser &&
+          userProfile &&
+          userProfile.userType !== 'admin' &&
+          lue.financeurId !== currentUser.uid &&
+          lue.status === 'published' &&
+          vueComptee.current !== aapId
+        ) {
           vueComptee.current = aapId;
-          aapService.incrementViews(aapId).catch(err => console.warn('Vue non comptée :', err));
+          aapService.incrementViews(aapId).catch((err) => console.warn('Vue non comptée :', err));
         }
       }
     } catch (err) {
@@ -139,12 +151,8 @@ export default function AapDetailPage() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center max-w-md">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">AAP non trouvé</h2>
-          <p className="text-gray-600 mb-4">
-            Cet appel à projets n'existe pas ou n'est plus disponible.
-          </p>
-          <Button onClick={() => navigate('/aap/search')}>
-            Retour à la recherche
-          </Button>
+          <p className="text-gray-600 mb-4">Cet appel à projets n'existe pas ou n'est plus disponible.</p>
+          <Button onClick={() => navigate('/aap/search')}>Retour à la recherche</Button>
         </Card>
       </div>
     );
@@ -158,11 +166,7 @@ export default function AapDetailPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back button */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate(retourRecherche)}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate(retourRecherche)} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour à la recherche
         </Button>
@@ -175,24 +179,24 @@ export default function AapDetailPage() {
               {/* Mention de relecture, date d'extraction et lien officiel en évidence (mention-relecture-fiches, instruction 11) */}
               {/* Mention de relecture réservée à l'administrateur (retour du 2026-10-20) ; le candidat voit la date de mise à jour */}
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-sm text-gray-600">
-                  {userProfile?.userType === 'admin' && mentionRelecture(aap) && (
-                    <>
-                      <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
-                      {mentionRelecture(aap)!.detail && <span>{mentionRelecture(aap)!.detail.trim()}</span>}
-                    </>
-                  )}
-                  {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
-                  {aap.externalUrl && (
-                    <a
-                      href={lienSur(aap.externalUrl)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary-600 hover:underline inline-flex items-center gap-1 font-medium"
-                    >
-                      Annonce officielle
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  )}
+                {userProfile?.userType === 'admin' && mentionRelecture(aap) && (
+                  <>
+                    <Badge variant={mentionRelecture(aap)!.variant}>{mentionRelecture(aap)!.libelle}</Badge>
+                    {mentionRelecture(aap)!.detail && <span>{mentionRelecture(aap)!.detail.trim()}</span>}
+                  </>
+                )}
+                {dateExtraction(aap) && <span>Mise à jour le {dateExtraction(aap)}</span>}
+                {aap.externalUrl && (
+                  <a
+                    href={lienSur(aap.externalUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-600 hover:underline inline-flex items-center gap-1 font-medium"
+                  >
+                    Annonce officielle
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
               </div>
               <div className="flex items-center gap-2 text-gray-600 mb-2">
                 <Building className="h-5 w-5" />
@@ -200,8 +204,13 @@ export default function AapDetailPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="sm" aria-label={estFavori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-                aria-pressed={estFavori} onClick={() => (currentUser && aapId ? basculer(aapId) : versConnexion())}>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label={estFavori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                aria-pressed={estFavori}
+                onClick={() => (currentUser && aapId ? basculer(aapId) : versConnexion())}
+              >
                 <Heart className={`h-5 w-5 ${estFavori ? 'fill-current text-error-500' : ''}`} />
               </Button>
             </div>
@@ -210,24 +219,39 @@ export default function AapDetailPage() {
           {/* En-tête à trois cases (parcours-candidat-jour-1, 2026-10-20) : montant, dates, territoire, en clair */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-6 border-y">
             <div className="rounded-lg bg-gray-50 p-4">
-              <p className="text-sm text-gray-600 flex items-center gap-2"><Euro className="h-4 w-4" />Montant</p>
+              <p className="text-sm text-gray-600 flex items-center gap-2">
+                <Euro className="h-4 w-4" />
+                Montant
+              </p>
               <p className="text-xl font-bold text-gray-900 mt-1">{libelleMontant(aap)}</p>
               {aap.budgetTotal && (aap.budgetMin || aap.budgetMax) && (
-                <p className="text-sm text-gray-600 mt-1">Enveloppe totale : {aap.budgetTotal.toLocaleString('fr-FR')} €</p>
+                <p className="text-sm text-gray-600 mt-1">
+                  Enveloppe totale : {aap.budgetTotal.toLocaleString('fr-FR')} €
+                </p>
               )}
             </div>
             <div className="rounded-lg bg-gray-50 p-4">
-              <p className="text-sm text-gray-600 flex items-center gap-2"><Calendar className="h-4 w-4" />Dates</p>
+              <p className="text-sm text-gray-600 flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Dates
+              </p>
               <p className={`text-xl font-bold mt-1 ${isUrgent ? 'text-warning-600' : 'text-gray-900'}`}>
                 {aap.deadline ? `Clôture le ${formatDate(aap.deadline)}` : 'Date de clôture non précisée'}
               </p>
               <p className="text-sm text-gray-600 mt-1">
-                {closed ? 'Candidatures fermées' : daysLeft === null ? "Vérifiez la date sur l'annonce officielle" : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
+                {closed
+                  ? 'Candidatures fermées'
+                  : daysLeft === null
+                    ? "Vérifiez la date sur l'annonce officielle"
+                    : `${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`}
                 {aap.startDate && ` · ouvert depuis le ${formatDate(aap.startDate)}`}
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-4">
-              <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin className="h-4 w-4" />Territoire</p>
+              <p className="text-sm text-gray-600 flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                Territoire
+              </p>
               <p className="text-xl font-bold text-gray-900 mt-1">
                 {aap.territoriesEligible && aap.territoriesEligible.length > 0
                   ? aap.territoriesEligible.map(libelleTerritoire).join(', ')
@@ -240,45 +264,66 @@ export default function AapDetailPage() {
           {/* Fiche importée : la candidature se fait sur le site officiel (question 21, 2026-11-13) */}
           {candidatureSurSiteOfficiel(aap) && (
             <div className="mt-6">
-              <a href={lienSur(aap.externalUrl)} target="_blank" rel="noopener noreferrer"
-                className="block w-full text-center px-6 py-3 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700">
+              <a
+                href={lienSur(aap.externalUrl)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center px-6 py-3 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700"
+              >
                 Candidater sur le site officiel
               </a>
               <p className="mt-2 text-center text-sm text-gray-500">
-                Cet appel est publié par {aap.financeurName || 'le financeur'} : le dossier se dépose sur son site, selon
-                l'annonce officielle. Notez votre démarche dans « Mes candidatures » pour la suivre.
+                Cet appel est publié par {aap.financeurName || 'le financeur'} : le dossier se dépose sur son site,
+                selon l'annonce officielle. Notez votre démarche dans « Mes candidatures » pour la suivre.
               </p>
               {/* Suivi tenu par le candidat (suivi-candidature-externe, 2026-11-13) */}
               {currentUser && userProfile?.userType === 'porteur' && aapId && (
-                <Button variant="secondary" className="w-full mt-3" onClick={async () => {
-                  await addDoc(collection(db, 'applications'), {
-                    ...suiviCandidatureExterne({ id: aapId, title: aap.title, financeurId: aap.financeurId }, currentUser.uid),
-                    submittedAt: Timestamp.now(), createdAt: Timestamp.now(), updatedAt: Timestamp.now(),
-                  });
-                  navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur', externe: true } } });
-                }}>
+                <Button
+                  variant="secondary"
+                  className="w-full mt-3"
+                  onClick={async () => {
+                    await addDoc(collection(db, 'applications'), {
+                      ...suiviCandidatureExterne(
+                        { id: aapId, title: aap.title, financeurId: aap.financeurId },
+                        currentUser.uid,
+                      ),
+                      submittedAt: Timestamp.now(),
+                      createdAt: Timestamp.now(),
+                      updatedAt: Timestamp.now(),
+                    });
+                    navigate('/mes-candidatures', {
+                      state: {
+                        envoyee: {
+                          aapTitle: aap.title,
+                          financeurName: aap.financeurName || 'le financeur',
+                          externe: true,
+                        },
+                      },
+                    });
+                  }}
+                >
                   J'ai déposé ma candidature : la suivre ici
                 </Button>
               )}
             </div>
           )}
           {/* Appel clos : plus de bouton (corrections-relecture 2.1) ; l'encadré « Clôturé » reste affiché */}
-          {!candidatureSurSiteOfficiel(aap) && candidatureOuverte(aap) && (userProfile?.userType === 'porteur' || !currentUser) && (
-            <div className="mt-6">
-              <Button
-                size="lg"
-                className="w-full"
-                onClick={() => (currentUser ? navigate(`/aap/${aapId}/candidater`) : versConnexion())}
-              >
-                Candidater à cet AAP
-              </Button>
-              {!currentUser && (
-                <p className="mt-2 text-center text-sm text-gray-500">
-                  Candidater demande un compte candidat.
-                </p>
-              )}
-            </div>
-          )}
+          {!candidatureSurSiteOfficiel(aap) &&
+            candidatureOuverte(aap) &&
+            (userProfile?.userType === 'porteur' || !currentUser) && (
+              <div className="mt-6">
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={() => (currentUser ? navigate(`/aap/${aapId}/candidater`) : versConnexion())}
+                >
+                  Candidater à cet AAP
+                </Button>
+                {!currentUser && (
+                  <p className="mt-2 text-center text-sm text-gray-500">Candidater demande un compte candidat.</p>
+                )}
+              </div>
+            )}
         </Card>
 
         {/* Description */}
@@ -294,15 +339,20 @@ export default function AapDetailPage() {
               le champ public / privé dédié arrive au jour 2 du plan MVP */}
           <Card className="p-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Users className="h-5 w-5 text-primary-600" />
-              À qui s'adresse cet appel
+              <Users className="h-5 w-5 text-primary-600" />À qui s'adresse cet appel
             </h3>
             {aQuiSAdresse(aap).length > 0 ? (
               <div className="flex flex-wrap gap-2 mb-4">
-                {aQuiSAdresse(aap).map(t => <Badge key={t} variant="primary">{t}</Badge>)}
+                {aQuiSAdresse(aap).map((t) => (
+                  <Badge key={t} variant="primary">
+                    {t}
+                  </Badge>
+                ))}
               </div>
             ) : (
-              <p className="text-gray-500 italic mb-4">Types de structures non précisés sur l'annonce : voir les critères ci-dessous</p>
+              <p className="text-gray-500 italic mb-4">
+                Types de structures non précisés sur l'annonce : voir les critères ci-dessous
+              </p>
             )}
             {aap.qualification && (
               <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm mb-4">
@@ -347,17 +397,13 @@ export default function AapDetailPage() {
               {aap.budgetMin && (
                 <div className="flex justify-between">
                   <span className="text-gray-600">Minimum:</span>
-                  <span className="font-semibold text-gray-900">
-                    {aap.budgetMin.toLocaleString('fr-FR')}€
-                  </span>
+                  <span className="font-semibold text-gray-900">{aap.budgetMin.toLocaleString('fr-FR')}€</span>
                 </div>
               )}
               {aap.budgetMax && (
                 <div className="flex justify-between">
                   <span className="text-gray-600">Maximum:</span>
-                  <span className="font-semibold text-gray-900">
-                    {aap.budgetMax.toLocaleString('fr-FR')}€
-                  </span>
+                  <span className="font-semibold text-gray-900">{aap.budgetMax.toLocaleString('fr-FR')}€</span>
                 </div>
               )}
             </div>
@@ -367,12 +413,10 @@ export default function AapDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Sectors */}
           <Card className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Thématiques
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Thématiques</h3>
             <div className="flex flex-wrap gap-2">
               {aap.sectorsTargeted && aap.sectorsTargeted.length > 0 ? (
-                aap.sectorsTargeted.map(sector => (
+                aap.sectorsTargeted.map((sector) => (
                   <Badge key={sector} variant="primary">
                     {LIBELLES_THEMATIQUES_FICHE[sector] ?? sector}
                   </Badge>
@@ -385,12 +429,10 @@ export default function AapDetailPage() {
 
           {/* Territories */}
           <Card className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Territoires éligibles
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Territoires éligibles</h3>
             <div className="flex flex-wrap gap-2">
               {aap.territoriesEligible && aap.territoriesEligible.length > 0 ? (
-                aap.territoriesEligible.map(territory => (
+                aap.territoriesEligible.map((territory) => (
                   <Badge key={territory} variant="gray">
                     {libelleTerritoire(territory)}
                   </Badge>
@@ -452,10 +494,7 @@ export default function AapDetailPage() {
             {aap.contactEmail && (
               <div className="flex items-center gap-2 text-gray-700">
                 <span className="font-medium">Email:</span>
-                <a
-                  href={`mailto:${aap.contactEmail}`}
-                  className="text-primary-600 hover:underline"
-                >
+                <a href={`mailto:${aap.contactEmail}`} className="text-primary-600 hover:underline">
                   {aap.contactEmail}
                 </a>
               </div>
@@ -463,10 +502,7 @@ export default function AapDetailPage() {
             {aap.contactPhone && (
               <div className="flex items-center gap-2 text-gray-700">
                 <span className="font-medium">Téléphone:</span>
-                <a
-                  href={`tel:${aap.contactPhone}`}
-                  className="text-primary-600 hover:underline"
-                >
+                <a href={`tel:${aap.contactPhone}`} className="text-primary-600 hover:underline">
                   {aap.contactPhone}
                 </a>
               </div>
@@ -495,9 +531,7 @@ export default function AapDetailPage() {
             {aap.publishedAt && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Date de publication:</span>
-                <span className="font-semibold text-gray-900">
-                  {formatDate(aap.publishedAt)}
-                </span>
+                <span className="font-semibold text-gray-900">{formatDate(aap.publishedAt)}</span>
               </div>
             )}
             <div className="flex justify-between">
@@ -508,9 +542,7 @@ export default function AapDetailPage() {
             </div>
             {closed && (
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                <p className="text-gray-700 text-sm font-medium">
-                  Clôturé : la date limite de candidature est passée.
-                </p>
+                <p className="text-gray-700 text-sm font-medium">Clôturé : la date limite de candidature est passée.</p>
               </div>
             )}
             {isUrgent && (

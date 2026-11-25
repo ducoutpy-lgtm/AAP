@@ -18,7 +18,16 @@ describe('retours des testeurs', () => {
   });
 
   it('les plus récents d’abord', () => {
-    const r = (id: string, jour: number): Retour => ({ id, userId: 'u', role: 'porteur', email: 'a@b', type: 'idee', page: '/', message: 'x'.repeat(12), le: new Date(2026, 9, jour) });
-    expect(lesPlusRecents([r('a', 1), r('b', 9), r('c', 5)], 2).map(x => x.id)).toEqual(['b', 'c']);
+    const r = (id: string, jour: number): Retour => ({
+      id,
+      userId: 'u',
+      role: 'porteur',
+      email: 'a@b',
+      type: 'idee',
+      page: '/',
+      message: 'x'.repeat(12),
+      le: new Date(2026, 9, jour),
+    });
+    expect(lesPlusRecents([r('a', 1), r('b', 9), r('c', 5)], 2).map((x) => x.id)).toEqual(['b', 'c']);
   });
 });

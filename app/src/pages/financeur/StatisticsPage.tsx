@@ -42,20 +42,16 @@ export default function StatisticsPage() {
 
     try {
       // Load AAPs
-      const aapsQuery = query(
-        collection(db, 'aap'),
-        where('financeurId', '==', currentUser.uid)
-      );
+      const aapsQuery = query(collection(db, 'aap'), where('financeurId', '==', currentUser.uid));
       const aapsSnapshot = await getDocs(aapsQuery);
-      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
+      const aaps = aapsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
 
       // Load applications
-      const applicationsQuery = query(
-        collection(db, 'applications'),
-        where('financeurId', '==', currentUser.uid)
-      );
+      const applicationsQuery = query(collection(db, 'applications'), where('financeurId', '==', currentUser.uid));
       const applicationsSnapshot = await getDocs(applicationsQuery);
-      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Application & { id: string })[];
+      const applications = applicationsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (Application & {
+        id: string;
+      })[];
 
       // Calculate stats
       const totalAAP = aaps.length;
@@ -139,12 +135,8 @@ export default function StatisticsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center max-w-md">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            Aucune donnée disponible
-          </h2>
-          <p className="text-gray-600">
-            Créez des AAP pour voir vos statistiques
-          </p>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Aucune donnée disponible</h2>
+          <p className="text-gray-600">Créez des AAP pour voir vos statistiques</p>
         </Card>
       </div>
     );
@@ -159,9 +151,7 @@ export default function StatisticsPage() {
             <BarChart3 className="h-8 w-8 text-primary-600" />
             <h1 className="text-3xl font-bold text-gray-900">Statistiques</h1>
           </div>
-          <p className="text-gray-600">
-            Vue d'ensemble de vos performances
-          </p>
+          <p className="text-gray-600">Vue d'ensemble de vos performances</p>
         </div>
 
         {/* Key Metrics */}
@@ -204,9 +194,7 @@ export default function StatisticsPage() {
                 <Target className="h-6 w-6 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-1">
-              {stats.conversionRate.toFixed(1)}%
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-1">{stats.conversionRate.toFixed(1)}%</h3>
             <p className="text-sm text-gray-600">Taux de conversion</p>
           </Card>
         </div>
@@ -229,7 +217,7 @@ export default function StatisticsPage() {
                     <div
                       className="bg-primary-600 h-2 rounded-full"
                       style={{
-                        width: `${Math.max((count / Math.max(...stats.applicationsOverTime.map(a => a.count))) * 100, 5)}%`,
+                        width: `${Math.max((count / Math.max(...stats.applicationsOverTime.map((a) => a.count))) * 100, 5)}%`,
                       }}
                     ></div>
                   </div>
@@ -261,18 +249,12 @@ export default function StatisticsPage() {
         {/* Additional stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="p-6">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
-              Moyenne candidatures/AAP
-            </h3>
-            <p className="text-3xl font-bold text-gray-900">
-              {stats.averageApplicationsPerAAP.toFixed(1)}
-            </p>
+            <h3 className="text-sm font-medium text-gray-600 mb-2">Moyenne candidatures/AAP</h3>
+            <p className="text-3xl font-bold text-gray-900">{stats.averageApplicationsPerAAP.toFixed(1)}</p>
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
-              Taux d'acceptation
-            </h3>
+            <h3 className="text-sm font-medium text-gray-600 mb-2">Taux d'acceptation</h3>
             <p className="text-3xl font-bold text-green-600">
               {stats.totalApplications > 0
                 ? ((stats.acceptedApplications / stats.totalApplications) * 100).toFixed(1)
@@ -282,9 +264,7 @@ export default function StatisticsPage() {
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
-              Taux de rejet
-            </h3>
+            <h3 className="text-sm font-medium text-gray-600 mb-2">Taux de rejet</h3>
             <p className="text-3xl font-bold text-red-600">
               {stats.totalApplications > 0
                 ? ((stats.rejectedApplications / stats.totalApplications) * 100).toFixed(1)

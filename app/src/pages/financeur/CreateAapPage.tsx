@@ -10,7 +10,13 @@ import { Textarea } from '../../components/ui/Textarea';
 import { Stepper } from '../../components/ui/Stepper';
 import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
 import type { AAP } from '../../types';
-import { erreursEtape, ErreursFormulaire, donneesDepuisFormulaire, formulaireDepuisAap, FORMULAIRE_VIDE } from './aapFormulaire';
+import {
+  erreursEtape,
+  ErreursFormulaire,
+  donneesDepuisFormulaire,
+  formulaireDepuisAap,
+  FORMULAIRE_VIDE,
+} from './aapFormulaire';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { messageErreur } from '../../utils/erreurs';
@@ -51,7 +57,7 @@ const REGIONS = [
   { value: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine' },
   { value: 'occitanie', label: 'Occitanie' },
   { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
-  { value: "provence-alpes-cote-d-azur", label: "Provence-Alpes-Côte d'Azur" },
+  { value: 'provence-alpes-cote-d-azur', label: "Provence-Alpes-Côte d'Azur" },
 ];
 
 // aapExistant (changement profil-et-edition-aap, 2026-10-20) : en modification, le formulaire part de l'appel
@@ -71,19 +77,19 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
   const [formData, setFormData] = useState(aapExistant ? formulaireDepuisAap(aapExistant) : FORMULAIRE_VIDE);
 
   const handleSectorChange = (sector: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       sectorsTargeted: prev.sectorsTargeted.includes(sector)
-        ? prev.sectorsTargeted.filter(s => s !== sector)
+        ? prev.sectorsTargeted.filter((s) => s !== sector)
         : [...prev.sectorsTargeted, sector],
     }));
   };
 
   const handleTerritoryChange = (territory: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       territoriesEligible: prev.territoriesEligible.includes(territory)
-        ? prev.territoriesEligible.filter(t => t !== territory)
+        ? prev.territoriesEligible.filter((t) => t !== territory)
         : [...prev.territoriesEligible, territory],
     }));
   };
@@ -94,7 +100,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
     setErreurs(trouvees);
     if (Object.keys(trouvees).length === 0) {
       setError('');
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
       window.scrollTo(0, 0);
     } else {
       setError('Corrigez les champs signalés.');
@@ -102,7 +108,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
   };
 
   const handleBack = () => {
-    setCurrentStep(prev => prev - 1);
+    setCurrentStep((prev) => prev - 1);
     window.scrollTo(0, 0);
   };
 
@@ -253,7 +259,9 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
                   </label>
                 ))}
               </div>
-              {erreurs.territoriesEligible && <p className="mt-1 text-sm text-error-500">{erreurs.territoriesEligible}</p>}
+              {erreurs.territoriesEligible && (
+                <p className="mt-1 text-sm text-error-500">{erreurs.territoriesEligible}</p>
+              )}
             </div>
 
             <Textarea
@@ -375,9 +383,9 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               <div>
                 <h3 className="font-semibold text-gray-900">Secteurs ciblés</h3>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {formData.sectorsTargeted.map(sector => (
+                  {formData.sectorsTargeted.map((sector) => (
                     <span key={sector} className="badge-primary">
-                      {SECTEURS.find(s => s.value === sector)?.label}
+                      {SECTEURS.find((s) => s.value === sector)?.label}
                     </span>
                   ))}
                 </div>
@@ -386,9 +394,9 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
               <div>
                 <h3 className="font-semibold text-gray-900">Territoires</h3>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {formData.territoriesEligible.map(territory => (
+                  {formData.territoriesEligible.map((territory) => (
                     <span key={territory} className="badge-gray">
-                      {REGIONS.find(r => r.value === territory)?.label}
+                      {REGIONS.find((r) => r.value === territory)?.label}
                     </span>
                   ))}
                 </div>
@@ -449,9 +457,7 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
         {/* Form */}
         <div className="bg-white rounded-lg shadow-md p-8">
           {error && (
-            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
-              {error}
-            </div>
+            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">{error}</div>
           )}
 
           {renderStep()}

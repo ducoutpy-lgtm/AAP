@@ -32,7 +32,10 @@ describe('formulaireDepuisAap', () => {
   });
 
   it('laisse la date vide quand la clôture n est pas précisée', () => {
-    expect(formulaireDepuisAap({ ...appel, deadline: null, tags: undefined })).toMatchObject({ deadline: '', tags: '' });
+    expect(formulaireDepuisAap({ ...appel, deadline: null, tags: undefined })).toMatchObject({
+      deadline: '',
+      tags: '',
+    });
   });
 });
 
@@ -65,26 +68,41 @@ describe('donneesDepuisFormulaire', () => {
 // Plan niveau A, lot 3.4 (2026-11-25) : la page ne contrôlait que la présence d'une date ; un minimum supérieur au
 // maximum, un montant négatif ou une date passée passaient, et tout échec donnait le même message vague.
 describe('erreursEtape', () => {
-  const valide = { ...FORMULAIRE_VIDE, title: 'Soutien aux maisons de santé', description: 'x'.repeat(100),
-    sectorsTargeted: ['sante'], territoriesEligible: ['bretagne'], budgetMin: '5000', budgetMax: '20000',
-    deadline: '2026-12-31', contactEmail: 'contact@exemple.fr' };
+  const valide = {
+    ...FORMULAIRE_VIDE,
+    title: 'Soutien aux maisons de santé',
+    description: 'x'.repeat(100),
+    sectorsTargeted: ['sante'],
+    territoriesEligible: ['bretagne'],
+    budgetMin: '5000',
+    budgetMax: '20000',
+    deadline: '2026-12-31',
+    contactEmail: 'contact@exemple.fr',
+  };
   const AUJOURDHUI = '2026-11-25';
 
   it('formulaire valide : aucune erreur, à chaque étape', () => {
     for (const etape of [0, 1, 2, 3, 4]) expect(erreursEtape(etape, valide, AUJOURDHUI)).toEqual({});
   });
   it('étape 1 : titre court, description courte, lien qui n’est pas une adresse web', () => {
-    const e = erreursEtape(0, { ...valide, title: 'Court', description: 'Trop court', externalUrl: 'javascript:alert(1)' }, AUJOURDHUI);
+    const e = erreursEtape(
+      0,
+      { ...valide, title: 'Court', description: 'Trop court', externalUrl: 'javascript:alert(1)' },
+      AUJOURDHUI,
+    );
     expect(Object.keys(e).sort()).toEqual(['description', 'externalUrl', 'title']);
     expect(e.description).toMatch(/100 caractères/);
   });
   it('étape 2 : au moins un secteur et un territoire', () => {
-    expect(Object.keys(erreursEtape(1, { ...valide, sectorsTargeted: [], territoriesEligible: [] }, AUJOURDHUI)).sort())
-      .toEqual(['sectorsTargeted', 'territoriesEligible']);
+    expect(
+      Object.keys(erreursEtape(1, { ...valide, sectorsTargeted: [], territoriesEligible: [] }, AUJOURDHUI)).sort(),
+    ).toEqual(['sectorsTargeted', 'territoriesEligible']);
   });
   it('étape 3 : montant négatif, minimum supérieur au maximum, date d’hier ou absente', () => {
     expect(erreursEtape(2, { ...valide, budgetTotal: '-1' }, AUJOURDHUI)).toHaveProperty('budgetTotal');
-    expect(erreursEtape(2, { ...valide, budgetMin: '30000', budgetMax: '20000' }, AUJOURDHUI)).toHaveProperty('budgetMax');
+    expect(erreursEtape(2, { ...valide, budgetMin: '30000', budgetMax: '20000' }, AUJOURDHUI)).toHaveProperty(
+      'budgetMax',
+    );
     expect(erreursEtape(2, { ...valide, deadline: '2026-11-24' }, AUJOURDHUI).deadline).toMatch(/passée/);
     expect(erreursEtape(2, { ...valide, deadline: '2026-11-25' }, AUJOURDHUI)).toEqual({});
     expect(erreursEtape(2, { ...valide, deadline: '' }, AUJOURDHUI)).toHaveProperty('deadline');

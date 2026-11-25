@@ -2,15 +2,19 @@
 // page. Un message s'affiche dans un bandeau (components/layout/Annonces.tsx, posé une fois dans App.tsx), garde sa place
 // d'une page à l'autre (une publication mène ensuite à « Mes appels ») et disparaît au clic ou après huit secondes.
 export type TypeAnnonce = 'succes' | 'erreur' | 'info';
-export interface Annonce { id: number; texte: string; type: TypeAnnonce }
+export interface Annonce {
+  id: number;
+  texte: string;
+  type: TypeAnnonce;
+}
 
 let annonces: Annonce[] = [];
 let suivant = 1;
 const ecouteurs = new Set<() => void>();
-const prevenir = () => ecouteurs.forEach(f => f());
+const prevenir = () => ecouteurs.forEach((f) => f());
 
 export function retirerAnnonce(id: number): void {
-  annonces = annonces.filter(a => a.id !== id);
+  annonces = annonces.filter((a) => a.id !== id);
   prevenir();
 }
 
@@ -25,5 +29,7 @@ export const lireAnnonces = (): Annonce[] => annonces;
 
 export function ecouterAnnonces(ecouteur: () => void): () => void {
   ecouteurs.add(ecouteur);
-  return () => { ecouteurs.delete(ecouteur); };
+  return () => {
+    ecouteurs.delete(ecouteur);
+  };
 }

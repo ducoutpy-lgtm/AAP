@@ -27,7 +27,11 @@ describe('connexionRecente', () => {
 // alors que Firebase l'aurait acceptée ; les deux heures comparées viennent maintenant du serveur
 describe('connexionRecenteSelonServeur', () => {
   it('juge sur l’heure de connexion et l’heure du jeton renouvelé, toutes deux du serveur', () => {
-    expect(connexionRecenteSelonServeur({ authTime: '2026-11-20T10:00:00Z', issuedAtTime: '2026-11-20T10:02:00Z' })).toBe(true);
-    expect(connexionRecenteSelonServeur({ authTime: '2026-11-20T10:00:00Z', issuedAtTime: '2026-11-20T10:06:00Z' })).toBe(false);
+    expect(
+      connexionRecenteSelonServeur({ authTime: '2026-11-20T10:00:00Z', issuedAtTime: '2026-11-20T10:02:00Z' }),
+    ).toBe(true);
+    expect(
+      connexionRecenteSelonServeur({ authTime: '2026-11-20T10:00:00Z', issuedAtTime: '2026-11-20T10:06:00Z' }),
+    ).toBe(false);
   });
 });

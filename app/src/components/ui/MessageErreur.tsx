@@ -8,7 +8,10 @@ interface MessageErreurProps {
   texte?: string;
 }
 
-export function MessageErreur({ onReessayer, texte = "Les données n'ont pas pu être chargées. Vérifiez votre connexion, puis réessayez." }: MessageErreurProps) {
+export function MessageErreur({
+  onReessayer,
+  texte = "Les données n'ont pas pu être chargées. Vérifiez votre connexion, puis réessayez.",
+}: MessageErreurProps) {
   return (
     <div className="container mx-auto px-4 py-12 max-w-xl">
       <div role="alert" className="p-4 rounded-lg border border-error-200 bg-error-50 text-error-800">

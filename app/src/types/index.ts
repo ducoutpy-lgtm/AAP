@@ -312,12 +312,7 @@ export interface FavoriteAap {
   savedAt: Timestamp | Date;
 }
 
-export type NotificationType =
-  | 'system'
-  | 'new_aap'
-  | 'deadline'
-  | 'status_change'
-  | 'new_message';
+export type NotificationType = 'system' | 'new_aap' | 'deadline' | 'status_change' | 'new_message';
 
 export interface Notification {
   id?: string;

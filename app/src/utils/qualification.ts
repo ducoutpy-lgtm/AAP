@@ -70,11 +70,14 @@ export function dateIsoValide(valeur: string | null | undefined): string | null 
 }
 
 // Qualification écrite à la main depuis l'administration
-export function qualificationManuelle(valeurs: Pick<AapQualification, 'destinataires' | 'typeAppel' | 'objets' | 'dateOuverture'>, par: string): AapQualification {
+export function qualificationManuelle(
+  valeurs: Pick<AapQualification, 'destinataires' | 'typeAppel' | 'objets' | 'dateOuverture'>,
+  par: string,
+): AapQualification {
   return {
-    destinataires: valeurs.destinataires.filter(d => DESTINATAIRES.includes(d)),
+    destinataires: valeurs.destinataires.filter((d) => DESTINATAIRES.includes(d)),
     typeAppel: TYPES_APPEL.includes(valeurs.typeAppel) ? valeurs.typeAppel : 'autre',
-    objets: valeurs.objets.filter(o => OBJETS.includes(o)),
+    objets: valeurs.objets.filter((o) => OBJETS.includes(o)),
     dateOuverture: dateIsoValide(valeurs.dateOuverture),
     par,
     le: new Date().toISOString().slice(0, 10),

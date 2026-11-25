@@ -3,8 +3,23 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
-  Activity, BarChart3, Bookmark, Calendar, Coins, Columns, CreditCard, FileText, HelpCircle, LayoutDashboard, Mail, MessageCircle,
-  PlusCircle, Search, Sparkles, UserCircle, Users,
+  Activity,
+  BarChart3,
+  Bookmark,
+  Calendar,
+  Coins,
+  Columns,
+  CreditCard,
+  FileText,
+  HelpCircle,
+  LayoutDashboard,
+  Mail,
+  MessageCircle,
+  PlusCircle,
+  Search,
+  Sparkles,
+  UserCircle,
+  Users,
 } from 'lucide-react';
 import type { UserType } from '../../types';
 
@@ -38,9 +53,7 @@ const PARAMETRES: SectionMenu = {
 
 // Alertes et Messagerie retirées du menu le 2026-11-13 (parcours-candidat-sans-impasse) : rien ne crée de conversation
 // ni de notification tant que les fonctions serveur ne sont pas déployées ; les pages restent à leur adresse.
-const COMMUNES: EntreeMenu[] = [
-  { libelle: 'Calendrier', adresse: '/calendrier', icone: Calendar },
-];
+const COMMUNES: EntreeMenu[] = [{ libelle: 'Calendrier', adresse: '/calendrier', icone: Calendar }];
 
 export function entreesMenu(role: UserType): SectionMenu[] {
   if (role === 'admin') {
@@ -100,8 +113,8 @@ export function tableauDeBord(role: UserType): string {
 
 // L'entrée courante : l'adresse exacte, ou le préfixe le plus long (ex. /admin/aaps sous /admin)
 export function entreeActive(sections: SectionMenu[], pathname: string): string | null {
-  const adresses = sections.flatMap(s => s.entrees.map(e => e.adresse));
+  const adresses = sections.flatMap((s) => s.entrees.map((e) => e.adresse));
   if (adresses.includes(pathname)) return pathname;
-  const prefixes = adresses.filter(a => a !== '/' && pathname.startsWith(a + '/'));
+  const prefixes = adresses.filter((a) => a !== '/' && pathname.startsWith(a + '/'));
   return prefixes.sort((a, b) => b.length - a.length)[0] ?? null;
 }

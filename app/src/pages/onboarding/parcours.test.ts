@@ -29,7 +29,13 @@ describe('regionDepuisCodePostal', () => {
 });
 
 describe('etapeComplete', () => {
-  const structure = { ...PARCOURS_VIDE, nom: 'EHPAD Les Lilas', forme: 'association', ville: 'Évry', codePostal: '91000' };
+  const structure = {
+    ...PARCOURS_VIDE,
+    nom: 'EHPAD Les Lilas',
+    forme: 'association',
+    ville: 'Évry',
+    codePostal: '91000',
+  };
 
   it('écran 1 : nom, forme, ville et code postal à cinq chiffres obligatoires', () => {
     expect(etapeComplete(1, PARCOURS_VIDE, 'porteur')).toBe(false);
@@ -40,21 +46,35 @@ describe('etapeComplete', () => {
   it('écran 2 porteur : type d établissement obligatoire, publics facultatifs', () => {
     expect(etapeComplete(2, structure, 'porteur')).toBe(false);
     expect(etapeComplete(2, { ...structure, typeEtablissement: 'ehpad' }, 'porteur')).toBe(true);
-    expect(etapeComplete(2, { ...structure, typeEtablissement: 'ehpad', publics: ['personnes-agees'] }, 'porteur')).toBe(true);
+    expect(
+      etapeComplete(2, { ...structure, typeEtablissement: 'ehpad', publics: ['personnes-agees'] }, 'porteur'),
+    ).toBe(true);
   });
 
   it('écran 2 financeur : un secteur et la personne de contact', () => {
     expect(etapeComplete(2, { ...structure, secteurs: ['sante'] }, 'financeur')).toBe(false);
-    expect(etapeComplete(2, { ...structure, secteurs: ['sante'], prenom: 'Anne', nomContact: 'Martin' }, 'financeur')).toBe(true);
+    expect(
+      etapeComplete(2, { ...structure, secteurs: ['sante'], prenom: 'Anne', nomContact: 'Martin' }, 'financeur'),
+    ).toBe(true);
   });
 });
 
 describe('profils construits depuis le parcours', () => {
   it('porteur : région déduite, champs hérités compatibles, nouveaux champs présents', () => {
     const p = profilPorteurDepuisParcours(
-      { ...PARCOURS_VIDE, nom: ' EHPAD Les Lilas ', forme: 'association', ville: 'Évry', codePostal: '91000',
-        typeEtablissement: 'ehpad', taille: '51-200', budget: '2m-10m', publics: ['personnes-agees'] },
-      'u1', 'p@exemple.fr'
+      {
+        ...PARCOURS_VIDE,
+        nom: ' EHPAD Les Lilas ',
+        forme: 'association',
+        ville: 'Évry',
+        codePostal: '91000',
+        typeEtablissement: 'ehpad',
+        taille: '51-200',
+        budget: '2m-10m',
+        publics: ['personnes-agees'],
+      },
+      'u1',
+      'p@exemple.fr',
     );
     expect(p.structureName).toBe('EHPAD Les Lilas');
     expect(p.address.region).toBe('ile-de-france');
@@ -69,9 +89,18 @@ describe('profils construits depuis le parcours', () => {
 
   it('financeur : organisation, secteurs et contact ; fonction absente enregistrée null', () => {
     const f = profilFinanceurDepuisParcours(
-      { ...PARCOURS_VIDE, nom: 'Fondation Test', forme: 'fondation', ville: 'Paris', codePostal: '75008',
-        secteurs: ['sante', 'social'], prenom: 'Anne', nomContact: 'Martin' },
-      'u2', 'a@exemple.fr'
+      {
+        ...PARCOURS_VIDE,
+        nom: 'Fondation Test',
+        forme: 'fondation',
+        ville: 'Paris',
+        codePostal: '75008',
+        secteurs: ['sante', 'social'],
+        prenom: 'Anne',
+        nomContact: 'Martin',
+      },
+      'u2',
+      'a@exemple.fr',
     );
     expect(f.organisationType).toBe('fondation');
     expect(f.sectorsSupported).toEqual(['sante', 'social']);
@@ -80,7 +109,7 @@ describe('profils construits depuis le parcours', () => {
   });
 
   it('les types d établissement ont des identifiants uniques', () => {
-    const ids = TYPES_ETABLISSEMENT.flatMap(g => g.options.map(o => o.value));
+    const ids = TYPES_ETABLISSEMENT.flatMap((g) => g.options.map((o) => o.value));
     expect(new Set(ids).size).toBe(ids.length);
   });
 });

@@ -142,7 +142,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (userDoc.exists()) {
         // Complète le profil connu au lieu de le remplacer (premier-clic-candidater, 2026-11-16)
         const relu = userDoc.data();
-        setUserProfile(connu => fusionnerProfil(connu, currentUser.uid, relu) as User);
+        setUserProfile((connu) => fusionnerProfil(connu, currentUser.uid, relu) as User);
       }
     }
   };

@@ -33,10 +33,16 @@ const FAMILLES: [RegExp, string][] = [
   [/priv[ée]s? (?:à but )?non lucratif|\bespic\b|non lucratif/i, 'Privé non lucratif'],
   [/priv[ée]s? (?:à but )?lucratif|\bentreprises?\b|\bsoci[ée]t[ée]s?\b/i, 'Entreprises, privé lucratif'],
   [/collectivit[ée]s?|\bcommunes?\b|\bccas\b|conseils? d[ée]partementa/i, 'Collectivités'],
-  [/[ée]tablissements?(?: publics?| priv[ée]s?)? de sant[ée]|h[ôo]pita|hospitali|\bchu\b|cliniques?/i, 'Établissements de santé'],
+  [
+    /[ée]tablissements?(?: publics?| priv[ée]s?)? de sant[ée]|h[ôo]pita|hospitali|\bchu\b|cliniques?/i,
+    'Établissements de santé',
+  ],
   [/m[ée]dico-socia|\besms\b|\behpad\b|\besat\b|\bime\b|\bfam\b|\bmas\b|\bssiad\b/i, 'Établissements médico-sociaux'],
   [/chercheurs?|laboratoires?|[ée]quipes? de recherche|universit/i, 'Équipes de recherche'],
-  [/\bcpts\b|maisons? de sant[ée]|centres? de sant[ée]|professionnels? de sant[ée] lib[ée]ra/i, 'Exercice coordonné et libéraux'],
+  [
+    /\bcpts\b|maisons? de sant[ée]|centres? de sant[ée]|professionnels? de sant[ée] lib[ée]ra/i,
+    'Exercice coordonné et libéraux',
+  ],
 ];
 
 export function famillesDepuisCriteres(texte: string | null | undefined): string[] {
@@ -46,16 +52,21 @@ export function famillesDepuisCriteres(texte: string | null | undefined): string
 
 // À qui s'adresse l'appel : la qualification (modèle ou administrateur) d'abord, sinon les types lus par l'extraction
 // (structureTypeEligible), sinon les familles reconnues dans les critères ; vide si rien
-export function aQuiSAdresse(aap: Pick<AAP, 'structureTypeEligible' | 'eligibilityCriteria' | 'qualification'>): string[] {
+export function aQuiSAdresse(
+  aap: Pick<AAP, 'structureTypeEligible' | 'eligibilityCriteria' | 'qualification'>,
+): string[] {
   const qualifies = destinatairesDe(aap);
   if (qualifies.length > 0) return qualifies;
-  const lus = Array.from(new Set((aap.structureTypeEligible ?? []).map(t => t.trim()).filter(Boolean)));
+  const lus = Array.from(new Set((aap.structureTypeEligible ?? []).map((t) => t.trim()).filter(Boolean)));
   return lus.length > 0 ? lus : famillesDepuisCriteres(aap.eligibilityCriteria);
 }
 
 // Appels pour une structure : sa région ou national, non clôturés, clôture la plus proche d'abord puis sans date
-export function appelsPourProfil<T extends Pick<AAP, 'territoriesEligible' | 'deadline'>>(aaps: T[], region: string): T[] {
-  const concernes = aaps.filter(aap => {
+export function appelsPourProfil<T extends Pick<AAP, 'territoriesEligible' | 'deadline'>>(
+  aaps: T[],
+  region: string,
+): T[] {
+  const concernes = aaps.filter((aap) => {
     const jours = getDaysUntilDeadline(aap.deadline);
     if (jours !== null && jours < 0) return false;
     const t = aap.territoriesEligible ?? [];
@@ -75,15 +86,25 @@ export function candidatureSurSiteOfficiel(aap: Pick<AAP, 'source' | 'financeurI
 // « Mes candidatures » ; elle est marquée externe et n'est transmise à personne par l'application.
 export function suiviCandidatureExterne(aap: { id: string; title: string; financeurId: string }, porteurId: string) {
   return {
-    aapId: aap.id, aapTitle: aap.title, porteurId, financeurId: aap.financeurId, projectTitle: aap.title,
+    aapId: aap.id,
+    aapTitle: aap.title,
+    porteurId,
+    financeurId: aap.financeurId,
+    projectTitle: aap.title,
     projectDescription: 'Candidature déposée sur le site officiel du financeur (suivi tenu par le candidat).',
-    objectives: '', methodology: '', timeline: '', expectedImpact: '', budget: { total: 0, breakdown: '' },
-    documents: [], status: 'submitted' as const, externe: true,
+    objectives: '',
+    methodology: '',
+    timeline: '',
+    expectedImpact: '',
+    budget: { total: 0, breakdown: '' },
+    documents: [],
+    status: 'submitted' as const,
+    externe: true,
   };
 }
 
 export function echeancesProches<T extends Pick<AAP, 'deadline'>>(aaps: T[], jours = 30): T[] {
-  return aaps.filter(aap => {
+  return aaps.filter((aap) => {
     const j = getDaysUntilDeadline(aap.deadline);
     return j !== null && j >= 0 && j <= jours;
   });
@@ -111,16 +132,27 @@ export const LIBELLES_STATUT_CANDIDATURE: Record<ApplicationStatus, string> = {
 
 export function colonneDe(status: string): ColonneCandidature {
   switch (status) {
-    case 'submitted': return 'envoyee';
-    case 'pending_info': return 'complement';
-    case 'accepted': return 'acceptee';
-    case 'rejected': return 'refusee';
-    default: return 'examen'; // under_review, draft, valeurs anciennes (shortlisted) : rien n'est perdu
+    case 'submitted':
+      return 'envoyee';
+    case 'pending_info':
+      return 'complement';
+    case 'accepted':
+      return 'acceptee';
+    case 'rejected':
+      return 'refusee';
+    default:
+      return 'examen'; // under_review, draft, valeurs anciennes (shortlisted) : rien n'est perdu
   }
 }
 
 export function repartirCandidatures<T extends { status: string }>(apps: T[]): Record<ColonneCandidature, T[]> {
-  const colonnes: Record<ColonneCandidature, T[]> = { envoyee: [], examen: [], complement: [], acceptee: [], refusee: [] };
+  const colonnes: Record<ColonneCandidature, T[]> = {
+    envoyee: [],
+    examen: [],
+    complement: [],
+    acceptee: [],
+    refusee: [],
+  };
   for (const a of apps) colonnes[colonneDe(a.status)].push(a);
   return colonnes;
 }
@@ -135,8 +167,11 @@ export function candidatureOuverte(aap: Pick<AAP, 'status' | 'deadline' | 'valid
 // Fiche ouverte par son adresse directe (plan niveau A, lot 3.4, 2026-11-25) : un candidat ne lit que les fiches de la
 // recherche (publiées ou clôturées, et contrôlées) ; l'administrateur et le financeur auteur lisent toutes les leurs, pour
 // l'aperçu (administration, saisie d'un appel). Brouillon et archivé (fiche rejetée) restent fermés aux autres.
-export function ficheConsultable(aap: Pick<AAP, 'status' | 'validation' | 'financeurId'>, userType: UserType | undefined,
-  uid: string | undefined): boolean {
+export function ficheConsultable(
+  aap: Pick<AAP, 'status' | 'validation' | 'financeurId'>,
+  userType: UserType | undefined,
+  uid: string | undefined,
+): boolean {
   if (userType === 'admin' || (uid && aap.financeurId === uid)) return true;
   return (aap.status === 'published' || aap.status === 'closed') && visiblePubliquement(aap);
 }

@@ -16,7 +16,13 @@ export function estUnDoublon(cle: string, maintenant: number, memoire: Map<strin
   return precedent !== undefined && maintenant - precedent < DELAI_DOUBLON_MS;
 }
 
-export async function journaliser(userId: string, role: UserType, action: ActionJournal, cible = '', libelle = ''): Promise<void> {
+export async function journaliser(
+  userId: string,
+  role: UserType,
+  action: ActionJournal,
+  cible = '',
+  libelle = '',
+): Promise<void> {
   if (role === 'admin') return; // l'administrateur n'est pas un testeur
   if (estUnDoublon(`${userId}|${action}|${cible}|${libelle}`, Date.now())) return;
   try {

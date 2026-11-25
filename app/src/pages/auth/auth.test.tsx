@@ -8,19 +8,34 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 // Compte simulé : changerCompte() modifie l'état et redessine la page, comme le ferait AuthContext quand Firebase répond
 const compte = vi.hoisted(() => ({
-  signup: vi.fn(), login: vi.fn(), loginWithGoogle: vi.fn(),
-  currentUser: null as { uid: string } | null, userProfile: null as { userType: string } | null, loading: false,
-  version: 0, ecouteurs: new Set<() => void>(),
+  signup: vi.fn(),
+  login: vi.fn(),
+  loginWithGoogle: vi.fn(),
+  currentUser: null as { uid: string } | null,
+  userProfile: null as { userType: string } | null,
+  loading: false,
+  version: 0,
+  ecouteurs: new Set<() => void>(),
 }));
 const changerCompte = (etat: Partial<Pick<typeof compte, 'currentUser' | 'userProfile' | 'loading'>>) => {
   Object.assign(compte, etat);
   compte.version += 1;
-  compte.ecouteurs.forEach(f => f());
+  compte.ecouteurs.forEach((f) => f());
 };
 vi.mock('../../contexts/AuthContext', async () => {
   const { useSyncExternalStore } = await import('react');
-  const abonner = (f: () => void) => { compte.ecouteurs.add(f); return () => { compte.ecouteurs.delete(f); }; };
-  return { useAuth: () => { useSyncExternalStore(abonner, () => compte.version); return compte; } };
+  const abonner = (f: () => void) => {
+    compte.ecouteurs.add(f);
+    return () => {
+      compte.ecouteurs.delete(f);
+    };
+  };
+  return {
+    useAuth: () => {
+      useSyncExternalStore(abonner, () => compte.version);
+      return compte;
+    },
+  };
 });
 vi.mock('../../config/firebase', () => ({ db: {} }));
 vi.mock('firebase/firestore', () => ({ doc: vi.fn(), getDoc: vi.fn() }));
@@ -31,14 +46,15 @@ import { destinationApresConnexion } from '../../utils/connexion';
 
 beforeEach(() => changerCompte({ currentUser: null, userProfile: null, loading: false }));
 
-const ouvrir = (adresse: string) => render(
-  <MemoryRouter initialEntries={[adresse]}>
-    <Routes>
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/complete-profile" element={<p>Profil à compléter</p>} />
-    </Routes>
-  </MemoryRouter>,
-);
+const ouvrir = (adresse: string) =>
+  render(
+    <MemoryRouter initialEntries={[adresse]}>
+      <Routes>
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/complete-profile" element={<p>Profil à compléter</p>} />
+      </Routes>
+    </MemoryRouter>,
+  );
 
 const remplir = (email: string, mdp: string, confirmation: string) => {
   fireEvent.change(screen.getByLabelText(/Email/), { target: { value: email } });
@@ -86,10 +102,26 @@ describe('connexion', () => {
 
   // Depuis le 2026-10-20 la recherche demande un compte : un lien de recherche partagé passe par la connexion
   it('un lien de recherche avec filtres, ouvert sans compte, revient sur la recherche avec ses filtres', async () => {
-    compte.login.mockReset().mockImplementation(async () => changerCompte({ currentUser: { uid: 'c1' }, userProfile: { userType: 'porteur' } }));
-    const Arrivee = () => <p>arrivée {useLocation().pathname}{useLocation().search}</p>;
+    compte.login
+      .mockReset()
+      .mockImplementation(async () =>
+        changerCompte({ currentUser: { uid: 'c1' }, userProfile: { userType: 'porteur' } }),
+      );
+    const Arrivee = () => (
+      <p>
+        arrivée {useLocation().pathname}
+        {useLocation().search}
+      </p>
+    );
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/login', state: { from: { pathname: '/aap/search', search: '?territory=normandie&q=chutes', hash: '' } } }]}>
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: '/login',
+            state: { from: { pathname: '/aap/search', search: '?territory=normandie&q=chutes', hash: '' } },
+          },
+        ]}
+      >
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/aap/search" element={<Arrivee />} />
@@ -100,7 +132,9 @@ describe('connexion', () => {
     fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
     fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
     fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
-    expect(await screen.findByText(/^arrivée/, {}, { timeout: 3000 })).toHaveTextContent('arrivée /aap/search?territory=normandie&q=chutes');
+    expect(await screen.findByText(/^arrivée/, {}, { timeout: 3000 })).toHaveTextContent(
+      'arrivée /aap/search?territory=normandie&q=chutes',
+    );
   });
 });
 
@@ -108,9 +142,18 @@ describe('connexion refusée', () => {
   afterEach(cleanup);
 
   it('un mauvais mot de passe affiche un message en français, pas le texte technique de Firebase', async () => {
-    compte.login.mockReset().mockRejectedValue(Object.assign(new Error('Firebase: Error (auth/invalid-credential).'),
-      { code: 'auth/invalid-credential' }));
-    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    compte.login
+      .mockReset()
+      .mockRejectedValue(
+        Object.assign(new Error('Firebase: Error (auth/invalid-credential).'), { code: 'auth/invalid-credential' }),
+      );
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </MemoryRouter>,
+    );
     fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
     fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'mauvais' } });
     fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
@@ -124,13 +167,25 @@ describe('Se souvenir de moi (décision 36 du 2026-11-24)', () => {
 
   it('case décochée : session fermée à la fermeture du navigateur ; cochée : session gardée', async () => {
     compte.login.mockReset().mockResolvedValue(undefined);
-    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </MemoryRouter>,
+    );
     fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
     fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
     fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
     await waitFor(() => expect(compte.login).toHaveBeenCalledWith('c@test.local', 'secret12', false));
     cleanup();
-    render(<MemoryRouter initialEntries={['/login']}><Routes><Route path="/login" element={<LoginPage />} /></Routes></MemoryRouter>);
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </MemoryRouter>,
+    );
     fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
     fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
     fireEvent.click(screen.getByLabelText(/Se souvenir de moi/));
@@ -162,7 +217,9 @@ describe('connexion : le profil est attendu, puis le tableau de bord du rôle', 
     fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'f@test.local' } });
     fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
     fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
-    expect(await screen.findByText(/^arrivée/, {}, { timeout: 4000 })).toHaveTextContent('arrivée /dashboard/financeur');
+    expect(await screen.findByText(/^arrivée/, {}, { timeout: 4000 })).toHaveTextContent(
+      'arrivée /dashboard/financeur',
+    );
   }, 8000);
 
   it('destination : la page demandée d’abord, sinon le tableau de bord du rôle, sinon le profil à compléter', () => {

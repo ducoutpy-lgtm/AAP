@@ -5,11 +5,24 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const appels = vi.hoisted(() => ({ addDoc: vi.fn(), updateDoc: vi.fn() }));
 vi.mock('../config/firebase', () => ({ db: {}, storage: {} }));
-vi.mock('firebase/storage', () => ({ ref: vi.fn(), uploadBytes: vi.fn(), getDownloadURL: vi.fn(), deleteObject: vi.fn() }));
+vi.mock('firebase/storage', () => ({
+  ref: vi.fn(),
+  uploadBytes: vi.fn(),
+  getDownloadURL: vi.fn(),
+  deleteObject: vi.fn(),
+}));
 vi.mock('firebase/firestore', () => ({
-  collection: vi.fn(), doc: vi.fn(), getDoc: vi.fn(), getDocs: vi.fn(), query: vi.fn(), where: vi.fn(), orderBy: vi.fn(),
-  deleteDoc: vi.fn(), deleteField: vi.fn(() => 'supprime'),
-  addDoc: appels.addDoc, updateDoc: appels.updateDoc,
+  collection: vi.fn(),
+  doc: vi.fn(),
+  getDoc: vi.fn(),
+  getDocs: vi.fn(),
+  query: vi.fn(),
+  where: vi.fn(),
+  orderBy: vi.fn(),
+  deleteDoc: vi.fn(),
+  deleteField: vi.fn(() => 'supprime'),
+  addDoc: appels.addDoc,
+  updateDoc: appels.updateDoc,
   Timestamp: { now: () => 'maintenant', fromDate: (d: Date) => d },
 }));
 

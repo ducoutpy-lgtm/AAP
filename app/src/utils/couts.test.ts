@@ -2,7 +2,13 @@
 import { describe, expect, it } from 'vitest';
 import { coutParFicheQualifiee, cumuls, lundiDe, parCle, parSemaine, type LigneCout } from './couts';
 
-const l = (etape: string, modele: string, cout: number, le: Date): LigneCout => ({ source: 'collecte', etape, modele, coutEuros: cout, le });
+const l = (etape: string, modele: string, cout: number, le: Date): LigneCout => ({
+  source: 'collecte',
+  etape,
+  modele,
+  coutEuros: cout,
+  le,
+});
 
 const lignes: LigneCout[] = [
   l('extraction', 'claude-haiku-5-5', 1.0, new Date(2026, 9, 19)),
@@ -18,9 +24,9 @@ describe('cumuls et répartitions', () => {
     expect(c.total).toBeCloseTo(1.15, 6);
     expect(c.mois).toBeCloseTo(1.1, 6);
     expect(c.appelsMois).toBe(3);
-    const etapes = parCle(lignes, x => x.etape);
+    const etapes = parCle(lignes, (x) => x.etape);
     expect(etapes[0]).toEqual({ cle: 'extraction', cout: 1.05, appels: 2 });
-    expect(parCle(lignes, x => x.modele).map(x => x.cle)).toEqual(['claude-haiku-5-5', 'claude-sonnet-4-6']);
+    expect(parCle(lignes, (x) => x.modele).map((x) => x.cle)).toEqual(['claude-haiku-5-5', 'claude-sonnet-4-6']);
   });
 
   it('par semaine, lundi ISO, ordre chronologique', () => {

@@ -20,13 +20,18 @@ import { TextesReutilisablesCarte } from '../../components/profil/TextesReutilis
 import { PreferenceCourrielCarte } from '../../components/profil/PreferenceCourrielCarte';
 import { nomFichierExport, SUR_DEMANDE_AU_DPO } from '../../utils/exportDonnees';
 
-const ROLES: Record<UserType, string> = { porteur: 'Candidat (établissement)', financeur: 'Financeur', admin: 'Administrateur' };
-const ABONNEMENTS: Record<SubscriptionStatus, { libelle: string; variant: 'success' | 'warning' | 'error' | 'gray' }> = {
-  active: { libelle: 'Abonnement actif', variant: 'success' },
-  trial: { libelle: "Période d'essai", variant: 'warning' },
-  expired: { libelle: 'Abonnement expiré', variant: 'error' },
-  cancelled: { libelle: 'Abonnement résilié', variant: 'gray' },
+const ROLES: Record<UserType, string> = {
+  porteur: 'Candidat (établissement)',
+  financeur: 'Financeur',
+  admin: 'Administrateur',
 };
+const ABONNEMENTS: Record<SubscriptionStatus, { libelle: string; variant: 'success' | 'warning' | 'error' | 'gray' }> =
+  {
+    active: { libelle: 'Abonnement actif', variant: 'success' },
+    trial: { libelle: "Période d'essai", variant: 'warning' },
+    expired: { libelle: 'Abonnement expiré', variant: 'error' },
+    cancelled: { libelle: 'Abonnement résilié', variant: 'gray' },
+  };
 
 export default function ProfilPage() {
   const { currentUser, userProfile, loading } = useAuth();
@@ -40,11 +45,24 @@ export default function ProfilPage() {
     if (!currentUser || !userProfile) return;
     // Heures du serveur (jeton renouvelé), pas celle du poste (corrections-relecture 3.5)
     let recente = false;
-    try { recente = connexionRecenteSelonServeur(await currentUser.getIdTokenResult(true)); } catch { setSuppression('echec'); return; }
-    if (!recente) { setSuppression('reconnexion'); return; }
-    if (!confirm('Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications et '
-      + 'vos candidatures aux appels importés seront effacés ; les candidatures déjà reçues par un financeur resteront chez '
-      + 'lui, sans votre identifiant. Cette action est irréversible.')) return;
+    try {
+      recente = connexionRecenteSelonServeur(await currentUser.getIdTokenResult(true));
+    } catch {
+      setSuppression('echec');
+      return;
+    }
+    if (!recente) {
+      setSuppression('reconnexion');
+      return;
+    }
+    if (
+      !confirm(
+        'Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications et ' +
+          'vos candidatures aux appels importés seront effacés ; les candidatures déjà reçues par un financeur resteront chez ' +
+          'lui, sans votre identifiant. Cette action est irréversible.',
+      )
+    )
+      return;
     setSuppression('en-cours');
     try {
       await supprimerMonCompte(currentUser, userProfile.userType);
@@ -107,7 +125,9 @@ export default function ProfilPage() {
             </div>
             <div>
               <dt className="text-gray-500">Abonnement</dt>
-              <dd><Badge variant={abonnement.variant}>{abonnement.libelle}</Badge></dd>
+              <dd>
+                <Badge variant={abonnement.variant}>{abonnement.libelle}</Badge>
+              </dd>
             </div>
             {finEssai && userProfile.subscriptionStatus === 'trial' && (
               <div>
@@ -119,8 +139,8 @@ export default function ProfilPage() {
           <div className="mt-4 pt-4 border-t text-sm">
             <h2 className="font-semibold text-gray-900 mb-1">Mes données personnelles</h2>
             <p className="text-gray-600 mb-2">
-              Fichier JSON de vos données : compte, profil, candidatures, recherches, favoris, notifications, messages. Sur
-              demande au délégué à la protection des données ({EDITEUR.contact}) : {SUR_DEMANDE_AU_DPO.join(', ')}.
+              Fichier JSON de vos données : compte, profil, candidatures, recherches, favoris, notifications, messages.
+              Sur demande au délégué à la protection des données ({EDITEUR.contact}) : {SUR_DEMANDE_AU_DPO.join(', ')}.
             </p>
             <Button variant="secondary" onClick={telechargerMesDonnees} disabled={exportEtat === 'en-cours'}>
               {exportEtat === 'en-cours' ? 'Préparation du fichier...' : 'Télécharger mes données'}
@@ -142,16 +162,22 @@ export default function ProfilPage() {
               )}
               {suppression === 'echec' && (
                 <p className="text-error-600 mt-2">
-                  La suppression n'a pas abouti. Reconnectez-vous et recommencez, ou écrivez au délégué à la protection des
-                  données ({EDITEUR.contact}).
+                  La suppression n'a pas abouti. Reconnectez-vous et recommencez, ou écrivez au délégué à la protection
+                  des données ({EDITEUR.contact}).
                 </p>
               )}
             </div>
           </div>
           {userProfile.userType === 'porteur' && (
             <>
-              <TextesReutilisablesCarte uid={currentUser.uid} initial={(profil as PorteurProfile | null)?.textesReutilisables} />
-              <PreferenceCourrielCarte uid={currentUser.uid} actif={userProfile.notificationPreferences?.email !== false} />
+              <TextesReutilisablesCarte
+                uid={currentUser.uid}
+                initial={(profil as PorteurProfile | null)?.textesReutilisables}
+              />
+              <PreferenceCourrielCarte
+                uid={currentUser.uid}
+                actif={userProfile.notificationPreferences?.email !== false}
+              />
             </>
           )}
         </div>

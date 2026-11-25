@@ -30,16 +30,22 @@ export default function MyApplicationsPage() {
   const [loading, setLoading] = useState(true);
   const [erreur, setErreur] = useState('');
   // Confirmation passée par le formulaire après l'envoi (« soumise, mais à qui, quoi, quand ? »)
-  const envoyee = (useLocation().state as { envoyee?: { aapTitle: string; financeurName: string; nonDeposees?: string[]; externe?: boolean } } | null)?.envoyee;
+  const envoyee = (
+    useLocation().state as {
+      envoyee?: { aapTitle: string; financeurName: string; nonDeposees?: string[]; externe?: boolean };
+    } | null
+  )?.envoyee;
 
   useEffect(() => {
     if (!currentUser) return;
     getDocs(query(collection(db, 'applications'), where('porteurId', '==', currentUser.uid)))
-      .then(snap => {
+      .then((snap) => {
         const dateDe = (c: Candidature) => (c.submittedAt ?? c.createdAt)?.toMillis() ?? 0;
-        setCandidatures((snap.docs.map(d => ({ id: d.id, ...d.data() })) as Candidature[]).sort((a, b) => dateDe(b) - dateDe(a)));
+        setCandidatures(
+          (snap.docs.map((d) => ({ id: d.id, ...d.data() })) as Candidature[]).sort((a, b) => dateDe(b) - dateDe(a)),
+        );
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error loading applications:', err);
         setErreur(messageErreur(err, "Les candidatures n'ont pas pu être chargées"));
       })
@@ -66,9 +72,16 @@ export default function MyApplicationsPage() {
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-1">Mes candidatures</h1>
-            <p className="text-gray-600">{candidatures.length} dossier{candidatures.length > 1 ? 's' : ''}, suivis par étape</p>
+            <p className="text-gray-600">
+              {candidatures.length} dossier{candidatures.length > 1 ? 's' : ''}, suivis par étape
+            </p>
           </div>
-          <Link to="/aap/search"><Button variant="secondary"><Search className="h-4 w-4 mr-2" />Trouver un appel</Button></Link>
+          <Link to="/aap/search">
+            <Button variant="secondary">
+              <Search className="h-4 w-4 mr-2" />
+              Trouver un appel
+            </Button>
+          </Link>
         </div>
 
         {envoyee && (
@@ -76,29 +89,34 @@ export default function MyApplicationsPage() {
             <p className="font-medium">{envoyee.externe ? 'Candidature notée' : 'Candidature envoyée'}</p>
             {envoyee.externe ? (
               <p className="text-sm mt-1">
-                Votre candidature à « {envoyee.aapTitle} », déposée sur le site de {envoyee.financeurName}, est notée ici
-                pour la suivre. La réponse du financeur vous parviendra directement, hors de l'application.
+                Votre candidature à « {envoyee.aapTitle} », déposée sur le site de {envoyee.financeurName}, est notée
+                ici pour la suivre. La réponse du financeur vous parviendra directement, hors de l'application.
               </p>
             ) : (
-            <p className="text-sm mt-1">
-              Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
-              {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; il passera dans la colonne « En cours
-              d'examen », puis « Acceptée », « Refusée » ou « Complément demandé » : suivez son avancement sur cette page.
-            </p>
+              <p className="text-sm mt-1">
+                Votre dossier pour « {envoyee.aapTitle} » a été transmis à {envoyee.financeurName} le{' '}
+                {new Date().toLocaleDateString('fr-FR')}. Le financeur l'examine ; il passera dans la colonne « En cours
+                d'examen », puis « Acceptée », « Refusée » ou « Complément demandé » : suivez son avancement sur cette
+                page.
+              </p>
             )}
             {(envoyee.nonDeposees?.length ?? 0) > 0 && (
               <p className="text-sm mt-2 text-amber-800">
-                Pièce{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''} non déposée{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''}
-                {' '}({envoyee.nonDeposees?.join(', ')}) : le dépôt de fichiers n'est pas encore ouvert. Adressez-
-                {(envoyee.nonDeposees?.length ?? 0) > 1 ? 'les' : 'la'} directement au financeur, selon l'annonce officielle.
+                Pièce{(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''} non déposée
+                {(envoyee.nonDeposees?.length ?? 0) > 1 ? 's' : ''} ({envoyee.nonDeposees?.join(', ')}) : le dépôt de
+                fichiers n'est pas encore ouvert. Adressez-
+                {(envoyee.nonDeposees?.length ?? 0) > 1 ? 'les' : 'la'} directement au financeur, selon l'annonce
+                officielle.
               </p>
             )}
           </div>
         )}
-        {erreur && <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>}
+        {erreur && (
+          <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
-          {COLONNES_CANDIDATURES.map(col => (
+          {COLONNES_CANDIDATURES.map((col) => (
             <div key={col.cle} className="bg-gray-100 rounded-lg p-3 min-h-[200px]">
               <h2 className="text-sm font-semibold text-gray-700 mb-3">
                 {col.libelle} <span className="text-gray-400">({colonnes[col.cle].length})</span>
@@ -107,14 +125,15 @@ export default function MyApplicationsPage() {
                 <p className="text-xs text-gray-400 text-center py-6">Aucune</p>
               ) : (
                 <ul className="space-y-3">
-                  {colonnes[col.cle].map(c => (
+                  {colonnes[col.cle].map((c) => (
                     <li key={c.id}>
                       <Link to={`/candidature/${c.id}`} className="block">
                         <Card className="!p-3 hover:shadow-md">
                           <p className="font-medium text-gray-900 text-sm line-clamp-2">{c.projectTitle}</p>
                           <p className="text-xs text-gray-600 mt-1 line-clamp-2">{c.aapTitle}</p>
                           <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />{dateFr(c)}
+                            <Calendar className="h-3 w-3" />
+                            {dateFr(c)}
                           </p>
                         </Card>
                       </Link>

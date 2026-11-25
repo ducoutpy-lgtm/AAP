@@ -29,8 +29,8 @@ export default function SavedSearchesPage() {
   useEffect(() => {
     if (!currentUser) return;
     getDocs(query(collection(db, 'savedSearches'), where('userId', '==', currentUser.uid)))
-      .then(snap => setRecherches(snap.docs.map(d => ({ id: d.id, ...d.data() })) as RechercheSauvegardee[]))
-      .catch(err => {
+      .then((snap) => setRecherches(snap.docs.map((d) => ({ id: d.id, ...d.data() })) as RechercheSauvegardee[]))
+      .catch((err) => {
         console.error('Error loading saved searches:', err);
         setErreur("Les recherches n'ont pas pu être chargées.");
       })
@@ -43,7 +43,7 @@ export default function SavedSearchesPage() {
     const active = !r.alertEnabled;
     try {
       await updateDoc(doc(db, 'savedSearches', r.id), { alertEnabled: active, frequency: 'weekly' });
-      setRecherches(rs => rs.map(x => (x.id === r.id ? { ...x, alertEnabled: active } : x)));
+      setRecherches((rs) => rs.map((x) => (x.id === r.id ? { ...x, alertEnabled: active } : x)));
     } catch (err) {
       console.error('Error toggling alert:', err);
       setErreur("L'alerte n'a pas pu être modifiée.");
@@ -55,7 +55,7 @@ export default function SavedSearchesPage() {
     setErreur('');
     try {
       await deleteDoc(doc(db, 'savedSearches', r.id));
-      setRecherches(rs => rs.filter(x => x.id !== r.id));
+      setRecherches((rs) => rs.filter((x) => x.id !== r.id));
     } catch (err) {
       console.error('Error deleting search:', err);
       setErreur("La recherche n'a pas pu être supprimée.");
@@ -80,13 +80,21 @@ export default function SavedSearchesPage() {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-1">Recherches sauvegardées</h1>
             <p className="text-gray-600">
-              Alerte chaque lundi : un courriel vous signale les appels nouveaux de chaque recherche dont l'alerte est active.
+              Alerte chaque lundi : un courriel vous signale les appels nouveaux de chaque recherche dont l'alerte est
+              active.
             </p>
           </div>
-          <Link to="/aap/search"><Button variant="secondary"><Search className="h-4 w-4 mr-2" />Nouvelle recherche</Button></Link>
+          <Link to="/aap/search">
+            <Button variant="secondary">
+              <Search className="h-4 w-4 mr-2" />
+              Nouvelle recherche
+            </Button>
+          </Link>
         </div>
 
-        {erreur && <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>}
+        {erreur && (
+          <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">{erreur}</div>
+        )}
 
         {recherches.length === 0 ? (
           <Card className="p-8 text-center">
@@ -94,11 +102,13 @@ export default function SavedSearchesPage() {
             <p className="text-sm text-gray-500 mb-4">
               Choisissez des filtres sur la page de recherche, puis cliquez « Enregistrer cette recherche ».
             </p>
-            <Link to="/aap/search"><Button>Rechercher des appels</Button></Link>
+            <Link to="/aap/search">
+              <Button>Rechercher des appels</Button>
+            </Link>
           </Card>
         ) : (
           <ul className="space-y-4">
-            {recherches.map(r => {
+            {recherches.map((r) => {
               const etiquettes = etiquettesActives(filtresDepuisParams(new URLSearchParams(r.params)));
               return (
                 <li key={r.id}>
@@ -107,17 +117,30 @@ export default function SavedSearchesPage() {
                       <div className="min-w-0">
                         <h2 className="font-semibold text-gray-900">{r.name}</h2>
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {etiquettes.map(e => (
-                            <span key={e.cle} className="bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-0.5 text-xs">{e.libelle}</span>
+                          {etiquettes.map((e) => (
+                            <span
+                              key={e.cle}
+                              className="bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-0.5 text-xs"
+                            >
+                              {e.libelle}
+                            </span>
                           ))}
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         <Button onClick={() => navigate(`/aap/search?${r.params}`)}>Lancer</Button>
                         <Button variant="secondary" onClick={() => basculerAlerte(r)}>
-                          {r.alertEnabled
-                            ? <><Bell className="h-4 w-4 mr-2" />Alerte chaque lundi : active</>
-                            : <><BellOff className="h-4 w-4 mr-2" />Alerte arrêtée</>}
+                          {r.alertEnabled ? (
+                            <>
+                              <Bell className="h-4 w-4 mr-2" />
+                              Alerte chaque lundi : active
+                            </>
+                          ) : (
+                            <>
+                              <BellOff className="h-4 w-4 mr-2" />
+                              Alerte arrêtée
+                            </>
+                          )}
                         </Button>
                         <Button variant="ghost" onClick={() => supprimer(r)} aria-label={`Supprimer ${r.name}`}>
                           <Trash2 className="h-4 w-4" />

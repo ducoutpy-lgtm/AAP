@@ -39,29 +39,31 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
   const [message, setMessage] = useState('');
 
   const [formData, setFormData] = useState(
-    profilExistant ? formulairePorteurDepuisProfil(profilExistant) : FORMULAIRE_PORTEUR_VIDE
+    profilExistant ? formulairePorteurDepuisProfil(profilExistant) : FORMULAIRE_PORTEUR_VIDE,
   );
 
   const handleDomaineChange = (domaine: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       domainesIntervention: prev.domainesIntervention.includes(domaine)
-        ? prev.domainesIntervention.filter(d => d !== domaine)
+        ? prev.domainesIntervention.filter((d) => d !== domaine)
         : [...prev.domainesIntervention, domaine],
     }));
   };
 
   const handleObjetChange = (valeur: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      objetsProjet: prev.objetsProjet.includes(valeur) ? prev.objetsProjet.filter(o => o !== valeur) : [...prev.objetsProjet, valeur],
+      objetsProjet: prev.objetsProjet.includes(valeur)
+        ? prev.objetsProjet.filter((o) => o !== valeur)
+        : [...prev.objetsProjet, valeur],
     }));
   };
 
   const handlePublicChange = (valeur: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      publics: prev.publics.includes(valeur) ? prev.publics.filter(p => p !== valeur) : [...prev.publics, valeur],
+      publics: prev.publics.includes(valeur) ? prev.publics.filter((p) => p !== valeur) : [...prev.publics, valeur],
     }));
   };
 
@@ -76,46 +78,46 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
       // Sauvegarder le profil porteur
       // Fusion (2026-11-20) : le formulaire ne réécrit que ses champs ; sans elle, les champs écrits ailleurs (textes
       // réutilisables de la carte de Mon profil) étaient effacés à chaque enregistrement
-      await setDoc(doc(db, 'porteurProfiles', currentUser.uid), {
-        userId: currentUser.uid,
-        structureName: formData.structureName,
-        siret: formData.siret || null,
-        structureType: formData.structureType,
-        secteurActivite: formData.secteurActivite,
-        domainesIntervention: formData.domainesIntervention,
-        // Champs du parcours d'intégration (parcours-integration, 2026-10-20)
-        typeEtablissement: formData.typeEtablissement || null,
-        tailleTranche: formData.tailleTranche || null,
-        budgetTranche: formData.budgetTranche || null,
-        publics: formData.publics,
-        // Fenêtre « Préciser mon profil » (liste-demarrage, 2026-10-20)
-        objetsProjet: formData.objetsProjet,
-        anneeOuverture: anneeOuvertureValide(formData.anneeOuverture),
-        rayonAction: formData.rayonAction || null,
-        address: {
-          city: formData.city,
-          postalCode: formData.postalCode,
-          region: formData.region,
-          country: 'France',
+      await setDoc(
+        doc(db, 'porteurProfiles', currentUser.uid),
+        {
+          userId: currentUser.uid,
+          structureName: formData.structureName,
+          siret: formData.siret || null,
+          structureType: formData.structureType,
+          secteurActivite: formData.secteurActivite,
+          domainesIntervention: formData.domainesIntervention,
+          // Champs du parcours d'intégration (parcours-integration, 2026-10-20)
+          typeEtablissement: formData.typeEtablissement || null,
+          tailleTranche: formData.tailleTranche || null,
+          budgetTranche: formData.budgetTranche || null,
+          publics: formData.publics,
+          // Fenêtre « Préciser mon profil » (liste-demarrage, 2026-10-20)
+          objetsProjet: formData.objetsProjet,
+          anneeOuverture: anneeOuvertureValide(formData.anneeOuverture),
+          rayonAction: formData.rayonAction || null,
+          address: {
+            city: formData.city,
+            postalCode: formData.postalCode,
+            region: formData.region,
+            country: 'France',
+          },
+          contactPerson: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: currentUser.email,
+            phone: formData.phone || null,
+          },
+          teamSize: formData.teamSize ? parseInt(formData.teamSize) : null,
+          website: formData.website || null,
+          description: formData.description || null,
+          updatedAt: Timestamp.now(),
         },
-        contactPerson: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: currentUser.email,
-          phone: formData.phone || null,
-        },
-        teamSize: formData.teamSize ? parseInt(formData.teamSize) : null,
-        website: formData.website || null,
-        description: formData.description || null,
-        updatedAt: Timestamp.now(),
-      }, { merge: true });
+        { merge: true },
+      );
 
       // Mettre à jour le statut de complétion du profil
-      await setDoc(
-        doc(db, 'users', currentUser.uid),
-        { profileComplete: true },
-        { merge: true }
-      );
+      await setDoc(doc(db, 'users', currentUser.uid), { profileComplete: true }, { merge: true });
 
       await refreshUserProfile();
 
@@ -153,22 +155,16 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
         {/* Form */}
         <div className="bg-white rounded-lg shadow-md p-8">
           {error && (
-            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
-              {error}
-            </div>
+            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">{error}</div>
           )}
           {message && (
-            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-              {message}
-            </div>
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">{message}</div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Informations sur la structure */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Informations sur votre structure
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Informations sur votre structure</h2>
               <div className="space-y-4">
                 <Input
                   label="Nom de la structure"
@@ -201,9 +197,13 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
                     className="input-field"
                   >
                     <option value="">Sélectionnez une option</option>
-                    {TYPES_ETABLISSEMENT.map(g => (
+                    {TYPES_ETABLISSEMENT.map((g) => (
                       <optgroup key={g.groupe} label={g.groupe}>
-                        {g.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                        {g.options.map((o) => (
+                          <option key={o.value} value={o.value}>
+                            {o.label}
+                          </option>
+                        ))}
                       </optgroup>
                     ))}
                   </select>
@@ -283,9 +283,7 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Domaines d'intervention
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Domaines d'intervention</label>
                   <div className="grid grid-cols-2 gap-2">
                     {SECTEURS.map((secteur) => (
                       <label key={secteur.value} className="flex items-center space-x-2">
@@ -373,9 +371,7 @@ export default function CompletePorteurProfile({ profilExistant }: { profilExist
 
             {/* Informations complémentaires */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Informations complémentaires
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Informations complémentaires</h2>
               <div className="space-y-4">
                 <Input
                   label="Site web"

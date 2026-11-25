@@ -32,7 +32,7 @@ export default function RecommendationsPage() {
         const profilDoc = await getDoc(doc(db, 'porteurProfiles', currentUser.uid));
         const profil = (profilDoc.exists() ? profilDoc.data() : {}) as PorteurProfile;
         const snapshot = await getDocs(query(collection(db, 'aap'), where('status', '==', 'published')));
-        const aaps = snapshot.docs.map(d => ({ id: d.id, ...d.data() })) as Appel[];
+        const aaps = snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as Appel[];
         setManques(manquesDuProfil(profil));
         setRecommandations(recommander(aaps, profil));
       } catch (err) {
@@ -73,7 +73,9 @@ export default function RecommendationsPage() {
         </div>
 
         <Card className="p-4 mb-6 bg-blue-50 border-blue-200">
-          <p className="text-sm text-blue-900"><strong>Comment sont choisis ces appels ?</strong></p>
+          <p className="text-sm text-blue-900">
+            <strong>Comment sont choisis ces appels ?</strong>
+          </p>
           <p className="text-sm text-blue-800 mt-1">
             Nous comparons chaque appel ouvert à votre région, à votre statut, à votre type d'établissement et à vos
             projets. Un appel d'une autre région, ou réservé à d'autres structures, n'est pas proposé. Chaque carte dit
@@ -87,7 +89,9 @@ export default function RecommendationsPage() {
               <p className="text-sm text-amber-900">
                 Complétez votre profil pour des recommandations plus justes : {manques.join(', ')}.
               </p>
-              <Button size="sm" variant="secondary" onClick={() => navigate('/profil')}>Compléter mon profil</Button>
+              <Button size="sm" variant="secondary" onClick={() => navigate('/profil')}>
+                Compléter mon profil
+              </Button>
             </div>
           </Card>
         )}
@@ -96,7 +100,9 @@ export default function RecommendationsPage() {
           <Card className="p-12 text-center">
             <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">Aucun appel ouvert ne correspond pour l'instant</h3>
-            <p className="text-gray-600 mb-4">De nouveaux appels arrivent chaque semaine. Vous pouvez aussi chercher librement.</p>
+            <p className="text-gray-600 mb-4">
+              De nouveaux appels arrivent chaque semaine. Vous pouvez aussi chercher librement.
+            </p>
             <Button onClick={() => navigate('/aap/search')}>Rechercher des appels</Button>
           </Card>
         ) : (
@@ -105,8 +111,11 @@ export default function RecommendationsPage() {
               const jours = getDaysUntilDeadline(aap.deadline);
               const urgent = jours !== null && jours <= 7;
               return (
-                <Card key={aap.id} className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => navigate(`/aap/${aap.id}`)}>
+                <Card
+                  key={aap.id}
+                  className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => navigate(`/aap/${aap.id}`)}
+                >
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{aap.title}</h3>
                   {aap.financeurName && (
                     <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
@@ -120,7 +129,9 @@ export default function RecommendationsPage() {
                       <CheckCircle className="h-4 w-4 text-green-600" /> Pourquoi cet appel vous est proposé
                     </p>
                     <ul className="text-sm text-green-800 space-y-1">
-                      {raisons.map(r => <li key={r}>• {r}</li>)}
+                      {raisons.map((r) => (
+                        <li key={r}>• {r}</li>
+                      ))}
                     </ul>
                   </div>
                   {aVerifier.length > 0 && (
@@ -129,7 +140,9 @@ export default function RecommendationsPage() {
                         <AlertTriangle className="h-4 w-4 text-amber-600" /> À vérifier sur l'annonce officielle
                       </p>
                       <ul className="text-sm text-amber-800 space-y-1">
-                        {aVerifier.map(r => <li key={r}>• {r}</li>)}
+                        {aVerifier.map((r) => (
+                          <li key={r}>• {r}</li>
+                        ))}
                       </ul>
                     </div>
                   )}
@@ -139,7 +152,9 @@ export default function RecommendationsPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t">
                     <div className="flex items-center gap-2 text-sm">
                       <Calendar className={`h-4 w-4 ${urgent ? 'text-warning-500' : 'text-gray-400'}`} />
-                      <span className={urgent ? 'text-warning-600 font-medium' : 'text-gray-600'}>{deadlineLabel(jours)}</span>
+                      <span className={urgent ? 'text-warning-600 font-medium' : 'text-gray-600'}>
+                        {deadlineLabel(jours)}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <Euro className="h-4 w-4" />
@@ -147,17 +162,22 @@ export default function RecommendationsPage() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <MapPin className="h-4 w-4" />
-                      <span>{(aap.territoriesEligible ?? []).map(libelleTerritoire).join(', ') || 'Territoire non précisé'}</span>
+                      <span>
+                        {(aap.territoriesEligible ?? []).map(libelleTerritoire).join(', ') || 'Territoire non précisé'}
+                      </span>
                     </div>
                   </div>
 
                   <div className="mt-4">
                     {/* Fiche importée : candidature sur le site officiel (question 21, 2026-11-13) */}
-                    <Button className="w-full" onClick={(e) => {
-                      e.stopPropagation();
-                      if (candidatureSurSiteOfficiel(aap)) window.open(aap.externalUrl, '_blank', 'noopener');
-                      else navigate(`/aap/${aap.id}/candidater`);
-                    }}>
+                    <Button
+                      className="w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (candidatureSurSiteOfficiel(aap)) window.open(aap.externalUrl, '_blank', 'noopener');
+                        else navigate(`/aap/${aap.id}/candidater`);
+                      }}
+                    >
                       {candidatureSurSiteOfficiel(aap) ? 'Candidater sur le site officiel' : 'Candidater'}
                     </Button>
                   </div>

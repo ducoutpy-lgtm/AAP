@@ -13,13 +13,23 @@ describe('étiquettes des champs', () => {
   });
 
   it('Select et Textarea : idem', () => {
-    render(<><Select label="Région" options={[{ value: 'idf', label: 'Île-de-France' }]} /><Textarea label="Résumé" /></>);
+    render(
+      <>
+        <Select label="Région" options={[{ value: 'idf', label: 'Île-de-France' }]} />
+        <Textarea label="Résumé" />
+      </>,
+    );
     expect(screen.getByLabelText('Région')).toBeInstanceOf(HTMLSelectElement);
     expect(screen.getByLabelText('Résumé')).toBeInstanceOf(HTMLTextAreaElement);
   });
 
   it('deux champs de même étiquette restent distincts', () => {
-    render(<><Input label="Nom" /><Input label="Nom" /></>);
+    render(
+      <>
+        <Input label="Nom" />
+        <Input label="Nom" />
+      </>,
+    );
     const [a, b] = screen.getAllByLabelText('Nom');
     expect(a.id).not.toBe(b.id);
   });

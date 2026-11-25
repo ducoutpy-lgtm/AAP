@@ -15,12 +15,17 @@ export default function PageIntrouvable() {
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {currentUser && (
-            <Link to={destinationApresConnexion(undefined, userProfile)}
-              className="px-4 py-2 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700">
+            <Link
+              to={destinationApresConnexion(undefined, userProfile)}
+              className="px-4 py-2 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700"
+            >
               Mon tableau de bord
             </Link>
           )}
-          <Link to="/" className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100">
+          <Link
+            to="/"
+            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100"
+          >
             Retour à l'accueil
           </Link>
         </div>

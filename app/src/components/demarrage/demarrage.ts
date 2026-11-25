@@ -36,8 +36,8 @@ export interface EtatDemarrage {
 // État des actions d'un compte d'après users.demarrage (absent pour un compte neuf : rien n'est fait)
 export function etatDemarrage(role: UserType, user: Pick<User, 'demarrage'> | null | undefined): EtatDemarrage {
   const definitions = role === 'financeur' ? ACTIONS_FINANCEUR : ACTIONS_PORTEUR;
-  const actions = definitions.map(a => ({ ...a, faite: user?.demarrage?.[a.cle] === true }));
-  const faites = actions.filter(a => a.faite).length;
+  const actions = definitions.map((a) => ({ ...a, faite: user?.demarrage?.[a.cle] === true }));
+  const faites = actions.filter((a) => a.faite).length;
   return { actions, faites, total: actions.length, termine: faites === actions.length };
 }
 

@@ -9,9 +9,8 @@ export default function MentionsLegalesPage() {
       <Section titre="Éditeur du service">
         <p>
           Le service {EDITEUR.nomService} est édité par {EDITEUR.raisonSociale}, {EDITEUR.formeJuridique.toLowerCase()},
-          au capital de {EDITEUR.capital}, immatriculée au registre du commerce et des sociétés
-          sous le numéro {EDITEUR.siren} (SIRET du siège {EDITEUR.siret}), dont le siège social est situé{' '}
-          {EDITEUR.siege}.
+          au capital de {EDITEUR.capital}, immatriculée au registre du commerce et des sociétés sous le numéro{' '}
+          {EDITEUR.siren} (SIRET du siège {EDITEUR.siret}), dont le siège social est situé {EDITEUR.siege}.
         </p>
         <p>Directeur de la publication : {EDITEUR.directeurPublication}.</p>
         <p>Contact : {EDITEUR.contact}.</p>
@@ -23,9 +22,9 @@ export default function MentionsLegalesPage() {
           Dublin 2, Irlande.
         </p>
         <p>
-          Les données des comptes et des appels à projets sont stockées par Google Cloud EMEA Limited (services Firebase :
-          authentification, base de données Firestore), 70 Sir John Rogerson's Quay, Dublin 2, Irlande. Région de
-          la base de données : eur3, multirégion Europe (Belgique et Pays-Bas). Les comptes de connexion (Firebase
+          Les données des comptes et des appels à projets sont stockées par Google Cloud EMEA Limited (services Firebase
+          : authentification, base de données Firestore), 70 Sir John Rogerson's Quay, Dublin 2, Irlande. Région de la
+          base de données : eur3, multirégion Europe (Belgique et Pays-Bas). Les comptes de connexion (Firebase
           Authentication) et les fichiers déposés (stockage Firebase, région US-CENTRAL1) sont traités aux États-Unis.
         </p>
       </Section>
@@ -33,9 +32,9 @@ export default function MentionsLegalesPage() {
       <Section titre="Objet du service">
         <p>
           {EDITEUR.nomService} recense des appels à projets, appels à candidatures, bourses et prix publiés par des
-          financeurs publics et privés du secteur de la santé et du médico-social en France, et les met à disposition des
-          établissements et services porteurs de projets. Les informations affichées sont extraites automatiquement des
-          sites des financeurs ; chaque fiche indique si elle a été relue, la date de son extraction et le lien vers
+          financeurs publics et privés du secteur de la santé et du médico-social en France, et les met à disposition
+          des établissements et services porteurs de projets. Les informations affichées sont extraites automatiquement
+          des sites des financeurs ; chaque fiche indique si elle a été relue, la date de son extraction et le lien vers
           l'annonce officielle, qui seule fait foi.
         </p>
       </Section>
@@ -43,9 +42,9 @@ export default function MentionsLegalesPage() {
       <Section titre="Propriété intellectuelle">
         <p>
           La structure du site, ses textes propres, sa charte graphique et son code sont la propriété de{' '}
-          {EDITEUR.raisonSociale}. Les textes des appels à projets restent la propriété de leurs émetteurs respectifs ; ils
-          sont reproduits sous forme de résumés avec renvoi systématique vers la source. Tout émetteur qui souhaite le
-          retrait d'une fiche peut en faire la demande à l'adresse de contact ci-dessus.
+          {EDITEUR.raisonSociale}. Les textes des appels à projets restent la propriété de leurs émetteurs respectifs ;
+          ils sont reproduits sous forme de résumés avec renvoi systématique vers la source. Tout émetteur qui souhaite
+          le retrait d'une fiche peut en faire la demande à l'adresse de contact ci-dessus.
         </p>
       </Section>
 
@@ -60,8 +59,8 @@ export default function MentionsLegalesPage() {
 
       <Section titre="Données personnelles et cookies">
         <p>
-          Le traitement des données personnelles est décrit dans la politique de confidentialité. Le site n'utilise
-          que les témoins de connexion strictement nécessaires au fonctionnement du compte (authentification Firebase) ;
+          Le traitement des données personnelles est décrit dans la politique de confidentialité. Le site n'utilise que
+          les témoins de connexion strictement nécessaires au fonctionnement du compte (authentification Firebase) ;
           aucun outil de mesure d'audience n'est utilisé pendant la phase de test et aucun témoin publicitaire ni de
           mesure d'audience n'est déposé.
         </p>

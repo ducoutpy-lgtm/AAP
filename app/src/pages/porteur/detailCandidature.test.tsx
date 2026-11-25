@@ -17,10 +17,19 @@ vi.mock('firebase/firestore', () => ({
 import ApplicationDetailPage from './ApplicationDetailPage';
 
 const ouvrir = (dossier: Record<string, unknown>) => {
-  donnees.dossier = { porteurId: 'p1', aapId: 'a1', aapTitle: 'Appel', projectTitle: 'Mon projet', status: 'submitted', ...dossier };
+  donnees.dossier = {
+    porteurId: 'p1',
+    aapId: 'a1',
+    aapTitle: 'Appel',
+    projectTitle: 'Mon projet',
+    status: 'submitted',
+    ...dossier,
+  };
   render(
     <MemoryRouter initialEntries={['/candidature/c1']}>
-      <Routes><Route path="/candidature/:applicationId" element={<ApplicationDetailPage />} /></Routes>
+      <Routes>
+        <Route path="/candidature/:applicationId" element={<ApplicationDetailPage />} />
+      </Routes>
     </MemoryRouter>,
   );
 };
@@ -43,7 +52,12 @@ describe('détail d’une candidature', () => {
   });
 
   it('pièce non déposée : sans lien, avec la mention', async () => {
-    ouvrir({ documents: [{ name: 'dossier.pdf', url: '', nonDeposee: true }, { name: 'budget.xlsx', url: 'https://exemple.fr/b' }] });
+    ouvrir({
+      documents: [
+        { name: 'dossier.pdf', url: '', nonDeposee: true },
+        { name: 'budget.xlsx', url: 'https://exemple.fr/b' },
+      ],
+    });
     expect(await screen.findByText(/dossier\.pdf/)).toBeInTheDocument();
     expect(screen.getByText(/dossier\.pdf/).closest('a')).toBeNull();
     expect(screen.getByText(/non déposée/)).toBeInTheDocument();

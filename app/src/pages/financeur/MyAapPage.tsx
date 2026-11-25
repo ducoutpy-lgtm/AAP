@@ -35,8 +35,8 @@ export default function MyAapPage() {
       // Nombre de candidatures compté depuis les candidatures reçues : un candidat ne peut pas modifier l'appel
       // (règles Firestore), le compteur du document reste donc à zéro (financeur-vendable, 2026-10-21)
       const recues = await getDocs(query(collection(db, 'applications'), where('financeurId', '==', currentUser.uid)));
-      const parAppel = candidaturesParAppel(recues.docs.map(d => ({ id: d.id, ...d.data() }) as Application));
-      setAaps(data.map(a => ({ ...a, applicationsCount: parAppel[a.id!] ?? 0 })));
+      const parAppel = candidaturesParAppel(recues.docs.map((d) => ({ id: d.id, ...d.data() }) as Application));
+      setAaps(data.map((a) => ({ ...a, applicationsCount: parAppel[a.id!] ?? 0 })));
     } catch (error) {
       console.error('Error loading AAPs:', error);
       setErreurChargement(true);
@@ -51,7 +51,7 @@ export default function MyAapPage() {
     if (!confirm('Clôturer cet appel ? Il ne recevra plus de candidature.')) return;
     try {
       await aapService.updateAapStatus(aapId, 'closed');
-      setAaps(prev => prev.map(aap => (aap.id === aapId ? { ...aap, status: 'closed' } : aap)));
+      setAaps((prev) => prev.map((aap) => (aap.id === aapId ? { ...aap, status: 'closed' } : aap)));
     } catch (error) {
       console.error('Error closing AAP:', error);
       annoncer('La clôture a échoué : réessayez dans un instant.', 'erreur');
@@ -63,14 +63,14 @@ export default function MyAapPage() {
 
     try {
       await aapService.deleteAap(aapId);
-      setAaps(prev => prev.filter(aap => aap.id !== aapId));
+      setAaps((prev) => prev.filter((aap) => aap.id !== aapId));
     } catch (error) {
       console.error('Error deleting AAP:', error);
       annoncer('Erreur lors de la suppression', 'erreur');
     }
   };
 
-  const filteredAaps = aaps.filter(aap => {
+  const filteredAaps = aaps.filter((aap) => {
     if (filter === 'all') return true;
     return aap.status === filter;
   });
@@ -117,9 +117,7 @@ export default function MyAapPage() {
           <button
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'all'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+              filter === 'all' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
             Tous ({aaps.length})
@@ -127,32 +125,26 @@ export default function MyAapPage() {
           <button
             onClick={() => setFilter('draft')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'draft'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+              filter === 'draft' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
-            Brouillons ({aaps.filter(a => a.status === 'draft').length})
+            Brouillons ({aaps.filter((a) => a.status === 'draft').length})
           </button>
           <button
             onClick={() => setFilter('published')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'published'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+              filter === 'published' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
-            Publiés ({aaps.filter(a => a.status === 'published').length})
+            Publiés ({aaps.filter((a) => a.status === 'published').length})
           </button>
           <button
             onClick={() => setFilter('closed')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'closed'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+              filter === 'closed' ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
-            Fermés ({aaps.filter(a => a.status === 'closed').length})
+            Fermés ({aaps.filter((a) => a.status === 'closed').length})
           </button>
         </div>
 
@@ -169,7 +161,7 @@ export default function MyAapPage() {
           </Card>
         ) : (
           <div className="grid gap-6">
-            {filteredAaps.map(aap => (
+            {filteredAaps.map((aap) => (
               <Card key={aap.id} className="!p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
@@ -189,9 +181,7 @@ export default function MyAapPage() {
                     </span>
                   ))}
                   {aap.sectorsTargeted.length > 3 && (
-                    <span className="badge-gray text-xs">
-                      +{aap.sectorsTargeted.length - 3}
-                    </span>
+                    <span className="badge-gray text-xs">+{aap.sectorsTargeted.length - 3}</span>
                   )}
                 </div>
 
@@ -208,7 +198,12 @@ export default function MyAapPage() {
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     <span>
-                      Deadline: {aap.deadline ? new Date(aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate()).toLocaleDateString('fr-FR') : 'Non précisée'}
+                      Deadline:{' '}
+                      {aap.deadline
+                        ? new Date(
+                            aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate(),
+                          ).toLocaleDateString('fr-FR')
+                        : 'Non précisée'}
                     </span>
                   </div>
                 </div>
@@ -249,11 +244,7 @@ export default function MyAapPage() {
                   )}
 
                   {aap.status === 'draft' && (
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDelete(aap.id!)}
-                    >
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(aap.id!)}>
                       <Trash2 className="mr-2 h-4 w-4" />
                       Supprimer
                     </Button>

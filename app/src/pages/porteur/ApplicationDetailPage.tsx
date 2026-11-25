@@ -16,7 +16,13 @@ import { LIBELLES_STATUT_CANDIDATURE } from '../../utils/candidat';
 import { euros } from '../../utils/recherche';
 
 const VARIANT: Record<ApplicationStatus, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
-  draft: 'gray', submitted: 'primary', under_review: 'warning', pending_info: 'warning', shortlisted: 'warning', accepted: 'success', rejected: 'error',
+  draft: 'gray',
+  submitted: 'primary',
+  under_review: 'warning',
+  pending_info: 'warning',
+  shortlisted: 'warning',
+  accepted: 'success',
+  rejected: 'error',
 };
 
 // Le formulaire enregistre certains champs sous une forme plus simple que le type (texte au lieu de liste) : on lit
@@ -32,7 +38,8 @@ type Dossier = Omit<Application, 'budget' | 'team' | 'documents'> & {
   externe?: boolean;
 };
 
-const dateFr = (v: Timestamp | Date | null | undefined) => enDate(v)?.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) ?? '';
+const dateFr = (v: Timestamp | Date | null | undefined) =>
+  enDate(v)?.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) ?? '';
 
 export default function ApplicationDetailPage() {
   const { applicationId } = useParams<{ applicationId: string }>();
@@ -43,7 +50,7 @@ export default function ApplicationDetailPage() {
   useEffect(() => {
     if (!applicationId) return;
     getDoc(doc(db, 'applications', applicationId))
-      .then(snap => setDossier(snap.exists() ? (snap.data() as Dossier) : null))
+      .then((snap) => setDossier(snap.exists() ? (snap.data() as Dossier) : null))
       .catch(() => setDossier(null))
       .finally(() => setChargement(false));
   }, [applicationId]);
@@ -55,7 +62,9 @@ export default function ApplicationDetailPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Candidature introuvable</h1>
-          <Link to="/mes-candidatures" className="text-primary-600 hover:underline">Retour à mes candidatures</Link>
+          <Link to="/mes-candidatures" className="text-primary-600 hover:underline">
+            Retour à mes candidatures
+          </Link>
         </div>
       </div>
     );
@@ -84,13 +93,19 @@ export default function ApplicationDetailPage() {
               <h1 className="text-3xl font-bold text-gray-900 mt-3">{dossier.projectTitle}</h1>
               <p className="text-gray-600 mt-1">
                 Pour l'appel{' '}
-                <Link to={`/aap/${dossier.aapId}`} className="text-primary-600 hover:underline">{dossier.aapTitle ?? 'voir la fiche'}</Link>
+                <Link to={`/aap/${dossier.aapId}`} className="text-primary-600 hover:underline">
+                  {dossier.aapTitle ?? 'voir la fiche'}
+                </Link>
               </p>
             </div>
             <div className="text-sm text-gray-600 text-right">
               {dossier.submittedAt && <p>Envoyée le {dateFr(dossier.submittedAt)}</p>}
               {/* Montant nul ou inconnu (suivi hors de l'application) : pas de ligne « Budget demandé : 0 € » */}
-              {!!dossier.budget?.total && <p className="mt-1">Budget demandé : <span className="font-semibold text-gray-900">{euros(dossier.budget.total)}</span></p>}
+              {!!dossier.budget?.total && (
+                <p className="mt-1">
+                  Budget demandé : <span className="font-semibold text-gray-900">{euros(dossier.budget.total)}</span>
+                </p>
+              )}
             </div>
           </div>
 
@@ -104,14 +119,16 @@ export default function ApplicationDetailPage() {
           )}
           {statut === 'submitted' && !dossier.externe && (
             <p className="mt-6 text-sm text-gray-600 bg-primary-50 border border-primary-200 rounded-lg p-3">
-              Le financeur a reçu votre dossier. Le statut passera à « En cours d'examen » quand il l'ouvrira, puis à
-              « Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
+              Le financeur a reçu votre dossier. Le statut passera à « En cours d'examen » quand il l'ouvrira, puis à «
+              Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
             </p>
           )}
           {(dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes) && (
             <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
               <p className="font-medium text-gray-900 mb-1">Retour du financeur</p>
-              <p className="text-gray-700 whitespace-pre-wrap">{dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes}</p>
+              <p className="text-gray-700 whitespace-pre-wrap">
+                {dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes}
+              </p>
             </div>
           )}
         </Card>
@@ -122,19 +139,22 @@ export default function ApplicationDetailPage() {
             <ul className="space-y-2 text-sm text-gray-700">
               {dossier.statusHistory.map((h, i) => (
                 <li key={i}>
-                  {dateFr(h.changedAt)} : {LIBELLES_STATUT_CANDIDATURE[h.status] ?? h.status}{h.comment ? ` (${h.comment})` : ''}
+                  {dateFr(h.changedAt)} : {LIBELLES_STATUT_CANDIDATURE[h.status] ?? h.status}
+                  {h.comment ? ` (${h.comment})` : ''}
                 </li>
               ))}
             </ul>
           </Card>
         )}
 
-        {sections.filter(([, v]) => v).map(([titre, valeur]) => (
-          <Card key={titre} className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">{titre}</h2>
-            <p className="text-gray-700 whitespace-pre-wrap">{valeur}</p>
-          </Card>
-        ))}
+        {sections
+          .filter(([, v]) => v)
+          .map(([titre, valeur]) => (
+            <Card key={titre} className="p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">{titre}</h2>
+              <p className="text-gray-700 whitespace-pre-wrap">{valeur}</p>
+            </Card>
+          ))}
 
         {dossier.budget?.breakdown && typeof dossier.budget.breakdown === 'string' && (
           <Card className="p-6">
@@ -154,10 +174,21 @@ export default function ApplicationDetailPage() {
                 <li key={i}>
                   {/* Pièce non déposée (stockage fermé) : sans lien, le lien vide rouvrait la page */}
                   {d.nonDeposee || !d.url ? (
-                    <span className="text-gray-700">{d.name} <span className="text-sm text-warning-600">(non déposée : à adresser directement au financeur)</span></span>
+                    <span className="text-gray-700">
+                      {d.name}{' '}
+                      <span className="text-sm text-warning-600">
+                        (non déposée : à adresser directement au financeur)
+                      </span>
+                    </span>
                   ) : (
-                    <a href={lienSur(d.url)} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline inline-flex items-center gap-1">
-                      <ExternalLink className="h-4 w-4" />{d.name}
+                    <a
+                      href={lienSur(d.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary-600 hover:underline inline-flex items-center gap-1"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      {d.name}
                     </a>
                   )}
                 </li>

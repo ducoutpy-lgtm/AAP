@@ -23,13 +23,28 @@ const documentDe = (chemin: string, id: string) =>
   });
 
 const listeDe = (chemin: string, champ: string, uid: string) =>
-  lire(async () => (await getDocs(query(collection(db, chemin), where(champ, '==', uid)))).docs.map(d => ({ id: d.id, ...d.data() })));
+  lire(async () =>
+    (await getDocs(query(collection(db, chemin), where(champ, '==', uid)))).docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    })),
+  );
 
 export async function exporterMesDonnees(utilisateur: User, role: UserType) {
   const uid = utilisateur.uid;
   // Lectures indépendantes lancées ensemble ; chacune note son échec sans arrêter les autres (lire)
-  const [utilisateurDoc, profilDeStructure, candidatures, recherchesSauvegardees, favoris, notifications, messagesEnvoyes,
-    messagesRecus, paiements, appelsPublies] = await Promise.all([
+  const [
+    utilisateurDoc,
+    profilDeStructure,
+    candidatures,
+    recherchesSauvegardees,
+    favoris,
+    notifications,
+    messagesEnvoyes,
+    messagesRecus,
+    paiements,
+    appelsPublies,
+  ] = await Promise.all([
     documentDe('users', uid),
     role === 'admin' ? null : documentDe(role === 'porteur' ? 'porteurProfiles' : 'financeurProfiles', uid),
     listeDe('applications', 'porteurId', uid),
@@ -45,9 +60,12 @@ export async function exporterMesDonnees(utilisateur: User, role: UserType) {
     exporteLe: new Date(),
     responsableDuTraitement: `${EDITEUR.raisonSociale}, contact du délégué à la protection des données : ${EDITEUR.contact}`,
     compteDeConnexion: {
-      uid, email: utilisateur.email, emailVerifie: utilisateur.emailVerified,
-      creeLe: utilisateur.metadata.creationTime ?? null, derniereConnexion: utilisateur.metadata.lastSignInTime ?? null,
-      fournisseurs: utilisateur.providerData.map(p => p.providerId),
+      uid,
+      email: utilisateur.email,
+      emailVerifie: utilisateur.emailVerified,
+      creeLe: utilisateur.metadata.creationTime ?? null,
+      derniereConnexion: utilisateur.metadata.lastSignInTime ?? null,
+      fournisseurs: utilisateur.providerData.map((p) => p.providerId),
     },
     utilisateur: utilisateurDoc,
     profilDeStructure,

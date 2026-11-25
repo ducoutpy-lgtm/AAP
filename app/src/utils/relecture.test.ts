@@ -1,7 +1,15 @@
 // Tests de la mention de relecture (changement mention-relecture-fiches, testé dans degel-application-complete 5.1).
 import { describe, expect, it } from 'vitest';
 import type { AAP } from '../types';
-import { dateExtraction, estRelue, formatDateFr, mentionRelecture, RELECTEUR_HUMAIN, visiblePubliquement, selectionATraiter } from './relecture';
+import {
+  dateExtraction,
+  estRelue,
+  formatDateFr,
+  mentionRelecture,
+  RELECTEUR_HUMAIN,
+  visiblePubliquement,
+  selectionATraiter,
+} from './relecture';
 
 const base: AAP = {
   financeurId: 'scraped',
@@ -23,7 +31,9 @@ const avec = (validation: AAP['validation'], extraitLe?: string): AAP =>
 
 describe('mentionRelecture : ce que lit le visiteur, déduit de validation', () => {
   it('rend « Contrôlée par le modèle » pour une validation au nom du modèle', () => {
-    const m = mentionRelecture(avec({ statut: 'validee', commentaire: '', date: '2026-10-15', par: 'claude-haiku-5-5' }));
+    const m = mentionRelecture(
+      avec({ statut: 'validee', commentaire: '', date: '2026-10-15', par: 'claude-haiku-5-5' }),
+    );
     expect(m?.libelle).toBe('Contrôlée par le modèle');
     expect(m?.variant).toBe('primary');
     expect(m?.detail).toContain('claude-haiku-5-5');
@@ -37,8 +47,12 @@ describe('mentionRelecture : ce que lit le visiteur, déduit de validation', () 
   });
 
   it('rend « Non relue » pour une fiche proposée ou à corriger', () => {
-    expect(mentionRelecture(avec({ statut: 'proposee', commentaire: '', date: '', par: '' }))?.libelle).toMatch(/^Non relue/);
-    expect(mentionRelecture(avec({ statut: 'a_corriger', commentaire: 'c', date: '', par: 'x' }))?.variant).toBe('warning');
+    expect(mentionRelecture(avec({ statut: 'proposee', commentaire: '', date: '', par: '' }))?.libelle).toMatch(
+      /^Non relue/,
+    );
+    expect(mentionRelecture(avec({ statut: 'a_corriger', commentaire: 'c', date: '', par: 'x' }))?.variant).toBe(
+      'warning',
+    );
   });
 
   it('ne dit rien pour un appel saisi à la main ou une fiche rejetée', () => {
@@ -65,9 +79,13 @@ describe('estRelue et dates', () => {
 describe('visiblePubliquement', () => {
   it('validée ou sans bloc validation : visible ; proposée, à corriger, rejetée : invisible', () => {
     expect(visiblePubliquement({ validation: undefined })).toBe(true);
-    expect(visiblePubliquement({ validation: { statut: 'validee', commentaire: '', date: '', par: 'modele' } })).toBe(true);
+    expect(visiblePubliquement({ validation: { statut: 'validee', commentaire: '', date: '', par: 'modele' } })).toBe(
+      true,
+    );
     expect(visiblePubliquement({ validation: { statut: 'proposee', commentaire: '', date: '', par: '' } })).toBe(false);
-    expect(visiblePubliquement({ validation: { statut: 'a_corriger', commentaire: '', date: '', par: '' } })).toBe(false);
+    expect(visiblePubliquement({ validation: { statut: 'a_corriger', commentaire: '', date: '', par: '' } })).toBe(
+      false,
+    );
     expect(visiblePubliquement({ validation: { statut: 'rejetee', commentaire: '', date: '', par: '' } })).toBe(false);
   });
 });
@@ -78,13 +96,20 @@ describe('selectionATraiter', () => {
   const f = (id: string, status: string, statut?: string) =>
     ({ id, status, validation: statut ? { statut } : undefined }) as Parameters<typeof selectionATraiter>[0][number];
   const fiches = [
-    f('proposee', 'draft', 'proposee'), f('a-corriger', 'published', 'a_corriger'), f('deja', 'published', 'validee'),
-    f('rejetee', 'archived', 'rejetee'), f('close', 'closed', 'proposee'), f('manuelle', 'published'),
+    f('proposee', 'draft', 'proposee'),
+    f('a-corriger', 'published', 'a_corriger'),
+    f('deja', 'published', 'validee'),
+    f('rejetee', 'archived', 'rejetee'),
+    f('close', 'closed', 'proposee'),
+    f('manuelle', 'published'),
   ];
   it('valider : ni archivée, ni clôturée, ni déjà validée, ni sans contrôle', () => {
     expect(selectionATraiter(fiches, 'validee')).toEqual({ aTraiter: ['proposee', 'a-corriger'], ignorees: 4 });
   });
   it('rejeter : ni déjà rejetée, ni sans contrôle', () => {
-    expect(selectionATraiter(fiches, 'rejetee')).toEqual({ aTraiter: ['proposee', 'a-corriger', 'deja', 'close'], ignorees: 2 });
+    expect(selectionATraiter(fiches, 'rejetee')).toEqual({
+      aTraiter: ['proposee', 'a-corriger', 'deja', 'close'],
+      ignorees: 2,
+    });
   });
 });

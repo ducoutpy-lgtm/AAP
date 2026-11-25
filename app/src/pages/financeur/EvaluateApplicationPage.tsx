@@ -6,15 +6,7 @@ import { db } from '../../config/firebase';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import {
-  ArrowLeft,
-  Download,
-  CheckCircle,
-  XCircle,
-  Clock,
-  TrendingUp,
-  FileText,
-} from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle, XCircle, Clock, TrendingUp, FileText } from 'lucide-react';
 import { messageErreur } from '../../utils/erreurs';
 import { annoncer } from '../../utils/annonces';
 
@@ -162,12 +154,8 @@ export default function EvaluateApplicationPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center max-w-md">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            Candidature non trouvée
-          </h2>
-          <Button onClick={() => navigate(`/aap/${aapId}/candidatures`)}>
-            Retour aux candidatures
-          </Button>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Candidature non trouvée</h2>
+          <Button onClick={() => navigate(`/aap/${aapId}/candidatures`)}>Retour aux candidatures</Button>
         </Card>
       </div>
     );
@@ -177,11 +165,7 @@ export default function EvaluateApplicationPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back button */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate(`/aap/${aapId}/candidatures`)}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate(`/aap/${aapId}/candidatures`)} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour aux candidatures
         </Button>
@@ -190,14 +174,10 @@ export default function EvaluateApplicationPage() {
         <Card className="p-6 mb-6">
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {application.projectTitle}
-              </h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">{application.projectTitle}</h1>
               <p className="text-gray-600">AAP: {application.aapTitle}</p>
             </div>
-            <Badge variant="gray">
-              Soumise le {formatDate(application.submittedAt)}
-            </Badge>
+            <Badge variant="gray">Soumise le {formatDate(application.submittedAt)}</Badge>
           </div>
 
           {/* Scores */}
@@ -205,20 +185,14 @@ export default function EvaluateApplicationPage() {
             <div className="grid grid-cols-3 gap-4 pt-4 border-t">
               <div className="text-center">
                 <p className="text-sm text-gray-600 mb-1">Score préqualification</p>
-                <p
-                  className={`text-3xl font-bold ${getScoreColor(
-                    application.prequalificationScore
-                  )}`}
-                >
+                <p className={`text-3xl font-bold ${getScoreColor(application.prequalificationScore)}`}>
                   {application.prequalificationScore}
                 </p>
               </div>
               {application.completenessScore !== undefined && (
                 <div className="text-center">
                   <p className="text-sm text-gray-600 mb-1">Complétude</p>
-                  <p className="text-2xl font-semibold text-gray-900">
-                    {application.completenessScore}%
-                  </p>
+                  <p className="text-2xl font-semibold text-gray-900">{application.completenessScore}%</p>
                 </div>
               )}
               <div className="text-center">
@@ -233,9 +207,7 @@ export default function EvaluateApplicationPage() {
           {/* Flags and suggestions */}
           {application.conformityFlags && application.conformityFlags.length > 0 && (
             <div className="mt-4 p-4 bg-warning-50 border border-warning-200 rounded-lg">
-              <p className="text-sm font-medium text-warning-900 mb-2">
-                ⚠️ Points d'attention:
-              </p>
+              <p className="text-sm font-medium text-warning-900 mb-2">⚠️ Points d'attention:</p>
               <ul className="list-disc list-inside text-sm text-warning-800 space-y-1">
                 {application.conformityFlags.map((flag, index) => (
                   <li key={index}>{flag}</li>
@@ -249,9 +221,7 @@ export default function EvaluateApplicationPage() {
         <div className="space-y-6 mb-6">
           <Card className="p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Description du projet</h2>
-            <p className="text-gray-700 whitespace-pre-wrap">
-              {application.projectDescription}
-            </p>
+            <p className="text-gray-700 whitespace-pre-wrap">{application.projectDescription}</p>
           </Card>
 
           <Card className="p-6">
@@ -273,15 +243,11 @@ export default function EvaluateApplicationPage() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">Budget</h2>
             <div className="mb-4">
               <p className="text-sm text-gray-600">Total:</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {application.budget.total.toLocaleString('fr-FR')}€
-              </p>
+              <p className="text-2xl font-bold text-gray-900">{application.budget.total.toLocaleString('fr-FR')}€</p>
             </div>
             <div>
               <p className="text-sm text-gray-600 mb-2">Répartition:</p>
-              <p className="text-gray-700 whitespace-pre-wrap">
-                {application.budget.breakdown}
-              </p>
+              <p className="text-gray-700 whitespace-pre-wrap">{application.budget.breakdown}</p>
             </div>
           </Card>
 
@@ -293,18 +259,14 @@ export default function EvaluateApplicationPage() {
           {application.partnersInvolved && (
             <Card className="p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Partenaires</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">
-                {application.partnersInvolved}
-              </p>
+              <p className="text-gray-700 whitespace-pre-wrap">{application.partnersInvolved}</p>
             </Card>
           )}
 
           {application.expectedImpact && (
             <Card className="p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Impact attendu</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">
-                {application.expectedImpact}
-              </p>
+              <p className="text-gray-700 whitespace-pre-wrap">{application.expectedImpact}</p>
             </Card>
           )}
 
@@ -314,10 +276,7 @@ export default function EvaluateApplicationPage() {
               <h2 className="text-xl font-bold text-gray-900 mb-4">Documents joints</h2>
               <div className="space-y-2">
                 {application.documents.map((doc, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                  >
+                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
                       <FileText className="h-5 w-5 text-gray-400" />
                       <span className="text-gray-700">{doc.name}</span>
@@ -341,21 +300,15 @@ export default function EvaluateApplicationPage() {
 
         {/* Evaluation form */}
         <Card className="p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">
-            Votre évaluation
-          </h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Votre évaluation</h2>
 
           {error && (
-            <div className="bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg mb-4">
-              {error}
-            </div>
+            <div className="bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg mb-4">{error}</div>
           )}
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Score d'évaluation (0-100)
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Score d'évaluation (0-100)</label>
               <input
                 type="number"
                 min="0"
@@ -367,9 +320,7 @@ export default function EvaluateApplicationPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Commentaires et feedback
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Commentaires et feedback</label>
               <textarea
                 value={financeurFeedback}
                 onChange={(e) => setFinanceurFeedback(e.target.value)}
@@ -380,12 +331,7 @@ export default function EvaluateApplicationPage() {
             </div>
 
             <div className="flex gap-3">
-              <Button
-                variant="secondary"
-                onClick={handleSaveDraft}
-                disabled={saving}
-                className="flex-1"
-              >
+              <Button variant="secondary" onClick={handleSaveDraft} disabled={saving} className="flex-1">
                 Sauvegarder le brouillon
               </Button>
             </div>
@@ -394,9 +340,7 @@ export default function EvaluateApplicationPage() {
 
         {/* Status change actions */}
         <Card className="p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">
-            Décision
-          </h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Décision</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <Button
               variant="secondary"

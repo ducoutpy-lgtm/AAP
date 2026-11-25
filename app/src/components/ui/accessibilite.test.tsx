@@ -12,7 +12,12 @@ describe('carte cliquable', () => {
 
   it('atteinte par Tab, ouverte par Entrée ou Espace ; une touche dans un bouton intérieur ne l’ouvre pas', () => {
     const ouvrir = vi.fn();
-    render(<Card onClick={ouvrir}><p>Appel test</p><button type="button">Favori</button></Card>);
+    render(
+      <Card onClick={ouvrir}>
+        <p>Appel test</p>
+        <button type="button">Favori</button>
+      </Card>,
+    );
     const carte = screen.getByRole('button', { name: /Appel test/ });
     expect(carte).toHaveAttribute('tabindex', '0');
     fireEvent.keyDown(carte, { key: 'Enter' });
@@ -23,7 +28,11 @@ describe('carte cliquable', () => {
   });
 
   it('une carte sans action reste un simple bloc, hors de la tabulation', () => {
-    render(<Card><p>Texte</p></Card>);
+    render(
+      <Card>
+        <p>Texte</p>
+      </Card>,
+    );
     expect(screen.queryByRole('button')).toBeNull();
   });
 });
@@ -32,7 +41,9 @@ function Essai() {
   const [ouverte, setOuverte] = useState(false);
   return (
     <>
-      <button type="button" onClick={() => setOuverte(true)}>Ouvrir</button>
+      <button type="button" onClick={() => setOuverte(true)}>
+        Ouvrir
+      </button>
       <Modal isOpen={ouverte} onClose={() => setOuverte(false)} title="Qualifier la fiche">
         <button type="button">Valider</button>
       </Modal>

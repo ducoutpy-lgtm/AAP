@@ -13,9 +13,12 @@ export default function CompleteProfile() {
 
   useEffect(() => {
     if (!loading && userProfile?.profileComplete) {
-      const dashboardPath = userProfile.userType === 'admin'
-        ? '/admin'
-        : userProfile.userType === 'porteur' ? '/dashboard/porteur' : '/dashboard/financeur';
+      const dashboardPath =
+        userProfile.userType === 'admin'
+          ? '/admin'
+          : userProfile.userType === 'porteur'
+            ? '/dashboard/porteur'
+            : '/dashboard/financeur';
       navigate(dashboardPath, { replace: true });
     }
   }, [userProfile, loading, navigate]);

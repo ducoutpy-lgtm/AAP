@@ -1,32 +1,125 @@
 {
   "_note": "Cas communs du filtrage de /aap/search, rejoués par Vitest (recherche.test.ts) et pytest (scraping/tests/test_alertes.py). Changement alertes-recherches-sauvegardees, 2026-11-16. deadline_jours : jours avant la clôture comptés depuis le jour du test, null = sans date.",
   "fiches": [
-    {"id": "a", "title": "Prévention des chutes en EHPAD", "description": "Soutien aux actions de prévention", "financeurName": "ARS Île-de-France", "champ": "medico-social", "territoriesEligible": ["ile-de-france"], "deadline_jours": 60, "destinataires": ["public", "prive-non-lucratif"], "typeAppel": "appel-a-projets", "budgetMin": null, "budgetMax": 50000},
-    {"id": "b", "title": "Recherche clinique en cancérologie", "description": "Projets de recherche", "financeurName": "INCa", "champ": "sante", "territoriesEligible": ["france"], "deadline_jours": 20, "destinataires": ["recherche"], "typeAppel": "appel-a-projets", "budgetMin": 100000, "budgetMax": 500000},
-    {"id": "c", "title": "Habitat inclusif", "description": "Aide à la vie partagée pour personnes âgées", "financeurName": "Conseil départemental du Nord", "champ": "medico-social", "territoriesEligible": ["hauts-de-france"], "deadline_jours": -3, "destinataires": ["tous"], "typeAppel": "ami", "budgetMin": null, "budgetMax": null},
-    {"id": "d", "title": "Santé mentale des jeunes", "description": "Actions de proximité", "financeurName": null, "champ": null, "territoriesEligible": [], "deadline_jours": null, "destinataires": [], "typeAppel": "subvention", "budgetMin": null, "budgetMax": null},
-    {"id": "e", "title": "Numérique en santé", "description": "Télémédecine en zone rurale", "financeurName": "ARS Île-de-France", "champ": "sante", "territoriesEligible": ["ile-de-france"], "deadline_jours": 90, "destinataires": ["prive-lucratif"], "typeAppel": "appel-a-candidatures", "budgetMin": 20000, "budgetMax": 30000},
-    {"id": "g", "title": "Inclusion des personnes handicapées", "description": "Appel saisi par un financeur", "financeurName": "Fondation Exemple", "champ": null, "sectorsTargeted": ["social"], "territoriesEligible": ["guyane"], "deadline_jours": -5, "destinataires": [], "typeAppel": "subvention", "budgetMin": null, "budgetMax": null}
+    {
+      "id": "a",
+      "title": "Prévention des chutes en EHPAD",
+      "description": "Soutien aux actions de prévention",
+      "financeurName": "ARS Île-de-France",
+      "champ": "medico-social",
+      "territoriesEligible": ["ile-de-france"],
+      "deadline_jours": 60,
+      "destinataires": ["public", "prive-non-lucratif"],
+      "typeAppel": "appel-a-projets",
+      "budgetMin": null,
+      "budgetMax": 50000
+    },
+    {
+      "id": "b",
+      "title": "Recherche clinique en cancérologie",
+      "description": "Projets de recherche",
+      "financeurName": "INCa",
+      "champ": "sante",
+      "territoriesEligible": ["france"],
+      "deadline_jours": 20,
+      "destinataires": ["recherche"],
+      "typeAppel": "appel-a-projets",
+      "budgetMin": 100000,
+      "budgetMax": 500000
+    },
+    {
+      "id": "c",
+      "title": "Habitat inclusif",
+      "description": "Aide à la vie partagée pour personnes âgées",
+      "financeurName": "Conseil départemental du Nord",
+      "champ": "medico-social",
+      "territoriesEligible": ["hauts-de-france"],
+      "deadline_jours": -3,
+      "destinataires": ["tous"],
+      "typeAppel": "ami",
+      "budgetMin": null,
+      "budgetMax": null
+    },
+    {
+      "id": "d",
+      "title": "Santé mentale des jeunes",
+      "description": "Actions de proximité",
+      "financeurName": null,
+      "champ": null,
+      "territoriesEligible": [],
+      "deadline_jours": null,
+      "destinataires": [],
+      "typeAppel": "subvention",
+      "budgetMin": null,
+      "budgetMax": null
+    },
+    {
+      "id": "e",
+      "title": "Numérique en santé",
+      "description": "Télémédecine en zone rurale",
+      "financeurName": "ARS Île-de-France",
+      "champ": "sante",
+      "territoriesEligible": ["ile-de-france"],
+      "deadline_jours": 90,
+      "destinataires": ["prive-lucratif"],
+      "typeAppel": "appel-a-candidatures",
+      "budgetMin": 20000,
+      "budgetMax": 30000
+    },
+    {
+      "id": "g",
+      "title": "Inclusion des personnes handicapées",
+      "description": "Appel saisi par un financeur",
+      "financeurName": "Fondation Exemple",
+      "champ": null,
+      "sectorsTargeted": ["social"],
+      "territoriesEligible": ["guyane"],
+      "deadline_jours": -5,
+      "destinataires": [],
+      "typeAppel": "subvention",
+      "budgetMin": null,
+      "budgetMax": null
+    }
   ],
   "cas": [
-    {"nom": "sans filtre : clos masqués", "params": "", "attendus": ["a", "b", "d", "e"]},
-    {"nom": "statut tous", "params": "statut=tous", "attendus": ["a", "b", "c", "d", "e", "g"]},
-    {"nom": "texte dans le titre, la description ou le financeur", "params": "q=ars", "attendus": ["a", "e"]},
-    {"nom": "texte insensible à la casse", "params": "q=T%C3%A9l%C3%A9m%C3%A9decine", "attendus": ["e"]},
-    {"nom": "financeur non spécifié trouvé par le texte", "params": "q=non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"]},
-    {"nom": "thématique médico-social", "params": "thematique=medico-social&statut=tous", "attendus": ["a", "c", "g"]},
-    {"nom": "thématique non classée", "params": "thematique=non-classee", "attendus": ["d"]},
-    {"nom": "territoire : national gardé dans chaque région", "params": "territory=ile-de-france", "attendus": ["a", "b", "e"]},
-    {"nom": "territoire national seul", "params": "territory=france", "attendus": ["b"]},
-    {"nom": "statut bientôt clos", "params": "statut=bientot-clos", "attendus": ["b"]},
-    {"nom": "statut sans date", "params": "statut=sans-date", "attendus": ["d"]},
-    {"nom": "destinataire : tous et non qualifié répondent", "params": "destinataire=prive-non-lucratif&statut=tous", "attendus": ["a", "c", "d", "g"]},
-    {"nom": "type d'appel", "params": "typeAppel=ami&statut=tous", "attendus": ["c"]},
-    {"nom": "financeur exact", "params": "financeur=Non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"]},
-    {"nom": "montant minimum : sans montant gardé", "params": "budgetMin=60000", "attendus": ["b", "d"]},
-    {"nom": "montant maximum : sans montant gardé", "params": "budgetMax=50000", "attendus": ["a", "d", "e"]},
-    {"nom": "filtres cumulés", "params": "thematique=sante&territory=ile-de-france&budgetMax=200000", "attendus": ["b", "e"]},
-    {"nom": "montant non numérique : seules les fiches sans montant", "params": "budgetMin=abc", "attendus": ["d"]},
-    {"nom": "montant avec espace lu comme parseFloat (50)", "params": "budgetMin=50%20000", "attendus": ["a", "b", "d", "e"]}
+    { "nom": "sans filtre : clos masqués", "params": "", "attendus": ["a", "b", "d", "e"] },
+    { "nom": "statut tous", "params": "statut=tous", "attendus": ["a", "b", "c", "d", "e", "g"] },
+    { "nom": "texte dans le titre, la description ou le financeur", "params": "q=ars", "attendus": ["a", "e"] },
+    { "nom": "texte insensible à la casse", "params": "q=T%C3%A9l%C3%A9m%C3%A9decine", "attendus": ["e"] },
+    { "nom": "financeur non spécifié trouvé par le texte", "params": "q=non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"] },
+    {
+      "nom": "thématique médico-social",
+      "params": "thematique=medico-social&statut=tous",
+      "attendus": ["a", "c", "g"]
+    },
+    { "nom": "thématique non classée", "params": "thematique=non-classee", "attendus": ["d"] },
+    {
+      "nom": "territoire : national gardé dans chaque région",
+      "params": "territory=ile-de-france",
+      "attendus": ["a", "b", "e"]
+    },
+    { "nom": "territoire national seul", "params": "territory=france", "attendus": ["b"] },
+    { "nom": "statut bientôt clos", "params": "statut=bientot-clos", "attendus": ["b"] },
+    { "nom": "statut sans date", "params": "statut=sans-date", "attendus": ["d"] },
+    {
+      "nom": "destinataire : tous et non qualifié répondent",
+      "params": "destinataire=prive-non-lucratif&statut=tous",
+      "attendus": ["a", "c", "d", "g"]
+    },
+    { "nom": "type d'appel", "params": "typeAppel=ami&statut=tous", "attendus": ["c"] },
+    { "nom": "financeur exact", "params": "financeur=Non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"] },
+    { "nom": "montant minimum : sans montant gardé", "params": "budgetMin=60000", "attendus": ["b", "d"] },
+    { "nom": "montant maximum : sans montant gardé", "params": "budgetMax=50000", "attendus": ["a", "d", "e"] },
+    {
+      "nom": "filtres cumulés",
+      "params": "thematique=sante&territory=ile-de-france&budgetMax=200000",
+      "attendus": ["b", "e"]
+    },
+    { "nom": "montant non numérique : seules les fiches sans montant", "params": "budgetMin=abc", "attendus": ["d"] },
+    {
+      "nom": "montant avec espace lu comme parseFloat (50)",
+      "params": "budgetMin=50%20000",
+      "attendus": ["a", "b", "d", "e"]
+    }
   ]
 }

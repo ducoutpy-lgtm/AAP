@@ -3,14 +3,21 @@
 // d'un mégaoctet.
 import { describe, expect, it } from 'vitest';
 
-const SOURCES = import.meta.glob(['../**/*.tsx', '../**/*.ts', '!../**/*.test.tsx', '!../**/*.test.ts'],
-  { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const SOURCES = import.meta.glob(['../**/*.tsx', '../**/*.ts', '!../**/*.test.tsx', '!../**/*.test.ts'], {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 describe('chargement', () => {
   it('Stripe : seule sa version « pure » est importée, et appelée au paiement, jamais au chargement d’un fichier', () => {
-    const imports = Object.entries(SOURCES).filter(([, t]) => /from '@stripe\/stripe-js'/.test(t)).map(([c]) => c);
+    const imports = Object.entries(SOURCES)
+      .filter(([, t]) => /from '@stripe\/stripe-js'/.test(t))
+      .map(([c]) => c);
     expect(imports).toEqual([]);
-    const auChargement = Object.entries(SOURCES).filter(([, t]) => /^(export )?const \w+ = loadStripe\(/m.test(t)).map(([c]) => c);
+    const auChargement = Object.entries(SOURCES)
+      .filter(([, t]) => /^(export )?const \w+ = loadStripe\(/m.test(t))
+      .map(([c]) => c);
     expect(auChargement).toEqual([]);
   });
 

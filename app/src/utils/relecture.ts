@@ -60,9 +60,11 @@ export function selectionATraiter(
   fiches: (Pick<AAP, 'status' | 'validation'> & { id: string })[],
   verdict: 'validee' | 'rejetee',
 ): { aTraiter: string[]; ignorees: number } {
-  const garder = (a: Pick<AAP, 'status' | 'validation'>) => Boolean(a.validation) && (verdict === 'validee'
-    ? a.validation!.statut !== 'validee' && a.status !== 'archived' && a.status !== 'closed'
-    : a.validation!.statut !== 'rejetee');
-  const aTraiter = fiches.filter(garder).map(a => a.id);
+  const garder = (a: Pick<AAP, 'status' | 'validation'>) =>
+    Boolean(a.validation) &&
+    (verdict === 'validee'
+      ? a.validation!.statut !== 'validee' && a.status !== 'archived' && a.status !== 'closed'
+      : a.validation!.statut !== 'rejetee');
+  const aTraiter = fiches.filter(garder).map((a) => a.id);
   return { aTraiter, ignorees: fiches.length - aTraiter.length };
 }

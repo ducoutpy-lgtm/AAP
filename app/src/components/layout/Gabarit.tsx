@@ -34,7 +34,11 @@ function BoutonRetour({ versDefaut }: { versDefaut: string }) {
   const navigate = useNavigate();
   const retour = () => (window.history.length > 1 ? navigate(-1) : navigate(versDefaut));
   return (
-    <button type="button" onClick={retour} className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900">
+    <button
+      type="button"
+      onClick={retour}
+      className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
+    >
       <ArrowLeft className="h-4 w-4" />
       Retour
     </button>
@@ -64,11 +68,13 @@ function EnTetePublic() {
           <span className="text-xl font-bold text-gray-900">AAP Santé</span>
         </Link>
         <nav className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
-          {LIENS_PUBLICS.map(l => (
+          {LIENS_PUBLICS.map((l) => (
             <NavLink
               key={l.adresse}
               to={l.adresse}
-              className={({ isActive }) => (isActive ? 'text-primary-700 font-medium' : 'text-gray-700 hover:text-primary-600')}
+              className={({ isActive }) =>
+                isActive ? 'text-primary-700 font-medium' : 'text-gray-700 hover:text-primary-600'
+              }
             >
               {l.libelle}
             </NavLink>
@@ -77,15 +83,26 @@ function EnTetePublic() {
         <div className="ml-auto flex items-center gap-4 text-sm">
           {currentUser ? (
             <>
-              <Link to={espace} className="text-primary-700 font-medium hover:underline">Mon espace</Link>
-              <button type="button" onClick={() => logout().then(() => navigate('/'))} className="text-gray-600 hover:text-gray-900">
+              <Link to={espace} className="text-primary-700 font-medium hover:underline">
+                Mon espace
+              </Link>
+              <button
+                type="button"
+                onClick={() => logout().then(() => navigate('/'))}
+                className="text-gray-600 hover:text-gray-900"
+              >
                 Déconnexion
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-gray-700 hover:text-primary-600">Connexion</Link>
-              <Link to="/signup" className="bg-primary-600 hover:bg-primary-700 text-white px-3 py-1.5 rounded-lg font-medium">
+              <Link to="/login" className="text-gray-700 hover:text-primary-600">
+                Connexion
+              </Link>
+              <Link
+                to="/signup"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-3 py-1.5 rounded-lg font-medium"
+              >
                 Créer un compte
               </Link>
             </>
@@ -111,25 +128,61 @@ export function PiedDePage() {
           <div>
             <h4 className="text-white font-semibold mb-3">Produit</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/fonctionnalites" className="hover:text-white">Fonctionnalités</Link></li>
-              <li><Link to="/financeurs" className="hover:text-white">Financeurs</Link></li>
-              <li><Link to="/tarifs" className="hover:text-white">Tarifs</Link></li>
-              <li><Link to="/faq" className="hover:text-white">FAQ</Link></li>
+              <li>
+                <Link to="/fonctionnalites" className="hover:text-white">
+                  Fonctionnalités
+                </Link>
+              </li>
+              <li>
+                <Link to="/financeurs" className="hover:text-white">
+                  Financeurs
+                </Link>
+              </li>
+              <li>
+                <Link to="/tarifs" className="hover:text-white">
+                  Tarifs
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="hover:text-white">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="text-white font-semibold mb-3">Entreprise</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/a-propos" className="hover:text-white">À propos</Link></li>
-              <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+              <li>
+                <Link to="/a-propos" className="hover:text-white">
+                  À propos
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="text-white font-semibold mb-3">Légal</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/cgu" className="hover:text-white">Conditions générales d'utilisation</Link></li>
-              <li><Link to="/confidentialite" className="hover:text-white">Politique de confidentialité</Link></li>
-              <li><Link to="/mentions-legales" className="hover:text-white">Mentions légales</Link></li>
+              <li>
+                <Link to="/cgu" className="hover:text-white">
+                  Conditions générales d'utilisation
+                </Link>
+              </li>
+              <li>
+                <Link to="/confidentialite" className="hover:text-white">
+                  Politique de confidentialité
+                </Link>
+              </li>
+              <li>
+                <Link to="/mentions-legales" className="hover:text-white">
+                  Mentions légales
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -152,7 +205,9 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
   useEffect(() => setMenuOuvert(false), [pathname]);
   useEffect(() => {
     if (!menuOuvert) return;
-    const fermer = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuOuvert(false); };
+    const fermer = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOuvert(false);
+    };
     document.addEventListener('keydown', fermer);
     return () => document.removeEventListener('keydown', fermer);
   }, [menuOuvert]);
@@ -174,17 +229,36 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      {menuOuvert && <div className="fixed inset-0 z-40 bg-black/30 md:hidden" aria-hidden="true" onClick={() => setMenuOuvert(false)} />}
-      <aside id="menu-principal" className={`${menuOuvert ? 'fixed inset-y-0 left-0 z-50 w-64 flex' : 'hidden'} md:static md:z-auto md:flex ${replie ? 'md:w-16' : 'md:w-64'} flex-shrink-0 bg-white border-r border-gray-200 flex-col transition-all`}>
+      {menuOuvert && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          aria-hidden="true"
+          onClick={() => setMenuOuvert(false)}
+        />
+      )}
+      <aside
+        id="menu-principal"
+        className={`${menuOuvert ? 'fixed inset-y-0 left-0 z-50 w-64 flex' : 'hidden'} md:static md:z-auto md:flex ${replie ? 'md:w-16' : 'md:w-64'} flex-shrink-0 bg-white border-r border-gray-200 flex-col transition-all`}
+      >
         <div className="h-14 flex items-center justify-between px-3 border-b border-gray-200">
           <Link to={accueil} className="flex items-center gap-2 overflow-hidden">
             <Target className="h-7 w-7 text-primary-600 flex-shrink-0" />
             {!etroit && <span className="text-lg font-bold text-gray-900 whitespace-nowrap">AAP Santé</span>}
           </Link>
-          <button type="button" onClick={basculer} aria-label={replie ? 'Déplier le menu' : 'Replier le menu'} className="hidden md:block text-gray-500 hover:text-gray-900">
+          <button
+            type="button"
+            onClick={basculer}
+            aria-label={replie ? 'Déplier le menu' : 'Replier le menu'}
+            className="hidden md:block text-gray-500 hover:text-gray-900"
+          >
             {replie ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
           </button>
-          <button type="button" onClick={() => setMenuOuvert(false)} aria-label="Fermer le menu" className="md:hidden text-gray-500 hover:text-gray-900">
+          <button
+            type="button"
+            onClick={() => setMenuOuvert(false)}
+            aria-label="Fermer le menu"
+            className="md:hidden text-gray-500 hover:text-gray-900"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -194,7 +268,7 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
               {s.titre && !etroit && (
                 <p className="px-4 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">{s.titre}</p>
               )}
-              {s.entrees.map(e => {
+              {s.entrees.map((e) => {
                 const Icone = e.icone;
                 const estActive = active === e.adresse;
                 return (
@@ -205,7 +279,9 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
                     state={e.adresse === '/retour' ? { page: pathname } : undefined}
                     title={e.libelle}
                     className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                      estActive ? 'bg-primary-50 text-primary-700 font-medium border-r-2 border-primary-600' : 'text-gray-700 hover:bg-gray-50'
+                      estActive
+                        ? 'bg-primary-50 text-primary-700 font-medium border-r-2 border-primary-600'
+                        : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
                     <Icone className="h-5 w-5 flex-shrink-0" />
@@ -240,14 +316,22 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
 
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-14 bg-white border-b border-gray-200 flex items-center gap-4 px-4 sticky top-0 z-30">
-          <button type="button" onClick={() => setMenuOuvert(true)} aria-label="Ouvrir le menu" aria-expanded={menuOuvert}
-            aria-controls="menu-principal" className="md:hidden text-gray-700 hover:text-gray-900">
+          <button
+            type="button"
+            onClick={() => setMenuOuvert(true)}
+            aria-label="Ouvrir le menu"
+            aria-expanded={menuOuvert}
+            aria-controls="menu-principal"
+            className="md:hidden text-gray-700 hover:text-gray-900"
+          >
             <Menu className="h-6 w-6" />
           </button>
           {pathname !== accueil && <BoutonRetour versDefaut={accueil} />}
           <div className="ml-auto flex items-center gap-4 text-sm">
             {userProfile?.subscriptionStatus === 'trial' && role !== 'admin' && (
-              <Link to="/abonnement/choisir" className="text-primary-700 font-medium hover:underline">Voir nos offres</Link>
+              <Link to="/abonnement/choisir" className="text-primary-700 font-medium hover:underline">
+                Voir nos offres
+              </Link>
             )}
             {/* Cloche « Alertes » retirée le 2026-11-16, comme l'entrée du menu le 2026-11-13 (parcours-candidat-sans-impasse) :
                 rien ne crée de notification tant que les fonctions serveur ne sont pas déployées */}
@@ -259,7 +343,11 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
         </header>
         <main className="flex-1">
           {/* Clé = adresse : la limite d'erreur repart à zéro à chaque page (corrections-relecture 2.2) */}
-          <LimiteErreur key={pathname}><Suspense fallback={<LoadingSpinner />}><Outlet /></Suspense></LimiteErreur>
+          <LimiteErreur key={pathname}>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Outlet />
+            </Suspense>
+          </LimiteErreur>
         </main>
         <PiedDePage />
       </div>
@@ -270,7 +358,9 @@ function HabillageConnecte({ role }: { role: 'porteur' | 'financeur' | 'admin' }
 export default function Gabarit() {
   const { currentUser, userProfile } = useAuth();
   const { pathname } = useLocation();
-  const connecteComplet = Boolean(currentUser && userProfile && (userProfile.profileComplete || userProfile.userType === 'admin'));
+  const connecteComplet = Boolean(
+    currentUser && userProfile && (userProfile.profileComplete || userProfile.userType === 'admin'),
+  );
 
   return (
     <>
@@ -281,7 +371,11 @@ export default function Gabarit() {
         <div className="min-h-screen flex flex-col">
           <EnTetePublic />
           <main className="flex-1">
-            <LimiteErreur key={pathname}><Suspense fallback={<LoadingSpinner />}><Outlet /></Suspense></LimiteErreur>
+            <LimiteErreur key={pathname}>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Outlet />
+              </Suspense>
+            </LimiteErreur>
           </main>
           <PiedDePage />
         </div>

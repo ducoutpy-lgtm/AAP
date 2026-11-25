@@ -16,9 +16,19 @@ import { GrilleOffres } from '../../components/offres/GrilleOffres';
 import { libelleTerritoire } from '../../utils/territoires';
 import type { UserType } from '../../types';
 import {
-  BUDGETS, etapeComplete, FORMES_JURIDIQUES, PARCOURS_VIDE, profilFinanceurDepuisParcours,
-  profilPorteurDepuisParcours, PUBLICS, regionDepuisCodePostal, SECTEURS_FINANCES, TAILLES, TYPES_ETABLISSEMENT,
-  TYPES_ORGANISATION, type FormulaireParcours,
+  BUDGETS,
+  etapeComplete,
+  FORMES_JURIDIQUES,
+  PARCOURS_VIDE,
+  profilFinanceurDepuisParcours,
+  profilPorteurDepuisParcours,
+  PUBLICS,
+  regionDepuisCodePostal,
+  SECTEURS_FINANCES,
+  TAILLES,
+  TYPES_ETABLISSEMENT,
+  TYPES_ORGANISATION,
+  type FormulaireParcours,
 } from './parcours';
 import { messageErreur } from '../../utils/erreurs';
 
@@ -40,11 +50,11 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
   const [erreur, setErreur] = useState('');
 
   const champ = <K extends keyof FormulaireParcours>(cle: K, valeur: FormulaireParcours[K]) =>
-    setF(prev => ({ ...prev, [cle]: valeur }));
+    setF((prev) => ({ ...prev, [cle]: valeur }));
   const basculer = (cle: 'publics' | 'secteurs', valeur: string) =>
-    setF(prev => ({
+    setF((prev) => ({
       ...prev,
-      [cle]: prev[cle].includes(valeur) ? prev[cle].filter(v => v !== valeur) : [...prev[cle], valeur],
+      [cle]: prev[cle].includes(valeur) ? prev[cle].filter((v) => v !== valeur) : [...prev[cle], valeur],
     }));
 
   const region = regionDepuisCodePostal(f.codePostal);
@@ -60,14 +70,20 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
       const email = currentUser.email ?? '';
       if (role === 'porteur') {
         await setDoc(doc(db, 'porteurProfiles', currentUser.uid), {
-          ...profilPorteurDepuisParcours(f, currentUser.uid, email), updatedAt: Timestamp.now(),
+          ...profilPorteurDepuisParcours(f, currentUser.uid, email),
+          updatedAt: Timestamp.now(),
         });
       } else {
         await setDoc(doc(db, 'financeurProfiles', currentUser.uid), {
-          ...profilFinanceurDepuisParcours(f, currentUser.uid, email), updatedAt: Timestamp.now(),
+          ...profilFinanceurDepuisParcours(f, currentUser.uid, email),
+          updatedAt: Timestamp.now(),
         });
       }
-      await setDoc(doc(db, 'users', currentUser.uid), { profileComplete: true, cguAccepteLe: Timestamp.now() }, { merge: true });
+      await setDoc(
+        doc(db, 'users', currentUser.uid),
+        { profileComplete: true, cguAccepteLe: Timestamp.now() },
+        { merge: true },
+      );
       await refreshUserProfile();
       navigate(destination);
     } catch (err) {
@@ -111,14 +127,20 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                     Je suis <span className="text-error-500">*</span>
                   </p>
                   <div className="grid grid-cols-2 gap-3">
-                    {([['porteur', 'Candidat', 'établissement, association, collectivité qui répond aux appels'],
-                      ['financeur', 'Financeur', 'ARS, fondation, collectivité, entreprise qui publie des appels']] as const).map(([v, titre, sous]) => (
+                    {(
+                      [
+                        ['porteur', 'Candidat', 'établissement, association, collectivité qui répond aux appels'],
+                        ['financeur', 'Financeur', 'ARS, fondation, collectivité, entreprise qui publie des appels'],
+                      ] as const
+                    ).map(([v, titre, sous]) => (
                       <button
                         key={v}
                         type="button"
                         onClick={() => setRole(v)}
                         className={`p-4 border-2 rounded-lg text-center transition-all ${
-                          role === v ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200 hover:border-gray-300'
+                          role === v
+                            ? 'border-primary-600 bg-primary-50 text-primary-700'
+                            : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
                         <div className="font-semibold">{titre}</div>
@@ -148,7 +170,9 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                 </span>
               </label>
               <div className="flex justify-end">
-                <Button onClick={() => setEcran(1)} disabled={!cguAcceptees || !role}>Commencer</Button>
+                <Button onClick={() => setEcran(1)} disabled={!cguAcceptees || !role}>
+                  Commencer
+                </Button>
               </div>
             </div>
           )}
@@ -199,23 +223,35 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                   className="input-field"
                 >
                   <option value="">Sélectionnez une option</option>
-                  {TYPES_ETABLISSEMENT.map(g => (
+                  {TYPES_ETABLISSEMENT.map((g) => (
                     <optgroup key={g.groupe} label={g.groupe}>
-                      {g.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                      {g.options.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
                     </optgroup>
                   ))}
                 </select>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
-                <Select label="Taille (équivalents temps plein)" value={f.taille} onChange={(e) => champ('taille', e.target.value)} options={TAILLES} />
-                <Select label="Budget annuel" value={f.budget} onChange={(e) => champ('budget', e.target.value)} options={BUDGETS} />
+                <Select
+                  label="Taille (équivalents temps plein)"
+                  value={f.taille}
+                  onChange={(e) => champ('taille', e.target.value)}
+                  options={TAILLES}
+                />
+                <Select
+                  label="Budget annuel"
+                  value={f.budget}
+                  onChange={(e) => champ('budget', e.target.value)}
+                  options={BUDGETS}
+                />
               </div>
               <div>
-                <p className="block text-sm font-medium text-gray-700 mb-2">
-                  Publics accueillis (facultatif)
-                </p>
+                <p className="block text-sm font-medium text-gray-700 mb-2">Publics accueillis (facultatif)</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {PUBLICS.map(p => (
+                  {PUBLICS.map((p) => (
                     <label key={p.value} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
@@ -239,7 +275,7 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                   Secteurs financés <span className="text-error-500">*</span>
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  {SECTEURS_FINANCES.map(s => (
+                  {SECTEURS_FINANCES.map((s) => (
                     <label key={s.value} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
@@ -253,10 +289,25 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
-                <Input label="Prénom du contact" value={f.prenom} onChange={(e) => champ('prenom', e.target.value)} required />
-                <Input label="Nom du contact" value={f.nomContact} onChange={(e) => champ('nomContact', e.target.value)} required />
+                <Input
+                  label="Prénom du contact"
+                  value={f.prenom}
+                  onChange={(e) => champ('prenom', e.target.value)}
+                  required
+                />
+                <Input
+                  label="Nom du contact"
+                  value={f.nomContact}
+                  onChange={(e) => champ('nomContact', e.target.value)}
+                  required
+                />
               </div>
-              <Input label="Fonction" value={f.fonction} onChange={(e) => champ('fonction', e.target.value)} helperText="Ex : responsable des appels à projets" />
+              <Input
+                label="Fonction"
+                value={f.fonction}
+                onChange={(e) => champ('fonction', e.target.value)}
+                helperText="Ex : responsable des appels à projets"
+              />
             </div>
           )}
 
@@ -277,7 +328,9 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
 
           {ecran > 0 && (
             <div className="flex justify-between pt-8">
-              <Button variant="secondary" onClick={() => setEcran(ecran - 1)} disabled={enregistrement}>Retour</Button>
+              <Button variant="secondary" onClick={() => setEcran(ecran - 1)} disabled={enregistrement}>
+                Retour
+              </Button>
               {ecran < 3 && (
                 <Button onClick={() => setEcran(ecran + 1)} disabled={!etapeComplete(ecran as 1 | 2, f, roleChoisi)}>
                   Suivant
@@ -290,4 +343,3 @@ export default function ParcoursIntegrationPage({ roleInitial }: { roleInitial?:
     </div>
   );
 }
-

@@ -9,7 +9,15 @@ describe('lienSur', () => {
     expect(lienSur('http://exemple.fr')).toBe('http://exemple.fr');
   });
   it('refuse tout autre schéma, et le vide', () => {
-    for (const lien of ['javascript:alert(1)', ' JavaScript:alert(1)', 'data:text/html,<b>x</b>', 'vbscript:x', '', undefined, null]) {
+    for (const lien of [
+      'javascript:alert(1)',
+      ' JavaScript:alert(1)',
+      'data:text/html,<b>x</b>',
+      'vbscript:x',
+      '',
+      undefined,
+      null,
+    ]) {
       expect(lienSur(lien)).toBeUndefined();
     }
   });

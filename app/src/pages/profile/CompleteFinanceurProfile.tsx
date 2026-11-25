@@ -17,7 +17,7 @@ import { messageErreur } from '../../utils/erreurs';
 
 const ORGANISATION_TYPES = [
   { value: 'ministere', label: 'Ministère' },
-  { value: 'agence', label: 'Agence d\'État' },
+  { value: 'agence', label: "Agence d'État" },
   { value: 'fondation', label: 'Fondation' },
   { value: 'entreprise', label: 'Entreprise' },
   { value: 'collectivite', label: 'Collectivité territoriale' },
@@ -48,14 +48,14 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
   const [logoPreview, setLogoPreview] = useState<string>(profilExistant?.logo ?? '');
 
   const [formData, setFormData] = useState(
-    profilExistant ? formulaireFinanceurDepuisProfil(profilExistant) : FORMULAIRE_FINANCEUR_VIDE
+    profilExistant ? formulaireFinanceurDepuisProfil(profilExistant) : FORMULAIRE_FINANCEUR_VIDE,
   );
 
   const handleSectorChange = (sector: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       sectorsSupported: prev.sectorsSupported.includes(sector)
-        ? prev.sectorsSupported.filter(s => s !== sector)
+        ? prev.sectorsSupported.filter((s) => s !== sector)
         : [...prev.sectorsSupported, sector],
     }));
   };
@@ -93,36 +93,36 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
       // Sauvegarder le profil financeur
       // Fusion (2026-11-20) : le formulaire ne réécrit que ses champs ; sans elle, les champs écrits ailleurs (textes
       // réutilisables de la carte de Mon profil) étaient effacés à chaque enregistrement
-      await setDoc(doc(db, 'financeurProfiles', currentUser.uid), {
-        userId: currentUser.uid,
-        organisationName: formData.organisationName,
-        organisationType: formData.organisationType,
-        sectorsSupported: formData.sectorsSupported,
-        address: {
-          city: formData.city,
-          postalCode: formData.postalCode,
-          region: formData.region,
-          country: 'France',
+      await setDoc(
+        doc(db, 'financeurProfiles', currentUser.uid),
+        {
+          userId: currentUser.uid,
+          organisationName: formData.organisationName,
+          organisationType: formData.organisationType,
+          sectorsSupported: formData.sectorsSupported,
+          address: {
+            city: formData.city,
+            postalCode: formData.postalCode,
+            region: formData.region,
+            country: 'France',
+          },
+          contactPerson: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: currentUser.email,
+            phone: formData.phone || null,
+            position: formData.position || null,
+          },
+          website: formData.website || null,
+          logo: logoUrl,
+          description: formData.description || null,
+          updatedAt: Timestamp.now(),
         },
-        contactPerson: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: currentUser.email,
-          phone: formData.phone || null,
-          position: formData.position || null,
-        },
-        website: formData.website || null,
-        logo: logoUrl,
-        description: formData.description || null,
-        updatedAt: Timestamp.now(),
-      }, { merge: true });
+        { merge: true },
+      );
 
       // Mettre à jour le statut de complétion du profil
-      await setDoc(
-        doc(db, 'users', currentUser.uid),
-        { profileComplete: true },
-        { merge: true }
-      );
+      await setDoc(doc(db, 'users', currentUser.uid), { profileComplete: true }, { merge: true });
 
       await refreshUserProfile();
 
@@ -160,22 +160,16 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
         {/* Form */}
         <div className="bg-white rounded-lg shadow-md p-8">
           {error && (
-            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">
-              {error}
-            </div>
+            <div className="mb-6 p-4 bg-error-50 border border-error-200 rounded-lg text-error-600">{error}</div>
           )}
           {message && (
-            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-              {message}
-            </div>
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">{message}</div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Informations sur l'organisation */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Informations sur votre organisation
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Informations sur votre organisation</h2>
               <div className="space-y-4">
                 <Input
                   label="Nom de l'organisation"
@@ -210,41 +204,26 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
                     ))}
                   </div>
                   {formData.sectorsSupported.length === 0 && (
-                    <p className="mt-1 text-sm text-error-500">
-                      Sélectionnez au moins un secteur
-                    </p>
+                    <p className="mt-1 text-sm text-error-500">Sélectionnez au moins un secteur</p>
                   )}
                 </div>
 
                 {/* Logo upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Logo de l'organisation
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Logo de l'organisation</label>
                   <div className="flex items-center gap-4">
                     {logoPreview && (
-                      <img
-                        src={logoPreview}
-                        alt="Logo preview"
-                        className="h-20 w-20 object-contain border rounded"
-                      />
+                      <img src={logoPreview} alt="Logo preview" className="h-20 w-20 object-contain border rounded" />
                     )}
                     <label className="cursor-pointer">
                       <div className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300 inline-flex items-center gap-2">
                         <Upload className="h-4 w-4" />
                         <span className="text-sm">Choisir un fichier</span>
                       </div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleLogoChange}
-                        className="hidden"
-                      />
+                      <input type="file" accept="image/*" onChange={handleLogoChange} className="hidden" />
                     </label>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Format: PNG, JPG - Max: 2 Mo
-                  </p>
+                  <p className="mt-1 text-sm text-gray-500">Format: PNG, JPG - Max: 2 Mo</p>
                 </div>
               </div>
             </div>
@@ -317,9 +296,7 @@ export default function CompleteFinanceurProfile({ profilExistant }: { profilExi
 
             {/* Informations complémentaires */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Informations complémentaires
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Informations complémentaires</h2>
               <div className="space-y-4">
                 <Input
                   label="Site web"

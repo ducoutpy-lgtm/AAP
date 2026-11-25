@@ -15,9 +15,5 @@ export function Badge({ children, variant = 'gray', className = '' }: BadgeProps
     gray: 'badge-gray',
   };
 
-  return (
-    <span className={`${variantClasses[variant]} ${className}`}>
-      {children}
-    </span>
-  );
+  return <span className={`${variantClasses[variant]} ${className}`}>{children}</span>;
 }

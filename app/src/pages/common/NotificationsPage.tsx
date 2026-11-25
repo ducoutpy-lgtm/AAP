@@ -49,11 +49,11 @@ export default function NotificationsPage() {
       const notificationsQuery = query(
         collection(db, 'notifications'),
         where('userId', '==', currentUser.uid),
-        orderBy('createdAt', 'desc')
+        orderBy('createdAt', 'desc'),
       );
 
       const snapshot = await getDocs(notificationsQuery);
-      const notificationsData = snapshot.docs.map(doc => ({
+      const notificationsData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Notification[];
@@ -70,7 +70,7 @@ export default function NotificationsPage() {
 
   const applyFilter = () => {
     if (filter === 'unread') {
-      setFilteredNotifications(notifications.filter(n => !n.read));
+      setFilteredNotifications(notifications.filter((n) => !n.read));
     } else {
       setFilteredNotifications(notifications);
     }
@@ -82,9 +82,7 @@ export default function NotificationsPage() {
         read: true,
       });
 
-      setNotifications(notifications.map(n =>
-        n.id === notificationId ? { ...n, read: true } : n
-      ));
+      setNotifications(notifications.map((n) => (n.id === notificationId ? { ...n, read: true } : n)));
     } catch (err) {
       console.error('Error marking notification as read:', err);
     }
@@ -92,15 +90,11 @@ export default function NotificationsPage() {
 
   const markAllAsRead = async () => {
     try {
-      const unreadNotifications = notifications.filter(n => !n.read);
+      const unreadNotifications = notifications.filter((n) => !n.read);
 
-      await Promise.all(
-        unreadNotifications.map(n =>
-          updateDoc(doc(db, 'notifications', n.id), { read: true })
-        )
-      );
+      await Promise.all(unreadNotifications.map((n) => updateDoc(doc(db, 'notifications', n.id), { read: true })));
 
-      setNotifications(notifications.map(n => ({ ...n, read: true })));
+      setNotifications(notifications.map((n) => ({ ...n, read: true })));
     } catch (err) {
       console.error('Error marking all as read:', err);
     }
@@ -109,7 +103,7 @@ export default function NotificationsPage() {
   const deleteNotification = async (notificationId: string) => {
     try {
       // In production, you might want to use a soft delete or archive
-      setNotifications(notifications.filter(n => n.id !== notificationId));
+      setNotifications(notifications.filter((n) => n.id !== notificationId));
     } catch (err) {
       console.error('Error deleting notification:', err);
     }
@@ -159,7 +153,7 @@ export default function NotificationsPage() {
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return 'À l\'instant';
+    if (diffMins < 1) return "À l'instant";
     if (diffMins < 60) return `Il y a ${diffMins} min`;
     if (diffHours < 24) return `Il y a ${diffHours}h`;
     if (diffDays < 7) return `Il y a ${diffDays}j`;
@@ -171,7 +165,7 @@ export default function NotificationsPage() {
     });
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
   if (erreurChargement) return <MessageErreur onReessayer={loadNotifications} />;
@@ -193,9 +187,7 @@ export default function NotificationsPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Notifications
-              </h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Notifications</h1>
               <p className="text-gray-600">
                 {unreadCount > 0 ? (
                   <>
@@ -219,11 +211,7 @@ export default function NotificationsPage() {
           <Card className="p-4">
             <div className="flex items-center gap-3">
               <Filter className="h-5 w-5 text-gray-400" />
-              <Button
-                variant={filter === 'all' ? 'primary' : 'secondary'}
-                size="sm"
-                onClick={() => setFilter('all')}
-              >
+              <Button variant={filter === 'all' ? 'primary' : 'secondary'} size="sm" onClick={() => setFilter('all')}>
                 Toutes ({notifications.length})
               </Button>
               <Button
@@ -247,12 +235,12 @@ export default function NotificationsPage() {
             <p className="text-gray-600">
               {filter === 'unread'
                 ? 'Toutes vos notifications sont à jour !'
-                : 'Vous n\'avez pas encore de notifications.'}
+                : "Vous n'avez pas encore de notifications."}
             </p>
           </Card>
         ) : (
           <div className="space-y-2">
-            {filteredNotifications.map(notification => (
+            {filteredNotifications.map((notification) => (
               <Card
                 key={notification.id}
                 className={`p-4 transition-all cursor-pointer hover:shadow-md ${
@@ -262,17 +250,15 @@ export default function NotificationsPage() {
               >
                 <div className="flex items-start gap-4">
                   {/* Icon */}
-                  <div className="flex-shrink-0 mt-1">
-                    {getNotificationIcon(notification.type)}
-                  </div>
+                  <div className="flex-shrink-0 mt-1">{getNotificationIcon(notification.type)}</div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-1">
                       <div className="flex items-center gap-2">
-                        <h3 className={`text-sm font-semibold ${
-                          !notification.read ? 'text-gray-900' : 'text-gray-700'
-                        }`}>
+                        <h3
+                          className={`text-sm font-semibold ${!notification.read ? 'text-gray-900' : 'text-gray-700'}`}
+                        >
                           {notification.title}
                         </h3>
                         {!notification.read && (
@@ -287,14 +273,10 @@ export default function NotificationsPage() {
                       </Badge>
                     </div>
 
-                    <p className="text-sm text-gray-600 mb-2">
-                      {notification.message}
-                    </p>
+                    <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">
-                        {formatDate(notification.createdAt)}
-                      </span>
+                      <span className="text-xs text-gray-500">{formatDate(notification.createdAt)}</span>
 
                       <div className="flex items-center gap-2">
                         {!notification.read && (

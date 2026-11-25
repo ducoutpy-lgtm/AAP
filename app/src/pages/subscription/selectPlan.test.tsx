@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-const compte = vi.hoisted(() => ({ userProfile: { userType: 'porteur', subscriptionStatus: 'trial', trialEndsAt: new Date() } }));
+const compte = vi.hoisted(() => ({
+  userProfile: { userType: 'porteur', subscriptionStatus: 'trial', trialEndsAt: new Date() },
+}));
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => compte }));
 vi.mock('../../config/firebase', () => ({ functions: {} }));
 vi.mock('firebase/functions', () => ({ httpsCallable: vi.fn() }));
@@ -15,7 +17,11 @@ import SelectPlanPage from './SelectPlanPage';
 
 describe('écran Abonnement', () => {
   it('mention « paiement bientôt disponible » et boutons d’abonnement inactifs ; l’essai reste accessible', () => {
-    render(<MemoryRouter><SelectPlanPage /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <SelectPlanPage />
+      </MemoryRouter>,
+    );
     expect(screen.getAllByText(/Paiement bientôt disponible/).length).toBeGreaterThan(0);
     const abonnements = screen.getAllByRole('button', { name: /Paiement bientôt disponible/ });
     expect(abonnements).toHaveLength(2);

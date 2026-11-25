@@ -8,18 +8,22 @@ import { ANONYME, planDeSuppression } from '../utils/suppressionCompte';
 
 async function supprimerLesSiens(chemin: string, uid: string) {
   const snap = await getDocs(query(collection(db, chemin), where('userId', '==', uid)));
-  await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+  await Promise.all(snap.docs.map((d) => deleteDoc(d.ref)));
 }
 
 export async function supprimerMonCompte(utilisateur: User, role: UserType): Promise<void> {
   const uid = utilisateur.uid;
   const candidatures = await getDocs(query(collection(db, 'applications'), where('porteurId', '==', uid)));
-  const plan = planDeSuppression(candidatures.docs.map(d => ({
-    id: d.id, financeurId: String(d.data().financeurId ?? ''), status: String(d.data().status ?? ''),
-  })));
+  const plan = planDeSuppression(
+    candidatures.docs.map((d) => ({
+      id: d.id,
+      financeurId: String(d.data().financeurId ?? ''),
+      status: String(d.data().status ?? ''),
+    })),
+  );
   await Promise.all([
-    ...plan.supprimer.map(id => deleteDoc(doc(db, 'applications', id))),
-    ...plan.anonymiser.map(id => updateDoc(doc(db, 'applications', id), { porteurId: ANONYME })),
+    ...plan.supprimer.map((id) => deleteDoc(doc(db, 'applications', id))),
+    ...plan.anonymiser.map((id) => updateDoc(doc(db, 'applications', id), { porteurId: ANONYME })),
     supprimerLesSiens('savedSearches', uid),
     supprimerLesSiens('favoriteAap', uid),
     supprimerLesSiens('notifications', uid),

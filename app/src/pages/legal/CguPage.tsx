@@ -18,9 +18,9 @@ export default function CguPage() {
       <Section titre="2. Accès au service">
         <p>
           La consultation des appels, comme les autres fonctions (candidature, recherches sauvegardées, messagerie,
-          publication d'un appel), demande un compte, réservé aux professionnels
-          agissant pour une structure : établissement ou service de santé ou médico-social, association, collectivité,
-          fondation, administration, entreprise.
+          publication d'un appel), demande un compte, réservé aux professionnels agissant pour une structure :
+          établissement ou service de santé ou médico-social, association, collectivité, fondation, administration,
+          entreprise.
         </p>
         <p>
           Le compte est personnel. L'utilisateur choisit un mot de passe robuste, le garde confidentiel et prévient
@@ -42,18 +42,19 @@ export default function CguPage() {
         <p>
           Toute création de compte ouvre une période d'essai gratuite de quatorze jours. Au-delà, l'accès aux fonctions
           réservées est soumis à un abonnement. Pendant la phase de test, les tarifs affichés sont provisoires et aucun
-          paiement n'est ouvert : aucun abonnement ne peut être souscrit ni prélevé. Les conditions de résiliation seront
-          fixées et publiées à l'ouverture du paiement. Aucun paiement n'est prélevé sans action explicite de l'utilisateur.
+          paiement n'est ouvert : aucun abonnement ne peut être souscrit ni prélevé. Les conditions de résiliation
+          seront fixées et publiées à l'ouverture du paiement. Aucun paiement n'est prélevé sans action explicite de
+          l'utilisateur.
         </p>
       </Section>
 
       <Section titre="5. Contenus des appels à projets">
         <p>
-          Les fiches d'appels à projets sont produites automatiquement à partir des sites des financeurs, puis contrôlées
-          par un programme et, pour partie, relues par l'éditeur. Chaque fiche indique son état de relecture, la date
-          d'extraction et le lien vers l'annonce officielle. Seule l'annonce officielle fait foi : l'utilisateur vérifie
-          les dates, montants et conditions à la source avant de candidater. L'éditeur corrige ou retire toute fiche
-          signalée comme inexacte.
+          Les fiches d'appels à projets sont produites automatiquement à partir des sites des financeurs, puis
+          contrôlées par un programme et, pour partie, relues par l'éditeur. Chaque fiche indique son état de relecture,
+          la date d'extraction et le lien vers l'annonce officielle. Seule l'annonce officielle fait foi : l'utilisateur
+          vérifie les dates, montants et conditions à la source avant de candidater. L'éditeur corrige ou retire toute
+          fiche signalée comme inexacte.
         </p>
         <p>
           Un financeur qui publie un appel dans le service est seul responsable de son contenu et de sa conformité au
@@ -72,9 +73,9 @@ export default function CguPage() {
 
       <Section titre="7. Obligations de l'utilisateur">
         <p>
-          L'utilisateur s'interdit toute extraction massive des données du service, toute tentative d'accès non autorisé,
-          toute usurpation d'identité et toute utilisation du service à des fins autres que la recherche et la gestion de
-          financements de projets de santé et médico-sociaux.
+          L'utilisateur s'interdit toute extraction massive des données du service, toute tentative d'accès non
+          autorisé, toute usurpation d'identité et toute utilisation du service à des fins autres que la recherche et la
+          gestion de financements de projets de santé et médico-sociaux.
         </p>
       </Section>
 
@@ -97,8 +98,8 @@ export default function CguPage() {
       <Section titre="10. Résiliation">
         <p>
           L'utilisateur peut fermer son compte à tout moment depuis son profil ou par demande à l'adresse de contact ;
-          ses données sont alors supprimées ou anonymisées dans les délais indiqués dans la politique de confidentialité,
-          sous réserve des obligations légales de conservation.
+          ses données sont alors supprimées ou anonymisées dans les délais indiqués dans la politique de
+          confidentialité, sous réserve des obligations légales de conservation.
         </p>
       </Section>
 

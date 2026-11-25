@@ -13,7 +13,7 @@ export function champCsv(valeur: unknown): string {
 }
 
 export function versCsv(entetes: string[], lignes: unknown[][]): string {
-  return '﻿' + [entetes, ...lignes].map(ligne => ligne.map(champCsv).join(';')).join('\r\n');
+  return '﻿' + [entetes, ...lignes].map((ligne) => ligne.map(champCsv).join(';')).join('\r\n');
 }
 
 // Télécharge le texte sous le nom donné, puis libère l'adresse temporaire du fichier

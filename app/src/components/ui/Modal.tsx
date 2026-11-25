@@ -12,7 +12,8 @@ interface ModalProps {
 
 // Fenêtre accessible (plan niveau A, lot 3.3, 2026-11-25) : rôle dialog nommé par son titre, croix « Fermer », Échap
 // ferme ; à l'ouverture le focus entre dans la fenêtre, Tab y reste, et il revient à l'élément d'origine à la fermeture.
-const FOCALISABLES = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const FOCALISABLES =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function Modal({ isOpen, onClose, title, children, footer, size = 'md' }: ModalProps) {
   const idTitre = useId();
@@ -75,18 +76,23 @@ export function Modal({ isOpen, onClose, title, children, footer, size = 'md' }:
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-screen items-center justify-center p-4">
         {/* Backdrop */}
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-          onClick={onClose}
-        />
+        <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
 
         {/* Modal */}
-        <div ref={fenetre} role="dialog" aria-modal="true" aria-labelledby={title ? idTitre : undefined} tabIndex={-1}
-          className={`relative bg-white rounded-lg shadow-xl ${sizeClasses[size]} w-full`}>
+        <div
+          ref={fenetre}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={title ? idTitre : undefined}
+          tabIndex={-1}
+          className={`relative bg-white rounded-lg shadow-xl ${sizeClasses[size]} w-full`}
+        >
           {/* Header */}
           {title && (
             <div className="flex items-center justify-between p-6 border-b">
-              <h3 id={idTitre} className="text-xl font-semibold text-gray-900">{title}</h3>
+              <h3 id={idTitre} className="text-xl font-semibold text-gray-900">
+                {title}
+              </h3>
               <button
                 type="button"
                 aria-label="Fermer"
@@ -102,11 +108,7 @@ export function Modal({ isOpen, onClose, title, children, footer, size = 'md' }:
           <div className="p-6">{children}</div>
 
           {/* Footer */}
-          {footer && (
-            <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50">
-              {footer}
-            </div>
-          )}
+          {footer && <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50">{footer}</div>}
         </div>
       </div>
     </div>

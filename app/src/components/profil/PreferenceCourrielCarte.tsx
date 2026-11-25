@@ -28,9 +28,16 @@ export function PreferenceCourrielCarte({ uid, actif }: { uid: string; actif: bo
       <h2 className="text-lg font-semibold text-gray-900 mb-2">Courriel du lundi</h2>
       <label className="flex items-start gap-3 text-sm text-gray-700">
         <input type="checkbox" checked={coche} onChange={basculer} className="mt-1 h-4 w-4" />
-        <span>Recevoir le courriel du lundi : nouveaux appels pour votre structure et alertes de vos recherches enregistrées.</span>
+        <span>
+          Recevoir le courriel du lundi : nouveaux appels pour votre structure et alertes de vos recherches
+          enregistrées.
+        </span>
       </label>
-      {message && <p className="mt-2 text-sm text-gray-600" role="status">{message}</p>}
+      {message && (
+        <p className="mt-2 text-sm text-gray-600" role="status">
+          {message}
+        </p>
+      )}
     </Card>
   );
 }

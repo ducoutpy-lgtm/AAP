@@ -48,7 +48,7 @@ export default function SignupPage() {
       // Redirection vers la page de complétion du profil
       navigate('/complete-profile');
     } catch (err) {
-      setError(messageErreur(err, 'Échec de l\'inscription'));
+      setError(messageErreur(err, "Échec de l'inscription"));
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ export default function SignupPage() {
       // La logique de sélection du type de compte sera gérée après
       navigate('/complete-profile');
     } catch (err) {
-      setError(messageErreur(err, 'Échec de l\'inscription avec Google'));
+      setError(messageErreur(err, "Échec de l'inscription avec Google"));
     } finally {
       setLoading(false);
     }
@@ -82,9 +82,7 @@ export default function SignupPage() {
 
         {/* Card */}
         <div className="bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-            Créer un compte
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Créer un compte</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">
@@ -94,9 +92,7 @@ export default function SignupPage() {
 
           {/* User Type Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Je suis un(e)
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Je suis un(e)</label>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
@@ -183,13 +179,7 @@ export default function SignupPage() {
             </div>
 
             <div className="mt-6">
-              <Button
-                type="button"
-                variant="secondary"
-                fullWidth
-                onClick={handleGoogleSignup}
-                disabled={loading}
-              >
+              <Button type="button" variant="secondary" fullWidth onClick={handleGoogleSignup} disabled={loading}>
                 <Mail className="mr-2 h-5 w-5" />
                 Google
               </Button>
@@ -204,12 +194,8 @@ export default function SignupPage() {
           </p>
 
           <div className="mt-6 p-4 bg-primary-50 rounded-lg">
-            <p className="text-sm text-primary-900 font-medium">
-              🎉 14 jours d'essai gratuit
-            </p>
-            <p className="text-xs text-primary-700 mt-1">
-              Aucune carte bancaire requise. Annulez à tout moment.
-            </p>
+            <p className="text-sm text-primary-900 font-medium">🎉 14 jours d'essai gratuit</p>
+            <p className="text-xs text-primary-700 mt-1">Aucune carte bancaire requise. Annulez à tout moment.</p>
           </div>
         </div>
       </div>

@@ -22,16 +22,24 @@ export function LegalLayout({ titre, children }: { titre: string; children: Reac
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="text-primary-600 hover:underline text-sm">Retour à l'accueil</Link>
+        <Link to="/" className="text-primary-600 hover:underline text-sm">
+          Retour à l'accueil
+        </Link>
         <h1 className="text-3xl font-bold text-gray-900 mt-4 mb-2">{titre}</h1>
         <p className="text-sm text-gray-500 mb-8">
           {EDITEUR.nomService}, édité par {EDITEUR.raisonSociale}. Dernière mise à jour : {EDITEUR.dateMiseAJour}.
         </p>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">{children}</div>
         <nav className="mt-8 text-sm text-gray-600 flex flex-wrap gap-4">
-          <Link to="/mentions-legales" className="hover:underline">Mentions légales</Link>
-          <Link to="/cgu" className="hover:underline">Conditions générales d'utilisation</Link>
-          <Link to="/confidentialite" className="hover:underline">Politique de confidentialité</Link>
+          <Link to="/mentions-legales" className="hover:underline">
+            Mentions légales
+          </Link>
+          <Link to="/cgu" className="hover:underline">
+            Conditions générales d'utilisation
+          </Link>
+          <Link to="/confidentialite" className="hover:underline">
+            Politique de confidentialité
+          </Link>
         </nav>
       </div>
     </div>

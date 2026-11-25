@@ -4,7 +4,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-const etat = vi.hoisted(() => ({ compte: { currentUser: null as { uid: string } | null, userProfile: null as { userType: string } | null } }));
+const etat = vi.hoisted(() => ({
+  compte: { currentUser: null as { uid: string } | null, userProfile: null as { userType: string } | null },
+}));
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => etat.compte }));
 
 import PageIntrouvable from './PageIntrouvable';
@@ -14,7 +16,11 @@ describe('page introuvable', () => {
 
   it('sans compte : « Page introuvable » et un lien vers l’accueil', () => {
     etat.compte = { currentUser: null, userProfile: null };
-    render(<MemoryRouter><PageIntrouvable /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <PageIntrouvable />
+      </MemoryRouter>,
+    );
     expect(screen.getByRole('heading', { name: 'Page introuvable' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: "Retour à l'accueil" })).toHaveAttribute('href', '/');
     expect(screen.queryByRole('link', { name: 'Mon tableau de bord' })).toBeNull();
@@ -22,7 +28,11 @@ describe('page introuvable', () => {
 
   it('connecté : un lien vers son tableau de bord en plus', () => {
     etat.compte = { currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
-    render(<MemoryRouter><PageIntrouvable /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <PageIntrouvable />
+      </MemoryRouter>,
+    );
     expect(screen.getByRole('link', { name: 'Mon tableau de bord' })).toHaveAttribute('href', '/dashboard/porteur');
   });
 });

@@ -64,11 +64,11 @@ export default function ViewApplicationsPage() {
       const applicationsQuery = query(
         collection(db, 'applications'),
         where('aapId', '==', aapId),
-        where('financeurId', '==', currentUser.uid)
+        where('financeurId', '==', currentUser.uid),
       );
 
       const snapshot = await getDocs(applicationsQuery);
-      const applicationsData = snapshot.docs.map(doc => ({
+      const applicationsData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Application[];
@@ -88,7 +88,7 @@ export default function ViewApplicationsPage() {
 
     // Filter by status
     if (statusFilter !== 'all') {
-      result = result.filter(app => app.status === statusFilter);
+      result = result.filter((app) => app.status === statusFilter);
     }
 
     // Sort
@@ -104,7 +104,7 @@ export default function ViewApplicationsPage() {
   const getStatusLabel = (status: Application['status']): string => {
     const labels = {
       submitted: 'Soumise',
-      under_review: 'En cours d\'examen',
+      under_review: "En cours d'examen",
       shortlisted: 'Pré-sélectionnée',
       accepted: 'Acceptée',
       rejected: 'Rejetée',
@@ -112,9 +112,7 @@ export default function ViewApplicationsPage() {
     return labels[status];
   };
 
-  const getStatusVariant = (
-    status: Application['status']
-  ): 'success' | 'warning' | 'error' | 'gray' => {
+  const getStatusVariant = (status: Application['status']): 'success' | 'warning' | 'error' | 'gray' => {
     const variants = {
       submitted: 'gray' as const,
       under_review: 'warning' as const,
@@ -141,9 +139,16 @@ export default function ViewApplicationsPage() {
 
   // Export CSV échappé (utils/csv.ts, plan niveau A, lot 3.4)
   const exportApplications = () => {
-    const csv = versCsv(['Titre', 'Statut', 'Score', 'Budget', 'Date'], filteredApplications.map(app => [
-      app.projectTitle, getStatusLabel(app.status), app.prequalificationScore || '-', app.budget.total, formatDate(app.submittedAt),
-    ]));
+    const csv = versCsv(
+      ['Titre', 'Statut', 'Score', 'Budget', 'Date'],
+      filteredApplications.map((app) => [
+        app.projectTitle,
+        getStatusLabel(app.status),
+        app.prequalificationScore || '-',
+        app.budget.total,
+        formatDate(app.submittedAt),
+      ]),
+    );
     telechargerCsv(csv, `candidatures-${aap?.title || 'aap'}.csv`);
   };
 
@@ -175,20 +180,14 @@ export default function ViewApplicationsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back button */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/mes-aap')}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate('/mes-aap')} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour à mes AAP
         </Button>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Candidatures: {aap.title}
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Candidatures: {aap.title}</h1>
           <p className="text-gray-600">
             {applications.length} candidature{applications.length > 1 ? 's' : ''} reçue
             {applications.length > 1 ? 's' : ''}
@@ -204,19 +203,19 @@ export default function ViewApplicationsPage() {
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Nouvelles</p>
             <p className="text-2xl font-bold text-blue-600">
-              {applications.filter(app => app.status === 'submitted').length}
+              {applications.filter((app) => app.status === 'submitted').length}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">En examen</p>
             <p className="text-2xl font-bold text-yellow-600">
-              {applications.filter(app => app.status === 'under_review').length}
+              {applications.filter((app) => app.status === 'under_review').length}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Acceptées</p>
             <p className="text-2xl font-bold text-green-600">
-              {applications.filter(app => app.status === 'accepted').length}
+              {applications.filter((app) => app.status === 'accepted').length}
             </p>
           </Card>
           <Card className="p-4">
@@ -225,9 +224,9 @@ export default function ViewApplicationsPage() {
               {applications.length > 0
                 ? Math.round(
                     applications
-                      .filter(app => app.prequalificationScore)
+                      .filter((app) => app.prequalificationScore)
                       .reduce((sum, app) => sum + (app.prequalificationScore || 0), 0) /
-                      applications.filter(app => app.prequalificationScore).length
+                      applications.filter((app) => app.prequalificationScore).length,
                   ) || '-'
                 : '-'}
             </p>
@@ -240,7 +239,7 @@ export default function ViewApplicationsPage() {
             <div className="flex flex-wrap items-center gap-3">
               <Filter className="h-5 w-5 text-gray-400" />
               <Button
-                variant={statusFilter === "all" ? "primary" : "secondary"}
+                variant={statusFilter === 'all' ? 'primary' : 'secondary'}
                 size="sm"
                 onClick={() => setStatusFilter('all')}
               >
@@ -304,54 +303,40 @@ export default function ViewApplicationsPage() {
         {filteredApplications.length === 0 ? (
           <Card className="p-12 text-center">
             <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Aucune candidature
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Aucune candidature</h3>
             <p className="text-gray-600">
               {statusFilter === 'all'
-                ? 'Aucune candidature n\'a encore été soumise pour cet AAP.'
+                ? "Aucune candidature n'a encore été soumise pour cet AAP."
                 : `Aucune candidature avec le statut "${getStatusLabel(statusFilter as Application['status'])}".`}
             </p>
           </Card>
         ) : (
           <div className="space-y-4">
-            {filteredApplications.map(application => (
+            {filteredApplications.map((application) => (
               <Card
                 key={application.id}
                 className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() =>
-                  navigate(`/aap/${aapId}/candidature/${application.id}/evaluer`)
-                }
+                onClick={() => navigate(`/aap/${aapId}/candidature/${application.id}/evaluer`)}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {application.projectTitle}
-                      </h3>
-                      <Badge variant={getStatusVariant(application.status)}>
-                        {getStatusLabel(application.status)}
-                      </Badge>
+                      <h3 className="text-xl font-semibold text-gray-900">{application.projectTitle}</h3>
+                      <Badge variant={getStatusVariant(application.status)}>{getStatusLabel(application.status)}</Badge>
                     </div>
-                    <p className="text-gray-600 line-clamp-2">
-                      {application.projectDescription}
-                    </p>
+                    <p className="text-gray-600 line-clamp-2">{application.projectDescription}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t">
                   <div>
                     <p className="text-sm text-gray-600">Date de soumission</p>
-                    <p className="font-medium text-gray-900">
-                      {formatDate(application.submittedAt)}
-                    </p>
+                    <p className="font-medium text-gray-900">{formatDate(application.submittedAt)}</p>
                   </div>
 
                   <div>
                     <p className="text-sm text-gray-600">Budget demandé</p>
-                    <p className="font-medium text-gray-900">
-                      {application.budget.total.toLocaleString('fr-FR')}€
-                    </p>
+                    <p className="font-medium text-gray-900">{application.budget.total.toLocaleString('fr-FR')}€</p>
                   </div>
 
                   {application.prequalificationScore !== undefined && (
@@ -359,11 +344,7 @@ export default function ViewApplicationsPage() {
                       <p className="text-sm text-gray-600">Score de préqualification</p>
                       <div className="flex items-center gap-2">
                         <TrendingUp className="h-4 w-4" />
-                        <p
-                          className={`font-bold text-lg ${getScoreColor(
-                            application.prequalificationScore
-                          )}`}
-                        >
+                        <p className={`font-bold text-lg ${getScoreColor(application.prequalificationScore)}`}>
                           {application.prequalificationScore}/100
                         </p>
                       </div>

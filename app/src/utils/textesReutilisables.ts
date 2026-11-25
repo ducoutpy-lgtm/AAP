@@ -19,6 +19,6 @@ export function ajouterTexte(resume: string, cle: CleTexte, texte: string): stri
 // Textes remplis, dans l'ordre des intitulés
 export function textesRemplis(textes: TextesReutilisables | undefined): [CleTexte, string][] {
   return (Object.keys(LIBELLES_TEXTES) as CleTexte[])
-    .filter(cle => (textes?.[cle] ?? '').trim())
-    .map(cle => [cle, (textes?.[cle] ?? '').trim()]);
+    .filter((cle) => (textes?.[cle] ?? '').trim())
+    .map((cle) => [cle, (textes?.[cle] ?? '').trim()]);
 }

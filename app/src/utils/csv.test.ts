@@ -22,7 +22,13 @@ describe('versCsv', () => {
   it('valeurs absentes vides ; en-tête, séparateur point-virgule et indicateur UTF-8 pour Excel', () => {
     expect(champCsv(null)).toBe('""');
     expect(champCsv(undefined)).toBe('""');
-    const csv = versCsv(['Titre', 'Budget'], [['Équipe mobile', 12000], ['Répit', null]]);
+    const csv = versCsv(
+      ['Titre', 'Budget'],
+      [
+        ['Équipe mobile', 12000],
+        ['Répit', null],
+      ],
+    );
     expect(csv.startsWith('﻿')).toBe(true);
     expect(csv.slice(1).split('\r\n')).toEqual(['"Titre";"Budget"', '"Équipe mobile";"12000"', '"Répit";""']);
   });

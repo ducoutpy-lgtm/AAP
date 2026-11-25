@@ -37,11 +37,14 @@ const somme = (lignes: LigneCout[]) => lignes.reduce((t, l) => t + (l.coutEuros 
 
 export function cumuls(lignes: LigneCout[], maintenant = new Date()) {
   const debutMois = new Date(maintenant.getFullYear(), maintenant.getMonth(), 1);
-  const duMois = lignes.filter(l => dateCout(l) >= debutMois);
+  const duMois = lignes.filter((l) => dateCout(l) >= debutMois);
   return { total: somme(lignes), appels: lignes.length, mois: somme(duMois), appelsMois: duMois.length };
 }
 
-export function parCle(lignes: LigneCout[], cle: (l: LigneCout) => string): { cle: string; cout: number; appels: number }[] {
+export function parCle(
+  lignes: LigneCout[],
+  cle: (l: LigneCout) => string,
+): { cle: string; cout: number; appels: number }[] {
   const m = new Map<string, { cout: number; appels: number }>();
   for (const l of lignes) {
     const k = cle(l) || '(vide)';
@@ -50,7 +53,9 @@ export function parCle(lignes: LigneCout[], cle: (l: LigneCout) => string): { cl
     v.appels += 1;
     m.set(k, v);
   }
-  return Array.from(m.entries()).map(([k, v]) => ({ cle: k, ...v })).sort((a, b) => b.cout - a.cout);
+  return Array.from(m.entries())
+    .map(([k, v]) => ({ cle: k, ...v }))
+    .sort((a, b) => b.cout - a.cout);
 }
 
 // Lundi de la semaine d'une date (ISO), pour la courbe
@@ -64,7 +69,9 @@ export function lundiDe(d: Date): string {
 }
 
 export function parSemaine(lignes: LigneCout[]): { semaine: string; cout: number; appels: number }[] {
-  return parCle(lignes, l => lundiDe(dateCout(l))).map(x => ({ semaine: x.cle, cout: x.cout, appels: x.appels })).sort((a, b) => a.semaine.localeCompare(b.semaine));
+  return parCle(lignes, (l) => lundiDe(dateCout(l)))
+    .map((x) => ({ semaine: x.cle, cout: x.cout, appels: x.appels }))
+    .sort((a, b) => a.semaine.localeCompare(b.semaine));
 }
 
 // Coût par appel qualifié : tout ce qui a été dépensé rapporté aux fiches publiées et validées ; null sans fiche
@@ -72,4 +79,5 @@ export function coutParFicheQualifiee(total: number, fichesQualifiees: number): 
   return fichesQualifiees > 0 ? total / fichesQualifiees : null;
 }
 
-export const euros3 = (n: number): string => `${n.toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 })} €`;
+export const euros3 = (n: number): string =>
+  `${n.toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 })} €`;

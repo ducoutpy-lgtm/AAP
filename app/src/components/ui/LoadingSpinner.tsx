@@ -10,16 +10,10 @@ export function LoadingSpinner({ size = 'md', fullScreen = false }: LoadingSpinn
     lg: 'h-16 w-16',
   };
 
-  const spinner = (
-    <div className={`animate-spin rounded-full border-b-2 border-primary-600 ${sizeClasses[size]}`} />
-  );
+  const spinner = <div className={`animate-spin rounded-full border-b-2 border-primary-600 ${sizeClasses[size]}`} />;
 
   if (fullScreen) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        {spinner}
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center">{spinner}</div>;
   }
 
   return spinner;

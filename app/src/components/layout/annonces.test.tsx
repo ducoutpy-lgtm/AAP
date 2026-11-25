@@ -30,7 +30,9 @@ describe('annonces', () => {
     render(<Annonces />);
     act(() => annoncer('Évaluation sauvegardée'));
     expect(screen.getByText('Évaluation sauvegardée')).toBeInTheDocument();
-    act(() => { vi.advanceTimersByTime(8000); });
+    act(() => {
+      vi.advanceTimersByTime(8000);
+    });
     expect(screen.queryByText('Évaluation sauvegardée')).toBeNull();
   });
 });

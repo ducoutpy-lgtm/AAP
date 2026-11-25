@@ -17,7 +17,8 @@ export default function EditAapPage() {
 
   useEffect(() => {
     if (!aapId) return;
-    aapService.getAapById(aapId)
+    aapService
+      .getAapById(aapId)
       .then(setAap)
       .finally(() => setChargement(false));
   }, [aapId]);
@@ -34,7 +35,9 @@ export default function EditAapPage() {
             {aap ? "Cet appel n'est pas le vôtre" : 'Appel introuvable'}
           </h1>
           <p className="text-gray-600 mb-6">Seul le financeur qui a créé un appel peut le modifier.</p>
-          <Link to="/mes-aap" className="text-primary-600 hover:underline">Retour à mes appels</Link>
+          <Link to="/mes-aap" className="text-primary-600 hover:underline">
+            Retour à mes appels
+          </Link>
         </div>
       </div>
     );

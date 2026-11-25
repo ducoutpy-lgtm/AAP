@@ -19,9 +19,7 @@ export default function SubscriptionSuccess() {
   }, [sessionId, refreshUserProfile]);
 
   const handleContinue = () => {
-    const dashboardPath = userProfile?.userType === 'porteur'
-      ? '/dashboard/porteur'
-      : '/dashboard/financeur';
+    const dashboardPath = userProfile?.userType === 'porteur' ? '/dashboard/porteur' : '/dashboard/financeur';
     navigate(dashboardPath);
   };
 
@@ -30,12 +28,11 @@ export default function SubscriptionSuccess() {
       <Card className="max-w-lg text-center">
         <CheckCircle className="h-20 w-20 text-success-500 mx-auto mb-6" />
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Abonnement activé !
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Abonnement activé !</h1>
 
         <p className="text-lg text-gray-600 mb-6">
-          Votre abonnement a été activé avec succès. Vous pouvez maintenant profiter de toutes les fonctionnalités de la plateforme.
+          Votre abonnement a été activé avec succès. Vous pouvez maintenant profiter de toutes les fonctionnalités de la
+          plateforme.
         </p>
 
         <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
@@ -49,10 +46,7 @@ export default function SubscriptionSuccess() {
             Accéder à mon espace
           </Button>
 
-          <button
-            onClick={() => navigate('/profil')}
-            className="w-full text-gray-600 hover:text-gray-900 text-sm"
-          >
+          <button onClick={() => navigate('/profil')} className="w-full text-gray-600 hover:text-gray-900 text-sm">
             Gérer mon abonnement
           </button>
         </div>

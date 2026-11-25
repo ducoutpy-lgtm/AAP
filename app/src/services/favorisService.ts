@@ -6,7 +6,7 @@ import { db } from '../config/firebase';
 
 export async function lireFavoris(uid: string): Promise<Set<string>> {
   const snap = await getDocs(query(collection(db, 'favoriteAap'), where('userId', '==', uid)));
-  return new Set(snap.docs.map(d => String(d.data().aapId)));
+  return new Set(snap.docs.map((d) => String(d.data().aapId)));
 }
 
 export async function basculerFavori(uid: string, aapId: string, dejaFavori: boolean): Promise<void> {

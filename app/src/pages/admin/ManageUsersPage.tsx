@@ -6,16 +6,7 @@ import { User } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
-import {
-  ArrowLeft,
-  Search,
-  Filter,
-  Download,
-  UserCheck,
-  UserX,
-  Mail,
-  Calendar,
-} from 'lucide-react';
+import { ArrowLeft, Search, Filter, Download, UserCheck, UserX, Mail, Calendar } from 'lucide-react';
 import { telechargerCsv, versCsv } from '../../utils/csv';
 import { MessageErreur } from '../../components/ui/MessageErreur';
 import { annoncer } from '../../utils/annonces';
@@ -53,7 +44,7 @@ export default function ManageUsersPage() {
     setErreurChargement(false);
     try {
       const usersSnapshot = await getDocs(collection(db, 'users'));
-      const usersData = usersSnapshot.docs.map(doc => ({
+      const usersData = usersSnapshot.docs.map((doc) => ({
         uid: doc.id,
         ...doc.data(),
       })) as UserWithId[];
@@ -73,19 +64,17 @@ export default function ManageUsersPage() {
 
     // Search filter
     if (searchTerm) {
-      result = result.filter(user =>
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      result = result.filter((user) => user.email.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
     // User type filter
     if (userTypeFilter !== 'all') {
-      result = result.filter(user => user.userType === userTypeFilter);
+      result = result.filter((user) => user.userType === userTypeFilter);
     }
 
     // Status filter
     if (statusFilter !== 'all') {
-      result = result.filter(user => user.subscriptionStatus === statusFilter);
+      result = result.filter((user) => user.subscriptionStatus === statusFilter);
     }
 
     setFilteredUsers(result);
@@ -115,15 +104,22 @@ export default function ManageUsersPage() {
       loadUsers();
     } catch (err) {
       console.error('Error activating user:', err);
-      annoncer('Erreur lors de l\'activation', 'erreur');
+      annoncer("Erreur lors de l'activation", 'erreur');
     }
   };
 
   // Export CSV échappé (utils/csv.ts, plan niveau A, lot 3.4)
   const exportUsers = () => {
-    const csv = versCsv(['Email', 'Type', 'Statut', 'Plan', 'Date création'], filteredUsers.map(user => [
-      user.email, user.userType, user.subscriptionStatus, user.subscriptionPlan || 'Aucun', dateCreation(user.createdAt),
-    ]));
+    const csv = versCsv(
+      ['Email', 'Type', 'Statut', 'Plan', 'Date création'],
+      filteredUsers.map((user) => [
+        user.email,
+        user.userType,
+        user.subscriptionStatus,
+        user.subscriptionPlan || 'Aucun',
+        dateCreation(user.createdAt),
+      ]),
+    );
     telechargerCsv(csv, 'utilisateurs.csv');
   };
 
@@ -171,19 +167,13 @@ export default function ManageUsersPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/admin')}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate('/admin')} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour au tableau de bord
         </Button>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Gestion des utilisateurs
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestion des utilisateurs</h1>
           <p className="text-gray-600">
             {filteredUsers.length} utilisateur(s) • {users.length} au total
           </p>
@@ -197,20 +187,18 @@ export default function ManageUsersPage() {
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Porteurs</p>
-            <p className="text-2xl font-bold text-blue-600">
-              {users.filter(u => u.userType === 'porteur').length}
-            </p>
+            <p className="text-2xl font-bold text-blue-600">{users.filter((u) => u.userType === 'porteur').length}</p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Financeurs</p>
             <p className="text-2xl font-bold text-green-600">
-              {users.filter(u => u.userType === 'financeur').length}
+              {users.filter((u) => u.userType === 'financeur').length}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Actifs</p>
             <p className="text-2xl font-bold text-primary-600">
-              {users.filter(u => u.subscriptionStatus === 'active').length}
+              {users.filter((u) => u.subscriptionStatus === 'active').length}
             </p>
           </Card>
         </div>
@@ -260,12 +248,7 @@ export default function ManageUsersPage() {
             </select>
 
             {/* Export */}
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={exportUsers}
-              disabled={filteredUsers.length === 0}
-            >
+            <Button variant="secondary" size="sm" onClick={exportUsers} disabled={filteredUsers.length === 0}>
               <Download className="h-4 w-4 mr-2" />
               Exporter
             </Button>
@@ -304,7 +287,7 @@ export default function ManageUsersPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredUsers.map(user => (
+                  {filteredUsers.map((user) => (
                     <tr key={user.uid} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -313,13 +296,9 @@ export default function ManageUsersPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-600">
-                          {getUserTypeLabel(user.userType)}
-                        </span>
+                        <span className="text-sm text-gray-600">{getUserTypeLabel(user.userType)}</span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {getStatusBadge(user.subscriptionStatus)}
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(user.subscriptionStatus)}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="text-sm text-gray-600">
                           {user.subscriptionPlan === 'monthly' && 'Mensuel'}
@@ -336,19 +315,11 @@ export default function ManageUsersPage() {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end gap-2">
                           {user.subscriptionStatus !== 'cancelled' ? (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleSuspendUser(user.uid)}
-                            >
+                            <Button variant="ghost" size="sm" onClick={() => handleSuspendUser(user.uid)}>
                               <UserX className="h-4 w-4" />
                             </Button>
                           ) : (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleActivateUser(user.uid)}
-                            >
+                            <Button variant="ghost" size="sm" onClick={() => handleActivateUser(user.uid)}>
                               <UserCheck className="h-4 w-4" />
                             </Button>
                           )}

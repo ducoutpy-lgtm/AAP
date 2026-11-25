@@ -6,15 +6,7 @@ import type { AAP, Application, User } from '../../types';
 import { enDate } from '../../utils/dates';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import {
-  ArrowLeft,
-  Users,
-  FileText,
-  Send,
-  TrendingUp,
-  DollarSign,
-  BarChart3,
-} from 'lucide-react';
+import { ArrowLeft, Users, FileText, Send, TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
 import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface GlobalStats {
@@ -57,51 +49,52 @@ export default function GlobalStatisticsPage() {
     try {
       // Load users
       const usersSnapshot = await getDocs(collection(db, 'users'));
-      const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (User & { id: string })[];
+      const users = usersSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (User & { id: string })[];
 
-      const totalPorteurs = users.filter(u => u.userType === 'porteur').length;
-      const totalFinanceurs = users.filter(u => u.userType === 'financeur').length;
-      const activeSubscriptions = users.filter(u => u.subscriptionStatus === 'active').length;
-      const trialSubscriptions = users.filter(u => u.subscriptionStatus === 'trial').length;
+      const totalPorteurs = users.filter((u) => u.userType === 'porteur').length;
+      const totalFinanceurs = users.filter((u) => u.userType === 'financeur').length;
+      const activeSubscriptions = users.filter((u) => u.subscriptionStatus === 'active').length;
+      const trialSubscriptions = users.filter((u) => u.subscriptionStatus === 'trial').length;
 
       // New users this month
       const now = new Date();
       const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-      const newUsersThisMonth = users.filter(u => {
+      const newUsersThisMonth = users.filter((u) => {
         const createdAt = enDate(u.createdAt);
         return !!createdAt && createdAt >= firstDayOfMonth;
       }).length;
 
       // Load AAPs
       const aapsSnapshot = await getDocs(collection(db, 'aap'));
-      const aaps = aapsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
-      const publishedAaps = aaps.filter(a => a.status === 'published').length;
+      const aaps = aapsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (AAP & { id: string })[];
+      const publishedAaps = aaps.filter((a) => a.status === 'published').length;
 
       // Load applications
       const applicationsSnapshot = await getDocs(collection(db, 'applications'));
-      const applications = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as (Application & { id: string })[];
-      const acceptedApplications = applications.filter(a => a.status === 'accepted').length;
+      const applications = applicationsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as (Application & {
+        id: string;
+      })[];
+      const acceptedApplications = applications.filter((a) => a.status === 'accepted').length;
 
       // Load payments
-      const paymentsSnapshot = await getDocs(
-        query(collection(db, 'payments'), where('status', '==', 'succeeded'))
-      );
-      const payments = paymentsSnapshot.docs.map(doc => doc.data());
+      const paymentsSnapshot = await getDocs(query(collection(db, 'payments'), where('status', '==', 'succeeded')));
+      const payments = paymentsSnapshot.docs.map((doc) => doc.data());
 
-      const monthlyRevenue = payments
-        .filter(p => {
-          const date = p.paidAt?.toDate ? p.paidAt.toDate() : new Date(p.paidAt);
-          return date >= firstDayOfMonth;
-        })
-        .reduce((sum, p) => sum + (p.amount || 0), 0) / 100;
+      const monthlyRevenue =
+        payments
+          .filter((p) => {
+            const date = p.paidAt?.toDate ? p.paidAt.toDate() : new Date(p.paidAt);
+            return date >= firstDayOfMonth;
+          })
+          .reduce((sum, p) => sum + (p.amount || 0), 0) / 100;
 
       const annualRevenue = payments.reduce((sum, p) => sum + (p.amount || 0), 0) / 100;
 
       // Calculate conversion rate (trial to active)
       const trialToActiveConversions = users.filter(
-        u => u.subscriptionStatus === 'active' && u.subscriptionPlan
+        (u) => u.subscriptionStatus === 'active' && u.subscriptionPlan,
       ).length;
-      const totalTrialsEver = users.filter(u => u.subscriptionStatus !== 'cancelled').length;
+      const totalTrialsEver = users.filter((u) => u.subscriptionStatus !== 'cancelled').length;
       const conversionRate = totalTrialsEver > 0 ? (trialToActiveConversions / totalTrialsEver) * 100 : 0;
 
       setStats({
@@ -126,27 +119,28 @@ export default function GlobalStatisticsPage() {
         const monthDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
         const nextMonthDate = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
 
-        const monthUsers = users.filter(u => {
+        const monthUsers = users.filter((u) => {
           const date = enDate(u.createdAt);
           return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
-        const monthAaps = aaps.filter(a => {
+        const monthAaps = aaps.filter((a) => {
           const date = enDate(a.createdAt);
           return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
-        const monthApplications = applications.filter(a => {
+        const monthApplications = applications.filter((a) => {
           const date = enDate(a.submittedAt);
           return !!date && date >= monthDate && date < nextMonthDate;
         }).length;
 
-        const monthRevenue = payments
-          .filter(p => {
-            const date = p.paidAt?.toDate ? p.paidAt.toDate() : new Date(p.paidAt);
-            return date >= monthDate && date < nextMonthDate;
-          })
-          .reduce((sum, p) => sum + (p.amount || 0), 0) / 100;
+        const monthRevenue =
+          payments
+            .filter((p) => {
+              const date = p.paidAt?.toDate ? p.paidAt.toDate() : new Date(p.paidAt);
+              return date >= monthDate && date < nextMonthDate;
+            })
+            .reduce((sum, p) => sum + (p.amount || 0), 0) / 100;
 
         monthlyStats.push({
           month: monthDate.toLocaleDateString('fr-FR', { month: 'short' }),
@@ -183,11 +177,7 @@ export default function GlobalStatisticsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/admin')}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate('/admin')} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour au tableau de bord
         </Button>
@@ -195,13 +185,9 @@ export default function GlobalStatisticsPage() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <BarChart3 className="h-8 w-8 text-primary-600" />
-            <h1 className="text-3xl font-bold text-gray-900">
-              Statistiques Globales
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900">Statistiques Globales</h1>
           </div>
-          <p className="text-gray-600">
-            Vue d'ensemble de la plateforme
-          </p>
+          <p className="text-gray-600">Vue d'ensemble de la plateforme</p>
         </div>
 
         {/* KPIs */}
@@ -212,9 +198,7 @@ export default function GlobalStatisticsPage() {
               <Users className="h-5 w-5 text-primary-600" />
             </div>
             <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
-            <p className="text-sm text-green-600 mt-1">
-              +{stats.newUsersThisMonth} ce mois
-            </p>
+            <p className="text-sm text-green-600 mt-1">+{stats.newUsersThisMonth} ce mois</p>
           </Card>
 
           <Card className="p-6">
@@ -223,9 +207,7 @@ export default function GlobalStatisticsPage() {
               <FileText className="h-5 w-5 text-blue-600" />
             </div>
             <p className="text-3xl font-bold text-gray-900">{stats.publishedAaps}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              sur {stats.totalAaps} total
-            </p>
+            <p className="text-sm text-gray-500 mt-1">sur {stats.totalAaps} total</p>
           </Card>
 
           <Card className="p-6">
@@ -234,9 +216,7 @@ export default function GlobalStatisticsPage() {
               <Send className="h-5 w-5 text-green-600" />
             </div>
             <p className="text-3xl font-bold text-gray-900">{stats.totalApplications}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              {stats.acceptedApplications} acceptées
-            </p>
+            <p className="text-sm text-gray-500 mt-1">{stats.acceptedApplications} acceptées</p>
           </Card>
 
           <Card className="p-6">
@@ -244,12 +224,8 @@ export default function GlobalStatisticsPage() {
               <p className="text-sm text-gray-600">Revenus (total)</p>
               <DollarSign className="h-5 w-5 text-yellow-600" />
             </div>
-            <p className="text-3xl font-bold text-gray-900">
-              {stats.annualRevenue.toLocaleString('fr-FR')}€
-            </p>
-            <p className="text-sm text-green-600 mt-1">
-              {stats.monthlyRevenue.toLocaleString('fr-FR')}€ ce mois
-            </p>
+            <p className="text-3xl font-bold text-gray-900">{stats.annualRevenue.toLocaleString('fr-FR')}€</p>
+            <p className="text-sm text-green-600 mt-1">{stats.monthlyRevenue.toLocaleString('fr-FR')}€ ce mois</p>
           </Card>
         </div>
 
@@ -287,9 +263,7 @@ export default function GlobalStatisticsPage() {
             <p className="text-sm text-gray-600 mb-2">Taux de conversion</p>
             <div className="flex items-center gap-2">
               <TrendingUp className="h-8 w-8 text-primary-600" />
-              <p className="text-3xl font-bold text-gray-900">
-                {stats.conversionRate.toFixed(1)}%
-              </p>
+              <p className="text-3xl font-bold text-gray-900">{stats.conversionRate.toFixed(1)}%</p>
             </div>
             <p className="text-xs text-gray-500 mt-1">Essai → Payant</p>
           </Card>
@@ -297,16 +271,14 @@ export default function GlobalStatisticsPage() {
 
         {/* Monthly Trends */}
         <Card className="p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">
-            Évolution sur 6 mois
-          </h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Évolution sur 6 mois</h2>
 
           {/* Users Chart */}
           <div className="mb-8">
             <h3 className="text-sm font-medium text-gray-700 mb-3">Nouveaux utilisateurs</h3>
             <div className="flex items-end gap-2 h-32">
               {monthlyData.map((data, index) => {
-                const maxUsers = Math.max(...monthlyData.map(d => d.users), 1);
+                const maxUsers = Math.max(...monthlyData.map((d) => d.users), 1);
                 const height = (data.users / maxUsers) * 100;
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center">
@@ -327,7 +299,7 @@ export default function GlobalStatisticsPage() {
             <h3 className="text-sm font-medium text-gray-700 mb-3">Nouveaux AAP</h3>
             <div className="flex items-end gap-2 h-32">
               {monthlyData.map((data, index) => {
-                const maxAaps = Math.max(...monthlyData.map(d => d.aaps), 1);
+                const maxAaps = Math.max(...monthlyData.map((d) => d.aaps), 1);
                 const height = (data.aaps / maxAaps) * 100;
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center">
@@ -348,7 +320,7 @@ export default function GlobalStatisticsPage() {
             <h3 className="text-sm font-medium text-gray-700 mb-3">Candidatures</h3>
             <div className="flex items-end gap-2 h-32">
               {monthlyData.map((data, index) => {
-                const maxApps = Math.max(...monthlyData.map(d => d.applications), 1);
+                const maxApps = Math.max(...monthlyData.map((d) => d.applications), 1);
                 const height = (data.applications / maxApps) * 100;
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center">
@@ -369,7 +341,7 @@ export default function GlobalStatisticsPage() {
             <h3 className="text-sm font-medium text-gray-700 mb-3">Revenus (€)</h3>
             <div className="flex items-end gap-2 h-32">
               {monthlyData.map((data, index) => {
-                const maxRevenue = Math.max(...monthlyData.map(d => d.revenue), 1);
+                const maxRevenue = Math.max(...monthlyData.map((d) => d.revenue), 1);
                 const height = (data.revenue / maxRevenue) * 100;
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center">

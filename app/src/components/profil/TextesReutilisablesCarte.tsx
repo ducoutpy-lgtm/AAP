@@ -24,19 +24,22 @@ export function TextesReutilisablesCarte({ uid, initial }: { uid: string; initia
   return (
     <div className="mt-4 pt-4 border-t text-sm">
       <h2 className="font-semibold text-gray-900 mb-1">Textes réutilisables</h2>
-      <p className="text-gray-600 mb-3">
-        Écrits une fois, ajoutés d'un clic au résumé de chaque candidature.
-      </p>
+      <p className="text-gray-600 mb-3">Écrits une fois, ajoutés d'un clic au résumé de chaque candidature.</p>
       <div className="space-y-3">
-        {(Object.keys(LIBELLES_TEXTES) as CleTexte[]).map(cle => (
+        {(Object.keys(LIBELLES_TEXTES) as CleTexte[]).map((cle) => (
           <div key={cle}>
-            <label className="block text-gray-700 mb-1" htmlFor={`texte-${cle}`}>{LIBELLES_TEXTES[cle]}</label>
+            <label className="block text-gray-700 mb-1" htmlFor={`texte-${cle}`}>
+              {LIBELLES_TEXTES[cle]}
+            </label>
             <textarea
               id={`texte-${cle}`}
               rows={3}
               className="input-field"
               value={textes[cle] ?? ''}
-              onChange={(e) => { setTextes({ ...textes, [cle]: e.target.value }); setEtat(''); }}
+              onChange={(e) => {
+                setTextes({ ...textes, [cle]: e.target.value });
+                setEtat('');
+              }}
             />
           </div>
         ))}
@@ -46,7 +49,9 @@ export function TextesReutilisablesCarte({ uid, initial }: { uid: string; initia
           {etat === 'en-cours' ? 'Enregistrement...' : 'Enregistrer les textes'}
         </Button>
         {etat === 'enregistre' && <span className="text-green-700">Textes enregistrés.</span>}
-        {etat === 'echec' && <span className="text-error-600">Les textes n'ont pas pu être enregistrés. Réessayez.</span>}
+        {etat === 'echec' && (
+          <span className="text-error-600">Les textes n'ont pas pu être enregistrés. Réessayez.</span>
+        )}
       </div>
     </div>
   );

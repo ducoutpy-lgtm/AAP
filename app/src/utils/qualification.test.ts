@@ -29,12 +29,18 @@ describe('correspondTypeAppel et destinatairesDe', () => {
 
 describe('qualificationManuelle', () => {
   it('écarte les valeurs hors liste, valide la date, signe au nom donné', () => {
-    const r = qualificationManuelle({ destinataires: ['public', 'inconnu'], typeAppel: 'bizarre', objets: ['qvt', 'x'], dateOuverture: '2026-13-45' }, 'Monsieur DUCOUT');
+    const r = qualificationManuelle(
+      { destinataires: ['public', 'inconnu'], typeAppel: 'bizarre', objets: ['qvt', 'x'], dateOuverture: '2026-13-45' },
+      'Monsieur DUCOUT',
+    );
     expect(r.destinataires).toEqual(['public']);
     expect(r.typeAppel).toBe('autre');
     expect(r.objets).toEqual(['qvt']);
     expect(r.dateOuverture).toBeNull();
     expect(r.par).toBe('Monsieur DUCOUT');
-    expect(qualificationManuelle({ destinataires: [], typeAppel: 'ami', objets: [], dateOuverture: '2026-11-02' }, 'x').dateOuverture).toBe('2026-11-02');
+    expect(
+      qualificationManuelle({ destinataires: [], typeAppel: 'ami', objets: [], dateOuverture: '2026-11-02' }, 'x')
+        .dateOuverture,
+    ).toBe('2026-11-02');
   });
 });

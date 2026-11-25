@@ -26,7 +26,10 @@ export function colonneDe(statut: ApplicationStatus): ApplicationStatus | null {
 }
 
 export function parColonne(candidatures: Application[]): Record<ApplicationStatus, Application[]> {
-  const colonnes = Object.fromEntries(COLONNES.map(c => [c, [] as Application[]])) as Record<ApplicationStatus, Application[]>;
+  const colonnes = Object.fromEntries(COLONNES.map((c) => [c, [] as Application[]])) as Record<
+    ApplicationStatus,
+    Application[]
+  >;
   for (const c of candidatures) {
     const col = colonneDe(c.status);
     if (col) colonnes[col].push(c);
@@ -46,25 +49,28 @@ export interface ResumeFinanceur {
 }
 
 export function resumeFinanceur(aaps: AAP[], candidatures: Application[], maintenant = new Date()): ResumeFinanceur {
-  const parStatut = Object.fromEntries(COLONNES.map(c => [c, 0])) as Record<ApplicationStatus, number>;
-  const recues = candidatures.filter(c => c.status !== 'draft');
+  const parStatut = Object.fromEntries(COLONNES.map((c) => [c, 0])) as Record<ApplicationStatus, number>;
+  const recues = candidatures.filter((c) => c.status !== 'draft');
   for (const c of recues) {
     const col = colonneDe(c.status);
     if (col) parStatut[col] += 1;
   }
   const dernieres = [...recues]
-    .sort((a, b) => (dateDe(b.submittedAt ?? b.createdAt)?.getTime() ?? 0) - (dateDe(a.submittedAt ?? a.createdAt)?.getTime() ?? 0))
+    .sort(
+      (a, b) =>
+        (dateDe(b.submittedAt ?? b.createdAt)?.getTime() ?? 0) - (dateDe(a.submittedAt ?? a.createdAt)?.getTime() ?? 0),
+    )
     .slice(0, 5);
   // Même règle que la recherche et la fiche (getDaysUntilDeadline, jours du calendrier, décision 38) : l'appel qui clôt
   // aujourd'hui reste la prochaine échéance (corrections-relecture 3.4)
   const ouvert = (d: Date) => !isClosed(getDaysUntilDeadline(d, maintenant));
   const aVenir = aaps
-    .filter(a => a.status === 'published' && dateDe(a.deadline) && ouvert(dateDe(a.deadline) as Date))
+    .filter((a) => a.status === 'published' && dateDe(a.deadline) && ouvert(dateDe(a.deadline) as Date))
     .sort((a, b) => (dateDe(a.deadline) as Date).getTime() - (dateDe(b.deadline) as Date).getTime());
   return {
-    publies: aaps.filter(a => a.status === 'published').length,
-    brouillons: aaps.filter(a => a.status === 'draft').length,
-    clos: aaps.filter(a => a.status === 'closed' || a.status === 'archived').length,
+    publies: aaps.filter((a) => a.status === 'published').length,
+    brouillons: aaps.filter((a) => a.status === 'draft').length,
+    clos: aaps.filter((a) => a.status === 'closed' || a.status === 'archived').length,
     candidatures: recues.length,
     parStatut,
     vues: aaps.reduce((t, a) => t + (a.views || 0), 0),

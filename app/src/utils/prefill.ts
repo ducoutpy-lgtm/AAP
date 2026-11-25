@@ -40,11 +40,17 @@ const texte = (v: unknown): string => (typeof v === 'string' ? v.trim() : '');
 export function preRemplissageDepuis(champs: ChampsLus | null | undefined): PreRemplissage {
   const c = champs ?? {};
   const montantBrut = c.montant_demande;
-  const montant = typeof montantBrut === 'number' && Number.isFinite(montantBrut) && montantBrut > 0 ? String(Math.round(montantBrut)) : '';
-  const confiance = c.confiance === 'haute' || c.confiance === 'moyenne' || c.confiance === 'basse' ? c.confiance : 'basse';
+  const montant =
+    typeof montantBrut === 'number' && Number.isFinite(montantBrut) && montantBrut > 0
+      ? String(Math.round(montantBrut))
+      : '';
+  const confiance =
+    c.confiance === 'haute' || c.confiance === 'moyenne' || c.confiance === 'basse' ? c.confiance : 'basse';
   const titre = texte(c.titre_projet);
   const resume = texte(c.resume);
-  const manquants = [!titre && 'le titre', !resume && 'le résumé', !montant && 'le montant demandé'].filter((x): x is string => Boolean(x));
+  const manquants = [!titre && 'le titre', !resume && 'le résumé', !montant && 'le montant demandé'].filter(
+    (x): x is string => Boolean(x),
+  );
   return { titre, resume, montant, confiance, remarque: texte(c.remarque), manquants };
 }
 

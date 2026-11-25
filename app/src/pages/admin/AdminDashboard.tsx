@@ -5,16 +5,7 @@ import { db } from '../../config/firebase';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
-import {
-  Users,
-  FileText,
-  Send,
-  CreditCard,
-  TrendingUp,
-  AlertTriangle,
-  BarChart3,
-  Coins,
-} from 'lucide-react';
+import { Users, FileText, Send, CreditCard, TrendingUp, AlertTriangle, BarChart3, Coins } from 'lucide-react';
 import { MessageErreur } from '../../components/ui/MessageErreur';
 
 interface DashboardStats {
@@ -66,33 +57,31 @@ export default function AdminDashboard() {
     try {
       // Load users
       const usersSnapshot = await getDocs(collection(db, 'users'));
-      const users = usersSnapshot.docs.map(doc => doc.data());
+      const users = usersSnapshot.docs.map((doc) => doc.data());
 
-      const totalPorteurs = users.filter(u => u.userType === 'porteur').length;
-      const totalFinanceurs = users.filter(u => u.userType === 'financeur').length;
-      const activeSubscriptions = users.filter(u => u.subscriptionStatus === 'active').length;
-      const trialUsers = users.filter(u => u.subscriptionStatus === 'trial').length;
+      const totalPorteurs = users.filter((u) => u.userType === 'porteur').length;
+      const totalFinanceurs = users.filter((u) => u.userType === 'financeur').length;
+      const activeSubscriptions = users.filter((u) => u.subscriptionStatus === 'active').length;
+      const trialUsers = users.filter((u) => u.subscriptionStatus === 'trial').length;
 
       // Load AAPs
       const aapSnapshot = await getDocs(collection(db, 'aap'));
-      const aapDocs = aapSnapshot.docs.map(d => d.data());
-      const aapPublies = aapDocs.filter(a => a.status === 'published').length;
-      const aControler = aapDocs.filter(a => a.status !== 'archived'
-        && (a.validation?.statut === 'proposee' || a.validation?.statut === 'a_corriger')).length;
+      const aapDocs = aapSnapshot.docs.map((d) => d.data());
+      const aapPublies = aapDocs.filter((a) => a.status === 'published').length;
+      const aControler = aapDocs.filter(
+        (a) =>
+          a.status !== 'archived' && (a.validation?.statut === 'proposee' || a.validation?.statut === 'a_corriger'),
+      ).length;
 
       // Load applications
       const applicationsSnapshot = await getDocs(collection(db, 'applications'));
 
       // Load payments for revenue calculation
-      const paymentsSnapshot = await getDocs(
-        query(
-          collection(db, 'payments'),
-          where('status', '==', 'succeeded')
-        )
-      );
-      const revenue = paymentsSnapshot.docs.reduce((sum, doc) => {
-        return sum + (doc.data().amount || 0);
-      }, 0) / 100; // Convert from cents to euros
+      const paymentsSnapshot = await getDocs(query(collection(db, 'payments'), where('status', '==', 'succeeded')));
+      const revenue =
+        paymentsSnapshot.docs.reduce((sum, doc) => {
+          return sum + (doc.data().amount || 0);
+        }, 0) / 100; // Convert from cents to euros
 
       setStats({
         totalUsers: usersSnapshot.size,
@@ -111,13 +100,9 @@ export default function AdminDashboard() {
       const activities: RecentActivity[] = [];
 
       // Recent users
-      const recentUsersQuery = query(
-        collection(db, 'users'),
-        orderBy('createdAt', 'desc'),
-        limit(3)
-      );
+      const recentUsersQuery = query(collection(db, 'users'), orderBy('createdAt', 'desc'), limit(3));
       const recentUsersSnapshot = await getDocs(recentUsersQuery);
-      recentUsersSnapshot.docs.forEach(doc => {
+      recentUsersSnapshot.docs.forEach((doc) => {
         const data = doc.data();
         activities.push({
           id: doc.id,
@@ -129,13 +114,9 @@ export default function AdminDashboard() {
       });
 
       // Recent AAPs
-      const recentAapQuery = query(
-        collection(db, 'aap'),
-        orderBy('createdAt', 'desc'),
-        limit(3)
-      );
+      const recentAapQuery = query(collection(db, 'aap'), orderBy('createdAt', 'desc'), limit(3));
       const recentAapSnapshot = await getDocs(recentAapQuery);
-      recentAapSnapshot.docs.forEach(doc => {
+      recentAapSnapshot.docs.forEach((doc) => {
         const data = doc.data();
         activities.push({
           id: doc.id,
@@ -147,13 +128,9 @@ export default function AdminDashboard() {
       });
 
       // Recent applications
-      const recentAppsQuery = query(
-        collection(db, 'applications'),
-        orderBy('submittedAt', 'desc'),
-        limit(3)
-      );
+      const recentAppsQuery = query(collection(db, 'applications'), orderBy('submittedAt', 'desc'), limit(3));
       const recentAppsSnapshot = await getDocs(recentAppsQuery);
-      recentAppsSnapshot.docs.forEach(doc => {
+      recentAppsSnapshot.docs.forEach((doc) => {
         const data = doc.data();
         activities.push({
           id: doc.id,
@@ -224,17 +201,10 @@ export default function AdminDashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Tableau de bord Administrateur
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Gestion globale de la plateforme AAP
-              </p>
+              <h1 className="text-3xl font-bold text-gray-900">Tableau de bord Administrateur</h1>
+              <p className="text-gray-600 mt-1">Gestion globale de la plateforme AAP</p>
             </div>
-            <Button
-              variant="secondary"
-              onClick={() => navigate('/admin/statistiques')}
-            >
+            <Button variant="secondary" onClick={() => navigate('/admin/statistiques')}>
               <BarChart3 className="h-4 w-4 mr-2" />
               Statistiques détaillées
             </Button>
@@ -277,12 +247,8 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Abonnements actifs</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {stats.activeSubscriptions}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {stats.trialUsers} en période d'essai
-                </p>
+                <p className="text-3xl font-bold text-gray-900">{stats.activeSubscriptions}</p>
+                <p className="text-xs text-gray-500 mt-1">{stats.trialUsers} en période d'essai</p>
               </div>
               <div className="p-3 bg-green-100 rounded-lg">
                 <TrendingUp className="h-6 w-6 text-green-600" />
@@ -294,12 +260,8 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Revenus</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {stats.revenue.toLocaleString('fr-FR')}€
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Revenus totaux
-                </p>
+                <p className="text-3xl font-bold text-gray-900">{stats.revenue.toLocaleString('fr-FR')}€</p>
+                <p className="text-xs text-gray-500 mt-1">Revenus totaux</p>
               </div>
               <div className="p-3 bg-yellow-100 rounded-lg">
                 <CreditCard className="h-6 w-6 text-yellow-600" />
@@ -315,7 +277,8 @@ export default function AdminDashboard() {
               <p className="text-sm text-gray-600 mb-1">Fiches à contrôler</p>
               <p className="text-3xl font-bold text-gray-900">{stats.aControler}</p>
               <p className="text-xs text-gray-500 mt-1">
-                Proposées par la veille ou à corriger ; elles ne sont pas visibles des candidats tant qu'elles ne sont pas validées
+                Proposées par la veille ou à corriger ; elles ne sont pas visibles des candidats tant qu'elles ne sont
+                pas validées
               </p>
             </div>
             <Button onClick={() => navigate('/admin/aaps?validation=proposee')} disabled={stats.aControler === 0}>
@@ -328,9 +291,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Quick Actions */}
           <Card className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Actions rapides
-            </h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Actions rapides</h2>
             <div className="space-y-3">
               <Button
                 className="w-full justify-start"
@@ -340,27 +301,15 @@ export default function AdminDashboard() {
                 <Users className="h-4 w-4 mr-3" />
                 Gérer les utilisateurs
               </Button>
-              <Button
-                className="w-full justify-start"
-                variant="secondary"
-                onClick={() => navigate('/admin/aaps')}
-              >
+              <Button className="w-full justify-start" variant="secondary" onClick={() => navigate('/admin/aaps')}>
                 <FileText className="h-4 w-4 mr-3" />
                 Contrôler les appels
               </Button>
-              <Button
-                className="w-full justify-start"
-                variant="secondary"
-                onClick={() => navigate('/admin/testeurs')}
-              >
+              <Button className="w-full justify-start" variant="secondary" onClick={() => navigate('/admin/testeurs')}>
                 <Users className="h-4 w-4 mr-3" />
                 Suivre les testeurs
               </Button>
-              <Button
-                className="w-full justify-start"
-                variant="secondary"
-                onClick={() => navigate('/admin/couts-ia')}
-              >
+              <Button className="w-full justify-start" variant="secondary" onClick={() => navigate('/admin/couts-ia')}>
                 <Coins className="h-4 w-4 mr-3" />
                 Appels externes (coûts)
               </Button>
@@ -369,25 +318,16 @@ export default function AdminDashboard() {
 
           {/* Recent Activity */}
           <Card className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Activité récente
-            </h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Activité récente</h2>
             <div className="space-y-3 max-h-[400px] overflow-y-auto">
               {recentActivity.length === 0 ? (
                 <p className="text-gray-500 text-sm">Aucune activité récente</p>
               ) : (
-                recentActivity.map(activity => (
-                  <div
-                    key={activity.id}
-                    className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
-                  >
-                    <div className="p-2 bg-white rounded">
-                      {getActivityIcon(activity.type)}
-                    </div>
+                recentActivity.map((activity) => (
+                  <div key={activity.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div className="p-2 bg-white rounded">{getActivityIcon(activity.type)}</div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900 truncate">
-                        {activity.description}
-                      </p>
+                      <p className="text-sm text-gray-900 truncate">{activity.description}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <p className="text-xs text-gray-500">
                           {activity.timestamp.toLocaleDateString('fr-FR', {

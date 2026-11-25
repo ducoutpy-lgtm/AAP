@@ -5,21 +5,39 @@ import { candidatureSurSiteOfficiel, suiviCandidatureExterne, candidatureOuverte
 describe('suiviCandidatureExterne (suivi-candidature-externe)', () => {
   it('note une candidature déposée sur le site officiel, sans prétendre la transmettre', () => {
     const suivi = suiviCandidatureExterne({ id: 'a1', title: 'AAP EHPAD', financeurId: 'scraped' }, 'p1');
-    expect(suivi).toMatchObject({ aapId: 'a1', aapTitle: 'AAP EHPAD', porteurId: 'p1', financeurId: 'scraped',
-      projectTitle: 'AAP EHPAD', status: 'submitted', externe: true, documents: [] });
+    expect(suivi).toMatchObject({
+      aapId: 'a1',
+      aapTitle: 'AAP EHPAD',
+      porteurId: 'p1',
+      financeurId: 'scraped',
+      projectTitle: 'AAP EHPAD',
+      status: 'submitted',
+      externe: true,
+      documents: [],
+    });
     expect(suivi.projectDescription).toContain('site officiel');
   });
 });
 
 describe('candidatureSurSiteOfficiel (candidature-site-officiel, question 21)', () => {
-  it("renvoie au site officiel pour une fiche importée qui a une adresse, au formulaire sinon", () => {
-    expect(candidatureSurSiteOfficiel({ source: 'scraped', financeurId: 'scraped', externalUrl: 'https://ars.fr/aap' })).toBe(true);
+  it('renvoie au site officiel pour une fiche importée qui a une adresse, au formulaire sinon', () => {
+    expect(
+      candidatureSurSiteOfficiel({ source: 'scraped', financeurId: 'scraped', externalUrl: 'https://ars.fr/aap' }),
+    ).toBe(true);
     expect(candidatureSurSiteOfficiel({ financeurId: 'scraped', externalUrl: 'https://ars.fr/aap' })).toBe(true);
     expect(candidatureSurSiteOfficiel({ source: 'manual', financeurId: 'f1', externalUrl: '' })).toBe(false);
     expect(candidatureSurSiteOfficiel({ source: 'scraped', financeurId: 'scraped', externalUrl: '' })).toBe(false);
   });
 });
-import { appelsPourProfil, aQuiSAdresse, colonneDe, echeancesProches, famillesDepuisCriteres, libelleMontant, repartirCandidatures } from './candidat';
+import {
+  appelsPourProfil,
+  aQuiSAdresse,
+  colonneDe,
+  echeancesProches,
+  famillesDepuisCriteres,
+  libelleMontant,
+  repartirCandidatures,
+} from './candidat';
 
 const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
 
@@ -35,19 +53,39 @@ describe('libelleMontant', () => {
 
 describe('aQuiSAdresse', () => {
   it('reprend les types éligibles sans doublon ni vide', () => {
-    expect(aQuiSAdresse({ structureTypeEligible: ['EHPAD', ' EHPAD', '', 'Associations'] })).toEqual(['EHPAD', 'Associations']);
+    expect(aQuiSAdresse({ structureTypeEligible: ['EHPAD', ' EHPAD', '', 'Associations'] })).toEqual([
+      'EHPAD',
+      'Associations',
+    ]);
     expect(aQuiSAdresse({})).toEqual([]);
   });
 
   it('la qualification prime sur les types lus et les critères', () => {
-    expect(aQuiSAdresse({ structureTypeEligible: ['EHPAD'], qualification: { destinataires: ['public', 'tous'], typeAppel: 'ami', objets: [], dateOuverture: null, par: 'm', le: '' } }))
-      .toEqual(['Établissements publics', 'Toute structure']);
+    expect(
+      aQuiSAdresse({
+        structureTypeEligible: ['EHPAD'],
+        qualification: {
+          destinataires: ['public', 'tous'],
+          typeAppel: 'ami',
+          objets: [],
+          dateOuverture: null,
+          par: 'm',
+          le: '',
+        },
+      }),
+    ).toEqual(['Établissements publics', 'Toute structure']);
   });
 
   it('sans types structurés, lit les familles dans les critères', () => {
-    expect(aQuiSAdresse({ eligibilityCriteria: '- Structures éligibles : associations loi 1901' })).toEqual(['Associations']);
-    expect(famillesDepuisCriteres('Établissements publics de santé et ESPIC, EHPAD'))
-      .toEqual(['Établissements publics', 'Privé non lucratif', 'Établissements de santé', 'Établissements médico-sociaux']);
+    expect(aQuiSAdresse({ eligibilityCriteria: '- Structures éligibles : associations loi 1901' })).toEqual([
+      'Associations',
+    ]);
+    expect(famillesDepuisCriteres('Établissements publics de santé et ESPIC, EHPAD')).toEqual([
+      'Établissements publics',
+      'Privé non lucratif',
+      'Établissements de santé',
+      'Établissements médico-sociaux',
+    ]);
     expect(famillesDepuisCriteres('Dossier à déposer avant le 30 juin')).toEqual([]);
   });
 });
@@ -62,15 +100,24 @@ describe('appelsPourProfil et echeancesProches', () => {
   ];
 
   it('garde la région et le national, écarte les clôturés, trie par clôture puis sans date', () => {
-    expect(appelsPourProfil(aaps, 'normandie').map(a => a.id)).toEqual(['region-proche', 'national-loin', 'region-sans-date']);
+    expect(appelsPourProfil(aaps, 'normandie').map((a) => a.id)).toEqual([
+      'region-proche',
+      'national-loin',
+      'region-sans-date',
+    ]);
   });
 
   it('sans région connue, garde tout ce qui est ouvert', () => {
-    expect(appelsPourProfil(aaps, '').map(a => a.id)).toEqual(['autre-region', 'region-proche', 'national-loin', 'region-sans-date']);
+    expect(appelsPourProfil(aaps, '').map((a) => a.id)).toEqual([
+      'autre-region',
+      'region-proche',
+      'national-loin',
+      'region-sans-date',
+    ]);
   });
 
   it('échéances proches : 0 à 30 jours', () => {
-    expect(echeancesProches(aaps).map(a => a.id)).toEqual(['region-proche', 'autre-region']);
+    expect(echeancesProches(aaps).map((a) => a.id)).toEqual(['region-proche', 'autre-region']);
   });
 });
 
@@ -113,15 +160,25 @@ describe('ficheConsultable', () => {
   const PROPOSEE = { statut: 'proposee' as const, commentaire: '', date: '2026-11-25', par: '' };
   const VALIDEE = { ...PROPOSEE, statut: 'validee' as const };
   it('candidat : appel publié ou clôturé et contrôlé seulement', () => {
-    expect(ficheConsultable({ status: 'published', validation: VALIDEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(true);
+    expect(ficheConsultable({ status: 'published', validation: VALIDEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(
+      true,
+    );
     expect(ficheConsultable({ status: 'closed', validation: VALIDEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(true);
-    expect(ficheConsultable({ status: 'published', validation: PROPOSEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(false);
+    expect(ficheConsultable({ status: 'published', validation: PROPOSEE, financeurId: 'f1' }, 'porteur', 'p1')).toBe(
+      false,
+    );
     expect(ficheConsultable({ status: 'draft', financeurId: 'f1' }, 'porteur', 'p1')).toBe(false);
-    expect(ficheConsultable({ status: 'archived', validation: VALIDEE, financeurId: 'scraped' }, 'financeur', 'f2')).toBe(false);
+    expect(
+      ficheConsultable({ status: 'archived', validation: VALIDEE, financeurId: 'scraped' }, 'financeur', 'f2'),
+    ).toBe(false);
   });
   it('administrateur et financeur auteur : toutes leurs fiches, pour l’aperçu', () => {
-    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'scraped' }, 'admin', 'a1')).toBe(true);
-    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'f1' }, 'financeur', 'f1')).toBe(true);
+    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'scraped' }, 'admin', 'a1')).toBe(
+      true,
+    );
+    expect(ficheConsultable({ status: 'draft', validation: PROPOSEE, financeurId: 'f1' }, 'financeur', 'f1')).toBe(
+      true,
+    );
   });
   it('candidature fermée sur une fiche non contrôlée, même publiée', () => {
     expect(candidatureOuverte({ status: 'published', deadline: null, validation: PROPOSEE })).toBe(false);

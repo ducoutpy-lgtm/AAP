@@ -25,11 +25,12 @@ export function RoleGuard({ children, allowedRoles }: RoleGuardProps) {
 
   if (!allowedRoles.includes(userProfile.userType)) {
     // Redirection vers le dashboard approprié
-    const redirectPath = userProfile.userType === 'porteur'
-      ? '/dashboard/porteur'
-      : userProfile.userType === 'financeur'
-      ? '/dashboard/financeur'
-      : '/admin';
+    const redirectPath =
+      userProfile.userType === 'porteur'
+        ? '/dashboard/porteur'
+        : userProfile.userType === 'financeur'
+          ? '/dashboard/financeur'
+          : '/admin';
 
     return <Navigate to={redirectPath} replace />;
   }

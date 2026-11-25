@@ -3,7 +3,9 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-interface Etat { erreur: Error | null }
+interface Etat {
+  erreur: Error | null;
+}
 
 export class LimiteErreur extends Component<{ children: ReactNode }, Etat> {
   state: Etat = { erreur: null };
@@ -13,7 +15,7 @@ export class LimiteErreur extends Component<{ children: ReactNode }, Etat> {
   }
 
   componentDidCatch(erreur: Error, info: ErrorInfo) {
-    console.error('Erreur d\'affichage :', erreur, info.componentStack);
+    console.error("Erreur d'affichage :", erreur, info.componentStack);
   }
 
   render() {
@@ -22,9 +24,15 @@ export class LimiteErreur extends Component<{ children: ReactNode }, Etat> {
       <div className="min-h-[60vh] flex items-center justify-center p-8">
         <div className="max-w-lg text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-3">Cette page a rencontré une erreur</h1>
-          <p className="text-gray-600 mb-2">Le reste de l'application fonctionne. Le détail technique a été noté pour correction.</p>
+          <p className="text-gray-600 mb-2">
+            Le reste de l'application fonctionne. Le détail technique a été noté pour correction.
+          </p>
           <p className="text-xs text-gray-400 mb-6 break-words">{this.state.erreur.message}</p>
-          <Link to="/" className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-medium" onClick={() => this.setState({ erreur: null })}>
+          <Link
+            to="/"
+            className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-medium"
+            onClick={() => this.setState({ erreur: null })}
+          >
             Retour à l'accueil
           </Link>
         </div>

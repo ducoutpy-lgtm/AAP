@@ -43,7 +43,9 @@ export interface CreateAapData {
 // Bloc de validation d'un appel saisi ou modifié par un financeur (plan niveau A, lot 1.2, décision « Validation admin »
 // du 2026-11-24) : « Proposée », sans relecteur ; l'appel ne paraît qu'après validation par l'administrateur
 const aValider = () => ({
-  statut: 'proposee' as const, par: '', date: new Date().toISOString().slice(0, 10),
+  statut: 'proposee' as const,
+  par: '',
+  date: new Date().toISOString().slice(0, 10),
   commentaire: 'Appel saisi par un financeur : à valider avant publication',
 });
 
@@ -82,14 +84,10 @@ export const aapService = {
 
   // Récupérer tous les AAP d'un financeur
   async getFinanceurAaps(financeurId: string): Promise<AAP[]> {
-    const q = query(
-      collection(db, 'aap'),
-      where('financeurId', '==', financeurId),
-      orderBy('createdAt', 'desc')
-    );
+    const q = query(collection(db, 'aap'), where('financeurId', '==', financeurId), orderBy('createdAt', 'desc'));
 
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AAP));
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as AAP);
   },
 
   // Récupérer les AAP publiés (pour la recherche)
@@ -98,11 +96,11 @@ export const aapService = {
       collection(db, 'aap'),
       where('status', '==', 'published'),
       orderBy('publishedAt', 'desc'),
-      limit(limitCount)
+      limit(limitCount),
     );
 
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AAP));
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as AAP);
   },
 
   // Mettre à jour un AAP
@@ -187,41 +185,31 @@ export const aapService = {
     budgetMin?: number;
     budgetMax?: number;
   }): Promise<AAP[]> {
-    const q = query(
-      collection(db, 'aap'),
-      where('status', '==', 'published'),
-      orderBy('publishedAt', 'desc')
-    );
+    const q = query(collection(db, 'aap'), where('status', '==', 'published'), orderBy('publishedAt', 'desc'));
 
     // Note: Firestore a des limitations sur les requêtes complexes
     // Pour une recherche plus avancée, il faudrait utiliser Algolia ou Elasticsearch
 
     const snapshot = await getDocs(q);
-    let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AAP));
+    let results = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as AAP);
 
     // Filtrage côté client pour les critères complexes
     if (filters.sectors && filters.sectors.length > 0) {
-      results = results.filter(aap =>
-        aap.sectorsTargeted.some(sector => filters.sectors!.includes(sector))
-      );
+      results = results.filter((aap) => aap.sectorsTargeted.some((sector) => filters.sectors!.includes(sector)));
     }
 
     if (filters.territories && filters.territories.length > 0) {
-      results = results.filter(aap =>
-        aap.territoriesEligible.some(territory => filters.territories!.includes(territory))
+      results = results.filter((aap) =>
+        aap.territoriesEligible.some((territory) => filters.territories!.includes(territory)),
       );
     }
 
     if (filters.budgetMin !== undefined) {
-      results = results.filter(aap =>
-        aap.budgetMax === undefined || aap.budgetMax >= filters.budgetMin!
-      );
+      results = results.filter((aap) => aap.budgetMax === undefined || aap.budgetMax >= filters.budgetMin!);
     }
 
     if (filters.budgetMax !== undefined) {
-      results = results.filter(aap =>
-        aap.budgetMin === undefined || aap.budgetMin <= filters.budgetMax!
-      );
+      results = results.filter((aap) => aap.budgetMin === undefined || aap.budgetMin <= filters.budgetMax!);
     }
 
     return results;

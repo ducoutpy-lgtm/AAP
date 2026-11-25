@@ -45,15 +45,42 @@ export interface FormulaireFinanceur {
 }
 
 export const FORMULAIRE_PORTEUR_VIDE: FormulairePorteur = {
-  structureName: '', siret: '', structureType: '', secteurActivite: '', domainesIntervention: [],
-  city: '', postalCode: '', region: '', firstName: '', lastName: '', phone: '', teamSize: '', website: '', description: '',
-  typeEtablissement: '', tailleTranche: '', budgetTranche: '', publics: [],
-  objetsProjet: [], anneeOuverture: '', rayonAction: '',
+  structureName: '',
+  siret: '',
+  structureType: '',
+  secteurActivite: '',
+  domainesIntervention: [],
+  city: '',
+  postalCode: '',
+  region: '',
+  firstName: '',
+  lastName: '',
+  phone: '',
+  teamSize: '',
+  website: '',
+  description: '',
+  typeEtablissement: '',
+  tailleTranche: '',
+  budgetTranche: '',
+  publics: [],
+  objetsProjet: [],
+  anneeOuverture: '',
+  rayonAction: '',
 };
 
 export const FORMULAIRE_FINANCEUR_VIDE: FormulaireFinanceur = {
-  organisationName: '', organisationType: '', sectorsSupported: [],
-  city: '', postalCode: '', region: '', firstName: '', lastName: '', phone: '', position: '', website: '', description: '',
+  organisationName: '',
+  organisationType: '',
+  sectorsSupported: [],
+  city: '',
+  postalCode: '',
+  region: '',
+  firstName: '',
+  lastName: '',
+  phone: '',
+  position: '',
+  website: '',
+  description: '',
 };
 
 function texte(valeur: number | string | null | undefined): string {

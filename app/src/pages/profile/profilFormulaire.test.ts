@@ -28,13 +28,21 @@ describe('formulairePorteurDepuisProfil', () => {
 
   it('un profil antérieur au parcours a les nouveaux champs vides ; un profil du parcours les reprend', () => {
     const ancien: PorteurProfile = {
-      userId: 'u1', structureName: 'X', structureType: 'association', secteurActivite: 'sante',
-      domainesIntervention: [], updatedAt: new Date('2026-10-01'),
+      userId: 'u1',
+      structureName: 'X',
+      structureType: 'association',
+      secteurActivite: 'sante',
+      domainesIntervention: [],
+      updatedAt: new Date('2026-10-01'),
     };
     expect(formulairePorteurDepuisProfil(ancien).typeEtablissement).toBe('');
     expect(formulairePorteurDepuisProfil(ancien).publics).toEqual([]);
     const nouveau: PorteurProfile = {
-      ...ancien, typeEtablissement: 'ehpad', tailleTranche: '51-200', budgetTranche: null, publics: ['personnes-agees'],
+      ...ancien,
+      typeEtablissement: 'ehpad',
+      tailleTranche: '51-200',
+      budgetTranche: null,
+      publics: ['personnes-agees'],
     };
     const f = formulairePorteurDepuisProfil(nouveau);
     expect(f.typeEtablissement).toBe('ehpad');
@@ -43,7 +51,12 @@ describe('formulairePorteurDepuisProfil', () => {
     expect(f.publics).toEqual(['personnes-agees']);
     expect(f.objetsProjet).toEqual([]);
     expect(f.anneeOuverture).toBe('');
-    const precise: PorteurProfile = { ...nouveau, objetsProjet: ['immobilier'], anneeOuverture: 1998, rayonAction: 'regional' };
+    const precise: PorteurProfile = {
+      ...nouveau,
+      objetsProjet: ['immobilier'],
+      anneeOuverture: 1998,
+      rayonAction: 'regional',
+    };
     expect(formulairePorteurDepuisProfil(precise).objetsProjet).toEqual(['immobilier']);
     expect(formulairePorteurDepuisProfil(precise).anneeOuverture).toBe('1998');
     expect(formulairePorteurDepuisProfil(precise).rayonAction).toBe('regional');
@@ -69,14 +82,13 @@ describe('formulaireFinanceurDepuisProfil', () => {
   });
 });
 
-
 // Décision 41 du 2026-11-24 : le parcours d'intégration enregistre les régions d'outre-mer, mais Mon profil ne
 // proposait que les 13 régions de métropole ; le champ obligatoire bloquait l'enregistrement.
 describe('régions de Mon profil', () => {
   it('toute région déduite du code postal par le parcours est proposée', async () => {
     const { REGIONS } = await import('./profilFormulaire');
     const { regionDepuisCodePostal } = await import('../onboarding/parcours');
-    const proposees = new Set(REGIONS.map(r => r.value));
+    const proposees = new Set(REGIONS.map((r) => r.value));
     for (const cp of ['97100', '97200', '97300', '97400', '97600', '75001', '13001']) {
       expect(proposees.has(regionDepuisCodePostal(cp))).toBe(true);
     }

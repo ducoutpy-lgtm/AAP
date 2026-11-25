@@ -15,7 +15,7 @@ export function useMarquerDemarrage(cle: ActionDemarrage) {
     if (!currentUser || !userProfile || dejaFaite) return;
     setDoc(doc(db, 'users', currentUser.uid), { demarrage: { [cle]: true } }, { merge: true })
       .then(() => refreshUserProfile())
-      .catch(err => console.error('Liste de démarrage non mise à jour :', err));
+      .catch((err) => console.error('Liste de démarrage non mise à jour :', err));
     // refreshUserProfile est redéfinie à chaque rendu ; l'effet ne doit courir qu'au changement de compte ou d'action
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid, userProfile?.uid, cle, dejaFaite]);

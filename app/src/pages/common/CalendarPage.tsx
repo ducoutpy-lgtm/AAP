@@ -9,7 +9,18 @@ import { visiblePubliquement } from '../../utils/relecture';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
-import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameMonth, isSameDay, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
+import {
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  format,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+  startOfWeek,
+  endOfWeek,
+} from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { MessageErreur } from '../../components/ui/MessageErreur';
 import { activableAuClavier } from '../../utils/clavier';
@@ -53,11 +64,11 @@ export default function CalendarPage() {
           collection(db, 'aap'),
           where('status', '==', 'published'),
           where('deadline', '>=', Timestamp.fromDate(start)),
-          where('deadline', '<=', Timestamp.fromDate(end))
+          where('deadline', '<=', Timestamp.fromDate(end)),
         );
 
         const snapshot = await getDocs(aapsQuery);
-        snapshot.docs.forEach(doc => {
+        snapshot.docs.forEach((doc) => {
           const aap = doc.data() as AAP;
           if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher (deadline nullable depuis le lot 0)
           // Mêmes fiches que la recherche : une fiche non contrôlée n'est pas visible des candidats (corrections-relecture 3.3)
@@ -84,11 +95,11 @@ export default function CalendarPage() {
           where('financeurId', '==', currentUser.uid),
           where('status', '==', 'published'),
           where('deadline', '>=', Timestamp.fromDate(start)),
-          where('deadline', '<=', Timestamp.fromDate(end))
+          where('deadline', '<=', Timestamp.fromDate(end)),
         );
 
         const snapshot = await getDocs(aapsQuery);
-        snapshot.docs.forEach(doc => {
+        snapshot.docs.forEach((doc) => {
           const aap = doc.data() as AAP;
           if (!aap.deadline) return; // appel sans date de clôture : pas d'échéance à afficher
           const deadline = aap.deadline instanceof Date ? aap.deadline : aap.deadline.toDate();
@@ -119,7 +130,7 @@ export default function CalendarPage() {
   };
 
   const getEventsForDate = (date: Date): DeadlineEvent[] => {
-    return events.filter(event => isSameDay(event.deadline, date));
+    return events.filter((event) => isSameDay(event.deadline, date));
   };
 
   const getUrgencyColor = (urgency: DeadlineEvent['urgency']): string => {
@@ -160,9 +171,7 @@ export default function CalendarPage() {
             <CalendarIcon className="h-8 w-8 text-primary-600" />
             <h1 className="text-3xl font-bold text-gray-900">Calendrier des Deadlines</h1>
           </div>
-          <p className="text-gray-600">
-            Suivez toutes les dates limites de vos AAP
-          </p>
+          <p className="text-gray-600">Suivez toutes les dates limites de vos AAP</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -171,28 +180,20 @@ export default function CalendarPage() {
             <Card className="p-6">
               {/* Month navigation */}
               <div className="flex items-center justify-between mb-6">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-                >
+                <Button variant="ghost" size="sm" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
                 <h2 className="text-xl font-semibold text-gray-900">
                   {format(currentMonth, 'MMMM yyyy', { locale: fr })}
                 </h2>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                >
+                <Button variant="ghost" size="sm" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               </div>
 
               {/* Week days */}
               <div className="grid grid-cols-7 gap-2 mb-2">
-                {weekDays.map(day => (
+                {weekDays.map((day) => (
                   <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
                     {day}
                   </div>
@@ -216,19 +217,17 @@ export default function CalendarPage() {
                         !isCurrentMonth
                           ? 'bg-gray-50 text-gray-400'
                           : isSelected
-                          ? 'bg-primary-50 border-primary-500'
-                          : isToday
-                          ? 'bg-blue-50 border-blue-500'
-                          : 'bg-white hover:bg-gray-50'
+                            ? 'bg-primary-50 border-primary-500'
+                            : isToday
+                              ? 'bg-blue-50 border-blue-500'
+                              : 'bg-white hover:bg-gray-50'
                       }`}
                     >
-                      <div className={`text-sm font-medium mb-1 ${
-                        isToday ? 'text-blue-600' : 'text-gray-900'
-                      }`}>
+                      <div className={`text-sm font-medium mb-1 ${isToday ? 'text-blue-600' : 'text-gray-900'}`}>
                         {format(day, 'd')}
                       </div>
                       <div className="space-y-1">
-                        {dayEvents.slice(0, 2).map(event => (
+                        {dayEvents.slice(0, 2).map((event) => (
                           <div
                             key={event.id}
                             className={`text-xs px-1 py-0.5 rounded ${getUrgencyColor(event.urgency)} text-white truncate`}
@@ -236,11 +235,7 @@ export default function CalendarPage() {
                             {event.title}
                           </div>
                         ))}
-                        {dayEvents.length > 2 && (
-                          <div className="text-xs text-gray-500">
-                            +{dayEvents.length - 2}
-                          </div>
-                        )}
+                        {dayEvents.length > 2 && <div className="text-xs text-gray-500">+{dayEvents.length - 2}</div>}
                       </div>
                     </div>
                   );
@@ -280,7 +275,7 @@ export default function CalendarPage() {
                   <p className="text-sm text-gray-500">Aucun événement</p>
                 ) : (
                   <div className="space-y-2">
-                    {getEventsForDate(selectedDate).map(event => (
+                    {getEventsForDate(selectedDate).map((event) => (
                       <div
                         key={event.id}
                         onClick={() => navigate(`/aap/${event.id}`)}
@@ -291,9 +286,7 @@ export default function CalendarPage() {
                           <div className={`w-2 h-2 rounded-full mt-1.5 ${getUrgencyColor(event.urgency)}`}></div>
                           <div className="flex-1">
                             <p className="text-sm font-medium text-gray-900">{event.title}</p>
-                            <p className="text-xs text-gray-500">
-                              {format(event.deadline, 'HH:mm', { locale: fr })}
-                            </p>
+                            <p className="text-xs text-gray-500">{format(event.deadline, 'HH:mm', { locale: fr })}</p>
                           </div>
                         </div>
                       </div>
@@ -307,30 +300,24 @@ export default function CalendarPage() {
             <Card className="p-4 bg-error-50 border-error-200">
               <div className="flex items-center gap-2 mb-3">
                 <AlertCircle className="h-5 w-5 text-error-600" />
-                <h3 className="text-sm font-semibold text-error-900">
-                  Deadlines urgentes
-                </h3>
+                <h3 className="text-sm font-semibold text-error-900">Deadlines urgentes</h3>
               </div>
               <div className="space-y-2">
                 {events
-                  .filter(e => e.urgency === 'high')
+                  .filter((e) => e.urgency === 'high')
                   .slice(0, 5)
-                  .map(event => (
+                  .map((event) => (
                     <div
                       key={event.id}
                       onClick={() => navigate(`/aap/${event.id}`)}
                       {...activableAuClavier(() => navigate(`/aap/${event.id}`))}
                       className="p-2 bg-white border border-error-200 rounded hover:shadow cursor-pointer"
                     >
-                      <p className="text-sm font-medium text-gray-900 truncate">
-                        {event.title}
-                      </p>
-                      <p className="text-xs text-error-600">
-                        {format(event.deadline, 'dd MMM yyyy', { locale: fr })}
-                      </p>
+                      <p className="text-sm font-medium text-gray-900 truncate">{event.title}</p>
+                      <p className="text-xs text-error-600">{format(event.deadline, 'dd MMM yyyy', { locale: fr })}</p>
                     </div>
                   ))}
-                {events.filter(e => e.urgency === 'high').length === 0 && (
+                {events.filter((e) => e.urgency === 'high').length === 0 && (
                   <p className="text-sm text-error-800">Aucune deadline urgente</p>
                 )}
               </div>

@@ -25,7 +25,7 @@ const journal: LigneJournal[] = [
 describe('resumerParCompte', () => {
   it('compte les actions, trouve la dernière connexion, liste les dernières actions, trie par activité récente', () => {
     const r = resumerParCompte(comptes, journal);
-    expect(r.map(x => x.uid)).toEqual(['a', 'b', 'c']);
+    expect(r.map((x) => x.uid)).toEqual(['a', 'b', 'c']);
     const a = r[0];
     expect([a.connexions, a.recherches, a.fiches, a.candidatures, a.appels]).toEqual([2, 1, 2, 1, 0]);
     expect(a.derniereConnexion).toEqual(jour(0));
@@ -45,14 +45,22 @@ describe('resumerParCompte', () => {
 
 describe('chiffresDepuis', () => {
   it('ne compte que la période et les comptes distincts', () => {
-    expect(chiffresDepuis(journal, jour(7))).toEqual({ comptesActifs: 1, connexions: 2, recherches: 1, fiches: 2, candidatures: 1 });
+    expect(chiffresDepuis(journal, jour(7))).toEqual({
+      comptesActifs: 1,
+      connexions: 2,
+      recherches: 1,
+      fiches: 2,
+      candidatures: 1,
+    });
     expect(chiffresDepuis(journal, jour(30)).comptesActifs).toBe(2);
   });
 });
 
 describe('libelleFiltres', () => {
   it('joint les libellés, ou dit sans filtre', () => {
-    expect(libelleFiltres([{ libelle: 'Normandie' }, { libelle: 'Bientôt clôturé' }])).toBe('Normandie · Bientôt clôturé');
+    expect(libelleFiltres([{ libelle: 'Normandie' }, { libelle: 'Bientôt clôturé' }])).toBe(
+      'Normandie · Bientôt clôturé',
+    );
     expect(libelleFiltres([])).toBe('sans filtre');
   });
 });

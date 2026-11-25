@@ -42,15 +42,9 @@ export default function SelectPlanPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-md text-center">
           <AlertCircle className="h-16 w-16 text-primary-600 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Abonnement actif
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Vous avez déjà un abonnement actif.
-          </p>
-          <Button onClick={() => navigate('/profil')}>
-            Gérer mon abonnement
-          </Button>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Abonnement actif</h2>
+          <p className="text-gray-600 mb-6">Vous avez déjà un abonnement actif.</p>
+          <Button onClick={() => navigate('/profil')}>Gérer mon abonnement</Button>
         </Card>
       </div>
     );
@@ -95,37 +89,34 @@ export default function SelectPlanPage() {
     navigate(dashboardPath);
   };
 
-  const features = userType === 'porteur' ? [
-    'Recherche illimitée d\'AAP',
-    'Alertes personnalisées',
-    'Candidatures en ligne',
-    'Outil de préqualification',
-    'Suivi des candidatures',
-    'Messagerie avec financeurs',
-  ] : [
-    'Publication d\'AAP illimitée',
-    'Gestion des candidatures',
-    'Préqualification automatique',
-    'Statistiques avancées',
-    'Messagerie avec porteurs',
-    'Support prioritaire',
-  ];
+  const features =
+    userType === 'porteur'
+      ? [
+          "Recherche illimitée d'AAP",
+          'Alertes personnalisées',
+          'Candidatures en ligne',
+          'Outil de préqualification',
+          'Suivi des candidatures',
+          'Messagerie avec financeurs',
+        ]
+      : [
+          "Publication d'AAP illimitée",
+          'Gestion des candidatures',
+          'Préqualification automatique',
+          'Statistiques avancées',
+          'Messagerie avec porteurs',
+          'Support prioritaire',
+        ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Choisissez votre formule
-          </h1>
-          <p className="text-xl text-gray-600">
-            {TRIAL_DAYS} jours d'essai gratuit • Aucune carte bancaire requise
-          </p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Choisissez votre formule</h1>
+          <p className="text-xl text-gray-600">{TRIAL_DAYS} jours d'essai gratuit • Aucune carte bancaire requise</p>
           {userProfile.subscriptionStatus === 'trial' && userProfile.trialEndsAt && (
-            <p className="mt-2 text-sm text-primary-600">
-              Votre période d'essai est en cours
-            </p>
+            <p className="mt-2 text-sm text-primary-600">Votre période d'essai est en cours</p>
           )}
         </div>
 
@@ -149,14 +140,10 @@ export default function SelectPlanPage() {
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Mensuel</h3>
               <div className="mb-4">
-                <span className="text-5xl font-bold text-gray-900">
-                  {plans.monthly.amount}€
-                </span>
+                <span className="text-5xl font-bold text-gray-900">{plans.monthly.amount}€</span>
                 <span className="text-gray-600">/mois</span>
               </div>
-              <p className="text-sm text-gray-500">
-                Facturation mensuelle • Annulable à tout moment
-              </p>
+              <p className="text-sm text-gray-500">Facturation mensuelle • Annulable à tout moment</p>
             </div>
 
             <ul className="space-y-3 mb-8">
@@ -168,12 +155,7 @@ export default function SelectPlanPage() {
               ))}
             </ul>
 
-            <Button
-              fullWidth
-              onClick={() => handleSelectPlan('monthly')}
-              loading={loading === 'monthly'}
-              disabled
-            >
+            <Button fullWidth onClick={() => handleSelectPlan('monthly')} loading={loading === 'monthly'} disabled>
               Paiement bientôt disponible
             </Button>
           </Card>
@@ -189,19 +171,16 @@ export default function SelectPlanPage() {
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Annuel</h3>
               <div className="mb-2">
-                <span className="text-5xl font-bold text-gray-900">
-                  {plans.annual.amount}€
-                </span>
+                <span className="text-5xl font-bold text-gray-900">{plans.annual.amount}€</span>
                 <span className="text-gray-600">/an</span>
               </div>
               <div className="text-sm mb-4">
                 <span className="text-gray-500">Soit </span>
-                <span className="text-primary-600 font-semibold">
-                  {(plans.annual.amount / 12).toFixed(2)}€/mois
-                </span>
+                <span className="text-primary-600 font-semibold">{(plans.annual.amount / 12).toFixed(2)}€/mois</span>
               </div>
               <p className="text-sm text-gray-500">
-                Facturation annuelle • Économisez {((1 - plans.annual.amount / (plans.monthly.amount * 12)) * 100).toFixed(0)}%
+                Facturation annuelle • Économisez{' '}
+                {((1 - plans.annual.amount / (plans.monthly.amount * 12)) * 100).toFixed(0)}%
               </p>
             </div>
 
@@ -214,12 +193,7 @@ export default function SelectPlanPage() {
               ))}
             </ul>
 
-            <Button
-              fullWidth
-              onClick={() => handleSelectPlan('annual')}
-              loading={loading === 'annual'}
-              disabled
-            >
+            <Button fullWidth onClick={() => handleSelectPlan('annual')} loading={loading === 'annual'} disabled>
               Paiement bientôt disponible
             </Button>
           </Card>
@@ -228,10 +202,7 @@ export default function SelectPlanPage() {
         {/* Skip for now (if in trial) */}
         {userProfile.subscriptionStatus === 'trial' && (
           <div className="text-center">
-            <button
-              onClick={handleSkipTrial}
-              className="text-gray-600 hover:text-gray-900 underline"
-            >
+            <button onClick={handleSkipTrial} className="text-gray-600 hover:text-gray-900 underline">
               Continuer avec la période d'essai
             </button>
           </div>
@@ -240,9 +211,7 @@ export default function SelectPlanPage() {
         {/* Features comparison */}
         <div className="max-w-4xl mx-auto mt-12">
           <Card>
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Toutes les fonctionnalités incluses
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Toutes les fonctionnalités incluses</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center">
@@ -259,9 +228,7 @@ export default function SelectPlanPage() {
           <p className="mb-2">
             <strong>Questions fréquentes:</strong>
           </p>
-          <p>
-            • Aucun engagement • Annulation en 1 clic • Données sécurisées • Support 7j/7
-          </p>
+          <p>• Aucun engagement • Annulation en 1 clic • Données sécurisées • Support 7j/7</p>
         </div>
       </div>
     </div>

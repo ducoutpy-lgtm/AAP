@@ -97,75 +97,308 @@ function App() {
         <Routes>
           {/* Toutes les pages sous le gabarit commun : en-tête ou barre latérale, retour, pied de page, remontée en haut */}
           <Route element={<Gabarit />}>
-          {/* Routes publiques */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/fonctionnalites" element={<FonctionnalitesPage />} />
-          <Route path="/tarifs" element={<TarifsPage />} />
-          <Route path="/financeurs" element={<FinanceursPage />} />
-          <Route path="/faq" element={<FaqPage />} />
-          <Route path="/a-propos" element={<AProposPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          {/* Mot de passe oublié (changement acces-administration) : e-mail et saisie du nouveau mot de passe gérés par Firebase */}
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+            {/* Routes publiques */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/fonctionnalites" element={<FonctionnalitesPage />} />
+            <Route path="/tarifs" element={<TarifsPage />} />
+            <Route path="/financeurs" element={<FinanceursPage />} />
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/a-propos" element={<AProposPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            {/* Mot de passe oublié (changement acces-administration) : e-mail et saisie du nouveau mot de passe gérés par Firebase */}
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-          {/* Profil à compléter après l'inscription */}
-          <Route path="/complete-profile" element={<ProtectedRoute><CompleteProfile /></ProtectedRoute>} />
+            {/* Profil à compléter après l'inscription */}
+            <Route
+              path="/complete-profile"
+              element={
+                <ProtectedRoute>
+                  <CompleteProfile />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Abonnement : écrans présents, paiement Stripe non branché (fonctions serveur non déployées) */}
-          <Route path="/abonnement/choisir" element={<ProtectedRoute><SelectPlanPage /></ProtectedRoute>} />
-          <Route path="/abonnement/succes" element={<ProtectedRoute><SubscriptionSuccess /></ProtectedRoute>} />
-          <Route path="/abonnement/annule" element={<ProtectedRoute><SubscriptionCancelled /></ProtectedRoute>} />
+            {/* Abonnement : écrans présents, paiement Stripe non branché (fonctions serveur non déployées) */}
+            <Route
+              path="/abonnement/choisir"
+              element={
+                <ProtectedRoute>
+                  <SelectPlanPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/abonnement/succes"
+              element={
+                <ProtectedRoute>
+                  <SubscriptionSuccess />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/abonnement/annule"
+              element={
+                <ProtectedRoute>
+                  <SubscriptionCancelled />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Consultation publique : les AAP publiés sont lisibles sans compte (changement consultation-aap-sans-compte) */}
-          {/* Depuis le 2026-10-20 (décision de Monsieur DUCOUT) la recherche et les fiches demandent un compte connecté */}
-          <Route path="/aap/search" element={<ProtectedRoute><SearchAapPage /></ProtectedRoute>} />
-          <Route path="/aap/:aapId" element={<ProtectedRoute><AapDetailPage /></ProtectedRoute>} />
+            {/* Consultation publique : les AAP publiés sont lisibles sans compte (changement consultation-aap-sans-compte) */}
+            {/* Depuis le 2026-10-20 (décision de Monsieur DUCOUT) la recherche et les fiches demandent un compte connecté */}
+            <Route
+              path="/aap/search"
+              element={
+                <ProtectedRoute>
+                  <SearchAapPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/aap/:aapId"
+              element={
+                <ProtectedRoute>
+                  <AapDetailPage />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Porteur */}
-          <Route path="/dashboard/porteur" element={<RoutePourRole roles={['porteur']}><PorteurDashboard /></RoutePourRole>} />
-          <Route path="/aap/:aapId/candidater" element={<RoutePourRole roles={['porteur']}><ApplicationFormPage /></RoutePourRole>} />
-          <Route path="/mes-candidatures" element={<RoutePourRole roles={['porteur']}><MyApplicationsPage /></RoutePourRole>} />
-          <Route path="/candidature/:applicationId" element={<RoutePourRole roles={['porteur']}><ApplicationDetailPage /></RoutePourRole>} />
-          <Route path="/recherches-sauvegardees" element={<RoutePourRole roles={['porteur']}><SavedSearchesPage /></RoutePourRole>} />
-          <Route path="/recommandations" element={<RoutePourRole roles={['porteur']}><RecommendationsPage /></RoutePourRole>} />
+            {/* Porteur */}
+            <Route
+              path="/dashboard/porteur"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <PorteurDashboard />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/aap/:aapId/candidater"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <ApplicationFormPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/mes-candidatures"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <MyApplicationsPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/candidature/:applicationId"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <ApplicationDetailPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/recherches-sauvegardees"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <SavedSearchesPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/recommandations"
+              element={
+                <RoutePourRole roles={['porteur']}>
+                  <RecommendationsPage />
+                </RoutePourRole>
+              }
+            />
 
-          {/* Financeur */}
-          <Route path="/dashboard/financeur" element={<RoutePourRole roles={['financeur']}><FinanceurDashboard /></RoutePourRole>} />
-          <Route path="/candidatures-recues" element={<RoutePourRole roles={['financeur']}><CandidaturesRecuesPage /></RoutePourRole>} />
-          <Route path="/mes-aap" element={<RoutePourRole roles={['financeur']}><MyAapPage /></RoutePourRole>} />
-          <Route path="/aap/nouveau" element={<RoutePourRole roles={['financeur']}><CreateAapPage /></RoutePourRole>} />
-          {/* Édition : le financeur auteur, et l'administrateur pour corriger toute fiche depuis /admin/aaps (la route ne
+            {/* Financeur */}
+            <Route
+              path="/dashboard/financeur"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <FinanceurDashboard />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/candidatures-recues"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <CandidaturesRecuesPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/mes-aap"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <MyAapPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/aap/nouveau"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <CreateAapPage />
+                </RoutePourRole>
+              }
+            />
+            {/* Édition : le financeur auteur, et l'administrateur pour corriger toute fiche depuis /admin/aaps (la route ne
               l'admettait pas : renvoi vers /admin, corrections-relecture 1.4, 2026-11-20) */}
-          <Route path="/aap/:aapId/edit" element={<RoutePourRole roles={['financeur', 'admin']}><EditAapPage /></RoutePourRole>} />
-          <Route path="/aap/:aapId/candidatures" element={<RoutePourRole roles={['financeur']}><ViewApplicationsPage /></RoutePourRole>} />
-          <Route path="/aap/:aapId/candidature/:applicationId/evaluer" element={<RoutePourRole roles={['financeur']}><EvaluateApplicationPage /></RoutePourRole>} />
-          <Route path="/statistiques" element={<RoutePourRole roles={['financeur']}><StatisticsPage /></RoutePourRole>} />
+            <Route
+              path="/aap/:aapId/edit"
+              element={
+                <RoutePourRole roles={['financeur', 'admin']}>
+                  <EditAapPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/aap/:aapId/candidatures"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <ViewApplicationsPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/aap/:aapId/candidature/:applicationId/evaluer"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <EvaluateApplicationPage />
+                </RoutePourRole>
+              }
+            />
+            <Route
+              path="/statistiques"
+              element={
+                <RoutePourRole roles={['financeur']}>
+                  <StatisticsPage />
+                </RoutePourRole>
+              }
+            />
 
-          {/* Communs aux comptes connectés */}
-          <Route path="/profil" element={<ProtectedRoute><ProfilPage /></ProtectedRoute>} />
-          <Route path="/calendrier" element={<ProtectedRoute><SubscriptionGuard><CalendarPage /></SubscriptionGuard></ProtectedRoute>} />
-          <Route path="/messages" element={<ProtectedRoute><SubscriptionGuard><MessagesPage /></SubscriptionGuard></ProtectedRoute>} />
-          <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
-          <Route path="/retour" element={<ProtectedRoute><RetourPage /></ProtectedRoute>} />
+            {/* Communs aux comptes connectés */}
+            <Route
+              path="/profil"
+              element={
+                <ProtectedRoute>
+                  <ProfilPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/calendrier"
+              element={
+                <ProtectedRoute>
+                  <SubscriptionGuard>
+                    <CalendarPage />
+                  </SubscriptionGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/messages"
+              element={
+                <ProtectedRoute>
+                  <SubscriptionGuard>
+                    <MessagesPage />
+                  </SubscriptionGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <ProtectedRoute>
+                  <NotificationsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/retour"
+              element={
+                <ProtectedRoute>
+                  <RetourPage />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Administration (sans garde d'abonnement) */}
-          <Route path="/admin" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><AdminDashboard /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/utilisateurs" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><ManageUsersPage /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/aaps" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><ManageAAPsPage /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/statistiques" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><GlobalStatisticsPage /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/testeurs" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><TesteursPage /></RoleGuard></ProtectedRoute>} />
-          <Route path="/admin/couts-ia" element={<ProtectedRoute><RoleGuard allowedRoles={['admin']}><CoutsExternesPage /></RoleGuard></ProtectedRoute>} />
+            {/* Administration (sans garde d'abonnement) */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <AdminDashboard />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/utilisateurs"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <ManageUsersPage />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/aaps"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <ManageAAPsPage />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/statistiques"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <GlobalStatisticsPage />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/testeurs"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <TesteursPage />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/couts-ia"
+              element={
+                <ProtectedRoute>
+                  <RoleGuard allowedRoles={['admin']}>
+                    <CoutsExternesPage />
+                  </RoleGuard>
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Pages légales (rédigées le 2026-10-19, changement degel-application-complete) */}
-          <Route path="/cgu" element={<CguPage />} />
-          <Route path="/confidentialite" element={<ConfidentialitePage />} />
-          <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+            {/* Pages légales (rédigées le 2026-10-19, changement degel-application-complete) */}
+            <Route path="/cgu" element={<CguPage />} />
+            <Route path="/confidentialite" element={<ConfidentialitePage />} />
+            <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
 
-          {/* 404 */}
-          {/* Page 404 (plan niveau A, lot 3.7) ; les écrans vides des paiements et des paramètres sont retirés */}
-          <Route path="*" element={<PageIntrouvable />} />
+            {/* 404 */}
+            {/* Page 404 (plan niveau A, lot 3.7) ; les écrans vides des paiements et des paramètres sont retirés */}
+            <Route path="*" element={<PageIntrouvable />} />
           </Route>
         </Routes>
       </AuthProvider>

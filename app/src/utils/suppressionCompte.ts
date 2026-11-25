@@ -4,12 +4,16 @@
 // Identifiant mis à la place du candidat sur une candidature gardée par un financeur inscrit
 export const ANONYME = 'compte-supprime';
 
-interface CandidatureResumee { id: string; financeurId: string; status: string }
+interface CandidatureResumee {
+  id: string;
+  financeurId: string;
+  status: string;
+}
 
 // Candidatures aux appels importés et brouillons : supprimées ; envoyées à un financeur inscrit : gardées sans identifiant
 export function planDeSuppression(candidatures: CandidatureResumee[]): { supprimer: string[]; anonymiser: string[] } {
-  const supprimer = candidatures.filter(c => c.financeurId === 'scraped' || c.status === 'draft').map(c => c.id);
-  return { supprimer, anonymiser: candidatures.map(c => c.id).filter(id => !supprimer.includes(id)) };
+  const supprimer = candidatures.filter((c) => c.financeurId === 'scraped' || c.status === 'draft').map((c) => c.id);
+  return { supprimer, anonymiser: candidatures.map((c) => c.id).filter((id) => !supprimer.includes(id)) };
 }
 
 // Firebase n'efface un compte qu'après une connexion récente : cinq minutes au plus

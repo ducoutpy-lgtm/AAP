@@ -11,7 +11,18 @@ import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import {
-  ExternalLink, Search, Calendar, Building, MapPin, Euro, Heart, FileText, X, Link2, UserCheck } from 'lucide-react';
+  ExternalLink,
+  Search,
+  Calendar,
+  Building,
+  MapPin,
+  Euro,
+  Heart,
+  FileText,
+  X,
+  Link2,
+  UserCheck,
+} from 'lucide-react';
 import { getDaysUntilDeadline, isClosed, deadlineLabel } from '../../utils/deadline';
 import { libelleTerritoire, LIBELLES_THEMATIQUES, valeursPresentes } from '../../utils/territoires';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
@@ -20,8 +31,19 @@ import { journaliser } from '../../services/journalService';
 import { libelleFiltres } from '../../utils/journal';
 import { LIBELLES_DESTINATAIRES, LIBELLES_TYPES_APPEL } from '../../utils/qualification';
 import {
-  etiquettesActives, euros, fichesConsultees, FILTRES_VIDES, filtresDepuisParams, rechercheAEnregistrer, resultatsRecherche,
-  filtresDepuisProfil, LIBELLES_STATUT, paramsDepuisFiltres, STATUT_TOUS, statutAppel, totalMontants,
+  etiquettesActives,
+  euros,
+  fichesConsultees,
+  FILTRES_VIDES,
+  filtresDepuisParams,
+  rechercheAEnregistrer,
+  resultatsRecherche,
+  filtresDepuisProfil,
+  LIBELLES_STATUT,
+  paramsDepuisFiltres,
+  STATUT_TOUS,
+  statutAppel,
+  totalMontants,
   type FiltresRecherche,
   type StatutAppel,
 } from '../../utils/recherche';
@@ -29,7 +51,10 @@ import { MessageErreur } from '../../components/ui/MessageErreur';
 
 // Pastille de statut d'une carte (recherche-guidee) : couleur selon l'urgence
 const VARIANT_STATUT: Record<StatutAppel, 'success' | 'warning' | 'gray' | 'primary'> = {
-  ouvert: 'success', 'bientot-clos': 'warning', clos: 'gray', 'sans-date': 'primary',
+  ouvert: 'success',
+  'bientot-clos': 'warning',
+  clos: 'gray',
+  'sans-date': 'primary',
 };
 
 export default function SearchAapPage() {
@@ -72,13 +97,24 @@ export default function SearchAapPage() {
         : 'alerte chaque lundi par courriel';
     try {
       // Une recherche identique déjà enregistrée n'est pas recréée (sinon deux sections identiques dans le courriel)
-      const deja = await getDocs(query(collection(db, 'savedSearches'), where('userId', '==', recherche.userId), where('params', '==', recherche.params)));
+      const deja = await getDocs(
+        query(
+          collection(db, 'savedSearches'),
+          where('userId', '==', recherche.userId),
+          where('params', '==', recherche.params),
+        ),
+      );
       if (!deja.empty) {
         setEnregistrement({ ok: true, texte: `Cette recherche est déjà enregistrée : ${alerte}.` });
         return;
       }
-      await addDoc(collection(db, 'savedSearches'), { ...recherche, createdAt: Timestamp.now(), updatedAt: Timestamp.now() });
-      if (currentUser && userProfile) await journaliser(currentUser.uid, userProfile.userType, 'recherche-sauvegardee', '', recherche.name);
+      await addDoc(collection(db, 'savedSearches'), {
+        ...recherche,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
+      });
+      if (currentUser && userProfile)
+        await journaliser(currentUser.uid, userProfile.userType, 'recherche-sauvegardee', '', recherche.name);
       setEnregistrement({ ok: true, texte: `Recherche « ${recherche.name} » enregistrée : ${alerte}.` });
     } catch (err) {
       console.error('Error saving search:', err);
@@ -90,7 +126,14 @@ export default function SearchAapPage() {
 
   // Journal des actions (suivi-testeurs) : une ligne « recherche » par ouverture de la page, avec les filtres d'arrivée
   useEffect(() => {
-    if (currentUser && userProfile) journaliser(currentUser.uid, userProfile.userType, 'recherche', '', libelleFiltres(etiquettesActives(filtresDepuisParams(searchParams))));
+    if (currentUser && userProfile)
+      journaliser(
+        currentUser.uid,
+        userProfile.userType,
+        'recherche',
+        '',
+        libelleFiltres(etiquettesActives(filtresDepuisParams(searchParams))),
+      );
     // à l'ouverture et au changement de compte seulement
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid, userProfile?.uid]);
@@ -102,14 +145,15 @@ export default function SearchAapPage() {
   useEffect(() => {
     if (!currentUser || userProfile?.userType !== 'porteur') return;
     getDoc(doc(db, 'porteurProfiles', currentUser.uid))
-      .then(snap => {
+      .then((snap) => {
         const region = filtresDepuisProfil(snap.data() as PorteurProfile | undefined).territory ?? '';
         setRegionProfil(region);
         // Arrivée sans filtre : la recherche part du profil (retour de Monsieur DUCOUT du 2026-10-20 : « je devrais
         // n'avoir que ceux qui me concernent ») ; les étiquettes restent retirables d'une croix
-        if (region && searchParams.toString() === '') setSearchParams(paramsDepuisFiltres({ ...FILTRES_VIDES, territory: region }), { replace: true });
+        if (region && searchParams.toString() === '')
+          setSearchParams(paramsDepuisFiltres({ ...FILTRES_VIDES, territory: region }), { replace: true });
       })
-      .catch(err => console.error('Profil porteur non lu :', err));
+      .catch((err) => console.error('Profil porteur non lu :', err));
     // Au montage et au changement de compte seulement : rejouer à chaque frappe écraserait les filtres choisis
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userProfile]);
@@ -121,7 +165,7 @@ export default function SearchAapPage() {
       await navigator.clipboard.writeText(window.location.href);
       setLienCopie('Lien copié');
     } catch {
-      setLienCopie('Copie impossible : copiez l\'adresse de la page');
+      setLienCopie("Copie impossible : copiez l'adresse de la page");
     }
     setTimeout(() => setLienCopie(''), 3000);
   };
@@ -129,8 +173,11 @@ export default function SearchAapPage() {
   // Options des filtres construites à partir des fiches chargées (changement filtres-recherche, 2026-10-14) : les
   // identifiants de territoire écrits par l'import, affichés avec leur libellé ; les financeurs présents (nom canonique
   // écrit par l'import, changement nettoyage-financeurs-territoires) ; les sources (site d'origine de la fiche).
-  const territoiresPresents = valeursPresentes(aaps.flatMap(aap => aap.territoriesEligible ?? []), libelleTerritoire);
-  const financeursPresents = valeursPresentes(aaps.map(aap => aap.financeurName || 'Non spécifié'));
+  const territoiresPresents = valeursPresentes(
+    aaps.flatMap((aap) => aap.territoriesEligible ?? []),
+    libelleTerritoire,
+  );
+  const financeursPresents = valeursPresentes(aaps.map((aap) => aap.financeurName || 'Non spécifié'));
 
   useEffect(() => {
     loadAaps();
@@ -142,15 +189,17 @@ export default function SearchAapPage() {
       const aapsQuery = query(
         collection(db, 'aap'),
         where('status', '==', 'published'),
-        orderBy('publishedAt', 'desc')
+        orderBy('publishedAt', 'desc'),
       );
 
       const snapshot = await getDocs(aapsQuery);
       // Seules les fiches contrôlées (ou saisies à la main) sont visibles des candidats (administration-controle)
-      const aapsData = (snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as (AAP & { id: string })[]).filter(visiblePubliquement);
+      const aapsData = (
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as (AAP & { id: string })[]
+      ).filter(visiblePubliquement);
 
       setAaps(aapsData);
     } catch (err) {
@@ -163,9 +212,10 @@ export default function SearchAapPage() {
 
   const resetFilters = () => setFilters(FILTRES_VIDES);
 
-  const aapsAffiches = onglet === 'consultees'
-    ? consultees.map(id => aaps.find(a => a.id === id)).filter((a): a is AAP & { id: string } => Boolean(a))
-    : filteredAaps;
+  const aapsAffiches =
+    onglet === 'consultees'
+      ? consultees.map((id) => aaps.find((a) => a.id === id)).filter((a): a is AAP & { id: string } => Boolean(a))
+      : filteredAaps;
 
   // Lecture en échec : message et « Réessayer » au lieu d'une page vide (plan niveau A, lot 3.1)
   if (erreurChargement) return <MessageErreur onReessayer={loadAaps} />;
@@ -185,15 +235,17 @@ export default function SearchAapPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header : compteur avec montants annoncés (recherche-guidee, 2026-10-20) */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Rechercher des Appels à Projets
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Rechercher des Appels à Projets</h1>
           <p className="text-gray-600">
-            <span className="font-semibold text-gray-900">{filteredAaps.length} appel{filteredAaps.length > 1 ? 's' : ''} à projets</span>
+            <span className="font-semibold text-gray-900">
+              {filteredAaps.length} appel{filteredAaps.length > 1 ? 's' : ''} à projets
+            </span>
             {montants.chiffrees > 0 && (
               <>
-                {' '}totalisant <span className="font-semibold text-gray-900">{euros(montants.total)}</span> annoncés
-                {' '}({montants.chiffrees} fiche{montants.chiffrees > 1 ? 's' : ''} chiffrée{montants.chiffrees > 1 ? 's' : ''})
+                {' '}
+                totalisant <span className="font-semibold text-gray-900">{euros(montants.total)}</span> annoncés (
+                {montants.chiffrees} fiche{montants.chiffrees > 1 ? 's' : ''} chiffrée
+                {montants.chiffrees > 1 ? 's' : ''})
               </>
             )}
           </p>
@@ -231,26 +283,46 @@ export default function SearchAapPage() {
         {/* Étiquettes des filtres actifs, retirables d'une croix (recherche-guidee) */}
         {etiquettes.length > 0 && onglet === 'trouver' && (
           <div className="flex flex-wrap items-center gap-2 mb-6">
-            {etiquettes.map(e => (
-              <span key={e.cle} className="inline-flex items-center gap-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-1 text-sm">
+            {etiquettes.map((e) => (
+              <span
+                key={e.cle}
+                className="inline-flex items-center gap-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-full px-3 py-1 text-sm"
+              >
                 {e.libelle}
-                <button type="button" onClick={() => retirerFiltre(e.cle)} aria-label={`Retirer ${e.libelle}`} className="hover:text-primary-900">
+                <button
+                  type="button"
+                  onClick={() => retirerFiltre(e.cle)}
+                  aria-label={`Retirer ${e.libelle}`}
+                  className="hover:text-primary-900"
+                >
                   <X className="h-4 w-4" />
                 </button>
               </span>
             ))}
-            <button type="button" onClick={resetFilters} className="text-sm text-gray-600 hover:text-gray-900 underline">
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="text-sm text-gray-600 hover:text-gray-900 underline"
+            >
               Effacer tout
             </button>
             {userProfile?.userType === 'porteur' && (
-              <Button variant="secondary" onClick={enregistrerRecherche} disabled={enregistrementEnCours}>Enregistrer cette recherche</Button>
+              <Button variant="secondary" onClick={enregistrerRecherche} disabled={enregistrementEnCours}>
+                Enregistrer cette recherche
+              </Button>
             )}
           </div>
         )}
         {enregistrement && (
-          <div className={`mb-6 p-3 rounded-lg text-sm border ${enregistrement.ok ? 'bg-green-50 border-green-200 text-green-800' : 'bg-error-50 border-error-200 text-error-600'}`}>
+          <div
+            className={`mb-6 p-3 rounded-lg text-sm border ${enregistrement.ok ? 'bg-green-50 border-green-200 text-green-800' : 'bg-error-50 border-error-200 text-error-600'}`}
+          >
             {enregistrement.texte}{' '}
-            {enregistrement.ok && <Link to="/recherches-sauvegardees" className="underline">Voir mes recherches</Link>}
+            {enregistrement.ok && (
+              <Link to="/recherches-sauvegardees" className="underline">
+                Voir mes recherches
+              </Link>
+            )}
           </div>
         )}
 
@@ -262,9 +334,7 @@ export default function SearchAapPage() {
 
               {/* Recherche textuelle */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Recherche
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Recherche</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
@@ -279,9 +349,7 @@ export default function SearchAapPage() {
 
               {/* Thématique */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Thématique
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Thématique</label>
                 <select
                   value={filters.thematique}
                   onChange={(e) => setFilters({ ...filters, thematique: e.target.value })}
@@ -298,16 +366,14 @@ export default function SearchAapPage() {
 
               {/* Territoire */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Territoire
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Territoire</label>
                 <select
                   value={filters.territory}
                   onChange={(e) => setFilters({ ...filters, territory: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Tous les territoires</option>
-                  {territoiresPresents.map(territory => (
+                  {territoiresPresents.map((territory) => (
                     <option key={territory} value={territory}>
                       {libelleTerritoire(territory)}
                     </option>
@@ -317,16 +383,14 @@ export default function SearchAapPage() {
 
               {/* Financeur */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Financeur
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Financeur</label>
                 <select
                   value={filters.financeur}
                   onChange={(e) => setFilters({ ...filters, financeur: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Tous les financeurs</option>
-                  {financeursPresents.map(financeur => (
+                  {financeursPresents.map((financeur) => (
                     <option key={financeur} value={financeur}>
                       {financeur}
                     </option>
@@ -336,25 +400,25 @@ export default function SearchAapPage() {
 
               {/* À qui s'adresse l'appel et type d'appel (qualification-appels, jour 2) */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  À qui s'adresse l'appel
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">À qui s'adresse l'appel</label>
                 <select
                   value={filters.destinataire}
                   onChange={(e) => setFilters({ ...filters, destinataire: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="">Toutes les structures</option>
-                  {Object.entries(LIBELLES_DESTINATAIRES).filter(([id]) => id !== 'tous').map(([id, libelle]) => (
-                    <option key={id} value={id}>{libelle}</option>
-                  ))}
+                  {Object.entries(LIBELLES_DESTINATAIRES)
+                    .filter(([id]) => id !== 'tous')
+                    .map(([id, libelle]) => (
+                      <option key={id} value={id}>
+                        {libelle}
+                      </option>
+                    ))}
                 </select>
               </div>
 
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Type d'appel
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Type d'appel</label>
                 <select
                   value={filters.typeAppel}
                   onChange={(e) => setFilters({ ...filters, typeAppel: e.target.value })}
@@ -362,16 +426,16 @@ export default function SearchAapPage() {
                 >
                   <option value="">Tous les types</option>
                   {Object.entries(LIBELLES_TYPES_APPEL).map(([id, libelle]) => (
-                    <option key={id} value={id}>{libelle}</option>
+                    <option key={id} value={id}>
+                      {libelle}
+                    </option>
                   ))}
                 </select>
               </div>
 
               {/* Statut à quatre valeurs (recherche-guidee) */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Statut
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Statut</label>
                 <select
                   value={filters.statut}
                   onChange={(e) => setFilters({ ...filters, statut: e.target.value })}
@@ -379,7 +443,7 @@ export default function SearchAapPage() {
                 >
                   <option value="">Ouverts et sans date</option>
                   <option value={STATUT_TOUS}>Tous, clôturés compris</option>
-                  {(Object.keys(LIBELLES_STATUT) as StatutAppel[]).map(s => (
+                  {(Object.keys(LIBELLES_STATUT) as StatutAppel[]).map((s) => (
                     <option key={s} value={s}>
                       {s === 'bientot-clos' ? 'Bientôt clôturé (30 jours ou moins)' : LIBELLES_STATUT[s]}
                     </option>
@@ -389,9 +453,7 @@ export default function SearchAapPage() {
 
               {/* Budget */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Budget (€)
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Budget (€)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <Input
                     type="number"
@@ -408,11 +470,7 @@ export default function SearchAapPage() {
                 </div>
               </div>
 
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={resetFilters}
-              >
+              <Button variant="secondary" className="w-full" onClick={resetFilters}>
                 Réinitialiser
               </Button>
             </Card>
@@ -439,7 +497,7 @@ export default function SearchAapPage() {
               </Card>
             ) : (
               <div className="space-y-4">
-                {aapsAffiches.map(aap => {
+                {aapsAffiches.map((aap) => {
                   const daysLeft = getDaysUntilDeadline(aap.deadline);
                   const closed = isClosed(daysLeft);
                   const isUrgent = daysLeft !== null && !closed && daysLeft <= 7;
@@ -449,19 +507,21 @@ export default function SearchAapPage() {
                       key={aap.id}
                       className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
                       // Adresse de la recherche, filtres compris, pour « Retour à la recherche » (corrections-relecture 3.2)
-                      onClick={() => navigate(`/aap/${aap.id}`, { state: { retour: `/aap/search?${searchParams.toString()}` } })}
+                      onClick={() =>
+                        navigate(`/aap/${aap.id}`, { state: { retour: `/aap/search?${searchParams.toString()}` } })
+                      }
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="mb-2">
-                            <Badge variant={VARIANT_STATUT[statutAppel(aap)]}>{LIBELLES_STATUT[statutAppel(aap)]}</Badge>
+                            <Badge variant={VARIANT_STATUT[statutAppel(aap)]}>
+                              {LIBELLES_STATUT[statutAppel(aap)]}
+                            </Badge>
                           </div>
-                          <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                            {aap.title}
-                          </h3>
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2">{aap.title}</h3>
                           <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
                             <Building className="h-4 w-4" />
-                            <span>{aap.financeurName || "Non spécifié"}</span>
+                            <span>{aap.financeurName || 'Non spécifié'}</span>
                           </div>
                         </div>
                         <Button
@@ -478,9 +538,7 @@ export default function SearchAapPage() {
                         </Button>
                       </div>
 
-                      <p className="text-gray-600 mb-4 line-clamp-2">
-                        {aap.description}
-                      </p>
+                      <p className="text-gray-600 mb-4 line-clamp-2">{aap.description}</p>
 
                       {/* Mention de relecture, date d'extraction et lien officiel (mention-relecture-fiches, instruction 11) */}
                       {(dateExtraction(aap) || aap.externalUrl) && (
@@ -506,15 +564,13 @@ export default function SearchAapPage() {
 
                       {/* Tags secteurs */}
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {aap.sectorsTargeted?.slice(0, 3).map(sector => (
+                        {aap.sectorsTargeted?.slice(0, 3).map((sector) => (
                           <Badge key={sector} variant="gray">
                             {sector}
                           </Badge>
                         ))}
                         {aap.sectorsTargeted && aap.sectorsTargeted.length > 3 && (
-                          <Badge variant="gray">
-                            +{aap.sectorsTargeted.length - 3}
-                          </Badge>
+                          <Badge variant="gray">+{aap.sectorsTargeted.length - 3}</Badge>
                         )}
                       </div>
 
@@ -532,8 +588,8 @@ export default function SearchAapPage() {
                             {aap.budgetMin && aap.budgetMax
                               ? `${aap.budgetMin.toLocaleString()}€ - ${aap.budgetMax.toLocaleString()}€`
                               : aap.budgetMax
-                              ? `Jusqu'à ${aap.budgetMax.toLocaleString()}€`
-                              : 'Non spécifié'}
+                                ? `Jusqu'à ${aap.budgetMax.toLocaleString()}€`
+                                : 'Non spécifié'}
                           </span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600">

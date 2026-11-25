@@ -3,8 +3,11 @@
 // recherche n'exécutait qu'un commentaire.
 import { describe, expect, it } from 'vitest';
 
-const SOURCES = import.meta.glob(['../**/*.tsx', '../**/*.ts', '!../**/*.test.tsx', '!../**/*.test.ts'],
-  { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const SOURCES = import.meta.glob(['../**/*.tsx', '../**/*.ts', '!../**/*.test.tsx', '!../**/*.test.ts'], {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 describe('écrans finis', () => {
   it('aucun texte « en cours de développement » ni favori factice dans les sources', () => {
@@ -16,7 +19,9 @@ describe('écrans finis', () => {
 
   // Lot 3.1 : retours par bandeau (utils/annonces.ts) au lieu des fenêtres alert() du navigateur
   it('aucun alert() dans les sources', () => {
-    const fautifs = Object.entries(SOURCES).filter(([, texte]) => /\balert\(/.test(texte)).map(([chemin]) => chemin);
+    const fautifs = Object.entries(SOURCES)
+      .filter(([, texte]) => /\balert\(/.test(texte))
+      .map(([chemin]) => chemin);
     expect(fautifs).toEqual([]);
   });
 

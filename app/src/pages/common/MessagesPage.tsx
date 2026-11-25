@@ -57,11 +57,11 @@ export default function MessagesPage() {
       const messagesQuery = query(
         collection(db, 'messages'),
         where('conversationId', '==', selectedConversation.id),
-        orderBy('createdAt', 'asc')
+        orderBy('createdAt', 'asc'),
       );
 
       const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-        const messagesData = snapshot.docs.map(doc => ({
+        const messagesData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         })) as Message[];
@@ -84,11 +84,11 @@ export default function MessagesPage() {
       const conversationsQuery = query(
         collection(db, 'conversations'),
         where('participants', 'array-contains', currentUser.uid),
-        orderBy('lastMessageAt', 'desc')
+        orderBy('lastMessageAt', 'desc'),
       );
 
       const snapshot = await getDocs(conversationsQuery);
-      const conversationsData = snapshot.docs.map(doc => ({
+      const conversationsData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Conversation[];
@@ -106,11 +106,11 @@ export default function MessagesPage() {
       const messagesQuery = query(
         collection(db, 'messages'),
         where('conversationId', '==', conversationId),
-        orderBy('createdAt', 'asc')
+        orderBy('createdAt', 'asc'),
       );
 
       const snapshot = await getDocs(messagesQuery);
-      const messagesData = snapshot.docs.map(doc => ({
+      const messagesData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Message[];
@@ -124,7 +124,7 @@ export default function MessagesPage() {
   const handleSendMessage = async () => {
     if (!newMessage.trim() || !selectedConversation || !currentUser || !userProfile) return;
 
-    const receiverId = selectedConversation.participants.find(p => p !== currentUser.uid);
+    const receiverId = selectedConversation.participants.find((p) => p !== currentUser.uid);
     if (!receiverId) return;
 
     try {
@@ -155,7 +155,7 @@ export default function MessagesPage() {
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000);
 
-    if (diffMins < 1) return 'À l\'instant';
+    if (diffMins < 1) return "À l'instant";
     if (diffMins < 60) return `${diffMins} min`;
     if (diffMs < 86400000) {
       return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -164,13 +164,14 @@ export default function MessagesPage() {
   };
 
   const getOtherParticipantName = (conversation: Conversation): string => {
-    const otherUserId = conversation.participants.find(p => p !== currentUser?.uid);
+    const otherUserId = conversation.participants.find((p) => p !== currentUser?.uid);
     return otherUserId ? conversation.participantNames[otherUserId] || 'Utilisateur' : 'Utilisateur';
   };
 
-  const filteredConversations = conversations.filter(conv =>
-    getOtherParticipantName(conv).toLowerCase().includes(searchTerm.toLowerCase()) ||
-    conv.relatedEntityTitle?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredConversations = conversations.filter(
+    (conv) =>
+      getOtherParticipantName(conv).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      conv.relatedEntityTitle?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {
@@ -212,7 +213,7 @@ export default function MessagesPage() {
                   <p className="text-gray-600">Aucune conversation</p>
                 </div>
               ) : (
-                filteredConversations.map(conversation => (
+                filteredConversations.map((conversation) => (
                   <div
                     key={conversation.id}
                     onClick={() => setSelectedConversation(conversation)}
@@ -230,22 +231,14 @@ export default function MessagesPage() {
                           {getOtherParticipantName(conversation)}
                         </span>
                       </div>
-                      {conversation.unreadCount > 0 && (
-                        <Badge variant="primary">
-                          {conversation.unreadCount}
-                        </Badge>
-                      )}
+                      {conversation.unreadCount > 0 && <Badge variant="primary">{conversation.unreadCount}</Badge>}
                     </div>
 
                     {conversation.relatedEntityTitle && (
-                      <div className="text-xs text-gray-500 mb-1">
-                        Re: {conversation.relatedEntityTitle}
-                      </div>
+                      <div className="text-xs text-gray-500 mb-1">Re: {conversation.relatedEntityTitle}</div>
                     )}
 
-                    <p className="text-sm text-gray-600 truncate">
-                      {conversation.lastMessage}
-                    </p>
+                    <p className="text-sm text-gray-600 truncate">{conversation.lastMessage}</p>
                     <span className="text-xs text-gray-400 mt-1 block">
                       {formatMessageTime(conversation.lastMessageAt)}
                     </span>
@@ -264,13 +257,9 @@ export default function MessagesPage() {
                   <div className="flex items-center gap-3">
                     <User className="h-8 w-8 text-gray-400" />
                     <div>
-                      <h3 className="font-semibold text-gray-900">
-                        {getOtherParticipantName(selectedConversation)}
-                      </h3>
+                      <h3 className="font-semibold text-gray-900">{getOtherParticipantName(selectedConversation)}</h3>
                       {selectedConversation.relatedEntityTitle && (
-                        <p className="text-sm text-gray-600">
-                          {selectedConversation.relatedEntityTitle}
-                        </p>
+                        <p className="text-sm text-gray-600">{selectedConversation.relatedEntityTitle}</p>
                       )}
                     </div>
                   </div>
@@ -281,19 +270,14 @@ export default function MessagesPage() {
                   {messages.length === 0 ? (
                     <div className="text-center py-8">
                       <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600">
-                        Aucun message. Commencez la conversation !
-                      </p>
+                      <p className="text-gray-600">Aucun message. Commencez la conversation !</p>
                     </div>
                   ) : (
-                    messages.map(message => {
+                    messages.map((message) => {
                       const isOwnMessage = message.senderId === currentUser?.uid;
 
                       return (
-                        <div
-                          key={message.id}
-                          className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}
-                        >
+                        <div key={message.id} className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
                           <div
                             className={`max-w-[70%] rounded-lg p-3 ${
                               isOwnMessage
@@ -301,13 +285,9 @@ export default function MessagesPage() {
                                 : 'bg-white text-gray-900 border border-gray-200'
                             }`}
                           >
-                            <p className="text-sm whitespace-pre-wrap break-words">
-                              {message.content}
-                            </p>
+                            <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
                             <span
-                              className={`text-xs mt-1 block ${
-                                isOwnMessage ? 'text-primary-100' : 'text-gray-500'
-                              }`}
+                              className={`text-xs mt-1 block ${isOwnMessage ? 'text-primary-100' : 'text-gray-500'}`}
                             >
                               {formatMessageTime(message.createdAt)}
                             </span>
@@ -335,10 +315,7 @@ export default function MessagesPage() {
                       }}
                       className="flex-1"
                     />
-                    <Button
-                      onClick={handleSendMessage}
-                      disabled={!newMessage.trim()}
-                    >
+                    <Button onClick={handleSendMessage} disabled={!newMessage.trim()}>
                       <Send className="h-4 w-4" />
                     </Button>
                   </div>
@@ -348,9 +325,7 @@ export default function MessagesPage() {
               <div className="flex-1 flex items-center justify-center bg-gray-50">
                 <div className="text-center">
                   <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">
-                    Sélectionnez une conversation pour commencer
-                  </p>
+                  <p className="text-gray-600">Sélectionnez une conversation pour commencer</p>
                 </div>
               </div>
             )}

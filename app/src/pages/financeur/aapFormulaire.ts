@@ -75,7 +75,10 @@ export function formulaireDepuisAap(aap: AAP): FormulaireAap {
 }
 
 export function donneesDepuisFormulaire(f: FormulaireAap): CreateAapData {
-  const etiquettes = f.tags.split(',').map((t) => t.trim()).filter(Boolean);
+  const etiquettes = f.tags
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean);
   return {
     title: f.title,
     description: f.description,
@@ -111,7 +114,8 @@ export function erreursEtape(etape: number, f: FormulaireAap, aujourdhui = jourL
     if (f.description.trim().length < 100) {
       e.description = `La description doit compter au moins 100 caractères (${f.description.trim().length} actuellement).`;
     }
-    if (f.externalUrl.trim() && !lienSur(f.externalUrl)) e.externalUrl = "L'adresse doit commencer par http:// ou https://.";
+    if (f.externalUrl.trim() && !lienSur(f.externalUrl))
+      e.externalUrl = "L'adresse doit commencer par http:// ou https://.";
   } else if (etape === 1) {
     if (f.sectorsTargeted.length === 0) e.sectorsTargeted = 'Choisissez au moins un secteur.';
     if (f.territoriesEligible.length === 0) e.territoriesEligible = 'Choisissez au moins un territoire.';
@@ -119,13 +123,20 @@ export function erreursEtape(etape: number, f: FormulaireAap, aujourdhui = jourL
     for (const champ of ['budgetMin', 'budgetMax', 'budgetTotal'] as const) {
       if (montantInvalide(f[champ])) e[champ] = 'Indiquez un montant positif en euros.';
     }
-    if (!e.budgetMin && !e.budgetMax && f.budgetMin.trim() && f.budgetMax.trim() && Number(f.budgetMin) > Number(f.budgetMax)) {
+    if (
+      !e.budgetMin &&
+      !e.budgetMax &&
+      f.budgetMin.trim() &&
+      f.budgetMax.trim() &&
+      Number(f.budgetMin) > Number(f.budgetMax)
+    ) {
       e.budgetMax = 'Le budget maximum doit être supérieur ou égal au minimum.';
     }
     if (!f.deadline) e.deadline = 'Indiquez la date limite de candidature.';
     else if (f.deadline < aujourdhui) e.deadline = 'La date limite est déjà passée.';
   } else if (etape === 3) {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.contactEmail.trim())) e.contactEmail = 'Indiquez une adresse électronique valide.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.contactEmail.trim()))
+      e.contactEmail = 'Indiquez une adresse électronique valide.';
   }
   return e;
 }

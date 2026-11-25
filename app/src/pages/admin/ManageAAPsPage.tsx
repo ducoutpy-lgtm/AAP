@@ -7,7 +7,12 @@ import { RELECTEUR_HUMAIN, selectionATraiter } from '../../utils/relecture';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
-import { LIBELLES_DESTINATAIRES, LIBELLES_OBJETS, LIBELLES_TYPES_APPEL, qualificationManuelle } from '../../utils/qualification';
+import {
+  LIBELLES_DESTINATAIRES,
+  LIBELLES_OBJETS,
+  LIBELLES_TYPES_APPEL,
+  qualificationManuelle,
+} from '../../utils/qualification';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -45,12 +50,12 @@ export default function ManageAAPsPage() {
   const [erreurChargement, setErreurChargement] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'published' | 'closed' | 'archived'>(
-    (params.get('status') as 'draft' | 'published' | 'closed' | 'archived' | null) ?? 'all'
+    (params.get('status') as 'draft' | 'published' | 'closed' | 'archived' | null) ?? 'all',
   );
   // Suivi de la validation (rapport du 2026-10-14, instruction 12) : filtre par validation.statut, la seule source de
   // fiabilité d'une fiche. 'aucun' : fiche saisie à la main, sans bloc validation.
   const [validationFilter, setValidationFilter] = useState<'all' | ValidationStatut | 'aucun'>(
-    (params.get('validation') as ValidationStatut | 'aucun' | null) ?? 'all'
+    (params.get('validation') as ValidationStatut | 'aucun' | null) ?? 'all',
   );
   // Traitement en masse (2026-10-20) : filtre par financeur, sélection par cases, valider ou rejeter la sélection
   const [financeurFilter, setFinanceurFilter] = useState<string>(params.get('financeur') ?? 'all');
@@ -68,19 +73,23 @@ export default function ManageAAPsPage() {
     setQObjets(aap.qualification?.objets ?? []);
     setQDate(aap.qualification?.dateOuverture ?? '');
   };
-  const basculerDans = (liste: string[], valeur: string) => liste.includes(valeur) ? liste.filter(v => v !== valeur) : [...liste, valeur];
+  const basculerDans = (liste: string[], valeur: string) =>
+    liste.includes(valeur) ? liste.filter((v) => v !== valeur) : [...liste, valeur];
   const enregistrerQualification = async () => {
     if (!aQualifier) return;
     setQEnregistrement(true);
     try {
       await updateDoc(doc(db, 'aap', aQualifier.id), {
-        qualification: qualificationManuelle({ destinataires: qDestinataires, typeAppel: qType, objets: qObjets, dateOuverture: qDate || null }, RELECTEUR_HUMAIN),
+        qualification: qualificationManuelle(
+          { destinataires: qDestinataires, typeAppel: qType, objets: qObjets, dateOuverture: qDate || null },
+          RELECTEUR_HUMAIN,
+        ),
       });
       setAQualifier(null);
       await loadAaps();
     } catch (err) {
       console.error('Erreur de qualification :', err);
-      annoncer('Erreur lors de l\'enregistrement de la qualification', 'erreur');
+      annoncer("Erreur lors de l'enregistrement de la qualification", 'erreur');
     } finally {
       setQEnregistrement(false);
     }
@@ -92,7 +101,14 @@ export default function ManageAAPsPage() {
   const financeursPresents = (() => {
     const compte = new Map<string, number>();
     for (const aap of aaps) {
-      if (searchTerm && !(aap.title.toLowerCase().includes(searchTerm.toLowerCase()) || aap.financeurName?.toLowerCase().includes(searchTerm.toLowerCase()))) continue;
+      if (
+        searchTerm &&
+        !(
+          aap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          aap.financeurName?.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
+        continue;
       if (statusFilter !== 'all' && aap.status !== statusFilter) continue;
       if (validationFilter !== 'all' && (aap.validation?.statut ?? 'aucun') !== validationFilter) continue;
       const nom = aap.financeurName || 'Non précisé';
@@ -113,7 +129,8 @@ export default function ManageAAPsPage() {
   }, [searchTerm, statusFilter, validationFilter, financeurFilter, aaps]);
 
   useEffect(() => {
-    if (financeurFilter !== 'all' && !financeursPresents.some(([f]) => f === financeurFilter)) setFinanceurFilter('all');
+    if (financeurFilter !== 'all' && !financeursPresents.some(([f]) => f === financeurFilter))
+      setFinanceurFilter('all');
     // financeursPresents est recalculé à chaque rendu : la dépendance utile est le trio de filtres
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, statusFilter, validationFilter, aaps]);
@@ -122,7 +139,7 @@ export default function ManageAAPsPage() {
     setErreurChargement(false);
     try {
       const aapsSnapshot = await getDocs(collection(db, 'aap'));
-      const aapsData = aapsSnapshot.docs.map(doc => ({
+      const aapsData = aapsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as AAPWithId[];
@@ -142,39 +159,41 @@ export default function ManageAAPsPage() {
 
     // Search filter
     if (searchTerm) {
-      result = result.filter(aap =>
-        aap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        aap.financeurName?.toLowerCase().includes(searchTerm.toLowerCase())
+      result = result.filter(
+        (aap) =>
+          aap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          aap.financeurName?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     // Status filter
     if (statusFilter !== 'all') {
-      result = result.filter(aap => aap.status === statusFilter);
+      result = result.filter((aap) => aap.status === statusFilter);
     }
 
     // Filtre par statut de validation
     if (validationFilter !== 'all') {
-      result = result.filter(aap => (aap.validation?.statut ?? 'aucun') === validationFilter);
+      result = result.filter((aap) => (aap.validation?.statut ?? 'aucun') === validationFilter);
     }
 
     // Filtre par financeur (nom canonique)
     if (financeurFilter !== 'all') {
-      result = result.filter(aap => (aap.financeurName || 'Non précisé') === financeurFilter);
+      result = result.filter((aap) => (aap.financeurName || 'Non précisé') === financeurFilter);
     }
 
     setFilteredAaps(result);
     // La sélection ne garde que des fiches encore affichées
-    setSelection(prev => new Set([...prev].filter(id => result.some(a => a.id === id))));
+    setSelection((prev) => new Set([...prev].filter((id) => result.some((a) => a.id === id))));
   };
 
   const basculerSelection = (id: string) =>
-    setSelection(prev => {
+    setSelection((prev) => {
       const s = new Set(prev);
-      if (s.has(id)) s.delete(id); else s.add(id);
+      if (s.has(id)) s.delete(id);
+      else s.add(id);
       return s;
     });
-  const toutSelectionner = () => setSelection(new Set(filteredAaps.map(a => a.id)));
+  const toutSelectionner = () => setSelection(new Set(filteredAaps.map((a) => a.id)));
   const toutDeselectionner = () => setSelection(new Set());
 
   // Valider ou rejeter toutes les fiches cochées (une écriture par fiche, même verdict que les boutons unitaires)
@@ -182,19 +201,43 @@ export default function ManageAAPsPage() {
   // le rejet groupé
   const traiterSelection = async (verdict: 'validee' | 'rejetee') => {
     if (selection.size === 0) return;
-    const { aTraiter, ignorees } = selectionATraiter(aaps.filter(a => selection.has(a.id)), verdict);
+    const { aTraiter, ignorees } = selectionATraiter(
+      aaps.filter((a) => selection.has(a.id)),
+      verdict,
+    );
     const libelle = verdict === 'validee' ? 'valider et publier' : 'rejeter';
-    const note = ignorees ? ` (${ignorees} ignorée${ignorees > 1 ? 's' : ''} : ${verdict === 'validee' ? 'déjà validée, rejetée, archivée, clôturée ou sans contrôle' : 'déjà rejetée ou sans contrôle'})` : '';
-    if (aTraiter.length === 0) { annoncer(`Aucune fiche à ${libelle}${note}.`, 'info'); return; }
+    const note = ignorees
+      ? ` (${ignorees} ignorée${ignorees > 1 ? 's' : ''} : ${verdict === 'validee' ? 'déjà validée, rejetée, archivée, clôturée ou sans contrôle' : 'déjà rejetée ou sans contrôle'})`
+      : '';
+    if (aTraiter.length === 0) {
+      annoncer(`Aucune fiche à ${libelle}${note}.`, 'info');
+      return;
+    }
     if (!confirm(`Confirmer : ${libelle} ${aTraiter.length} fiche${aTraiter.length > 1 ? 's' : ''}${note} ?`)) return;
-    const commentaire = verdict === 'rejetee' ? prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') : '';
+    const commentaire =
+      verdict === 'rejetee' ? prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') : '';
     if (commentaire === null) return;
     setTraitement(true);
     try {
       for (const id of aTraiter) {
-        await updateDoc(doc(db, 'aap', id), verdict === 'validee'
-          ? { validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'published', publishedAt: new Date() }
-          : { validation: { statut: 'rejetee', commentaire: commentaire.trim(), date: aujourdHui(), par: RELECTEUR_HUMAIN }, status: 'archived' });
+        await updateDoc(
+          doc(db, 'aap', id),
+          verdict === 'validee'
+            ? {
+                validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN },
+                status: 'published',
+                publishedAt: new Date(),
+              }
+            : {
+                validation: {
+                  statut: 'rejetee',
+                  commentaire: commentaire.trim(),
+                  date: aujourdHui(),
+                  par: RELECTEUR_HUMAIN,
+                },
+                status: 'archived',
+              },
+        );
       }
       setSelection(new Set());
       await loadAaps();
@@ -217,7 +260,7 @@ export default function ManageAAPsPage() {
       loadAaps();
     } catch (err) {
       console.error('Error archiving AAP:', err);
-      annoncer('Erreur lors de l\'archivage', 'erreur');
+      annoncer("Erreur lors de l'archivage", 'erreur');
     }
   };
 
@@ -321,13 +364,16 @@ export default function ManageAAPsPage() {
   };
 
   // Libellés et couleurs du statut de validation (type AapValidation). Le relecteur est Monsieur DUCOUT ou un modèle.
-  const VALIDATION_LIBELLES: Record<ValidationStatut, { libelle: string; variant: 'primary' | 'success' | 'warning' | 'error' | 'gray' }> = {
+  const VALIDATION_LIBELLES: Record<
+    ValidationStatut,
+    { libelle: string; variant: 'primary' | 'success' | 'warning' | 'error' | 'gray' }
+  > = {
     proposee: { libelle: 'Proposée, non relue', variant: 'warning' },
     a_corriger: { libelle: 'À corriger', variant: 'error' },
     validee: { libelle: 'Validée', variant: 'success' },
     rejetee: { libelle: 'Rejetée', variant: 'gray' },
   };
-  const compterValidation = (statut: ValidationStatut) => aaps.filter(a => a.validation?.statut === statut).length;
+  const compterValidation = (statut: ValidationStatut) => aaps.filter((a) => a.validation?.statut === statut).length;
 
   // Publication soumise au verdict humain (rapport du 2026-10-14, instruction 9) : une fiche « proposee » ou
   // « a_corriger » ne se publie pas depuis l'administration ; un AAP sans bloc validation (saisi à la main) garde le bouton.
@@ -351,19 +397,13 @@ export default function ManageAAPsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/admin')}
-          className="mb-6"
-        >
+        <Button variant="ghost" onClick={() => navigate('/admin')} className="mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Retour au tableau de bord
         </Button>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Contrôle des appels à projets
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Contrôle des appels à projets</h1>
           <p className="text-gray-600">
             {filteredAaps.length} AAP(s) • {aaps.length} au total
           </p>
@@ -377,27 +417,21 @@ export default function ManageAAPsPage() {
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Brouillons</p>
-            <p className="text-2xl font-bold text-gray-600">
-              {aaps.filter(a => a.status === 'draft').length}
-            </p>
+            <p className="text-2xl font-bold text-gray-600">{aaps.filter((a) => a.status === 'draft').length}</p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Publiés</p>
-            <p className="text-2xl font-bold text-green-600">
-              {aaps.filter(a => a.status === 'published').length}
-            </p>
+            <p className="text-2xl font-bold text-green-600">{aaps.filter((a) => a.status === 'published').length}</p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600 mb-1">Clôturés</p>
-            <p className="text-2xl font-bold text-yellow-600">
-              {aaps.filter(a => a.status === 'closed').length}
-            </p>
+            <p className="text-2xl font-bold text-yellow-600">{aaps.filter((a) => a.status === 'closed').length}</p>
           </Card>
         </div>
 
         {/* Suivi de la validation (instruction 12) : un compteur par statut, cliquable pour filtrer */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          {(Object.keys(VALIDATION_LIBELLES) as ValidationStatut[]).map(statut => (
+          {(Object.keys(VALIDATION_LIBELLES) as ValidationStatut[]).map((statut) => (
             <button
               key={statut}
               type="button"
@@ -459,7 +493,11 @@ export default function ManageAAPsPage() {
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent max-w-xs"
               >
                 <option value="all">Tous les financeurs ({financeursPresents.reduce((n, [, c]) => n + c, 0)})</option>
-                {financeursPresents.map(([f, c]) => <option key={f} value={f}>{f} ({c})</option>)}
+                {financeursPresents.map(([f, c]) => (
+                  <option key={f} value={f}>
+                    {f} ({c})
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -468,18 +506,32 @@ export default function ManageAAPsPage() {
         {/* Traitement en masse */}
         <Card className="p-4 mb-6">
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <span className="font-medium text-gray-900">{selection.size} fiche{selection.size > 1 ? 's' : ''} sélectionnée{selection.size > 1 ? 's' : ''}</span>
+            <span className="font-medium text-gray-900">
+              {selection.size} fiche{selection.size > 1 ? 's' : ''} sélectionnée{selection.size > 1 ? 's' : ''}
+            </span>
             <Button variant="secondary" size="sm" onClick={toutSelectionner} disabled={filteredAaps.length === 0}>
               Tout sélectionner ({filteredAaps.length} affichées)
             </Button>
             <Button variant="secondary" size="sm" onClick={toutDeselectionner} disabled={selection.size === 0}>
               Tout désélectionner
             </Button>
-            <Button variant="primary" size="sm" onClick={() => traiterSelection('validee')} disabled={selection.size === 0} loading={traitement}>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => traiterSelection('validee')}
+              disabled={selection.size === 0}
+              loading={traitement}
+            >
               <ShieldCheck className="h-4 w-4 mr-2" />
               Valider et publier la sélection
             </Button>
-            <Button variant="danger" size="sm" onClick={() => traiterSelection('rejetee')} disabled={selection.size === 0} loading={traitement}>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={() => traiterSelection('rejetee')}
+              disabled={selection.size === 0}
+              loading={traitement}
+            >
               <ShieldX className="h-4 w-4 mr-2" />
               Rejeter la sélection
             </Button>
@@ -493,7 +545,7 @@ export default function ManageAAPsPage() {
           </Card>
         ) : (
           <div className="space-y-4">
-            {filteredAaps.map(aap => (
+            {filteredAaps.map((aap) => (
               <Card key={aap.id} className={`p-6 ${selection.has(aap.id) ? 'ring-2 ring-primary-300' : ''}`}>
                 <div className="flex items-start justify-between mb-4">
                   <input
@@ -505,9 +557,7 @@ export default function ManageAAPsPage() {
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {aap.title}
-                      </h3>
+                      <h3 className="text-xl font-semibold text-gray-900">{aap.title}</h3>
                       {getStatusBadge(aap.status)}
                       {aap.validation && (
                         <Badge variant={VALIDATION_LIBELLES[aap.validation.statut].variant}>
@@ -517,24 +567,22 @@ export default function ManageAAPsPage() {
                     </div>
                     {aap.validation && (aap.validation.par || aap.validation.commentaire) && (
                       <p className="text-sm text-gray-500 mb-2">
-                        Relecture{aap.validation.par ? ` par ${aap.validation.par}` : ''}{aap.validation.date ? ` le ${aap.validation.date}` : ''}
+                        Relecture{aap.validation.par ? ` par ${aap.validation.par}` : ''}
+                        {aap.validation.date ? ` le ${aap.validation.date}` : ''}
                         {aap.validation.commentaire ? ` : ${aap.validation.commentaire}` : ''}
                       </p>
                     )}
-                    {aap.financeurName && (
-                      <p className="text-sm text-gray-600 mb-2">
-                        Financeur: {aap.financeurName}
-                      </p>
-                    )}
+                    {aap.financeurName && <p className="text-sm text-gray-600 mb-2">Financeur: {aap.financeurName}</p>}
                     {aap.qualification && (
                       <p className="text-sm text-gray-600 mb-2">
-                        Qualification ({aap.qualification.par}) : {LIBELLES_TYPES_APPEL[aap.qualification.typeAppel] ?? aap.qualification.typeAppel}
-                        {' · '}{aap.qualification.destinataires.map(d => LIBELLES_DESTINATAIRES[d] ?? d).join(', ') || 'destinataires non précisés'}
+                        Qualification ({aap.qualification.par}) :{' '}
+                        {LIBELLES_TYPES_APPEL[aap.qualification.typeAppel] ?? aap.qualification.typeAppel}
+                        {' · '}
+                        {aap.qualification.destinataires.map((d) => LIBELLES_DESTINATAIRES[d] ?? d).join(', ') ||
+                          'destinataires non précisés'}
                       </p>
                     )}
-                    <p className="text-gray-600 line-clamp-2">
-                      {aap.description}
-                    </p>
+                    <p className="text-gray-600 line-clamp-2">{aap.description}</p>
                   </div>
                 </div>
 
@@ -554,9 +602,7 @@ export default function ManageAAPsPage() {
                     <div className="flex items-center gap-1">
                       <Euro className="h-4 w-4 text-gray-400" />
                       <p className="font-medium text-gray-900">
-                        {aap.budgetMax
-                          ? `Jusqu'à ${aap.budgetMax.toLocaleString('fr-FR')}€`
-                          : '-'}
+                        {aap.budgetMax ? `Jusqu'à ${aap.budgetMax.toLocaleString('fr-FR')}€` : '-'}
                       </p>
                     </div>
                   </div>
@@ -571,19 +617,13 @@ export default function ManageAAPsPage() {
 
                   <div>
                     <p className="text-sm text-gray-600">Candidatures</p>
-                    <p className="font-medium text-gray-900">
-                      {aap.applicationsCount || 0}
-                    </p>
+                    <p className="font-medium text-gray-900">{aap.applicationsCount || 0}</p>
                   </div>
                 </div>
 
                 {/* Actions */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => navigate(`/aap/${aap.id}`)}
-                  >
+                  <Button variant="secondary" size="sm" onClick={() => navigate(`/aap/${aap.id}`)}>
                     <Eye className="h-4 w-4 mr-2" />
                     Voir
                   </Button>
@@ -613,43 +653,27 @@ export default function ManageAAPsPage() {
                   </Button>
 
                   {aap.status === 'draft' && publiable(aap) && (
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={() => handlePublishAap(aap.id)}
-                    >
+                    <Button variant="primary" size="sm" onClick={() => handlePublishAap(aap.id)}>
                       <CheckCircle className="h-4 w-4 mr-2" />
                       Publier
                     </Button>
                   )}
 
                   {aap.status === 'published' && (
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleCloseAap(aap.id)}
-                    >
+                    <Button variant="secondary" size="sm" onClick={() => handleCloseAap(aap.id)}>
                       <XCircle className="h-4 w-4 mr-2" />
                       Clôturer
                     </Button>
                   )}
 
                   {aap.status !== 'archived' && (
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleArchiveAap(aap.id)}
-                    >
+                    <Button variant="secondary" size="sm" onClick={() => handleArchiveAap(aap.id)}>
                       <Archive className="h-4 w-4 mr-2" />
                       Archiver
                     </Button>
                   )}
 
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDeleteAap(aap.id)}
-                  >
+                  <Button variant="danger" size="sm" onClick={() => handleDeleteAap(aap.id)}>
                     <Trash2 className="h-4 w-4 mr-2" />
                     Supprimer
                   </Button>
@@ -658,48 +682,69 @@ export default function ManageAAPsPage() {
             ))}
           </div>
         )}
-      <Modal
-        isOpen={aQualifier !== null}
-        onClose={() => setAQualifier(null)}
-        title={aQualifier ? `Qualifier : ${aQualifier.title}` : ''}
-        size="lg"
-        footer={
-          <>
-            <Button variant="secondary" onClick={() => setAQualifier(null)} disabled={qEnregistrement}>Annuler</Button>
-            <Button onClick={enregistrerQualification} loading={qEnregistrement}>Enregistrer</Button>
-          </>
-        }
-      >
-        <div className="space-y-5">
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">À qui s'adresse l'appel</p>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {Object.entries(LIBELLES_DESTINATAIRES).map(([id, libelle]) => (
-                <label key={id} className="flex items-center space-x-2">
-                  <input type="checkbox" checked={qDestinataires.includes(id)} onChange={() => setQDestinataires(basculerDans(qDestinataires, id))} className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
-                  <span className="text-sm text-gray-700">{libelle}</span>
-                </label>
-              ))}
+        <Modal
+          isOpen={aQualifier !== null}
+          onClose={() => setAQualifier(null)}
+          title={aQualifier ? `Qualifier : ${aQualifier.title}` : ''}
+          size="lg"
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setAQualifier(null)} disabled={qEnregistrement}>
+                Annuler
+              </Button>
+              <Button onClick={enregistrerQualification} loading={qEnregistrement}>
+                Enregistrer
+              </Button>
+            </>
+          }
+        >
+          <div className="space-y-5">
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">À qui s'adresse l'appel</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {Object.entries(LIBELLES_DESTINATAIRES).map(([id, libelle]) => (
+                  <label key={id} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={qDestinataires.includes(id)}
+                      onChange={() => setQDestinataires(basculerDans(qDestinataires, id))}
+                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                    />
+                    <span className="text-sm text-gray-700">{libelle}</span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Select label="Type d'appel" value={qType} onChange={(e) => setQType(e.target.value)} options={Object.entries(LIBELLES_TYPES_APPEL).map(([value, label]) => ({ value, label }))} />
-            <Input label="Date d'ouverture" type="date" value={qDate} onChange={(e) => setQDate(e.target.value)} />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Ce que l'appel finance</p>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {Object.entries(LIBELLES_OBJETS).map(([id, libelle]) => (
-                <label key={id} className="flex items-center space-x-2">
-                  <input type="checkbox" checked={qObjets.includes(id)} onChange={() => setQObjets(basculerDans(qObjets, id))} className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
-                  <span className="text-sm text-gray-700">{libelle}</span>
-                </label>
-              ))}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Select
+                label="Type d'appel"
+                value={qType}
+                onChange={(e) => setQType(e.target.value)}
+                options={Object.entries(LIBELLES_TYPES_APPEL).map(([value, label]) => ({ value, label }))}
+              />
+              <Input label="Date d'ouverture" type="date" value={qDate} onChange={(e) => setQDate(e.target.value)} />
             </div>
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">Ce que l'appel finance</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {Object.entries(LIBELLES_OBJETS).map(([id, libelle]) => (
+                  <label key={id} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={qObjets.includes(id)}
+                      onChange={() => setQObjets(basculerDans(qObjets, id))}
+                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                    />
+                    <span className="text-sm text-gray-700">{libelle}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <p className="text-xs text-gray-500">
+              Enregistré au nom de {RELECTEUR_HUMAIN} ; l'import ne l'écrasera plus.
+            </p>
           </div>
-          <p className="text-xs text-gray-500">Enregistré au nom de {RELECTEUR_HUMAIN} ; l'import ne l'écrasera plus.</p>
-        </div>
-      </Modal>
+        </Modal>
       </div>
     </div>
   );

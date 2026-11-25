@@ -3,7 +3,12 @@
 // le vrai dossier est le formulaire du financeur, joint à l'appel). Trois étapes : le projet en quelques lignes, le
 // montant demandé, les pièces (le dossier de candidature rempli). Le pré-remplissage à partir du dossier PDF est le
 // jour 5 du plan MVP.
-import { ajouterTexte, LIBELLES_TEXTES, textesRemplis, type TextesReutilisables } from '../../utils/textesReutilisables';
+import {
+  ajouterTexte,
+  LIBELLES_TEXTES,
+  textesRemplis,
+  type TextesReutilisables,
+} from '../../utils/textesReutilisables';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { lienSur } from '../../utils/liens';
@@ -12,7 +17,14 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ArrowLeft, Upload, X, FileText, ExternalLink, Sparkles } from 'lucide-react';
 import { httpsCallable } from 'firebase/functions';
 import { db, storage, functions } from '../../config/firebase';
-import { fusionner, LIBELLES_CONFIANCE, preRemplissageDepuis, verifierFichierPdf, type ChampsLus, type PreRemplissage } from '../../utils/prefill';
+import {
+  fusionner,
+  LIBELLES_CONFIANCE,
+  preRemplissageDepuis,
+  verifierFichierPdf,
+  type ChampsLus,
+  type PreRemplissage,
+} from '../../utils/prefill';
 import { useAuth } from '../../contexts/AuthContext';
 import { AAP } from '../../types';
 import { Button } from '../../components/ui/Button';
@@ -53,8 +65,10 @@ export default function ApplicationFormPage() {
   useEffect(() => {
     if (!currentUser) return;
     getDoc(doc(db, 'porteurProfiles', currentUser.uid))
-      .then(snap => setTextes((snap.data() as { textesReutilisables?: TextesReutilisables } | undefined)?.textesReutilisables))
-      .catch(err => console.error('Error loading reusable texts:', err));
+      .then((snap) =>
+        setTextes((snap.data() as { textesReutilisables?: TextesReutilisables } | undefined)?.textesReutilisables),
+      )
+      .catch((err) => console.error('Error loading reusable texts:', err));
   }, [currentUser]);
 
   const preremplir = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +76,10 @@ export default function ApplicationFormPage() {
     e.target.value = '';
     if (!fichier || !aapId) return;
     const refus = verifierFichierPdf(fichier);
-    if (refus) { setError(refus); return; }
+    if (refus) {
+      setError(refus);
+      return;
+    }
     setError('');
     setLecture(true);
     try {
@@ -72,7 +89,10 @@ export default function ApplicationFormPage() {
         lecteur.onerror = () => rejeter(new Error('Fichier illisible'));
         lecteur.readAsDataURL(fichier);
       });
-      const appel = httpsCallable<{ aapId: string; nomFichier: string; pdfBase64: string }, { champs: ChampsLus; coutEuros: number }>(functions, 'preremplirCandidature');
+      const appel = httpsCallable<
+        { aapId: string; nomFichier: string; pdfBase64: string },
+        { champs: ChampsLus; coutEuros: number }
+      >(functions, 'preremplirCandidature');
       const { data } = await appel({ aapId, nomFichier: fichier.name, pdfBase64 });
       const resultat = preRemplissageDepuis(data.champs);
       const fusion = fusionner({ titre, resume, montant }, resultat);
@@ -81,7 +101,9 @@ export default function ApplicationFormPage() {
       setMontant(fusion.montant);
       setLu(resultat);
       // Le dossier déposé est déjà une pièce de la candidature
-      setDocuments(prev => (prev.some(d => d.name === fichier.name && d.size === fichier.size) ? prev : [...prev, fichier]));
+      setDocuments((prev) =>
+        prev.some((d) => d.name === fichier.name && d.size === fichier.size) ? prev : [...prev, fichier],
+      );
     } catch (err) {
       const message = err instanceof Error ? err.message : '';
       setError(message ? `Lecture du dossier impossible : ${message}` : 'Lecture du dossier impossible');
@@ -93,29 +115,41 @@ export default function ApplicationFormPage() {
   useEffect(() => {
     if (!aapId) return;
     getDoc(doc(db, 'aap', aapId))
-      .then(snap => setAap(snap.exists() ? (snap.data() as AAP) : null))
-      .catch(err => console.error('Appel non chargé :', err))
+      .then((snap) => setAap(snap.exists() ? (snap.data() as AAP) : null))
+      .catch((err) => console.error('Appel non chargé :', err))
       .finally(() => setLoading(false));
   }, [aapId]);
 
-  const piecesExigees = (aap?.requiredDocuments?.length ?? 0) > 0 || (aap?.scrapeMetadata?.fichiersJoints?.length ?? 0) > 0;
+  const piecesExigees =
+    (aap?.requiredDocuments?.length ?? 0) > 0 || (aap?.scrapeMetadata?.fichiersJoints?.length ?? 0) > 0;
 
   const etapeValide = (): boolean => {
     setError('');
     if (etape === 0) {
-      if (titre.trim().length < 5) { setError('Donnez un titre à votre projet (cinq caractères au moins)'); return false; }
-      if (resume.trim().length < 20) { setError('Résumez votre projet en quelques lignes (vingt caractères au moins)'); return false; }
+      if (titre.trim().length < 5) {
+        setError('Donnez un titre à votre projet (cinq caractères au moins)');
+        return false;
+      }
+      if (resume.trim().length < 20) {
+        setError('Résumez votre projet en quelques lignes (vingt caractères au moins)');
+        return false;
+      }
     }
-    if (etape === 1 && (!montant || parseFloat(montant) <= 0)) { setError('Indiquez le montant demandé, en euros'); return false; }
+    if (etape === 1 && (!montant || parseFloat(montant) <= 0)) {
+      setError('Indiquez le montant demandé, en euros');
+      return false;
+    }
     if (etape === 2 && piecesExigees && documents.length === 0) {
-      setError('Cet appel attend un dossier : joignez le dossier de candidature rempli (et les autres pièces demandées)');
+      setError(
+        'Cet appel attend un dossier : joignez le dossier de candidature rempli (et les autres pièces demandées)',
+      );
       return false;
     }
     return true;
   };
 
   const ajouterFichiers = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setDocuments(prev => [...prev, ...Array.from(e.target.files!)]);
+    if (e.target.files) setDocuments((prev) => [...prev, ...Array.from(e.target.files!)]);
   };
 
   const envoyer = async () => {
@@ -131,13 +165,18 @@ export default function ApplicationFormPage() {
         try {
           const fichierRef = ref(storage, `uploads/applications/${currentUser.uid}/${Date.now()}_${file.name}`);
           await uploadBytes(fichierRef, file);
-          pieces.push({ name: file.name, url: await getDownloadURL(fichierRef), type: file.type, uploadedAt: new Date() });
+          pieces.push({
+            name: file.name,
+            url: await getDownloadURL(fichierRef),
+            type: file.type,
+            uploadedAt: new Date(),
+          });
         } catch (errDepot) {
           console.error('Dépôt de la pièce impossible :', errDepot);
           pieces.push(pieceNonDeposee(file));
         }
       }
-      const nonDeposees = pieces.filter(p => p.nonDeposee).map(p => p.name);
+      const nonDeposees = pieces.filter((p) => p.nonDeposee).map((p) => p.name);
       await addDoc(collection(db, 'applications'), {
         aapId,
         aapTitle: aap.title,
@@ -157,20 +196,28 @@ export default function ApplicationFormPage() {
         updatedAt: Timestamp.now(),
       });
       if (userProfile) await journaliser(currentUser.uid, userProfile.userType, 'candidature', aapId, aap.title);
-      navigate('/mes-candidatures', { state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur', nonDeposees } } });
+      navigate('/mes-candidatures', {
+        state: { envoyee: { aapTitle: aap.title, financeurName: aap.financeurName || 'le financeur', nonDeposees } },
+      });
     } catch (err) {
       console.error('Error submitting application:', err);
       const message = err instanceof Error ? err.message : '';
-      setError(message.includes('storage/unauthorized')
-        ? "Le dépôt du fichier a été refusé par le stockage (règles Storage non déployées) : prévenez l'administrateur, votre saisie est conservée"
-        : message || "Erreur lors de l'envoi");
+      setError(
+        message.includes('storage/unauthorized')
+          ? "Le dépôt du fichier a été refusé par le stockage (règles Storage non déployées) : prévenez l'administrateur, votre saisie est conservée"
+          : message || "Erreur lors de l'envoi",
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" /></div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" />
+      </div>
+    );
   }
   if (!aap || !ficheConsultable(aap, userProfile?.userType, currentUser?.uid)) {
     return (
@@ -205,13 +252,17 @@ export default function ApplicationFormPage() {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Candidater : {aap.title}</h1>
-          <p className="text-gray-600">{aap.financeurName} · {libelleMontant(aap)}</p>
+          <p className="text-gray-600">
+            {aap.financeurName} · {libelleMontant(aap)}
+          </p>
         </div>
 
         <Stepper steps={ETAPES} currentStep={etape} />
 
         <Card className="p-8">
-          {error && <div className="bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg mb-6">{error}</div>}
+          {error && (
+            <div className="bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg mb-6">{error}</div>
+          )}
 
           {etape === 0 && (
             <div className="space-y-6">
@@ -221,24 +272,43 @@ export default function ApplicationFormPage() {
                   Gagnez du temps : déposez votre dossier, les champs se remplissent
                 </p>
                 <p className="text-xs text-primary-800 mb-3">
-                  Votre dossier de candidature au format PDF (20 Mo au plus) est lu par l'application ; vous relisez et corrigez
-                  ensuite. Il sera joint à l'étape Pièces.
+                  Votre dossier de candidature au format PDF (20 Mo au plus) est lu par l'application ; vous relisez et
+                  corrigez ensuite. Il sera joint à l'étape Pièces.
                 </p>
-                <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium cursor-pointer ${lecture ? 'bg-gray-200 text-gray-500' : 'bg-primary-600 hover:bg-primary-700 text-white'}`}>
+                <label
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium cursor-pointer ${lecture ? 'bg-gray-200 text-gray-500' : 'bg-primary-600 hover:bg-primary-700 text-white'}`}
+                >
                   <Upload className="h-4 w-4" />
                   {lecture ? 'Lecture du dossier en cours...' : 'Déposer mon dossier PDF pour pré-remplir'}
-                  <input type="file" accept=".pdf,application/pdf" className="hidden" onChange={preremplir} disabled={lecture} />
+                  <input
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    className="hidden"
+                    onChange={preremplir}
+                    disabled={lecture}
+                  />
                 </label>
                 {lu && (
                   <div className="mt-3 text-sm text-primary-900">
-                    <p><span className="font-medium">{LIBELLES_CONFIANCE[lu.confiance]}.</span>{lu.manquants.length > 0 && ` Non trouvé dans le dossier : ${lu.manquants.join(', ')}.`}</p>
+                    <p>
+                      <span className="font-medium">{LIBELLES_CONFIANCE[lu.confiance]}.</span>
+                      {lu.manquants.length > 0 && ` Non trouvé dans le dossier : ${lu.manquants.join(', ')}.`}
+                    </p>
                     {lu.remarque && <p className="mt-1">À compléter : {lu.remarque}</p>}
                   </div>
                 )}
               </div>
-              <Input label="Titre du projet" value={titre} onChange={(e) => setTitre(e.target.value)} placeholder="Ex : Création d'une unité de soins palliatifs de 8 lits" required />
+              <Input
+                label="Titre du projet"
+                value={titre}
+                onChange={(e) => setTitre(e.target.value)}
+                placeholder="Ex : Création d'une unité de soins palliatifs de 8 lits"
+                required
+              />
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Résumé du projet <span className="text-error-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Résumé du projet <span className="text-error-500">*</span>
+                </label>
                 <textarea
                   value={resume}
                   onChange={(e) => setResume(e.target.value)}
@@ -249,13 +319,24 @@ export default function ApplicationFormPage() {
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
                   {textesRemplis(textes).length === 0 ? (
                     <span className="text-gray-500">
-                      Textes réutilisables (présentation, références, moyens) : à enregistrer dans <Link to="/profil" className="underline">Mon profil</Link>.
+                      Textes réutilisables (présentation, références, moyens) : à enregistrer dans{' '}
+                      <Link to="/profil" className="underline">
+                        Mon profil
+                      </Link>
+                      .
                     </span>
-                  ) : textesRemplis(textes).map(([cle, texte]) => (
-                    <Button key={cle} type="button" variant="ghost" onClick={() => setResume(ajouterTexte(resume, cle, texte))}>
-                      Ajouter : {LIBELLES_TEXTES[cle]}
-                    </Button>
-                  ))}
+                  ) : (
+                    textesRemplis(textes).map(([cle, texte]) => (
+                      <Button
+                        key={cle}
+                        type="button"
+                        variant="ghost"
+                        onClick={() => setResume(ajouterTexte(resume, cle, texte))}
+                      >
+                        Ajouter : {LIBELLES_TEXTES[cle]}
+                      </Button>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -263,7 +344,15 @@ export default function ApplicationFormPage() {
 
           {etape === 1 && (
             <div className="space-y-4">
-              <Input label="Montant demandé (euros)" type="number" min="0" value={montant} onChange={(e) => setMontant(e.target.value)} required helperText={`L'appel annonce : ${libelleMontant(aap)}`} />
+              <Input
+                label="Montant demandé (euros)"
+                type="number"
+                min="0"
+                value={montant}
+                onChange={(e) => setMontant(e.target.value)}
+                required
+                helperText={`L'appel annonce : ${libelleMontant(aap)}`}
+              />
             </div>
           )}
 
@@ -271,12 +360,20 @@ export default function ApplicationFormPage() {
             <div className="space-y-6">
               {(aap.scrapeMetadata?.fichiersJoints?.length ?? 0) > 0 && (
                 <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
-                  <p className="text-sm font-medium text-primary-900 mb-2">Le dossier de candidature de l'appel, à remplir puis à joindre ici :</p>
+                  <p className="text-sm font-medium text-primary-900 mb-2">
+                    Le dossier de candidature de l'appel, à remplir puis à joindre ici :
+                  </p>
                   <ul className="space-y-1">
                     {aap.scrapeMetadata!.fichiersJoints!.map((f, i) => (
                       <li key={i}>
-                        <a href={lienSur(f.url)} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-700 hover:underline inline-flex items-center gap-1">
-                          <ExternalLink className="h-4 w-4" />{decodeURIComponent(f.filename)}
+                        <a
+                          href={lienSur(f.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-primary-700 hover:underline inline-flex items-center gap-1"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          {decodeURIComponent(f.filename)}
                         </a>
                       </li>
                     ))}
@@ -287,39 +384,86 @@ export default function ApplicationFormPage() {
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm font-medium text-blue-900 mb-2">Pièces demandées par le financeur :</p>
                   <ul className="list-disc list-inside text-sm text-blue-800 space-y-1">
-                    {aap.requiredDocuments!.map((d, i) => <li key={i}>{d}</li>)}
+                    {aap.requiredDocuments!.map((d, i) => (
+                      <li key={i}>{d}</li>
+                    ))}
                   </ul>
                 </div>
               )}
               <label className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-primary-400">
                 <Upload className="h-10 w-10 text-gray-400 mx-auto mb-2" />
                 <span className="text-sm text-gray-700">Cliquez pour joindre vos fichiers (PDF, Word, Excel)</span>
-                <input type="file" multiple className="hidden" onChange={ajouterFichiers} accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods" />
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={ajouterFichiers}
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods"
+                />
               </label>
               {documents.length > 0 && (
                 <ul className="space-y-2">
                   {documents.map((f, i) => (
                     <li key={i} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2 text-sm">
-                      <span className="flex items-center gap-2 text-gray-800"><FileText className="h-4 w-4" />{f.name} <span className="text-gray-400">({(f.size / 1024).toFixed(0)} Ko)</span></span>
-                      <button type="button" onClick={() => setDocuments(documents.filter((_, j) => j !== i))} aria-label={`Retirer ${f.name}`} className="text-gray-400 hover:text-error-600"><X className="h-4 w-4" /></button>
+                      <span className="flex items-center gap-2 text-gray-800">
+                        <FileText className="h-4 w-4" />
+                        {f.name} <span className="text-gray-400">({(f.size / 1024).toFixed(0)} Ko)</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setDocuments(documents.filter((_, j) => j !== i))}
+                        aria-label={`Retirer ${f.name}`}
+                        className="text-gray-400 hover:text-error-600"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                     </li>
                   ))}
                 </ul>
               )}
               <div className="border-t pt-4 text-sm text-gray-700">
                 <p className="font-medium text-gray-900 mb-1">Récapitulatif</p>
-                <p>{titre} · {montant ? `${Number(montant).toLocaleString('fr-FR')} €` : ''} · {documents.length} pièce{documents.length > 1 ? 's' : ''}</p>
-                <p className="text-gray-500 mt-1">Une fois envoyée, la candidature n'est plus modifiable ; vous la suivez dans <Link to="/mes-candidatures" className="text-primary-600 hover:underline">Mes candidatures</Link>.</p>
+                <p>
+                  {titre} · {montant ? `${Number(montant).toLocaleString('fr-FR')} €` : ''} · {documents.length} pièce
+                  {documents.length > 1 ? 's' : ''}
+                </p>
+                <p className="text-gray-500 mt-1">
+                  Une fois envoyée, la candidature n'est plus modifiable ; vous la suivez dans{' '}
+                  <Link to="/mes-candidatures" className="text-primary-600 hover:underline">
+                    Mes candidatures
+                  </Link>
+                  .
+                </p>
               </div>
             </div>
           )}
 
           <div className="flex justify-between mt-8 pt-6 border-t">
-            <Button variant="secondary" onClick={() => { setError(''); setEtape(etape - 1); }} disabled={etape === 0 || submitting}>Précédent</Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setError('');
+                setEtape(etape - 1);
+              }}
+              disabled={etape === 0 || submitting}
+            >
+              Précédent
+            </Button>
             {etape < ETAPES.length - 1 ? (
-              <Button onClick={() => { if (etapeValide()) { setEtape(etape + 1); window.scrollTo(0, 0); } }}>Suivant</Button>
+              <Button
+                onClick={() => {
+                  if (etapeValide()) {
+                    setEtape(etape + 1);
+                    window.scrollTo(0, 0);
+                  }
+                }}
+              >
+                Suivant
+              </Button>
             ) : (
-              <Button onClick={envoyer} loading={submitting}>Envoyer la candidature</Button>
+              <Button onClick={envoyer} loading={submitting}>
+                Envoyer la candidature
+              </Button>
             )}
           </div>
         </Card>

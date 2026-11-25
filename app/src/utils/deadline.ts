@@ -12,7 +12,10 @@ export const SANS_DATE = 'Date de clôture non précisée';
 // L'appel reste ouvert tout son dernier jour, en métropole comme outre-mer (avant : décompte en heures depuis minuit UTC,
 // « Clôturé » dès 20 h le dernier jour aux Antilles). Même règle dans scraping/alertes.py et l'import.
 // null = pas de date de clôture connue
-export const getDaysUntilDeadline = (deadline: Date | Timestamp | null | undefined, maintenant = new Date()): number | null => {
+export const getDaysUntilDeadline = (
+  deadline: Date | Timestamp | null | undefined,
+  maintenant = new Date(),
+): number | null => {
   if (!deadline) return null;
   const d = deadline instanceof Date ? deadline : deadline.toDate();
   const cloture = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
@@ -31,8 +34,8 @@ export const deadlineLabel = (daysLeft: number | null): string => {
 
 // Tri stable : les AAP datés d'abord, dans leur ordre d'origine, puis ceux sans date de clôture
 export const datesDAbord = <T extends { deadline: Date | Timestamp | null }>(aaps: T[]): T[] => [
-  ...aaps.filter(aap => aap.deadline),
-  ...aaps.filter(aap => !aap.deadline),
+  ...aaps.filter((aap) => aap.deadline),
+  ...aaps.filter((aap) => !aap.deadline),
 ];
 
 // Urgence d'une échéance pour le calendrier (corrections-relecture 3.3, 2026-11-20) : un appel clos est « passé », jamais

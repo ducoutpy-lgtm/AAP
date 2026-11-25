@@ -27,7 +27,8 @@ export default function LoginPage() {
   // Redirection une fois le profil lu (plan niveau A, lot 3.5, 2026-11-25) : la page attendait une seconde fixe, puis
   // lisait le compte d'avant la connexion ; AuthContext garde loading vrai tant que le profil n'est pas lu
   useEffect(() => {
-    if (connecte && currentUser && !chargementCompte) navigate(destinationApresConnexion(from, userProfile), { replace: true });
+    if (connecte && currentUser && !chargementCompte)
+      navigate(destinationApresConnexion(from, userProfile), { replace: true });
   }, [connecte, currentUser, chargementCompte, userProfile, from, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -72,9 +73,7 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-            Connexion
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Connexion</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-error-50 border border-error-200 rounded-lg text-error-600 text-sm">
@@ -106,7 +105,7 @@ export default function LoginPage() {
                 <input
                   type="checkbox"
                   checked={seSouvenir}
-                  onChange={e => setSeSouvenir(e.target.checked)}
+                  onChange={(e) => setSeSouvenir(e.target.checked)}
                   className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                 />
                 <span className="ml-2 text-gray-600">Se souvenir de moi</span>
@@ -133,19 +132,12 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-6">
-              <Button
-                type="button"
-                variant="secondary"
-                fullWidth
-                onClick={handleGoogleLogin}
-                disabled={loading}
-              >
+              <Button type="button" variant="secondary" fullWidth onClick={handleGoogleLogin} disabled={loading}>
                 <Mail className="mr-2 h-5 w-5" />
                 Google
               </Button>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -12,7 +12,9 @@ export const TYPES_RETOUR: { cle: TypeRetour; libelle: string; aide: string }[] 
   { cle: 'autre', libelle: 'Autre', aide: 'Tout le reste' },
 ];
 
-export const LIBELLES_TYPES_RETOUR: Record<TypeRetour, string> = Object.fromEntries(TYPES_RETOUR.map(t => [t.cle, t.libelle])) as Record<TypeRetour, string>;
+export const LIBELLES_TYPES_RETOUR: Record<TypeRetour, string> = Object.fromEntries(
+  TYPES_RETOUR.map((t) => [t.cle, t.libelle]),
+) as Record<TypeRetour, string>;
 
 export const LONGUEUR_MINIMALE = 10;
 
@@ -30,7 +32,8 @@ export interface Retour {
 // Message accepté : au moins dix caractères une fois les espaces superflus retirés ; renvoie le motif du refus sinon
 export function controlerMessage(message: string): string | null {
   const propre = message.replace(/\s+/g, ' ').trim();
-  if (propre.length < LONGUEUR_MINIMALE) return `Décrivez un peu plus : au moins ${LONGUEUR_MINIMALE} caractères (${propre.length} pour l'instant).`;
+  if (propre.length < LONGUEUR_MINIMALE)
+    return `Décrivez un peu plus : au moins ${LONGUEUR_MINIMALE} caractères (${propre.length} pour l'instant).`;
   if (propre.length > 4000) return 'Message trop long : 4 000 caractères au plus.';
   return null;
 }
