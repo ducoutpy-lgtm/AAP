@@ -211,6 +211,14 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   une ligne « AAP attend : … » à la séance de pilotage). Piège de test noté : une doublure de `useAuth` doit renvoyer
   le même objet à chaque appel, sinon une page qui dépend de `currentUser` recharge sans fin.
 
+- 2026-11-25, journée : plan niveau A terminé dans le code (lots 1 à 4, décisions 35 à 43), parcours des trois rôles
+  joués sur les émulateurs, puis relecture indépendante par agents (mode « ultracode » activé par Monsieur DUCOUT) :
+  47 constats confirmés, note B-, corrigés en deux passes contre-vérifiées (14 commits, `openspec/changes/niveau-a/
+  tasks.md` section 7). 254 tests de l'application, 61 de règles, 297 Python, lint, types, mise en forme, ruff, mypy
+  verts. Rien n'est poussé ni déployé (règles Firestore et hébergement attendent son accord). **Reprendre à** : réponses
+  aux questions 44 à 53 de `docs/A_VALIDER.md`, puis question à boutons de poussée et de mise en ligne (5.2), avec une
+  ligne « AAP attend : … » à la séance de pilotage. Lundi 30/11, 8 h : PC allumé, session ouverte, sur secteur.
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui

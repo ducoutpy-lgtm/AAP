@@ -72,6 +72,34 @@ Questions du 2026-11-21, nées de la relecture de l'application (changement `cor
 43. (2026-11-24) Scripts `scripts/depublier_non_controlees.py` (20/10, 34 fiches à dépublier « en attente d'accord ») et
    `scripts/corriger_financeur_relais.py` : je ne trouve pas la preuve qu'ils ont été joués. Ils écrivent en base par
    défaut. Les ranger avec les migrations jouées (`scripts/migrations_jouees/`), ou les garder ? À trancher.
+44. (2026-11-25, relecture du plan niveau A) Filtre des liens du nom de structure dans le courriel : un domaine nu n'est
+   retiré que si son extension est l'une des 38 extensions courantes (fr, com, org, net, eu, info, io, ly, co...) ; les
+   extensions qui sont aussi des mots français (de, la, et...) sont écartées pour garder « EHPAD St.Joseph ». Risque
+   restant : « x.ai » ou « x.de » passent. Garder cette liste ? Oui / non.
+45. Suivi externe d'une fiche importée clôturée (« J'ai déposé ma candidature : la suivre ici ») : la règle l'autorise
+   (envoyé d'emblée, fiche visible). Autre voie : masquer le bouton sur une fiche clôturée. Garder la règle ? Oui / non.
+46. Un administrateur qui publie le brouillon d'un financeur depuis `/aap/:id/edit` le valide du même coup (même bloc que
+   « Valider et publier »). D'accord ? Oui / non.
+47. Montants : devant un multiplicateur, le point est lu comme une décimale, d'où « 12.500 k€ » = 12 500 € (et non
+   12,5 millions) ; la seule valeur réelle de ce type (« 1.120 millions d'euros » du GIRCI) vaut bien 1,12 million.
+   D'accord ? Oui / non.
+48. Petits choix faits par la relecture : heure retirée du panneau du jour du calendrier (une clôture n'a pas d'heure) ;
+   corbeille des notifications qui supprime définitivement, sans confirmation ; `rejeux.json` coupé laissé tel quel et
+   signalé chaque lundi, sans réparation automatique ; après une erreur passagère de lecture d'une adresse, la fenêtre
+   du courriel avance quand même pour les autres candidats. D'accord avec les quatre ? Oui / à revoir.
+49. Sécurité : tout compte en période d'essai peut lire par le kit Firebase les appels non publiés (brouillons, rejetés),
+   et un visiteur un appel publié encore « Proposée » ; l'écran ne les montre pas. Resserrer la règle de lecture demande
+   de revoir les requêtes de liste (recherche, calendrier, tableaux de bord). Le faire maintenant ? Oui / plus tard.
+50. Messagerie : la page lit une collection `conversations` sans règle ni code qui l'écrive ; elle n'affiche donc jamais
+   rien. La construire (règles, création des conversations), ou retirer la page du menu en attendant ? Construire /
+   retirer / laisser.
+51. Suspension : un compte suspendu peut supprimer son document `users` puis le recréer en essai. Interdire la
+   suppression par le compte demande de faire passer la suppression du compte par une fonction serveur. Le faire ?
+   Oui / plus tard.
+52. Compteur de vues : un compte peut ajouter une vue à chaque ouverture, sans limite (un candidat qui recharge sa page
+   fait monter le compteur). Une vue par compte et par appel demanderait une collection de plus. Le faire ? Oui / non.
+53. Mises à niveau majeures (tâche 1.5) : `firebase` 10 vers 12 et `react-router-dom` 6 vers 7, pour les 13 failles
+   restantes (5 élevées) ; travail à part, avec tous les parcours rejoués sur les émulateurs. Le lancer ? Oui / plus tard.
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec

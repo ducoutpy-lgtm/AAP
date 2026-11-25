@@ -4,12 +4,29 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Corrigé (2026-11-25, relecture indépendante du plan niveau A)
+- `alertes.py` : thématique déduite des secteurs pour les seuls appels saisis à la main (une fiche collectée
+  « incertain » restait rangée en santé) ; bilan de l'administrateur compté sur sept jours, et non depuis le courriel du
+  matin ; relance le même jour : pas de courriel « aucun nouvel appel » ; filtre des liens du nom de structure en temps
+  linéaire (91 s pour 100 000 caractères avant), insensible à la casse, domaines nus retirés pour 38 extensions
+  connues seulement (« EHPAD St.Joseph » gardé) ; paramètres de recherche encodés dans le lien ; compte à l'adresse de
+  connexion illisible noté au journal.
+- `trier_file.py` : un appel de financeur (financeurId présent et différent de `scraped`, ou source `manual`) n'est
+  jamais publié ni rejeté comme doublon par le tri ; clôture comptée en jours du calendrier.
+- `import_to_firestore.py` : point décimal devant un multiplicateur (« 7.6 millions », « 1.120 millions d'euros » du
+  GIRCI = 1,12 million) ; un ancien `scrapeMetadata.verification` ne survit plus à la fusion.
+- `echantillon.py`, `extraction_locale.py`, `rejeu.py` : l'erreur affichée est celle du texte en cause ; un texte réussi
+  ou refusé sort de `.errors.json` ; `liens.json` et `rejeux.json` écrits par fichier temporaire, un fichier coupé
+  (même au milieu d'un caractère accentué) est signalé « illisible » avec un bilan d'erreur au journal, sans arrêter
+  les autres sources ; commande exacte de `perimer_fiches.py` dans `VEILLE.md`.
+- 297 tests Python verts.
+
 ### Modifié et corrigé (2026-11-24 et 25, plan niveau A, changement `niveau-a`)
 - 24/11 : `alertes.py` écrit à l'adresse de connexion vérifiée, nom de structure sans lien ; `veille.cmd` envoie les
-  courriels d'abord, lance Python en `-u` et note l'heure de chaque étape ; textes en échec retentés trois fois au plus
+  courriels d'abord, lance Python en `-u` et note l'heure de chaque étape ; textes en échec essayés trois fois au plus
   (`noter_echec`), JSON écrits par fichier temporaire ; journal des coûts à chemin fixe ; `chaine_pdf_locale` rend le
   code d'échec et écrit « chaîne terminée » ; import : vues, candidatures et corrections humaines préservées, montants
-  en millions, milliards, M€, k€ ; scripts d'écriture à blanc par défaut, migrations jouées dans
+  en millions, milliards, M€, k€ ; nouveaux scripts d'écriture à blanc par défaut (anciens scripts listés dans le README), migrations jouées dans
   `scripts/migrations_jouees/`.
 - 25/11 : thématique d'un appel de financeur déduite de ses secteurs (décision 37) et clôture comptée en jours du
   calendrier (décision 38, `jours_avant_cloture`), mêmes cas que l'application ; phrase périmée du bilan administrateur

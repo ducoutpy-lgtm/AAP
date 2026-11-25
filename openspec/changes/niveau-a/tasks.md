@@ -46,7 +46,8 @@ local par lot vérifié.
 - [x] 2.5 Import : compteurs et corrections préservés, montants en millions. (2026-11-24 : vues et candidatures écrites à
   la création seulement ; adresse officielle et secteurs protégés sur une fiche validée ; montants en millions,
   milliards, M€ et k€, virgule décimale, espaces insécables. 2 tests en échec avant, 264 tests Python verts.)
-- [x] 2.6 Scripts d'écriture à blanc par défaut (option `--reel`) ; migrations déjà jouées rangées à part. (2026-11-24 :
+- [x] 2.6 Scripts d'écriture à blanc par défaut (option `--reel`) pour les scripts revus (plusieurs anciens écrivent
+  encore sans option : liste dans `scraping/README.md`, relecture du 2026-11-25) ; migrations déjà jouées rangées à part. (2026-11-24 :
   `migrer_identifiants`, `migrer_echeances`, `publier_sans_date` rangés dans `scripts/migrations_jouees/` avec un README ;
   les scripts récurrents lancés par la veille sans option (`import_to_firestore`, `publier_chiffres`, `publier_couts`)
   gardent leur convention, sinon la chaîne cassait : convention à documenter (4.4) ; `depublier_non_controlees` et
@@ -152,3 +153,21 @@ local par lot vérifié.
 
 - [ ] 5.1 Vérification finale (lint, types, tests, règles, compilation, démarrage) et nouvelle note.
 - [ ] 5.2 Question à part : poussée et mise en ligne des règles et de l'hébergement.
+
+## 7. Relecture indépendante et vérification (2026-11-25)
+
+- [x] 7.1 Parcours sur les émulateurs : connexion des trois rôles, saisie d'un appel avec erreurs puis valide,
+  validation par l'administrateur, recherche par thématique, favori, clavier, menu à 375 px, page 404, Abonnement. Une
+  régression de la connexion trouvée (page recréée par le gabarit) et corrigée (`481227c`, test en échec avant).
+- [x] 7.2 Relecture en cinq angles et notation par des agents distincts, chaque constat contre-vérifié : 47 confirmés,
+  7 réfutés, note B- (relecture du code, des règles, de la chaîne, de la documentation et des tests).
+- [x] 7.3 Première passe, huit groupes de fichiers sans recouvrement, chacun contre-vérifié : `ae2e473`, `8a8271a`,
+  `382d614`, `46a199b`, `e068903`, `0ca11f6`, `954ad36`, `bf99f2d`.
+- [x] 7.4 Seconde passe sur les points « à reprendre » des sceptiques, six groupes contre-vérifiés : `153d190`,
+  `9bbd9c9`, `7b7f6c0`, `1cae3d0`, `c7f5f26`, `c4beabe`. Retour sur une consigne de la session (montants : un point suivi
+  de trois chiffres lu en milliers) sur avis bloquant : la seule valeur réelle devenait 1 000 fois trop grande.
+- [x] 7.5 Documentation finale (CHANGELOG, README, `CLAUDE.md`), questions 44 à 53 dans `docs/A_VALIDER.md`.
+- [ ] 7.6 Laissés à une décision de Monsieur DUCOUT (questions 49 à 53) : lecture des appels non publiés par tout compte
+  en essai ; messagerie sans règle `conversations` ; suspension contournable en recréant son document `users` ; vues
+  gonflables par des ouvertures répétées ; mises à niveau majeures (1.5).
+

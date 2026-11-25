@@ -5,14 +5,34 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-25, relecture indépendante du plan niveau A)
+- Relecture en cinq angles (application, sécurité, chaîne du lundi, documentation, tests) par des agents distincts, chaque
+  constat contre-vérifié : 47 confirmés, 7 réfutés ; note indépendante B-. Corrigés en deux passes (14 commits), chacune
+  contre-vérifiée, avec un test en échec avant chaque correction de comportement.
+- Application : la connexion redirige même quand le gabarit recrée la page ; vue et journal seulement sur une fiche
+  lisible ; case « courriel du lundi » juste après un aller-retour ; dates de clôture affichées en UTC (plus de veille
+  outre-mer), heure retirée du calendrier ; territoires d'outre-mer dans le formulaire d'appel ; corbeille des
+  notifications qui supprime en base ; l'administrateur qui publie un brouillon depuis la modification le valide ;
+  échappement CSV complet ; derniers liens passés par `lienSur` ; lecture de profil périmée ignorée ; plus aucun emoji.
+- Règles Firestore : vue sur un appel publié et visible seulement ; favori lié au compte ; candidature sur un appel
+  visible (suivi externe envoyé d'emblée sur une fiche importée clôturée) ; bloc `scrapeMetadata` refusé au financeur.
+- Courriel du lundi et chaîne : thématique tirée des secteurs réservée aux appels saisis à la main ; bilan de
+  l'administrateur sur sept jours ; pas de courriel vide lors d'une relance dans la journée ; filtre des liens linéaire et
+  limité aux extensions connues ; compte à l'adresse illisible noté au journal ; tri qui ne publie ni n'archive un appel
+  de financeur et compte la clôture en jours ; « 7.6 millions » lu 7,6 millions ; ancien contrôle effacé à la fusion ;
+  échec retiré de `.errors.json` à la réussite ; fichiers coupés (accent compris) signalés sans arrêter la veille.
+- Chiffres au 2026-11-25 : 254 tests de l'application, 61 tests de règles (57 Firestore, 4 Storage), 297 tests Python ;
+  lint, types, mise en forme, ruff, mypy et spec valides. Choix à confirmer : `docs/A_VALIDER.md`, questions 44 à 53.
+
 ### Modifié et corrigé (2026-11-24 et 25, plan niveau A, changement `niveau-a`)
 - Sécurité (24/11) : courriel du lundi envoyé à l'adresse de connexion vérifiée ; un compte ne modifie que ses champs de
   parcours et naît en essai ; un appel saisi par un financeur n'est visible qu'après validation de l'administrateur ;
   formulaire de contact borné, liens `javascript:` et `data:` refusés, messagerie limitée au champ « lu » ; sept
   dépendances inutilisées retirées (vulnérabilités de production : 20 dont 2 critiques, puis 13 dont aucune critique).
-- Chaîne du lundi (24/11) : courriels en tête de `veille.cmd`, heure par étape ; textes en échec retentés trois fois ;
+- Chaîne du lundi (24/11) : courriels en tête de `veille.cmd`, heure par étape ; textes en échec essayés trois fois au plus ;
   journal des coûts à chemin fixe ; chaîne des PDF qui rend ses échecs ; import qui préserve compteurs et corrections,
-  montants en millions ; scripts d'écriture à blanc par défaut (détail : `scraping/CHANGELOG.md`).
+  montants en millions ; nouveaux scripts d'écriture à blanc par défaut, plusieurs anciens écrivent encore sans
+  option (liste dans `scraping/README.md`, détail : `scraping/CHANGELOG.md`).
 - Application (25/11) : connexion qui attend le profil puis mène au tableau de bord du rôle ; « Se souvenir de moi »
   réel ; fiche hors de la recherche introuvable par son adresse directe ; compteur de vues ; favori enregistré ; clôture
   en jours du calendrier (outre-mer compris) ; thématique des appels de financeur ; bouton « Clôturer » et avis du

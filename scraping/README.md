@@ -174,6 +174,16 @@ liste. Boîte d'envoi : Zoho Mail d'ARCADIA, variables `SMTP_*` et `COURRIEL_*` 
 `scraping/.env` (voir `.env.example`), mot de passe d'application jamais affiché. Sans ces variables, ou avec
 `--dry-run`, les courriels sont écrits dans `logs/courriels/` pour relecture.
 
+Règles ajoutées par la relecture du 2026-11-25 : le bilan de l'administrateur compte les fiches nouvelles des sept
+derniers jours (`--jours`), indépendamment du dernier envoi aux candidats ; une relance le même jour (fenêtre de moins
+d'un jour) n'envoie rien à un candidat sans appel nouveau, le courriel court « aucun nouvel appel » restant celui du
+passage hebdomadaire ; un compte dont l'adresse de connexion ne peut pas être lue est noté au journal (identifiant et
+type d'erreur) ; le nom de structure et le nom de recherche sont lus sur 200 caractères au plus, sans lien (adresses,
+`www.`, domaines nus dont l'extension est l'une des 38 extensions courantes de `_EXTENSIONS`), puis coupés à 80 ; les
+paramètres du lien « Voir la recherche » sont encodés. Thématique d'une recherche : un appel saisi par un financeur,
+sans champ classé, prend celle de ses « Secteurs ciblés » (Santé, Social) ; une fiche collectée sans champ reste
+« non classée ».
+
 Depuis le 2026-11-16 (changement `alertes-recherches-sauvegardees`), le courriel d'un candidat contient aussi une
 section par recherche sauvegardée dont l'alerte est active (« Votre recherche « X » : n nouveaux appels », cinq au plus,
 lien vers la recherche). Les filtres sont ceux de `/aap/search`, appliqués par `correspond` ; la même règle existe en
@@ -674,7 +684,10 @@ python ../scripts/trier_file.py [--reel] [--douter id,id]                       
   mesuré le 2026-11-20 : environ 12 PDF par heure.
 - Tri de la file (`scripts/trier_file.py`, lancé aussi par `veille_payante.py` après l'import) : doublons rejetés
   après sauvegarde, fiches contrôlées sans doute publiées, fiches douteuses laissées à Monsieur DUCOUT avec leur motif
-  (visible dans `/admin/aaps`). Lire l'essai à blanc avant `--reel` ; `--douter` garde dans la file ce qui ne semble
+  (visible dans `/admin/aaps`). Un appel saisi par un financeur (financeurId présent et différent de `scraped`, ou
+  source `manual`) n'est jamais publié ni rejeté comme doublon par le tri : il attend la validation de
+  l'administrateur ; la clôture y est comptée en jours du calendrier, comme dans l'application (relecture du
+  2026-11-25). Lire l'essai à blanc avant `--reel` ; `--douter` garde dans la file ce qui ne semble
   pas être un appel.
 - Mesures : `LOCAL_CONTRE_HAIKU.md` (contrôle local fiable pour le tri, plus prudent ; qualification locale sans gain
   pour les recommandations) ; `EXACTITUDE_PDF_LOCALE.md` (58 fiches de PDF : 85,8 % de champs justes, 3 dates
@@ -838,6 +851,17 @@ Mesures POC (20 avril 2026, Sonnet 4.6 + prompt caching activé) :
 - **0,035 € / AAP en moyenne** (input ~3k tokens, output ~2k tokens).
 - Projection 5 sources × 50 AAP / jour sans optimisation : **~260 €/mois**.
 - Avec **delta scraping** (5 % de nouveautés/jour) : **~13 €/mois**.
+
+## Échecs, fichiers coupés et montants (relecture du 2026-11-25)
+
+- `.errors.json` d'une extraction ne garde que les textes encore en échec : un texte essayé de nouveau puis réussi ou
+  refusé en sort, et le journal affiche l'erreur du texte en cause.
+- `liens.json` et `rejeux.json` de la veille s'écrivent par fichier temporaire ; un fichier coupé (même au milieu d'un
+  caractère accentué) est sauté avec la ligne « illisible ... à réparer ou à recréer » et un bilan d'erreur au
+  journal de la source ; les autres sources continuent. Une liste de résultats coupée arrête l'étape avec le même mot.
+- Montants (`import_to_firestore.parse_budget_total`) : devant « millions », « M€ », « k€ » ou « milliards », le point
+  est une décimale (« 7.6 millions » = 7 600 000 ; « 1.120 millions d'euros » du GIRCI Grand Ouest = 1 120 000) ;
+  sans multiplicateur, il sépare les milliers (« 12.000 € »).
 
 ## Tâches planifiées Windows (relevé du 2026-11-25)
 

@@ -221,8 +221,8 @@ linté.
 | `npm run lint` | ESLint, aucun avertissement toléré |
 | `npm run typecheck` | contrôle des types TypeScript |
 | `npm run format` / `npm run format:check` | mise en forme Prettier (2026-11-25) / son contrôle |
-| `npm test` | tests Vitest de `src` (219 au 2026-11-25) |
-| `npm run test:rules` | règles Firestore et Storage sur l'émulateur (51 Firestore et 4 Storage, 55 en tout, au 2026-11-25) |
+| `npm test` | tests Vitest de `src` (254 au 2026-11-25) |
+| `npm run test:rules` | règles Firestore et Storage sur l'émulateur (57 Firestore et 4 Storage, 61 en tout, au 2026-11-25) |
 | `npm run build` | compilation de production dans `dist/` |
 
 ## Structure du projet
@@ -307,6 +307,13 @@ d'alerte ; page 404 ; menu sur téléphone (sous 768 px) ; cartes, calendrier et
 pages connectées chargées à la demande et Stripe chargé seulement au paiement ; écran Abonnement « Paiement bientôt
 disponible ». Écrans retirés : `/admin/paiements` et `/admin/parametres` (gabarits vides). Détail et preuves :
 `openspec/changes/niveau-a/tasks.md`.
+
+**Relecture indépendante du plan** (2026-11-25, 47 constats confirmés, corrigés en deux passes) : dates de clôture
+affichées en UTC (le jour enregistré, outre-mer compris) et heure retirée du calendrier ; territoires d'outre-mer dans
+le formulaire d'appel ; corbeille des notifications qui supprime en base ; l'administrateur qui publie un brouillon
+depuis `/aap/:id/edit` le valide ; vue comptée seulement sur une fiche lisible ; case du courriel juste après un
+aller-retour ; règles : vue et candidature sur un appel visible, favori lié au compte, suivi externe d'une fiche
+importée clôturée, `scrapeMetadata` refusé au financeur. Choix à confirmer : `docs/A_VALIDER.md`, questions 44 à 53.
 
 **Espace d'administration et compte administrateur** (changement `acces-administration`, 2026-10-15) : `/admin`,
 `/admin/aaps` et `/admin/utilisateurs` sont réservés aux comptes dont `users/{uid}.userType` vaut `admin`. Aucun compte de
