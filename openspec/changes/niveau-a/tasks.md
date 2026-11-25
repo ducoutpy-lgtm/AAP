@@ -86,7 +86,11 @@ local par lot vérifié.
 - [x] 6.3 (37) Thématique des appels de financeur déduite des « Secteurs ciblés » (application et `scraping/alertes.py`).
   (2026-11-25 : sans champ classé, Santé donne santé et Social donne médico-social, `thematique` de `territoires.ts` et
   filtre de `alertes.py` ; fiche g des cas communs, en échec des deux côtés avant la correction ; 181 et 265 tests verts.)
-- [ ] 6.4 (38) Jour de clôture compté en jours du calendrier, règle commune à l'import, à l'application et au courriel.
+- [x] 6.4 (38) Jour de clôture compté en jours du calendrier, règle commune à l'import, à l'application et au courriel.
+  (2026-11-25 : `getDaysUntilDeadline` compare le jour de clôture (minuit UTC) à la date du jour du visiteur, la prochaine
+  échéance du financeur la reprend ; `jours_avant_cloture` dans `alertes.py` (le courriel retirait l'appel qui clôt le
+  jour même) ; l'import comparait déjà des dates. Tests en échec avant (Martinique : -1 au lieu de 0) ; 183 et 266 verts.
+  Reste : les dates affichées (`toLocaleDateString`) montrent la veille outre-mer, à traiter avec les dates du lot 3.)
 - [x] 6.5 (39) Bouton « Clôturer » dans « Mes appels ». (2026-11-25 : sur un appel publié, avec confirmation ; test de page
   en échec sans le bouton.)
 - [x] 6.6 (40) Avis du financeur visible par le candidat. (2026-11-25 : la page du candidat lit `financeurFeedback`,

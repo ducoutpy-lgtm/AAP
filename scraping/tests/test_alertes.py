@@ -1,6 +1,6 @@
 """Tests des alertes par courriel (fonctions pures, sans réseau ni Firestore)."""
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -297,3 +297,17 @@ def test_le_nom_de_structure_ne_porte_aucun_lien():
                                        [], "https://aapi-11bc3.web.app")
     assert "arnaque" not in sujet + texte and "www.x.fr" not in sujet + texte
     assert max(len(ligne) for ligne in sujet.splitlines()) < 160
+
+
+def test_cloture_comptee_en_jours_du_calendrier():
+    """Décision 38 du 2026-11-24 : un appel qui clôt aujourd'hui (minuit UTC, comme l'import l'enregistre) reste dans le
+    courriel toute la journée ; avant, il en sortait dès minuit UTC passé. Même règle que l'application et l'import."""
+    minuit = datetime.combine(date.today(), time(), tzinfo=timezone.utc)
+    profil = {"structureName": "EHPAD Test", "structureType": "association", "address": {"region": "normandie"}}
+    dernier_jour = fiche(id="dernier-jour", deadline=minuit)
+    assert [f["id"] for f in a.fiches_nouvelles_pour(profil, [dernier_jour], DEPUIS)] == ["dernier-jour"]
+    assert a.statut_appel(dernier_jour) == "bientot-clos"
+    hier = fiche(id="hier", deadline=minuit - timedelta(days=1))
+    assert a.fiches_nouvelles_pour(profil, [hier], DEPUIS) == []
+    assert a.statut_appel(hier) == "clos"
+    assert a.jours_avant_cloture(minuit + timedelta(days=3), date.today()) == 3

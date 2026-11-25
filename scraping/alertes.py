@@ -16,7 +16,7 @@ import argparse
 import re
 import math
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qs
 from pathlib import Path
 
@@ -102,6 +102,13 @@ def _nouvelles_visibles(fiches: list[dict], depuis: datetime) -> list[dict]:
             and (quand := _date(f.get("publishedAt")) or _date(f.get("createdAt"))) and quand >= depuis]
 
 
+def jours_avant_cloture(cloture: datetime, aujourdhui: date | None = None) -> int:
+    """Jours avant la clôture, en jours du calendrier (décision 38 du 2026-11-24) : la date de clôture (minuit UTC, un jour
+    du calendrier) moins la date du jour du poste. L'appel reste ouvert tout son dernier jour. Même règle que
+    getDaysUntilDeadline (app/src/utils/deadline.ts) et que l'import (scripts/import_to_firestore.py)."""
+    return (cloture.astimezone(timezone.utc).date() - (aujourdhui or date.today())).days
+
+
 def _par_cloture(fiches: list[dict]) -> list[dict]:
     """Clôture la plus proche d'abord, appels sans date en dernier (tri stable)."""
     return sorted(fiches, key=lambda f: _date(f.get("deadline")) or LOIN)
@@ -121,7 +128,7 @@ def fiches_nouvelles_pour(profil: dict, fiches: list[dict], depuis: datetime) ->
         if famille and dest and famille not in dest and "tous" not in dest:
             continue
         cloture = _date(f.get("deadline"))
-        if cloture and cloture < datetime.now(timezone.utc):
+        if cloture and jours_avant_cloture(cloture) < 0:
             continue
         retenues.append(f)
     return _par_cloture(retenues)
@@ -147,7 +154,7 @@ def statut_appel(fiche: dict) -> str:
     cloture = _date(fiche.get("deadline"))
     if not cloture:
         return "sans-date"
-    jours = math.ceil((cloture - datetime.now(timezone.utc)).total_seconds() / 86400)
+    jours = jours_avant_cloture(cloture)
     if jours < 0:
         return "clos"
     return "bientot-clos" if jours <= SEUIL_BIENTOT_CLOS_JOURS else "ouvert"

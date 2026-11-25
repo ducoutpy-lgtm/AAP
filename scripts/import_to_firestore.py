@@ -585,6 +585,8 @@ def main() -> int:
                 # entre en brouillon avec deadline nulle, en attente de la validation de Monsieur DUCOUT.
                 doc = sans_date_en_attente(doc, today)
                 en_attente += 1
+            # Jours du calendrier : appel gardé tout son dernier jour (règle commune avec l'application et le courriel,
+            # décision 38 du 2026-11-24)
             elif not args.include_expired and doc["deadline"].date() < today:
                 skipped["expire"] += 1
                 continue

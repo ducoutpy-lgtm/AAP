@@ -7,12 +7,17 @@ import { Timestamp } from 'firebase/firestore';
 
 export const SANS_DATE = 'Date de clôture non précisée';
 
+// Jours avant la clôture, en jours du calendrier (décision 38 du 2026-11-24) : la date de clôture est enregistrée à
+// minuit UTC (import, formulaire du financeur) et désigne un jour du calendrier, comparé à la date du jour du visiteur.
+// L'appel reste ouvert tout son dernier jour, en métropole comme outre-mer (avant : décompte en heures depuis minuit UTC,
+// « Clôturé » dès 20 h le dernier jour aux Antilles). Même règle dans scraping/alertes.py et l'import.
 // null = pas de date de clôture connue
-export const getDaysUntilDeadline = (deadline: Date | Timestamp | null | undefined): number | null => {
+export const getDaysUntilDeadline = (deadline: Date | Timestamp | null | undefined, maintenant = new Date()): number | null => {
   if (!deadline) return null;
-  const deadlineDate = deadline instanceof Date ? deadline : deadline.toDate();
-  const diff = deadlineDate.getTime() - Date.now();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  const d = deadline instanceof Date ? deadline : deadline.toDate();
+  const cloture = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  const aujourdhui = Date.UTC(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+  return Math.round((cloture - aujourdhui) / (1000 * 60 * 60 * 24));
 };
 
 export const isClosed = (daysLeft: number | null): boolean => daysLeft !== null && daysLeft < 0;

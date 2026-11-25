@@ -2,6 +2,7 @@
 // colonnes des candidatures reçues. Pourquoi un fichier à part : testable par Vitest sans React ni Firebase.
 import type { Timestamp } from 'firebase/firestore';
 import type { AAP, Application, ApplicationStatus } from '../types';
+import { getDaysUntilDeadline, isClosed } from './deadline';
 
 export const LIBELLES_STATUTS_CANDIDATURE: Record<ApplicationStatus, string> = {
   draft: 'Brouillon',
@@ -54,9 +55,9 @@ export function resumeFinanceur(aaps: AAP[], candidatures: Application[], mainte
   const dernieres = [...recues]
     .sort((a, b) => (dateDe(b.submittedAt ?? b.createdAt)?.getTime() ?? 0) - (dateDe(a.submittedAt ?? a.createdAt)?.getTime() ?? 0))
     .slice(0, 5);
-  // Même règle que getDaysUntilDeadline / isClosed (recherche, fiche) : ouvert tant que le nombre de jours arrondi au-dessus
-  // n'est pas négatif, donc l'appel qui clôt aujourd'hui reste la prochaine échéance (corrections-relecture 3.4)
-  const ouvert = (d: Date) => Math.ceil((d.getTime() - maintenant.getTime()) / (24 * 3600 * 1000)) >= 0;
+  // Même règle que la recherche et la fiche (getDaysUntilDeadline, jours du calendrier, décision 38) : l'appel qui clôt
+  // aujourd'hui reste la prochaine échéance (corrections-relecture 3.4)
+  const ouvert = (d: Date) => !isClosed(getDaysUntilDeadline(d, maintenant));
   const aVenir = aaps
     .filter(a => a.status === 'published' && dateDe(a.deadline) && ouvert(dateDe(a.deadline) as Date))
     .sort((a, b) => (dateDe(a.deadline) as Date).getTime() - (dateDe(b.deadline) as Date).getTime());
