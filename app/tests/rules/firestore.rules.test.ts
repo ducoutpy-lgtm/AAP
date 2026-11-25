@@ -11,7 +11,7 @@ import {
   initializeTestEnvironment,
   RulesTestEnvironment,
 } from '@firebase/rules-unit-testing';
-import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from 'firebase/firestore';
 
 const regles = readFileSync(fileURLToPath(new URL('../../firestore.rules', import.meta.url)), 'utf8');
 
@@ -435,5 +435,21 @@ describe('contact et messagerie : champs bornés', () => {
       { senderId: 'f1', receiverId: 'porteur1', content: 'Bonjour', read: false }));
     await assertFails(updateDoc(doc(porteur(), 'messages/m2'), { content: 'Texte réécrit' }));
     await assertSucceeds(updateDoc(doc(porteur(), 'messages/m2'), { read: true }));
+  });
+});
+
+// Décision 35 du 2026-11-24 : l'ouverture d'une fiche par un compte connecté ajoute 1 à son compteur de vues ; cette
+// écriture ne permet rien d'autre.
+describe('aap : compteur de vues', () => {
+  it('un compte connecté ajoute une vue à un appel publié, puis une autre', async () => {
+    await assertSucceeds(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1) }));
+    await assertSucceeds(updateDoc(doc(porteur2(), 'aap/publie'), { views: increment(1) }));
+  });
+  it('ni deux vues d’un coup, ni un nombre choisi, ni un autre champ, ni un brouillon, ni sans compte', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(2) }));
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: 1000 }));
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1), title: 'Réécrit' }));
+    await assertFails(updateDoc(doc(porteur(), 'aap/brouillon'), { views: increment(1) }));
+    await assertFails(updateDoc(doc(visiteur(), 'aap/publie'), { views: increment(1) }));
   });
 });

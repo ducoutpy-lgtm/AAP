@@ -30,6 +30,14 @@ service cloud.firestore {
     }
 
     // Statut d'un appel modifié par son auteur : inchangé, ou brouillon -> publié, ou publié -> clôturé
+    // Compteur de vues (décision 35 du 2026-11-24) : un compte connecté qui ouvre un appel publié ajoute exactement 1 à
+    // `views`, sans toucher à aucun autre champ
+    function ajouteUneVue() {
+      return isAuthenticated() && resource.data.get('status', '') == 'published'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
+        && request.resource.data.views == resource.data.get('views', 0) + 1;
+    }
+
     function statutAuteurPermis() {
       let avant = resource.data.get('status', '');
       let apres = request.resource.data.get('status', '');
@@ -162,7 +170,7 @@ service cloud.firestore {
       // l'administrateur ne revient pas dans la recherche par lui (corrections-relecture 2.4, 2026-11-20).
       // Plan niveau A, lot 1.2 : toute modification par l'auteur repasse l'appel « Proposée » (une fois validé, il pouvait
       // le réécrire sans nouveau contrôle) ; seule la clôture d'un appel publié se fait telle quelle.
-      allow update: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid
+      allow update: if isAdmin() || ajouteUneVue() || (isAuthenticated() && resource.data.financeurId == request.auth.uid
         && figes(['financeurId', 'source']) && statutAuteurPermis()
         && (aValiderSansRelecteur() || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
                                         && request.resource.data.status == 'closed')));

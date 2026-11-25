@@ -79,7 +79,10 @@ local par lot vérifié.
 
 ## 6. Décisions du 2026-11-24 (questions 35 à 43, choix à cocher relayés par la séance de pilotage)
 
-- [ ] 6.1 (35) Compteur de vues : +1 à l'ouverture d'une fiche, règle Firestore qui n'autorise que cet ajout.
+- [x] 6.1 (35) Compteur de vues : +1 à l'ouverture d'une fiche, règle Firestore qui n'autorise que cet ajout.
+  (2026-11-25 : `ajouteUneVue` dans `firestore.rules` (compte connecté, appel publié, `views` seul, +1 exactement) ;
+  la fiche appelle `incrementViews` une fois par ouverture, ni pour l'auteur ni pour l'administrateur. Tests en échec
+  avant : règle (55 tests sur l'émulateur) et page (185 tests). Règle à mettre en ligne après accord.)
 - [x] 6.2 (36) « Se souvenir de moi » : case décochée, session fermée à la fermeture du navigateur. (2026-11-25 :
   `login(email, mot de passe, seSouvenir)` et `setPersistence` ; décochée par défaut ; test en échec sans la correction ;
   181 tests verts. La connexion par Google garde la session, non modifiée.)

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { lienSur } from '../../utils/liens';
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore';
@@ -14,6 +14,7 @@ import { getDaysUntilDeadline, isClosed } from '../../utils/deadline';
 import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { memoriserFicheConsultee } from '../../utils/recherche';
 import { journaliser } from '../../services/journalService';
+import { aapService } from '../../services/aapService';
 import { aQuiSAdresse, candidatureOuverte, candidatureSurSiteOfficiel, libelleMontant, LIBELLES_THEMATIQUES_FICHE, suiviCandidatureExterne } from '../../utils/candidat';
 import { libelleObjet, libelleTypeAppel } from '../../utils/qualification';
 import { formatDateFr } from '../../utils/relecture';
@@ -60,6 +61,8 @@ export default function AapDetailPage() {
   // Adresses de téléchargement des pièces jointes hébergées dans Storage, par index dans fichiersJoints.
   // Les sites des ARS refusent l'accès direct à leurs fichiers : on sert notre copie quand elle existe.
   const [pieceUrls, setPieceUrls] = useState<Record<number, string>>({});
+  // Fiche déjà comptée : React rejoue l'effet de chargement en mode strict, une ouverture ne vaut qu'une vue
+  const vueComptee = useRef<string | null>(null);
 
   useEffect(() => {
     const fichiers = aap?.scrapeMetadata?.fichiersJoints ?? [];
@@ -90,6 +93,14 @@ export default function AapDetailPage() {
         setAap({ ...aapDoc.data() } as AAP);
         // Journal des actions (suivi-testeurs) : fiche ouverte par un compte connecté
         if (currentUser && userProfile) journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, (aapDoc.data() as AAP).title);
+        // Compteur de vues (décision 35 du 2026-11-24) : appel publié ouvert par un autre compte que son auteur ou
+        // l'administrateur ; un échec n'empêche pas la lecture de la fiche
+        const lue = aapDoc.data() as AAP;
+        if (currentUser && userProfile && userProfile.userType !== 'admin' && lue.financeurId !== currentUser.uid
+          && lue.status === 'published' && vueComptee.current !== aapId) {
+          vueComptee.current = aapId;
+          aapService.incrementViews(aapId).catch(err => console.warn('Vue non comptée :', err));
+        }
       }
     } catch (err) {
       console.error('Error loading AAP:', err);
