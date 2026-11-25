@@ -60,8 +60,11 @@ financeur@test.local, admin@test.local. Les données exportées à l'arrêt vont
 
 ```bash
 git clone <repository-url>
-cd AAP
+cd AAP/app
 ```
+
+L'application est dans le dossier `app/` du dépôt : toutes les commandes `npm` de ce document se lancent depuis `app/`
+(il n'y a pas de `package.json` à la racine du dépôt).
 
 ### 2. Installer les dépendances
 
@@ -92,7 +95,7 @@ cd ..
 
 3. Créer une application Web dans Firebase et récupérer la configuration
 
-4. Créer un fichier `.env` à la racine:
+4. Créer le fichier `app/.env` (copie de `app/.env.example`) :
 
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
@@ -103,8 +106,6 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
 
 VITE_STRIPE_PUBLIC_KEY=pk_test_...
-VITE_APP_ENV=development
-VITE_APP_URL=http://localhost:3000
 ```
 
 ### 2. Stripe
@@ -220,8 +221,8 @@ linté.
 | `npm run lint` | ESLint, aucun avertissement toléré |
 | `npm run typecheck` | contrôle des types TypeScript |
 | `npm run format` / `npm run format:check` | mise en forme Prettier (2026-11-25) / son contrôle |
-| `npm test` | tests Vitest de `src` (218 au 2026-11-25) |
-| `npm run test:rules` | règles Firestore et Storage sur l'émulateur (55 et 2 au 2026-11-25) |
+| `npm test` | tests Vitest de `src` (219 au 2026-11-25) |
+| `npm run test:rules` | règles Firestore et Storage sur l'émulateur (51 Firestore et 4 Storage, 55 en tout, au 2026-11-25) |
 | `npm run build` | compilation de production dans `dist/` |
 
 ## Structure du projet
@@ -339,17 +340,24 @@ construits à partir des fiches chargées ; le filtre budget n'écarte pas les f
 cinq régions d'outre-mer ont leur libellé et une fiche sans territoire reconnu affiche « Territoire non précisé » au
 lieu de « National ».
 
+Légende (relevé du code au 2026-11-25) : sans mention, l'écran existe dans `src/` ; « fonctions serveur non
+déployées » : l'écran existe, mais les données ne sont écrites que par `functions/`, non déployées ; « à faire » : ne
+fonctionne pas encore.
+
 ### Pour les Porteurs de Projets
 
 - Authentification (Email/Password + Google)
 - Dashboard personnalisé
 - Recherche avancée d'AAP avec filtres
-- Sauvegarde d'AAP favoris
+- Sauvegarde d'AAP favoris (cœur de la fiche et des cartes ; pas encore de liste « Mes favoris »)
 - Candidature en ligne multi-étapes
-- Préqualification automatique
+- Préqualification automatique (fonctions serveur non déployées : le score n'est écrit que par
+  `functions/src/applications/onApplicationCreated.ts`)
 - Suivi des candidatures
-- Alertes personnalisées
-- Messagerie avec financeurs
+- Alertes personnalisées : courriel du lundi par `scraping/alertes.py`, recherches sauvegardées comprises ; les alertes
+  quotidiennes de `functions/src/scheduled/sendDailyAlerts.ts` attendent le déploiement des fonctions serveur
+- Messagerie avec financeurs (à faire : aucun écran ne crée de conversation et les règles Firestore n'ont pas de bloc
+  `conversations`)
 
 ### Pour les Financeurs
 
@@ -359,15 +367,16 @@ lieu de « National ».
 - Gestion des candidatures
 - Système de notation et scoring
 - Statistiques détaillées
-- Messagerie avec porteurs
+- Messagerie avec porteurs (à faire : voir la messagerie des porteurs)
 
 ### Fonctionnalités Communes
 
 - Essai gratuit de 14 jours ; abonnement Stripe non branché (écran « Paiement bientôt disponible »)
-- Notifications in-app
+- Notifications in-app (fonctions serveur non déployées : la page `/notifications` lit et marque lues des
+  notifications que seules les fonctions de `functions/src` créent)
 - Calendrier des deadlines
 - Profils personnalisés
-- Messagerie interne
+- Messagerie interne (à faire : voir la messagerie des porteurs)
 
 
 ## Déploiement

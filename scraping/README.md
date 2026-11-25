@@ -41,17 +41,18 @@ poc-scraping/
 
 ## Installation rapide
 
-Voir **`MODE_EMPLOI.txt`** pour les commandes exactes à copier-coller dans `cmd` ou PowerShell.
-
-En résumé :
+Un seul environnement Python pour tout le dépôt, à la racine (`.venv`) : les `.cmd` de ce dossier lancent
+`..\.venv\Scripts\python.exe`. Depuis la racine du dépôt :
 ```
 python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-python -m playwright install chromium
-copy .env.example .env
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -m playwright install chromium
+copy scraping\.env.example scraping\.env
 ```
-Puis éditer `.env` pour renseigner `ANTHROPIC_API_KEY`.
+Puis éditer `scraping/.env` pour renseigner `ANTHROPIC_API_KEY`. Les commandes `python ...` de ce document se lancent
+depuis `scraping/` avec cet environnement (`..\.venv\Scripts\python.exe`, ou après `..\.venv\Scripts\activate`).
+`MODE_EMPLOI.txt` explique le projet en langage courant ; ses commandes datent d'avant la fusion du 2026-10-09
+(dossier `poc-scraping`, environnement dans ce dossier).
 
 ---
 
@@ -164,10 +165,12 @@ les verdicts champ par champ contre le texte source vont dans `sources/exactitud
 
 ### Courriels hebdomadaires (jour 3 du plan MVP, changement `alertes-courriel`, 2026-10-20)
 
-Après la relecture des pages, `veille.cmd` appelle `alertes.py --admin --candidats` : bilan à l'administrateur (chiffres
-de `VEILLE.md`, fiches nouvelles de la semaine, fiches à contrôler, lien direct vers la liste), et à chaque candidat au
-profil complet qui accepte les courriels les appels publiés depuis sept jours de sa région ou nationaux, ouverts à sa
-famille de structure, dix au plus. Boîte d'envoi : Zoho Mail d'ARCADIA, variables `SMTP_*` et `COURRIEL_*` de
+`veille.cmd` appelle `alertes.py` en deux fois (plan niveau A, lot 2.1, 2026-11-24) : `--candidats` en première étape,
+avant la relecture des pages, puis `--admin` après la collecte et les deux portails. Courriel des candidats : à chaque
+candidat au profil complet qui accepte les courriels, à son adresse de connexion vérifiée, les appels publiés depuis le
+dernier envoi réussi (sept jours à défaut, `--jours`) de sa région ou nationaux, ouverts à sa famille de structure, dix
+au plus. Bilan à l'administrateur : chiffres de `VEILLE.md`, fiches nouvelles, fiches à contrôler, lien direct vers la
+liste. Boîte d'envoi : Zoho Mail d'ARCADIA, variables `SMTP_*` et `COURRIEL_*` de
 `scraping/.env` (voir `.env.example`), mot de passe d'application jamais affiché. Sans ces variables, ou avec
 `--dry-run`, les courriels sont écrits dans `logs/courriels/` pour relecture.
 
@@ -555,7 +558,8 @@ devis de l'extraction, du contrôle et de la qualification (devis du contrôle e
 sous-estime d'environ moitié), ne lance une étape que si son devis tient dans le reste des 0,50 euro de la semaine et
 sous 4,50 euros de cumul, avec `--plafond` = cumul + devis, puis importe les fiches nouvelles en « à valider »
 (`import_to_firestore.py --a-valider` : jamais publiées). Au-delà, l'étape attend son accord (motif écrit au journal).
-Ordre revu le 2026-11-22 (paragraphe suivant) : les courriels partent désormais en premier. `python veille_payante.py
+Ordre actuel (plan niveau A, lot 2.1, 2026-11-24) : courriel des candidats d'abord, puis relecture, collecte et
+portails, bilan de l'administrateur, chiffres publics et coûts, modèle local en dernier. `python veille_payante.py
 --moteur api` sans `--reel` n'écrit que les devis.
 
 Depuis le 2026-11-22 (changement `corrections-chaine-du-lundi`, décision « Ordre des étapes ») : la tâche Windows coupe
@@ -579,8 +583,9 @@ sortie ajoutée à `logs/veille.log`, rattrapage si le PC était éteint à l'he
 le jour même est sautée, sinon une relance compterait une absence de trop aux liens disparus. Pour voir ou retirer la
 tâche : Planificateur de tâches Windows, ou `schtasks /Query /TN "AAP Sante - veille hebdomadaire"`. Après chaque
 passage, lire `VEILLE.md` et le bilan reçu par courriel ; la fin du journal porte « Veille terminee ». Le 9 novembre, la
-veille s'est arrêtée parce que sa fenêtre a été fermée : `veille_cachee.vbs` la lance sans fenêtre (action de la tâche à
-remplacer par `wscript.exe "...\scraping\veille_cachee.vbs"`, sur accord de Monsieur DUCOUT).
+veille s'est arrêtée parce que sa fenêtre a été fermée : `veille_cachee.vbs` la lance sans fenêtre ; l'action de la
+tâche est `wscript.exe "...\scraping\veille_cachee.vbs"` (relevé `schtasks` du 2026-11-25, section « Tâches planifiées
+Windows »).
 
 ### Vérification des fiches assistée par le modèle (changement `verification-assistee-haiku`, 2026-10-15)
 
@@ -849,10 +854,19 @@ deux tâches ne réveille le PC.
 
 ## Conventions des scripts d'écriture (plan niveau A, lot 2.6, 2026-11-24)
 
-- Un script ponctuel qui écrit dans Firestore tourne à blanc par défaut et n'écrit qu'avec `--reel`, après une
-  sauvegarde JSON dans `scripts/sauvegardes/`.
-- Les scripts lancés chaque lundi par `veille.cmd` sans option (`import_to_firestore.py`, `publier_chiffres.py`,
-  `publier_couts.py`) gardent leur convention d'origine (`--dry-run` pour l'essai à blanc) : la chaîne casserait sinon.
+Les scripts de `scripts/` n'ont pas tous la même convention (relevé du 2026-11-25, options lues dans chaque script) :
+
+- **À blanc sans option, écriture seulement avec `--reel`**, après une sauvegarde JSON dans `scripts/sauvegardes/` :
+  `anonymiser_journal.py`, `corriger_financeur_relais.py`, `depublier_non_controlees.py`, `rejeter_doublons.py`,
+  `trier_file.py` (lancé avec `--reel` par `veille_payante.py` et par la chaîne des PDF).
+- **Écrivent en base sans option** : seul `--dry-run` fait un essai à blanc. Toujours lancer d'abord avec `--dry-run`.
+  Scripts ponctuels : `appliquer_controle.py`, `migrer_champ.py`, `perimer_fiches.py`, `reporter_valeurs_api.py`
+  (sauvegarde JSON avant écriture) et `creer_admin.py` (crée le compte Firebase Auth et écrit le profil, sans
+  sauvegarde). Scripts récurrents, gardés ainsi parce que la chaîne les lance sans option : `import_to_firestore.py`
+  (lancé par `veille_payante.py` et par la chaîne des PDF), `publier_chiffres.py` et `publier_couts.py` (lancés par
+  `veille.cmd`).
+- **N'écrivent rien en base** : `doublons.py`, `exporter_fiches_visibles.py` et `pdf_dossier_test.py` (fichiers locaux
+  seulement) ; `semer_emulateurs.py` écrit dans les émulateurs du PC, jamais dans le vrai projet.
 - Les migrations déjà jouées sont rangées dans `scripts/migrations_jouees/` (README) et ne se relancent pas.
 
 ## Tests et qualité (plan niveau A, lot 4.1, 2026-11-25)
@@ -866,8 +880,11 @@ Réglages dans `pyproject.toml` à la racine du dépôt ; outils installés par 
 .venv\Scripts\python.exe -m mypy
 ```
 
-Chaque fichier de test se lance aussi seul (`pytest scraping/tests/test_validation.py`). mypy contrôle les sept modules
-lancés par `veille.cmd` ; ruff ne contrôle pas la longueur des lignes ni les noms courts (style du code existant). La
+Chaque fichier de test se lance aussi seul (`pytest scraping/tests/test_validation.py`). mypy contrôle sept modules de la
+chaîne du lundi, liste `files` de `pyproject.toml` : `alertes.py`, `courriel.py` (importé par `alertes.py`), `rejeu.py`,
+`veille_payante.py`, `publier_chiffres.py`, `publier_couts.py` et `trier_file.py` (lancé par `veille_payante.py`) ;
+`portail_recherche.py` et `funding_tenders.py`, lancés par `veille.cmd`, n'y sont pas ; ruff ne contrôle pas la
+longueur des lignes ni les noms courts (style du code existant). La
 reprise sur erreur de l'API (429, 529, 5xx) est testée par un faux client (`tests/test_extractor_reprise.py`), sans
 coût. Les filtres des recherches enregistrées sont rejoués sur les mêmes cas que l'application
 (`app/src/utils/cas_filtres_recherche.json`) : thématique déduite des secteurs pour un appel de financeur et clôture

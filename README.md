@@ -35,24 +35,25 @@ Compte administrateur : `.venv\Scripts\python scripts/creer_admin.py --email <ad
 
 ### 2. Scraping
 
+Un seul environnement Python pour tout le dépôt, `.venv` à la racine (ignoré par Git) : les `.cmd` de `scraping/`
+lancent `..\.venv\Scripts\python.exe`. Depuis la racine du dépôt :
+
 ```bash
-cd scraping
 python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-python -m playwright install chromium
-copy .env.example .env        # puis renseigner ANTHROPIC_API_KEY
-python run.py --source fondation_de_france
-python validate.py --source fondation_de_france   # rapport HTML de qualité
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt   # collecte, jonction, pytest, ruff, mypy
+.venv\Scripts\python.exe -m playwright install chromium
+copy scraping\.env.example scraping\.env    # puis renseigner ANTHROPIC_API_KEY
+cd scraping
+..\.venv\Scripts\python.exe run.py --source fondation_de_france
+..\.venv\Scripts\python.exe validate.py --source fondation_de_france   # rapport HTML de qualité
 ```
 
-Guide détaillé non technique : `scraping/MODE_EMPLOI.txt`.
+Guide non technique : `scraping/MODE_EMPLOI.txt` (ses commandes datent d'avant la fusion du 2026-10-09).
 
 ### 3. Import des AAP scrapés dans l'application
 
 ```bash
-python -m venv .venv                       # environnement Python à la racine (ignoré par Git)
-.venv\Scripts\python -m pip install -r scripts/requirements.txt
+# Environnement de l'étape 2 (requirements-dev.txt comprend scripts/requirements.txt), depuis la racine du dépôt
 # Clé de compte de service : console Firebase > Paramètres du projet > Comptes de service > Générer une nouvelle clé privée
 # Enregistrer le fichier sous scripts/serviceAccountKey.json (ignoré par Git, jamais commité)
 .venv\Scripts\python scripts/import_to_firestore.py --dry-run     # affiche ce qui serait importé, n'écrit rien
@@ -63,15 +64,16 @@ Depuis le 2026-10-20 (décision de Monsieur DUCOUT, changement `administration-c
 contrôle du modèle n'a pas validée entre en brouillon, et seules les fiches validées sont visibles dans la recherche
 publique ; elles se contrôlent depuis `/admin/aaps` (« Valider et publier », « Rejeter », « Modifier »). Les fiches
 publiées avant cette décision sans contrôle se repassent en brouillon par
-`scripts/depublier_non_controlees.py` (`--dry-run` d'abord, sauvegarde dans `scripts/sauvegardes/`).
+`scripts/depublier_non_controlees.py` (déjà joué le 2026-10-20 ; essai à blanc sans option, écriture seulement avec
+`--reel`, après sauvegarde dans `scripts/sauvegardes/`).
 
 Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
 sont importés ; une fiche sans date de clôture est publiée avec `deadline` nulle (plus aucune échéance fictive depuis
 le lot 0 du 2026-10-14), l'étiquette `sans-date-cloture` et le badge « À vérifier » : l'application affiche « Date de
 clôture non précisée » et la classe après les appels datés (décision de Monsieur DUCOUT du 2026-10-14 au soir, qui
-remplace le brouillon du lot 0 ; `scripts/publier_sans_date.py` publie les brouillons existants, après essai à blanc
-et accord). Une fiche classée hors champ par le modèle (`scrapeMetadata.champ`, changement `filtre-champ-sante`) entre
-en brouillon à corriger, jamais publiée sans verdict ; `scripts/migrer_champ.py` repasse en brouillon les fiches
+remplace le brouillon du lot 0 ; les brouillons existants ont été publiés le 2026-10-14 par
+`scripts/migrations_jouees/publier_sans_date.py`, migration jouée qui ne se relance pas). Une fiche classée hors champ
+par le modèle (`scrapeMetadata.champ`, changement `filtre-champ-sante`) entre en brouillon à corriger, jamais publiée sans verdict ; `scripts/migrer_champ.py` repasse en brouillon les fiches
 publiées avant le filtre ; le verdict « hors champ » de la validation quotidienne (touche 7) rejette la fiche.
 Nettoyage des financeurs et des territoires (changement `nettoyage-financeurs-territoires`, 2026-10-14 au soir,
 constat de Monsieur DUCOUT : « base sale ») : `scrapeMetadata.source` est l'émetteur du registre (`sourceNom` son nom,
@@ -93,21 +95,22 @@ relit chaque fiche publiable à côté de sa page et liste les champs douteux ; 
 `scrapeMetadata.verification`. Depuis le 2026-10-15 à midi (décision de Monsieur DUCOUT), ce contrôle vaut relecture :
 une fiche sans doute, ou corrigeable d'après la page (dates, montants), est validée au nom du modèle ; une page qui
 n'est pas un appel est rejetée ; un doute sur le titre, le financeur ou le territoire reste à relire. Les fiches déjà en
-base ont reçu cette décision par `scripts/appliquer_controle.py` (essai à blanc, sauvegarde) ; l'outil de validation ne
-présente plus que les fiches restantes.
+base ont reçu cette décision par `scripts/appliquer_controle.py` (essai à blanc avec `--dry-run` ; sans option, il
+écrit après sauvegarde) ; l'outil de validation ne présente plus que les fiches restantes.
 L'import est rejouable : un second passage met à jour sans dupliquer. Règles depuis le 2026-10-14 (changement
 `organisation-donnees-validees`) : identifiant du document dérivé de l'adresse de l'appel (deux moteurs, un
 seul document) ; sur un document existant, `status`, `publishedAt` et `validation` ne sont jamais réécrits
 (un AAP archivé dans l'administration reste archivé) ; les verdicts de `scraping/sources/verdicts_fiches.json`
 pilotent le bloc `validation` (« pas un AAP » -> archivé, « AAP juste » -> badge « À vérifier » retiré et champs
-métier protégés, « à corriger » -> badge gardé avec le commentaire). Migration des identifiants :
-`scripts/migrer_identifiants.py` (sauvegarde dans `scripts/sauvegardes/`, hors Git).
+métier protégés, « à corriger » -> badge gardé avec le commentaire). Migration des identifiants, jouée le 2026-10-14 :
+`scripts/migrations_jouees/migrer_identifiants.py` (ne se relance pas ; sauvegarde dans `scripts/sauvegardes/`, hors
+Git).
 
 Règles ajoutées par le lot 0 du rapport de critique (changement `lot-0-assainissement`, 2026-10-14) : `validation.statut` est la seule source de la
 fiabilité d'une fiche et l'étiquette `a-verifier` en découle (`proposee` ou `a_corriger`, quel que soit le moteur) ;
 `validation.par` est renseigné ; seuls les champs d'une liste blanche partent vers Firestore, un champ inconnu arrête
-l'import à blanc comme en réel en le nommant. Migration des échéances fictives vers `deadline` nulle :
-`.venv\Scripts\python scripts/migrer_echeances.py --dry-run` puis sans option (sauvegarde JSON d'abord).
+l'import à blanc comme en réel en le nommant. Migration des échéances fictives vers `deadline` nulle, jouée le
+2026-10-14 (141 échéances) : `scripts/migrations_jouees/migrer_echeances.py` (ne se relance pas).
 Tests de l'import (faux Firestore en mémoire) : `.venv\Scripts\python -m pytest scripts/tests -q`.
 
 Pourquoi `grpcio` est fixé en 1.74.0 dans `scripts/requirements.txt` : les versions plus récentes sont
@@ -122,9 +125,14 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
    `firebase deploy --only firestore:rules,firestore:indexes --project aapi-11bc3`.
 2. Import avec l'option : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired`
    (105 AAP lus, 89 documents distincts : les doublons entre sources sont fusionnés).
-3. `cd app && npm run dev`, puis http://localhost:3000 : la recherche et les fiches demandent un compte depuis le 2026-10-20 (décision de Monsieur DUCOUT ;
-   la consultation sans compte du 2026-10-13 est retirée) : inscription avec 14 jours d'essai, ou compte de test
-   des émulateurs, puis http://localhost:3000/aap/search.
+3. La recherche et les fiches demandent un compte depuis le 2026-10-20 (décision de Monsieur DUCOUT ; la consultation
+   sans compte du 2026-10-13 est retirée). Deux façons d'ouvrir l'application :
+   - vrai projet : `cd app && npm run dev`, puis http://localhost:3000 avec un compte inscrit (`/signup`, 14 jours
+     d'essai), puis http://localhost:3000/aap/search ;
+   - émulateurs du PC (comptes et appels factices, pas ceux de l'étape 2) : `app\emulateurs_dev.cmd`, ou
+     `npm run emulateurs` puis `npm run dev:emulateurs` dans `app/`, puis
+     `.venv\Scripts\python scripts/semer_emulateurs.py` depuis la racine ; ensuite http://localhost:3001/aap/search
+     avec un compte de test de `scripts/semer_emulateurs.py` (par exemple candidat@test.local).
 4. Page « Rechercher des AAP » : les AAP scrapés apparaissent, les AAP clos portent la mention « Clôturé »,
    la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle » et liste ses
    pièces jointes. En développement, les fichiers sont servis depuis le PC : créer une fois le lien de
