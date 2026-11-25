@@ -224,16 +224,30 @@ def _lignes_fiche(f: dict, url: str) -> list[str]:
 
 
 # Adresse avec protocole ou www., en majuscules comme en minuscules, ou nom de domaine nu (« arnaque.fr/promo »,
-# « bit.ly/x1 ») que les messageries rendent cliquable ; un sigle à points (« C.H.U. ») ou un nombre n'est pas visé, la
-# dernière partie devant compter deux lettres au moins (relecture du 2026-11-25, constats 12 et 45)
-_LIEN = re.compile(r"(?:https?://|www\.)\S*|\b[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}\b(?:/\S*)?", re.IGNORECASE)
+# « bit.ly/x1 ») que les messageries rendent cliquable (relecture du 2026-11-25, constats 12 et 45). Le domaine nu n'est
+# retiré que si sa dernière partie est une extension courante : « St.Joseph », « A.Lebrun » ou « UGECAM.IDF » restent
+# entiers, un sigle à points (« C.H.U. ») ou un nombre n'est pas visé ; une extension absente de la liste passe (choix
+# assumé contre les mots perdus). Le domaine part du début d'une suite de lettres, chiffres, points et tirets : une
+# seule tentative par suite garde un temps proportionnel à la longueur du texte (une tentative à chaque point ou tiret
+# prenait un temps qui croissait comme le carré de la longueur)
+_EXTENSIONS = ("fr", "com", "org", "net", "eu", "info", "io", "ly", "co", "be", "ch", "lu", "ca", "uk", "us", "biz", "me",
+               "app", "site", "online", "xyz", "top", "shop", "store", "live", "link", "click", "dev", "tv", "cc", "ws",
+               "gl", "gd", "to", "ru", "cn", "tk", "re")
+_LIEN = re.compile(r"(?:https?://|www\.)\S*|(?<![\w.-])\.*(?:[\w-]+\.+)+(?:" + "|".join(_EXTENSIONS) + r")\b(?:/\S*)?",
+                   re.IGNORECASE)
+# Caractères du nom lus au plus, avant toute expression : 80 sont affichés, la marque « [lien retiré] » remplaçant un
+# lien plus long laisse de la place au reste du nom
+_LU = 200
 
 
 def _nom_sur(nom) -> str:
     """Nom de recherche affiché dans le courriel : liens retirés, 80 caractères au plus (le nom est saisi par le compte
     et part depuis la boîte officielle ; défense en profondeur, relecture du 2026-11-16)."""
-    propre = _LIEN.sub("[lien retiré]", str(nom or "")).strip()
-    return (propre[:79] + "…") if len(propre) > 80 else (propre or "Recherche sans nom")
+    propre = _LIEN.sub("[lien retiré]", str(nom or "")[:_LU]).strip()
+    if len(propre) > 80:
+        # Seconde passe sur la coupe : « arnaque.fraude », gardé entier, ne doit pas finir en « arnaque.fr… » cliquable
+        return _LIEN.sub("[lien retiré]", propre[:79])[:79] + "…"
+    return propre or "Recherche sans nom"
 
 
 def sections_recherches(recherches: list[dict], fiches: list[dict], depuis: datetime) -> list[dict]:

@@ -2,6 +2,7 @@
 import sys
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
+from time import perf_counter
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import alertes as a  # noqa: E402
@@ -336,6 +337,42 @@ def test_nom_de_structure_sans_lien_quelle_que_soit_sa_forme():
     # Noms ordinaires gardés : sigle à points, montant, apostrophe
     for nom in ("C.H.U. de Lille", "EHPAD Les Lilas", "Fondation 1.000 sourires", "Centre Hospitalier Sud-Francilien"):
         assert a._nom_sur(nom) == nom
+
+
+def test_filtre_des_liens_en_temps_lineaire():
+    """Relecture du filtre des liens : le motif du domaine nu prenait un temps qui croissait comme le carré de la longueur
+    du nom (« a- » répété 20 000 fois : 15,6 s), nom que le compte écrit sans limite de taille."""
+    for texte in ("a-" * 50_000, "a." * 50_000 + "1", "a" * 100_000, "." * 100_000, "a.-" * 33_334):
+        debut = perf_counter()
+        a._nom_sur(texte)
+        assert perf_counter() - debut < 1, texte[:6]
+        # Le motif lui-même, sans la borne de longueur du nom
+        debut = perf_counter()
+        a._LIEN.sub("", texte)
+        assert perf_counter() - debut < 1, texte[:6]
+
+
+def test_initiales_et_abreviations_a_point_gardees():
+    """Relecture du filtre des liens : un point collé à une initiale ou à une abréviation retirait des mots ; seul un nom de
+    domaine dont la dernière partie est une extension connue est retiré."""
+    for nom in ("EHPAD St.Joseph", "Foyer A.Lebrun", "Association J.Moulin", "Mutualité Française.Normandie",
+                "UGECAM.IDF", "C.Genial - Fondation Pour La Culture Scientifique Et Technique"):
+        assert a._nom_sur(nom) == nom
+    for piege in ("arnaque.fr/promo", "bit.ly/x1", "sous.domaine.exemple.fr", "EXEMPLE.FR", "sante.gouv.fr",
+                  "t.co/x", "exemple.online"):
+        assert a._nom_sur(f"EHPAD {piege}") == "EHPAD [lien retiré]", piege
+    # Points de suspension ou point collé avant le domaine
+    for piege in ("Promo...arnaque.fr", "Promo.arnaque.fr", ".arnaque.fr"):
+        assert "arnaque" not in a._nom_sur(f"EHPAD {piege}"), piege
+
+
+def test_coupe_du_nom_sans_lien_fabrique():
+    """Un mot gardé entier (« arnaque.fraude », extension inconnue) ne devient pas « arnaque.fr » cliquable quand le nom
+    est coupé à 80 caractères ; un lien placé au-delà des caractères lus ne passe pas non plus."""
+    propre = a._nom_sur("E" * 68 + " arnaque.fraude")
+    assert "arnaque.fr" not in propre and len(propre) <= 80
+    propre = a._nom_sur("https://" + "x" * 300 + " arnaque.fr/promo")
+    assert "arnaque" not in propre and len(propre) <= 80
 
 
 def test_parametres_de_recherche_encodes_dans_le_lien():
