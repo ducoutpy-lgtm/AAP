@@ -1,0 +1,7 @@
+# Mise en forme limitée au code de l application (src, tests) : voir les commandes format et format:check
+dist
+node_modules
+coverage
+functions
+emulateurs
+public
