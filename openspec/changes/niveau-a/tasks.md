@@ -61,7 +61,10 @@ local par lot vérifié.
   calendrier, notifications) ; 25 `alert()` remplacés par `annoncer()` (`utils/annonces.ts`, bandeau `Annonces` posé dans
   `App.tsx`) ; envoi de message en échec annoncé. Tests en échec avant (recherche, annonces, aucun `alert(` dans les
   sources) ; 213 verts. Les `confirm()` et `prompt()` restent, comme le prévoyait l'audit.)
-- [ ] 3.2 Menu sur téléphone.
+- [x] 3.2 Menu sur téléphone. (2026-11-25 : sous 768 px la barre latérale est masquée ; bouton « Ouvrir le menu »
+  (`aria-expanded`, `aria-controls`) dans la barre haute, menu par-dessus la page, refermé au changement de page, par
+  Échap, par sa croix ou un clic à côté ; `menus.ts` inchangé. Test en échec avant ; 214 verts. Rendu sur un écran de
+  375 px : dans la vérification 5.1.)
 - [ ] 3.3 Cartes ouvrables au clavier, fenêtre modale accessible, couleurs manquantes de la palette. (Palette faite le
   2026-11-24 : échelles complètes de success, warning, error, info ; `src/test/palette.test.ts` en échec avec l'ancienne
   configuration, vert avec la nouvelle ; classes générées vérifiées dans la feuille compilée. Restent clavier et modale.)
