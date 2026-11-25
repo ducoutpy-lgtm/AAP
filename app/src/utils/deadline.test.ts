@@ -24,7 +24,8 @@ describe('jours avant la clôture, en jours du calendrier', () => {
   const fuseau = process.env.TZ;
   afterEach(() => {
     vi.useRealTimers();
-    process.env.TZ = fuseau;
+    if (fuseau === undefined) delete process.env.TZ;
+    else process.env.TZ = fuseau;
   });
   const le1erDecembre = new Date(Date.UTC(2026, 11, 1));
 
@@ -47,5 +48,11 @@ describe('jours avant la clôture, en jours du calendrier', () => {
     expect(getDaysUntilDeadline(le1erDecembre)).toBe(0);
     vi.setSystemTime(new Date('2026-12-02T00:30:00+01:00'));
     expect(isClosed(getDaysUntilDeadline(le1erDecembre))).toBe(true);
+  });
+
+  // Relecture, constat 47 : sans TZ au départ (cas du poste), « process.env.TZ = undefined » écrivait la chaîne
+  // « undefined » (fuseau Etc/Unknown, lu comme UTC) ; les tests suivants du fichier ne tournaient plus à l'heure du poste
+  it('rétablit le fuseau de départ après chaque test, y compris quand TZ était absent', () => {
+    expect(process.env.TZ).toBe(fuseau);
   });
 });

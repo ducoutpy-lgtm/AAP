@@ -44,14 +44,15 @@ describe('espace financeur', () => {
   });
 
   // corrections-relecture 3.4 (2026-11-20) : même règle que « Clôturé » dans la recherche ; l'appel qui clôt aujourd'hui
-  // (échéance à minuit UTC du jour) reste ouvert toute la journée, donc reste la prochaine échéance
+  // (échéance à minuit UTC du jour) reste ouvert toute la journée, donc reste la prochaine échéance. Instants locaux
+  // (relecture, constat 41) : le jour du visiteur se lit dans son fuseau (décision 38), le 21/11 à 1 h partout
   it('un appel qui clôt aujourd’hui reste la prochaine échéance', () => {
     const jour = [
       aap('aujourdhui', 'published', new Date(Date.UTC(2026, 10, 20))),
       aap('plus-tard', 'published', new Date(Date.UTC(2026, 11, 15))),
     ];
-    expect(resumeFinanceur(jour, [], new Date(Date.UTC(2026, 10, 20, 9))).prochaineEcheance?.id).toBe('aujourdhui');
-    expect(resumeFinanceur(jour, [], new Date(Date.UTC(2026, 10, 21, 1))).prochaineEcheance?.id).toBe('plus-tard');
+    expect(resumeFinanceur(jour, [], new Date(2026, 10, 20, 9)).prochaineEcheance?.id).toBe('aujourdhui');
+    expect(resumeFinanceur(jour, [], new Date(2026, 10, 21, 1)).prochaineEcheance?.id).toBe('plus-tard');
   });
 
   it('colonnes des candidatures reçues', () => {

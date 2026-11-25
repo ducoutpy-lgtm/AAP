@@ -39,7 +39,12 @@ import {
   repartirCandidatures,
 } from './candidat';
 
-const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
+// Échéance à minuit UTC d'un jour du calendrier compté depuis la date locale, comme l'import (décision 38) : le décompte
+// ne dépend ni de l'heure ni du fuseau du poste (relecture, constat 40)
+const dans = (jours: number) => {
+  const auj = new Date();
+  return new Date(Date.UTC(auj.getFullYear(), auj.getMonth(), auj.getDate() + jours));
+};
 
 describe('libelleMontant', () => {
   it('écrit le montant en français selon ce que la fiche porte', () => {
@@ -139,7 +144,7 @@ describe('colonnes des candidatures', () => {
 // Appel clos (corrections-relecture 2.1, 2026-11-20) : la fiche montrait « Candidatures fermées » mais gardait le bouton
 // « Candidater », et le formulaire envoyait la candidature au financeur après la clôture.
 describe('candidatureOuverte', () => {
-  const jours = (n: number) => new Date(Date.now() + n * 24 * 3600 * 1000);
+  const jours = dans;
   it('appel publié avant sa date : ouvert ; sans date : ouvert', () => {
     expect(candidatureOuverte({ status: 'published', deadline: jours(10) })).toBe(true);
     expect(candidatureOuverte({ status: 'published', deadline: null })).toBe(true);

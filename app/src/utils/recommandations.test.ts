@@ -9,7 +9,12 @@ import {
   regionDuProfil,
 } from './recommandations';
 
-const dans = (jours: number) => new Date(Date.now() + jours * 24 * 3600 * 1000);
+// Échéance à minuit UTC d'un jour du calendrier compté depuis la date locale, comme l'import (décision 38) : le décompte
+// ne dépend ni de l'heure ni du fuseau du poste (relecture, constat 40)
+const dans = (jours: number) => {
+  const auj = new Date();
+  return new Date(Date.UTC(auj.getFullYear(), auj.getMonth(), auj.getDate() + jours));
+};
 const ehpad = {
   structureType: 'association',
   typeEtablissement: 'ehpad',
@@ -100,10 +105,8 @@ describe('evaluerAppel', () => {
       ),
     ).not.toBeNull();
     expect(evaluerAppel(appel('d'), ehpad as never)?.aVerifier).toContain("Domaine de l'appel non précisé");
-    // clôture à minuit ce jour : getDaysUntilDeadline arrondit à 0, l'appel n'est pas encore clos
-    expect(evaluerAppel(appel('e', { deadline: dans(-0.3) }), ehpad as never)?.raisons).toContain(
-      "Clôture aujourd'hui",
-    );
+    // clôture ce jour (minuit UTC du jour, comme l'import) : 0 jour, l'appel reste ouvert tout son dernier jour
+    expect(evaluerAppel(appel('e', { deadline: dans(0) }), ehpad as never)?.raisons).toContain("Clôture aujourd'hui");
   });
 
   it('signale les appels nationaux, sans date ou proches de la clôture', () => {
