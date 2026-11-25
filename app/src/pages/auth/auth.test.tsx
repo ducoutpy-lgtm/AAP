@@ -4,6 +4,7 @@
 // doublures : aucun appel à Firebase.
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useSyncExternalStore } from 'react';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 // Compte simulé : changerCompte() modifie l'état et redessine la page, comme le ferait AuthContext quand Firebase répond
@@ -228,5 +229,52 @@ describe('connexion : le profil est attendu, puis le tableau de bord du rôle', 
     expect(destinationApresConnexion(undefined, { userType: 'porteur' })).toBe('/dashboard/porteur');
     expect(destinationApresConnexion(undefined, { userType: 'financeur' })).toBe('/dashboard/financeur');
     expect(destinationApresConnexion(undefined, null)).toBe('/complete-profile');
+  });
+});
+
+// Vérification sur les émulateurs (2026-11-25) : quand le profil arrive, le gabarit passe de l'habillage public à
+// l'habillage connecté et recrée la page de connexion ; l'état « connecté » de la page était perdu et la connexion
+// restait sur /login. La page redirige désormais tout compte connecté dont le profil est lu.
+describe('connexion : la page recréée par le gabarit redirige quand même', () => {
+  afterEach(cleanup);
+
+  it('profil lu après la connexion, page recréée entre-temps : arrivée sur le tableau de bord du candidat', async () => {
+    compte.login.mockReset().mockImplementation(async () => {
+      changerCompte({ currentUser: { uid: 'c1' }, loading: true, userProfile: null });
+      setTimeout(() => changerCompte({ loading: false, userProfile: { userType: 'porteur' } }), 100);
+    });
+    const Habillage = () => {
+      useSyncExternalStore(
+        (f) => {
+          compte.ecouteurs.add(f);
+          return () => {
+            compte.ecouteurs.delete(f);
+          };
+        },
+        () => compte.version,
+      );
+      return compte.userProfile ? (
+        <div>
+          <LoginPage />
+        </div>
+      ) : (
+        <section>
+          <LoginPage />
+        </section>
+      );
+    };
+    const Arrivee = () => <p>arrivée {useLocation().pathname}</p>;
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <Routes>
+          <Route path="/login" element={<Habillage />} />
+          <Route path="/dashboard/porteur" element={<Arrivee />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+    fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'c@test.local' } });
+    fireEvent.change(screen.getByLabelText(/^Mot de passe/), { target: { value: 'secret12' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Se connecter' }));
+    expect(await screen.findByText(/^arrivée/, {}, { timeout: 3000 })).toHaveTextContent('arrivée /dashboard/porteur');
   });
 });

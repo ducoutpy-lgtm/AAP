@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [seSouvenir, setSeSouvenir] = useState(false);
 
   const { login, loginWithGoogle, currentUser, userProfile, loading: chargementCompte } = useAuth();
-  const [connecte, setConnecte] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,11 +24,12 @@ export default function LoginPage() {
   const from = origine?.pathname ? `${origine.pathname}${origine.search ?? ''}${origine.hash ?? ''}` : undefined;
 
   // Redirection une fois le profil lu (plan niveau A, lot 3.5, 2026-11-25) : la page attendait une seconde fixe, puis
-  // lisait le compte d'avant la connexion ; AuthContext garde loading vrai tant que le profil n'est pas lu
+  // lisait le compte d'avant la connexion ; AuthContext garde loading vrai tant que le profil n'est pas lu. Tout compte
+  // connecté dont le profil est lu quitte la page, sans état propre à la page : le gabarit la recrée quand le profil
+  // arrive (habillage public puis connecté), et un état « connecté » de la page se perdait alors (vu sur les émulateurs).
   useEffect(() => {
-    if (connecte && currentUser && !chargementCompte)
-      navigate(destinationApresConnexion(from, userProfile), { replace: true });
-  }, [connecte, currentUser, chargementCompte, userProfile, from, navigate]);
+    if (currentUser && !chargementCompte) navigate(destinationApresConnexion(from, userProfile), { replace: true });
+  }, [currentUser, chargementCompte, userProfile, from, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -38,7 +38,6 @@ export default function LoginPage() {
 
     try {
       await login(email, password, seSouvenir);
-      setConnecte(true);
     } catch (err) {
       setError(messageErreur(err, 'Échec de la connexion'));
     } finally {
@@ -52,7 +51,6 @@ export default function LoginPage() {
 
     try {
       await loginWithGoogle();
-      setConnecte(true);
     } catch (err) {
       setError(messageErreur(err, 'Échec de la connexion avec Google'));
     } finally {
