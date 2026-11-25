@@ -129,14 +129,18 @@ def inscrire_sites(extrait: list[dict], candidats: dict, sonde=verifier_site) ->
     for numero, url in candidats.items():
         l = par_numero.get(numero)
         if l is None:
-            refus.append((numero, "numéro RNF absent de l'extrait")); continue
+            refus.append((numero, "numéro RNF absent de l'extrait"))
+            continue
         if l["site_trouve"]:
-            refus.append((numero, f"site déjà inscrit : {l['site_trouve']}")); continue
+            refus.append((numero, f"site déjà inscrit : {l['site_trouve']}"))
+            continue
         if not str(url).startswith("http"):
-            refus.append((numero, "adresse non http")); continue
+            refus.append((numero, "adresse non http"))
+            continue
         motif = sonde(url, l.get("titre", ""))
         if motif:
-            refus.append((numero, motif)); continue
+            refus.append((numero, motif))
+            continue
         l["site_trouve"] = url
         inscrits += 1
     return inscrits, refus
@@ -190,7 +194,9 @@ def main() -> int:
                              "inscrit les sites dont le domaine porte le nom après vérification, journalise le reste dans results/recherche_sites.jsonl")
     args = parser.parse_args()
     if args.chercher:
-        import json, time
+        import json
+        import time
+
         import recherche_web
         journal = ICI / "results" / "recherche_sites.jsonl"
         journal.parent.mkdir(exist_ok=True)

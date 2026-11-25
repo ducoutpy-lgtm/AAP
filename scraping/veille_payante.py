@@ -27,8 +27,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import os
+import re
 import subprocess
 import sys
 from datetime import date, datetime, timedelta
@@ -137,7 +137,8 @@ def lancer(arguments: list[str]) -> tuple[int, str]:
     env = {**os.environ, "PYTHONUTF8": "1"}
     p = subprocess.Popen([PYTHON, "-u", *arguments], cwd=ICI, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
                          encoding="utf-8", errors="replace", env=env)
-    lignes = []
+    lignes: list[str] = []
+    assert p.stdout is not None  # stdout=PIPE : toujours un flux
     for ligne in p.stdout:
         lignes.append(ligne)
         print(ligne, end="", flush=True)

@@ -1,0 +1,7 @@
+# Environnement Python complet du dépôt (plan niveau A, lot 4.1, 2026-11-25) : collecte, jonction et outils de contrôle.
+# Installation : .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+-r scraping/requirements.txt
+-r scripts/requirements.txt
+pytest>=9.1
+ruff>=0.17
+mypy>=2.4

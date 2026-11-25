@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import echantillon  # noqa: E402
-from echantillon import CHAMPS, CONSIGNE_CHAMP, SCHEMA_CHAMP, normaliser_champ  # noqa: E402
+from echantillon import CONSIGNE_CHAMP, normaliser_champ  # noqa: E402
 
 ICI = Path(__file__).resolve().parent
 VERDICTS_CHAMP = ICI / "sources" / "verdicts_champ.json"
@@ -105,7 +105,7 @@ def rapport_markdown(fiches: list[dict], registre: dict[str, dict], aujourdhui: 
             c["dans"] += 1
         if meta.get("champ"):
             c["classees"] += 1
-    lignes = [f"# Champ santé et médico-social des fiches", "",
+    lignes = ["# Champ santé et médico-social des fiches", "",
               f"Changement OpenSpec `filtre-champ-sante`. Rapport du {aujourdhui}. Définition décidée par Monsieur DUCOUT le "
               "2026-10-14 (consigne posée aux modèles, version 4) :", "", f"> {CONSIGNE_CHAMP}", "",
               f"Fiches lues dans les fichiers de l'import : {len(fiches)}. Répartition : "

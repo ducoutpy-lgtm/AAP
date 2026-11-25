@@ -17,7 +17,6 @@ dans scrape_metadata.verification ; sauvegarde des fichiers avant la premi√®re √
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import shutil
 import sys

@@ -51,6 +51,7 @@ DEFAULT_KEY = ROOT / "scripts" / "serviceAccountKey.json"
 # Le schema des fiches (scraping/schema.py) est la source de verite des champs qu'une fiche lue peut porter.
 sys.path.insert(0, str(ROOT / "scraping"))
 from schema import AapNormalized  # noqa: E402
+
 # Verdicts de Monsieur DUCOUT sur les fiches (raccourci « Validation des fiches a verifier »), cle = adresse de
 # l'appel. Fichier versionne, jamais ecrit par un outil automatique (changement organisation-donnees-validees).
 VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
@@ -60,6 +61,7 @@ import financeurs  # noqa: E402
 import registre  # noqa: E402
 import territoires  # noqa: E402
 import verification  # noqa: E402
+
 EMETTEURS = financeurs.index_emetteurs(registre.charger())
 FINANCEURS = financeurs.charger()
 

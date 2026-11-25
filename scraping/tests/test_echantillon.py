@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import echantillon  # noqa: E402
@@ -37,7 +38,7 @@ def test_valider_fiche_complete_url_et_financeur():
 
 def test_valider_fiche_refuse_un_montant_texte():
     brut = {"titre": "AAP", "financeur": "F", "description": "d", "montant_max": "dix mille"}
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         echantillon.valider_fiche(brut, "https://x.fr", "F")
 
 

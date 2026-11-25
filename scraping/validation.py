@@ -28,10 +28,9 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 import requests
-
+import verification
 from qualification import texte_sans_balises
 from registre import CHAMPS_CIBLEE, adresse_aap
-import verification
 
 ICI = Path(__file__).resolve().parent
 RESULTS = ICI / "results"

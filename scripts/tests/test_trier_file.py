@@ -64,6 +64,7 @@ def test_un_rapprochement_par_ricochet_ne_rejette_pas():
     """corrections-chaine-du-lundi 1.7 (2026-11-22) : les groupes se forment par ricochet (A ~ C, C ~ B) ; B, qui ne
     ressemble pas directement à la fiche gardée A (axes différents), était rejetée. Elle reste à relire."""
     from datetime import datetime, timezone
+
     import trier_file as t
     maintenant = datetime(2026, 11, 22, tzinfo=timezone.utc)
     a = ("axe3", {"title": "Appel à projets Axe 3 : coordination et appui", "financeurName": "CFPPA du Nord",
@@ -79,6 +80,7 @@ def test_un_appel_saisi_par_un_financeur_reste_toujours_a_valider():
     """Plan niveau A, lot 1.2 (décision « Validation admin » du 2026-11-24) : le tri automatique ne publie jamais un
     appel saisi par un financeur, même sans autre doute ; seul l'administrateur le valide."""
     from datetime import datetime, timezone
+
     import trier_file as t
     fiche = {"source": "manual", "status": "published", "validation": {"statut": "proposee"},
              "scrapeMetadata": {"verification": {"estUnAppel": True, "douteux": []}, "champ": "sante"}}

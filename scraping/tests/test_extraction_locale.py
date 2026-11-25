@@ -42,6 +42,7 @@ def test_bilan_compteurs_et_estimation():
 def test_textes_restants_et_devis(tmp_path, monkeypatch):
     # V4 (extraction-api-v4) : le devis compte les textes non traités par le fichier de sortie API et écrit un maximum.
     import json
+
     import echantillon
     monkeypatch.setattr(extraction_locale, "ICI", tmp_path)
     a, b = tmp_path / "decouverte" / "s" / "fiches" / "a.txt", tmp_path / "decouverte" / "s" / "fiches" / "b.txt"
@@ -83,6 +84,7 @@ def test_la_veille_n_extrait_que_les_pages_web():
 def test_textes_de_la_veille_locale(tmp_path, monkeypatch):
     """Changement veille-modele-local (2026-11-21) : pages web jamais traitées par l'API, dans un fichier à part."""
     import json
+
     import extraction_locale as e
     monkeypatch.setattr(e, "ICI", tmp_path)
     fiches = tmp_path / "decouverte" / "s" / "fiches"
@@ -104,6 +106,7 @@ def test_la_limite_porte_sur_les_textes_encore_a_faire(tmp_path, monkeypatch):
     textes déjà traités ; la veille et la chaîne de nuit doivent donc ne lui passer que les textes restants, sinon une
     limite de 40 reprendrait chaque semaine les 40 mêmes textes déjà faits."""
     import json
+
     import extraction_locale as e
     monkeypatch.setattr(e, "ICI", tmp_path)
     fiches = tmp_path / "decouverte" / "s" / "fiches"

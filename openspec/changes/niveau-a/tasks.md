@@ -94,8 +94,13 @@ local par lot vérifié.
 
 ## 4. Outillage, tests, documentation
 
-- [ ] 4.1 Python : `pyproject.toml` (ruff, mypy sur la chaîne du lundi), dépendances complètes, tests indépendants de
-  l'ordre.
+- [x] 4.1 Python : `pyproject.toml` (ruff, mypy sur la chaîne du lundi), dépendances complètes, tests indépendants de
+  l'ordre. (2026-11-25 : `pyproject.toml` à la racine ; pytest avec `pythonpath` (`test_validation` et `test_annuaires`
+  échouaient lancés seuls, 8 et 8 verts maintenant) ; ruff E, F, I, B sans longueur de ligne ni noms courts (style du
+  code existant) : 981 signalements, 43 corrigés d'office (imports), 10 à la main, « All checks passed » ; mypy sur les
+  sept modules lancés par `veille.cmd`, une correction, « no issues found in 7 source files » ; `requests` déclaré,
+  `requirements-dev.txt`. 266 tests verts. Reste : le test du relais lit encore les vrais `financeurs.json` et
+  `registre.json`.)
 - [ ] 4.2 Prettier, appliqué en un commit de mise en forme seul.
 - [ ] 4.3 Tests des pages clés, des règles du formulaire de contact, de la reprise sur erreur de l'API.
 - [ ] 4.4 README, `app/README.md`, `scraping/README.md`, `scraping/.env.example`, spec de consultation, tableau de

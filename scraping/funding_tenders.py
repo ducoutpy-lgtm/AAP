@@ -21,7 +21,6 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 import httpx
-
 from schema import AapNormalized
 from utils import DEFAULT_HTTP_HEADERS, ensure_utf8_stdout
 

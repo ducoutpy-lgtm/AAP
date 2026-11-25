@@ -15,10 +15,9 @@ import os
 import traceback
 from pathlib import Path
 
+from extractor import extract_aap
 from playwright.async_api import async_playwright
 from pydantic import ValidationError
-
-from extractor import extract_aap
 from schema import AapNormalized
 from utils import make_browser_context, utc_now_iso, write_json
 

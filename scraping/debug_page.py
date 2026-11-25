@@ -18,7 +18,6 @@ import sys
 from pathlib import Path
 
 from playwright.async_api import async_playwright
-
 from utils import accept_cookies, ensure_utf8_stdout, make_browser_context
 
 DEFAULT_URL = "https://www.fondationdefrance.org/fr/appels-a-projets"

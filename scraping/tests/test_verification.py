@@ -133,8 +133,8 @@ def test_decision_du_modele_garde_dates_et_montants_du_portail_europeen():
 # ---------------------------------------------------------------- moteur local (lecture-pdf-locale, voie A, 2026-11-19)
 
 def test_question_de_controle_partagee_et_moteur_local(monkeypatch):
-    import extractor
     import echantillon
+    import extractor
     contenu = extractor.contenu_verification("Texte de la page", {"titre": "T"}, "https://x.fr/a", avec_outil=False)
     assert "https://x.fr/a" in contenu and '"titre": "T"' in contenu and "Texte de la page" in contenu
     assert "outil" not in contenu

@@ -12,8 +12,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import httpx
-
-from utils import accept_cookies, DEFAULT_HTTP_HEADERS
+from utils import DEFAULT_HTTP_HEADERS, accept_cookies
 
 BASE_URL = "https://www.iledefrance.ars.sante.fr"
 LIST_URL = f"{BASE_URL}/liste-appels-projet-candidature"

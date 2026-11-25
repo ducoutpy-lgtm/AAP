@@ -1,0 +1,34 @@
+# Réglages des outils Python du dépôt (plan niveau A, lot 4.1, 2026-11-25). Aucun paquet n'est construit : ce fichier ne
+# sert qu'aux tests (pytest), au contrôle du code (ruff) et au contrôle des types (mypy). Installation des outils :
+# .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+
+[tool.pytest.ini_options]
+# Dossiers des tests et chemins d'import : chaque fichier de test se lance seul, dans n'importe quel ordre (avant, deux
+# fichiers ne trouvaient leur module que si un autre test avait ajouté scraping/ au chemin)
+testpaths = ["scraping/tests", "scripts/tests"]
+pythonpath = ["scraping", "scripts"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = ["_archive", "app", "scraping/results", "scraping/logs"]
+
+[tool.ruff.lint]
+# E, F : erreurs et noms inutilisés ; I : ordre des imports ; B : pièges courants (valeurs par défaut mutables...)
+select = ["E", "F", "I", "B"]
+# Laissés de côté : longueur des lignes (847 lignes, affaire de mise en forme, pas d'erreur), noms courts « l » (77) et
+# lambdas nommées (4), choix d'écriture du code existant
+ignore = ["E501", "E741", "E731"]
+
+[tool.mypy]
+# Typage contrôlé sur la chaîne du lundi (veille.cmd) d'abord, module par module ; les bibliothèques sans types
+# (firebase_admin, playwright...) ne bloquent pas le contrôle
+python_version = "3.12"
+ignore_missing_imports = true
+mypy_path = ["scraping", "scripts"]
+explicit_package_bases = true
+# Modules contrôlés (« python -m mypy » sans argument) : ceux que lance veille.cmd chaque lundi ; les modules qu'ils
+# importent sont lus pour les types, mais leurs propres écarts ne sont pas encore signalés (périmètre à élargir)
+files = ["scraping/alertes.py", "scraping/courriel.py", "scraping/rejeu.py", "scraping/veille_payante.py",
+         "scripts/publier_chiffres.py", "scripts/publier_couts.py", "scripts/trier_file.py"]
+follow_imports = "silent"

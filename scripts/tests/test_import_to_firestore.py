@@ -12,8 +12,8 @@ import pytest
 RACINE = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(RACINE / "scripts"))
 sys.path.insert(0, str(RACINE / "scraping"))
-import import_to_firestore as imp  # noqa: E402
 import annuaires  # noqa: E402
+import import_to_firestore as imp  # noqa: E402
 import registre  # noqa: E402
 
 MAINTENANT = datetime(2026, 10, 14, 12, 0, tzinfo=timezone.utc)

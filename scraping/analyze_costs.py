@@ -57,8 +57,12 @@ def main() -> None:
         s_usd = sum(e["cost_usd"] for e in items)
         s_eur = sum(e["cost_eur_approx"] for e in items)
         print(f"{src:<30} {len(items):>6} {s_in:>10} {s_out:>8} {s_usd:>8.4f} {s_eur:>8.4f}")
-        tot_in += s_in; tot_out += s_out; tot_cache_r += s_cr; tot_cache_w += s_cw
-        tot_usd += s_usd; tot_eur += s_eur
+        tot_in += s_in
+        tot_out += s_out
+        tot_cache_r += s_cr
+        tot_cache_w += s_cw
+        tot_usd += s_usd
+        tot_eur += s_eur
 
     print(f"{'-' * 72}")
     print(f"{'TOTAL':<30} {len(entries):>6} {tot_in:>10} {tot_out:>8} {tot_usd:>8.4f} {tot_eur:>8.4f}")

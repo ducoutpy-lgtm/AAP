@@ -15,8 +15,7 @@ import os
 import time
 from pathlib import Path
 
-from anthropic import Anthropic, APIStatusError, APIConnectionError, RateLimitError
-
+from anthropic import Anthropic, APIConnectionError, APIStatusError, RateLimitError
 from utils import append_jsonl, utc_now_iso
 
 # Modele surchargable via env pour faciliter les tests de regression.

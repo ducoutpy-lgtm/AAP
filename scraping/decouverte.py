@@ -24,13 +24,14 @@ import unicodedata
 from collections import Counter
 from datetime import date
 from pathlib import Path
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlparse
 
 from utils import accept_cookies, ensure_utf8_stdout, make_browser_context, utc_now_iso
 
 ICI = Path(__file__).resolve().parent
 REGISTRE = ICI / "sources" / "registre.json"
 from registre import adresse_aap  # noqa: E402  (adresse validee a l'ecran, sinon adresse d'origine)
+
 DOSSIER = ICI / "decouverte"
 RESULTATS = DOSSIER / "resultats.json"
 RAPPORT = ICI / "DECOUVERTE.md"

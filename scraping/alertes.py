@@ -13,12 +13,12 @@ Lecture seule sur Firestore (compte de service). Sans boîte d'envoi configurée
 from __future__ import annotations
 
 import argparse
-import re
 import math
+import re
 import sys
 from datetime import date, datetime, timedelta, timezone
-from urllib.parse import parse_qs
 from pathlib import Path
+from urllib.parse import parse_qs
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import courriel  # noqa: E402

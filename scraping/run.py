@@ -10,7 +10,6 @@ import asyncio
 import importlib
 
 from dotenv import load_dotenv
-
 from orchestrator import process_source
 from utils import ensure_utf8_stdout
 
@@ -30,7 +29,7 @@ def main() -> None:
     try:
         module = importlib.import_module(f"sources.{args.source}")
     except ModuleNotFoundError as e:
-        raise SystemExit(f"Source introuvable : sources/{args.source}.py  ({e})")
+        raise SystemExit(f"Source introuvable : sources/{args.source}.py  ({e})") from e
 
     asyncio.run(process_source(args.source, module))
 

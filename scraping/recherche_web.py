@@ -54,8 +54,6 @@ def chercher_tavily(requete: str, nombre: int = 8) -> list[dict]:
     clients, Brave exige une carte bancaire. Une recherche simple coûte un crédit. Format de réponse à confirmer à la
     première utilisation (documentation Tavily, point d'accès /search).
     """
-    import os
-    from pathlib import Path
     cles = _cles_tavily()
     if not cles:
         raise RefusMoteur("TAVILY_API_KEY absente de scraping/.env")
@@ -103,18 +101,18 @@ GENERIQUES = {"fondation", "entreprise", "pour", "fonds", "groupe", "france", "f
              "social", "plus", "paris", "cite", "internationale", "universitaire", "universite", "ecole", "centre", "institut",
              "association", "foundation", "union", "service", "services", "maison", "hopital", "hospitalier", "fondations",
              "nationale", "national", "regionale", "regional", "action", "aide", "enfance", "famille", "handicap", "autonomie",
-             "solidarite", "medicale", "medical", "recherche", "sciences", "science", "avenir", "espoir", "vie", "soins", "soin",
+             "solidarite", "medicale", "medical", "sciences", "science", "avenir", "espoir", "vie", "soins", "soin",
              # mots géographiques : un domaine régional (ex. auvergne-rhone-alpes.ambition-ess.org) n'est pas le site d'une fondation
              "alpes", "rhone", "auvergne", "loire", "provence", "bretagne", "normandie", "aquitaine", "occitanie", "lorraine",
              "alsace", "picardie", "champagne", "bourgogne", "savoie", "pyrenees", "corse", "nord", "ouest", "ile", "lyon",
              "marseille", "lille", "toulouse", "nantes", "bordeaux", "strasbourg", "montpellier", "rennes", "grenoble", "bonobo",
-             "manche", "mediterranee", "atlantique", "europe", "centre", "touraine", "poitou", "anjou", "vendee", "gascogne",
+             "manche", "mediterranee", "atlantique", "europe", "touraine", "poitou", "anjou", "vendee", "gascogne",
              "languedoc", "roussillon", "limousin", "berry", "beauce", "sologne", "ardennes", "flandre", "artois", "franche",
              "comte", "jura", "vosges", "ariege", "aveyron", "cantal", "correze", "creuse", "dordogne", "gironde", "landes",
              "herault", "isere", "drome", "ardeche", "allier", "nievre", "yonne", "aube", "marne", "meuse", "moselle",
              "somme", "oise", "aisne", "eure", "orne", "sarthe", "mayenne", "morbihan", "finistere", "cotes", "armor",
-             "charente", "maritime", "sevres", "vienne", "indre", "cher", "loiret", "essonne", "yvelines", "seine", "oise", "var",
-             "vaucluse", "gard", "lozere", "tarn", "garonne", "lot", "gers", "bearn", "basque", "roussillon", "guadeloupe",
+             "charente", "maritime", "sevres", "vienne", "indre", "cher", "loiret", "essonne", "yvelines", "seine", "var",
+             "vaucluse", "gard", "lozere", "tarn", "garonne", "lot", "gers", "bearn", "basque", "guadeloupe",
              "martinique", "guyane", "reunion", "mayotte", "caledonie", "polynesie", "monde", "international", "mondiale"}
 
 

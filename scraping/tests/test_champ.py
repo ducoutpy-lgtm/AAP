@@ -1,5 +1,4 @@
 """Tests du filtre du champ (fonctions pures, sans réseau, sans Ollama, sans appel API)."""
-import json
 import sys
 from pathlib import Path
 

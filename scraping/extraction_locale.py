@@ -26,7 +26,6 @@ import argparse
 import asyncio
 import json
 import sys
-import time
 from pathlib import Path
 
 import httpx
@@ -34,7 +33,7 @@ import httpx
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import echantillon  # noqa: E402
 import lecture_pdf  # noqa: E402
-from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, RESULTS, JS_TEXTE, lire_fiche, nettoyer_texte, nom_fiche  # noqa: E402
+from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, JS_TEXTE, RESULTS, lire_fiche, nettoyer_texte, nom_fiche  # noqa: E402
 
 REGISTRE = ICI / "sources" / "registre.json"
 SORTIE = RESULTS / "extraction_locale.json"

@@ -6,6 +6,7 @@ C est ce schema que consommera le futur moteur de recherche / matching.
 from __future__ import annotations
 
 from typing import Optional
+
 from pydantic import BaseModel, Field
 
 

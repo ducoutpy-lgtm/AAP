@@ -4,3 +4,5 @@ pydantic>=2.5
 httpx>=0.27
 python-dotenv>=1.0
 pypdf>=6.0
+# Lu par validation.py, recherche_web.py et annuaires.py (plan niveau A, lot 4.1)
+requests>=2.31

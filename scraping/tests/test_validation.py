@@ -143,6 +143,7 @@ def test_appliquer_verdicts_pages_confirme_ou_corrige_une_page_ciblee():
 def test_migrer_verdicts_sauvegarde_copie_sans_ecraser_et_renomme(tmp_path, monkeypatch):
     """Lot 0, instruction 7 : essai a blanc sans ecriture, puis sauvegarde, fusion sans ecraser, renommage des anciens."""
     import json
+
     import validation
     ancien_pages, nouveau_pages = tmp_path / "results" / "validation_pages.json", tmp_path / "sources" / "verdicts_pages.json"
     ancien_liens, nouveau_liens = tmp_path / "results" / "validation_liens.json", tmp_path / "sources" / "verdicts_liens.json"

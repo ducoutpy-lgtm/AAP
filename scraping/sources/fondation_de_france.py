@@ -15,8 +15,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import httpx
-
-from utils import accept_cookies, DEFAULT_HTTP_HEADERS
+from utils import DEFAULT_HTTP_HEADERS, accept_cookies
 
 LIST_URL = "https://www.fondationdefrance.org/fr/appels-a-projets"
 FINANCEUR_HINT = "Fondation de France"
