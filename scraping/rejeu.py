@@ -15,13 +15,13 @@ Usage (depuis scraping/, environnement ../.venv) :
 
 Garde-fous : une page en erreur ou sans lien d'appel lisible ne touche pas aux compteurs de ses liens ; une page déjà
 relue le jour même est sautée (sinon une relance compterait une absence de trop) ; une page à la fois, deux secondes de
-pause (règle réseau du projet).
+pause (règle réseau du projet). liens.json et rejeux.json sont écrits par fichier temporaire ; un fichier coupé est
+signalé, laissé tel quel et sa source sautée, sans arrêter les autres (relecture du plan niveau A, 2026-11-25).
 """
 from __future__ import annotations
 
 import argparse
 import asyncio
-import json
 import shutil
 import sys
 import time
@@ -171,7 +171,12 @@ async def relire(sources: list[dict]) -> list[dict]:
                 if not chemin.exists():
                     bilan["erreur"] = "pas de liens.json (source jamais découverte)"
                 else:
-                    donnees = json.loads(chemin.read_text(encoding="utf-8"))
+                    donnees = echantillon._charger_ou_signaler(chemin)
+                    if donnees is None:  # fichier coupé : source sautée, les autres sont relues
+                        bilan["erreur"] = "liens.json illisible (fichier coupé), compteurs inchangés"
+                        bilans.append(bilan)
+                        print(f"{s['id'][:40]:40} {bilan['erreur']}")
+                        continue
                     bilan["url"] = donnees.get("url")
                     if deja_relue(donnees, jour):
                         bilan["erreur"] = "déjà relue aujourd'hui, compteurs inchangés"
@@ -182,13 +187,16 @@ async def relire(sources: list[dict]) -> list[dict]:
                                                         donnees.get("hors_site", False))
                     fusion, b = comparer_liens(donnees.get("liens", []), relus, jour)
                     bilan.update(b, erreur=erreur)
+                    # Écritures par fichier temporaire (echantillon._ecrire_json) : un arrêt pendant l'écriture ne
+                    # laisse plus de fichier coupé (arrêt du poste à 10 h 13 le 23/11)
                     if not b["ignore"]:
                         donnees.update(liens=fusion, dernier_rejeu=jour)
-                        chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=1), encoding="utf-8")
+                        echantillon._ecrire_json(chemin, donnees, indent=1)
                     journal = dossier / "rejeux.json"
-                    liste = json.loads(journal.read_text(encoding="utf-8")) if journal.exists() else []
-                    liste.append(bilan)
-                    journal.write_text(json.dumps(liste, ensure_ascii=False, indent=1), encoding="utf-8")
+                    liste = echantillon._charger_ou_signaler(journal) if journal.exists() else []
+                    if liste is not None:  # journal coupé : laissé tel quel pour être réparé, jamais écrasé
+                        liste.append(bilan)
+                        echantillon._ecrire_json(journal, liste, indent=1)
                     await asyncio.sleep(2.0)  # rythme humain
                 bilans.append(bilan)
                 etat = f"erreur : {bilan['erreur']}" if bilan["ignore"] else f"{bilan['vus']} liens, {len(bilan['nouveaux'])} nouveaux, {len(bilan['disparus'])} disparus"
@@ -209,7 +217,9 @@ def liens_connus() -> dict[str, dict[str, dict]]:
     """source -> {href: lien} pour toutes les sources découvertes."""
     resultat: dict[str, dict[str, dict]] = {}
     for chemin in DOSSIER.glob("*/liens.json"):
-        donnees = json.loads(chemin.read_text(encoding="utf-8"))
+        donnees = echantillon._charger_ou_signaler(chemin)
+        if donnees is None:  # fichier coupé : source sautée
+            continue
         resultat[chemin.parent.name] = {l["href"]: l for l in donnees.get("liens", []) if l.get("href")}
     return resultat
 
@@ -236,7 +246,9 @@ def marquer() -> int:
 def rapport() -> int:
     journaux = {}
     for chemin in DOSSIER.glob("*/rejeux.json"):
-        journaux[chemin.parent.name] = json.loads(chemin.read_text(encoding="utf-8"))
+        journal = echantillon._charger_ou_signaler(chemin)
+        if journal is not None:  # journal coupé : source absente du rapport, signalée dans le journal de la veille
+            journaux[chemin.parent.name] = journal
     perimables = []
     for chemin in fichiers_de_resultats():
         fiches = echantillon._charger_liste(chemin)

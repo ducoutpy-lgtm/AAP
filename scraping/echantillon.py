@@ -523,11 +523,25 @@ def _charger_liste(chemin: Path) -> list:
         raise ValueError(f"{chemin} illisible ({err}) : le restaurer depuis Git ou une sauvegarde avant de relancer") from err
 
 
-def _ecrire_json(chemin: Path, donnees) -> None:
+def _charger_ou_signaler(chemin: Path):
+    """Contenu d'un fichier JSON lu source par source (liens.json, rejeux.json de la veille), ou None s'il manque ou s'il
+    est coupé. Un fichier coupé est signalé et laissé tel quel pour être réparé : il n'arrête plus les autres sources,
+    là où _charger_liste arrête l'étape (relecture du plan niveau A, 2026-11-25)."""
+    if not chemin.exists():
+        return None
+    try:
+        return json.loads(chemin.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as err:
+        print(f"{chemin} illisible ({err}) : ignoré et laissé tel quel, à réparer ou à recréer")
+        return None
+
+
+def _ecrire_json(chemin: Path, donnees, indent: int = 2) -> None:
     """Écriture sans fichier coupé (plan niveau A, lot 2.2) : un fichier temporaire, puis remplacement d'un coup ; une
-    coupure pendant l'écriture laisse l'ancien fichier intact."""
+    coupure pendant l'écriture laisse l'ancien fichier intact. indent garde la mise en forme des fichiers de la veille
+    (1 pour liens.json et rejeux.json)."""
     temporaire = chemin.with_name(chemin.name + ".tmp")
-    temporaire.write_text(json.dumps(donnees, ensure_ascii=False, indent=2), encoding="utf-8")
+    temporaire.write_text(json.dumps(donnees, ensure_ascii=False, indent=indent), encoding="utf-8")
     os.replace(temporaire, chemin)
 
 
@@ -543,6 +557,16 @@ def noter_echec(echecs: list[dict], fichier: str, erreur: str) -> None:
             e.update(erreur=erreur, tentatives=int(e.get("tentatives") or 1) + 1)
             return
     echecs.append({"fichier": fichier, "erreur": erreur, "tentatives": 1})
+
+
+def retirer_echec(echecs: list[dict], fichier: str) -> bool:
+    """Retire l'échec d'un texte enfin réussi ou refusé (fonction pure sur la liste) ; vrai s'il y en avait un. Sinon le
+    texte restait dans .errors.json : le résumé annonçait un échec à tort et extraction_locale.bilan le comptait deux fois
+    (relecture du plan niveau A, 2026-11-25)."""
+    restants = [e for e in echecs if e.get("fichier") != fichier]
+    retire = len(restants) < len(echecs)
+    echecs[:] = restants
+    return retire
 
 
 def echecs_definitifs(echecs: list[dict]) -> set[str]:
@@ -593,6 +617,8 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
                 refusees.append({"fichier": rel, "url": url, "source": rubrique["id"], "raison": avis.get("raison", ""),
                                  "duree_s": round(time.time() - t0, 1)})
                 _ecrire_json(chemin_refus, refusees)
+                if retirer_echec(echecs, rel):
+                    _ecrire_json(chemin_echecs, echecs)
                 print(f"[{i}/{len(fiches)}] refusée {chemin.name} {avis.get('raison', '')[:70]}")
                 continue
             messages = [{"role": "system", "content": CONSIGNE}, {"role": "user", "content": page}]
@@ -607,9 +633,11 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
                     brut, a_relire = neutraliser(brut, ecarts), True
             fiche = valider_fiche(brut, url, rubrique["nom"])
         except Exception as err:
-            noter_echec(echecs, rel, type(err).__name__ + ": " + str(err).splitlines()[0][:160])
+            # Message gardé à part : l'entrée d'un texte déjà en échec n'est pas la dernière de la liste (constat 21)
+            erreur = type(err).__name__ + ": " + str(err).splitlines()[0][:160]
+            noter_echec(echecs, rel, erreur)
             _ecrire_json(chemin_echecs, echecs)
-            print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
+            print(f"[{i}/{len(fiches)}] échec   {chemin.name} {erreur[:80]}")
             continue
         champ = question_champ_sans_echec(moteur, modele, texte, url, rubrique["id"])
         duree = round(time.time() - t0, 1)
@@ -621,6 +649,8 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend
+        if retirer_echec(echecs, rel):
+            _ecrire_json(chemin_echecs, echecs)
         print(f"[{i}/{len(fiches)}] ok {duree:5.0f}s  {fiche.titre[:60]}" + ("  (à relire)" if a_relire else ""))
     print(f"\n{len(refusees)} pages refusées, {len(sortie)} réussites ({nouvelles} nouvelles), {len(echecs)} échecs, "
           f"{time.time() - debut:.0f} s pour ce passage ({modele}) -> {chemin_sortie.name}")
@@ -735,6 +765,8 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
                 refusees.append({"fichier": rel, "url": url, "source": rubrique["id"], "raison": avis.get("raison", ""),
                                  "duree_s": round(time.time() - t0, 1)})
                 _ecrire_json(chemin_refus, refusees)
+                if retirer_echec(echecs, rel):
+                    _ecrire_json(chemin_echecs, echecs)
                 print(f"[{i}/{len(fiches)}] refusée {chemin.name} {avis.get('raison', '')[:70]}")
                 continue
             brut = extractor.extract_aap(texte, url, financeur_hint=rubrique["nom"], source=rubrique["id"], model=modele)
@@ -743,9 +775,10 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
                 brut, a_relire = neutraliser(brut, ecarts), True
             fiche = valider_fiche(brut, url, rubrique["nom"])
         except Exception as err:
-            noter_echec(echecs, rel, type(err).__name__ + ": " + str(err).splitlines()[0][:160])
+            erreur = type(err).__name__ + ": " + str(err).splitlines()[0][:160]  # même raison que dans extraire()
+            noter_echec(echecs, rel, erreur)
             _ecrire_json(chemin_echecs, echecs)
-            print(f"[{i}/{len(fiches)}] échec   {chemin.name} {echecs[-1]['erreur'][:80]}")
+            print(f"[{i}/{len(fiches)}] échec   {chemin.name} {erreur[:80]}")
             continue
         champ = question_champ_sans_echec("api", modele, texte, url, rubrique["id"])
         duree = round(time.time() - t0, 1)
@@ -756,6 +789,8 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
         sortie.append(d)
         nouvelles += 1
         _ecrire_json(chemin_sortie, sortie)  # écrit à chaque fiche : un arrêt ne perd rien, la relance reprend
+        if retirer_echec(echecs, rel):
+            _ecrire_json(chemin_echecs, echecs)
         print(f"[{i}/{len(fiches)}] ok {duree:5.1f}s  {fiche.titre[:60]}" + ("  (à relire)" if a_relire else ""))
     print(f"\n{len(refusees)} pages refusées, {len(sortie)} réussites ({nouvelles} nouvelles), {len(echecs)} échecs ; "
           f"coût cumulé de {modele} : {cout_cumule(modele):.3f} euros -> {chemin_sortie.name}")

@@ -143,8 +143,8 @@ def liens_par_source(sources: list[dict], pdf: bool = False) -> dict[str, list[d
     """Liens web uniques de chaque source, dans l'ordre de traitement (une adresse va à la première source)."""
     vus, resultat = set(), {}
     for s in sources:
-        chemin = DOSSIER / s["id"] / "liens.json"
-        liens = json.loads(chemin.read_text(encoding="utf-8"))["liens"] if chemin.exists() else []
+        donnees = echantillon._charger_ou_signaler(DOSSIER / s["id"] / "liens.json")  # absent ou coupé : aucun lien
+        liens = donnees["liens"] if donnees is not None else []
         resultat[s["id"]] = liens_web(liens, vus, pdf)
     return resultat
 

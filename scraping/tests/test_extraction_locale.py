@@ -1,4 +1,5 @@
 """Tests des fonctions pures de l'extraction locale globale (sans réseau, sans Ollama)."""
+import json
 import sys
 from pathlib import Path
 
@@ -126,3 +127,46 @@ def test_la_limite_porte_sur_les_textes_encore_a_faire(tmp_path, monkeypatch):
     tous = [({}, c) for c in (faite, restante, pdf_fait, pdf_restant)]
     assert [c for _, c in e.textes_veille_locale(tous)] == [restante]
     assert [c for _, c in e.textes_pdf_locaux(tous)] == [pdf_restant]
+
+
+def test_un_texte_reussi_ou_refuse_apres_un_echec_n_est_compte_qu_une_fois(tmp_path, monkeypatch):
+    """Relecture du plan niveau A (notation, axe Code) : un texte en échec puis réussi (ou refusé) restait dans
+    .errors.json ; bilan le comptait deux fois (fiche et échec) et le résumé annonçait des échecs à tort."""
+    import echantillon
+    dossier = tmp_path / "decouverte" / "src" / "fiches"
+    dossier.mkdir(parents=True)
+    a, b = dossier / "a.txt", dossier / "b.txt"
+    a.write_text("https://x/a\nlien\n\ntexte de la page", encoding="utf-8")
+    b.write_text("https://x/b\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    sortie = tmp_path / "results" / "extraction_locale.json"
+    sortie.parent.mkdir()
+    erreurs = sortie.with_name(sortie.stem + ".errors.json")
+    erreurs.write_text(json.dumps([{"fichier": str(c.relative_to(tmp_path)), "erreur": "TimeoutError", "tentatives": 1}
+                                   for c in (a, b)] + [{"fichier": "c.txt", "erreur": "URLError", "tentatives": 3}]),
+                       encoding="utf-8")
+    fiche = {"titre": "Appel santé mentale", "financeur": "ARS Test", "description": "Soutien aux CMP.",
+             "date_ouverture": "2026-01-10", "date_cloture": "2026-12-31", "montant_min": None, "montant_max": 50000,
+             "enveloppe_globale": None, "eligibilite": [], "pieces_attendues": [], "territoire": "Bretagne",
+             "categories_etablissement": ["psychiatrie"]}
+    reponses = iter([{"est_aap": True, "raison": "appel"}, fiche, {"champ": "sante", "raison": "soins"},
+                     {"est_aap": False, "raison": "liste d'appels"}])
+    monkeypatch.setattr(echantillon, "appeler_ollama", lambda m, msgs, sch: next(reponses))
+    echantillon.extraire([], "ollama", "test", None, chemin_sortie=sortie, fiches=[({"id": "src", "nom": "S"}, a), ({"id": "src", "nom": "S"}, b)])
+    echecs = json.loads(erreurs.read_text(encoding="utf-8"))
+    assert [e["fichier"] for e in echecs] == ["c.txt"]
+    texte = extraction_locale.bilan(1, 10, 10, json.loads(sortie.read_text(encoding="utf-8")),
+                                    json.loads(sortie.with_name(sortie.stem + "_non_aap.json").read_text(encoding="utf-8")), echecs)
+    assert "Échecs : 1" in texte and "Textes restant à traiter : 7," in texte
+
+
+def test_liens_par_source_saute_un_liens_json_coupe(tmp_path, monkeypatch):
+    """Relecture du plan niveau A (chaîne du lundi) : rejeu.py --collecter lit les liens.json par liens_par_source ; un
+    seul fichier coupé arrêtait la collecte de toutes les sources."""
+    monkeypatch.setattr(extraction_locale, "DOSSIER", tmp_path)
+    for sid, contenu in [("s0", '{"liens": [{"hr'), ("s1", json.dumps({"liens": [{"href": "https://x/a", "texte": "A"}]}))]:
+        (tmp_path / sid).mkdir()
+        (tmp_path / sid / "liens.json").write_text(contenu, encoding="utf-8")
+    assert extraction_locale.liens_par_source([{"id": "s0"}, {"id": "s1"}]) == {
+        "s0": [], "s1": [{"href": "https://x/a", "texte": "A"}]}

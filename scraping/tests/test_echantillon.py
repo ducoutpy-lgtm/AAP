@@ -313,3 +313,54 @@ def test_extraire_ecrit_la_date_de_collecte(tmp_path, monkeypatch):
     echantillon.extraire([], "ollama", "test", None, chemin_sortie=sortie, fiches=[({"id": "src", "nom": "Source"}, chemin)])
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
     assert fiche["scrape_metadata"]["collecte_le"] == "2026-10-20T09:00:00" and fiche["scrape_metadata"]["produite_le"]
+
+
+def _texte_et_echecs(tmp_path, monkeypatch, *noms_sortie):
+    """Un texte a.txt déjà en échec une fois, suivi d'un autre texte b.txt en échec : le cas de la reprise des échecs.
+    Un fichier des échecs par fichier de sortie donné ; retourne le texte et les fichiers de sortie."""
+    chemin = tmp_path / "decouverte" / "src" / "fiches" / "a.txt"
+    chemin.parent.mkdir(parents=True)
+    chemin.write_text("https://x/page-a\nlien\n\ntexte de la page", encoding="utf-8")
+    monkeypatch.setattr(echantillon, "ICI", tmp_path)
+    monkeypatch.setattr(echantillon, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(echantillon, "cout_cumule", lambda *a, **k: 0.0)
+    (tmp_path / "results").mkdir()
+    sorties = [tmp_path / "results" / nom for nom in noms_sortie]
+    for sortie in sorties:
+        sortie.with_name(sortie.stem + ".errors.json").write_text(json.dumps([
+            {"fichier": str(chemin.relative_to(tmp_path)), "erreur": "TimeoutError: A", "tentatives": 1},
+            {"fichier": "b.txt", "erreur": "ValidationError: B", "tentatives": 1}]), encoding="utf-8")
+    return chemin, sorties
+
+
+def _plante(*_a, **_k):
+    raise TimeoutError("A, second essai")
+
+
+def test_un_texte_de_nouveau_en_echec_affiche_sa_propre_erreur(tmp_path, monkeypatch, capsys):
+    # Relecture du plan niveau A, constat 21 : noter_echec met à jour l'entrée du texte sans la déplacer ; le journal
+    # affichait echecs[-1], l'erreur du dernier texte enregistré (b.txt) au lieu de celle du texte en cours.
+    import extractor
+    chemin, (locale, api) = _texte_et_echecs(tmp_path, monkeypatch, "extraction_test.json", "extraction_api_test.json")
+    monkeypatch.setattr(echantillon, "appeler_ollama", _plante)
+    echantillon.extraire([], "ollama", "test", None, chemin_sortie=locale, fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    monkeypatch.setattr(extractor, "est_un_aap", _plante)
+    echantillon.extraire_api({}, "claude-haiku-5-5", None, 5.0, chemin_sortie=api, fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    lignes = [l for l in capsys.readouterr().out.splitlines() if "échec " in l and "a.txt" in l]
+    assert len(lignes) == 2
+    assert all("TimeoutError: A, second essai" in l and "ValidationError" not in l for l in lignes)
+
+
+def test_un_texte_reussi_apres_un_echec_sort_du_fichier_des_echecs_moteur_api(tmp_path, monkeypatch, capsys):
+    # Relecture du plan niveau A (notation, axe Code) : un texte en échec puis réussi restait dans .errors.json ; le
+    # résumé annonçait un échec à tort. Moteur api : aucun appel payant, les trois appels sont remplacés.
+    import extractor
+    chemin, (sortie,) = _texte_et_echecs(tmp_path, monkeypatch, "extraction_api_test.json")
+    erreurs = sortie.with_name(sortie.stem + ".errors.json")
+    monkeypatch.setattr(extractor, "est_un_aap", lambda *a, **k: {"est_aap": True, "raison": "appel"})
+    monkeypatch.setattr(extractor, "extract_aap", lambda *a, **k: dict(FICHE_BRUTE))
+    monkeypatch.setattr(extractor, "champ_aap", lambda *a, **k: {"champ": "sante", "raison": "soins"})
+    echantillon.extraire_api({}, "claude-haiku-5-5", None, 5.0, chemin_sortie=sortie,
+                             fiches=[({"id": "src", "nom": "Source"}, chemin)])
+    assert [e["fichier"] for e in json.loads(erreurs.read_text(encoding="utf-8"))] == ["b.txt"]
+    assert "1 réussites (1 nouvelles), 1 échecs" in capsys.readouterr().out
