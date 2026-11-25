@@ -56,6 +56,12 @@ beforeEach(async () => {
       financeurId: 'f1',
       title: 'Archivé par l’administrateur',
     });
+    await setDoc(doc(db, 'aap/ouvert-f1'), {
+      status: 'published',
+      financeurId: 'f1',
+      title: 'Appel ouvert du financeur',
+      validation: { statut: 'validee', par: 'Monsieur DUCOUT' },
+    });
     await setDoc(doc(db, 'applications/c1'), { porteurId: 'porteur1', financeurId: 'f1', status: 'draft' });
     await setDoc(doc(db, 'applications/c2'), { porteurId: 'porteur1', financeurId: 'f1', status: 'submitted' });
     await setDoc(doc(db, 'savedSearches/s1'), { userId: 'porteur1', name: 'ma recherche' });
@@ -96,7 +102,10 @@ describe('aap : consultation publique et actions de l’administrateur', () => {
 
   it('un porteur ne modifie ni ne crée un AAP', async () => {
     await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { status: 'archived' }));
-    await assertFails(setDoc(doc(porteur(), 'aap/nouveau'), { status: 'draft', financeurId: 'porteur1' }));
+    // Bloc de validation joint (relecture du 2026-11-25, constat 38) : seul le rôle produit le refus
+    await assertFails(
+      setDoc(doc(porteur(), 'aap/nouveau'), { status: 'draft', financeurId: 'porteur1', validation: A_VALIDER }),
+    );
   });
 
   it('un visiteur ne crée pas un AAP', async () => {
@@ -148,14 +157,23 @@ describe('aap : création et modification par un financeur (dégel du 2026-10-19
         validation: A_VALIDER,
       }),
     );
-    await assertFails(setDoc(doc(financeur(), 'aap/usurpe'), { status: 'draft', financeurId: 'autre', title: 'x' }));
+    // Les refus de ce bloc joignent le bloc de validation (relecture du 2026-11-25, constat 38) : sans lui, ils
+    // échouaient sur aValiderSansRelecteur, quel que soit le contrôle visé
+    await assertFails(
+      setDoc(doc(financeur(), 'aap/usurpe'), {
+        status: 'draft',
+        financeurId: 'autre',
+        title: 'x',
+        validation: A_VALIDER,
+      }),
+    );
   });
 
   it('le financeur modifie et supprime son appel, pas celui d’un autre ni une fiche importée', async () => {
     await assertSucceeds(
       updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', validation: A_VALIDER }),
     );
-    await assertFails(updateDoc(doc(financeur(), 'aap/publie'), { title: 'détourné' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/publie'), { title: 'détourné', validation: A_VALIDER }));
     await assertSucceeds(deleteDoc(doc(financeur(), 'aap/du-financeur')));
   });
 
@@ -189,7 +207,7 @@ describe('candidatures : porteur en brouillon, financeur en évaluation', () => 
       setDoc(doc(porteur(), 'applications/nouvelle'), {
         porteurId: 'porteur1',
         financeurId: 'f1',
-        aapId: 'du-financeur',
+        aapId: 'ouvert-f1',
         status: 'draft',
       }),
     );
@@ -197,7 +215,7 @@ describe('candidatures : porteur en brouillon, financeur en évaluation', () => 
       setDoc(doc(porteur(), 'applications/usurpee'), {
         porteurId: 'porteur2',
         financeurId: 'f1',
-        aapId: 'du-financeur',
+        aapId: 'ouvert-f1',
         status: 'draft',
       }),
     );
@@ -215,8 +233,31 @@ describe('candidatures : porteur en brouillon, financeur en évaluation', () => 
     await assertSucceeds(deleteDoc(doc(porteur(), 'applications/c1')));
     await assertFails(deleteDoc(doc(porteur(), 'applications/c2')));
     await assertFails(
-      setDoc(doc(expire(), 'applications/x'), { porteurId: 'expire', financeurId: 'f1', status: 'draft' }),
+      setDoc(doc(expire(), 'applications/x'), {
+        porteurId: 'expire',
+        financeurId: 'f1',
+        aapId: 'ouvert-f1',
+        status: 'draft',
+      }),
     );
+  });
+
+  // Relecture du 2026-11-25 (constat 14) : par le SDK, un candidat écrivait à un appel non visible (brouillon, encore
+  // « Proposée », archivé) ; la règle lit l'appel comme candidatureOuverte le fait à l'écran
+  it('le candidat ne candidate qu’à un appel publié et visible', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) =>
+      setDoc(doc(ctx.firestore(), 'aap/propose-f1'), {
+        status: 'published',
+        financeurId: 'f1',
+        title: 'Proposé',
+        validation: { statut: 'proposee', par: '' },
+      }),
+    );
+    const vers = (aapId: string) => ({ porteurId: 'porteur1', financeurId: 'f1', aapId, status: 'submitted' });
+    await assertFails(setDoc(doc(porteur(), 'applications/vers-brouillon'), vers('du-financeur')));
+    await assertFails(setDoc(doc(porteur(), 'applications/vers-propose'), vers('propose-f1')));
+    await assertFails(setDoc(doc(porteur(), 'applications/vers-archive'), vers('archive-f1')));
+    await assertSucceeds(setDoc(doc(porteur(), 'applications/vers-ouvert'), vers('ouvert-f1')));
   });
 });
 
@@ -229,8 +270,23 @@ describe('recherches sauvegardées, favoris, notifications, messages', () => {
   });
 
   it('un favori se crée au nom de son propriétaire seulement', async () => {
-    await assertSucceeds(setDoc(doc(porteur(), 'favoriteAap/fav1'), { userId: 'porteur1', aapId: 'publie' }));
-    await assertFails(setDoc(doc(porteur(), 'favoriteAap/fav2'), { userId: 'porteur2', aapId: 'publie' }));
+    await assertSucceeds(
+      setDoc(doc(porteur(), 'favoriteAap/porteur1_publie'), { userId: 'porteur1', aapId: 'publie' }),
+    );
+    await assertFails(setDoc(doc(porteur(), 'favoriteAap/porteur2_publie'), { userId: 'porteur2', aapId: 'publie' }));
+  });
+
+  // Relecture du 2026-11-25 (constat 11) : l'identifiant « compte_appel » écrit par favorisService est lié au compte et à
+  // l'appel ; un autre compte ne l'occupe pas d'avance pour bloquer le favori
+  it('l’identifiant d’un favori vaut « compte_appel » ; un autre compte ne l’occupe pas', async () => {
+    await assertFails(setDoc(doc(porteur2(), 'favoriteAap/porteur1_publie'), { userId: 'porteur2', aapId: 'publie' }));
+    await assertFails(
+      setDoc(doc(porteur(), 'favoriteAap/porteur1_publie'), { userId: 'porteur1', aapId: 'brouillon' }),
+    );
+    await assertFails(setDoc(doc(porteur(), 'favoriteAap/fav1'), { userId: 'porteur1', aapId: 'publie' }));
+    await assertSucceeds(
+      setDoc(doc(porteur(), 'favoriteAap/porteur1_publie'), { userId: 'porteur1', aapId: 'publie' }),
+    );
   });
 
   it('le destinataire lit et marque lue sa notification ; l’administrateur en crée une', async () => {
@@ -302,7 +358,9 @@ describe('suppression du compte (question 25, 2026-11-19)', () => {
 
 describe('champs propriétaires figés (relecture du 2026-11-17, suite)', () => {
   it('un financeur ne transfère pas son appel à un autre compte', async () => {
-    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { financeurId: 'porteur1' }));
+    await assertFails(
+      updateDoc(doc(financeur(), 'aap/du-financeur'), { financeurId: 'porteur1', validation: A_VALIDER }),
+    );
     await assertSucceeds(
       updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Titre modifié', validation: A_VALIDER }),
     );
@@ -416,7 +474,7 @@ describe('candidatures : champs et statuts bornés', () => {
   });
 
   it('le candidat ne crée pas une candidature déjà évaluée, ni adressée à un autre financeur que celui de l’appel', async () => {
-    const base = { porteurId: 'porteur1', financeurId: 'f1', aapId: 'du-financeur' };
+    const base = { porteurId: 'porteur1', financeurId: 'f1', aapId: 'ouvert-f1' };
     await assertFails(setDoc(doc(porteur(), 'applications/acceptee'), { ...base, status: 'accepted' }));
     await assertFails(
       setDoc(doc(porteur(), 'applications/notee'), { ...base, status: 'submitted', financeurScore: 100 }),
@@ -444,8 +502,10 @@ describe('candidatures : champs et statuts bornés', () => {
 });
 
 describe('appels : statut et relecture réservés à l’administrateur', () => {
+  // Les refus de ce bloc joignent le bloc de validation (relecture du 2026-11-25, constat 38) : seul le contrôle visé
+  // (statut, verdict, source) produit le refus
   it('l’auteur ne republie pas un appel archivé ; l’administrateur le peut', async () => {
-    await assertFails(updateDoc(doc(financeur(), 'aap/archive-f1'), { status: 'published' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/archive-f1'), { status: 'published', validation: A_VALIDER }));
     await assertSucceeds(updateDoc(doc(admin(), 'aap/archive-f1'), { status: 'published' }));
   });
 
@@ -459,14 +519,14 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
     );
     await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { title: 'Corrigé', validation: A_VALIDER }));
     await assertSucceeds(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'closed' }));
-    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { status: 'published', validation: A_VALIDER }));
   });
 
   it('l’auteur n’écrit ni verdict de relecture ni source', async () => {
     await assertFails(
       updateDoc(doc(financeur(), 'aap/du-financeur'), { validation: { statut: 'validee', par: 'Monsieur DUCOUT' } }),
     );
-    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { source: 'scraped' }));
+    await assertFails(updateDoc(doc(financeur(), 'aap/du-financeur'), { source: 'scraped', validation: A_VALIDER }));
     await assertFails(
       setDoc(doc(financeur(), 'aap/avec-verdict'), {
         status: 'draft',
@@ -481,6 +541,7 @@ describe('appels : statut et relecture réservés à l’administrateur', () => 
         financeurId: 'f1',
         title: 'x',
         source: 'scraped',
+        validation: A_VALIDER,
       }),
     );
     await assertSucceeds(
@@ -599,5 +660,27 @@ describe('aap : compteur de vues', () => {
     await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1), title: 'Réécrit' }));
     await assertFails(updateDoc(doc(porteur(), 'aap/brouillon'), { views: increment(1) }));
     await assertFails(updateDoc(doc(visiteur(), 'aap/publie'), { views: increment(1) }));
+  });
+  // Relecture du 2026-11-25 (constats 2 et 43) : un appel publié encore « Proposée » ou « à corriger » est fermé au
+  // candidat (« AAP non trouvé ») ; il ne compte pas de vue, comme visiblePubliquement à l'écran
+  it('pas de vue sur un appel publié encore « Proposée » ou « à corriger » ; une vue sur un appel validé', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'aap/propose'), {
+        status: 'published',
+        financeurId: 'f1',
+        title: 'Proposé',
+        validation: { statut: 'proposee', par: '' },
+      });
+      await setDoc(doc(db, 'aap/a-corriger'), {
+        status: 'published',
+        financeurId: 'scraped',
+        title: 'À corriger',
+        validation: { statut: 'a_corriger', par: 'claude-haiku-5-5' },
+      });
+    });
+    await assertFails(updateDoc(doc(porteur(), 'aap/propose'), { views: increment(1) }));
+    await assertFails(updateDoc(doc(porteur(), 'aap/a-corriger'), { views: increment(1) }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'aap/ouvert-f1'), { views: increment(1) }));
   });
 });

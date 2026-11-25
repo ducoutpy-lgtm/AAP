@@ -29,11 +29,19 @@ service cloud.firestore {
         && request.resource.data.get('validation', {}).get('par', '') == '';
     }
 
+    // Appel publié et visible du public (relecture du 2026-11-25, constats 2, 14 et 43) : validation absente (saisi à la
+    // main avant le lot 1.2) ou « validee », comme visiblePubliquement (src/utils/relecture.ts) à l'écran
+    function publieEtVisible(appel) {
+      return appel.get('status', '') == 'published'
+        && (appel.get('validation', null) == null || appel.validation.get('statut', '') == 'validee');
+    }
+
     // Statut d'un appel modifié par son auteur : inchangé, ou brouillon -> publié, ou publié -> clôturé
     // Compteur de vues (décision 35 du 2026-11-24) : un compte connecté qui ouvre un appel publié ajoute exactement 1 à
-    // `views`, sans toucher à aucun autre champ
+    // `views`, sans toucher à aucun autre champ ; un appel publié encore « Proposée » ou « à corriger », fermé au
+    // candidat, ne compte pas de vue (relecture du 2026-11-25)
     function ajouteUneVue() {
-      return isAuthenticated() && resource.data.get('status', '') == 'published'
+      return isAuthenticated() && publieEtVisible(resource.data)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
         && request.resource.data.views == resource.data.get('views', 0) + 1;
     }
@@ -187,10 +195,13 @@ service cloud.firestore {
       );
 
       // Création : un porteur abonné, pour son propre compte, en brouillon ou envoyée, sans évaluation, adressée au
-      // financeur de l'appel (corrections-relecture 2.4, 2026-11-20 : une candidature pouvait naître « acceptée »)
+      // financeur de l'appel (corrections-relecture 2.4, 2026-11-20 : une candidature pouvait naître « acceptée »), et
+      // seulement à un appel publié et visible, comme candidatureOuverte à l'écran (relecture du 2026-11-25, constat 14 :
+      // par le SDK, un candidat écrivait à un brouillon, à un appel « Proposée » ou archivé)
       allow create: if isPorteur() && hasActiveSubscription() && request.resource.data.porteurId == request.auth.uid
         && request.resource.data.get('status', '') in ['draft', 'submitted']
         && !request.resource.data.keys().hasAny(champsEvaluation())
+        && publieEtVisible(get(/databases/$(database)/documents/aap/$(request.resource.data.aapId)).data)
         && request.resource.data.financeurId == get(/databases/$(database)/documents/aap/$(request.resource.data.aapId)).data.financeurId;
 
       // Mise à jour : le porteur propriétaire tant que la candidature est en brouillon (sans se donner de décision), ou le
@@ -221,10 +232,13 @@ service cloud.firestore {
       allow create: if isOwner(request.resource.data.userId);
     }
 
+    // Identifiant « compte_appel » imposé à la création, comme l'écrit favorisService (relecture du 2026-11-25,
+    // constat 11) : un autre compte occupait d'avance le document et bloquait le favori
     match /favoriteAap/{favoriteId} {
       allow read, delete: if isOwner(resource.data.userId);
       allow update: if isOwner(resource.data.userId) && request.resource.data.userId == resource.data.userId;
-      allow create: if isOwner(request.resource.data.userId);
+      allow create: if isOwner(request.resource.data.userId)
+        && favoriteId == request.auth.uid + '_' + request.resource.data.aapId;
     }
 
     // Notifications : le destinataire les lit, les marque lues et les supprime ; l'administrateur peut en créer.
