@@ -16,6 +16,7 @@ import {
   Mail,
   Calendar,
 } from 'lucide-react';
+import { telechargerCsv, versCsv } from '../../utils/csv';
 
 interface UserWithId extends User {
   uid: string;
@@ -113,26 +114,12 @@ export default function ManageUsersPage() {
     }
   };
 
+  // Export CSV échappé (utils/csv.ts, plan niveau A, lot 3.4)
   const exportUsers = () => {
-    const csvData = filteredUsers.map(user => ({
-      'Email': user.email,
-      'Type': user.userType,
-      'Statut': user.subscriptionStatus,
-      'Plan': user.subscriptionPlan || 'Aucun',
-      'Date création': dateCreation(user.createdAt),
-    }));
-
-    const csv = [
-      Object.keys(csvData[0]).join(','),
-      ...csvData.map(row => Object.values(row).join(',')),
-    ].join('\n');
-
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'utilisateurs.csv';
-    a.click();
+    const csv = versCsv(['Email', 'Type', 'Statut', 'Plan', 'Date création'], filteredUsers.map(user => [
+      user.email, user.userType, user.subscriptionStatus, user.subscriptionPlan || 'Aucun', dateCreation(user.createdAt),
+    ]));
+    telechargerCsv(csv, 'utilisateurs.csv');
   };
 
   const getStatusBadge = (status: User['subscriptionStatus']) => {

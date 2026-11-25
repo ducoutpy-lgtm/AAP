@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { ArrowLeft, FileText, TrendingUp, Filter, Download } from 'lucide-react';
+import { telechargerCsv, versCsv } from '../../utils/csv';
 
 interface Application {
   id: string;
@@ -134,27 +135,12 @@ export default function ViewApplicationsPage() {
     });
   };
 
+  // Export CSV échappé (utils/csv.ts, plan niveau A, lot 3.4)
   const exportApplications = () => {
-    // Simple CSV export
-    const csvData = filteredApplications.map(app => ({
-      'Titre': app.projectTitle,
-      'Statut': getStatusLabel(app.status),
-      'Score': app.prequalificationScore || '-',
-      'Budget': app.budget.total,
-      'Date': formatDate(app.submittedAt),
-    }));
-
-    const csv = [
-      Object.keys(csvData[0]).join(','),
-      ...csvData.map(row => Object.values(row).join(',')),
-    ].join('\n');
-
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `candidatures-${aap?.title || 'aap'}.csv`;
-    a.click();
+    const csv = versCsv(['Titre', 'Statut', 'Score', 'Budget', 'Date'], filteredApplications.map(app => [
+      app.projectTitle, getStatusLabel(app.status), app.prequalificationScore || '-', app.budget.total, formatDate(app.submittedAt),
+    ]));
+    telechargerCsv(csv, `candidatures-${aap?.title || 'aap'}.csv`);
   };
 
   if (loading) {
