@@ -11,6 +11,7 @@ import { Card } from '../../components/ui/Card';
 import { Sparkles, Target, Calendar, Euro, MapPin, Building, AlertTriangle, CheckCircle } from 'lucide-react';
 import { deadlineLabel, getDaysUntilDeadline } from '../../utils/deadline';
 import { candidatureSurSiteOfficiel, libelleMontant } from '../../utils/candidat';
+import { lienSur } from '../../utils/liens';
 import { libelleTerritoire } from '../../utils/territoires';
 import { manquesDuProfil, recommander, type Recommandation } from '../../utils/recommandations';
 import { MessageErreur } from '../../components/ui/MessageErreur';
@@ -174,8 +175,11 @@ export default function RecommendationsPage() {
                       className="w-full"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (candidatureSurSiteOfficiel(aap)) window.open(aap.externalUrl, '_blank', 'noopener');
-                        else navigate(`/aap/${aap.id}/candidater`);
+                        // Adresse passée par lienSur (relecture du 2026-11-25, constat 46) : seule une adresse web s'ouvre
+                        if (candidatureSurSiteOfficiel(aap)) {
+                          const lien = lienSur(aap.externalUrl);
+                          if (lien) window.open(lien, '_blank', 'noopener');
+                        } else navigate(`/aap/${aap.id}/candidater`);
                       }}
                     >
                       {candidatureSurSiteOfficiel(aap) ? 'Candidater sur le site officiel' : 'Candidater'}

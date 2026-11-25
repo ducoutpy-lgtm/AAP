@@ -43,11 +43,15 @@ import {
 
 // Ordre de préférence pour ouvrir une pièce jointe (spec consultation-aap-scrapes) :
 // copie Storage, sinon copie locale (seulement quand l'application tourne sur le PC, dossier
-// app/public/documents -> scraping/downloads), sinon fichier d'origine chez le financeur.
-const lienPieceJointe = (fichier: { url: string; fichierLocal?: string }, urlStorage: string | undefined): string => {
+// app/public/documents -> scraping/downloads), sinon fichier d'origine chez le financeur, par lienSur (relecture du
+// 2026-11-25, constat 46 : une adresse « javascript: » collectée devenait un lien).
+const lienPieceJointe = (
+  fichier: { url: string; fichierLocal?: string },
+  urlStorage: string | undefined,
+): string | undefined => {
   if (urlStorage) return urlStorage;
   if (import.meta.env.DEV && fichier.fichierLocal) return `/documents/${fichier.fichierLocal}`;
-  return fichier.url;
+  return lienSur(fichier.url);
 };
 
 export default function AapDetailPage() {
@@ -100,13 +104,17 @@ export default function AapDetailPage() {
       const aapDoc = await getDoc(doc(db, 'aap', aapId));
       if (aapDoc.exists()) {
         setAap({ ...aapDoc.data() } as AAP);
+        const lue = aapDoc.data() as AAP;
+        // Fiche que la page refuse d'afficher (« AAP non trouvé ») : ni journal ni vue (relecture du 2026-11-25,
+        // constats 2 et 43 : l'ouverture d'un appel publié mais « Proposée » gonflait le compteur du financeur)
+        const consultable = ficheConsultable(lue, userProfile?.userType, currentUser?.uid);
         // Journal des actions (suivi-testeurs) : fiche ouverte par un compte connecté
-        if (currentUser && userProfile)
-          journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, (aapDoc.data() as AAP).title);
+        if (currentUser && userProfile && consultable)
+          journaliser(currentUser.uid, userProfile.userType, 'fiche', aapId, lue.title);
         // Compteur de vues (décision 35 du 2026-11-24) : appel publié ouvert par un autre compte que son auteur ou
         // l'administrateur ; un échec n'empêche pas la lecture de la fiche
-        const lue = aapDoc.data() as AAP;
         if (
+          consultable &&
           currentUser &&
           userProfile &&
           userProfile.userType !== 'admin' &&
@@ -548,7 +556,7 @@ export default function AapDetailPage() {
             {isUrgent && (
               <div className="bg-warning-50 border border-warning-200 rounded-lg p-3">
                 <p className="text-warning-800 text-sm font-medium">
-                  ⚠️ Attention: Il ne reste que {daysLeft} jour{daysLeft > 1 ? 's' : ''} pour candidater !
+                  Attention: Il ne reste que {daysLeft} jour{daysLeft > 1 ? 's' : ''} pour candidater !
                 </p>
               </div>
             )}

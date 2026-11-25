@@ -4,9 +4,11 @@
 import { useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { useAuth } from '../../contexts/AuthContext';
 import { Card } from '../ui/Card';
 
 export function PreferenceCourrielCarte({ uid, actif }: { uid: string; actif: boolean }) {
+  const { refreshUserProfile } = useAuth();
   const [coche, setCoche] = useState(actif);
   const [message, setMessage] = useState('');
 
@@ -20,7 +22,11 @@ export function PreferenceCourrielCarte({ uid, actif }: { uid: string; actif: bo
     } catch {
       setCoche(!valeur);
       setMessage("Le réglage n'a pas pu être enregistré : réessayez dans un instant.");
+      return;
     }
+    // Profil du contexte relu après l'écriture (relecture du 2026-11-25, constat 3) : sinon Mon profil, rouvert, et la
+    // recherche repartaient de l'ancienne valeur. Hors du try : un échec de relecture n'annule pas le réglage enregistré.
+    refreshUserProfile().catch((err) => console.warn('Profil non relu après le réglage du courriel :', err));
   };
 
   return (

@@ -39,6 +39,7 @@ vi.mock('firebase/firestore', () => ({
 }));
 
 import AapDetailPage from './AapDetailPage';
+import { journaliser } from '../../services/journalService';
 
 const ouvrir = () =>
   render(
@@ -66,6 +67,9 @@ describe('compteur de vues de la fiche', () => {
       deadline: null,
       territoriesEligible: [],
     };
+    // Compte candidat remis à chaque test (relecture du 2026-11-25, constat 42) : le test de l'auteur et de
+    // l'administrateur laissait le compte administrateur, et l'ordre mélangé faisait échouer le premier test
+    etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
   });
   afterEach(cleanup);
 
@@ -92,7 +96,14 @@ describe('compteur de vues de la fiche', () => {
 
 // Plan niveau A, lot 3.4 (2026-11-25) : une fiche proposée s'ouvrait par son adresse directe
 describe('fiche non visible du public', () => {
+  const appels: string[] = [];
   beforeEach(() => {
+    appels.length = 0;
+    etat.incrementViews = (id: string) => {
+      appels.push(id);
+      return Promise.resolve();
+    };
+    vi.mocked(journaliser).mockClear();
     etat.fiche = {
       title: 'Appel proposé',
       status: 'published',
@@ -104,17 +115,53 @@ describe('fiche non visible du public', () => {
   });
   afterEach(cleanup);
 
-  it('un candidat voit « AAP non trouvé »', async () => {
+  // Relecture du 2026-11-25 (constats 2 et 43) : l'ouverture refusée comptait une vue et s'écrivait au journal
+  it('un candidat voit « AAP non trouvé », sans vue comptée ni ligne au journal', async () => {
     etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
     ouvrir();
     expect(await screen.findByText('AAP non trouvé')).toBeInTheDocument();
     expect(screen.queryByText('Appel proposé')).toBeNull();
+    await new Promise((r) => setTimeout(r, 20));
+    expect(appels).toEqual([]);
+    expect(journaliser).not.toHaveBeenCalled();
   });
 
   it('son auteur la lit, pour l’aperçu', async () => {
     etat.compte = { ...etat.compte, currentUser: { uid: 'f1' }, userProfile: { userType: 'financeur' } };
     ouvrir();
     expect(await screen.findByRole('heading', { name: 'Appel proposé' })).toBeInTheDocument();
+  });
+});
+
+// Liens sûrs (relecture du 2026-11-25, constat 46) : l'adresse d'une pièce jointe collectée passait telle quelle dans le
+// lien ; une adresse « javascript: » qui finit par « .pdf » franchit le filtre du scraping
+describe('pièces jointes de la fiche', () => {
+  beforeEach(() => {
+    etat.fiche = {
+      title: 'Appel test',
+      status: 'published',
+      financeurId: 'scraped',
+      deadline: null,
+      territoriesEligible: [],
+      scrapeMetadata: {
+        fichiersJoints: [
+          { url: 'javascript:alert(1)//cahier.pdf', filename: 'cahier.pdf' },
+          { url: 'https://www.ars.sante.fr/reglement.pdf', filename: 'reglement.pdf' },
+        ],
+      },
+    };
+    etat.compte = { ...etat.compte, currentUser: { uid: 'p1' }, userProfile: { userType: 'porteur' } };
+  });
+  afterEach(cleanup);
+
+  it('une adresse qui n’est pas une adresse web ne devient pas un lien', async () => {
+    ouvrir();
+    const piege = await screen.findByText('cahier.pdf');
+    expect(piege.closest('a')).not.toHaveAttribute('href');
+    expect(screen.getByText('reglement.pdf').closest('a')).toHaveAttribute(
+      'href',
+      'https://www.ars.sante.fr/reglement.pdf',
+    );
   });
 });
 

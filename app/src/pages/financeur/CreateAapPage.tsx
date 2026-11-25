@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { aapService } from '../../services/aapService';
@@ -21,6 +21,8 @@ import { useMarquerDemarrage } from '../../hooks/useMarquerDemarrage';
 import { journaliser } from '../../services/journalService';
 import { messageErreur } from '../../utils/erreurs';
 import { annoncer } from '../../utils/annonces';
+import { RELECTEUR_HUMAIN } from '../../utils/relecture';
+import { REGIONS as REGIONS_DU_PROFIL } from '../profile/profilFormulaire';
 
 const STEPS = [
   { label: 'Informations', description: 'Titre et description' },
@@ -43,22 +45,9 @@ const SECTEURS = [
   { value: 'recherche', label: 'Recherche & Innovation' },
 ];
 
-const REGIONS = [
-  { value: 'france', label: 'Toute la France' },
-  { value: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes' },
-  { value: 'bourgogne-franche-comte', label: 'Bourgogne-Franche-Comté' },
-  { value: 'bretagne', label: 'Bretagne' },
-  { value: 'centre-val-de-loire', label: 'Centre-Val de Loire' },
-  { value: 'corse', label: 'Corse' },
-  { value: 'grand-est', label: 'Grand Est' },
-  { value: 'hauts-de-france', label: 'Hauts-de-France' },
-  { value: 'ile-de-france', label: 'Île-de-France' },
-  { value: 'normandie', label: 'Normandie' },
-  { value: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine' },
-  { value: 'occitanie', label: 'Occitanie' },
-  { value: 'pays-de-la-loire', label: 'Pays de la Loire' },
-  { value: 'provence-alpes-cote-d-azur', label: "Provence-Alpes-Côte d'Azur" },
-];
+// Régions de Mon profil (profilFormulaire.ts, 13 de métropole et 5 d'outre-mer, mêmes identifiants), précédées de
+// « Toute la France » (relecture du 2026-11-25, constat 5 : la liste propre à ce formulaire omettait l'outre-mer)
+const REGIONS = [{ value: 'france', label: 'Toute la France' }, ...REGIONS_DU_PROFIL];
 
 // aapExistant (changement profil-et-edition-aap, 2026-10-20) : en modification, le formulaire part de l'appel
 // existant et l'enregistrement le met à jour au lieu d'en créer un second.
@@ -159,6 +148,18 @@ export default function CreateAapPage({ aapExistant }: { aapExistant?: AAP } = {
         const revalider = userProfile.userType !== 'admin';
         await aapService.updateAap(aapExistant.id, aapData, revalider);
         if (aapExistant.status === 'draft') {
+          // Publication par l'administrateur : elle vaut validation, même bloc que ManageAAPsPage (relecture du
+          // 2026-11-25) ; sans lui, le brouillon d'un financeur restait « Proposée », invisible malgré « Appel publié »
+          if (!revalider) {
+            await updateDoc(doc(db, 'aap', aapExistant.id), {
+              validation: {
+                statut: 'validee',
+                commentaire: '',
+                date: new Date().toISOString().slice(0, 10),
+                par: RELECTEUR_HUMAIN,
+              },
+            });
+          }
           await aapService.publishAap(aapExistant.id, revalider);
           await journaliser(currentUser.uid, userProfile.userType, 'appel', aapExistant.id, formData.title);
         }

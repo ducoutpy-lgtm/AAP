@@ -19,6 +19,15 @@ describe('versCsv', () => {
     expect(champCsv('-')).toBe('"-"');
   });
 
+  // Relecture du 2026-11-25 (constat 7) : seule une chaîne recevait l'apostrophe ; un tableau écrit par le SDK dans un
+  // titre ou une adresse (« =HYPERLINK(...) ») restait une formule. Seuls les nombres sont exemptés.
+  it('une valeur qui n’est pas une chaîne, tableau ou objet, est neutralisée elle aussi', () => {
+    expect(champCsv(['=HYPERLINK("http://x","clic")'])).toBe('"\'=HYPERLINK(""http://x"",""clic"")"');
+    expect(champCsv({ toString: () => '+SOMME(A1)' })).toBe('"\'+SOMME(A1)"');
+    expect(versCsv(['a'], [[['@SUM(1)']]])).toBe('﻿"a"\r\n"\'@SUM(1)"');
+    expect(champCsv(-12.5)).toBe('"-12.5"');
+  });
+
   it('valeurs absentes vides ; en-tête, séparateur point-virgule et indicateur UTF-8 pour Excel', () => {
     expect(champCsv(null)).toBe('""');
     expect(champCsv(undefined)).toBe('""');
