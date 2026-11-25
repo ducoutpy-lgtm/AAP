@@ -29,6 +29,24 @@ describe('thematique : champ classé par le modèle', () => {
     expect(thematique(fiche('incertain'))).toBe('non-classee');
     expect(LIBELLES_THEMATIQUES[thematique(fiche('incertain'))]).toBe('Non classée');
   });
+
+  // Relecture du 2026-11-25 (constats 1, 17 et 37) : l'import écrit sectorsTargeted ["sante", "social"] sur toute fiche
+  // collectée ; la décision 37 ne vise que les appels saisis à la main, sans bloc scrapeMetadata.
+  it('une fiche importée « incertain » ou pas encore classée reste non classée malgré les secteurs de l import', () => {
+    const importee = (champ?: string) => ({
+      scrapeMetadata: { source: 's', signature: 'x', ...(champ ? { champ } : {}) },
+      sectorsTargeted: ['sante', 'social'],
+    });
+    expect(thematique(importee('incertain'))).toBe('non-classee');
+    expect(thematique(importee(undefined))).toBe('non-classee');
+    expect(thematique(importee('medico-social'))).toBe('medico-social');
+  });
+
+  it('un appel saisi à la main tire sa thématique de ses secteurs ciblés (décision 37)', () => {
+    expect(thematique({ scrapeMetadata: undefined, sectorsTargeted: ['sante', 'social'] })).toBe('sante');
+    expect(thematique({ scrapeMetadata: undefined, sectorsTargeted: ['social'] })).toBe('medico-social');
+    expect(thematique({ scrapeMetadata: undefined, sectorsTargeted: [] })).toBe('non-classee');
+  });
 });
 
 describe('valeursPresentes : options de filtre construites à partir des fiches', () => {

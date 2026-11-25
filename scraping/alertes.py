@@ -18,7 +18,7 @@ import re
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlencode
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import courriel  # noqa: E402
@@ -178,9 +178,10 @@ def correspond(fiche: dict, f: dict) -> bool:
         return False
     champ = (fiche.get("scrapeMetadata") or {}).get("champ")
     if champ not in ("sante", "medico-social"):
-        # Appel saisi par un financeur : thématique depuis les « Secteurs ciblés » (décision 37, même règle que
-        # territoires.ts dans l'application)
-        secteurs = fiche.get("sectorsTargeted") or []
+        # Appel saisi par un financeur (pas de bloc scrapeMetadata) : thématique depuis les « Secteurs ciblés » (décision
+        # 37, même règle que territoires.ts dans l'application). Jamais pour une fiche importée, à qui l'import écrit
+        # toujours les secteurs Santé et Social : elle reste non classée (relecture du 2026-11-25)
+        secteurs = (fiche.get("sectorsTargeted") or []) if fiche.get("scrapeMetadata") is None else []
         champ = "sante" if "sante" in secteurs else "medico-social" if "social" in secteurs else None
     if f.get("thematique") and (champ or "non-classee") != f["thematique"]:
         return False
@@ -222,10 +223,16 @@ def _lignes_fiche(f: dict, url: str) -> list[str]:
             f"  {url}/aap/{f.get('id', '')}", ""]
 
 
+# Adresse avec protocole ou www., en majuscules comme en minuscules, ou nom de domaine nu (« arnaque.fr/promo »,
+# « bit.ly/x1 ») que les messageries rendent cliquable ; un sigle à points (« C.H.U. ») ou un nombre n'est pas visé, la
+# dernière partie devant compter deux lettres au moins (relecture du 2026-11-25, constats 12 et 45)
+_LIEN = re.compile(r"(?:https?://|www\.)\S*|\b[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}\b(?:/\S*)?", re.IGNORECASE)
+
+
 def _nom_sur(nom) -> str:
     """Nom de recherche affiché dans le courriel : liens retirés, 80 caractères au plus (le nom est saisi par le compte
     et part depuis la boîte officielle ; défense en profondeur, relecture du 2026-11-16)."""
-    propre = re.sub(r"(https?://|www\.)\S*", "[lien retiré]", str(nom or "")).strip()
+    propre = _LIEN.sub("[lien retiré]", str(nom or "")).strip()
     return (propre[:79] + "…") if len(propre) > 80 else (propre or "Recherche sans nom")
 
 
@@ -272,7 +279,8 @@ def courriel_candidat(profil: dict, fiches: list[dict], url: str, maximum: int =
         lignes += [f"Votre recherche « {s['nom']} » : {compte}", ""]
         for f in s["fiches"][:5]:
             lignes += _lignes_fiche(f, url)
-        lignes += [f"  Voir la recherche : {url}/aap/search?{s['params']}", ""]
+        # Paramètres saisis par le compte : relus puis réencodés, aucun espace ni saut de ligne ne sort du lien (constat 12)
+        lignes += [f"  Voir la recherche : {url}/aap/search?{urlencode(parse_qs(s['params']), doseq=True)}", ""]
     if sections:
         lignes += [f"Pour arrêter l'alerte d'une recherche : Recherches sauvegardées, {url}/recherches-sauvegardees.", ""]
     # Moyen réel de s'opposer à l'envoi (corrections-chaine-du-lundi 1.8, 2026-11-22) : aucun écran ne règle encore les
@@ -323,7 +331,8 @@ def lire_candidats(db, connexion=adresse_de_connexion) -> list[tuple[dict, dict,
             continue
         try:
             adresse, verifiee = connexion(u.id)
-        except Exception:  # noqa: BLE001 - compte de connexion absent ou illisible : pas de courriel
+        except Exception as e:  # noqa: BLE001 - compte de connexion absent ou illisible : pas de courriel, trace au journal
+            print(f"candidat {u.id} : adresse de connexion illisible ({type(e).__name__}), pas de courriel")
             continue
         if not adresse or not verifiee:
             continue
@@ -337,13 +346,18 @@ def lire_candidats(db, connexion=adresse_de_connexion) -> list[tuple[dict, dict,
     return resultat
 
 
-def envoyer_aux_candidats(candidats, fiches: list[dict], depuis: datetime, url: str, dry_run: bool) -> list[str]:
-    """Courriel de chaque candidat ; une erreur sur l'un est notée et n'arrête pas l'envoi aux suivants."""
+def envoyer_aux_candidats(candidats, fiches: list[dict], depuis: datetime, url: str, dry_run: bool,
+                          envoyer_vides: bool = True) -> list[str]:
+    """Courriel de chaque candidat ; une erreur sur l'un est notée et n'arrête pas l'envoi aux suivants. Avec
+    `envoyer_vides` faux (relance de la veille dans la journée), un candidat sans aucun appel nouveau ne reçoit rien."""
     lignes = []
     for compte, profil, recherches in candidats:
         try:
             retenues = fiches_nouvelles_pour(profil, fiches, depuis)
             sections = sections_recherches(recherches, fiches, depuis)
+            if not envoyer_vides and not retenues and not any(s["fiches"] for s in sections):
+                lignes.append(f"candidat {compte['email']} : aucun appel nouveau depuis l'envoi du jour, pas de courriel vide")
+                continue
             sujet, texte = courriel_candidat(profil, retenues, url, sections=sections)
             lignes.append(f"candidat {compte['email']} : {len(retenues)} appel(s), {len(sections)} recherche(s) en alerte ; "
                           + courriel.envoyer(compte["email"], sujet, texte, dry_run))
@@ -404,15 +418,21 @@ def main() -> int:
         return 0
     maintenant = datetime.now(timezone.utc)
     depuis = debut_fenetre(lire_dernier_envoi(DERNIER_ENVOI), maintenant, args.jours)
-    print(f"Appels nouveaux depuis le {depuis:%d/%m/%Y %H:%M} (UTC)")
+    if args.candidats:  # fenêtre du courriel des candidats ; le bilan de l'administrateur a la sienne (sept jours)
+        print(f"Appels nouveaux depuis le {depuis:%d/%m/%Y %H:%M} (UTC)")
     db = _firestore()
     fiches = lire_fiches(db)
     if args.admin:
         veille = resume_veille(VEILLE_MD.read_text(encoding="utf-8")) if VEILLE_MD.exists() else resume_veille("")
-        sujet, texte = courriel_admin(veille, etat_base(fiches, depuis), args.url)
+        # Fenêtre propre au bilan, « depuis sept jours » comme son libellé : veille.cmd lance --candidats avant --admin,
+        # qui partait donc de l'envoi du matin même et annonçait 0 fiche nouvelle (relecture du 2026-11-25, constat 15)
+        sujet, texte = courriel_admin(veille, etat_base(fiches, maintenant - timedelta(days=args.jours)), args.url)
         print("admin :", envoyer_admin(courriel.charger_config(), sujet, texte, args.dry_run))
     if args.candidats:
-        lignes = envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run)
+        # Fenêtre de moins d'un jour = relance de la veille après un envoi réussi le jour même : le courriel « aucun
+        # nouvel appel » est déjà parti, il n'est pas renvoyé ; un appel publié entre-temps l'est (constat 18)
+        lignes = envoyer_aux_candidats(lire_candidats(db), fiches, depuis, args.url, args.dry_run,
+                                       envoyer_vides=maintenant - depuis >= timedelta(days=1))
         for ligne in lignes:
             print(ligne)
         if not args.dry_run and envoi_reussi(lignes):

@@ -79,11 +79,25 @@
       "typeAppel": "subvention",
       "budgetMin": null,
       "budgetMax": null
+    },
+    {
+      "id": "h",
+      "title": "Coordination des parcours",
+      "description": "Fiche importée au champ incertain, avec les secteurs écrits par l'import",
+      "financeurName": "Fondation Exemple",
+      "champ": "incertain",
+      "sectorsTargeted": ["sante", "social"],
+      "territoriesEligible": ["bretagne"],
+      "deadline_jours": -10,
+      "destinataires": ["public"],
+      "typeAppel": "appel-a-projets",
+      "budgetMin": null,
+      "budgetMax": null
     }
   ],
   "cas": [
     { "nom": "sans filtre : clos masqués", "params": "", "attendus": ["a", "b", "d", "e"] },
-    { "nom": "statut tous", "params": "statut=tous", "attendus": ["a", "b", "c", "d", "e", "g"] },
+    { "nom": "statut tous", "params": "statut=tous", "attendus": ["a", "b", "c", "d", "e", "g", "h"] },
     { "nom": "texte dans le titre, la description ou le financeur", "params": "q=ars", "attendus": ["a", "e"] },
     { "nom": "texte insensible à la casse", "params": "q=T%C3%A9l%C3%A9m%C3%A9decine", "attendus": ["e"] },
     { "nom": "financeur non spécifié trouvé par le texte", "params": "q=non%20sp%C3%A9cifi%C3%A9", "attendus": ["d"] },
@@ -93,6 +107,16 @@
       "attendus": ["a", "c", "g"]
     },
     { "nom": "thématique non classée", "params": "thematique=non-classee", "attendus": ["d"] },
+    {
+      "nom": "thématique non classée : fiche importée incertaine comprise malgré ses secteurs",
+      "params": "thematique=non-classee&statut=tous",
+      "attendus": ["d", "h"]
+    },
+    {
+      "nom": "thématique santé : fiche importée incertaine écartée malgré ses secteurs",
+      "params": "thematique=sante&statut=tous",
+      "attendus": ["b", "e"]
+    },
     {
       "nom": "territoire : national gardé dans chaque région",
       "params": "territory=ile-de-france",

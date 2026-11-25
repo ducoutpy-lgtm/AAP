@@ -99,7 +99,8 @@ def _fiche_firestore(f: dict) -> dict:
     return {"id": f["id"], "title": f["title"], "description": f["description"], "financeurName": f["financeurName"],
             "territoriesEligible": f["territoriesEligible"],
             "deadline": None if j is None else MAINTENANT + timedelta(days=j, hours=1),
-            "scrapeMetadata": {"champ": f["champ"]} if f["champ"] else {},
+            # Sans champ : pas de bloc scrapeMetadata, comme l'adaptateur de recherche.test.ts (appel saisi à la main)
+            "scrapeMetadata": {"champ": f["champ"]} if f["champ"] else None,
             "qualification": {"destinataires": f["destinataires"], "typeAppel": f["typeAppel"]},
             "budgetMin": f["budgetMin"], "budgetMax": f["budgetMax"], "sectorsTargeted": f.get("sectorsTargeted") or []}
 
@@ -311,3 +312,107 @@ def test_cloture_comptee_en_jours_du_calendrier():
     assert a.fiches_nouvelles_pour(profil, [hier], DEPUIS) == []
     assert a.statut_appel(hier) == "clos"
     assert a.jours_avant_cloture(minuit + timedelta(days=3), date.today()) == 3
+
+
+# ---------------------------------------------------------------- relecture du 2026-11-25
+
+def test_thematique_des_secteurs_reservee_aux_appels_saisis_a_la_main():
+    """Constats 1, 17 et 37 : l'import écrit sectorsTargeted ["sante", "social"] sur toute fiche collectée ; une fiche
+    importée « incertain » ou pas encore classée passait en « Santé ». Décision 37 : appels saisis à la main seulement."""
+    sante, non_classee = a.filtres_depuis_params("thematique=sante"), a.filtres_depuis_params("thematique=non-classee")
+    for meta in ({"source": "s", "champ": "incertain"}, {"source": "s"}):
+        importee = fiche(scrapeMetadata=meta, sectorsTargeted=["sante", "social"])
+        assert a.correspond(importee, non_classee) and not a.correspond(importee, sante), meta
+    manuelle = fiche(sectorsTargeted=["sante", "social"])
+    assert a.correspond(manuelle, sante) and not a.correspond(manuelle, non_classee)
+
+
+def test_nom_de_structure_sans_lien_quelle_que_soit_sa_forme():
+    """Constats 12 et 45 : seules les adresses en minuscules commençant par http(s):// ou www. étaient retirées."""
+    for piege in ("Http://evil.fr", "HTTPS://x.fr", "WWW.x.fr", "arnaque.fr/promo", "bit.ly/x1", "evil-promo.fr/gain",
+                  "EXEMPLE.FR", "sous.domaine.exemple.fr"):
+        sujet, texte = a.courriel_candidat({"structureName": f"EHPAD - gagnez sur {piege}"}, [], "https://aapi-11bc3.web.app")
+        assert piege.lower() not in (sujet + texte).lower(), piege
+    # Noms ordinaires gardés : sigle à points, montant, apostrophe
+    for nom in ("C.H.U. de Lille", "EHPAD Les Lilas", "Fondation 1.000 sourires", "Centre Hospitalier Sud-Francilien"):
+        assert a._nom_sur(nom) == nom
+
+
+def test_parametres_de_recherche_encodes_dans_le_lien():
+    """Constat 12 : les paramètres d'une recherche sauvegardée étaient collés tels quels après /aap/search?."""
+    section = {"nom": "x", "params": "q=x%0A Rendez-vous sur HTTP://arnaque.fr&territory=normandie", "fiches": []}
+    texte = a.courriel_candidat({"structureName": "X"}, [], "https://aapi-11bc3.web.app", sections=[section])[1]
+    ligne = next(ligne for ligne in texte.splitlines() if "Voir la recherche" in ligne)
+    assert "HTTP://arnaque.fr" not in texte and " " not in ligne.split("Voir la recherche : ")[1]
+    assert ligne.endswith("/aap/search?q=x%0A+Rendez-vous+sur+HTTP%3A%2F%2Farnaque.fr&territory=normandie")
+    # Recherche ordinaire : lien inchangé
+    ordinaire = {"nom": "y", "params": "thematique=medico-social&territory=ile-de-france", "fiches": []}
+    assert "/aap/search?thematique=medico-social&territory=ile-de-france\n" in a.courriel_candidat(
+        {"structureName": "X"}, [], "u", sections=[ordinaire])[1]
+
+
+def test_compte_a_l_adresse_illisible_note_au_journal(capsys):
+    """Constat 20 : un compte dont l'adresse de connexion ne pouvait pas être lue était écarté sans aucune trace."""
+    base = _Base({"users": {"panne": {"userType": "porteur", "profileComplete": True},
+                            "ok": {"userType": "porteur", "profileComplete": True}},
+                  "porteurProfiles": {"panne": {"structureName": "A"}, "ok": {"structureName": "B"}}})
+
+    def connexion(uid):
+        if uid == "panne":
+            raise TimeoutError("délai dépassé")
+        return "ok@exemple.fr", True
+    candidats = a.lire_candidats(base, connexion)
+    assert [c["email"] for c, _, _ in candidats] == ["ok@exemple.fr"]
+    assert "candidat panne : adresse de connexion illisible (TimeoutError)" in capsys.readouterr().out
+
+
+def _lancer(monkeypatch, tmp_path, envoyes, *options):
+    """Lance main() comme veille.cmd, sur une base factice : une fiche publiée il y a deux jours, un candidat de
+    Normandie ; les courriels partent dans `envoyes` (destinataire, sujet, texte)."""
+    base = _Base({"aap": {"f1": fiche(id="f1", createdAt=MAINTENANT - timedelta(days=2),
+                                      publishedAt=MAINTENANT - timedelta(days=2))}})
+    candidat = ({"email": "ok@exemple.fr"}, {"structureName": "EHPAD Test", "structureType": "association",
+                                             "address": {"region": "normandie"}}, [])
+    monkeypatch.setattr(a, "DERNIER_ENVOI", tmp_path / "alertes_dernier_envoi.txt")
+    monkeypatch.setattr(a, "VEILLE_MD", tmp_path / "VEILLE.md")
+    monkeypatch.setattr(a, "_firestore", lambda: base)
+    monkeypatch.setattr(a, "lire_candidats", lambda db: [candidat])
+    monkeypatch.setattr(a.courriel, "charger_config", lambda: {"admin": "admin@exemple.fr"})
+    monkeypatch.setattr(a.courriel, "envoyer",
+                        lambda dest, sujet, texte, dry_run=False: envoyes.append((dest, sujet, texte)) or f"envoyé à {dest}")
+    monkeypatch.setattr(sys, "argv", ["alertes.py", *options])
+    assert a.main() == 0
+
+
+def test_bilan_administrateur_compte_sept_jours_apres_le_courriel_des_candidats(monkeypatch, tmp_path):
+    """Constat 15 : depuis que veille.cmd lance --candidats puis --admin à part, le bilan partait de l'envoi aux
+    candidats du matin même et annonçait 0 fiche nouvelle."""
+    envoyes = []
+    _lancer(monkeypatch, tmp_path, envoyes, "--candidats")
+    _lancer(monkeypatch, tmp_path, envoyes, "--admin")
+    admin = [texte for dest, _, texte in envoyes if dest == "admin@exemple.fr"]
+    assert len(admin) == 1 and "Fiches nouvelles en base depuis sept jours : 1 (dont validées par le modèle : 1)" in admin[0]
+
+
+def test_relance_le_meme_jour_ne_renvoie_pas_de_courriel_vide(monkeypatch, tmp_path, capsys):
+    """Constat 18 : une relance de la veille le jour même renvoyait à chaque candidat « aucun nouvel appel »."""
+    envoyes = []
+    _lancer(monkeypatch, tmp_path, envoyes, "--candidats")
+    _lancer(monkeypatch, tmp_path, envoyes, "--candidats")
+    assert [sujet for _, sujet, _ in envoyes] == ["AAP Santé : 1 nouvel appel à projets pour EHPAD Test"]
+    assert "pas de courriel vide" in capsys.readouterr().out
+
+
+def test_courriel_vide_envoye_lors_du_passage_hebdomadaire(monkeypatch):
+    """Spécification alertes-courriel : un candidat sans appel reçoit un courriel court qui le dit (passage du lundi) ;
+    seule une relance dans la journée (fenêtre de moins d'un jour) ne le renvoie pas."""
+    envoyes = []
+    monkeypatch.setattr(a.courriel, "envoyer", lambda dest, *_x, **_k: envoyes.append(dest) or f"envoyé à {dest}")
+    candidats = [({"email": "bretagne@x.fr"}, {"structureName": "A", "address": {"region": "bretagne"}}, []),
+                 ({"email": "normandie@x.fr"}, {"structureName": "B", "address": {"region": "normandie"}}, [])]
+    fiches = [fiche(id="f1", territoriesEligible=["normandie"])]
+    a.envoyer_aux_candidats(candidats, fiches, DEPUIS, "u", False)
+    assert envoyes == ["bretagne@x.fr", "normandie@x.fr"]
+    envoyes.clear()
+    lignes = a.envoyer_aux_candidats(candidats, fiches, DEPUIS, "u", False, envoyer_vides=False)
+    assert envoyes == ["normandie@x.fr"] and any("bretagne@x.fr" in ligne and "pas de courriel vide" in ligne for ligne in lignes)
