@@ -104,7 +104,11 @@ local par lot vérifié.
 - [x] 4.2 Prettier, appliqué en un commit de mise en forme seul. (2026-11-25 : Prettier 3.3.3 fixé, guillemets simples,
   120 caractères, fins de ligne du poste ; commandes `typecheck`, `format`, `format:check` ; mise en forme seule dans
   `58f627e` (132 fichiers), lint, types et 218 tests verts avant et après ; `.git-blame-ignore-revs`.)
-- [ ] 4.3 Tests des pages clés, des règles du formulaire de contact, de la reprise sur erreur de l'API.
+- [x] 4.3 Tests des pages clés, des règles du formulaire de contact, de la reprise sur erreur de l'API. (2026-11-25 :
+  pages clés testées pendant les lots 3 et 6 (fiche, recherche, connexion, abonnement, page 404, gabarit, Mes appels) ;
+  règles du contact testées au lot 1.3 ; `test_extractor_reprise.py` : 529 puis réussite (trois appels, attentes 3 et
+  6 s), 400 sans nouvel essai, quatre 429 puis arrêt clair, faux client sans coût ; reprise volontairement cassée
+  (`range(1)`) : 2 échecs, fichier rétabli. 269 tests Python verts.)
 - [ ] 4.4 README, `app/README.md`, `scraping/README.md`, `scraping/.env.example`, spec de consultation, tableau de
   `CLAUDE.md`, CHANGELOG.
 
