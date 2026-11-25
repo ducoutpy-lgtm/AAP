@@ -50,3 +50,12 @@ describe('détail d’une candidature', () => {
     expect(screen.getByText(/budget\.xlsx/).closest('a')).toHaveAttribute('href', 'https://exemple.fr/b');
   });
 });
+
+describe('avis du financeur (décision 40 du 2026-11-24)', () => {
+  afterEach(cleanup);
+
+  it('le candidat voit l’avis écrit par le financeur sur la page d’évaluation', async () => {
+    ouvrir({ status: 'accepted', financeurFeedback: 'Dossier solide, budget à préciser.', documents: [] });
+    expect(await screen.findByText('Dossier solide, budget à préciser.')).toBeInTheDocument();
+  });
+});

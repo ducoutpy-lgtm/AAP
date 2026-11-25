@@ -108,10 +108,10 @@ export default function ApplicationDetailPage() {
               « Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
             </p>
           )}
-          {(dossier.financeurComments || dossier.financeurNotes) && (
+          {(dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes) && (
             <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
               <p className="font-medium text-gray-900 mb-1">Retour du financeur</p>
-              <p className="text-gray-700 whitespace-pre-wrap">{dossier.financeurComments || dossier.financeurNotes}</p>
+              <p className="text-gray-700 whitespace-pre-wrap">{dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes}</p>
             </div>
           )}
         </Card>

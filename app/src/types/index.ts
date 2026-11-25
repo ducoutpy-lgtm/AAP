@@ -235,6 +235,8 @@ export interface Application {
   financeurScore?: number;
   financeurNotes?: string;
   financeurComments?: string;
+  // Avis écrit sur la page d'évaluation (EvaluateApplicationPage), lu par le candidat (décision 40 du 2026-11-24)
+  financeurFeedback?: string;
 
   // Status
   status: ApplicationStatus;

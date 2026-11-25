@@ -83,8 +83,10 @@ local par lot vérifié.
 - [ ] 6.2 (36) « Se souvenir de moi » : case décochée, session fermée à la fermeture du navigateur.
 - [ ] 6.3 (37) Thématique des appels de financeur déduite des « Secteurs ciblés » (application et `scraping/alertes.py`).
 - [ ] 6.4 (38) Jour de clôture compté en jours du calendrier, règle commune à l'import, à l'application et au courriel.
-- [ ] 6.5 (39) Bouton « Clôturer » dans « Mes appels ».
-- [ ] 6.6 (40) Avis du financeur visible par le candidat.
+- [x] 6.5 (39) Bouton « Clôturer » dans « Mes appels ». (2026-11-25 : sur un appel publié, avec confirmation ; test de page
+  en échec sans le bouton.)
+- [x] 6.6 (40) Avis du financeur visible par le candidat. (2026-11-25 : la page du candidat lit `financeurFeedback`,
+  champ écrit par l'évaluation ; test en échec avant.)
 - [x] 6.7 (41) Cinq régions d'outre-mer dans Mon profil. (2026-11-25 : liste commune `REGIONS` dans
   `profilFormulaire.ts`, 18 régions, identifiants du parcours ; test en échec avant.)
 - [ ] 6.8 (42) Case « Recevoir le courriel du lundi » dans Mon profil.

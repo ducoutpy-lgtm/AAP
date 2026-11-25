@@ -40,6 +40,19 @@ export default function MyAapPage() {
     }
   };
 
+  // Clôture d'un appel publié par son auteur (décision 39 du 2026-11-24) : seule écriture que les règles laissent passer
+  // sans nouvelle validation (statut publié -> clôturé)
+  const handleCloturer = async (aapId: string) => {
+    if (!confirm('Clôturer cet appel ? Il ne recevra plus de candidature.')) return;
+    try {
+      await aapService.updateAapStatus(aapId, 'closed');
+      setAaps(prev => prev.map(aap => (aap.id === aapId ? { ...aap, status: 'closed' } : aap)));
+    } catch (error) {
+      console.error('Error closing AAP:', error);
+      alert('La clôture a échoué : réessayez dans un instant.');
+    }
+  };
+
   const handleDelete = async (aapId: string) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cet AAP ?')) return;
 
@@ -220,6 +233,12 @@ export default function MyAapPage() {
                         Candidatures
                       </Button>
                     </Link>
+                  )}
+
+                  {aap.status === 'published' && (
+                    <Button variant="secondary" size="sm" onClick={() => handleCloturer(aap.id!)}>
+                      Clôturer
+                    </Button>
                   )}
 
                   {aap.status === 'draft' && (
