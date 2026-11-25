@@ -66,7 +66,7 @@ def courriel_admin(veille: dict, base: dict, url: str) -> tuple[str, str]:
         f"- Fiches à contrôler (proposées ou à corriger) : {base['a_controler']}",
         f"- Fiches publiées et visibles des candidats : {base['publiees']}", "",
         f"Contrôler les fiches : {url}/admin/aaps?validation=proposee", "",
-        "Les textes nouveaux de la veille ne sont extraits qu'après votre accord (devis dans la fenêtre de la veille).", "",
+        "Les textes nouveaux sont extraits par le modèle local (40 au plus par veille) ; leurs fiches arrivent « à valider ».", "",
         "AAP Santé, veille automatique.",
     ]
     return sujet, "\n".join(lignes)

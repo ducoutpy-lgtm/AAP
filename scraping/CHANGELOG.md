@@ -4,6 +4,19 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié et corrigé (2026-11-24 et 25, plan niveau A, changement `niveau-a`)
+- 24/11 : `alertes.py` écrit à l'adresse de connexion vérifiée, nom de structure sans lien ; `veille.cmd` envoie les
+  courriels d'abord, lance Python en `-u` et note l'heure de chaque étape ; textes en échec retentés trois fois au plus
+  (`noter_echec`), JSON écrits par fichier temporaire ; journal des coûts à chemin fixe ; `chaine_pdf_locale` rend le
+  code d'échec et écrit « chaîne terminée » ; import : vues, candidatures et corrections humaines préservées, montants
+  en millions, milliards, M€, k€ ; scripts d'écriture à blanc par défaut, migrations jouées dans
+  `scripts/migrations_jouees/`.
+- 25/11 : thématique d'un appel de financeur déduite de ses secteurs (décision 37) et clôture comptée en jours du
+  calendrier (décision 38, `jours_avant_cloture`), mêmes cas que l'application ; phrase périmée du bilan administrateur
+  corrigée (extraction locale, fiches « à valider ») ; `pyproject.toml` (pytest, ruff, mypy sur les modules de la
+  veille), `requests` déclaré, `requirements-dev.txt` ; test de la reprise sur erreur de l'API ; README : tâches
+  planifiées, conventions des scripts, tests et qualité. 269 tests verts.
+
 ### Corrigé (2026-11-22, changement `corrections-chaine-du-lundi`)
 Relecture de la chaîne du lundi : 10 défauts confirmés, 9 corrigés le 2026-11-22, chacun avec un test en échec avant
 (250 tests Python verts) ; le dixième (limite des tâches) réglé par la décision « Ordre des étapes ».

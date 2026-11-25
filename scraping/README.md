@@ -555,7 +555,8 @@ devis de l'extraction, du contrôle et de la qualification (devis du contrôle e
 sous-estime d'environ moitié), ne lance une étape que si son devis tient dans le reste des 0,50 euro de la semaine et
 sous 4,50 euros de cumul, avec `--plafond` = cumul + devis, puis importe les fiches nouvelles en « à valider »
 (`import_to_firestore.py --a-valider` : jamais publiées). Au-delà, l'étape attend son accord (motif écrit au journal).
-Les courriels partent ensuite. `python veille_payante.py --moteur api` sans `--reel` n'écrit que les devis.
+Ordre revu le 2026-11-22 (paragraphe suivant) : les courriels partent désormais en premier. `python veille_payante.py
+--moteur api` sans `--reel` n'écrit que les devis.
 
 Depuis le 2026-11-22 (changement `corrections-chaine-du-lundi`, décision « Ordre des étapes ») : la tâche Windows coupe
 la veille à 4 h, donc `veille.cmd` envoie les courriels et publie les chiffres avant l'étape du modèle local, qui traite
@@ -832,6 +833,45 @@ Mesures POC (20 avril 2026, Sonnet 4.6 + prompt caching activé) :
 - **0,035 € / AAP en moyenne** (input ~3k tokens, output ~2k tokens).
 - Projection 5 sources × 50 AAP / jour sans optimisation : **~260 €/mois**.
 - Avec **delta scraping** (5 % de nouveautés/jour) : **~13 €/mois**.
+
+## Tâches planifiées Windows (relevé du 2026-11-25)
+
+Les deux tâches ne sont pas exportées dans le dépôt : leur fichier XML contient le nom du compte Windows. Réglages lus
+par `schtasks /Query /TN "<nom>" /XML` :
+
+| Tâche | Quand | Action | Limite | Si le PC était éteint | Sur batterie | Session |
+|---|---|---|---|---|---|---|
+| AAP Sante - veille hebdomadaire | lundi 8 h | `wscript.exe scraping\veille_cachee.vbs` (`veille.cmd auto`, sans fenêtre) | 4 h | lancée dès que possible | lancée et poursuivie | ouverte |
+| AAP Sante - lecture locale des PDF | lundi 23 h | `wscript.exe scraping\chaine_pdf_locale_cachee.vbs` | 12 h | non rattrapée | ni lancée ni poursuivie | ouverte |
+
+Conséquence : le PC doit être allumé, la session ouverte et, pour la lecture des PDF, branché sur secteur. Aucune des
+deux tâches ne réveille le PC.
+
+## Conventions des scripts d'écriture (plan niveau A, lot 2.6, 2026-11-24)
+
+- Un script ponctuel qui écrit dans Firestore tourne à blanc par défaut et n'écrit qu'avec `--reel`, après une
+  sauvegarde JSON dans `scripts/sauvegardes/`.
+- Les scripts lancés chaque lundi par `veille.cmd` sans option (`import_to_firestore.py`, `publier_chiffres.py`,
+  `publier_couts.py`) gardent leur convention d'origine (`--dry-run` pour l'essai à blanc) : la chaîne casserait sinon.
+- Les migrations déjà jouées sont rangées dans `scripts/migrations_jouees/` (README) et ne se relancent pas.
+
+## Tests et qualité (plan niveau A, lot 4.1, 2026-11-25)
+
+Réglages dans `pyproject.toml` à la racine du dépôt ; outils installés par `requirements-dev.txt`. Depuis la racine :
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -X utf8 -m pytest -q
+.venv\Scripts\python.exe -m ruff check .
+.venv\Scripts\python.exe -m mypy
+```
+
+Chaque fichier de test se lance aussi seul (`pytest scraping/tests/test_validation.py`). mypy contrôle les sept modules
+lancés par `veille.cmd` ; ruff ne contrôle pas la longueur des lignes ni les noms courts (style du code existant). La
+reprise sur erreur de l'API (429, 529, 5xx) est testée par un faux client (`tests/test_extractor_reprise.py`), sans
+coût. Les filtres des recherches enregistrées sont rejoués sur les mêmes cas que l'application
+(`app/src/utils/cas_filtres_recherche.json`) : thématique déduite des secteurs pour un appel de financeur et clôture
+comptée en jours du calendrier, comme dans l'application (décisions 37 et 38 du 2026-11-24).
 
 ---
 

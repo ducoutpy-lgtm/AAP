@@ -5,6 +5,27 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié et corrigé (2026-11-24 et 25, plan niveau A, changement `niveau-a`)
+- Sécurité (24/11) : courriel du lundi envoyé à l'adresse de connexion vérifiée ; un compte ne modifie que ses champs de
+  parcours et naît en essai ; un appel saisi par un financeur n'est visible qu'après validation de l'administrateur ;
+  formulaire de contact borné, liens `javascript:` et `data:` refusés, messagerie limitée au champ « lu » ; sept
+  dépendances inutilisées retirées (vulnérabilités de production : 20 dont 2 critiques, puis 13 dont aucune critique).
+- Chaîne du lundi (24/11) : courriels en tête de `veille.cmd`, heure par étape ; textes en échec retentés trois fois ;
+  journal des coûts à chemin fixe ; chaîne des PDF qui rend ses échecs ; import qui préserve compteurs et corrections,
+  montants en millions ; scripts d'écriture à blanc par défaut (détail : `scraping/CHANGELOG.md`).
+- Application (25/11) : connexion qui attend le profil puis mène au tableau de bord du rôle ; « Se souvenir de moi »
+  réel ; fiche hors de la recherche introuvable par son adresse directe ; compteur de vues ; favori enregistré ; clôture
+  en jours du calendrier (outre-mer compris) ; thématique des appels de financeur ; bouton « Clôturer » et avis du
+  financeur ; régions d'outre-mer et case « courriel du lundi » dans Mon profil ; saisie d'un appel contrôlée ; exports
+  CSV échappés ; erreurs de lecture avec « Réessayer » ; bandeaux au lieu des fenêtres d'alerte ; page 404 ; menu sur
+  téléphone ; clavier et fenêtre modale accessibles ; Stripe chargé au paiement seulement, pages chargées à la demande ;
+  écran Abonnement « Paiement bientôt disponible ». Retirés : `/admin/paiements` et `/admin/parametres` (gabarits vides).
+- Outillage (25/11) : `pyproject.toml` (pytest, ruff, mypy), `requirements-dev.txt`, Prettier et commandes `typecheck`,
+  `format:check` ; mise en forme seule dans `58f627e` ; test de la reprise sur erreur de l'API ; documentation mise à
+  jour (README, `app/README.md`, `scraping/README.md` : tâches planifiées, conventions des scripts, tests).
+- Non fait : 1.5 (mises à niveau majeures de `firebase` et `react-router-dom`). Commits locaux, non poussés ; règles
+  Firestore (vues, favoris, appels de financeurs) et hébergement à mettre en ligne après accord.
+
 ### Corrigé (2026-11-22, chaîne du lundi)
 - Neuf défauts de la chaîne automatique du lundi corrigés : courriels avant le modèle local, extraction bornée, tri qui
   ne republie plus une fiche archivée, import qui ne réécrit plus une fiche validée, courriel sans doublon ni oubli,

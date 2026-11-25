@@ -30,7 +30,8 @@ npm run dev                   # http://localhost:3000
 
 Côté console Firebase (projet `aapi-11bc3`) : activer Authentication (E-mail/Mot de passe), créer Firestore
 et publier `app/firestore.rules`, activer Storage et publier `app/storage.rules`.
-Pour un compte admin : mettre `users/{uid}.userType = "admin"` dans Firestore.
+Compte administrateur : `.venv\Scripts\python scripts/creer_admin.py --email <adresse>` (essai à blanc avec
+`--dry-run`), puis choix du mot de passe par « Mot de passe oublié ? » sur `/login`.
 
 ### 2. Scraping
 
@@ -63,9 +64,6 @@ contrôle du modèle n'a pas validée entre en brouillon, et seules les fiches v
 publique ; elles se contrôlent depuis `/admin/aaps` (« Valider et publier », « Rejeter », « Modifier »). Les fiches
 publiées avant cette décision sans contrôle se repassent en brouillon par
 `scripts/depublier_non_controlees.py` (`--dry-run` d'abord, sauvegarde dans `scripts/sauvegardes/`).
-
-```bash
-```
 
 Option utile : `--include-expired` (AAP dont la clôture est passée). Sans elle, seuls les AAP encore ouverts
 sont importés ; une fiche sans date de clôture est publiée avec `deadline` nulle (plus aucune échéance fictive depuis
@@ -124,10 +122,9 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
    `firebase deploy --only firestore:rules,firestore:indexes --project aapi-11bc3`.
 2. Import avec l'option : `.venv\Scripts\python scripts/import_to_firestore.py --include-expired`
    (105 AAP lus, 89 documents distincts : les doublons entre sources sont fusionnés).
-3. `cd app && npm run dev`, puis http://localhost:3000 : depuis le 2026-10-13 (changement
-   `consultation-aap-sans-compte`), la consultation des AAP ne demande aucun compte : lien « Voir les appels
-   à projets » sur l'accueil, ou directement http://localhost:3000/aap/search. Un compte porteur (inscription,
-   14 jours d'essai, ou compte de démo) n'est nécessaire que pour candidater.
+3. `cd app && npm run dev`, puis http://localhost:3000 : la recherche et les fiches demandent un compte depuis le 2026-10-20 (décision de Monsieur DUCOUT ;
+   la consultation sans compte du 2026-10-13 est retirée) : inscription avec 14 jours d'essai, ou compte de test
+   des émulateurs, puis http://localhost:3000/aap/search.
 4. Page « Rechercher des AAP » : les AAP scrapés apparaissent, les AAP clos portent la mention « Clôturé »,
    la recherche par mot filtre la liste, chaque fiche a un lien « Voir l'annonce officielle » et liste ses
    pièces jointes. En développement, les fichiers sont servis depuis le PC : créer une fois le lien de
@@ -139,6 +136,42 @@ Ordre des opérations, après les étapes 1 à 3 ci-dessus :
 
 Spécifications correspondantes : `openspec/specs/import-aap-scrapes/` et `openspec/specs/consultation-aap-scrapes/`
 (après archivage du changement `demo-aap-scrapes-visibles`).
+
+## Vérifier le projet
+
+Commandes de contrôle (plan niveau A, 2026-11-25), à lancer avant chaque commit d'une modification :
+
+```powershell
+cd app
+npm run lint            # ESLint, aucun avertissement toléré
+npm run typecheck       # TypeScript, sans compilation
+npm run format:check    # mise en forme Prettier
+npm test                # tests Vitest de l'application (jsdom, sans Firebase)
+npm run test:rules      # règles Firestore et Storage sur l'émulateur (JDK 21 en tête du PATH, port 8080 libre)
+npm run build           # compilation de production
+cd ..
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt   # une fois : collecte, jonction, pytest, ruff, mypy
+.venv\Scripts\python.exe -m ruff check .                         # contrôle du code Python
+.venv\Scripts\python.exe -m mypy                                 # types des modules de la chaîne du lundi
+.venv\Scripts\python.exe -X utf8 -m pytest -q                    # tests de scraping/ et scripts/
+```
+
+Réglages : `pyproject.toml` (pytest, ruff, mypy), `app/.prettierrc.json`, `app/.eslintrc.cjs`. Le commit de mise en
+forme Prettier est listé dans `.git-blame-ignore-revs` (`git config blame.ignoreRevsFile .git-blame-ignore-revs`).
+Parcours connectés : sur les émulateurs Firebase (`app/README.md`, section Émulateurs ; comptes de
+`scripts/semer_emulateurs.py`), jamais sur le vrai projet.
+
+## Variables d'environnement
+
+Deux fichiers `.env`, jamais commités, à créer depuis leurs modèles : `app/.env.example` (clés publiques Firebase et
+Stripe de l'application) et `scraping/.env.example` (clé Anthropic, recherche web, boîte d'envoi des courriels). La clé
+du compte de service Firebase se range dans `scripts/serviceAccountKey.json` (ignoré par Git).
+
+## Mise en ligne
+
+Application en ligne : https://aapi-11bc3.web.app (Firebase Hosting). Procédure, réglages réseau du poste et contrôles
+après déploiement : `docs/MISE_EN_LIGNE.md`. Toute mise en ligne et toute poussée vers GitHub se font après l'accord de
+Monsieur DUCOUT.
 
 ## Historique
 

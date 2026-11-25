@@ -2,7 +2,7 @@
 
 Plateforme web centralisée pour la recherche et la gestion des appels à projets en France.
 
-## 📋 Table des matières
+## Table des matières
 
 - [Technologies](#technologies)
 - [Prérequis](#prérequis)
@@ -14,7 +14,7 @@ Plateforme web centralisée pour la recherche et la gestion des appels à projet
 - [Déploiement](#déploiement)
 - [Documentation](#documentation)
 
-## 🚀 Technologies
+## Technologies
 
 **Frontend:**
 - React 18 + TypeScript
@@ -27,12 +27,12 @@ Plateforme web centralisée pour la recherche et la gestion des appels à projet
 
 **Backend:**
 - Firebase (Auth, Firestore, Storage, Functions, Hosting)
-- Cloud Functions (Node.js 18 + TypeScript)
+- Cloud Functions (Node.js 20 + TypeScript)
 - Stripe API
 
-## 📦 Prérequis
+## Prérequis
 
-- Node.js 18+
+- Node.js 20+
 - npm ou yarn
 - Firebase CLI (`npm install -g firebase-tools`)
 - Compte Firebase
@@ -54,7 +54,7 @@ npm run dev:emulateurs                     # application en mode emulateurs (.en
 Comptes de test (mots de passe dans `scripts/semer_emulateurs.py`, valables sur ce PC seulement) : candidat@test.local,
 financeur@test.local, admin@test.local. Les données exportées à l'arrêt vont dans `emulateurs/donnees/` (ignoré par Git).
 
-## 🔧 Installation
+## Installation
 
 ### 1. Cloner le repository
 
@@ -77,7 +77,7 @@ npm install
 cd ..
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### 1. Firebase
 
@@ -159,7 +159,7 @@ firebase deploy --only firestore:rules --project aapi-11bc3
 
 Créer les indexes nécessaires dans Firestore (Firebase vous invitera à les créer lors de la première utilisation des requêtes).
 
-## 🏃 Démarrage
+## Démarrage
 
 ### Développement Local
 
@@ -208,9 +208,23 @@ Les fichiers buildés seront dans le dossier `dist/`
 npm run lint
 ```
 
-Configuration `.eslintrc.cjs` créée le 2026-10-14 (gabarit Vite) ; les fichiers des modules gelés y sont ignorés.
+Configuration `.eslintrc.cjs` créée le 2026-10-14 (gabarit Vite) ; depuis le dégel du 2026-10-19, tout le code est
+linté.
 
-## 📁 Structure du projet
+### Commandes
+
+| Commande | Effet |
+|---|---|
+| `npm run dev` | serveur local sur le vrai projet, port 3000 |
+| `npm run emulateurs` puis `npm run dev:emulateurs` | émulateurs Firebase et serveur local sur le port 3001 |
+| `npm run lint` | ESLint, aucun avertissement toléré |
+| `npm run typecheck` | contrôle des types TypeScript |
+| `npm run format` / `npm run format:check` | mise en forme Prettier (2026-11-25) / son contrôle |
+| `npm test` | tests Vitest de `src` (218 au 2026-11-25) |
+| `npm run test:rules` | règles Firestore et Storage sur l'émulateur (55 et 2 au 2026-11-25) |
+| `npm run build` | compilation de production dans `dist/` |
+
+## Structure du projet
 
 ```
 AAP/
@@ -248,9 +262,9 @@ AAP/
 └── README.md
 ```
 
-## ✨ Fonctionnalités
+## Fonctionnalités
 
-**Périmètre du MVP depuis le 2026-10-14** (lot 0 du rapport de critique, décision de Monsieur DUCOUT) : consultation
+**Périmètre du MVP du 2026-10-14 au 2026-10-19 (historique, remplacé par le dégel décrit plus bas)** (lot 0 du rapport de critique, décision de Monsieur DUCOUT) : consultation
 publique des AAP (`/aap/search`, `/aap/:aapId`), connexion (`/login`) et administration (`/admin`, `/admin/aaps`,
 `/admin/utilisateurs`). Les autres modules ci-dessous sont gelés jusqu'au lot 4 : routes retirées de `src/App.tsx`,
 code conservé sans modification, inscription fermée (`/signup` affiche la page 404). Une fiche sans date de clôture
@@ -274,19 +288,32 @@ porteur (`/dashboard/porteur`, `/aap/:id/candidater`, `/mes-candidatures`, `/rec
 serveur (notifications automatiques, alertes e-mail, paiement) restent non déployées tant que le forfait Blaze n'est pas
 confirmé. Les règles Firestore rouvrent les écritures des collections des modules (profils, candidatures, recherches,
 favoris, notifications, messages ; création d'un appel par un financeur abonné à son nom) et restent testées sur
-l'émulateur (`npm run test:rules`, 23 tests). Pages légales rédigées dans `src/pages/legal/` (mentions légales, CGU,
+l'émulateur (`npm run test:rules`, 23 tests au dégel, 55 au 2026-11-25). Pages légales rédigées dans `src/pages/legal/` (mentions légales, CGU,
 politique de confidentialité) avec les données d'entreprise à valider surlignées. Tests : `npm test` (Vitest,
 Testing Library, jsdom) couvre `utils/relecture.ts`, `utils/territoires.ts` et le rendu des pages légales, sans aucun
 appel Firebase. La session ne crée aucun compte sur le vrai projet : les parcours connectés sont vérifiés par Monsieur
 DUCOUT avec des comptes de test.
+
+**Plan niveau A** (changement `niveau-a`, audit du 2026-11-24, corrections des 24 et 25 novembre) : connexion qui attend
+le profil puis mène au tableau de bord du rôle ; « Se souvenir de moi » réel (case décochée : session fermée avec le
+navigateur) ; fiche proposée, brouillon ou archivée introuvable par son adresse directe pour un candidat (l'auteur et
+l'administrateur la lisent) ; appel saisi par un financeur publié après validation de l'administrateur ; favori
+(cœur) enregistré dans `favoriteAap` ; compteur de vues alimenté à l'ouverture d'une fiche ; clôture comptée en jours
+du calendrier (ouvert tout son dernier jour, outre-mer compris) ; thématique d'un appel de financeur déduite de ses
+« Secteurs ciblés » ; saisie d'un appel contrôlée champ par champ ; exports CSV échappés (point-virgule, UTF-8) ;
+erreurs de lecture affichées avec « Réessayer » ; retours par bandeau (`utils/annonces.ts`) au lieu des fenêtres
+d'alerte ; page 404 ; menu sur téléphone (sous 768 px) ; cartes, calendrier et fenêtre modale utilisables au clavier ;
+pages connectées chargées à la demande et Stripe chargé seulement au paiement ; écran Abonnement « Paiement bientôt
+disponible ». Écrans retirés : `/admin/paiements` et `/admin/parametres` (gabarits vides). Détail et preuves :
+`openspec/changes/niveau-a/tasks.md`.
 
 **Espace d'administration et compte administrateur** (changement `acces-administration`, 2026-10-15) : `/admin`,
 `/admin/aaps` et `/admin/utilisateurs` sont réservés aux comptes dont `users/{uid}.userType` vaut `admin`. Aucun compte de
 ce type n'existait et l'inscription est fermée : le script `scripts/creer_admin.py --email <adresse>` (essai à blanc avec
 `--dry-run`) crée le compte Firebase Auth sans mot de passe, ou le retrouve, et écrit le profil avec le rôle admin. Le mot
 de passe se choisit ensuite par « Mot de passe oublié ? » sur `/login` : la page `/reset-password` envoie l'e-mail de
-réinitialisation de Firebase. Le fournisseur Google n'est pas activé dans le projet Firebase : le bouton « Google » de la
-page de connexion ne fonctionne pas.
+réinitialisation de Firebase. Le fournisseur Google est activé depuis le 2026-10-19 : le bouton « Google » de la page de
+connexion fonctionne.
 
 **Suivi de la validation dans la modération des AAP** (`/admin/aaps`, 2026-10-19, instruction 12 du rapport de critique) :
 quatre compteurs cliquables (proposée non relue, à corriger, validée, rejetée) comptent les fiches par `validation.statut`,
@@ -314,37 +341,36 @@ lieu de « National ».
 
 ### Pour les Porteurs de Projets
 
-- ✅ Authentification (Email/Password + Google)
-- ✅ Dashboard personnalisé
-- 🔄 Recherche avancée d'AAP avec filtres
-- 🔄 Sauvegarde d'AAP favoris
-- 🔄 Candidature en ligne multi-étapes
-- 🔄 Préqualification automatique
-- 🔄 Suivi des candidatures
-- 🔄 Alertes personnalisées
-- 🔄 Messagerie avec financeurs
+- Authentification (Email/Password + Google)
+- Dashboard personnalisé
+- Recherche avancée d'AAP avec filtres
+- Sauvegarde d'AAP favoris
+- Candidature en ligne multi-étapes
+- Préqualification automatique
+- Suivi des candidatures
+- Alertes personnalisées
+- Messagerie avec financeurs
 
 ### Pour les Financeurs
 
-- ✅ Authentification et profil
-- ✅ Dashboard avec statistiques
-- 🔄 Publication d'AAP (CRUD)
-- 🔄 Gestion des candidatures
-- 🔄 Système de notation et scoring
-- 🔄 Statistiques détaillées
-- 🔄 Messagerie avec porteurs
+- Authentification et profil
+- Dashboard avec statistiques
+- Publication d'AAP (CRUD)
+- Gestion des candidatures
+- Système de notation et scoring
+- Statistiques détaillées
+- Messagerie avec porteurs
 
 ### Fonctionnalités Communes
 
-- ✅ Abonnements Stripe (essai gratuit 14 jours)
-- 🔄 Notifications in-app
-- 🔄 Calendrier des deadlines
-- 🔄 Profils personnalisés
-- 🔄 Messagerie interne
+- Essai gratuit de 14 jours ; abonnement Stripe non branché (écran « Paiement bientôt disponible »)
+- Notifications in-app
+- Calendrier des deadlines
+- Profils personnalisés
+- Messagerie interne
 
-**Légende:** ✅ Implémenté | 🔄 À développer
 
-## 🚢 Déploiement
+## Déploiement
 
 ### Déploiement sur Firebase Hosting
 
@@ -376,26 +402,26 @@ firebase deploy --only firestore:rules
 firebase hosting:channel:deploy staging
 ```
 
-## 📚 Documentation
+## Documentation
 
-- [Cahier des charges](./CAHIER-DES-CHARGES.md)
-- [Annexe technique](./annexe-technique-detaillee.md)
+- [Cahier des charges](../docs/CAHIER_DES_CHARGES_APPLICATION.md)
+- [Annexe technique](../docs/annexe_technique_application_web.md)
 - [Firebase Documentation](https://firebase.google.com/docs)
 - [Stripe Documentation](https://stripe.com/docs)
 - [Vite Documentation](https://vitejs.dev)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 
-## 🤝 Contribution
+## Contribution
 
 Ce projet suit les phases de développement définies dans le cahier des charges (25 semaines).
 
 **Phase actuelle:** Phase 1 - Fondations (Semaines 1-3)
 
-## 📝 License
+## License
 
 Propriétaire - Tous droits réservés
 
-## 🐛 Bugs et Support
+## Bugs et Support
 
 Pour signaler un bug ou demander de l'aide, créer une issue dans le repository.
 

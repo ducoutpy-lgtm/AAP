@@ -109,8 +109,14 @@ local par lot vérifié.
   règles du contact testées au lot 1.3 ; `test_extractor_reprise.py` : 529 puis réussite (trois appels, attentes 3 et
   6 s), 400 sans nouvel essai, quatre 429 puis arrêt clair, faux client sans coût ; reprise volontairement cassée
   (`range(1)`) : 2 échecs, fichier rétabli. 269 tests Python verts.)
-- [ ] 4.4 README, `app/README.md`, `scraping/README.md`, `scraping/.env.example`, spec de consultation, tableau de
-  `CLAUDE.md`, CHANGELOG.
+- [x] 4.4 README, `app/README.md`, `scraping/README.md`, `scraping/.env.example`, spec de consultation, tableau de
+  `CLAUDE.md`, CHANGELOG. (2026-11-25 : README racine (administrateur par `creer_admin.py`, consultation avec compte,
+  sections « Vérifier le projet », « Variables d'environnement », « Mise en ligne ») ; `app/README.md` (Node 20, Google
+  activé, commandes, résumé du plan, liens des cahiers, emojis retirés) ; `scraping/README.md` (tâches planifiées
+  relevées par `schtasks`, conventions des scripts, tests et qualité) ; variables facultatives dans `.env.example` ;
+  phrase périmée du bilan administrateur ; spec de consultation en delta (`specs/consultation-aap-scrapes`, fiche
+  fermée, jours du calendrier, compte requis, lien d'accueil retiré), « Change 'niveau-a' is valid » ; ligne du plan
+  au tableau de `CLAUDE.md` ; entrées des deux CHANGELOG.)
 
 ## 6. Décisions du 2026-11-24 (questions 35 à 43, choix à cocher relayés par la séance de pilotage)
 
