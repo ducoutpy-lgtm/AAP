@@ -219,6 +219,19 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   brouillons refusés sans compte). **Reprendre à** : ses réponses aux questions 44 à 53 de `docs/A_VALIDER.md` (posées
   par la séance de pilotage), puis, s'il le demande, une troisième passe sur les 27 points du 5.1 de `tasks.md`. Lundi 30/11, 8 h : PC allumé, session ouverte, sur secteur.
 
+- 2026-11-26, 11 h 45 : réponses 44 à 53 inscrites ; changement OpenSpec `securite-vues-messagerie` écrit (chantiers
+  49, 51 « registre des suspensions », 53, 52, 50, dans cet ordre). Chantier 49 fait et commité (`a421cbf`, index à
+  mettre en ligne AVANT les règles) ; chantier 51 en cours. Non poussés depuis `808488b`.
+  **Plainte de Monsieur DUCOUT sur la sélection** (lecture seule de la base réelle, 1 080 fiches, 488 visibles) :
+  99 fiches « à corriger – hors champ (modèle) » correctement jugées hors champ (forêts, grands fonds marins,
+  décarbonation, LEADER) encombrent sa liste au lieu d'être écartées ; 38 fiches hors champ sont EN LIGNE avec une
+  validation « Monsieur DUCOUT » (VEGEPOLYS, EIC, Bpifrance...) et 18 « incertain » ; « Biotech Santé Bretagne » (un
+  relais) affiché comme financeur sur 7 fiches ; 2 vrais doublons visibles (MSA aidants familiaux, Choose France for
+  Science) ; aucune fiche d'ARS en attente (192 en ligne sur 203). Proposé : relecture des titres par la session, liste
+  à écarter / garder / reclasser, puis nettoyage sur son accord (sauvegarde, essai à blanc) et correction de la chaîne
+  (hors champ écarté d'office, avertissement à la validation, relais jamais financeur). Il est en train de valider des
+  fiches (`scraping/sources/verdicts_fiches.json` modifié à 11 h 32 : ne pas y toucher).
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
