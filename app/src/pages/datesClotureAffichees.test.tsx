@@ -14,8 +14,11 @@ vi.mock('../config/firebase', () => ({ db: {} }));
 // 2026-11-25 : la doublure qui les ignorait montrait une échéance que la vraie requête ne charge pas)
 type Filtre = { champ: string; op: string; valeur: unknown };
 const valeurComparee = (v: unknown) => (v instanceof Date ? v.getTime() : v) as number | string;
+// Champ à point (« validation.statut », question 49 du 2026-11-26) lu dans le bloc imbriqué, comme Firestore
+const lireChamp = (fiche: Record<string, unknown>, champ: string): unknown =>
+  champ.split('.').reduce<unknown>((v, cle) => (v as Record<string, unknown> | undefined)?.[cle], fiche);
 const respecte = (fiche: Record<string, unknown>, { champ, op, valeur }: Filtre): boolean => {
-  const a = valeurComparee(fiche[champ]);
+  const a = valeurComparee(lireChamp(fiche, champ));
   const b = valeurComparee(valeur);
   if (op === '==') return a === b;
   if (op === '>=') return a >= b;
@@ -58,6 +61,8 @@ const APPEL = {
   financeurId: 'f1',
   financeurName: 'Financeur',
   deadline: new Date(Date.UTC(2026, 11, 1)),
+  // Appel visible du candidat : le calendrier ne lit que les appels validés (question 49, 2026-11-26)
+  validation: { statut: 'validee', commentaire: '', date: '2026-11-20', par: 'Monsieur DUCOUT' },
   views: 0,
   territoriesEligible: [],
   sectorsTargeted: [],

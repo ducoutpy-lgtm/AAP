@@ -90,11 +90,13 @@ export const aapService = {
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as AAP);
   },
 
-  // Récupérer les AAP publiés (pour la recherche)
+  // Récupérer les AAP publiés (pour la recherche) ; contrainte de validation exigée par la règle de lecture des listes
+  // (question 49, 2026-11-26)
   async getPublishedAaps(limitCount: number = 20): Promise<AAP[]> {
     const q = query(
       collection(db, 'aap'),
       where('status', '==', 'published'),
+      where('validation.statut', '==', 'validee'),
       orderBy('publishedAt', 'desc'),
       limit(limitCount),
     );
@@ -185,7 +187,13 @@ export const aapService = {
     budgetMin?: number;
     budgetMax?: number;
   }): Promise<AAP[]> {
-    const q = query(collection(db, 'aap'), where('status', '==', 'published'), orderBy('publishedAt', 'desc'));
+    // Contrainte de validation exigée par la règle de lecture des listes (question 49, 2026-11-26)
+    const q = query(
+      collection(db, 'aap'),
+      where('status', '==', 'published'),
+      where('validation.statut', '==', 'validee'),
+      orderBy('publishedAt', 'desc'),
+    );
 
     // Note: Firestore a des limitations sur les requêtes complexes
     // Pour une recherche plus avancée, il faudrait utiliser Algolia ou Elasticsearch

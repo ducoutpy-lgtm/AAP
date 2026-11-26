@@ -42,7 +42,15 @@ export default function PorteurDashboard() {
     getDoc(doc(db, 'porteurProfiles', uid))
       .then((s) => setProfil(s.exists() ? (s.data() as PorteurProfile) : null))
       .catch(() => undefined);
-    getDocs(query(collection(db, 'aap'), where('status', '==', 'published'), orderBy('publishedAt', 'desc')))
+    // Contrainte de validation exigée par la règle de lecture des listes (question 49, 2026-11-26)
+    getDocs(
+      query(
+        collection(db, 'aap'),
+        where('status', '==', 'published'),
+        where('validation.statut', '==', 'validee'),
+        orderBy('publishedAt', 'desc'),
+      ),
+    )
       .then((s) => setAaps((s.docs.map((d) => ({ id: d.id, ...d.data() })) as AapAvecId[]).filter(visiblePubliquement)))
       .catch((err) => {
         console.error('Appels non chargés :', err);

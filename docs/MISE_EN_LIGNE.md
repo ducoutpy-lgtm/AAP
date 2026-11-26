@@ -42,6 +42,7 @@ perd son délai à l'essayer (constaté le 2026-11-20 sur le Wi-Fi ; `git` et `c
 PowerShell en obligeant Node.js à passer par l'IPv4 :
 
 ```powershell
+$env:NODE_OPTIONS='--no-network-family-autoselection --dns-result-order=ipv4first'; firebase deploy --only firestore:indexes --project aapi-11bc3
 $env:NODE_OPTIONS='--no-network-family-autoselection --dns-result-order=ipv4first'; firebase deploy --only hosting,firestore:rules --project aapi-11bc3
 ```
 
@@ -79,3 +80,11 @@ Pierre-Yves DUCOUT, ARCADIA SASU, [adresse e-mail de contact à compléter]
 `/admin/testeurs` : section « Retours des testeurs » en tête (date, compte, rôle, type, page, message), puis l'usage
 compte par compte. Un retour ne se modifie ni ne se supprime depuis l'application (règle Firestore) ; la réponse se
 fait par courriel au testeur.
+
+## Index avant règles (2026-11-26, changement `securite-vues-messagerie`, question 49)
+
+Les requêtes de liste filtrent sur `validation.statut` : leurs index composites (`app/firestore.indexes.json`) doivent
+exister en ligne avant les nouvelles règles et la nouvelle application, sinon la recherche, le tableau de bord et le
+calendrier échouent. Mettre en ligne les index d'abord, attendre que la console Firebase (Firestore, onglet Index) les
+montre « Activé », puis les règles et l'hébergement.
+

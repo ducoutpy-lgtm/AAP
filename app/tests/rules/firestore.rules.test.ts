@@ -4,7 +4,7 @@
 // Chaque test porte le nom de la règle qu'il protège. Le jeu de données est écrit sans règles avant chaque test.
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import {
   assertFails,
   assertSucceeds,
@@ -18,6 +18,8 @@ import {
   getDoc,
   getDocs,
   increment,
+  limit,
+  orderBy,
   query,
   setDoc,
   updateDoc,
@@ -79,9 +81,19 @@ const expire = () => env.authenticatedContext('expire').firestore();
 const financeur = () => env.authenticatedContext('f1').firestore();
 
 describe('aap : consultation publique et actions de l’administrateur', () => {
-  it('un visiteur lit un AAP publié et liste les AAP publiés', async () => {
+  // Changement securite-vues-messagerie (question 49, 2026-11-26) : la liste des appels publiés porte aussi la contrainte
+  // de validation ; « status == 'published' » seule ouvrirait les appels « Proposée » et la règle la refuse
+  it('un visiteur lit un AAP publié et liste les AAP publiés et validés', async () => {
     await assertSucceeds(getDoc(doc(visiteur(), 'aap/publie')));
-    await assertSucceeds(getDocs(query(collection(visiteur(), 'aap'), where('status', '==', 'published'))));
+    await assertSucceeds(
+      getDocs(
+        query(
+          collection(visiteur(), 'aap'),
+          where('status', '==', 'published'),
+          where('validation.statut', '==', 'validee'),
+        ),
+      ),
+    );
   });
 
   it('un visiteur ne lit pas un brouillon', async () => {
@@ -185,9 +197,10 @@ describe('aap : création et modification par un financeur (dégel du 2026-10-19
     await assertSucceeds(deleteDoc(doc(financeur(), 'aap/du-financeur')));
   });
 
-  it('le financeur lit son brouillon ; un porteur en essai aussi (abonnement), un compte expiré non', async () => {
+  // Question 49 (2026-11-26) : le porteur en essai lisait ce brouillon par son abonnement ; il ne le lit plus
+  it('le financeur lit son brouillon ; ni un porteur en essai ni un compte expiré', async () => {
     await assertSucceeds(getDoc(doc(financeur(), 'aap/du-financeur')));
-    await assertSucceeds(getDoc(doc(porteur(), 'aap/du-financeur')));
+    await assertFails(getDoc(doc(porteur(), 'aap/du-financeur')));
     await assertFails(getDoc(doc(expire(), 'aap/brouillon')));
   });
 });
@@ -769,5 +782,181 @@ describe('aap : compteur de vues', () => {
     await assertFails(updateDoc(doc(porteur(), 'aap/propose'), { views: increment(1) }));
     await assertFails(updateDoc(doc(porteur(), 'aap/a-corriger'), { views: increment(1) }));
     await assertSucceeds(updateDoc(doc(porteur(), 'aap/ouvert-f1'), { views: increment(1) }));
+  });
+});
+
+// Changement securite-vues-messagerie, question 49 (décision « maintenant » de Monsieur DUCOUT, 2026-11-26) : un compte
+// en période d'essai lisait par le kit Firebase les brouillons et les appels rejetés, un visiteur un appel publié encore
+// « Proposée » ; l'écran ne les montrait pas, mais les données sortaient. Seuls l'administrateur et le financeur auteur
+// lisent un appel qui n'est pas publié (ou clôturé) et visible. Firestore ne filtre pas : une requête de liste que la
+// règle ne peut pas prouver est refusée en entier, d'où une requête par forme écrite par les pages.
+describe('aap : lecture réservée aux appels publiés et visibles (question 49)', () => {
+  const debut = new Date(Date.UTC(2026, 11, 1));
+  const fin = new Date(Date.UTC(2026, 11, 31, 23, 59, 59));
+  beforeEach(async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'aap/propose-f1'), {
+        status: 'published',
+        financeurId: 'f1',
+        title: 'Proposé',
+        validation: { statut: 'proposee', par: '' },
+      });
+      await setDoc(doc(db, 'aap/a-corriger'), {
+        status: 'published',
+        financeurId: 'scraped',
+        title: 'À corriger',
+        validation: { statut: 'a_corriger', par: 'claude-haiku-5-5' },
+      });
+      await setDoc(doc(db, 'aap/rejete'), {
+        status: 'archived',
+        financeurId: 'scraped',
+        title: 'Rejeté',
+        validation: { statut: 'rejetee', par: 'Monsieur DUCOUT' },
+      });
+      await setDoc(doc(db, 'aap/valide'), {
+        status: 'published',
+        financeurId: 'scraped',
+        title: 'Validé',
+        validation: { statut: 'validee', par: 'claude-haiku-5-5' },
+        publishedAt: new Date(Date.UTC(2026, 10, 20)),
+        createdAt: new Date(Date.UTC(2026, 10, 20)),
+        deadline: new Date(Date.UTC(2026, 11, 15)),
+      });
+      await setDoc(doc(db, 'aap/close-valide'), {
+        status: 'closed',
+        financeurId: 'scraped',
+        title: 'Clôturé, validé',
+        validation: { statut: 'validee', par: 'claude-haiku-5-5' },
+      });
+      // Contre-vérification : un appel clôturé mais non validé reste fermé
+      await setDoc(doc(db, 'aap/close-propose'), {
+        status: 'closed',
+        financeurId: 'scraped',
+        title: 'Clôturé, non validé',
+        validation: { statut: 'proposee', par: '' },
+      });
+    });
+  });
+
+  const NON_VISIBLES = [
+    'brouillon',
+    'du-financeur',
+    'rejete',
+    'archive-f1',
+    'propose-f1',
+    'a-corriger',
+    'close-propose',
+  ];
+
+  it('un candidat en essai et un visiteur ne lisent ni brouillon, ni appel rejeté, ni appel publié « Proposée » ou « à corriger »', async () => {
+    for (const lecteur of [porteur(), visiteur()]) {
+      for (const id of NON_VISIBLES) await assertFails(getDoc(doc(lecteur, `aap/${id}`)));
+    }
+  });
+
+  it('ni en requête de liste : brouillons, archivés, publiés sans contrainte de validation, « Proposée », collection entière', async () => {
+    for (const lecteur of [porteur(), visiteur()]) {
+      const aap = collection(lecteur, 'aap');
+      await assertFails(getDocs(query(aap, where('status', '==', 'draft'))));
+      await assertFails(getDocs(query(aap, where('status', '==', 'archived'))));
+      await assertFails(getDocs(query(aap, where('status', '==', 'published'))));
+      await assertFails(
+        getDocs(query(aap, where('status', '==', 'published'), where('validation.statut', '==', 'proposee'))),
+      );
+      await assertFails(getDocs(query(aap, where('validation.statut', '==', 'validee'))));
+      await assertFails(getDocs(aap));
+    }
+  });
+
+  it('un appel publié ou clôturé et validé se lit sans compte ; un appel publié sans bloc de validation aussi', async () => {
+    for (const lecteur of [visiteur(), porteur(), expire()]) {
+      await assertSucceeds(getDoc(doc(lecteur, 'aap/valide')));
+      await assertSucceeds(getDoc(doc(lecteur, 'aap/ouvert-f1')));
+      await assertSucceeds(getDoc(doc(lecteur, 'aap/close-valide')));
+      // Appel saisi à la main avant la validation obligatoire du 2026-11-24 (scripts/valider_publiees_sans_bloc.py)
+      await assertSucceeds(getDoc(doc(lecteur, 'aap/publie')));
+    }
+  });
+
+  it('le financeur auteur et l’administrateur lisent tous les appels qui leur reviennent', async () => {
+    for (const id of ['du-financeur', 'archive-f1', 'propose-f1', 'ouvert-f1']) {
+      await assertSucceeds(getDoc(doc(financeur(), `aap/${id}`)));
+    }
+    await assertFails(getDoc(doc(financeur(), 'aap/brouillon')));
+    for (const id of [...NON_VISIBLES, 'valide', 'publie']) await assertSucceeds(getDoc(doc(admin(), `aap/${id}`)));
+  });
+
+  // Une requête par forme écrite par les pages après la correction (les mêmes filtres et le même tri)
+  it('recherche, tableau de bord du candidat et service des appels : publiés et validés, triés par publication', async () => {
+    for (const lecteur of [visiteur(), porteur(), financeur(), admin()]) {
+      const aap = collection(lecteur, 'aap');
+      const publiesValides = [where('status', '==', 'published'), where('validation.statut', '==', 'validee')];
+      // SearchAapPage, PorteurDashboard, aapService.searchAaps
+      await assertSucceeds(getDocs(query(aap, ...publiesValides, orderBy('publishedAt', 'desc'))));
+      // aapService.getPublishedAaps
+      await assertSucceeds(getDocs(query(aap, ...publiesValides, orderBy('publishedAt', 'desc'), limit(20))));
+    }
+  });
+
+  it('recommandations : publiés et validés, sans tri ; le résultat ne contient que les appels visibles', async () => {
+    for (const lecteur of [visiteur(), porteur()]) {
+      const lus = await assertSucceeds(
+        getDocs(
+          query(
+            collection(lecteur, 'aap'),
+            where('status', '==', 'published'),
+            where('validation.statut', '==', 'validee'),
+          ),
+        ),
+      );
+      // « publie » (sans bloc de validation) ne sort pas de cette requête : il attend la migration
+      expect(lus.docs.map((d) => d.id).sort()).toEqual(['ouvert-f1', 'valide']);
+    }
+  });
+
+  it('calendrier du candidat : publiés, validés, clôture dans le mois', async () => {
+    const lus = await assertSucceeds(
+      getDocs(
+        query(
+          collection(porteur(), 'aap'),
+          where('status', '==', 'published'),
+          where('validation.statut', '==', 'validee'),
+          where('deadline', '>=', debut),
+          where('deadline', '<=', fin),
+        ),
+      ),
+    );
+    expect(lus.docs.map((d) => d.id)).toEqual(['valide']);
+  });
+
+  it('pages du financeur : ses appels, avec ou sans statut, tri et bornes du calendrier', async () => {
+    const aap = collection(financeur(), 'aap');
+    // FinanceurDashboard, StatisticsPage, export des données
+    const siens = await assertSucceeds(getDocs(query(aap, where('financeurId', '==', 'f1'))));
+    expect(siens.docs.map((d) => d.id).sort()).toEqual(['archive-f1', 'du-financeur', 'ouvert-f1', 'propose-f1']);
+    // Mes appels (aapService.getFinanceurAaps)
+    await assertSucceeds(getDocs(query(aap, where('financeurId', '==', 'f1'), orderBy('createdAt', 'desc'))));
+    // Calendrier du financeur
+    await assertSucceeds(
+      getDocs(
+        query(
+          aap,
+          where('financeurId', '==', 'f1'),
+          where('status', '==', 'published'),
+          where('deadline', '>=', debut),
+          where('deadline', '<=', fin),
+        ),
+      ),
+    );
+    // Les appels d'un autre compte ne se listent pas par ce chemin
+    await assertFails(getDocs(query(aap, where('financeurId', '==', 'scraped'))));
+  });
+
+  it('administration : collection entière, derniers appels créés, appels publiés', async () => {
+    const aap = collection(admin(), 'aap');
+    await assertSucceeds(getDocs(aap));
+    await assertSucceeds(getDocs(query(aap, orderBy('createdAt', 'desc'), limit(3))));
+    await assertSucceeds(getDocs(query(aap, where('status', '==', 'published'))));
   });
 });

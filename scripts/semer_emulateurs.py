@@ -74,6 +74,10 @@ def semer_financeur(db, financeur_uid: str, porteur_uid: str, maintenant: dateti
             "eligibilityCriteria": "- Établissement ou association du secteur sanitaire ou médico-social", "source": "manual",
             "createdAt": maintenant - timedelta(days=30), "updatedAt": maintenant,
             **({"publishedAt": maintenant - timedelta(days=30)} if a["status"] == "published" else {}),
+            # Bloc validé pour un appel publié : depuis la question 49, les listes du candidat ne lisent que les appels
+            # validés (sur le vrai projet, 0 appel publié sans bloc au 2026-11-26)
+            **({"validation": {"statut": "validee", "commentaire": "", "date": maintenant.date().isoformat(),
+                               "par": "Monsieur DUCOUT"}} if a["status"] == "published" else {}),
         })
     titres = {a["id"]: a["title"] for a in APPELS_TEST}
     for c in CANDIDATURES_TEST:

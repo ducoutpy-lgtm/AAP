@@ -62,9 +62,11 @@ export default function CalendarPage() {
         // les bornes locales écartaient les appels qui clôturent le 1er du mois
         const { debut: start, fin: end } = bornesMoisCloture(currentMonth);
 
+        // Contrainte de validation exigée par la règle de lecture des listes (question 49, 2026-11-26)
         const aapsQuery = query(
           collection(db, 'aap'),
           where('status', '==', 'published'),
+          where('validation.statut', '==', 'validee'),
           where('deadline', '>=', Timestamp.fromDate(start)),
           where('deadline', '<=', Timestamp.fromDate(end)),
         );

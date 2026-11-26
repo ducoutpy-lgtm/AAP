@@ -6,12 +6,16 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 
 ## 1. Lecture des appels (question 49)
 
-- [ ] 1.1 Tests de règles : brouillon, rejeté et publié « Proposée » refusés au candidat en essai et au visiteur ;
+- [x] 1.1 Tests de règles : brouillon, rejeté et publié « Proposée » refusés au candidat en essai et au visiteur ;
   publié validé accepté ; auteur et administrateur acceptés (échec avant).
-- [ ] 1.2 Règle de lecture resserrée ; requêtes de liste revues (recherche, calendrier, tableaux de bord,
+- [x] 1.2 Règle de lecture resserrée ; requêtes de liste revues (recherche, calendrier, tableaux de bord,
   recommandations, administration, Mes appels).
-- [ ] 1.3 Fiches publiées sans bloc de validation : décompte et migration à blanc ; écriture réelle sur son accord.
-- [ ] 1.4 Parcours des listes sur les émulateurs (candidat, financeur, administrateur).
+- [x] 1.3 Fiches publiées sans bloc de validation : décompte et migration à blanc ; écriture réelle sur son accord.
+- [x] 1.4 Parcours des listes sur les émulateurs (candidat, financeur, administrateur). (2026-11-26 : règle `get` et `list`
+  séparées, `validation.statut == 'validee'` dans les requêtes du candidat, index ajoutés ; 70 tests de règles (dont 9
+  nouveaux, 6 en échec avant), 258 de l'application, 302 Python ; essai à blanc sur le vrai projet : 0 appel publié sans
+  bloc, aucune migration utile ; émulateurs : recherche, tableau de bord, recommandations, calendrier du candidat, Mes
+  appels et calendrier du financeur, administration sans erreur. Index à mettre en ligne AVANT les règles.)
 
 ## 2. Registre des suspensions (question 51)
 

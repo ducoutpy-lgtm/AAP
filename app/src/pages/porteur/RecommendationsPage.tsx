@@ -32,7 +32,10 @@ export default function RecommendationsPage() {
       try {
         const profilDoc = await getDoc(doc(db, 'porteurProfiles', currentUser.uid));
         const profil = (profilDoc.exists() ? profilDoc.data() : {}) as PorteurProfile;
-        const snapshot = await getDocs(query(collection(db, 'aap'), where('status', '==', 'published')));
+        // Contrainte de validation exigée par la règle de lecture des listes (question 49, 2026-11-26)
+        const snapshot = await getDocs(
+          query(collection(db, 'aap'), where('status', '==', 'published'), where('validation.statut', '==', 'validee')),
+        );
         const aaps = snapshot.docs.map((d) => ({ id: d.id, ...d.data() })) as Appel[];
         setManques(manquesDuProfil(profil));
         setRecommandations(recommander(aaps, profil));

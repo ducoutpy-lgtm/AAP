@@ -39,6 +39,12 @@ service cloud.firestore {
       return appel.get('status', '') == 'published' && relectureVisible(appel);
     }
 
+    // Appel lisible de tous (question 49, 2026-11-26) : publié ou clôturé, et visible, comme ficheConsultable
+    // (src/utils/candidat.ts) à l'écran
+    function lisibleDeTous(appel) {
+      return appel.get('status', '') in ['published', 'closed'] && relectureVisible(appel);
+    }
+
     // Appel auquel un candidat écrit une candidature : publié et visible, ou fiche importée clôturée mais visible pour le
     // seul suivi externe (relecture du 2026-11-25, remarque sur le constat 14 : ficheConsultable ouvre cette fiche et
     // le bouton « J'ai déposé ma candidature : la suivre ici » y reste affiché)
@@ -172,11 +178,21 @@ service cloud.firestore {
 
     // AAP (appels à projets)
     match /aap/{aapId} {
-      // Lecture : un AAP publié est public (lisible sans compte) ; les autres statuts sont lisibles par
-      // l'administrateur, par les comptes avec abonnement et par le financeur auteur. Les requêtes de liste sans
-      // compte doivent filtrer sur status == 'published'.
-      allow read: if resource.data.status == 'published' || isAdmin() || hasActiveSubscription()
+      // Lecture : un AAP publié ou clôturé et visible est public (lisible sans compte) ; tout autre appel (brouillon,
+      // archivé ou rejeté, publié encore « Proposée » ou « à corriger ») n'est lisible que par l'administrateur et le
+      // financeur auteur. Question 49 (décision « maintenant » de Monsieur DUCOUT, 2026-11-26) : tout compte en essai
+      // lisait par le kit Firebase les appels non publiés, un visiteur un appel publié encore « Proposée ».
+      allow get: if lisibleDeTous(resource.data) || isAdmin()
         || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
+      // Requêtes de liste : Firestore ne filtre pas, il prouve la règle par les contraintes de la requête. Un get() avec
+      // valeur par défaut sur un champ que la requête ne contraint pas rend cette valeur (constaté sur l'émulateur le
+      // 2026-11-26 : avec relectureVisible, « status == 'published' » seule renvoyait à un visiteur un appel « Proposée »).
+      // La liste lit donc le bloc de validation sans valeur par défaut : les pages d'un candidat, d'un visiteur ou d'un
+      // financeur hors ses appels filtrent sur status == 'published' ET validation.statut == 'validee'. Un appel publié
+      // sans bloc de validation reste lisible par son adresse mais ne sort pas de ces listes
+      // (scripts/valider_publiees_sans_bloc.py lui ajoute le bloc).
+      allow list: if (resource.data.status in ['published', 'closed'] && resource.data.validation.statut == 'validee')
+        || isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
 
       // Création : un financeur abonné, pour son propre compte (financeurId = son identifiant). Les fiches
       // importées (financeurId 'scraped') passent par le SDK admin, hors de ces règles.

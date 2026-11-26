@@ -186,9 +186,11 @@ export default function SearchAapPage() {
   const loadAaps = async () => {
     setErreurChargement(false);
     try {
+      // Contrainte de validation exigée par la règle de lecture des listes (question 49, 2026-11-26)
       const aapsQuery = query(
         collection(db, 'aap'),
         where('status', '==', 'published'),
+        where('validation.statut', '==', 'validee'),
         orderBy('publishedAt', 'desc'),
       );
 

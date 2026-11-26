@@ -2,10 +2,10 @@
 
 ### Requirement: Un appel non visible n'est lisible que par l'administrateur et son auteur
 
-Les règles Firestore SHALL n'autoriser la lecture d'un document de `aap` que si l'appel est publié et visible du public
-(bloc de validation au statut « validee »), ou si le lecteur est l'administrateur, ou s'il est le financeur auteur de
-l'appel. Un compte en période d'essai et un visiteur SHALL se voir refuser tout autre appel, en lecture d'un document
-comme en requête de liste.
+Les règles Firestore SHALL n'autoriser la lecture d'un document de `aap` que si l'appel est publié ou clôturé et visible
+du public (bloc de validation au statut « validee », ou absent pour un ancien appel saisi à la main), ou si le lecteur
+est l'administrateur, ou s'il est le financeur auteur. Une requête de liste SHALL exiger le bloc au statut « validee ».
+Un compte en période d'essai et un visiteur SHALL se voir refuser tout autre appel.
 
 #### Scenario: Brouillon lu par un candidat en essai
 
