@@ -254,6 +254,15 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   mêmes fichiers) ; essai à blanc puis écriture sur la base après 9 h le 27/11, sur son accord (fiche Urbanisme en ligne
   sans description, 7 fiches de marchés publics, financeur des relais) ; parcours 2.3 du chantier 51 ; chantiers 53, 52,
   50.
+- 2026-11-26, 17 h : veille relancée à 12 h 02, toujours en cours après la limite de 4 heures (la tâche Windows se dit
+  arrêtée, code 0x41306, mais `veille.cmd` et ses étapes continuent) : courriels partis (candidat de test, 39 appels ;
+  bilan de l'administrateur) ; 31 fiches extraites sur 40 textes, 153 textes en attente ; import et tri attendus en échec
+  (quota Firestore). Monsieur DUCOUT, via la séance de pilotage : pas de rattrapage local cette nuit (PC débranché).
+  Chantier 52 fait (une vue par compte et par appel, `securite-vues-messagerie` 4.1 et 4.2, 80 tests de règles, 268 de
+  l'application, parcours joué, relecture adverse) ; règles à mettre en ligne sur son accord. Questions ouvertes :
+  limite de 4 heures (5a), lectures de `publier_couts.py` (5b, relit 8 512 documents à chaque veille), import et tri des
+  31 fiches puis nettoyage de la base le 27/11 après 9 h (5c), marques de vue gardées après la suppression d'un compte
+  (RGPD). Restent : nettoyage local à la fin réelle de la veille ; chantiers 53 (vendredi) et 50 (samedi) ; clôture.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

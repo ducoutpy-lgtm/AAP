@@ -42,8 +42,25 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 
 ## 4. Vues (question 52)
 
-- [ ] 4.1 Tests de règles : vue acceptée avec sa marque, refusée sans marque ou en double (échec avant).
-- [ ] 4.2 Marque de vue écrite avec l'ajout dans une même écriture ; test de page ; parcours sur les émulateurs.
+- [x] 4.1 Tests de règles : vue acceptée avec sa marque, refusée sans marque ou en double (échec avant).
+- [x] 4.2 Marque de vue écrite avec l'ajout dans une même écriture ; test de page ; parcours sur les émulateurs.
+  (2026-11-26, fait le jour même faute de quota pour 53, ordre changé et dit à la séance de pilotage : marque
+  `aap/{id}/vues/{uid}` avec la seule date du serveur, créée par le compte lui-même dans le lot qui ajoute la vue ;
+  `ajouteUneVue(aapId)` exige la marque absente avant et présente après ; jamais lue, réécrite ni effacée depuis
+  l'application. Échec avant : 3 tests de règles sur 4 (le quatrième, refus seulement, passait déjà) et 2 de page.
+  Après : 80 tests de règles (76 Firestore, 4 Storage), 268 de l'application, lint et compilation verts. Parcours sur les
+  émulateurs : candidat@test.local ouvre « Aide aux soignants et aux aidants » : `views` 0 -> 1, marque écrite ; deux
+  rechargements : 1, console sans message ; financeur@test.local ouvre la même fiche : 2, deux marques.
+  Relecture adverse (workflow `revue-vue-unique`, 2 relecteurs puis un sceptique par constat, 11 agents) : 6 confirmés,
+  3 réfutés. Corrigés avec un test en échec avant : garde-fou « marque absente avant » non couvert (prouvé en le
+  retirant : 1 échec) ; financeur auteur qui fixait lui-même `views` à la création ou à la modification (défaut antérieur,
+  contraire à la spec). Corrigé aussi : test de page qui échouait lancé seul (avertissements de React Router).
+  Limites laissées, à décider par Monsieur DUCOUT (`REPRISE.md`) : les marques restent après la suppression d'un compte
+  ou d'un appel (RGPD : identifiant du compte, fiche, date ; aucun effacement depuis l'application) ; une fiche supprimée
+  puis recréée par l'import au même identifiant ne recompte pas ses anciens lecteurs ; les compteurs déjà en base
+  comptent chaque compte une fois de plus après la mise en ligne ; plusieurs comptes comptent chacun une vue (périmètre
+  choisi). Signalé sans correction, hors question 52 : l'auteur écrit aussi `applicationsCount`. Règles à mettre en
+  ligne après son accord.)
 
 ## 5. Messagerie (question 50)
 

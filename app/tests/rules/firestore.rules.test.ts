@@ -21,9 +21,11 @@ import {
   limit,
   orderBy,
   query,
+  serverTimestamp,
   setDoc,
   updateDoc,
   where,
+  writeBatch,
 } from 'firebase/firestore';
 
 const regles = readFileSync(fileURLToPath(new URL('../../firestore.rules', import.meta.url)), 'utf8');
@@ -748,18 +750,55 @@ describe('contact et messagerie : champs bornés', () => {
 });
 
 // Décision 35 du 2026-11-24 : l'ouverture d'une fiche par un compte connecté ajoute 1 à son compteur de vues ; cette
-// écriture ne permet rien d'autre.
+// écriture ne permet rien d'autre. Question 52 (« oui » du 2026-11-26) : une vue par compte et par appel ; l'ajout
+// s'accompagne, dans la même écriture, de la marque de vue du compte (`aap/{id}/vues/{uid}`), qui ne s'écrit qu'une fois.
+function ecrireUneVue(db: ReturnType<typeof porteur>, id: string, uid: string, donnees: object = { views: increment(1) }) {
+  const lot = writeBatch(db);
+  lot.set(doc(db, `aap/${id}/vues/${uid}`), { vueLe: serverTimestamp() });
+  lot.update(doc(db, `aap/${id}`), donnees);
+  return lot.commit();
+}
+
 describe('aap : compteur de vues', () => {
-  it('un compte connecté ajoute une vue à un appel publié, puis une autre', async () => {
-    await assertSucceeds(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1) }));
-    await assertSucceeds(updateDoc(doc(porteur2(), 'aap/publie'), { views: increment(1) }));
+  it('une vue par compte : la première ouverture compte, la seconde est refusée, un autre compte compte', async () => {
+    await assertSucceeds(ecrireUneVue(porteur(), 'publie', 'porteur1'));
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur1'));
+    // Marque déjà écrite : un ajout seul la trouve « présente après » ; seule la condition « absente avant » le refuse
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1) }));
+    await assertSucceeds(ecrireUneVue(porteur2(), 'publie', 'porteur2'));
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      expect((await getDoc(doc(ctx.firestore(), 'aap/publie'))).data()?.views).toBe(2);
+    });
+  });
+  it('ni vue sans marque, ni marque sans vue, ni marque d’un autre compte ; marque ni lue, ni réécrite, ni effacée', async () => {
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1) }));
+    await assertFails(setDoc(doc(porteur(), 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp() }));
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur2'));
+    const db = porteur();
+    const lot = writeBatch(db);
+    lot.set(doc(db, 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp(), autre: 1 });
+    lot.update(doc(db, 'aap/publie'), { views: increment(1) });
+    await assertFails(lot.commit());
+    await assertSucceeds(ecrireUneVue(porteur(), 'publie', 'porteur1'));
+    await assertFails(getDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
+    await assertFails(updateDoc(doc(porteur(), 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp() }));
+    await assertFails(deleteDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
+  });
+  // Relecture du chantier 52 (2026-11-26, constat confirmé) : le financeur auteur écrivait lui-même `views`, sans
+  // marque, à la création comme à la modification de son appel ; la spec n'accepte une vue qu'avec sa marque
+  it('le financeur auteur ne fixe pas lui-même le compteur de vues', async () => {
+    await assertFails(updateDoc(doc(financeur(), 'aap/ouvert-f1'), { views: 5000, validation: A_VALIDER }));
+    const appel = { status: 'draft', financeurId: 'f1', title: 'x', source: 'manual', validation: A_VALIDER };
+    await assertFails(setDoc(doc(financeur(), 'aap/gonfle'), { ...appel, views: 5000 }));
+    await assertSucceeds(setDoc(doc(financeur(), 'aap/neuf'), { ...appel, views: 0 }));
+    await assertSucceeds(updateDoc(doc(financeur(), 'aap/ouvert-f1'), { title: 'retouché', validation: A_VALIDER }));
   });
   it('ni deux vues d’un coup, ni un nombre choisi, ni un autre champ, ni un brouillon, ni sans compte', async () => {
-    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(2) }));
-    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: 1000 }));
-    await assertFails(updateDoc(doc(porteur(), 'aap/publie'), { views: increment(1), title: 'Réécrit' }));
-    await assertFails(updateDoc(doc(porteur(), 'aap/brouillon'), { views: increment(1) }));
-    await assertFails(updateDoc(doc(visiteur(), 'aap/publie'), { views: increment(1) }));
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur1', { views: increment(2) }));
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur1', { views: 1000 }));
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur1', { views: increment(1), title: 'Réécrit' }));
+    await assertFails(ecrireUneVue(porteur(), 'brouillon', 'porteur1'));
+    await assertFails(ecrireUneVue(visiteur(), 'publie', 'porteur1'));
   });
   // Relecture du 2026-11-25 (constats 2 et 43) : un appel publié encore « Proposée » ou « à corriger » est fermé au
   // candidat (« AAP non trouvé ») ; il ne compte pas de vue, comme visiblePubliquement à l'écran
@@ -779,9 +818,9 @@ describe('aap : compteur de vues', () => {
         validation: { statut: 'a_corriger', par: 'claude-haiku-5-5' },
       });
     });
-    await assertFails(updateDoc(doc(porteur(), 'aap/propose'), { views: increment(1) }));
-    await assertFails(updateDoc(doc(porteur(), 'aap/a-corriger'), { views: increment(1) }));
-    await assertSucceeds(updateDoc(doc(porteur(), 'aap/ouvert-f1'), { views: increment(1) }));
+    await assertFails(ecrireUneVue(porteur(), 'propose', 'porteur1'));
+    await assertFails(ecrireUneVue(porteur(), 'a-corriger', 'porteur1'));
+    await assertSucceeds(ecrireUneVue(porteur(), 'ouvert-f1', 'porteur1'));
   });
 });
 

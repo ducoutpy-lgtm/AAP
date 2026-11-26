@@ -124,7 +124,11 @@ export default function AapDetailPage() {
           vueComptee.current !== aapId
         ) {
           vueComptee.current = aapId;
-          aapService.incrementViews(aapId).catch((err) => console.warn('Vue non comptée :', err));
+          // Question 52 : une fiche déjà vue par ce compte est refusée par les règles (marque déjà écrite) ; ce refus
+          // attendu n'est pas une erreur, toute autre reste signalée
+          aapService
+            .incrementViews(aapId, currentUser.uid)
+            .catch((err) => err?.code !== 'permission-denied' && console.warn('Vue non comptée :', err));
         }
       }
     } catch (err) {

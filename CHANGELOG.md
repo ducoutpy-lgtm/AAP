@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-26, changement `securite-vues-messagerie`, question 52 « oui »)
+- Compteur de vues : une vue par compte et par appel. La première ouverture d'une fiche écrit, dans la même écriture,
+  la vue et une marque propre au compte (`aap/{id}/vues/{uid}`, date seule) ; les règles refusent une vue sans marque
+  ou en double, et le financeur auteur ne fixe plus lui-même son compteur. Le refus attendu d'une seconde ouverture
+  n'est plus signalé comme une erreur. Règles à mettre en ligne après accord ; marques gardées après la suppression d'un
+  compte (point RGPD à décider).
+
 ### Corrigé (2026-11-26, changement `selection-des-appels`, « Oui, corrige »)
 - Pages bloquées : la collecte relit un écran anti-robot après 8 secondes et n'enregistre plus une page qui reste
   bloquée ; l'extraction met de côté un texte bloqué déjà collecté (`_bloquees/`) sans appeler le modèle. 63 textes

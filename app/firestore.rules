@@ -59,11 +59,16 @@ service cloud.firestore {
     // Statut d'un appel modifié par son auteur : inchangé, ou brouillon -> publié, ou publié -> clôturé
     // Compteur de vues (décision 35 du 2026-11-24) : un compte connecté qui ouvre un appel publié ajoute exactement 1 à
     // `views`, sans toucher à aucun autre champ ; un appel publié encore « Proposée » ou « à corriger », fermé au
-    // candidat, ne compte pas de vue (relecture du 2026-11-25)
-    function ajouteUneVue() {
+    // candidat, ne compte pas de vue (relecture du 2026-11-25).
+    // Question 52 (« oui » de Monsieur DUCOUT, 2026-11-26) : une vue par compte et par appel. L'ajout n'est accepté
+    // qu'avec la création, dans la même écriture, de la marque de vue du compte (`aap/{id}/vues/{uid}`), absente avant ;
+    // une seconde ouverture trouve la marque et est refusée, le compteur ne change pas.
+    function ajouteUneVue(aapId) {
+      let marque = /databases/$(database)/documents/aap/$(aapId)/vues/$(request.auth.uid);
       return isAuthenticated() && publieEtVisible(resource.data)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
-        && request.resource.data.views == resource.data.get('views', 0) + 1;
+        && request.resource.data.views == resource.data.get('views', 0) + 1
+        && !exists(marque) && existsAfter(marque);
     }
 
     function statutAuteurPermis() {
@@ -224,9 +229,10 @@ service cloud.firestore {
       // et ne paraît qu'après validation par l'administrateur (visiblePubliquement)
       // Relecture du 2026-11-25 (constat 6) : source « manual » obligatoire, comme l'écrit aapService.createAap, et pas de
       // bloc scrapeMetadata, réservé à l'import (le tri y lit le contrôle du modèle, l'écran la thématique)
+      // Question 52, relecture du 2026-11-26 : l'appel naît sans vue (le financeur fixait lui-même son compteur)
       allow create: if isFinanceur() && hasActiveSubscription() && request.resource.data.financeurId == request.auth.uid
         && request.resource.data.get('source', '') == 'manual' && aValiderSansRelecteur()
-        && !request.resource.data.keys().hasAny(['scrapeMetadata']);
+        && !request.resource.data.keys().hasAny(['scrapeMetadata']) && request.resource.data.get('views', 0) == 0;
 
       // Mise à jour et suppression : l'administrateur (publier, clôturer, archiver, supprimer, y compris les fiches
       // importées), ou le financeur auteur de l'appel. L'auteur ne touche ni au verdict de relecture ni à la source, et
@@ -234,12 +240,24 @@ service cloud.firestore {
       // l'administrateur ne revient pas dans la recherche par lui (corrections-relecture 2.4, 2026-11-20).
       // Plan niveau A, lot 1.2 : toute modification par l'auteur repasse l'appel « Proposée » (une fois validé, il pouvait
       // le réécrire sans nouveau contrôle) ; seule la clôture d'un appel publié se fait telle quelle.
-      // L'auteur ne touche pas non plus au bloc scrapeMetadata, réservé à l'import (relecture du 2026-11-25, constat 6).
-      allow update: if isAdmin() || ajouteUneVue() || (isAuthenticated() && resource.data.financeurId == request.auth.uid
-        && figes(['financeurId', 'source', 'scrapeMetadata']) && statutAuteurPermis()
+      // L'auteur ne touche pas non plus au bloc scrapeMetadata, réservé à l'import (relecture du 2026-11-25, constat 6),
+      // ni au compteur de vues, qui ne monte qu'avec une marque de vue (question 52, relecture du 2026-11-26).
+      allow update: if isAdmin() || ajouteUneVue(aapId) || (isAuthenticated() && resource.data.financeurId == request.auth.uid
+        && figes(['financeurId', 'source', 'scrapeMetadata', 'views']) && statutAuteurPermis()
         && (aValiderSansRelecteur() || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
                                         && request.resource.data.status == 'closed')));
       allow delete: if isAdmin() || (isAuthenticated() && resource.data.financeurId == request.auth.uid);
+
+      // Marque de vue (question 52) : créée une seule fois par le compte lui-même, avec la date du serveur pour seul
+      // champ, et seulement si la même écriture ajoute une vue à l'appel (sinon une marque isolée, ou posée sur un
+      // appel inexistant ou fermé, serait acceptée). Jamais lue, réécrite ni effacée depuis l'application : elle ne
+      // sert qu'au contrôle de la règle ci-dessus (donnée minimale : identifiant du compte et date d'ouverture).
+      match /vues/{uid} {
+        allow create: if isOwner(uid) && request.resource.data.keys().hasOnly(['vueLe'])
+          && request.resource.data.vueLe == request.time
+          && getAfter(/databases/$(database)/documents/aap/$(aapId)).data.get('views', 0)
+             == get(/databases/$(database)/documents/aap/$(aapId)).data.get('views', 0) + 1;
+      }
     }
 
     // Candidatures

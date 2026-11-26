@@ -13,14 +13,14 @@ const etat = vi.hoisted(() => ({
     refreshUserProfile: () => Promise.resolve(),
   },
   fiche: {} as Record<string, unknown>,
-  incrementViews: (() => Promise.resolve()) as (id: string) => Promise<void>,
+  incrementViews: (() => Promise.resolve()) as (id: string, uid: string) => Promise<void>,
 }));
 vi.mock('../../config/firebase', () => ({ db: {}, storage: {} }));
 vi.mock('../../contexts/AuthContext', () => ({ useAuth: () => etat.compte }));
 vi.mock('../../services/journalService', () => ({ journaliser: vi.fn() }));
 vi.mock('../../hooks/useMarquerDemarrage', () => ({ useMarquerDemarrage: vi.fn() }));
 vi.mock('../../services/aapService', () => ({
-  aapService: { incrementViews: (id: string) => etat.incrementViews(id) },
+  aapService: { incrementViews: (id: string, uid: string) => etat.incrementViews(id, uid) },
 }));
 const favoris = vi.hoisted(() => ({
   basculer: vi.fn<(uid: string, id: string, actif: boolean) => Promise<void>>(() => Promise.resolve()),
@@ -56,8 +56,9 @@ describe('compteur de vues de la fiche', () => {
   const appels: string[] = [];
   beforeEach(() => {
     appels.length = 0;
-    etat.incrementViews = (id: string) => {
-      appels.push(id);
+    // Question 52 (2026-11-26) : la vue part avec la marque du compte qui ouvre la fiche, d'où son identifiant
+    etat.incrementViews = (id: string, uid: string) => {
+      appels.push(`${id}:${uid}`);
       return Promise.resolve();
     };
     etat.fiche = {
@@ -76,9 +77,28 @@ describe('compteur de vues de la fiche', () => {
   it('un candidat ouvre la fiche : une vue, une seule', async () => {
     ouvrir();
     expect(await screen.findByRole('heading', { name: 'Appel test' })).toBeInTheDocument();
-    await vi.waitFor(() => expect(appels).toEqual(['a1']));
+    await vi.waitFor(() => expect(appels).toEqual(['a1:p1']));
     await new Promise((r) => setTimeout(r, 20));
-    expect(appels).toEqual(['a1']);
+    expect(appels).toEqual(['a1:p1']);
+  });
+
+  // Question 52 : une fiche déjà vue par ce compte est refusée par les règles (marque déjà écrite) ; ce refus attendu
+  // ne s'affiche pas comme une erreur, une autre erreur reste signalée
+  it('vue déjà comptée : le refus des règles reste silencieux, une autre erreur est signalée', async () => {
+    // Seul l'avertissement du compteur compte : React Router émet les siens au premier rendu (test lancé seul)
+    const avertir = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const duCompteur = () => avertir.mock.calls.filter((c) => c[0] === 'Vue non comptée :');
+    etat.incrementViews = () => Promise.reject(Object.assign(new Error('refus'), { code: 'permission-denied' }));
+    ouvrir();
+    expect(await screen.findByRole('heading', { name: 'Appel test' })).toBeInTheDocument();
+    await new Promise((r) => setTimeout(r, 20));
+    expect(duCompteur()).toHaveLength(0);
+    cleanup();
+    etat.incrementViews = () => Promise.reject(Object.assign(new Error('réseau'), { code: 'unavailable' }));
+    ouvrir();
+    expect(await screen.findByRole('heading', { name: 'Appel test' })).toBeInTheDocument();
+    await vi.waitFor(() => expect(duCompteur()).toHaveLength(1));
+    avertir.mockRestore();
   });
 
   it('l’auteur de l’appel et l’administrateur ne comptent pas', async () => {

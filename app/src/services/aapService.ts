@@ -13,6 +13,8 @@ import {
   limit,
   Timestamp,
   increment,
+  serverTimestamp,
+  writeBatch,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { db, storage } from '../config/firebase';
@@ -159,11 +161,13 @@ export const aapService = {
     await deleteDoc(doc(db, 'aap', aapId));
   },
 
-  // Incrémenter le nombre de vues
-  async incrementViews(aapId: string): Promise<void> {
-    await updateDoc(doc(db, 'aap', aapId), {
-      views: increment(1),
-    });
+  // Incrémenter le nombre de vues. Question 52 (2026-11-26) : une vue par compte et par appel ; la marque de vue du
+  // compte et l'ajout partent dans la même écriture, que les règles refusent en entier si la marque existe déjà
+  async incrementViews(aapId: string, userId: string): Promise<void> {
+    const lot = writeBatch(db);
+    lot.set(doc(db, 'aap', aapId, 'vues', userId), { vueLe: serverTimestamp() });
+    lot.update(doc(db, 'aap', aapId), { views: increment(1) });
+    await lot.commit();
   },
 
   // Upload d'un document pour un AAP
