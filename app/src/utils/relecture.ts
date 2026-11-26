@@ -68,3 +68,18 @@ export function selectionATraiter(
   const aTraiter = fiches.filter(garder).map((a) => a.id);
   return { aTraiter, ignorees: fiches.length - aTraiter.length };
 }
+
+// Fiche classée hors champ par le modèle (étiquette posée par l'import ou champ de scrapeMetadata) : la valider demande
+// une confirmation qui le dit (selection-des-appels, 2026-11-26).
+export function horsChamp(fiche: Pick<AAP, 'tags' | 'scrapeMetadata'>): boolean {
+  return (fiche.tags ?? []).includes('hors-champ') || fiche.scrapeMetadata?.champ === 'hors-champ';
+}
+
+// Phrase ajoutée à la confirmation de validation (vide quand aucune fiche n'est hors champ)
+export function messageHorsChamp(fiches: Pick<AAP, 'tags' | 'scrapeMetadata'>[]): string {
+  const n = fiches.filter(horsChamp).length;
+  if (n === 0) return '';
+  return n === 1
+    ? ' Attention : 1 fiche est classée hors champ par le modèle.'
+    : ` Attention : ${n} fiches sont classées hors champ par le modèle.`;
+}

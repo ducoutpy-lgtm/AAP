@@ -188,4 +188,5 @@ def test_nom_de_lieu_d_un_seul_mot_ecarte():
     table = dict(TABLE_RELAIS, **{"conseil-departemental-rhone": {"nom": "Conseil départemental Rhône", "categorie": "collectivite",
                                                                    "alias": ["Conseil départemental Rhône", "Rhône"]}})
     nom = "Lyonbiopôle Auvergne-Rhône-Alpes (appel à projets du Plan AURA 2022-2028, financé par la Région Auvergne-Rhône-Alpes)"
-    assert f.financeur_reel_du_relais(nom, "lyonbiopole", table) is None
+    # Depuis selection-des-appels (2026-11-26), le nom qui suit « financé par » est rattaché : la Région, jamais le Rhône
+    assert f.financeur_reel_du_relais(nom, "lyonbiopole", table) == "Conseil régional Auvergne-Rhône-Alpes"

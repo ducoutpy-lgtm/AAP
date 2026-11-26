@@ -175,7 +175,60 @@ MOTS_IGNORES_RELAIS = frozenset("de la le les du des l d et en pour par a au aux
                                 "programme emis relaye relayee".split())
 
 
-def financeur_reel_du_relais(nom_extrait: str | None, relais_id: str, table: dict | None = None) -> str | None:
+def est_le_relais(nom_extrait: str | None, relais_id: str, nom_relais: str = "") -> bool:
+    """Vrai si le nom lu est celui du relais : tous les mots de sa tête (avant le tiret et hors parenthèses) figurent dans
+    le nom du relais au registre ou dans son identifiant (« Medicen Paris Region – appels à projets (...) »).
+
+    Contre-vérifications du 2026-11-26 : la sous-chaîne prenait « Région Bretagne » pour le relais
+    atlanpole-biotherapies-regionaux ; le seul premier mot prenait « Gérontopôle Sud » pour le gérontopôle
+    Auvergne-Rhône-Alpes et « Pôle emploi » pour le pôle de gérontologie de Bourgogne-Franche-Comté."""
+    tete_brute = re.split(r"\s+[–-]\s+|,", PARENTHESE.sub(" ", nom_extrait or ""), maxsplit=1)[0]
+    mots = [m for m in normaliser(tete_brute).split() if len(m) >= 3 and m not in MOTS_IGNORES_RELAIS]
+    if not nom_relais:  # nom du relais inconnu (table sans le relais) : premier mot entier contre celui de l'identifiant
+        ident = [m for m in normaliser(relais_id.replace("-", " ")).split() if len(m) > 3]
+        return bool(mots) and bool(ident) and mots[0] == ident[0]
+    connus = set(normaliser(f"{nom_relais} {PARENTHESE.sub(' ', nom_relais)} {relais_id.replace('-', ' ')}").split())
+    return bool(mots) and set(mots) <= connus
+
+
+# Programmes cités par un relais sans nommer d'opérateur connu du référentiel (selection-des-appels, 2026-11-26 :
+# « Medicen Paris Region – appels à projets (dans le cadre du plan France 2030) », appel « Première Usine »).
+PROGRAMMES_RELAYES = (("france 2030", "France 2030 (État)"),)
+
+
+def programme_cite(texte: str | None) -> str | None:
+    t = normaliser(texte or "")
+    return next((nom for cle, nom in PROGRAMMES_RELAYES if cle in t), None)
+
+
+def financeur_a_preciser(nom_relais: str) -> str:
+    """Nom affiché quand un relais ne cite aucun financeur : « Financeur à préciser (relayé par Medicen Paris Region) »."""
+    court = re.split(r"\s+[–-]\s+", nom_relais or "", maxsplit=1)[0].strip()
+    return f"{FINANCEUR_A_PRECISER} (relayé par {court})"
+
+
+FINANCEUR_A_PRECISER = "Financeur à préciser"
+
+
+def financeur_d_un_relais(nom_extrait: str | None, titre: str | None, emetteur: dict, table: dict) -> str | None:
+    """Financeur à afficher pour une fiche d'un relais du registre, ou None si le nom lu ne désigne pas le relais
+    (selection-des-appels) : financeur cité entre parenthèses et connu du référentiel, sinon programme France 2030 cité
+    par le nom ou le titre, sinon, sauf pour un établissement (cancéropôle), « Financeur à préciser (relayé par ...) »."""
+    reel = financeur_reel_du_relais(nom_extrait, emetteur["id"], table, emetteur.get("nom") or "")
+    if reel:
+        return canonique(reel, None, table) or reel
+    if not est_le_relais(nom_extrait, emetteur["id"], emetteur.get("nom") or ""):
+        return None
+    programme = programme_cite(f"{nom_extrait or ''} {titre or ''}")
+    if programme:
+        return programme
+    if emetteur.get("categorie") != "etablissement":
+        return financeur_a_preciser(emetteur.get("nom") or "")
+    return None
+
+
+def financeur_reel_du_relais(nom_extrait: str | None, relais_id: str, table: dict | None = None,
+                             nom_relais: str | None = None) -> str | None:
     """Vrai financeur d'un appel publié par un relais, lu entre parenthèses (« Lyonbiopôle … (appel émis par la
     Commission européenne …) » -> « Commission européenne »), ou None si le nom n'est pas celui du relais ou si les
     parenthèses ne citent aucun financeur connu. Un financeur est reconnu quand tous les mots d'un de ses noms (hors mots
@@ -183,8 +236,9 @@ def financeur_reel_du_relais(nom_extrait: str | None, relais_id: str, table: dic
     Europe » -> Commission européenne), puis le plus long (fonction pure sur la table donnée)."""
     table = charger() if table is None else table
     nom = (nom_extrait or "").strip()
-    tete = [m for m in normaliser(PARENTHESE.sub("", nom)).split() if len(m) > 3]
-    if not tete or tete[0] not in relais_id.replace("-", ""):
+    if nom_relais is None:
+        nom_relais = (table.get(relais_id) or {}).get("nom") or ""
+    if not est_le_relais(nom, relais_id, nom_relais):
         return None
     meilleur: tuple[int, int, str] | None = None
     for interieur in PARENTHESE.findall(nom):
@@ -206,7 +260,19 @@ def financeur_reel_du_relais(nom_extrait: str | None, relais_id: str, table: dic
                     meilleur = rang
         if meilleur:
             break
-    return meilleur[2] if meilleur else None
+    if meilleur:
+        return meilleur[2]
+    # Financeur nommé autrement que dans le référentiel, après « financé par » seulement (« ... financé par la Région
+    # Auvergne-Rhône-Alpes » -> Conseil régional Auvergne-Rhône-Alpes). Le nom rattaché doit être un nom du référentiel
+    # ou un conseil régional : canonique fabrique sinon des noms (« porté par le département de recherche clinique du
+    # CHU » donnait « Conseil départemental ... », seconde contre-vérification du 2026-11-26).
+    connus = {e.get("nom") for e in table.values()}
+    for interieur in PARENTHESE.findall(nom):
+        m = re.search(r"financ\w* par\s+(?:la |le |les |l['’])?([^,;]+)", interieur, re.IGNORECASE)
+        cite = canonique(m.group(1).strip(), None, table) if m else None
+        if cite and cite != (table.get(relais_id) or {}).get("nom") and (cite in connus or cite.startswith("Conseil régional ")):
+            return cite
+    return None
 
 
 def _canonique_brut(nom_extrait: str | None, emetteur_id: str | None = None, table: dict | None = None) -> str | None:

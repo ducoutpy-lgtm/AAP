@@ -244,6 +244,16 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   fond de la séance : attendre « Veille terminee » dans `scraping/logs/veille.log`, puis compte rendu au pilotage).
   Ordre de mise en ligne à respecter : index d'abord (`firebase deploy --only firestore:indexes`), puis règles et
   hébergement ensemble. Rien n'est poussé depuis `808488b`.
+- 2026-11-26, 15 h 30 : QUOTA DE LECTURES FIRESTORE ÉPUISÉ vers 14 h (« 429 Quota exceeded », forfait gratuit, 50 000
+  lectures par jour) : le site n'affiche plus d'appel jusqu'à la remise à zéro (9 h environ le 27/11) ; ne pas balayer
+  la collection `aap` sans besoin (lire les fichiers locaux). Changement `selection-des-appels` (« Oui, corrige ») :
+  pages anti-robot et « accès refusé » écartées à la collecte et à l'extraction, marchés publics refusés, hors champ
+  écarté d'office à l'import, relais jamais financeur (Medicen -> « France 2030 (État) »), corrections de la relecture
+  conservées, alerte hors champ dans `/admin/aaps` (jouée sur les émulateurs) ; 320 tests Python, 267 de l'application.
+  Restent : écriture locale du nettoyage (`scripts/nettoyer_selection.py --reel`, après la fin de la veille, qui lit les
+  mêmes fichiers) ; essai à blanc puis écriture sur la base après 9 h le 27/11, sur son accord (fiche Urbanisme en ligne
+  sans description, 7 fiches de marchés publics, financeur des relais) ; parcours 2.3 du chantier 51 ; chantiers 53, 52,
+  50.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

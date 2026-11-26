@@ -237,7 +237,7 @@ def test_extraire_pose_la_question_du_champ_apres_l_extraction(tmp_path, monkeyp
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
     meta = fiche["scrape_metadata"]
     assert meta["champ"] == "sante" and meta["champ_raison"] == "santé mentale" and meta["champ_modele"] == "test"
-    assert meta["champ_source"] == "page" and meta["version_consigne"] == 4 and meta["a_verifier"] is True
+    assert meta["champ_source"] == "page" and meta["version_consigne"] == 5 and meta["a_verifier"] is True
     assert len(appels) == 3 and appels[2].startswith(echantillon.CONSIGNE_CHAMP[:40])
 
 
@@ -266,7 +266,7 @@ def test_extraire_api_pose_la_question_du_champ(tmp_path, monkeypatch):
     echantillon.extraire_api({"src": {"id": "src", "nom": "Source"}}, "claude-haiku-5-5", None, 5.0,
                              adresses={"https://x/page-d"}, chemin_sortie=sortie)
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
-    assert fiche["scrape_metadata"]["champ"] == "medico-social" and fiche["scrape_metadata"]["version_consigne"] == 4
+    assert fiche["scrape_metadata"]["champ"] == "medico-social" and fiche["scrape_metadata"]["version_consigne"] == 5
 
 
 def test_extraire_api_accepte_une_liste_de_textes_et_des_metadonnees(tmp_path, monkeypatch):
@@ -286,7 +286,7 @@ def test_extraire_api_accepte_une_liste_de_textes_et_des_metadonnees(tmp_path, m
                              fiches=[({"id": "src", "nom": "Source"}, chemin)], metadonnees={"a_verifier": True})
     [fiche] = json.loads(sortie.read_text(encoding="utf-8"))
     m = fiche["scrape_metadata"]
-    assert m["moteur"] == "api" and m["a_verifier"] is True and m["champ"] == "sante" and m["version_consigne"] == 4
+    assert m["moteur"] == "api" and m["a_verifier"] is True and m["champ"] == "sante" and m["version_consigne"] == 5
 
 
 def test_lire_fiche_et_date_collecte_avec_et_sans_en_tete(tmp_path):

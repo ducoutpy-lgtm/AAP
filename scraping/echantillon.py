@@ -42,6 +42,7 @@ from datetime import date as _date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import filtres_pages  # noqa: E402
 from schema import AapNormalized  # noqa: E402
 
 ICI = Path(__file__).resolve().parent
@@ -91,8 +92,10 @@ CONSIGNE_EST_AAP = (
     "est la fiche d'UN appel à projets, appel à candidatures, appel à manifestation d'intérêt, bourse ou "
     "prix auquel on peut candidater, avec son objet et ses conditions ou son calendrier ; false si c'est "
     "une liste de plusieurs appels, un calendrier, une page de résultats de recherche, une page "
-    "d'information, de présentation, de tarifs, un communiqué, un article ou un formulaire sans appel. "
-    "raison : une phrase en français."
+    "d'information, de présentation, de tarifs, un communiqué, un article ou un formulaire sans appel ; "
+    "false aussi pour un marché public (consultation, MAPA, remise des plis, règlement de consultation, offre "
+    "d'occupation ou d'activité commerciale dans un local) et pour un écran anti-robot ou « accès refusé » qui "
+    "cache le contenu. raison : une phrase en français."
 )
 
 # Question fermée du champ (changement filtre-champ-sante, instruction 26 du rapport de critique). Définition décidée
@@ -111,9 +114,12 @@ CONSIGNE_CHAMP = (
     "« hors-champ » pour le social sans dimension sanitaire (insertion par l'emploi, jeunesse, logement, pauvreté, "
     "parentalité, protection de l'enfance hors établissement médico-social), l'agriculture, l'économie, le tourisme, "
     "le patrimoine, la culture, le sport, l'environnement, l'énergie, le numérique hors établissements de santé, la "
-    "recherche hors santé, l'éducation et tout le reste ; un appel mixte (culture et santé, sport sur ordonnance) est "
-    "dans le champ seulement si un établissement de santé ou médico-social en est bénéficiaire ou si la santé en est "
-    "l'objet ; « incertain » si le texte ne permet pas de trancher. raison : une phrase en français."
+    "recherche hors santé, l'éducation et tout le reste ; par exemple hors champ : la défense des forêts contre "
+    "l'incendie, les grands fonds marins, la décarbonation de l'industrie, un appel LEADER ou de centre-bourg, "
+    "l'enseignement supérieur et les compétences en général, les arts visuels, l'innovation ou l'industrialisation "
+    "tous secteurs (France 2030, Bpifrance) sans objet de santé ; un appel mixte (culture et santé, sport sur "
+    "ordonnance) est dans le champ seulement si un établissement de santé ou médico-social en est bénéficiaire ou si "
+    "la santé en est l'objet ; « incertain » si le texte ne permet pas de trancher. raison : une phrase en français."
 )
 SCHEMA_CHAMP = {
     "type": "object",
@@ -171,16 +177,21 @@ SCHEMA_FICHE = {
 
 # Numero de version de la consigne d'extraction : a incrementer a chaque modification de CONSIGNE ou de
 # CONSIGNE_EST_AAP, pour savoir avec quelle consigne une fiche a ete produite (audit du 2026-10-14, M1).
-VERSION_CONSIGNE = 4  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee ;
+VERSION_CONSIGNE = 5  # 1 : premier tour ; 2 : question fermee et controle des formats ; 3 : inchangee, numerotee ;
 # 4 : question du champ posee dans la chaine apres l'extraction (filtre-champ-sante, tache 5.1, 2026-10-19) : la fiche
 # porte champ, champ_raison, champ_modele, champ_le, champ_source des sa production. Un echec de cette question ne perd
 # pas la fiche : champ « incertain », raison « echec : ... », champ.py --classer la reprendra.
+# 5 : marches publics et ecrans anti-robot refuses, exemples hors champ de Monsieur DUCOUT, financeur reel d'un relais
+# (selection-des-appels, 2026-11-26).
 
 CONSIGNE = (
     "Tu extrais les informations d'un appel à projets français du secteur santé ou médico-social "
     "à partir du texte d'une page web. Réponds uniquement par le JSON demandé. Dates au format "
     "AAAA-MM-JJ, null si absentes. Montants en euros entiers, null si absents. La description "
-    "reprend le contenu utile en français sans le résumer à une phrase. categories_etablissement "
+    "reprend le contenu utile en français sans le résumer à une phrase. financeur : l'organisme qui finance "
+    "l'appel ; un pôle de compétitivité, un gérontopôle ou un site qui relaie l'appel d'un autre organisme est un "
+    "relais, jamais le financeur (pour un appel France 2030 relayé, écrire « France 2030 » et l'opérateur s'il est "
+    "nommé). categories_etablissement "
     "parmi : ehpad, hopital, clinique, ssr, psychiatrie, handicap, domicile, association, autre."
 )
 
@@ -437,6 +448,21 @@ JS_TEXTE = """() => {
   return (principal || document.body).innerText;
 }"""
 
+# Écran anti-robot (selection-des-appels) : certains sites (Grand Est) le lèvent seuls après quelques secondes.
+ATTENTE_PAGE_BLOQUEE_MS = 8000
+
+
+async def texte_de_la_page(page, attente_ms: int = ATTENTE_PAGE_BLOQUEE_MS) -> tuple[str, str | None]:
+    """(texte, motif) de la page ouverte : un écran anti-robot est relu une fois après l'attente ; motif non nul si la
+    page reste bloquée (anti-robot ou « accès refusé »), auquel cas le texte ne doit pas être enregistré."""
+    texte = nettoyer_texte(await page.evaluate(JS_TEXTE))
+    motif = filtres_pages.page_bloquee(texte)
+    if motif != "page anti-robot":
+        return texte, motif
+    await page.wait_for_timeout(attente_ms)
+    texte = nettoyer_texte(await page.evaluate(JS_TEXTE))
+    return texte, filtres_pages.page_bloquee(texte)
+
 
 async def collecter(rubriques: list[dict]) -> None:
     from playwright.async_api import async_playwright
@@ -461,9 +487,12 @@ async def collecter(rubriques: list[dict]) -> None:
                     try:
                         await page.goto(lien["href"], wait_until="domcontentloaded", timeout=30000)
                         await accept_cookies(page)
-                        texte = nettoyer_texte(await page.evaluate(JS_TEXTE))
+                        texte, bloquee = await texte_de_la_page(page)
                     except Exception as err:
                         print(f"  {rubrique['id']} : {lien['href']} -> {type(err).__name__}")
+                        continue
+                    if bloquee:  # rien n'est écrit : la collecte suivante réessaie (selection-des-appels)
+                        print(f"  {rubrique['id']} : {lien['href']} -> page bloquée ({bloquee}), non enregistrée")
                         continue
                     if len(texte) < 200:
                         print(f"  {rubrique['id']} : {lien['href']} -> texte trop court, ignoré")
@@ -478,6 +507,40 @@ async def collecter(rubriques: list[dict]) -> None:
 
 
 # ---------------------------------------------------------------- extraction
+
+def filtre_avant_modele(chemin: Path, url: str, texte: str) -> tuple[str, str] | None:
+    """Filtre sans modèle (selection-des-appels) : ("bloquee", motif) pour un texte bloqué, déplacé dans `_bloquees/`
+    pour que la collecte suivante relise l'adresse (aucun refus n'est écrit, sinon le texte relu serait sauté) ;
+    ("marche", motif) pour un marché public, à refuser ; None sinon."""
+    motif = filtres_pages.page_bloquee(texte)
+    if motif:
+        destination = chemin.parent / "_bloquees" / chemin.name
+        destination.parent.mkdir(exist_ok=True)
+        chemin.replace(destination)
+        return "bloquee", motif
+    motif = filtres_pages.marche_public(url, texte)
+    return ("marche", motif) if motif else None
+
+
+def indice_financeur(rubrique: dict) -> str:
+    """Financeur probable donné au modèle : le nom de la source, sauf pour un relais du registre, qui publie les appels
+    d'autres organismes (Medicen, Biotech Santé Bretagne, gérontopôles) et ne doit pas être pris pour le financeur."""
+    nom = rubrique.get("nom") or ""
+    if not rubrique.get("relais"):
+        return nom
+    return f"{nom} est un relais : il publie les appels d'autres organismes ; indiquer l'organisme qui finance, jamais le relais"
+
+
+def _refus_du_filtre(refusees: list[dict], chemin_refus: Path, filtre: tuple[str, str], rel: str, url: str,
+                     source: str, rang: str, nom: str) -> None:
+    """Trace d'un texte écarté par filtre_avant_modele : refus écrit pour un marché public, simple message sinon."""
+    if filtre[0] == "marche":
+        refusees.append({"fichier": rel, "url": url, "source": source, "raison": filtre[1], "duree_s": 0.0, "filtre": True})
+        _ecrire_json(chemin_refus, refusees)
+        print(f"[{rang}] refusée {nom} {filtre[1]}")
+    else:
+        print(f"[{rang}] mise de côté {nom} : {filtre[1]}, relue à la prochaine collecte")
+
 
 def fiches_disponibles(rubriques: list[dict]) -> list[tuple[dict, Path]]:
     fiches = []
@@ -610,7 +673,13 @@ def extraire(rubriques: list[dict], moteur: str, modele: str, limite: int | None
             continue
         url, texte = lire_fiche(chemin)
         texte = texte.split("\n", 1)[1] if "\n" in texte else texte  # saute le texte du lien
+        filtre = filtre_avant_modele(chemin, url, texte)
+        if filtre:
+            _refus_du_filtre(refusees, chemin_refus, filtre, rel, url, rubrique["id"], f"{i}/{len(fiches)}", chemin.name)
+            continue
         page = f"URL source : {url}\n\nTexte de la page :\n{texte}"
+        if rubrique.get("relais"):  # même indice que le moteur api (seconde contre-vérification du 2026-11-26)
+            page = f"Financeur probable : {indice_financeur(rubrique)}\n\n{page}"
         t0 = time.time()
         try:
             avis = appeler_ollama(modele, [{"role": "system", "content": CONSIGNE_EST_AAP}, {"role": "user", "content": page}], SCHEMA_EST_AAP)
@@ -754,6 +823,10 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
             continue
         url, texte = lire_fiche(chemin)
         texte = texte.split("\n", 1)[1] if "\n" in texte else texte  # saute le texte du lien
+        filtre = filtre_avant_modele(chemin, url, texte)
+        if filtre:
+            _refus_du_filtre(refusees, chemin_refus, filtre, rel, url, rubrique["id"], f"{i}/{len(fiches)}", chemin.name)
+            continue
         cumul, estimation = cout_cumule(modele), estimation_appel_euros(len(texte), tarifs, extractor.EURO_PAR_DOLLAR)
         if plafond_atteint(cumul, estimation, plafond):
             print(f"Plafond : {cumul:.3f} euros dépensés, texte suivant estimé {estimation:.3f} euros, plafond {plafond:.2f} euros. "
@@ -770,7 +843,8 @@ def extraire_api(resultats: dict, modele: str, limite: int | None, plafond: floa
                     _ecrire_json(chemin_echecs, echecs)
                 print(f"[{i}/{len(fiches)}] refusée {chemin.name} {avis.get('raison', '')[:70]}")
                 continue
-            brut = extractor.extract_aap(texte, url, financeur_hint=rubrique["nom"], source=rubrique["id"], model=modele)
+            brut = extractor.extract_aap(texte, url, financeur_hint=indice_financeur(rubrique), source=rubrique["id"],
+                                         model=modele)
             ecarts, a_relire = ecarts_format(brut), False
             if ecarts:
                 brut, a_relire = neutraliser(brut, ecarts), True

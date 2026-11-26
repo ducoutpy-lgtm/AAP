@@ -33,7 +33,7 @@ import httpx
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import echantillon  # noqa: E402
 import lecture_pdf  # noqa: E402
-from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, JS_TEXTE, RESULTS, lire_fiche, nettoyer_texte, nom_fiche  # noqa: E402
+from echantillon import DOSSIER, FICHIERS_IGNORES, ICI, RESULTS, lire_fiche, nettoyer_texte, nom_fiche  # noqa: E402
 
 REGISTRE = ICI / "sources" / "registre.json"
 SORTIE = RESULTS / "extraction_locale.json"
@@ -136,7 +136,9 @@ def bilan(nb_sources: int, nb_liens: int, nb_textes: int, fiches: list[dict], re
 
 def rubriques(ids: set[str] | None = None) -> list[dict]:
     registre = json.loads(REGISTRE.read_text(encoding="utf-8"))
-    return [{"id": s["id"], "nom": s["nom"], "categorie": s.get("categorie", "")} for s in sources_confirmees(registre, ids)]
+    # relais recopié : sans lui, l'indice « ce site est un relais » n'arrivait jamais au modèle (selection-des-appels)
+    return [{"id": s["id"], "nom": s["nom"], "categorie": s.get("categorie", ""), "relais": bool(s.get("relais"))}
+            for s in sources_confirmees(registre, ids)]
 
 
 def liens_par_source(sources: list[dict], pdf: bool = False) -> dict[str, list[dict]]:
@@ -200,9 +202,12 @@ async def collecter(sources: list[dict], pdf: bool = False) -> None:
                     try:
                         await page.goto(lien["href"], wait_until="domcontentloaded", timeout=30000)
                         await accept_cookies(page)
-                        texte = nettoyer_texte(await page.evaluate(JS_TEXTE))
+                        texte, bloquee = await echantillon.texte_de_la_page(page)
                     except Exception as err:
                         print(f"  {s['id']} : {lien['href']} -> {type(err).__name__}")
+                        continue
+                    if bloquee:  # rien n'est écrit : la veille suivante réessaie (selection-des-appels)
+                        print(f"  {s['id']} : {lien['href']} -> page bloquée ({bloquee}), non enregistrée")
                         continue
                     if len(texte) < 200:
                         print(f"  {s['id']} : {lien['href']} -> texte trop court, ignoré")

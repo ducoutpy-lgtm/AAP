@@ -5,6 +5,21 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Corrigé (2026-11-26, changement `selection-des-appels`, « Oui, corrige »)
+- Pages bloquées : la collecte relit un écran anti-robot après 8 secondes et n'enregistre plus une page qui reste
+  bloquée ; l'extraction met de côté un texte bloqué déjà collecté (`_bloquees/`) sans appeler le modèle. 63 textes
+  concernés relevés (dont 37 écrans Cloudflare de La Réunion, du ministère de l'Enseignement supérieur et de la Somme
+  trouvés par la contre-vérification ; 9 du Grand Est, qui avaient donné 9 fiches, dont une en ligne).
+- Marchés publics : plateforme d'achat public ou deux marques de consultation refusées avant le modèle ; l'import ignore
+  ces fiches (7 fiches de la Métropole Aix-Marseille dans les résultats locaux).
+- Import : appel hors champ du modèle rejeté et archivé d'office, il n'entre plus dans la file « à corriger » ; un relais
+  n'est plus affiché comme financeur (« France 2030 (État) » pour la Première Usine relayée par Medicen, financeur
+  nommé après « financé par », sinon « Financeur à préciser (relayé par ...) », statut inchangé ; sur 195 fiches de
+  relais : 25 retrouvent leur financeur, 34 « à préciser ») ; corrections de la relecture du 2026-11-26
+  (`scraping/sources/corrections_fiches.json`, 11 fiches) conservées à chaque import.
+- Administration : valider une fiche hors champ, seule ou dans une sélection, demande une confirmation qui le dit.
+- Consigne du modèle version 5. Script `scripts/nettoyer_selection.py` (essai à blanc par défaut) pour l'existant.
+
 ### Mis en ligne (2026-11-26, sur l'accord de Monsieur DUCOUT, « Oui, envoie et mets en ligne »)
 - 60 commits du plan niveau A envoyés sur GitHub (`82bade3..5c7bfe4`). Règles Firestore publiées (« released rules
   firestore.rules ») et hébergement mis en ligne : https://aapi-11bc3.web.app sert `assets/index-C6x4fVWp.js`, identique

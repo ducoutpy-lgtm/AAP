@@ -9,6 +9,8 @@ import {
   RELECTEUR_HUMAIN,
   visiblePubliquement,
   selectionATraiter,
+  horsChamp,
+  messageHorsChamp,
 } from './relecture';
 
 const base: AAP = {
@@ -111,5 +113,26 @@ describe('selectionATraiter', () => {
       aTraiter: ['proposee', 'a-corriger', 'deja', 'close'],
       ignorees: 2,
     });
+  });
+});
+
+// selection-des-appels (2026-11-26) : valider une fiche hors champ demande une confirmation qui le dit
+describe('horsChamp et messageHorsChamp', () => {
+  const g = (tags: string[], champ?: string) =>
+    ({ tags, scrapeMetadata: champ ? { champ } : undefined }) as Parameters<typeof horsChamp>[0];
+  it("reconnaît l'étiquette ou le champ du modèle", () => {
+    expect(horsChamp(g(['hors-champ']))).toBe(true);
+    expect(horsChamp(g([], 'hors-champ'))).toBe(true);
+    expect(horsChamp(g(['champ-incertain'], 'incertain'))).toBe(false);
+    expect(horsChamp(g([]))).toBe(false);
+  });
+  it('compte les fiches hors champ de la sélection', () => {
+    expect(messageHorsChamp([g([]), g([])])).toBe('');
+    expect(messageHorsChamp([g(['hors-champ'])])).toBe(
+      ' Attention : 1 fiche est classée hors champ par le modèle.',
+    );
+    expect(messageHorsChamp([g(['hors-champ']), g([], 'hors-champ'), g([])])).toBe(
+      ' Attention : 2 fiches sont classées hors champ par le modèle.',
+    );
   });
 });

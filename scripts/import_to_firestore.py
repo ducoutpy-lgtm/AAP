@@ -55,8 +55,12 @@ from schema import AapNormalized  # noqa: E402
 # Verdicts de Monsieur DUCOUT sur les fiches (raccourci « Validation des fiches a verifier »), cle = adresse de
 # l'appel. Fichier versionne, jamais ecrit par un outil automatique (changement organisation-donnees-validees).
 VERDICTS = ROOT / "scraping" / "sources" / "verdicts_fiches.json"
+# Corrections de la relecture (champ, financeur) par identifiant de document, réappliquées à chaque import pour qu'un
+# ré-import ne rende pas au modèle ce que la relecture a corrigé (selection-des-appels, 2026-11-26).
+CORRECTIONS = ROOT / "scraping" / "sources" / "corrections_fiches.json"
 # Registre des emetteurs et table des financeurs canoniques (changement nettoyage-financeurs-territoires) : la source
 # reelle d'une fiche est son emetteur du registre, le financeur est ramene a un nom unique, le territoire est deduit.
+import filtres_pages  # noqa: E402
 import financeurs  # noqa: E402
 import registre  # noqa: E402
 import territoires  # noqa: E402
@@ -208,12 +212,15 @@ def appliquer_qualification(doc: dict, item: dict, today: date) -> dict:
     if (meta.get("champ") == "incertain" and str(meta.get("champRaison") or "").startswith("échec")
             and q.get("champ") in ("sante", "medico-social")):
         d["scrapeMetadata"] = {**meta, "champ": q["champ"], "champRaison": f"repris de la qualification ({meta['champRaison']})"}
-    if q.get("champ") == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR:
+    # Un champ corrigé par la relecture (appliquer_relecture) l'emporte aussi sur la qualification (contre-vérification)
+    corrige = str((d.get("scrapeMetadata") or {}).get("champRaison") or "").startswith("corrigé par la relecture")
+    if q.get("champ") == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR and not corrige:
+        # Écarté d'office depuis le 2026-11-26 (selection-des-appels) : il n'entre plus dans la file de Monsieur DUCOUT
         d["tags"] = [t for t in d.get("tags", []) if t != "hors-champ"] + ["hors-champ"]
-        d["status"] = "draft"
-        d["validation"] = {"statut": "a_corriger", "commentaire": "hors champ (qualification)", "date": today.isoformat(),
-                           "par": "import (qualification)"}
-        d["tags"] = etiqueter(d["tags"], "a_corriger")
+        d["status"] = "archived"
+        d["validation"] = {"statut": "rejetee", "commentaire": "hors champ (qualification), écartée d'office",
+                           "date": today.isoformat(), "par": "import (qualification)"}
+        d["tags"] = etiqueter(d["tags"], "rejetee")
     return d
 
 
@@ -248,6 +255,10 @@ def document_a_envoyer(doc: dict, existe: bool, existant: dict | None = None) ->
     proteges (l'application lit la relecture dans validation, plus dans les tags, depuis le 2026-10-19)."""
     if not existe:
         return dict(doc)
+    if rejet_page_bloquee(existant):
+        # La page relue n'est plus bloquée : la fiche repart avec son nouveau contenu, comme une création (l'ancienne
+        # description était l'écran anti-robot) ; seuls les compteurs de la base sont gardés (seconde contre-vérification)
+        return {k: v for k, v in doc.items() if k not in COMPTEURS}
     proteges = set(CHAMPS_HUMAINS) | set(COMPTEURS)
     # Fiche validée dans ce calcul, ou déjà validée en base : avec --a-valider le statut recalculé est « proposee », et
     # lire ce seul statut laissait réécrire les corrections faites dans l'application (corrections-chaine-du-lundi 1.2)
@@ -261,6 +272,10 @@ def document_a_envoyer(doc: dict, existe: bool, existant: dict | None = None) ->
         proteges -= {"validation", "status"}
     if ((existant or {}).get("qualification") or {}).get("par") == RELECTEUR:
         proteges |= {"qualification", "startDate"}
+    # Une fiche relue par Monsieur DUCOUT ne reçoit jamais « Financeur à préciser » (seconde contre-vérification)
+    if (((existant or {}).get("validation") or {}).get("par") == RELECTEUR
+            and str(doc.get("financeurName") or "").startswith(financeurs.FINANCEUR_A_PRECISER)):
+        proteges |= {"financeurName"}
     return {k: v for k, v in doc.items() if k not in proteges}
 
 
@@ -281,9 +296,9 @@ CHAMP_HORS, CHAMP_INCERTAIN = "hors-champ", "incertain"
 
 
 def champ_en_attente(doc: dict, today: date) -> dict:
-    """Fiche classee hors champ par le modele (filtre-champ-sante) : brouillon a corriger, jamais publiee sans verdict ;
-    « incertain » : etiquette champ-incertain seulement. Un verdict humain deja applique (validation.par = RELECTEUR)
-    l'emporte toujours sur le modele (fonction pure)."""
+    """Fiche classee hors champ par le modele (filtre-champ-sante) : rejetee et archivee d'office depuis le 2026-11-26
+    (selection-des-appels, elle n'entre plus dans la file « a corriger ») ; « incertain » : etiquette champ-incertain
+    seulement. Un verdict humain deja applique (validation.par = RELECTEUR) l'emporte toujours (fonction pure)."""
     d = dict(doc)
     champ = (d.get("scrapeMetadata") or {}).get("champ") or ""
     tags = [t for t in d.get("tags", []) if t not in ("hors-champ", "champ-incertain")]
@@ -291,11 +306,36 @@ def champ_en_attente(doc: dict, today: date) -> dict:
         tags.append("champ-incertain")
     if champ == CHAMP_HORS and (d.get("validation") or {}).get("par") != RELECTEUR:
         tags.append("hors-champ")
-        d["status"] = "draft"
-        d["validation"] = {"statut": "a_corriger", "commentaire": "hors champ (modele)", "date": today.isoformat(),
-                           "par": "import (champ)"}
+        d["status"] = "archived"
+        d["validation"] = {"statut": "rejetee", "commentaire": "hors champ (modèle), écartée d'office",
+                           "date": today.isoformat(), "par": "import (champ)"}
     d["tags"] = etiqueter(tags, (d.get("validation") or {}).get("statut", "proposee"))
     return d
+
+
+def appliquer_relecture(doc: dict, correction: dict | None) -> dict:
+    """Correction de la relecture (scraping/sources/corrections_fiches.json) : champ et financeur relus l'emportent sur
+    le modele a chaque import (selection-des-appels ; fonction pure)."""
+    if not correction:
+        return doc
+    d = dict(doc)
+    if correction.get("champ"):
+        d["scrapeMetadata"] = {**(d.get("scrapeMetadata") or {}), "champ": correction["champ"],
+                               "champRaison": f"corrigé par la relecture du {correction.get('date', '')}"}
+    if correction.get("financeur"):
+        d["financeurName"] = correction["financeur"]
+    return d
+
+
+# Rejet posé par scripts/nettoyer_selection.py sur une fiche tirée d'une page bloquée : levé par l'import quand la page
+# relue n'est plus bloquée (contre-vérification du 2026-11-26), sinon la fiche ne reviendrait jamais.
+PAR_NETTOYAGE = "nettoyage de la sélection, accord de Monsieur DUCOUT"
+COMMENTAIRE_PAGE_BLOQUEE = "page bloquée à la collecte"
+
+
+def rejet_page_bloquee(existant: dict | None) -> bool:
+    v = (existant or {}).get("validation") or {}
+    return v.get("par") == PAR_NETTOYAGE and v.get("commentaire") == COMMENTAIRE_PAGE_BLOQUEE
 
 
 def fusionner(mapped: list[tuple[str, dict]]) -> dict[str, dict]:
@@ -454,10 +494,12 @@ def to_app_aap(item: dict, source_name: str, now: datetime) -> dict | None:
     nom_canonique = financeurs.canonique(financeur, emetteur["id"] if emetteur else None, FINANCEURS)
     # Relais (changement financeur-reel-des-relais) : « Lyonbiopôle … (appel émis par la Commission européenne) » affiche
     # le financeur cité entre parenthèses, quand le référentiel le connaît ; un appel propre au relais garde son nom.
+    # Depuis le 2026-11-26 (selection-des-appels) : un relais n'est jamais le financeur. À défaut de financeur cité, le
+    # programme France 2030 ; sinon, sauf pour un établissement (cancéropôle, qui finance ses propres appels),
+    # « Financeur à préciser (relayé par ...) », statut inchangé (contre-vérification : une seule règle pour les fiches
+    # nouvelles et celles déjà en base, et la file de Monsieur DUCOUT ne grossit pas).
     if emetteur and emetteur.get("relais"):
-        reel = financeurs.financeur_reel_du_relais(financeur, emetteur["id"], FINANCEURS)
-        if reel:
-            nom_canonique = financeurs.canonique(reel, None, FINANCEURS) or reel
+        nom_canonique = financeurs.financeur_d_un_relais(financeur, titre, emetteur, FINANCEURS) or nom_canonique
 
     tags = [source_name]
     if item.get("territoire"):
@@ -587,8 +629,10 @@ def main() -> int:
     today = date.today()
     raw = load_results(args.source)
     verdicts = json.loads(VERDICTS.read_text(encoding="utf-8")) if VERDICTS.exists() else {}
+    corrections = json.loads(CORRECTIONS.read_text(encoding="utf-8")) if CORRECTIONS.exists() else {}
     mapped: list[tuple[str, dict]] = []
-    skipped = {"incomplet": 0, "expire": 0}
+    skipped = {"incomplet": 0, "expire": 0, "marche-public": 0, "page-bloquee": 0}
+    bloquees: set[str] = set()  # adresses dont une version au moins décrit une page bloquée
     en_attente, hors_champ = 0, 0
 
     try:
@@ -599,6 +643,14 @@ def main() -> int:
             if doc is None:
                 skipped["incomplet"] += 1
                 continue
+            # Marché public ou description d'une page bloquée : jamais écrit (selection-des-appels)
+            exclusion = filtres_pages.fiche_a_exclure(doc["externalUrl"], doc["description"])
+            if exclusion:
+                skipped["marche-public" if exclusion == "marché public" else "page-bloquee"] += 1
+                if exclusion == "page bloquée":
+                    bloquees.add(identifiant(doc["externalUrl"]))
+                continue
+            doc = appliquer_relecture(doc, corrections.get(identifiant(doc["externalUrl"])))
             if "deadline" not in doc:
                 # Pas de date de cloture : aucune date inventee (reponse Q4 du rapport du 2026-10-14) ; la fiche
                 # entre en brouillon avec deadline nulle, en attente de la validation de Monsieur DUCOUT.
@@ -622,6 +674,11 @@ def main() -> int:
     except ChampInconnu as err:
         print(f"Import arrete, rien n'est ecrit : {err}", file=sys.stderr)
         return 1
+    # La même page bloquée lue par l'autre moteur, sans marque dans sa description (contre-vérification du 2026-11-26) :
+    # toutes les versions d'une adresse dont une décrit une page bloquée sont ignorées.
+    restantes = [(i, d) for i, d in mapped if i not in bloquees]
+    skipped["page-bloquee"] += len(mapped) - len(restantes)
+    mapped = restantes
 
     # Deux sources peuvent livrer le meme AAP (ars_idf et ars_idf_local, connecteur et modele local) : meme
     # adresse, donc meme document Firestore. On fusionne ici pour que les compteurs affiches correspondent au
@@ -630,7 +687,7 @@ def main() -> int:
     doublons = len(mapped) - len(uniques)
     mapped = list(uniques.items())
 
-    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date publiees, {hors_champ} hors champ en brouillon)"
+    print(f"AAP lus : {len(raw)} | a importer : {len(mapped)} (dont {doublons} doublons fusionnes, {en_attente} sans date publiees, {hors_champ} hors champ ecartes)"
           f"| ignores : {skipped} | verdicts lus : {len(verdicts)}")
     # Mesure du nettoyage (changement nettoyage-financeurs-territoires) : noms de financeurs distincts et part des
     # fiches rattachees a un nom canonique, repartition des territoires.

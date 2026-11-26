@@ -241,12 +241,7 @@ def test_fiche_sans_date_publiee_deadline_nulle_a_verifier():
     assert col.magasin[ident]["deadline"] is None and col.magasin[ident]["status"] == "published"
 
 
-def test_fiche_hors_champ_entre_en_brouillon_a_corriger():
-    doc = {"status": "published", "tags": ["x"], "validation": {"statut": "proposee", "commentaire": "", "date": "", "par": ""},
-           "scrapeMetadata": {"champ": "hors-champ"}}
-    d = imp.champ_en_attente(doc, date(2026, 10, 14))
-    assert d["status"] == "draft" and d["validation"]["statut"] == "a_corriger" and d["validation"]["par"] == "import (champ)"
-    assert "hors-champ" in d["tags"] and "a-verifier" in d["tags"] and "x" in d["tags"]
+# Fiche hors champ : écartée d'office depuis le 2026-11-26 (selection-des-appels), test dans test_selection_import.py.
 
 
 def test_fiche_incertaine_garde_son_statut_avec_etiquette():
@@ -542,10 +537,10 @@ def test_le_controle_du_modele_vaut_relecture_sauf_verdict_humain():
     # Verdict humain existant : rien ne bouge
     humain = imp.appliquer_verdict(imp.to_app_aap(item, "x", MAINTENANT), {"verdict": "aap-a-corriger", "commentaire": "c"})
     assert imp.appliquer_decision_du_modele(humain, decision)["validation"]["par"] == imp.RELECTEUR
-    # Fiche hors champ : le brouillon hors champ reste
+    # Fiche hors champ : écartée d'office (selection-des-appels, 2026-11-26), la décision du modèle ne la reprend pas
     hors = imp.champ_en_attente(imp.appliquer_verdict(imp.to_app_aap(
         fiche(scrape_metadata={"moteur": "ollama", "modele": "q", "champ": "hors-champ", "verification": ver}), "x", MAINTENANT), None), AUJOURDHUI)
-    assert imp.appliquer_decision_du_modele(hors, decision)["validation"]["statut"] == "a_corriger"
+    assert imp.appliquer_decision_du_modele(hors, decision)["validation"]["statut"] == "rejetee"
 
 
 def test_appliquer_controle_modifications_n_ecrit_que_le_necessaire():
@@ -660,14 +655,7 @@ def test_la_qualification_est_portee_sur_le_document():
     assert doc.get("qualification") is None  # fonction pure
 
 
-def test_hors_champ_par_la_qualification_passe_en_brouillon_sauf_verdict_humain():
-    item = {"scrape_metadata": {"qualification": {"destinataires": ["tous"], "type_appel": "mecenat", "objets": [],
-                                                  "date_ouverture": None, "pieces_attendues": [], "champ": "hors-champ",
-                                                  "modele": "m", "le": "2026-10-20"}}}
-    d = imp.appliquer_qualification({"status": "published", "tags": []}, item, AUJOURDHUI)
-    assert d["status"] == "draft" and d["validation"]["statut"] == "a_corriger" and "hors-champ" in d["tags"]
-    humain = {"status": "published", "tags": [], "validation": {"statut": "validee", "par": imp.RELECTEUR, "commentaire": "", "date": ""}}
-    assert imp.appliquer_qualification(humain, item, AUJOURDHUI)["status"] == "published"
+# Hors champ par la qualification : écarté d'office depuis le 2026-11-26, test dans test_selection_import.py.
 
 
 def test_une_qualification_humaine_en_base_n_est_pas_ecrasee():

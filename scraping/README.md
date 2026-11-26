@@ -490,6 +490,36 @@ Mesures par moteur : repérage (décisions justes sur les pages jugées), qualit
 adresses de la liste. Verdicts dans `sources/verdicts_comparaison.json` (versionné, distinct de `verdicts_fiches.json`
 que lit l'import). La liste tirée fait foi : ne pas relancer `--tirer` une fois le passage global avancé.
 
+### Sélection des appels : pages bloquées, marchés publics, relais (changement `selection-des-appels`, 2026-11-26)
+
+Pourquoi : des fiches reprenaient l'écran anti-robot du site source (Grand Est), un marché public passait pour un appel
+(« 24 avenue du Prado », Métropole Aix-Marseille), un relais s'affichait comme financeur (Medicen pour un appel France
+2030). Les règles fixes de `filtres_pages.py` écartent ces cas sans appeler le modèle, donc à zéro euro :
+
+- collecte : un écran anti-robot est relu après 8 secondes ; une page qui reste bloquée (anti-robot, « accès refusé »)
+  n'est pas enregistrée, la veille suivante réessaie ;
+- extraction : un texte bloqué déjà collecté est déplacé dans `decouverte/<source>/fiches/_bloquees/` (la collecte
+  suivante relit l'adresse) ; une page de plateforme d'achat public, ou qui porte deux marques de consultation
+  (« remise des plis », « règlement de consultation », MAPA...) sans s'annoncer « appel à projets », est refusée avec
+  `"filtre": true` dans le fichier `*_non_aap.json` ;
+- import : fiche de marché public ou de page bloquée ignorée ; appel hors champ du modèle rejeté et archivé d'office
+  (« hors champ (modèle), écartée d'office », filtre « Rejetée » de l'administration) ; financeur d'un relais : celui
+  cité entre parenthèses ou après « financé par », sinon « France 2030 (État) », sinon « Financeur à préciser (relayé
+  par ...) », statut inchangé (un cancéropôle garde ses propres appels) ; une page bloquée reconnaît aussi l'écran
+  Cloudflare « Sorry, you have been blocked » ; un rejet « page bloquée à la collecte » du nettoyage est levé quand la
+  page relue n'est plus bloquée ; corrections de la relecture lues dans `sources/corrections_fiches.json` à
+  chaque import ;
+- consigne du modèle version 5 (exemples hors champ de Monsieur DUCOUT, marchés publics, relais).
+
+Nettoyage de l'existant, essai à blanc par défaut, sauvegarde avant toute écriture :
+
+```bash
+python ../scripts/nettoyer_selection.py                 # local : textes bloqués et entrées des résultats (essai)
+python ../scripts/nettoyer_selection.py --reel          # local : déplacement et réécriture, après sauvegarde
+python ../scripts/nettoyer_selection.py --base          # base : une lecture de la collection aap (essai)
+python ../scripts/nettoyer_selection.py --base --reel   # base : sur l'accord de Monsieur DUCOUT
+```
+
 ### Filtre du champ santé et médico-social (changement `filtre-champ-sante`, 2026-10-14)
 
 Définition décidée par Monsieur DUCOUT : `sante` (objet santé, ou bénéficiaire hôpital ou clinique quel que soit l'objet :

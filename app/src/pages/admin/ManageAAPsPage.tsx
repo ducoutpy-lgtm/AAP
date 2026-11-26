@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { collection, getDocs, doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { AAP, ValidationStatut } from '../../types';
-import { RELECTEUR_HUMAIN, selectionATraiter } from '../../utils/relecture';
+import { horsChamp, messageHorsChamp, RELECTEUR_HUMAIN, selectionATraiter } from '../../utils/relecture';
 import { formatDateCloture } from '../../utils/datesCloture';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
@@ -214,7 +214,10 @@ export default function ManageAAPsPage() {
       annoncer(`Aucune fiche à ${libelle}${note}.`, 'info');
       return;
     }
-    if (!confirm(`Confirmer : ${libelle} ${aTraiter.length} fiche${aTraiter.length > 1 ? 's' : ''}${note} ?`)) return;
+    // Fiches hors champ de la sélection signalées avant de valider (selection-des-appels, 2026-11-26)
+    const alerte = verdict === 'validee' ? messageHorsChamp(aaps.filter((a) => aTraiter.includes(a.id))) : '';
+    if (!confirm(`Confirmer : ${libelle} ${aTraiter.length} fiche${aTraiter.length > 1 ? 's' : ''}${note} ?${alerte}`))
+      return;
     const commentaire =
       verdict === 'rejetee' ? prompt('Motif du rejet (facultatif), appliqué à toute la sélection :') : '';
     if (commentaire === null) return;
@@ -297,6 +300,13 @@ export default function ManageAAPsPage() {
   const aujourdHui = () => new Date().toISOString().slice(0, 10);
 
   const handleValiderEtPublier = async (aapId: string) => {
+    const fiche = aaps.find((a) => a.id === aapId);
+    if (
+      fiche &&
+      horsChamp(fiche) &&
+      !confirm('Cette fiche est classée hors champ par le modèle. La valider et la publier quand même ?')
+    )
+      return;
     try {
       await updateDoc(doc(db, 'aap', aapId), {
         validation: { statut: 'validee', commentaire: '', date: aujourdHui(), par: RELECTEUR_HUMAIN },
