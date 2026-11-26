@@ -22,8 +22,16 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 - [x] 2.1 Tests de règles : création refusée par identifiant et par adresse, fiche protégée, compte rétabli (échec
   avant).
 - [x] 2.2 Règles `suspensions` et `users` ; suspension et rétablissement écrivent et effacent la fiche ; test de page.
-- [ ] 2.3 Parcours sur les émulateurs : suspension, suppression, nouvelle inscription refusée, rétablissement. (2026-11-26 : 2.1 et
-  2.2 faits, 78 tests de règles et 265 de l'application, contre-vérifiés ; parcours sur les émulateurs NON joués.
+- [x] 2.3 Parcours sur les émulateurs : suspension, suppression, nouvelle inscription refusée, rétablissement. (2026-11-26 : 2.1 et
+  2.2 faits, 78 tests de règles et 265 de l'application, contre-vérifiés ; parcours joué le 2026-11-26 vers 16 h :
+  l'administrateur suspend candidat@test.local depuis `/admin/utilisateurs` (fiches `suspensions/<uid>` et
+  `suspensions/email:candidat@test.local` écrites) ; le candidat ne lit ni n'efface sa fiche (403, 403), supprime son
+  document (200), ne le recrée pas (403) ; compte d'authentification supprimé puis rouvert avec la même adresse :
+  création refusée (403) ; « Rétablir » dans « Comptes suspendus sans document » efface les deux fiches, puis la création
+  réussit (200). Le message « Inscription refusée » à l'écran n'a pas été rejoué (test de page seulement). La page
+  `/admin/utilisateurs` plantait sur des comptes sans `createdAt` laissés par les tests des règles dans l'émulateur
+  (« reading 'toDate' », code antérieur, ligne 21) : non corrigé ; présence de comptes sans date en base réelle non
+  vérifiée (quota de lectures épuisé).
   Limites notées : une adresse contenant « / » ne peut pas être suspendue ; l'administration des utilisateurs exige les
   nouvelles règles en ligne (lecture de `suspensions`) ; une autre adresse ouvre toujours un compte en essai.)
 
