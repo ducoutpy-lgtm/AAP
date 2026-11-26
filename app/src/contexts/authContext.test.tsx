@@ -36,9 +36,16 @@ vi.mock('firebase/firestore', () => ({
 }));
 vi.mock('../services/journalService', () => ({ journaliser: vi.fn() }));
 
-import { onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
-import { getDoc } from 'firebase/firestore';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendEmailVerification,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { getDoc, setDoc } from 'firebase/firestore';
 import { AuthProvider, useAuth } from './AuthContext';
+import { messageErreur } from '../utils/erreurs';
 
 type Contexte = ReturnType<typeof useAuth>;
 type Etat = { uid: string | null; loading: boolean; role: string | null };
@@ -184,5 +191,62 @@ describe('lecture du profil devenue périmée', () => {
     });
     expect(etats[etats.length - 1]).toEqual({ uid: 'u2', loading: false, role: 'financeur' });
     expect(etats.filter((e) => e.uid === 'u2' && e.role === 'porteur')).toEqual([]);
+  });
+});
+
+// Registre des suspensions (question 51, 2026-11-26) : la règle refuse la création du document users d'un compte
+// suspendu ; l'écran d'inscription montrait « Action refusée : vous n'avez pas les droits nécessaires. »
+describe('inscription et compte suspendu (question 51)', () => {
+  beforeEach(() => {
+    vi.mocked(createUserWithEmailAndPassword)
+      .mockReset()
+      .mockResolvedValue({ user: { uid: 'u9', email: 'n@test.local' } } as never);
+    vi.mocked(sendEmailVerification).mockReset().mockResolvedValue(undefined);
+    vi.mocked(setDoc).mockReset().mockResolvedValue(undefined);
+  });
+
+  it('compte non suspendu : document users en essai, puis profil vide', async () => {
+    monter();
+    await act(() => contexte.signup('n@test.local', 'secret12', 'porteur'));
+    expect(setDoc).toHaveBeenCalledWith(
+      'users/u9',
+      expect.objectContaining({ email: 'n@test.local', userType: 'porteur', subscriptionStatus: 'trial' }),
+    );
+    expect(setDoc).toHaveBeenCalledWith('porteurProfiles/u9', expect.objectContaining({ userId: 'u9' }));
+  });
+
+  it('compte suspendu : la création refusée donne un message qui dit la suspension', async () => {
+    vi.mocked(setDoc).mockRejectedValueOnce(
+      Object.assign(new Error('Missing or insufficient permissions.'), { code: 'permission-denied' }),
+    );
+    monter();
+    let erreur: unknown;
+    await act(async () => {
+      erreur = await contexte.signup('n@test.local', 'secret12', 'porteur').catch((e: unknown) => e);
+    });
+    expect(messageErreur(erreur, "Échec de l'inscription")).toMatch(/suspendu/);
+    expect(messageErreur(erreur, "Échec de l'inscription")).toMatch(/Contact/);
+    // le profil n'est pas écrit après le refus
+    expect(setDoc).toHaveBeenCalledTimes(1);
+  });
+
+  // Contre-vérification du 2026-11-26 : le parcours d'intégration crée le document dès que le profil est nul, ce qui
+  // arrive aussi quand sa lecture a échoué ; le document existe alors, et le refus vient de la règle de mise à jour
+  it('document users déjà présent : un refus garde le message générique, pas « compte suspendu »', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    monter();
+    vi.mocked(getDoc).mockRejectedValueOnce(Object.assign(new Error('Lecture impossible'), { code: 'unavailable' }));
+    await act(() => simu.rappel!({ uid: 'u9' }));
+    vi.mocked(getDoc).mockResolvedValueOnce({ exists: () => true } as never);
+    vi.mocked(setDoc).mockRejectedValueOnce(
+      Object.assign(new Error('Missing or insufficient permissions.'), { code: 'permission-denied' }),
+    );
+    let erreur: unknown;
+    await act(async () => {
+      erreur = await contexte.creerDocumentUtilisateur('porteur').catch((e: unknown) => e);
+    });
+    expect(messageErreur(erreur, "Échec de l'inscription")).toMatch(/droits/);
+    expect(messageErreur(erreur, "Échec de l'inscription")).not.toMatch(/suspendu/);
+    vi.mocked(console.error).mockRestore();
   });
 });

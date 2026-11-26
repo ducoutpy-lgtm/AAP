@@ -102,6 +102,17 @@ service cloud.firestore {
       return isAuthenticated() && userData().userType == 'financeur';
     }
 
+    // Compte suspendu (question 51, décision « Registre des suspensions » de Monsieur DUCOUT du 2026-11-26) : une fiche
+    // existe à son identifiant ou à son adresse de connexion. Une règle ne fait pas de requête (pas de « where email ==
+    // ... ») : elle ne lit un document que par son chemin exact. L'adresse est donc dans l'identifiant de la seconde fiche,
+    // suspensions/email:<adresse en minuscules>, écrite avec la première par ManageUsersPage. Le préfixe « email: » la
+    // sépare des identifiants de compte dans la même collection, gardée par une seule règle. Minuscules des deux côtés :
+    // l'adresse saisie à l'inscription peut différer en casse de celle du compte suspendu.
+    function estSuspendu() {
+      return exists(/databases/$(database)/documents/suspensions/$(request.auth.uid))
+        || exists(/databases/$(database)/documents/suspensions/$('email:' + request.auth.token.get('email', '').lower()));
+    }
+
     // Utilisateurs
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
@@ -109,8 +120,14 @@ service cloud.firestore {
       // administrateur (faille relevée le 2026-11-13, question 20 ; les administrateurs sont créés par
       // scripts/creer_admin.py, qui passe par la clé de service)
       // Le compte naît en essai, jamais abonné (plan niveau A, lot 1, 2026-11-24)
+      // Ni par un compte suspendu (question 51, 2026-11-26) : il supprimait son document puis le recréait en essai, ou
+      // ouvrait un nouveau compte avec la même adresse
+      // Le champ email est l'adresse de connexion (contre-vérification du 2026-11-26) : ManageUsersPage écrit la fiche
+      // suspensions/email:<adresse> d'après ce champ ; une adresse leurre la mettait sur une autre adresse que celle du
+      // compte. Deux valeurs absentes sont égales : un compte sans adresse (compte de test) écrit un document sans adresse
       allow create: if isOwner(userId) && roleOuvert(request.resource.data.get('userType', ''))
-        && request.resource.data.get('subscriptionStatus', 'trial') == 'trial';
+        && request.resource.data.get('subscriptionStatus', 'trial') == 'trial'
+        && request.resource.data.get('email', null) == request.auth.token.get('email', null) && !estSuspendu();
       // Mise à jour : l'administrateur ; le propriétaire seulement sur ses champs de parcours (plan niveau A, lot 1 : il
       // réécrivait son adresse, lue par le courriel du lundi, et pouvait se donner un abonnement ou prolonger son essai),
       // sans toucher au rôle, sauf passage entre porteur et financeur (parcours d'intégration)
@@ -120,6 +137,12 @@ service cloud.firestore {
         && (request.resource.data.get('userType', '') == resource.data.get('userType', '') ||
             (roleOuvert(request.resource.data.get('userType', '')) && roleOuvert(resource.data.get('userType', '')))));
       allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // Registre des suspensions (question 51, 2026-11-26) : suspensions/{uid} et suspensions/email:<adresse>, écrites et
+    // effacées par l'administrateur depuis ManageUsersPage ; le compte suspendu ne les lit ni ne les efface
+    match /suspensions/{ficheId} {
+      allow read, write: if isAdmin();
     }
 
     // Profils

@@ -960,3 +960,114 @@ describe('aap : lecture réservée aux appels publiés et visibles (question 49)
     await assertSucceeds(getDocs(query(aap, where('status', '==', 'published'))));
   });
 });
+
+// Changement securite-vues-messagerie (question 51, décision « Registre des suspensions » de Monsieur DUCOUT du
+// 2026-11-26) : un compte suspendu supprimait son document users puis le recréait en essai, ou créait un nouveau compte
+// avec la même adresse. La suspension laisse deux fiches, suspensions/{uid} et suspensions/email:<adresse en minuscules>,
+// que seul l'administrateur lit, écrit ou efface.
+describe('comptes suspendus : registre des suspensions (question 51)', () => {
+  const ADRESSE = 'porteur1@exemple.fr';
+  const FICHE = { uid: 'porteur1', email: ADRESSE, le: new Date(2026, 10, 26), par: 'admin1' };
+  const suspendu = () => env.authenticatedContext('porteur1', { email: ADRESSE }).firestore();
+
+  // État après une suspension par l'administrateur : document en « cancelled » et ses deux fiches
+  const suspendre = () =>
+    env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'users/porteur1'), { userType: 'porteur', subscriptionStatus: 'cancelled', email: ADRESSE });
+      await setDoc(doc(db, 'suspensions/porteur1'), FICHE);
+      await setDoc(doc(db, `suspensions/email:${ADRESSE}`), FICHE);
+    });
+
+  it('l’administrateur lit, liste, écrit et efface les fiches de suspension', async () => {
+    await assertSucceeds(setDoc(doc(admin(), 'suspensions/porteur2'), { ...FICHE, uid: 'porteur2' }));
+    await assertSucceeds(setDoc(doc(admin(), 'suspensions/email:porteur2@exemple.fr'), { ...FICHE, uid: 'porteur2' }));
+    await assertSucceeds(getDoc(doc(admin(), 'suspensions/porteur2')));
+    await assertSucceeds(getDocs(collection(admin(), 'suspensions')));
+    await assertSucceeds(deleteDoc(doc(admin(), 'suspensions/porteur2')));
+    await assertSucceeds(deleteDoc(doc(admin(), 'suspensions/email:porteur2@exemple.fr')));
+  });
+
+  it('le compte suspendu ne lit ni n’efface sa fiche ; personne d’autre n’en écrit', async () => {
+    await suspendre();
+    await assertFails(getDoc(doc(suspendu(), 'suspensions/porteur1')));
+    await assertFails(getDoc(doc(suspendu(), `suspensions/email:${ADRESSE}`)));
+    await assertFails(deleteDoc(doc(suspendu(), 'suspensions/porteur1')));
+    await assertFails(deleteDoc(doc(suspendu(), `suspensions/email:${ADRESSE}`)));
+    await assertFails(getDocs(collection(porteur2(), 'suspensions')));
+    await assertFails(setDoc(doc(porteur2(), 'suspensions/porteur2'), { ...FICHE, uid: 'porteur2' }));
+    await assertFails(getDoc(doc(visiteur(), 'suspensions/porteur1')));
+  });
+
+  it('le compte suspendu supprime son document users, mais ne le recrée pas en essai', async () => {
+    await suspendre();
+    await assertSucceeds(deleteDoc(doc(suspendu(), 'users/porteur1')));
+    await assertFails(
+      setDoc(doc(suspendu(), 'users/porteur1'), { userType: 'porteur', subscriptionStatus: 'trial', email: ADRESSE }),
+    );
+  });
+
+  it('par son identifiant seul : fiche suspensions/{uid} sans fiche d’adresse, création refusée', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => setDoc(doc(ctx.firestore(), 'suspensions/porteur9'), FICHE));
+    const sansAdresse = env.authenticatedContext('porteur9').firestore();
+    await assertFails(setDoc(doc(sansAdresse, 'users/porteur9'), { userType: 'porteur', subscriptionStatus: 'trial' }));
+  });
+
+  // Document écrit avec l'adresse du jeton, comme AuthContext : seule la suspension produit le refus
+  it('nouvel identifiant, même adresse (casse comprise) : création refusée', async () => {
+    await suspendre();
+    const meme = env.authenticatedContext('nouvel-id', { email: ADRESSE }).firestore();
+    await assertFails(
+      setDoc(doc(meme, 'users/nouvel-id'), { userType: 'porteur', subscriptionStatus: 'trial', email: ADRESSE }),
+    );
+    const majuscules = env.authenticatedContext('autre-id', { email: 'Porteur1@Exemple.FR' }).firestore();
+    await assertFails(
+      setDoc(doc(majuscules, 'users/autre-id'), {
+        userType: 'financeur',
+        subscriptionStatus: 'trial',
+        email: 'Porteur1@Exemple.FR',
+      }),
+    );
+  });
+
+  // Contre-vérification du 2026-11-26 : le compte écrivait une adresse leurre dans le champ email de son document ;
+  // la suspension inscrivait alors la fiche suspensions/email:<leurre>, et un nouvel identifiant sous la vraie adresse
+  // recréait un compte en essai (et le vrai titulaire de l'adresse leurre se trouvait bloqué)
+  it('le champ email du document est l’adresse de connexion : adresse leurre ou absente refusée', async () => {
+    const malin = env.authenticatedContext('malin', { email: 'malin@exemple.fr' }).firestore();
+    const essai = { userType: 'porteur', subscriptionStatus: 'trial' };
+    await assertFails(setDoc(doc(malin, 'users/malin'), { ...essai, email: 'leurre@exemple.fr' }));
+    await assertFails(setDoc(doc(malin, 'users/malin'), essai));
+    await assertSucceeds(setDoc(doc(malin, 'users/malin'), { ...essai, email: 'malin@exemple.fr' }));
+    // Compte de test sans adresse dans son jeton : document sans adresse (ou adresse nulle) accepté, adresse inventée
+    // refusée
+    const sansAdresse = env.authenticatedContext('sans-adresse').firestore();
+    await assertFails(setDoc(doc(sansAdresse, 'users/sans-adresse'), { ...essai, email: 'leurre@exemple.fr' }));
+    await assertSucceeds(setDoc(doc(sansAdresse, 'users/sans-adresse'), { ...essai, email: null }));
+    await deleteDoc(doc(sansAdresse, 'users/sans-adresse'));
+    await assertSucceeds(setDoc(doc(sansAdresse, 'users/sans-adresse'), essai));
+  });
+
+  it('compte rétabli : fiches effacées par l’administrateur, le compte recrée son document', async () => {
+    await suspendre();
+    await assertSucceeds(deleteDoc(doc(suspendu(), 'users/porteur1')));
+    await assertSucceeds(deleteDoc(doc(admin(), 'suspensions/porteur1')));
+    await assertSucceeds(deleteDoc(doc(admin(), `suspensions/email:${ADRESSE}`)));
+    await assertSucceeds(
+      setDoc(doc(suspendu(), 'users/porteur1'), { userType: 'porteur', subscriptionStatus: 'trial', email: ADRESSE }),
+    );
+  });
+
+  it('un compte non suspendu supprime puis recrée son document ; une autre adresse n’est pas bloquée', async () => {
+    await suspendre();
+    const libre = env.authenticatedContext('porteur2', { email: 'porteur2@exemple.fr' }).firestore();
+    await assertSucceeds(deleteDoc(doc(libre, 'users/porteur2')));
+    await assertSucceeds(
+      setDoc(doc(libre, 'users/porteur2'), {
+        userType: 'porteur',
+        subscriptionStatus: 'trial',
+        email: 'porteur2@exemple.fr',
+      }),
+    );
+  });
+});

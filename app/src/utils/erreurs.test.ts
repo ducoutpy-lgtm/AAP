@@ -12,6 +12,8 @@ describe('messageErreur', () => {
     expect(messageErreur(firebase('auth/popup-closed-by-user'), 'x')).toMatch(/fermée/);
     expect(messageErreur(firebase('permission-denied'), 'x')).toMatch(/droits/);
     expect(messageErreur(firebase('unavailable'), 'x')).toMatch(/connexion/i);
+    // Inscription refusée par le registre des suspensions (question 51, 2026-11-26), code posé par AuthContext
+    expect(messageErreur(firebase('compte-suspendu'), 'x')).toMatch(/suspendu/);
   });
 
   it('garde un message français écrit par l’application, remplace un message technique par le message prévu', () => {

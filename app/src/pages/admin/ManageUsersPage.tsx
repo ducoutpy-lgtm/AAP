@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, doc, writeBatch, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { useAuth } from '../../contexts/AuthContext';
 import { User } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -19,10 +20,31 @@ interface UserWithId extends User {
 const dateCreation = (valeur: Timestamp | Date): string =>
   (valeur instanceof Date ? valeur : valeur.toDate()).toLocaleDateString('fr-FR');
 
+// Fiches du registre des suspensions (question 51, 2026-11-26) : par identifiant et par adresse en minuscules, chemins
+// lus par la règle de création de users (firestore.rules, estSuspendu). L'adresse est le champ email du document, que la
+// même règle impose égal à l'adresse de connexion du compte
+const fichesDeSuspension = (user: UserWithId) =>
+  [user.uid, ...(user.email ? [`email:${user.email.toLowerCase()}`] : [])].map((id) => doc(db, 'suspensions', id));
+
+// Contenu d'une fiche de suspension, écrit par handleSuspendUser
+interface FicheSuspension {
+  uid: string;
+  email: string;
+  le: Timestamp | Date;
+}
+
+// Compte suspendu qui a supprimé lui-même son document users : absent de la liste des utilisateurs, il ne reste que ses
+// fiches (identifiants des documents dans « fiches »)
+interface CompteSansDocument extends FicheSuspension {
+  fiches: string[];
+}
+
 export default function ManageUsersPage() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [users, setUsers] = useState<UserWithId[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<UserWithId[]>([]);
+  const [sansDocument, setSansDocument] = useState<CompteSansDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const [erreurChargement, setErreurChargement] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,14 +65,30 @@ export default function ManageUsersPage() {
   const loadUsers = async () => {
     setErreurChargement(false);
     try {
-      const usersSnapshot = await getDocs(collection(db, 'users'));
+      // Registre des suspensions lu avec les comptes : les fiches d'un compte sans document users sont listées à part
+      const [usersSnapshot, suspensionsSnapshot] = await Promise.all([
+        getDocs(collection(db, 'users')),
+        getDocs(collection(db, 'suspensions')),
+      ]);
       const usersData = usersSnapshot.docs.map((doc) => ({
         uid: doc.id,
         ...doc.data(),
       })) as UserWithId[];
 
+      // Fiches regroupées par compte (identifiant et adresse), seulement pour les comptes absents de users
+      const connus = new Set(usersData.map((u) => u.uid));
+      const orphelins = new Map<string, CompteSansDocument>();
+      suspensionsSnapshot.docs.forEach((fiche) => {
+        const { uid, email, le } = fiche.data() as FicheSuspension;
+        if (connus.has(uid)) return;
+        const compte = orphelins.get(uid) ?? { uid, email, le, fiches: [] };
+        compte.fiches.push(fiche.id);
+        orphelins.set(uid, compte);
+      });
+
       setUsers(usersData);
       setFilteredUsers(usersData);
+      setSansDocument([...orphelins.values()]);
     } catch (err) {
       console.error('Error loading users:', err);
       setErreurChargement(true);
@@ -80,13 +118,24 @@ export default function ManageUsersPage() {
     setFilteredUsers(result);
   };
 
-  const handleSuspendUser = async (userId: string) => {
+  // Écriture groupée (writeBatch) : statut et fiches de suspension passent ensemble ou pas du tout ; une suspension sans
+  // fiche laisserait le compte supprimer son document puis le recréer en essai
+  const handleSuspendUser = async (user: UserWithId) => {
     if (!confirm('Êtes-vous sûr de vouloir suspendre cet utilisateur ?')) return;
 
     try {
-      await updateDoc(doc(db, 'users', userId), {
+      const lot = writeBatch(db);
+      lot.update(doc(db, 'users', user.uid), {
         subscriptionStatus: 'cancelled',
       });
+      const fiche = {
+        uid: user.uid,
+        email: (user.email ?? '').toLowerCase(),
+        le: Timestamp.now(),
+        par: currentUser?.email ?? '',
+      };
+      fichesDeSuspension(user).forEach((ref) => lot.set(ref, fiche));
+      await lot.commit();
       annoncer('Utilisateur suspendu avec succès');
       loadUsers();
     } catch (err) {
@@ -95,16 +144,35 @@ export default function ManageUsersPage() {
     }
   };
 
-  const handleActivateUser = async (userId: string) => {
+  // Rétablissement : statut et effacement des fiches dans une même écriture groupée
+  const handleActivateUser = async (user: UserWithId) => {
     try {
-      await updateDoc(doc(db, 'users', userId), {
+      const lot = writeBatch(db);
+      lot.update(doc(db, 'users', user.uid), {
         subscriptionStatus: 'active',
       });
+      fichesDeSuspension(user).forEach((ref) => lot.delete(ref));
+      await lot.commit();
       annoncer('Utilisateur activé avec succès');
       loadUsers();
     } catch (err) {
       console.error('Error activating user:', err);
       annoncer("Erreur lors de l'activation", 'erreur');
+    }
+  };
+
+  // Rétablissement d'un compte sans document users : seules ses fiches sont effacées (une mise à jour du document absent
+  // ferait échouer toute l'écriture groupée) ; le compte pourra de nouveau créer son document, en essai
+  const handleLeverSuspension = async (compte: CompteSansDocument) => {
+    try {
+      const lot = writeBatch(db);
+      compte.fiches.forEach((id) => lot.delete(doc(db, 'suspensions', id)));
+      await lot.commit();
+      annoncer('Suspension levée avec succès');
+      loadUsers();
+    } catch (err) {
+      console.error('Error lifting suspension:', err);
+      annoncer('Erreur lors du rétablissement', 'erreur');
     }
   };
 
@@ -315,11 +383,11 @@ export default function ManageUsersPage() {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end gap-2">
                           {user.subscriptionStatus !== 'cancelled' ? (
-                            <Button variant="ghost" size="sm" onClick={() => handleSuspendUser(user.uid)}>
+                            <Button variant="ghost" size="sm" onClick={() => handleSuspendUser(user)}>
                               <UserX className="h-4 w-4" />
                             </Button>
                           ) : (
-                            <Button variant="ghost" size="sm" onClick={() => handleActivateUser(user.uid)}>
+                            <Button variant="ghost" size="sm" onClick={() => handleActivateUser(user)}>
                               <UserCheck className="h-4 w-4" />
                             </Button>
                           )}
@@ -331,6 +399,38 @@ export default function ManageUsersPage() {
               </table>
             </div>
           </Card>
+        )}
+
+        {/* Comptes suspendus sans document users (registre des suspensions, question 51) */}
+        {sansDocument.length > 0 && (
+          <section className="mt-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Comptes suspendus sans document</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Ces comptes ont été supprimés par leur titulaire après leur suspension. Leur adresse reste refusée à
+              l'inscription tant que la suspension n'est pas levée.
+            </p>
+            <Card className="overflow-hidden">
+              <ul className="divide-y divide-gray-200">
+                {sansDocument.map((compte) => (
+                  <li key={compte.uid} className="px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-center text-sm text-gray-900">
+                      <Mail className="h-4 w-4 text-gray-400 mr-2" />
+                      {compte.email || compte.uid}
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="flex items-center text-sm text-gray-600">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        Suspendu le {dateCreation(compte.le)}
+                      </span>
+                      <Button variant="secondary" size="sm" onClick={() => handleLeverSuspension(compte)}>
+                        Rétablir
+                      </Button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </section>
         )}
       </div>
     </div>

@@ -2,9 +2,10 @@
 
 ### Requirement: La suspension laisse une fiche que le compte ne peut pas effacer
 
-Suspendre un compte depuis l'administration SHALL écrire une fiche `suspensions/{uid}` portant l'identifiant et
-l'adresse de connexion du compte. Seul l'administrateur SHALL pouvoir lire, écrire ou effacer ces fiches. Rétablir le
-compte SHALL effacer sa fiche.
+Suspendre un compte depuis l'administration SHALL écrire deux fiches, `suspensions/{uid}` et
+`suspensions/email:<adresse de connexion en minuscules>` (une règle ne lit un document que par son chemin). Seul
+l'administrateur SHALL pouvoir lire, écrire ou effacer ces fiches. Rétablir le compte SHALL les effacer, y compris pour
+un compte qui a supprimé son document `users` (section « Comptes suspendus sans document » de l'administration).
 
 #### Scenario: Fiche de suspension protégée
 
@@ -19,7 +20,7 @@ compte SHALL effacer sa fiche.
 ### Requirement: Un compte suspendu ne recrée pas son compte en essai
 
 La création d'un document `users` SHALL être refusée quand une fiche de suspension existe pour l'identifiant du compte
-ou pour son adresse de connexion. La suppression de son compte par un compte non suspendu SHALL continuer de
+ou pour son adresse de connexion, et SHALL exiger que le champ `email` du document soit l'adresse de connexion. La suppression de son compte par un compte non suspendu SHALL continuer de
 fonctionner.
 
 #### Scenario: Compte suspendu qui supprime puis recrée son document

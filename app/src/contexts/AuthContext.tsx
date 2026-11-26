@@ -69,6 +69,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const trialEndsAt = new Date();
     trialEndsAt.setDate(trialEndsAt.getDate() + 14); // 14 jours de trial
 
+    // Refus de la création : le document neuf est celui du compte, au rôle ouvert, en essai et à l'adresse de connexion
+    // (user.email, la valeur que la règle compare) ; la règle ne le refuse alors qu'à un compte inscrit au registre des
+    // suspensions (question 51, 2026-11-26). Le code « compte-suspendu » fait dire la suspension à l'écran
+    // (utils/erreurs.ts) au lieu de « Action refusée ». Seulement si le document est absent : présent (profil illisible
+    // au chargement, puis parcours d'intégration), l'écriture est une mise à jour et son refus garde le message générique
     await setDoc(doc(db, 'users', user.uid), {
       email: user.email,
       userType,
@@ -82,6 +87,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         inApp: true,
         frequency: 'realtime',
       },
+    }).catch(async (err: unknown) => {
+      if ((err as { code?: unknown } | null)?.code !== 'permission-denied') throw err;
+      // Relecture en échec (null) : on ne sait pas, message générique
+      const existant = await getDoc(doc(db, 'users', user.uid)).catch(() => null);
+      if (existant?.exists() !== false) throw err;
+      throw Object.assign(new Error('Compte suspendu'), { code: 'compte-suspendu' });
     });
 
     // Création du document profil selon le type

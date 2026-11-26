@@ -17,6 +17,9 @@ const TRADUCTIONS: Record<string, string> = {
   'auth/network-request-failed': 'Connexion au service impossible : vérifiez votre connexion Internet, puis réessayez.',
   unavailable: 'Connexion au service impossible : vérifiez votre connexion Internet, puis réessayez.',
   'permission-denied': "Action refusée : vous n'avez pas les droits nécessaires.",
+  // Code posé par AuthContext quand la règle refuse la création du document users (registre des suspensions, question 51)
+  'compte-suspendu':
+    'Inscription refusée : ce compte ou cette adresse électronique est suspendu. Pour en savoir plus, écrivez-nous depuis la page Contact.',
   'not-found': 'Élément introuvable : il a peut-être été supprimé.',
   'storage/unauthorized': 'Dépôt du fichier refusé par le stockage.',
 };

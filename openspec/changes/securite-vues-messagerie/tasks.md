@@ -19,10 +19,13 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 
 ## 2. Registre des suspensions (question 51)
 
-- [ ] 2.1 Tests de règles : création refusée par identifiant et par adresse, fiche protégée, compte rétabli (échec
+- [x] 2.1 Tests de règles : création refusée par identifiant et par adresse, fiche protégée, compte rétabli (échec
   avant).
-- [ ] 2.2 Règles `suspensions` et `users` ; suspension et rétablissement écrivent et effacent la fiche ; test de page.
-- [ ] 2.3 Parcours sur les émulateurs : suspension, suppression, nouvelle inscription refusée, rétablissement.
+- [x] 2.2 Règles `suspensions` et `users` ; suspension et rétablissement écrivent et effacent la fiche ; test de page.
+- [ ] 2.3 Parcours sur les émulateurs : suspension, suppression, nouvelle inscription refusée, rétablissement. (2026-11-26 : 2.1 et
+  2.2 faits, 78 tests de règles et 265 de l'application, contre-vérifiés ; parcours sur les émulateurs NON joués.
+  Limites notées : une adresse contenant « / » ne peut pas être suspendue ; l'administration des utilisateurs exige les
+  nouvelles règles en ligne (lecture de `suspensions`) ; une autre adresse ouvre toujours un compte en essai.)
 
 ## 3. Mises à niveau (question 53)
 
