@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Mis en ligne (2026-11-26, sur l'accord de Monsieur DUCOUT, « Oui, envoie et mets en ligne »)
+- 60 commits du plan niveau A envoyés sur GitHub (`82bade3..5c7bfe4`). Règles Firestore publiées (« released rules
+  firestore.rules ») et hébergement mis en ligne : https://aapi-11bc3.web.app sert `assets/index-C6x4fVWp.js`, identique
+  à la compilation. Contrôle sans compte par l'interface publique de Firestore : lecture des appels publiés acceptée
+  (200, 3 documents), lecture des brouillons refusée (403, PERMISSION_DENIED). La faille P0 « un financeur inscrit
+  publie sans contrôle » est fermée en ligne par la règle testée sur l'émulateur (non rejouée avec un vrai compte).
+
 ### Corrigé (2026-11-25, relecture indépendante du plan niveau A)
 - Relecture en cinq angles (application, sécurité, chaîne du lundi, documentation, tests) par des agents distincts, chaque
   constat contre-vérifié : 47 confirmés, 7 réfutés ; note indépendante B-. Corrigés en deux passes (14 commits), chacune

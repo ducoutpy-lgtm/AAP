@@ -215,9 +215,9 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   joués sur les émulateurs, puis relecture indépendante par agents (mode « ultracode » activé par Monsieur DUCOUT) :
   47 constats confirmés, note B-, corrigés en deux passes contre-vérifiées (14 commits, `openspec/changes/niveau-a/
   tasks.md` section 7). 254 tests de l'application, 61 de règles, 297 Python, lint, types, mise en forme, ruff, mypy
-  verts. Rien n'est poussé ni déployé (règles Firestore et hébergement attendent son accord). **Reprendre à** : réponses
-  aux questions 44 à 53 de `docs/A_VALIDER.md`, puis question à boutons de poussée et de mise en ligne (5.2), avec une
-  ligne « AAP attend : … » à la séance de pilotage. Lundi 30/11, 8 h : PC allumé, session ouverte, sur secteur.
+  verts. 2026-11-26 : sur son accord, 60 commits poussés, règles Firestore et hébergement en ligne (`index-C6x4fVWp.js`,
+  brouillons refusés sans compte). **Reprendre à** : ses réponses aux questions 44 à 53 de `docs/A_VALIDER.md` (posées
+  par la séance de pilotage), puis, s'il le demande, une troisième passe sur les 27 points du 5.1 de `tasks.md`. Lundi 30/11, 8 h : PC allumé, session ouverte, sur secteur.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 

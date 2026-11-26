@@ -158,7 +158,9 @@ local par lot vérifié.
   jamais rejouée de bout en bout, `veille.cmd` sans dossier `logs` ni codes d'erreur, en-têtes HTTP de sécurité, règles
   des candidatures et des messages, essai de 14 jours jamais appliqué, contraste, `confirm()`, intégration continue et
   couverture, pages sans test, documentation de pilotage et changements OpenSpec non archivés.)
-- [ ] 5.2 Question à part : poussée et mise en ligne des règles et de l'hébergement.
+- [x] 5.2 Question à part : poussée et mise en ligne des règles et de l'hébergement. (2026-11-26 : « Oui, envoie et
+  mets en ligne » ; `git push` `82bade3..5c7bfe4` ; « released rules firestore.rules », « Deploy complete » ; le site
+  sert `index-C6x4fVWp.js` ; sans compte, publiés lus (200) et brouillons refusés (403).)
 
 ## 7. Relecture indépendante et vérification (2026-11-25)
 
