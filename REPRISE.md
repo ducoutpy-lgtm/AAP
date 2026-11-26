@@ -231,6 +231,14 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   à écarter / garder / reclasser, puis nettoyage sur son accord (sauvegarde, essai à blanc) et correction de la chaîne
   (hors champ écarté d'office, avertissement à la validation, relais jamais financeur). Il est en train de valider des
   fiches (`scraping/sources/verdicts_fiches.json` modifié à 11 h 32 : ne pas y toucher).
+- 2026-11-26, 12 h 10 : relecture du champ faite et APPLIQUÉE sur son accord (`docs/RELECTURE_CHAMP_2026-11-26.md`,
+  `scripts/appliquer_relecture_champ.py`, commit `6c71bcd`, sauvegarde `relecture_champ_2026-11-26_1206.json`) : 445
+  fiches en ligne, 15 à corriger (dont ses 15 « à décider »). Veille du lundi relancée à 12 h 02 sur son accord
+  (courriel des candidats parti : 1 candidat, 39 appels) ; à surveiller jusqu'à « Veille terminee », puis compte rendu au
+  pilotage. Chantier 51 codé mais NON COMMITÉ (fichiers modifiés dans app/) : reprendre l'avis bloquant (adresse leurre :
+  la règle de création de users doit exiger email == adresse de connexion) et le rétablissement d'un compte dont le
+  document est supprimé. Puis chantier de la sélection (hors champ écarté d'office, avertissement à la validation,
+  relais jamais financeur), puis 53, 52, 50.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
