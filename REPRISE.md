@@ -239,6 +239,11 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   la règle de création de users doit exiger email == adresse de connexion) et le rétablissement d'un compte dont le
   document est supprimé. Puis chantier de la sélection (hors champ écarté d'office, avertissement à la validation,
   relais jamais financeur), puis 53, 52, 50.
+- 2026-11-26, 12 h 40 : chantier 51 repris et commité (`aa92f13`, 78 tests de règles, 265 de l'application) ;
+  parcours 2.3 sur les émulateurs à jouer. Veille relancée à 12 h 02 toujours en cours (surveillance par une tâche de
+  fond de la séance : attendre « Veille terminee » dans `scraping/logs/veille.log`, puis compte rendu au pilotage).
+  Ordre de mise en ligne à respecter : index d'abord (`firebase deploy --only firestore:indexes`), puis règles et
+  hébergement ensemble. Rien n'est poussé depuis `808488b`.
 
 ## 2026-11-13 : relance du projet (à lire en premier)
 
