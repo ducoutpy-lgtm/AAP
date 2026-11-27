@@ -264,6 +264,16 @@ avant chaque lot et au moins toutes les 15 minutes ; plafond du jour atteint : a
   31 fiches puis nettoyage de la base le 27/11 après 9 h (5c), marques de vue gardées après la suppression d'un compte
   (RGPD). Restent : nettoyage local à la fin réelle de la veille ; chantiers 53 (vendredi) et 50 (samedi) ; clôture.
 
+- 2026-11-27, 15 h 40 : décisions à boutons (5a « 20 textes », 5b « le nouveau seulement », 5c « essai à blanc puis
+  écriture », marques de vue « Effacer avec le compte ») inscrites et faites : veille à 20 textes (`9906f33`),
+  `publier_couts.py` sans relecture de la base (`c31e171`, premier passage à la veille du 30/11), nettoyage local et de
+  la base écrits (`30ff3bb`), marques effacées avec le compte (`dc79613`). Chantiers 53 (`93be6e4`, `firebase` 12,
+  `react-router-dom` 7, 0 faille) et 50 (`ce7fa23`, messagerie, relecture adverse 11 constats dont 9 corrigés) faits.
+  La veille du 26/11 s'est arrêtée pendant la qualification (6 sur 20), sans import : contrôle et qualification des 31
+  fiches repris en local (`scraping/logs/rattrapage_2026-11-27.log`), puis import « à valider » et tri, sur son accord
+  5c. 19 commits non poussés ; mise en ligne (index `vues.uid`, règles, hébergement) sur son accord. Question 54 ouverte.
+  Rattrapage des 153 textes en attente : à faire une nuit où le PC reste branché (« pause » demandée le 26/11).
+
 ## 2026-11-13 : relance du projet (à lire en premier)
 
 Aucun travail du 2026-10-28 au 2026-11-13. Monsieur DUCOUT relance AAP, son projet principal (« pas au tiers de ce qui
