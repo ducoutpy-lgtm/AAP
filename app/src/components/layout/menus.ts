@@ -3,6 +3,7 @@
 // testable par Vitest sans React.
 import type { LucideIcon } from 'lucide-react';
 import {
+  MessageSquare,
   Activity,
   BarChart3,
   Bookmark,
@@ -51,9 +52,13 @@ const PARAMETRES: SectionMenu = {
   ],
 };
 
-// Alertes et Messagerie retirées du menu le 2026-11-13 (parcours-candidat-sans-impasse) : rien ne crée de conversation
-// ni de notification tant que les fonctions serveur ne sont pas déployées ; les pages restent à leur adresse.
-const COMMUNES: EntreeMenu[] = [{ libelle: 'Calendrier', adresse: '/calendrier', icone: Calendar }];
+// Alertes et Messagerie retirées du menu le 2026-11-13 (parcours-candidat-sans-impasse) : rien ne créait de
+// conversation ni de notification ; les pages restent à leur adresse. Messagerie rendue au menu le 2026-11-27
+// (question 50) : une conversation s'ouvre depuis une candidature envoyée. Les Alertes restent retirées.
+const COMMUNES: EntreeMenu[] = [
+  { libelle: 'Messagerie', adresse: '/messages', icone: MessageSquare },
+  { libelle: 'Calendrier', adresse: '/calendrier', icone: Calendar },
+];
 
 export function entreesMenu(role: UserType): SectionMenu[] {
   if (role === 'admin') {

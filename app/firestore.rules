@@ -325,13 +325,70 @@ service cloud.firestore {
       allow create: if isOwner(request.resource.data.userId) || isAdmin();
     }
 
+    // Messagerie (question 50, « construire » de Monsieur DUCOUT, 2026-11-26) : la page Messages lisait une collection
+    // que rien n'écrivait. Une conversation par candidature envoyée par l'application (identifiant = celui de la
+    // candidature), entre ses deux seuls participants : le candidat et le financeur de la candidature.
+    function participantDe(conversation) {
+      return isAuthenticated() && request.auth.uid in conversation.participants;
+    }
+
+    function conversationValide(applicationId) {
+      let candidature = get(/databases/$(database)/documents/applications/$(applicationId)).data;
+      let c = request.resource.data;
+      return c.keys().hasOnly(['participants', 'applicationId', 'titre', 'appel', 'lastMessage', 'lastMessageAt', 'nonLuPar'])
+        && c.applicationId == applicationId
+        && c.participants == [candidature.porteurId, candidature.financeurId]
+        && request.auth.uid in c.participants
+        // Relecture du 2026-11-27 : pas de participant fantôme (fiche importée, compte supprimé, financeur absent)
+        && candidature.financeurId is string && candidature.financeurId.size() > 0
+        && candidature.financeurId != 'scraped' && candidature.porteurId != 'compte-supprime'
+        // Candidature envoyée par l'application : ni brouillon, ni suivi d'un dépôt fait sur le site du financeur
+        && candidature.get('status', 'draft') != 'draft' && candidature.get('externe', false) != true
+        && c.titre is string && c.titre.size() <= 300 && c.appel is string && c.appel.size() <= 300
+        && c.lastMessage == '' && c.nonLuPar == null
+        // Date du serveur seulement (relecture du 2026-11-27 : une valeur choisie bloquait la page de l'autre)
+        && c.lastMessageAt == request.time;
+    }
+
+    match /conversations/{applicationId} {
+      // Une conversation absente se constate (l'application regarde avant de la créer) ; l'identifiant est celui de
+      // la candidature, rien d'autre n'est révélé
+      allow get: if resource == null || participantDe(resource.data);
+      allow list: if participantDe(resource.data);
+      // Compte actif seulement (relecture du 2026-11-27 : un compte suspendu ou expiré gardait ce canal d'écriture)
+      allow create: if hasActiveSubscription() && conversationValide(applicationId);
+      // Un participant met à jour l'aperçu du dernier message (200 caractères au plus), sa date (celle du serveur), et
+      // la marque « non lu » (posée pour l'autre participant à l'envoi, effacée à la lecture) ; jamais les
+      // participants. Effacer sa marque « non lu » reste permis à un compte suspendu ; le reste exige un compte actif.
+      allow update: if participantDe(resource.data) && (
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['nonLuPar']) && request.resource.data.nonLuPar == null)
+        || (hasActiveSubscription()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastMessage', 'lastMessageAt', 'nonLuPar'])
+            && request.resource.data.lastMessage is string && request.resource.data.lastMessage.size() <= 200
+            && (request.resource.data.nonLuPar == null || request.resource.data.nonLuPar in resource.data.participants)
+            && (!('lastMessageAt' in request.resource.data.diff(resource.data).affectedKeys())
+                || request.resource.data.lastMessageAt == request.time)));
+    }
+
+    // Un message : écrit par son expéditeur connecté, adressé à l'autre participant de sa conversation, de 1 à 5 000
+    // caractères, à la date du serveur, non lu (question 50)
+    function messageValide() {
+      let m = request.resource.data;
+      let conversation = get(/databases/$(database)/documents/conversations/$(m.conversationId)).data;
+      return m.keys().hasOnly(['conversationId', 'senderId', 'receiverId', 'content', 'createdAt', 'read'])
+        && m.senderId == request.auth.uid && request.auth.uid in conversation.participants
+        && m.receiverId in conversation.participants && m.receiverId != m.senderId
+        && m.content is string && m.content.size() >= 1 && m.content.size() <= 5000
+        && m.createdAt == request.time && m.read == false;
+    }
+
     // Messages : expéditeur et destinataire lisent ; un compte abonné écrit en son nom ; le destinataire marque lu
     match /messages/{messageId} {
       allow read: if isAuthenticated() && (
         resource.data.senderId == request.auth.uid ||
         resource.data.receiverId == request.auth.uid
       );
-      allow create: if hasActiveSubscription() && request.resource.data.senderId == request.auth.uid;
+      allow create: if hasActiveSubscription() && messageValide();
       // Le destinataire ne fait que marquer le message lu (plan niveau A, lot 1.3 : il pouvait en réécrire le contenu)
       allow update: if isOwner(resource.data.receiverId)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read', 'readAt']);

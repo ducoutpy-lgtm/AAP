@@ -4,9 +4,11 @@ import { entreeActive, entreesMenu, tableauDeBord } from './menus';
 import { routeExiste } from '../../test/routes';
 
 describe('pages vides retirées (parcours-candidat-sans-impasse)', () => {
-  it.each(['porteur', 'financeur'] as const)('%s : ni Messagerie ni Alertes, tant que rien ne les alimente', (role) => {
+  // Messagerie rendue au menu le 2026-11-27 (question 50 : les conversations sont créées depuis les candidatures) ;
+  // les Alertes restent retirées tant que rien ne les alimente
+  it.each(['porteur', 'financeur'] as const)('%s : Messagerie au menu, pas encore les Alertes', (role) => {
     const adresses = entreesMenu(role).flatMap((s) => s.entrees.map((e) => e.adresse));
-    expect(adresses).not.toContain('/messages');
+    expect(adresses).toContain('/messages');
     expect(adresses).not.toContain('/notifications');
   });
 });

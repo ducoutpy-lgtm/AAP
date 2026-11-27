@@ -1,19 +1,22 @@
 // Détail d'une candidature pour le candidat (changement parcours-candidat-jour-1, 2026-10-20) : la liste renvoyait
 // vers une page inexistante. Page mince : lecture du document, vérification du propriétaire, affichage.
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { lienSur } from '../../utils/liens';
 import { doc, getDoc, Timestamp } from 'firebase/firestore';
 import { ExternalLink, FileText } from 'lucide-react';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Badge } from '../../components/ui/Badge';
+import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import type { Application, ApplicationStatus } from '../../types';
 import { enDate } from '../../utils/dates';
 import { LIBELLES_STATUT_CANDIDATURE } from '../../utils/candidat';
 import { euros } from '../../utils/recherche';
+import { annoncer } from '../../utils/annonces';
+import { ouvrirConversation, peutEcrire } from '../../services/messagerieService';
 
 const VARIANT: Record<ApplicationStatus, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
   draft: 'gray',
@@ -44,6 +47,7 @@ const dateFr = (v: Timestamp | Date | null | undefined) =>
 export default function ApplicationDetailPage() {
   const { applicationId } = useParams<{ applicationId: string }>();
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const [dossier, setDossier] = useState<Dossier | null>(null);
   const [chargement, setChargement] = useState(true);
 
@@ -122,6 +126,30 @@ export default function ApplicationDetailPage() {
               Le financeur a reçu votre dossier. Le statut passera à « En cours d'examen » quand il l'ouvrira, puis à «
               Acceptée », « Refusée » ou « Complément demandé » ; suivez-le sur cette page ou dans Mes candidatures.
             </p>
+          )}
+          {/* Question 50 (2026-11-26) : une conversation par candidature envoyée, avec le financeur de l'appel */}
+          {applicationId && peutEcrire(dossier) && (
+            <div className="mt-6">
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  ouvrirConversation({
+                    id: applicationId,
+                    porteurId: dossier.porteurId,
+                    financeurId: dossier.financeurId,
+                    projectTitle: dossier.projectTitle,
+                    aapTitle: dossier.aapTitle,
+                  })
+                    .then((id) => navigate(`/messages?conversation=${id}`))
+                    .catch((err) => {
+                      console.error('Conversation non ouverte :', err);
+                      annoncer("La conversation n'a pas pu être ouverte : réessayez dans un instant.", 'erreur');
+                    })
+                }
+              >
+                Écrire au financeur
+              </Button>
+            </div>
           )}
           {(dossier.financeurFeedback || dossier.financeurComments || dossier.financeurNotes) && (
             <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-4">

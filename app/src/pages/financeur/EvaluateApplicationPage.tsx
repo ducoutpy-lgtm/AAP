@@ -9,12 +9,15 @@ import { Badge } from '../../components/ui/Badge';
 import { ArrowLeft, Download, CheckCircle, XCircle, Clock, TrendingUp, FileText } from 'lucide-react';
 import { messageErreur } from '../../utils/erreurs';
 import { annoncer } from '../../utils/annonces';
+import { ouvrirConversation, peutEcrire } from '../../services/messagerieService';
 
 interface Application {
   id: string;
   aapId: string;
   aapTitle: string;
   porteurId: string;
+  financeurId?: string;
+  externe?: boolean;
   projectTitle: string;
   projectDescription: string;
   objectives: string;
@@ -176,6 +179,30 @@ export default function EvaluateApplicationPage() {
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{application.projectTitle}</h1>
               <p className="text-gray-600">AAP: {application.aapTitle}</p>
+              {/* Question 50 (2026-11-26) : une conversation par candidature envoyée, avec le candidat */}
+              {application.financeurId && peutEcrire(application) && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="mt-3"
+                  onClick={() =>
+                    ouvrirConversation({
+                      id: application.id,
+                      porteurId: application.porteurId,
+                      financeurId: application.financeurId as string,
+                      projectTitle: application.projectTitle,
+                      aapTitle: application.aapTitle,
+                    })
+                      .then((id) => navigate(`/messages?conversation=${id}`))
+                      .catch((err) => {
+                        console.error('Conversation non ouverte :', err);
+                        annoncer("La conversation n'a pas pu être ouverte : réessayez dans un instant.", 'erreur');
+                      })
+                  }
+                >
+                  Écrire au candidat
+                </Button>
+              )}
             </div>
             <Badge variant="gray">Soumise le {formatDate(application.submittedAt)}</Badge>
           </div>

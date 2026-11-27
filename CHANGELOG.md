@@ -5,6 +5,13 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Ajouté (2026-11-27, changement `securite-vues-messagerie`, question 50 « construire »)
+- Messagerie : une conversation par candidature envoyée, entre le candidat et le financeur, ouverte par « Écrire au
+  financeur » (détail de la candidature) ou « Écrire au candidat » (évaluation) ; messages de 1 à 5 000 caractères,
+  marque « Non lu » pour le destinataire ; Messagerie rendue au menu ; conversations ajoutées à l'export des données
+  personnelles. Règles : deux participants seulement, compte actif, date du serveur, ni tiers ni usurpation. Règles à
+  mettre en ligne après accord ; sort des messages à la suppression d'un compte : question 54.
+
 ### Sécurité (2026-11-27, changement `securite-vues-messagerie`, question 53 « oui »)
 - Mises à niveau majeures : `firebase` 12.19.0 (10 avant), `react-router-dom` 7.18.5 (6 avant),
   `@firebase/rules-unit-testing` 5.0.2 ; `@grpc/grpc-js` forcé en 1.13.7 (`overrides`). `npm audit --omit=dev` : 13

@@ -77,10 +77,30 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 
 ## 5. Messagerie (question 50)
 
-- [ ] 5.1 Tests de règles : conversation à deux participants, tiers refusé, message borné, usurpation refusée (échec
+- [x] 5.1 Tests de règles : conversation à deux participants, tiers refusé, message borné, usurpation refusée (échec
   avant).
-- [ ] 5.2 Création d'une conversation depuis une candidature (candidat et financeur) ; page Messages ; tests de page.
-- [ ] 5.3 Parcours sur les émulateurs : le financeur écrit, le candidat répond.
+- [x] 5.2 Création d'une conversation depuis une candidature (candidat et financeur) ; page Messages ; tests de page.
+- [x] 5.3 Parcours sur les émulateurs : le financeur écrit, le candidat répond.
+  (2026-11-27, fait vendredi au lieu de samedi, quota disponible : `conversations/{idCandidature}`, participants repris
+  de la candidature, créée par l'un d'eux pour une candidature envoyée par l'application (ni brouillon, ni suivi
+  externe, ni participant fantôme), compte actif ; messages dans `messages` (export des données personnelles),
+  expéditeur connecté, destinataire = l'autre participant, 1 à 5 000 caractères, date du serveur ; marque `nonLuPar`
+  posée à l'envoi, effacée à la lecture ; service `messagerieService.ts`, page Messages, boutons « Écrire au financeur »
+  (détail de la candidature) et « Écrire au candidat » (évaluation), Messagerie rendue au menu, conversations dans
+  l'export. Échec avant : 5 tests de règles, 5 du service (module absent), 3 de la page, 1 de chaque bouton ; puis
+  relecture adverse (workflow `revue-messagerie`, 2 relecteurs puis un sceptique par constat, 14 agents) : 11 constats
+  confirmés, 9 corrigés avec un test en échec avant (date `lastMessageAt` libre qui bloquait la page de l'autre ;
+  compte suspendu ou expiré qui écrivait encore par la conversation ; participant fantôme `scraped`, `compte-supprime`
+  ou vide ; double envoi ; message envoyé qui sautait en haut du fil ; messages de la conversation précédente gardés ;
+  Messagerie absente du menu ; conversations absentes de l'export ; tests manquants des écritures). Un relecteur a lancé
+  les tests de règles malgré la consigne : émulateur vidé, ressemé. Après : 85 tests de règles (81 Firestore, 4
+  Storage), 286 de l'application, types, lint et compilation verts. Parcours sur les émulateurs : le financeur ouvre la
+  conversation depuis l'évaluation et écrit « Pouvez-vous préciser votre budget ? » ; le candidat la voit « Non lu »
+  dans sa page Messages, l'ouvre (marque effacée) et répond ; le financeur voit la réponse « Non lu » ; rejoué après
+  les corrections côté financeur (envoi par la touche Entrée, un seul message, date du serveur), pas côté candidat.
+  Ouvert, à décider par Monsieur DUCOUT (`docs/A_VALIDER.md`, question 54) : sort des messages et des conversations à
+  la suppression d'un compte (RGPD) ; sans décision, ils restent, avec l'identifiant du compte supprimé. Non fait :
+  pastille « non lu » dans le menu, notification au destinataire.)
 
 ## 6. Clôture
 

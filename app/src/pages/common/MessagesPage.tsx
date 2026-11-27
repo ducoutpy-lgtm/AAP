@@ -1,6 +1,9 @@
+// Messagerie (question 50, « construire » de Monsieur DUCOUT, 2026-11-26) : la page lisait une collection
+// `conversations` que rien n'écrivait. Elle passe par le service de messagerie : une conversation par candidature
+// envoyée, ouverte depuis la candidature (candidat ou financeur), choisie ici par l'adresse (?conversation=).
 import { useState, useEffect, useRef } from 'react';
-import { collection, query, where, orderBy, getDocs, addDoc, Timestamp, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { useSearchParams } from 'react-router-dom';
+import type { Timestamp } from 'firebase/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -9,147 +12,94 @@ import { Badge } from '../../components/ui/Badge';
 import { MessageSquare, Send, Search, User } from 'lucide-react';
 import { annoncer } from '../../utils/annonces';
 import { activableAuClavier } from '../../utils/clavier';
-
-interface Message {
-  id: string;
-  conversationId: string;
-  senderId: string;
-  senderName: string;
-  receiverId: string;
-  content: string;
-  createdAt: Timestamp;
-  read: boolean;
-}
-
-interface Conversation {
-  id: string;
-  participants: string[];
-  participantNames: { [userId: string]: string };
-  lastMessage: string;
-  lastMessageAt: Timestamp;
-  unreadCount: number;
-  relatedEntityId?: string;
-  relatedEntityType?: 'aap' | 'application';
-  relatedEntityTitle?: string;
-}
+import {
+  contenuValide,
+  ecouterConversations,
+  ecouterMessages,
+  envoyerMessage,
+  marquerLue,
+  type Conversation,
+  type MessageConversation,
+} from '../../services/messagerieService';
 
 export default function MessagesPage() {
   const { currentUser, userProfile } = useAuth();
+  const [parametres] = useSearchParams();
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(parametres.get('conversation'));
+  const [messages, setMessages] = useState<MessageConversation[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  // Envoi en cours : un second clic ou la touche Entrée n'envoient pas deux fois (relecture du 2026-11-27)
+  const [envoi, setEnvoi] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const uid = currentUser?.uid;
+  const selectedConversation = conversations.find((c) => c.id === selectedId) ?? null;
 
+  // Conversations du compte, à jour en temps réel (une réponse ou une conversation ouverte par l'autre apparaît)
   useEffect(() => {
-    if (currentUser) {
-      loadConversations();
-    }
-  }, [currentUser]);
+    if (!uid) return;
+    return ecouterConversations(
+      uid,
+      (liste) => {
+        setConversations(liste);
+        setLoading(false);
+      },
+      (err) => {
+        console.error('Error loading conversations:', err);
+        setLoading(false);
+      },
+    );
+  }, [uid]);
 
+  // Changement de conversation : les messages de la précédente disparaissent tout de suite (relecture du 2026-11-27)
   useEffect(() => {
-    if (selectedConversation) {
-      loadMessages(selectedConversation.id);
+    setMessages([]);
+    if (!uid || !selectedId) return;
+    return ecouterMessages(selectedId, uid, setMessages, (err) => {
+      console.error('Error loading messages:', err);
+      annoncer("Les messages n'ont pas pu être chargés : réessayez dans un instant.", 'erreur');
+    });
+  }, [uid, selectedId]);
 
-      // Real-time listener for messages
-      const messagesQuery = query(
-        collection(db, 'messages'),
-        where('conversationId', '==', selectedConversation.id),
-        orderBy('createdAt', 'asc'),
-      );
-
-      const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-        const messagesData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Message[];
-        setMessages(messagesData);
-        scrollToBottom();
-      });
-
-      return () => unsubscribe();
+  // Conversation ouverte : sa marque « non lu » est effacée pour le compte qui la lit
+  const nonLuPourMoi = !!uid && selectedConversation?.nonLuPar === uid;
+  useEffect(() => {
+    if (nonLuPourMoi && selectedId) {
+      marquerLue(selectedId).catch((err) => console.warn('Conversation non marquée lue :', err));
     }
-  }, [selectedConversation]);
+  }, [nonLuPourMoi, selectedId]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  const loadConversations = async () => {
-    if (!currentUser) return;
-
-    try {
-      const conversationsQuery = query(
-        collection(db, 'conversations'),
-        where('participants', 'array-contains', currentUser.uid),
-        orderBy('lastMessageAt', 'desc'),
-      );
-
-      const snapshot = await getDocs(conversationsQuery);
-      const conversationsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Conversation[];
-
-      setConversations(conversationsData);
-    } catch (err) {
-      console.error('Error loading conversations:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadMessages = async (conversationId: string) => {
-    try {
-      const messagesQuery = query(
-        collection(db, 'messages'),
-        where('conversationId', '==', conversationId),
-        orderBy('createdAt', 'asc'),
-      );
-
-      const snapshot = await getDocs(messagesQuery);
-      const messagesData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Message[];
-
-      setMessages(messagesData);
-    } catch (err) {
-      console.error('Error loading messages:', err);
-    }
-  };
-
   const handleSendMessage = async () => {
-    if (!newMessage.trim() || !selectedConversation || !currentUser || !userProfile) return;
-
-    const receiverId = selectedConversation.participants.find((p) => p !== currentUser.uid);
-    if (!receiverId) return;
-
+    if (envoi || !newMessage.trim() || !selectedConversation || !uid) return;
+    if (!contenuValide(newMessage)) {
+      annoncer('Le message dépasse 5 000 caractères : raccourcissez-le.', 'erreur');
+      return;
+    }
+    setEnvoi(true);
     try {
-      await addDoc(collection(db, 'messages'), {
-        conversationId: selectedConversation.id,
-        senderId: currentUser.uid,
-        senderName: userProfile.userType === 'porteur' ? 'Candidat' : 'Financeur',
-        receiverId,
-        content: newMessage,
-        createdAt: Timestamp.now(),
-        read: false,
-      });
-
+      await envoyerMessage(selectedConversation, uid, newMessage);
       setNewMessage('');
     } catch (err) {
       console.error('Error sending message:', err);
       annoncer("Le message n'a pas pu être envoyé : réessayez dans un instant.", 'erreur');
+    } finally {
+      setEnvoi(false);
     }
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView?.({ behavior: 'smooth' });
   };
 
-  const formatMessageTime = (timestamp: Timestamp): string => {
+  // Date posée par le serveur : absente un instant après l'envoi, le temps que l'écriture revienne
+  const formatMessageTime = (timestamp?: Timestamp | null): string => {
+    if (typeof timestamp?.toDate !== 'function') return "À l'instant";
     const date = timestamp.toDate();
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
@@ -163,15 +113,14 @@ export default function MessagesPage() {
     return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
   };
 
-  const getOtherParticipantName = (conversation: Conversation): string => {
-    const otherUserId = conversation.participants.find((p) => p !== currentUser?.uid);
-    return otherUserId ? conversation.participantNames[otherUserId] || 'Utilisateur' : 'Utilisateur';
-  };
+  // L'autre participant : le financeur pour le candidat, le candidat pour le financeur
+  const getOtherParticipantName = (): string =>
+    userProfile?.userType === 'porteur' ? 'Financeur de l’appel' : 'Candidat';
 
   const filteredConversations = conversations.filter(
     (conv) =>
-      getOtherParticipantName(conv).toLowerCase().includes(searchTerm.toLowerCase()) ||
-      conv.relatedEntityTitle?.toLowerCase().includes(searchTerm.toLowerCase()),
+      conv.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      conv.appel.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {
@@ -216,8 +165,8 @@ export default function MessagesPage() {
                 filteredConversations.map((conversation) => (
                   <div
                     key={conversation.id}
-                    onClick={() => setSelectedConversation(conversation)}
-                    {...activableAuClavier(() => setSelectedConversation(conversation))}
+                    onClick={() => setSelectedId(conversation.id)}
+                    {...activableAuClavier(() => setSelectedId(conversation.id))}
                     className={`p-3 rounded-lg cursor-pointer transition-colors ${
                       selectedConversation?.id === conversation.id
                         ? 'bg-primary-50 border border-primary-200'
@@ -228,15 +177,16 @@ export default function MessagesPage() {
                       <div className="flex items-center gap-2">
                         <User className="h-5 w-5 text-gray-400" />
                         <span className="font-semibold text-sm text-gray-900">
-                          {getOtherParticipantName(conversation)}
+                          {getOtherParticipantName()}
                         </span>
                       </div>
-                      {conversation.unreadCount > 0 && <Badge variant="primary">{conversation.unreadCount}</Badge>}
+                      {conversation.nonLuPar === uid && <Badge variant="primary">Non lu</Badge>}
                     </div>
 
-                    {conversation.relatedEntityTitle && (
-                      <div className="text-xs text-gray-500 mb-1">Re: {conversation.relatedEntityTitle}</div>
-                    )}
+                    <div className="text-xs text-gray-500 mb-1">
+                      {conversation.titre}
+                      {conversation.appel && ` · ${conversation.appel}`}
+                    </div>
 
                     <p className="text-sm text-gray-600 truncate">{conversation.lastMessage}</p>
                     <span className="text-xs text-gray-400 mt-1 block">
@@ -257,10 +207,11 @@ export default function MessagesPage() {
                   <div className="flex items-center gap-3">
                     <User className="h-8 w-8 text-gray-400" />
                     <div>
-                      <h3 className="font-semibold text-gray-900">{getOtherParticipantName(selectedConversation)}</h3>
-                      {selectedConversation.relatedEntityTitle && (
-                        <p className="text-sm text-gray-600">{selectedConversation.relatedEntityTitle}</p>
-                      )}
+                      <h3 className="font-semibold text-gray-900">{getOtherParticipantName()}</h3>
+                      <p className="text-sm text-gray-600">
+                        {selectedConversation.titre}
+                        {selectedConversation.appel && ` · ${selectedConversation.appel}`}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -274,7 +225,7 @@ export default function MessagesPage() {
                     </div>
                   ) : (
                     messages.map((message) => {
-                      const isOwnMessage = message.senderId === currentUser?.uid;
+                      const isOwnMessage = message.senderId === uid;
 
                       return (
                         <div key={message.id} className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
@@ -315,7 +266,7 @@ export default function MessagesPage() {
                       }}
                       className="flex-1"
                     />
-                    <Button onClick={handleSendMessage} disabled={!newMessage.trim()}>
+                    <Button onClick={handleSendMessage} disabled={envoi || !newMessage.trim()} aria-label="Envoyer">
                       <Send className="h-4 w-4" />
                     </Button>
                   </div>

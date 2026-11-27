@@ -365,8 +365,9 @@ describe('recherches sauvegardées, favoris, notifications, messages', () => {
     await assertSucceeds(setDoc(doc(admin(), 'notifications/n2'), { userId: 'porteur1', read: false }));
   });
 
-  it('un compte abonné envoie un message en son nom ; le destinataire le lit et le marque lu', async () => {
-    await assertSucceeds(
+  // Question 50 (2026-11-26, « construire ») : un message sans conversation n'est plus accepté (bloc « messagerie »)
+  it('un message sans conversation est refusé ; le destinataire le lit et le marque lu', async () => {
+    await assertFails(
       setDoc(doc(porteur(), 'messages/m2'), { senderId: 'porteur1', receiverId: 'f1', content: 'Bonjour' }),
     );
     await assertFails(
@@ -746,6 +747,133 @@ describe('contact et messagerie : champs bornés', () => {
     );
     await assertFails(updateDoc(doc(porteur(), 'messages/m2'), { content: 'Texte réécrit' }));
     await assertSucceeds(updateDoc(doc(porteur(), 'messages/m2'), { read: true }));
+  });
+});
+
+// Question 50 (« construire » de Monsieur DUCOUT, 2026-11-26) : la page Messages lisait une collection `conversations`
+// que rien n'écrivait ni ne couvrait. Une conversation par candidature envoyée (identifiant = celui de la candidature),
+// entre ses deux seuls participants ; les messages restent dans `messages` (export des données personnelles).
+describe('messagerie : une conversation par candidature (question 50)', () => {
+  const conversation = {
+    participants: ['porteur1', 'f1'],
+    applicationId: 'c2',
+    titre: 'Projet de test',
+    appel: 'Appel de test',
+    lastMessage: '',
+    lastMessageAt: serverTimestamp(),
+    nonLuPar: null,
+  };
+  const semer = () =>
+    env.withSecurityRulesDisabled(async (ctx) => {
+      await setDoc(doc(ctx.firestore(), 'conversations/c2'), { ...conversation, lastMessageAt: new Date() });
+    });
+  const message = (db: ReturnType<typeof porteur>, id: string, de: string, a: string, contenu = 'Bonjour', fil = 'c2') =>
+    setDoc(doc(db, `messages/${id}`), {
+      conversationId: fil,
+      senderId: de,
+      receiverId: a,
+      content: contenu,
+      createdAt: serverTimestamp(),
+      read: false,
+    });
+
+  it('un participant ouvre la conversation d’une candidature envoyée ; ni tiers, ni brouillon, ni suivi externe', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await setDoc(doc(ctx.firestore(), 'applications/c3'), {
+        porteurId: 'porteur1',
+        financeurId: 'f1',
+        status: 'submitted',
+        externe: true,
+      });
+    });
+    await assertFails(setDoc(doc(porteur2(), 'conversations/c2'), { ...conversation, participants: ['porteur2', 'f1'] }));
+    await assertFails(setDoc(doc(porteur(), 'conversations/c2'), { ...conversation, participants: ['porteur1', 'porteur2'] }));
+    await assertFails(setDoc(doc(porteur(), 'conversations/c1'), { ...conversation, applicationId: 'c1' }));
+    await assertFails(setDoc(doc(porteur(), 'conversations/c3'), { ...conversation, applicationId: 'c3' }));
+    await assertFails(setDoc(doc(porteur(), 'conversations/c2'), { ...conversation, nonLuPar: 'f1', autre: 1 }));
+    await assertSucceeds(setDoc(doc(financeur(), 'conversations/c2'), conversation));
+  });
+
+  it('seuls les deux participants la lisent, aussi par la liste ; une conversation absente se constate', async () => {
+    await semer();
+    await assertSucceeds(getDoc(doc(porteur(), 'conversations/c2')));
+    await assertSucceeds(
+      getDocs(query(collection(financeur(), 'conversations'), where('participants', 'array-contains', 'f1'))),
+    );
+    await assertFails(getDoc(doc(porteur2(), 'conversations/c2')));
+    await assertFails(
+      getDocs(query(collection(porteur2(), 'conversations'), where('participants', 'array-contains', 'porteur1'))),
+    );
+    await assertSucceeds(getDoc(doc(porteur(), 'conversations/absente')));
+  });
+
+  it('un message va de l’expéditeur connecté à l’autre participant, de 1 à 5 000 caractères', async () => {
+    await semer();
+    await assertSucceeds(message(financeur(), 'm10', 'f1', 'porteur1', 'Pouvez-vous préciser votre budget ?'));
+    await assertSucceeds(message(porteur(), 'm11', 'porteur1', 'f1', 'a'.repeat(5000)));
+    await assertFails(message(porteur(), 'm12', 'f1', 'porteur1'));
+    await assertFails(message(porteur(), 'm13', 'porteur1', 'porteur2'));
+    await assertFails(message(porteur2(), 'm14', 'porteur2', 'f1'));
+    await assertFails(message(porteur(), 'm15', 'porteur1', 'f1', ''));
+    await assertFails(message(porteur(), 'm16', 'porteur1', 'f1', 'a'.repeat(5001)));
+    await assertFails(message(porteur(), 'm17', 'porteur1', 'f1', 'Bonjour', 'c1'));
+    await assertSucceeds(
+      getDocs(query(collection(porteur(), 'messages'), where('conversationId', '==', 'c2'), where('receiverId', '==', 'porteur1'))),
+    );
+    await assertFails(
+      getDocs(query(collection(porteur2(), 'messages'), where('conversationId', '==', 'c2'), where('receiverId', '==', 'porteur1'))),
+    );
+  });
+
+  // Relecture adverse du chantier 50 (2026-11-27, constats confirmés)
+  it('relecture : date du serveur, compte actif, participants réels, tiers refusé même avec les bons participants', async () => {
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'applications/importee'), { porteurId: 'porteur1', financeurId: 'scraped', status: 'submitted' });
+      await setDoc(doc(db, 'applications/anonyme'), { porteurId: 'compte-supprime', financeurId: 'f1', status: 'submitted' });
+      await setDoc(doc(db, 'applications/sans-financeur'), { porteurId: 'porteur1', financeurId: '', status: 'submitted' });
+    });
+    await assertFails(setDoc(doc(porteur2(), 'conversations/c2'), conversation));
+    await assertFails(setDoc(doc(financeur(), 'conversations/c2'), { ...conversation, lastMessageAt: 'x' }));
+    await assertFails(setDoc(doc(financeur(), 'conversations/c2'), { ...conversation, lastMessageAt: new Date('9999-01-01') }));
+    await assertFails(
+      setDoc(doc(porteur(), 'conversations/importee'), { ...conversation, applicationId: 'importee', participants: ['porteur1', 'scraped'] }),
+    );
+    await assertFails(
+      setDoc(doc(financeur(), 'conversations/anonyme'), { ...conversation, applicationId: 'anonyme', participants: ['compte-supprime', 'f1'] }),
+    );
+    await assertFails(
+      setDoc(doc(porteur(), 'conversations/sans-financeur'), { ...conversation, applicationId: 'sans-financeur', participants: ['porteur1', ''] }),
+    );
+    await semer();
+    await assertFails(updateDoc(doc(financeur(), 'conversations/c2'), { lastMessageAt: 'x' }));
+    await assertFails(updateDoc(doc(financeur(), 'conversations/c2'), { lastMessageAt: new Date('9999-01-01') }));
+    // Compte suspendu ou expiré : plus d'écriture par la conversation, sauf effacer sa marque « non lu »
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await updateDoc(doc(ctx.firestore(), 'users/f1'), { subscriptionStatus: 'cancelled' });
+      await updateDoc(doc(ctx.firestore(), 'conversations/c2'), { nonLuPar: 'f1' });
+    });
+    await assertFails(
+      updateDoc(doc(financeur(), 'conversations/c2'), { lastMessage: 'Rappelez-moi', lastMessageAt: serverTimestamp(), nonLuPar: 'porteur1' }),
+    );
+    await assertSucceeds(updateDoc(doc(financeur(), 'conversations/c2'), { nonLuPar: null }));
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await deleteDoc(doc(ctx.firestore(), 'conversations/c2'));
+    });
+    await assertFails(setDoc(doc(financeur(), 'conversations/c2'), conversation));
+  });
+
+  it('la conversation garde ses participants ; l’envoi la met en non lue pour l’autre, la lecture l’efface', async () => {
+    await semer();
+    await assertSucceeds(
+      updateDoc(doc(porteur(), 'conversations/c2'), { lastMessage: 'Oui', lastMessageAt: serverTimestamp(), nonLuPar: 'f1' }),
+    );
+    await assertSucceeds(updateDoc(doc(financeur(), 'conversations/c2'), { nonLuPar: null }));
+    await assertFails(updateDoc(doc(porteur(), 'conversations/c2'), { participants: ['porteur1', 'porteur2'] }));
+    await assertFails(updateDoc(doc(porteur(), 'conversations/c2'), { nonLuPar: 'porteur2' }));
+    await assertFails(updateDoc(doc(porteur(), 'conversations/c2'), { lastMessage: 'a'.repeat(201) }));
+    await assertFails(updateDoc(doc(porteur2(), 'conversations/c2'), { nonLuPar: null }));
+    await assertFails(deleteDoc(doc(porteur(), 'conversations/c2')));
   });
 });
 

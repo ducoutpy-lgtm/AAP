@@ -100,6 +100,10 @@ Questions du 2026-11-21, nées de la relecture de l'application (changement `cor
    fait monter le compteur). Une vue par compte et par appel demanderait une collection de plus. Le faire ? Oui / non.
 53. Mises à niveau majeures (tâche 1.5) : `firebase` 10 vers 12 et `react-router-dom` 6 vers 7, pour les 13 failles
    restantes (5 élevées) ; travail à part, avec tous les parcours rejoués sur les émulateurs. Le lancer ? Oui / plus tard.
+54. Messagerie et suppression du compte (RGPD, relecture du 2026-11-27) : « Supprimer mon compte » n'efface ni les
+   messages ni les conversations ; ils gardent l'identifiant du compte supprimé, et l'autre participant les voit encore.
+   Effacer les messages envoyés par le compte supprimé / les anonymiser (identifiant remplacé par « compte-supprime »,
+   texte gardé pour l'autre participant) / les garder tels quels (à dire dans la page Confidentialité).
 
 Réponses du 2026-11-13 à 21 h 20 (choix à cocher, relayés par la séance de pilotage) : 17 « Oui, 0,59 € » ; 20 « Oui,
 corriger » (fait : changement `regles-role-protege`, 30 tests de règles verts) ; 21 « Lien site officiel » ; 22 « Avec

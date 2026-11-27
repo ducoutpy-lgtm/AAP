@@ -30,6 +30,14 @@ const listeDe = (chemin: string, champ: string, uid: string) =>
     })),
   );
 
+// Conversations du compte (question 50 et relecture du 2026-11-27) : lues par participant, comme le permettent les règles
+const conversationsDe = (uid: string) =>
+  lire(async () =>
+    (await getDocs(query(collection(db, 'conversations'), where('participants', 'array-contains', uid)))).docs.map(
+      (d) => ({ id: d.id, ...d.data() }),
+    ),
+  );
+
 export async function exporterMesDonnees(utilisateur: User, role: UserType) {
   const uid = utilisateur.uid;
   // Lectures indépendantes lancées ensemble ; chacune note son échec sans arrêter les autres (lire)
@@ -42,6 +50,7 @@ export async function exporterMesDonnees(utilisateur: User, role: UserType) {
     notifications,
     messagesEnvoyes,
     messagesRecus,
+    conversations,
     paiements,
     appelsPublies,
   ] = await Promise.all([
@@ -53,6 +62,7 @@ export async function exporterMesDonnees(utilisateur: User, role: UserType) {
     listeDe('notifications', 'userId', uid),
     listeDe('messages', 'senderId', uid),
     listeDe('messages', 'receiverId', uid),
+    conversationsDe(uid),
     listeDe('payments', 'userId', uid),
     role === 'financeur' ? listeDe('aap', 'financeurId', uid) : [],
   ]);
@@ -75,6 +85,7 @@ export async function exporterMesDonnees(utilisateur: User, role: UserType) {
     notifications,
     messagesEnvoyes,
     messagesRecus,
+    conversations,
     paiements,
     appelsPublies,
     surDemandeAuDpo: SUR_DEMANDE_AU_DPO,
