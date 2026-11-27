@@ -5,6 +5,12 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Sécurité (2026-11-27, changement `securite-vues-messagerie`, question 53 « oui »)
+- Mises à niveau majeures : `firebase` 12.19.0 (10 avant), `react-router-dom` 7.18.5 (6 avant),
+  `@firebase/rules-unit-testing` 5.0.2 ; `@grpc/grpc-js` forcé en 1.13.7 (`overrides`). `npm audit --omit=dev` : 13
+  failles (5 élevées) avant, 0 après. Aucun changement de code ; tests, règles, compilation et parcours des trois rôles
+  sur les émulateurs verts. Mise en ligne de l'hébergement après accord.
+
 ### Modifié (2026-11-27, changement `lectures-publier-couts`, décision 5b « Oui, le nouveau seulement »)
 - `scripts/publier_couts.py` ne relit plus la collection `coutsIa` à chaque veille (8 512 lectures le 26/11) : une liste
   locale des lignes déjà recopiées (`scraping/logs/couts_publies.txt`) suffit ; `--relire-base` la reconstruit. Premier

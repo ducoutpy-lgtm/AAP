@@ -37,8 +37,21 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
 
 ## 3. Mises à niveau (question 53)
 
-- [ ] 3.1 `firebase` 12 et `react-router-dom` 7 ; corrections d'API ; lint, types, tests, règles, compilation verts.
-- [ ] 3.2 `npm audit --omit=dev` avant et après ; parcours des trois rôles sur les émulateurs.
+- [x] 3.1 `firebase` 12 et `react-router-dom` 7 ; corrections d'API ; lint, types, tests, règles, compilation verts.
+- [x] 3.2 `npm audit --omit=dev` avant et après ; parcours des trois rôles sur les émulateurs.
+  (2026-11-27 : versions publiées depuis plus de deux semaines : `firebase` 12.19.0 (9 septembre), `react-router-dom`
+  7.18.5 (27 octobre), `@firebase/rules-unit-testing` 5.0.2 (19 août), compatible avec `firebase` 12 ; aucune
+  correction d'API nécessaire. `npm audit --omit=dev` : avant 13 failles (8 modérées, 5 élevées) ; après la mise à
+  niveau 4 élevées, toutes par `@grpc/grpc-js` 1.9.16, que `@firebase/firestore` 12 fixe en « ~1.9.0 » (utilisé côté
+  Node seulement : tests, scripts) ; forcé en 1.13.7 (8 octobre, corrigé) par `overrides` dans `package.json` : 0 faille.
+  Après : lint, types, 268 tests de l'application, 80 tests de règles (émulateur lancé par `npm run test:rules`, qui
+  exerce Firestore sous Node avec grpc-js 1.13.7) et compilation verts ; fichier compilé de 1 031 ko (270 ko compressé,
+  avertissement de taille de Vite, taille d'avant non relevée). Parcours sur les émulateurs ressemés : visiteur
+  renvoyé vers `/login` pour la recherche et les fiches (décision du 2026-10-20) ; candidat : connexion qui ramène à la
+  fiche demandée, recherche (10 appels, filtres), tableau de bord, « Voir tous (10) » au clic, « Mes candidatures »
+  (4) ; financeur : tableau de bord (43 vues), « Mes appels à projets » (3), « Candidatures reçues » (4), évaluation,
+  « Mettre en examen » écrit `under_review` ; administrateur : tableau de bord, `/admin/aaps` (88), `/admin/utilisateurs`
+  (3), `/admin/couts-ia` ; console sans erreur à chaque étape.)
 
 ## 4. Vues (question 52)
 
