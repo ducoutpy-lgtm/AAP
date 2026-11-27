@@ -1,7 +1,7 @@
 // Suppression du compte (changement suppression-compte, question 25, 2026-11-19). Tout se fait dans le navigateur avec
 // les droits du compte : les fonctions serveur ne sont pas déployées. Le compte de connexion est effacé en dernier.
 import { deleteUser, type User } from 'firebase/auth';
-import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, collectionGroup, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { UserType } from '../types';
 import { ANONYME, planDeSuppression } from '../utils/suppressionCompte';
@@ -30,5 +30,9 @@ export async function supprimerMonCompte(utilisateur: User, role: UserType): Pro
   ]);
   if (role !== 'admin') await deleteDoc(doc(db, role === 'porteur' ? 'porteurProfiles' : 'financeurProfiles', uid));
   await deleteDoc(doc(db, 'users', uid));
+  // Marques de vue (aap/{id}/vues/{uid}) : effacées avec le compte (décision « Effacer avec le compte » du
+  // 2026-11-27, RGPD) ; les règles ne le permettent qu'une fois le document users effacé
+  const marques = await getDocs(query(collectionGroup(db, 'vues'), where('uid', '==', uid)));
+  await Promise.all(marques.docs.map((d) => deleteDoc(d.ref)));
   await deleteUser(utilisateur);
 }

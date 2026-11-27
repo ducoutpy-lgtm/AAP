@@ -68,7 +68,9 @@ service cloud.firestore {
       return isAuthenticated() && publieEtVisible(resource.data)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
         && request.resource.data.views == resource.data.get('views', 0) + 1
-        && !exists(marque) && existsAfter(marque);
+        && !exists(marque) && existsAfter(marque)
+        // Compte inscrit seulement (2026-11-27) : sans document users, effacer ses marques ne permet pas de recompter
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
 
     function statutAuteurPermis() {
@@ -252,12 +254,22 @@ service cloud.firestore {
       // champ, et seulement si la même écriture ajoute une vue à l'appel (sinon une marque isolée, ou posée sur un
       // appel inexistant ou fermé, serait acceptée). Jamais lue, réécrite ni effacée depuis l'application : elle ne
       // sert qu'au contrôle de la règle ci-dessus (donnée minimale : identifiant du compte et date d'ouverture).
+      // Décision « Effacer avec le compte » (2026-11-27, RGPD) : la marque porte aussi l'identifiant du compte, pour
+      // qu'il retrouve ses marques ; il ne les efface qu'une fois son document users effacé (« Supprimer mon compte »),
+      // jamais avant : il pourrait sinon recompter sa vue.
       match /vues/{uid} {
-        allow create: if isOwner(uid) && request.resource.data.keys().hasOnly(['vueLe'])
-          && request.resource.data.vueLe == request.time
+        allow delete: if isOwner(uid) && !exists(/databases/$(database)/documents/users/$(request.auth.uid));
+        allow create: if isOwner(uid) && request.resource.data.keys().hasOnly(['vueLe', 'uid'])
+          && request.resource.data.uid == uid && request.resource.data.vueLe == request.time
           && getAfter(/databases/$(database)/documents/aap/$(aapId)).data.get('views', 0)
              == get(/databases/$(database)/documents/aap/$(aapId)).data.get('views', 0) + 1;
       }
+    }
+
+    // Marques de vue d'un compte, lues par lui seul (requête de groupe sur `vues` filtrée sur son identifiant) pour
+    // les effacer avec son compte (décision du 2026-11-27)
+    match /{chemin=**}/vues/{uid} {
+      allow list: if isAuthenticated() && resource.data.uid == request.auth.uid;
     }
 
     // Candidatures

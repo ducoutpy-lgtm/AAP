@@ -21,3 +21,19 @@ refuser une seconde marque.
 
 - **WHEN** un compte tente d'ajouter une vue sans créer sa marque de vue, ou d'en ajouter une seconde
 - **THEN** Firestore refuse l'écriture
+
+### Requirement: Marques effacées avec le compte
+
+Décision de Monsieur DUCOUT du 2026-11-27 (« Effacer avec le compte », RGPD) : « Supprimer mon compte » SHALL effacer
+toutes les marques de vue du compte. Un compte SHALL ne pouvoir effacer ses marques qu'une fois son document `users`
+effacé (sinon il recompterait sa vue), et jamais celles d'un autre compte.
+
+#### Scenario: Suppression du compte
+
+- **WHEN** un candidat qui a ouvert des fiches supprime son compte
+- **THEN** ses marques de vue sont effacées avant son compte de connexion
+
+#### Scenario: Effacement avant la suppression
+
+- **WHEN** un compte encore inscrit tente d'effacer sa marque de vue, ou celle d'un autre compte
+- **THEN** Firestore refuse

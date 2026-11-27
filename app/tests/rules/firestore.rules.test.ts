@@ -13,6 +13,7 @@ import {
 } from '@firebase/rules-unit-testing';
 import {
   collection,
+  collectionGroup,
   deleteDoc,
   doc,
   getDoc,
@@ -882,7 +883,7 @@ describe('messagerie : une conversation par candidature (question 50)', () => {
 // s'accompagne, dans la même écriture, de la marque de vue du compte (`aap/{id}/vues/{uid}`), qui ne s'écrit qu'une fois.
 function ecrireUneVue(db: ReturnType<typeof porteur>, id: string, uid: string, donnees: object = { views: increment(1) }) {
   const lot = writeBatch(db);
-  lot.set(doc(db, `aap/${id}/vues/${uid}`), { vueLe: serverTimestamp() });
+  lot.set(doc(db, `aap/${id}/vues/${uid}`), { vueLe: serverTimestamp(), uid });
   lot.update(doc(db, `aap/${id}`), donnees);
   return lot.commit();
 }
@@ -904,13 +905,36 @@ describe('aap : compteur de vues', () => {
     await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur2'));
     const db = porteur();
     const lot = writeBatch(db);
-    lot.set(doc(db, 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp(), autre: 1 });
+    lot.set(doc(db, 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp(), uid: 'porteur1', autre: 1 });
     lot.update(doc(db, 'aap/publie'), { views: increment(1) });
     await assertFails(lot.commit());
     await assertSucceeds(ecrireUneVue(porteur(), 'publie', 'porteur1'));
     await assertFails(getDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
     await assertFails(updateDoc(doc(porteur(), 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp() }));
     await assertFails(deleteDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
+  });
+  // Décision « Effacer avec le compte » (2026-11-27, RGPD) : la marque porte l'identifiant du compte, qui retrouve ses
+  // seules marques et les efface avec son compte (document users déjà effacé), jamais avant : il recompterait sa vue
+  it('marques effacées avec le compte, jamais avant ; celles des autres ni lues ni effacées', async () => {
+    const db = porteur();
+    const sansIdentifiant = writeBatch(db);
+    sansIdentifiant.set(doc(db, 'aap/publie/vues/porteur1'), { vueLe: serverTimestamp(), uid: 'porteur2' });
+    sansIdentifiant.update(doc(db, 'aap/publie'), { views: increment(1) });
+    await assertFails(sansIdentifiant.commit());
+    await assertSucceeds(ecrireUneVue(porteur(), 'publie', 'porteur1'));
+    await assertSucceeds(ecrireUneVue(porteur2(), 'publie', 'porteur2'));
+    const marquesDe = (base: ReturnType<typeof porteur>, uid: string) =>
+      getDocs(query(collectionGroup(base, 'vues'), where('uid', '==', uid)));
+    await assertSucceeds(marquesDe(porteur(), 'porteur1'));
+    await assertFails(marquesDe(porteur2(), 'porteur1'));
+    await assertFails(deleteDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await deleteDoc(doc(ctx.firestore(), 'users/porteur1'));
+    });
+    await assertFails(deleteDoc(doc(porteur(), 'aap/publie/vues/porteur2')));
+    await assertSucceeds(deleteDoc(doc(porteur(), 'aap/publie/vues/porteur1')));
+    // Sans document users, plus de vue comptée : effacer ses marques ne permet pas de recompter
+    await assertFails(ecrireUneVue(porteur(), 'publie', 'porteur1'));
   });
   // Relecture du chantier 52 (2026-11-26, constat confirmé) : le financeur auteur écrivait lui-même `views`, sans
   // marque, à la création comme à la modification de son appel ; la spec n'accepte une vue qu'avec sa marque

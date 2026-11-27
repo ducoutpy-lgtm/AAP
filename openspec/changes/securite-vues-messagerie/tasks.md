@@ -75,6 +75,18 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
   choisi). Signalé sans correction, hors question 52 : l'auteur écrit aussi `applicationsCount`. Règles à mettre en
   ligne après son accord.)
 
+- [x] 4.3 Marques effacées avec le compte (décision du 2026-11-27, « Effacer avec le compte ») : marque avec
+  l'identifiant du compte, lecture de ses seules marques, effacement après le document `users`, test de la suppression
+  du compte (échec avant) ; index de groupe sur `vues.uid` à mettre en ligne.
+  (2026-11-27 : marque `{ vueLe, uid }` ; requête de groupe `vues` où `uid` = le compte, lisible par lui seul ;
+  effacement permis au compte seulement sans document `users` ; vue refusée sans document `users` (effacer ses marques ne
+  permet pas de recompter) ; `supprimerMonCompte` efface les marques après le document `users` et avant le compte de
+  connexion ; index `vues.uid` (portée groupe) ajouté à `firestore.indexes.json`. Échec avant : 4 tests de règles et 1
+  du service. Après : 86 tests de règles, 287 de l'application, types et lint verts. Parcours sur les émulateurs :
+  candidat@test.local ouvre une fiche (marque écrite avec son identifiant), puis « Supprimer mon compte » (confirmation
+  du navigateur acceptée par la session) : 0 marque, document `users` absent (404), compte de connexion effacé, console
+  sans erreur.)
+
 ## 5. Messagerie (question 50)
 
 - [x] 5.1 Tests de règles : conversation à deux participants, tiers refusé, message borné, usurpation refusée (échec

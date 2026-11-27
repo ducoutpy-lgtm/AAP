@@ -165,7 +165,8 @@ export const aapService = {
   // compte et l'ajout partent dans la même écriture, que les règles refusent en entier si la marque existe déjà
   async incrementViews(aapId: string, userId: string): Promise<void> {
     const lot = writeBatch(db);
-    lot.set(doc(db, 'aap', aapId, 'vues', userId), { vueLe: serverTimestamp() });
+    // Identifiant du compte dans la marque : il la retrouve pour l'effacer avec son compte (décision du 2026-11-27)
+    lot.set(doc(db, 'aap', aapId, 'vues', userId), { vueLe: serverTimestamp(), uid: userId });
     lot.update(doc(db, 'aap', aapId), { views: increment(1) });
     await lot.commit();
   },
