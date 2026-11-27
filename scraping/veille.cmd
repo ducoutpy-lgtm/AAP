@@ -2,10 +2,12 @@
 rem Veille hebdomadaire des appels (changement rejeu-collecte-veille, 2026-10-20) : relit les pages validees des
 rem rubriques confirmees, collecte le texte des liens nouveaux, marque les fiches, ecrit VEILLE.md, envoie les courriels
 rem hebdomadaires (bilan a l'administrateur, appels de la semaine aux candidats) et publie les chiffres, puis lance
-rem l'extraction, le controle et la qualification par le modele local, au plus 40 textes (veille_payante.py --reel,
+rem l'extraction, le controle et la qualification par le modele local, au plus 20 textes (veille_payante.py --reel,
 rem changements veille-modele-local du 2026-11-21 et corrections-chaine-du-lundi du 2026-11-22 : zero euro, reportes sur
 rem batterie, import en « a valider » puis tri ; l'API Haiku seulement sur demande de Monsieur DUCOUT, --moteur api).
 rem Ordre choisi par Monsieur DUCOUT le 2026-11-22 (« Ordre des etapes ») : la tache Windows coupe la veille a 4 h.
+rem Constat du 2026-11-26 : la tache s'est dite arretee a 4 h (code 0x41306) mais veille.cmd et ses etapes ont continue ;
+rem 40 textes depassaient 4 h, d'ou 20 textes par lundi (decision 5a du 2026-11-27, veille_payante.TEXTES_PAR_VEILLE).
 rem Fermer la fenetre arrete la veille (reprise possible le jour meme, rien n'est perdu) : veille_cachee.vbs la lance
 rem sans fenetre.
 rem Lancement planifie (tache Windows « AAP Sante - veille hebdomadaire », lundi 8 h) : veille.cmd auto
@@ -45,7 +47,7 @@ echo.
 echo [%time%] Recopie du journal des couts externes vers l'administration (collection coutsIa) :
 "..\.venv\Scripts\python.exe" -u ..\scripts\publier_couts.py
 echo.
-echo [%time%] Modele local, au plus 40 textes (extraction, controle, qualification, import en « a valider », tri ; zero euro, reporte sur batterie) :
+echo [%time%] Modele local, au plus 20 textes (extraction, controle, qualification, import en « a valider », tri ; zero euro, reporte sur batterie) :
 rem Demarre le serveur Ollama s'il ne tourne pas (la commande list le lance), comme la chaine des PDF
 "%LOCALAPPDATA%\Programs\Ollama\ollama.exe" list >nul 2>&1
 "..\.venv\Scripts\python.exe" -u veille_payante.py --reel

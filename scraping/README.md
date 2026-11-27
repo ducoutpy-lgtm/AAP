@@ -604,7 +604,7 @@ portails, bilan de l'administrateur, chiffres publics et coûts, modèle local e
 
 Depuis le 2026-11-22 (changement `corrections-chaine-du-lundi`, décision « Ordre des étapes ») : la tâche Windows coupe
 la veille à 4 h, donc `veille.cmd` envoie les courriels et publie les chiffres avant l'étape du modèle local, qui traite
-au plus 40 textes encore jamais traités (`TEXTES_PAR_VEILLE`) ; la chaîne de nuit en traite au plus 60 (`PDF_PAR_NUIT`).
+au plus 20 textes encore jamais traités (`TEXTES_PAR_VEILLE`, 40 jusqu'au 2026-11-27, décision 5a) ; la chaîne de nuit en traite au plus 60 (`PDF_PAR_NUIT`).
 Le courriel du lundi annonce les appels publiés depuis le dernier envoi réussi (`logs/alertes_dernier_envoi.txt`).
 
 Depuis le 2026-11-21 (changement `veille-modele-local`, règle « modèle local d'abord » de `CLAUDE.md`, réponse de Monsieur

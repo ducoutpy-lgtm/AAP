@@ -4,6 +4,12 @@ Ce fichier liste les changements notables apportés au POC AAP Santé.
 
 ## [Non publié]
 
+### Modifié (2026-11-27, décision 5a de Monsieur DUCOUT, « Passer à 20 textes »)
+- Veille du lundi : le modèle local traite au plus 20 textes (40 avant). Le 26/11, 40 textes ont pris plus de 4 heures
+  (extraction 2 h 12, puis contrôle et qualification) et la limite de la tâche Windows n'a pas arrêté la chaîne.
+- Nettoyage local de la sélection fait le 2026-11-27 sur son accord (« Oui, après la veille ») : 63 textes bloqués mis
+  de côté, 83 entrées retirées des résultats (sauvegarde `scripts/sauvegardes/selection_local_2026-11-27_1439`).
+
 ### Corrigé (2026-11-25, relecture indépendante du plan niveau A)
 - `alertes.py` : thématique déduite des secteurs pour les seuls appels saisis à la main (une fiche collectée
   « incertain » restait rangée en santé) ; bilan de l'administrateur compté sur sept jours, et non depuis le courriel du

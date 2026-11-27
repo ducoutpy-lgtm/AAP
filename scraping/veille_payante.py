@@ -48,9 +48,10 @@ ETAPES_API = [("extraction", ["extraction_locale.py", "--extraire", "--moteur", 
               ("contrôle", ["verification.py", "--verifier", "--fichier", FICHES_API]),
               ("qualification", ["qualifier_fiches.py", "--qualifier", "--fichier", FICHES_API])]
 # La tâche Windows coupe la veille à 4 h (corrections-chaine-du-lundi 1.5, décision « Ordre des étapes » du 2026-11-22) :
-# courriels et chiffres partent avant ce lot (veille.cmd), qui traite au plus 40 textes ; les suivants attendent le lundi
-# d'après
-TEXTES_PAR_VEILLE = 40
+# courriels et chiffres partent avant ce lot (veille.cmd), qui traite au plus 20 textes ; les suivants attendent le lundi
+# d'après. Décision 5a de Monsieur DUCOUT (2026-11-27, « Passer à 20 textes ») : le 26/11, 40 textes ont pris plus de
+# 4 heures (extraction 2 h 12, puis contrôle et qualification) et la limite de la tâche Windows n'a pas coupé la chaîne.
+TEXTES_PAR_VEILLE = 20
 ETAPES_LOCALES = [("extraction", ["extraction_locale.py", "--extraire", "--sans-pdf", "--limite", str(TEXTES_PAR_VEILLE)]),
                   ("contrôle", ["verification.py", "--verifier", "--moteur", "ollama", "--fichier", FICHES_VEILLE_LOCALE]),
                   ("qualification", ["qualifier_fiches.py", "--qualifier", "--moteur", "ollama", "--fichier",

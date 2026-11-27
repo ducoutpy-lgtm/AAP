@@ -108,10 +108,11 @@ def test_veille_locale_a_blanc_ne_lance_rien(monkeypatch):
 
 
 # corrections-chaine-du-lundi 1.5 (2026-11-22, décision « Ordre des étapes ») : la tâche Windows coupe la veille à 4 h ;
-# courriels et chiffres partent avant le modèle local, qui traite au plus 40 textes par lundi.
-def test_extraction_locale_bornee_a_40_textes():
+# courriels et chiffres partent avant le modèle local. Décision 5a du 2026-11-27 (« Passer à 20 textes ») : 40 textes
+# prenaient plus de 4 heures le 26/11 (extraction 2 h 12, puis contrôle et qualification) ; 20 par lundi.
+def test_extraction_locale_bornee_a_20_textes():
     extraction = dict(vp.etapes("ollama"))["extraction"]
-    assert extraction[extraction.index("--limite") + 1] == str(vp.TEXTES_PAR_VEILLE) == "40"
+    assert extraction[extraction.index("--limite") + 1] == str(vp.TEXTES_PAR_VEILLE) == "20"
 
 
 def test_courriels_et_chiffres_avant_le_modele_local():
