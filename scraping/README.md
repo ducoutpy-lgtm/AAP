@@ -156,6 +156,10 @@ Spécification : `openspec/specs/registre-sources/`.
 `veille.cmd` appelle ensuite `..\scripts\publier_couts.py` : chaque ligne de `logs/extraction_costs.jsonl` devient un
 document de la collection Firestore `coutsIa` (identifiant dérivé du texte de la ligne : relançable sans doublon),
 lu par la page « Appels externes » de l'administration (`/admin/couts-ia`). `--dry-run` compte sans écrire.
+Depuis le 2026-11-27 (changement `lectures-publier-couts`, décision 5b) : la liste des lignes déjà recopiées est gardée
+sur le PC (`logs/couts_publies.txt`) ; le script n'écrit que les lignes absentes, sans lire Firestore (il relisait
+8 512 documents à chaque veille, sur 50 000 lectures gratuites par jour). Sans liste, ou avec `--relire-base`
+(document effacé à la main dans la console), il relit la base une fois puis écrit la liste.
 
 ### Mesure d'exactitude (changement `mesure-exactitude-30-fiches`, 2026-11-16)
 

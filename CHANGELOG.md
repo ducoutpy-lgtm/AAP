@@ -5,6 +5,11 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
 
 ## [Non publié]
 
+### Modifié (2026-11-27, changement `lectures-publier-couts`, décision 5b « Oui, le nouveau seulement »)
+- `scripts/publier_couts.py` ne relit plus la collection `coutsIa` à chaque veille (8 512 lectures le 26/11) : une liste
+  locale des lignes déjà recopiées (`scraping/logs/couts_publies.txt`) suffit ; `--relire-base` la reconstruit. Premier
+  passage (une dernière lecture complète) à la veille du 30/11.
+
 ### Corrigé (2026-11-26, changement `securite-vues-messagerie`, question 52 « oui »)
 - Compteur de vues : une vue par compte et par appel. La première ouverture d'une fiche écrit, dans la même écriture,
   la vue et une marque propre au compte (`aap/{id}/vues/{uid}`, date seule) ; les règles refusent une vue sans marque
