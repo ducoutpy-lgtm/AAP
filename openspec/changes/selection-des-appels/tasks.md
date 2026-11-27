@@ -28,7 +28,16 @@ Aucune écriture dans la base sans son accord direct, après sauvegarde et essai
 ## 4. Nettoyage
 
 - [x] 4.1 `scripts/nettoyer_selection.py` et son test ; essai à blanc local.
-- [ ] 4.2 Essai à blanc sur la base après la remise à zéro du quota ; écriture réelle sur son accord.
+- [x] 4.2 Essai à blanc sur la base après la remise à zéro du quota ; écriture réelle sur son accord.
+  (2026-11-27, décision 5c « Essai à blanc puis écriture » : écriture locale faite après la fin de la veille, 63 textes
+  mis de côté et 8 + 28 + 21 + 26 entrées retirées, comme l'essai du 26/11, sauvegarde
+  `scripts/sauvegardes/selection_local_2026-11-27_1439`. Base : 1 080 fiches lues, 30 modifiées, 7 relues par Monsieur
+  DUCOUT laissées ; 2 rejetées et archivées (« AMI Territoires pilotes – Urbanisme Favorable à la Santé » et « Pacte
+  Enseignement Supérieur et Compétences », pages bloquées du Grand Est), 28 financeurs de relais (6 « France 2030
+  (État) », 22 « Financeur à préciser ») ; sauvegarde `scripts/sauvegardes/selection_base_2026-11-27_1445.json`. Les 7
+  fiches de la plateforme d'Aix-Marseille étaient déjà archivées et rejetées (6 par la relecture du champ du 26/11, la
+  « 2026K19 » par Monsieur DUCOUT), d'où aucun marché public dans le plan. Relu après écriture : fiche Urbanisme
+  « archived / rejetee, page bloquée à la collecte ».)
 
 ## 5. Clôture
 
