@@ -10,7 +10,8 @@ français). Le journal propre au volet scraping reste dans `scraping/CHANGELOG.m
   financeur » (détail de la candidature) ou « Écrire au candidat » (évaluation) ; messages de 1 à 5 000 caractères,
   marque « Non lu » pour le destinataire ; Messagerie rendue au menu ; conversations ajoutées à l'export des données
   personnelles. Règles : deux participants seulement, compte actif, date du serveur, ni tiers ni usurpation. Règles à
-  mettre en ligne après accord ; sort des messages à la suppression d'un compte : question 54.
+  mettre en ligne après accord. Question 54 (« Effacer ») : à la suppression d'un compte, ses messages envoyés sont
+  effacés et l'aperçu de ses conversations vidé ; page Confidentialité et confirmation de suppression mises à jour.
 
 ### Sécurité (2026-11-27, changement `securite-vues-messagerie`, question 53 « oui »)
 - Mises à niveau majeures : `firebase` 12.19.0 (10 avant), `react-router-dom` 7.18.5 (6 avant),

@@ -73,7 +73,8 @@ export default function ConfidentialitePage() {
         <p>
           Compte et profil : pendant la durée de l'abonnement, puis trois ans après la dernière connexion, sauf
           suppression demandée plus tôt. Candidatures et évaluations : cinq ans après la clôture de l'appel, au titre de
-          la preuve. Messages : trois ans après le dernier échange. Données de facturation : dix ans (obligation
+          la preuve. Messages : trois ans après le dernier échange ; ceux qu'un compte a envoyés sont effacés à sa
+          suppression. Données de facturation : dix ans (obligation
           comptable). Journaux de connexion et journal d'usage : un an. Fiches d'appels à projets : tant que l'appel est
           utile aux utilisateurs ; les coordonnées d'un contact sont retirées sur demande.
         </p>

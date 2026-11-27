@@ -110,9 +110,14 @@ suspensions »). Ordre : sécurité d'abord. Chaque lot : test en échec d'abord
   conversation depuis l'évaluation et écrit « Pouvez-vous préciser votre budget ? » ; le candidat la voit « Non lu »
   dans sa page Messages, l'ouvre (marque effacée) et répond ; le financeur voit la réponse « Non lu » ; rejoué après
   les corrections côté financeur (envoi par la touche Entrée, un seul message, date du serveur), pas côté candidat.
-  Ouvert, à décider par Monsieur DUCOUT (`docs/A_VALIDER.md`, question 54) : sort des messages et des conversations à
-  la suppression d'un compte (RGPD) ; sans décision, ils restent, avec l'identifiant du compte supprimé. Non fait :
-  pastille « non lu » dans le menu, notification au destinataire.)
+  Question 54 (sort des messages à la suppression d'un compte) : « Effacer », réponse du 2026-11-27 vers 15 h 45,
+  appliquée : à la suppression du compte, ses messages envoyés sont effacés (règle : expéditeur, document `users` déjà
+  effacé), l'autre garde les siens, l'aperçu de ses conversations est vidé ; confirmation de suppression et page
+  Confidentialité mises à jour. Échec avant : 1 test de règles, 1 du service ; après : 87 tests de règles, 288 de
+  l'application. Parcours sur les émulateurs : conversation posée (un message de chaque côté), suppression du compte
+  candidat depuis `/profil` : son message effacé (404), celui du financeur gardé (200), aperçu vide, document `users`
+  effacé, console sans erreur. Les conversations gardent l'identifiant du compte supprimé dans `participants` (sans
+  autre donnée qui s'y rattache). Non fait : pastille « non lu » dans le menu, notification au destinataire.)
 
 ## 6. Clôture
 

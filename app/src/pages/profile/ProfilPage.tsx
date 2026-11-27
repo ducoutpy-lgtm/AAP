@@ -57,7 +57,8 @@ export default function ProfilPage() {
     }
     if (
       !confirm(
-        'Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications et ' +
+        'Supprimer définitivement votre compte ? Votre profil, vos recherches, vos favoris, vos notifications, vos ' +
+          'messages envoyés et ' +
           'vos candidatures aux appels importés seront effacés ; les candidatures déjà reçues par un financeur resteront chez ' +
           'lui, sans votre identifiant. Cette action est irréversible.',
       )

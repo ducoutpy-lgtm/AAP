@@ -864,6 +864,26 @@ describe('messagerie : une conversation par candidature (question 50)', () => {
     await assertFails(setDoc(doc(financeur(), 'conversations/c2'), conversation));
   });
 
+  // Question 54 (« Effacer », 2026-11-27) : à la suppression du compte, ses messages envoyés disparaissent, l'autre
+  // garde les siens ; l'aperçu du dernier message est vidé. Jamais avant la suppression (document users effacé).
+  it('messages envoyés effacés avec le compte, jamais avant ; ni ceux reçus ; aperçu vidé', async () => {
+    await semer();
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      const db = ctx.firestore();
+      await setDoc(doc(db, 'messages/envoye'), { conversationId: 'c2', senderId: 'porteur1', receiverId: 'f1', content: 'Mon budget', read: false });
+      await setDoc(doc(db, 'messages/recu'), { conversationId: 'c2', senderId: 'f1', receiverId: 'porteur1', content: 'Question', read: false });
+      await updateDoc(doc(db, 'conversations/c2'), { lastMessage: 'Mon budget' });
+    });
+    await assertFails(deleteDoc(doc(porteur(), 'messages/envoye')));
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await deleteDoc(doc(ctx.firestore(), 'users/porteur1'));
+    });
+    await assertFails(deleteDoc(doc(porteur(), 'messages/recu')));
+    await assertSucceeds(deleteDoc(doc(porteur(), 'messages/envoye')));
+    await assertFails(updateDoc(doc(porteur(), 'conversations/c2'), { lastMessage: 'autre texte' }));
+    await assertSucceeds(updateDoc(doc(porteur(), 'conversations/c2'), { lastMessage: '' }));
+  });
+
   it('la conversation garde ses participants ; l’envoi la met en non lue pour l’autre, la lecture l’efface', async () => {
     await semer();
     await assertSucceeds(

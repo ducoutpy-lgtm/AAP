@@ -34,5 +34,15 @@ export async function supprimerMonCompte(utilisateur: User, role: UserType): Pro
   // 2026-11-27, RGPD) ; les règles ne le permettent qu'une fois le document users effacé
   const marques = await getDocs(query(collectionGroup(db, 'vues'), where('uid', '==', uid)));
   await Promise.all(marques.docs.map((d) => deleteDoc(d.ref)));
+  // Messagerie (question 54, « Effacer », 2026-11-27) : ses messages envoyés disparaissent, l'autre participant garde
+  // les siens ; l'aperçu du dernier message de ses conversations est vidé (il pouvait reprendre son texte)
+  const [envoyes, conversations] = await Promise.all([
+    getDocs(query(collection(db, 'messages'), where('senderId', '==', uid))),
+    getDocs(query(collection(db, 'conversations'), where('participants', 'array-contains', uid))),
+  ]);
+  await Promise.all([
+    ...envoyes.docs.map((d) => deleteDoc(d.ref)),
+    ...conversations.docs.map((d) => updateDoc(d.ref, { lastMessage: '' })),
+  ]);
   await deleteUser(utilisateur);
 }
